@@ -5,9 +5,11 @@ public class Dashboard {
     public int ROWS;
     public int COLUMNS;
 
-    public Dashboard() {
+    public Dashboard(ObjectCard[][] grid, int ROWS, int COLUMNS) {
+        this.grid = grid;
+        this.ROWS = ROWS;
+        this.COLUMNS = COLUMNS;
     }
-
 
     public void fillGrid() {
     }

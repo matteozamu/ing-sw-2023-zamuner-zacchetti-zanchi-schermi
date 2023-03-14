@@ -6,7 +6,11 @@ public class Player {
     private Shelf shelf;
     private PersonalGoalCard personalGoalCard;
 
-    public Player() {
+    public Player(String name, int currentPoints, Shelf shelf, PersonalGoalCard personalGoalCard) {
+        this.name = name;
+        this.currentPoints = currentPoints;
+        this.shelf = shelf;
+        this.personalGoalCard = personalGoalCard;
     }
 
     public int addPoints(int points) {

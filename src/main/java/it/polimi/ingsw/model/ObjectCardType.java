@@ -6,5 +6,8 @@ public enum ObjectCardType {
     gioco,
     cornice,
     trofeo,
-    pianta
+    pianta;
+
+    ObjectCardType() {
+    }
 }

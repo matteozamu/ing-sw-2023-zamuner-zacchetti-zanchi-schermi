@@ -12,7 +12,15 @@ public class Game {
     private Player currentPlayer;
     private int numberOfPlayers;
 
-    public Game() {
+    public Game(int MAXPLAYER, String id, List<Player> players, Player winner, Player firstPlayer, CommonGoal[] commonGoals, Player currentPlayer, int numberOfPlayers) {
+        this.MAXPLAYER = MAXPLAYER;
+        this.id = id;
+        this.players = players;
+        this.winner = winner;
+        this.firstPlayer = firstPlayer;
+        this.commonGoals = commonGoals;
+        this.currentPlayer = currentPlayer;
+        this.numberOfPlayers = numberOfPlayers;
     }
 
     public void startGame() {
