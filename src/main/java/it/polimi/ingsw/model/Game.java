@@ -7,11 +7,11 @@ public class Game {
     private String id;
     private List<Player> players;
     private Board board;
-    private Player winner;
     private Player firstPlayer;
     private CommonGoal commonGoals[];
     private Player currentPlayer;
     private int numberOfPlayers;
+    private List<ObjectCard> cardContainer;
 
     public void startGame() {
     }
@@ -28,6 +28,17 @@ public class Game {
 
     public int calculatePoints(Player p) {
         return 0;
+    }
+
+    private ObjectCard getRandomObjectCard(){
+        return null;
+    }
+
+    public void fillBoard(){
+
+        // for per scegliere le coordinate, escludere alcuni valori
+//        Coordinate c = new Coordinate(x, y);
+//        this.board.getGrid().put(c, getRandomObjectCard());
     }
 
 }

@@ -7,7 +7,4 @@ public enum ObjectCardType {
     cornice,
     trofeo,
     pianta;
-
-    ObjectCardType() {
-    }
 }

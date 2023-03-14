@@ -1,14 +1,17 @@
 package it.polimi.ingsw.model;
 
+import java.util.HashMap;
+import java.util.Map;
+
 public class Shelf {
-    private ObjectCard grid[][];
+    private Map<Coordinate, ObjectCard> grid;
     private Boolean isFull;
     private int numbersOfCards;
 
-    public Shelf(ObjectCard[][] grid, Boolean isFull, int numbersOfCards) {
-        this.grid = grid;
-        this.isFull = isFull;
-        this.numbersOfCards = numbersOfCards;
+    public Shelf() {
+        this.grid = new HashMap<>();
+        this.isFull = false;
+        this.numbersOfCards = 0;
     }
 
     public void addObjectCard(int x, ObjectCard card) {
