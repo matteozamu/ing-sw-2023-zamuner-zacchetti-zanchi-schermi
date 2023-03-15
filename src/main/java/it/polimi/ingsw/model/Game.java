@@ -5,7 +5,7 @@ import java.util.List;
 import java.util.Random;
 
 public class Game {
-    public int MAXPLAYER;
+    public int MAX_PLAYER;
     private String id;
     private List<Player> players;
     private Board board;
@@ -14,6 +14,10 @@ public class Game {
     private Player currentPlayer;
     private int numberOfPlayers;
     private List<ObjectCard> cardContainer;
+
+    public Game() {
+        this.MAX_PLAYER = 4;
+    }
 
     private ArrayList<PersonalGoal> createPersonalGoals(){
         Random rand = new Random();
@@ -48,7 +52,7 @@ public class Game {
 
     // add player in the list
     public String insertPlayer(String name){
-        if (players.size() < 4){
+        if (players.size() < MAX_PLAYER){
             Shelf shelf = new Shelf();
             PersonalGoalCard pg = new PersonalGoalCard(this.createPersonalGoals());
             Player p = new Player(name, 0, shelf, pg);
