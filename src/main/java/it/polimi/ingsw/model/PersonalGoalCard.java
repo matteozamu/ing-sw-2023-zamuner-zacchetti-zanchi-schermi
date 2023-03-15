@@ -1,12 +1,15 @@
 package it.polimi.ingsw.model;
 
+import java.util.Random;
+
 public class PersonalGoalCard {
     private PersonalGoal goals[];
-    private int numTargetsReached;
+    private int targetsReached;
 
-    public PersonalGoalCard(PersonalGoal[] goals, int numTargetsReached) {
-        this.goals = goals;
-        this.numTargetsReached = numTargetsReached;
+    //serve mettere dei parametri nel costruttore?
+    public PersonalGoalCard(PersonalGoal goals[]) {
+       this.targetsReached = 0;
+       this.goals = goals;
     }
 
     public int calculatePoints(Player p) {

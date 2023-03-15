@@ -1,13 +1,13 @@
 package it.polimi.ingsw.model;
 
 public class PersonalGoal {
-    private int x;
-    private int y;
+    private int row;
+    private int column;
     private ObjectCardType type;
 
-    public PersonalGoal(int x, int y, ObjectCardType type) {
-        this.x = x;
-        this.y = y;
+    public PersonalGoal(int row, int column, ObjectCardType type) {
+        this.row = row;
+        this.column = column;
         this.type = type;
     }
 }

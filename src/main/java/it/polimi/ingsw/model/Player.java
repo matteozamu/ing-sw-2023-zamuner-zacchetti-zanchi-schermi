@@ -17,4 +17,8 @@ public class Player {
         return 0;
     }
 
+    public String getName(){
+        return this.name;
+    }
+
 }
