@@ -3,7 +3,6 @@ package it.polimi.ingsw.model;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
-import java.util.stream.Collectors;
 
 public class Game {
     public int MAXPLAYER;
@@ -11,15 +10,15 @@ public class Game {
     private List<Player> players;
     private Board board;
     private Player firstPlayer;
-    private CommonGoal commonGoals[];
+    private List<CommonGoal> commonGoals;
     private Player currentPlayer;
     private int numberOfPlayers;
     private List<ObjectCard> cardContainer;
 
-    private ArrayList createPersonalGoals(){
+    private ArrayList<PersonalGoal> createPersonalGoals(){
         Random rand = new Random();
         ArrayList<PersonalGoal> goals = new ArrayList<>();
-        ObjectCardType objTypes[] = ObjectCardType.values();
+        ObjectCardType[] objTypes = ObjectCardType.values();
 
         for (int i = 0; i < 6; i++){
             PersonalGoal pg = new PersonalGoal(rand.nextInt(6), rand.nextInt(5), objTypes[i]);
@@ -56,7 +55,7 @@ public class Game {
             players.add(p);
             return "giocatore inserito con successo";
         } else {
-            return "numero massimo di giocari raggiunto";
+            return "numero massimo di giocatori raggiunto";
         }
     }
 
