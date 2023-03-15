@@ -1,7 +1,9 @@
 package it.polimi.ingsw.model;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
+import java.util.stream.Collectors;
 
 public class Game {
     public int MAXPLAYER;
@@ -14,18 +16,19 @@ public class Game {
     private int numberOfPlayers;
     private List<ObjectCard> cardContainer;
 
-
-    private void createPersonalGoals(){
+    private ArrayList createPersonalGoals(){
         Random rand = new Random();
+        ArrayList<PersonalGoal> goals = new ArrayList<>();
+        ObjectCardType objTypes[] = ObjectCardType.values();
 
         for (int i = 0; i < 6; i++){
-
-            PersonalGoal p = new PersonalGoal(rand.nextInt(6), rand.nextInt(5), );
-            this.goals[i] = p;
+            PersonalGoal pg = new PersonalGoal(rand.nextInt(6), rand.nextInt(5), objTypes[i]);
+            goals.add(pg);
         }
 
-        return;
+        return goals;
     }
+
     public void startGame() {
     }
     public void endGame() {
@@ -44,12 +47,11 @@ public class Game {
         return false;
     }
 
-
-    //function to add player in the list
+    // add player in the list
     public String insertPlayer(String name){
         if (players.size() < 4){
             Shelf shelf = new Shelf();
-            PersonalGoalCard pg = new PersonalGoalCard();
+            PersonalGoalCard pg = new PersonalGoalCard(this.createPersonalGoals());
             Player p = new Player(name, 0, shelf, pg);
             players.add(p);
             return "giocatore inserito con successo";
@@ -67,7 +69,6 @@ public class Game {
     }
 
     public void fillBoard(){
-
         // for per scegliere le coordinate, escludere alcuni valori
 //        Coordinate c = new Coordinate(x, y);
 //        this.board.getGrid().put(c, getRandomObjectCard());

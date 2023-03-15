@@ -1,13 +1,14 @@
 package it.polimi.ingsw.model;
 
+import java.util.ArrayList;
 import java.util.Random;
 
 public class PersonalGoalCard {
-    private PersonalGoal goals[];
+    private ArrayList<PersonalGoal> goals;
     private int targetsReached;
 
     //serve mettere dei parametri nel costruttore?
-    public PersonalGoalCard(PersonalGoal goals[]) {
+    public PersonalGoalCard(ArrayList<PersonalGoal> goals) {
        this.targetsReached = 0;
        this.goals = goals;
     }
