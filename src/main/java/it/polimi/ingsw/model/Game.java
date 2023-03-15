@@ -17,9 +17,10 @@ public class Game {
 
     public Game() {
         this.MAX_PLAYER = 4;
+        this.players = new ArrayList<>();
     }
 
-    private ArrayList<PersonalGoal> createPersonalGoals(){
+    public ArrayList<PersonalGoal> createPersonalGoals(){
         Random rand = new Random();
         ArrayList<PersonalGoal> goals = new ArrayList<>();
         ObjectCardType[] objTypes = ObjectCardType.values();
@@ -51,15 +52,15 @@ public class Game {
     }
 
     // add player in the list
-    public String insertPlayer(String name){
+    public boolean addPlayer(String name){
         if (players.size() < MAX_PLAYER){
             Shelf shelf = new Shelf();
             PersonalGoalCard pg = new PersonalGoalCard(this.createPersonalGoals());
             Player p = new Player(name, 0, shelf, pg);
             players.add(p);
-            return "giocatore inserito con successo";
+            return true;
         } else {
-            return "numero massimo di giocatori raggiunto";
+            return false;
         }
     }
 
@@ -77,4 +78,10 @@ public class Game {
 //        this.board.getGrid().put(c, getRandomObjectCard());
     }
 
+    @Override
+    public String toString() {
+        return "Game{" +
+                "players=" + players +
+                '}';
+    }
 }

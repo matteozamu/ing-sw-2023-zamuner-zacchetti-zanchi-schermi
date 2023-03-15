@@ -21,4 +21,13 @@ public class Player {
         return this.name;
     }
 
+    @Override
+    public String toString() {
+        return "Player{" +
+                "name='" + name + '\'' +
+                ", currentPoints=" + currentPoints +
+                ", shelf=" + shelf +
+                ", personalGoalCard=" + personalGoalCard +
+                '}';
+    }
 }
