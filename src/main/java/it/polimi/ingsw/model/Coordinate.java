@@ -20,19 +20,19 @@ public class Coordinate {
         return y;
     }
 
-    public void setY(int y) {
-        this.y = y;
+    public Coordinate getU() {
+        return new Coordinate(x, y - 1);
     }
-    public Coordinate getU(){
-        return null;
-    };
-    public Coordinate getR(){
-        return null;
-    };
-    public Coordinate getD(){
-        return null;
-    };
-    public Coordinate getL(){
-        return null;
-    };
+
+    public Coordinate getR() {
+        return new Coordinate(x + 1, y);
+    }
+
+    public Coordinate getD() {
+        return new Coordinate(x, y + 1);
+    }
+
+    public Coordinate getL() {
+        return new Coordinate(x - 1, y);
+    }
 }
