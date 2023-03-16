@@ -3,7 +3,7 @@ package it.polimi.ingsw.model;
 import org.jetbrains.annotations.NotNull;
 
 public class CommonCardType2 extends CommonGoal {
-
+// Da controllare
     @Override
     public boolean checkGoal(@NotNull Shelf shelf) {
         for (int row = 0; row < 2; row++) {
