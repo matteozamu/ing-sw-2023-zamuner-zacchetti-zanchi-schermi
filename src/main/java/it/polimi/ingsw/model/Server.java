@@ -11,5 +11,7 @@ public class Server {
         System.out.println(g.addPlayer("Fritz"));
         System.out.println(g.addPlayer("Otto"));
         System.out.println(g);
+
+
     }
 }
