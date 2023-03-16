@@ -21,6 +21,10 @@ public class Player {
         return this.name;
     }
 
+    public Shelf getShelf() {
+        return shelf;
+    }
+
     @Override
     public String toString() {
         return "Player{" +
