@@ -1,5 +1,6 @@
 package it.polimi.ingsw.model;
 
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -15,10 +16,19 @@ public class Shelf {
     }
 
     public void addObjectCard(int x, ObjectCard card) {
+        // Capire come gestire la coordinata y
     }
 
     public boolean checkFull() {
         return false;
+    }
+
+    public Map<Coordinate, ObjectCard> getGrid() {
+        return Collections.unmodifiableMap(grid);
+    }
+
+    public ObjectCard getObjectCard(Coordinate coordinate) {
+        return grid.get(coordinate);
     }
 
 }
