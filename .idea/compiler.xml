@@ -8,7 +8,6 @@
         <outputRelativeToContentRoot value="true" />
         <module name="Progetto Java" />
         <module name="Progetto-SoftIng" />
-        <module name="Prova1" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>

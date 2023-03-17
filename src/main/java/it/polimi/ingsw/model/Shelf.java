@@ -8,8 +8,8 @@ public class Shelf {
     private Map<Coordinate, ObjectCard> grid;
     private Boolean isFull;
     private int numberOfCards;
-    private final int rows = 6;
-    private final int columns = 5;
+    private final int ROWS = 6;
+    private final int COLUMNS = 5;
 
     public Shelf() {
         this.grid = new HashMap<>();

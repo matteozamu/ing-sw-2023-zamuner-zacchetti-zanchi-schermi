@@ -19,7 +19,7 @@ public class Board {
     }
 
     // controllare se la cella libera
-    public void addCard(Coordinate c, ObjectCard card){
+    public void addCard(Coordinate c, ObjectCard card) {
         this.grid.put(c, card);
     }
 

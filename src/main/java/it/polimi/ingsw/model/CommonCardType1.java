@@ -1,11 +1,9 @@
 package it.polimi.ingsw.model;
 
-import org.jetbrains.annotations.NotNull;
-
 public class CommonCardType1 extends CommonGoal {
 
     @Override
-    public boolean checkGoal(@NotNull Shelf shelf) {
+    public boolean checkGoal(Shelf shelf) {
         return false;
     }
 }
