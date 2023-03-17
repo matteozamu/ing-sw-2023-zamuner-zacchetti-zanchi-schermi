@@ -1,5 +1,6 @@
 package it.polimi.ingsw.model;
 
+// Cinque tessere dello stesso tipo che formano una diagonale
 public class CommonCardType2 extends CommonGoal {
 
     @Override

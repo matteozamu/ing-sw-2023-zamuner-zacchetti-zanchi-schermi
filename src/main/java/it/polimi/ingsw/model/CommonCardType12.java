@@ -2,6 +2,10 @@ package it.polimi.ingsw.model;
 
 import java.util.Map;
 
+// Cinque colonne di altezza crescente o decrescente:
+// a partire dalla prima colonna a sinistra o a destra, ogni colonna successiva deve essere formata da una tessera in più.
+// Le tessere possono essere di qualsiasi tipo.
+
 public class CommonCardType12 extends CommonGoal {
 
     @Override
