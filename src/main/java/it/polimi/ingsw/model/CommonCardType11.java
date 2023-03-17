@@ -1,14 +1,12 @@
 package it.polimi.ingsw.model;
 
-import org.jetbrains.annotations.NotNull;
-
 import java.util.HashMap;
 import java.util.Map;
 
 public class CommonCardType11 extends CommonGoal {
 // In lavorazione
     @Override
-    public boolean checkGoal(@NotNull Shelf shelf) {
+    public boolean checkGoal(Shelf shelf) {
         Map<ObjectCardType, Integer> typeCount = new HashMap<>();
 
         for (Coordinate coord : shelf.getGrid().keySet()) {
@@ -20,7 +18,6 @@ public class CommonCardType11 extends CommonGoal {
                 return true;
             }
         }
-
         return false;
     }
 

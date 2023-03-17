@@ -1,11 +1,9 @@
 package it.polimi.ingsw.model;
 
-import org.jetbrains.annotations.NotNull;
-
 public class CommonCardType2 extends CommonGoal {
 
     @Override
-    public boolean checkGoal(@NotNull Shelf shelf) {
+    public boolean checkGoal(Shelf shelf) {
         for (int row = 0; row < 2; row++) {
             for (int col : new int[] {0, 4}) {
                 Coordinate coordinate = new Coordinate(col, row);
@@ -17,7 +15,6 @@ public class CommonCardType2 extends CommonGoal {
                 }
             }
         }
-
         return false;
     }
 
@@ -30,7 +27,6 @@ public class CommonCardType2 extends CommonGoal {
                 return false;
             }
         }
-
         return true;
     }
 
@@ -43,7 +39,6 @@ public class CommonCardType2 extends CommonGoal {
                 return false;
             }
         }
-
         return true;
     }
 }

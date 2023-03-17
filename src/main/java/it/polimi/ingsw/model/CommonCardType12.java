@@ -1,13 +1,11 @@
 package it.polimi.ingsw.model;
 
-import org.jetbrains.annotations.NotNull;
-
 import java.util.Map;
 
 public class CommonCardType12 extends CommonGoal {
 
     @Override
-    public boolean checkGoal(@NotNull Shelf shelf) {
+    public boolean checkGoal(Shelf shelf) {
         return checkDescendingStair(shelf) || checkAscendingStair(shelf);
     }
 
@@ -44,6 +42,5 @@ public class CommonCardType12 extends CommonGoal {
         }
         return true;
     }
-
 
 }
