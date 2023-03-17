@@ -34,6 +34,8 @@ public class Game {
     }
 
     public void startGame() {
+        //TODO verificare come creare un'istanza di una classe partendo da una stringa
+
     }
     public void endGame() {
     }
@@ -42,7 +44,10 @@ public class Game {
         return null;
     }
 
-    public boolean isUsernameTaken(String username) {
+    public boolean isUsernameTaken(String username) throws NullPointerException{
+        if (username == null){
+            throw new NullPointerException("Username is null");
+        }
         for (Player p : players){
             if (p.getName().equals(username)){
                 return true;
@@ -52,7 +57,8 @@ public class Game {
     }
 
     // add player in the list
-    public boolean addPlayer(String name){
+    //so che name != null
+    public boolean addPlayer(String name) {
         if (players.size() < MAX_PLAYER){
             Shelf shelf = new Shelf();
             PersonalGoalCard pg = new PersonalGoalCard(this.createPersonalGoals());
@@ -68,7 +74,7 @@ public class Game {
         return 0;
     }
 
-    private ObjectCard getRandomObjectCard(){
+    private ObjectCard getRandomObjectCard() {
         return null;
     }
 
