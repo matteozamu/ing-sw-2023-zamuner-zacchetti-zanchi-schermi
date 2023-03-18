@@ -18,10 +18,18 @@ public class CommonCardType3 extends CommonGoal {
         ObjectCard bottomLeft = grid.get(new Coordinate(0, 5));
         ObjectCard bottomRight = grid.get(new Coordinate(4, 5));
 
-        if (topLeft != null) cornerTypes.add(topLeft.getType());
-        if (topRight != null) cornerTypes.add(topRight.getType());
-        if (bottomLeft != null) cornerTypes.add(bottomLeft.getType());
-        if (bottomRight != null) cornerTypes.add(bottomRight.getType());
+        if (topLeft != null) {
+            cornerTypes.add(topLeft.getType());
+        }
+        if (topRight != null) {
+            cornerTypes.add(topRight.getType());
+        }
+        if (bottomLeft != null) {
+            cornerTypes.add(bottomLeft.getType());
+        }
+        if (bottomRight != null) {
+            cornerTypes.add(bottomRight.getType());
+        }
 
         return cornerTypes.size() == 1;
     }
