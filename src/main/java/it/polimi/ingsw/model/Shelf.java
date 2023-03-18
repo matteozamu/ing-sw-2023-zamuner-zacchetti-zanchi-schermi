@@ -29,11 +29,19 @@ public class Shelf {
 
 
     public void addObjectCard(int x, ObjectCard card) {
-        // Capire come gestire la coordinata y
+        // Da revisionare
+        int y = getNextAvailableRow(x);
+        if (y != -1) {
+            grid.put(new Coordinate(x, y), card);
+            numberOfCards++;
+            if (numberOfCards == ROWS * COLUMNS) {
+                isFull = true;
+            }
+        }
     }
 
     public boolean checkFull() {
-        return false;
+        return isFull;
     }
 
     public Map<Coordinate, ObjectCard> getGrid() {
