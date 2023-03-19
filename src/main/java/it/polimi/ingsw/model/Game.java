@@ -14,10 +14,12 @@ public class Game {
     private Player currentPlayer;
     private int numberOfPlayers;
     private List<ObjectCard> cardContainer;
+    private List<ObjectCard> temporaryCard;
 
     public Game() {
         this.MAX_PLAYER = 4;
         this.players = new ArrayList<>();
+        this.temporaryCard = new ArrayList<>();
     }
 
     public ArrayList<PersonalGoal> createPersonalGoals(){
@@ -41,6 +43,7 @@ public class Game {
     }
 
     public Player nextPlayer() {
+        this.temporaryCard.clear();
         return null;
     }
 
