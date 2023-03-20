@@ -1,12 +1,10 @@
 package it.polimi.ingsw.model;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Random;
+import java.util.*;
 
 public class Game {
     public int MAX_PLAYER;
-    private String id;
+    private UUID id;
     private List<Player> players;
     private Board board;
     private Player firstPlayer;
@@ -17,9 +15,14 @@ public class Game {
     private List<ObjectCard> temporaryCard;
 
     public Game() {
+        this.id = UUID.randomUUID();
         this.MAX_PLAYER = 4;
         this.players = new ArrayList<>();
         this.temporaryCard = new ArrayList<>();
+    }
+
+    public Board getBoard() {
+        return board;
     }
 
     public ArrayList<PersonalGoal> createPersonalGoals(){
@@ -31,7 +34,6 @@ public class Game {
             PersonalGoal pg = new PersonalGoal(rand.nextInt(6), rand.nextInt(5), objTypes[i]);
             goals.add(pg);
         }
-
         return goals;
     }
 
@@ -47,29 +49,27 @@ public class Game {
         return null;
     }
 
-    public boolean isUsernameTaken(String username) throws NullPointerException{
-        if (username == null){
-            throw new NullPointerException("Username is null");
-        }
+    // check if the username is already used by another player
+    public boolean isUsernameAvailable(String username) throws NullPointerException {
+        if (username == null) throw new NullPointerException("Username is null");
         for (Player p : players){
-            if (p.getName().equals(username)){
-                return true;
-            }
+            if (p.getName().equals(username)) return false;
         }
-        return false;
+        return true;
     }
 
-    // add player in the list
-    //so che name != null
-    public boolean addPlayer(String name) {
-        if (players.size() < MAX_PLAYER){
+    // add a new player to the game
+    public boolean addPlayer(String username) throws NullPointerException, IllegalStateException {
+        // if (username == null) throw new NullPointerException("Username is null");
+        // if(!this.isUsernameAvailable(username)) throw new IllegalStateException("Username " + username + " already in use");
+        if (players.size() < MAX_PLAYER) {
             Shelf shelf = new Shelf();
             PersonalGoalCard pg = new PersonalGoalCard(this.createPersonalGoals());
-            Player p = new Player(name, 0, shelf, pg);
+            Player p = new Player(username, shelf, pg);
             players.add(p);
             return true;
         } else {
-            return false;
+            throw new IllegalStateException("Max number of players reached");
         }
     }
 
@@ -78,13 +78,30 @@ public class Game {
     }
 
     private ObjectCard getRandomObjectCard() {
-        return null;
+        Random r = new Random();
+        return this.cardContainer.get(r.nextInt(this.cardContainer.size()-1));
     }
 
     public void fillBoard(){
-        // for per scegliere le coordinate, escludere alcuni valori
-//        Coordinate c = new Coordinate(x, y);
-//        this.board.getGrid().put(c, getRandomObjectCard());
+        Coordinate c;
+        try {
+            for (int row = 1; row <= 5; row++) {
+                for (int col = 1; col < 2 * row; col++) {
+                    c = new Coordinate(5 - row, -5 + col);
+                    this.board.addCard(c, getRandomObjectCard());
+                }
+            }
+            for (int row = 5 - 1; row >= 1; row--) {
+                for (int col = 1; col < 2 * row; col++) {
+                    c = new Coordinate(-5 + row, -5 + col);
+                    this.board.addCard(c, getRandomObjectCard());
+                }
+            }
+        } catch (NullPointerException e) {
+            e.printStackTrace();
+        } catch (IllegalStateException e) {
+            e.printStackTrace();
+        }
     }
 
     @Override
