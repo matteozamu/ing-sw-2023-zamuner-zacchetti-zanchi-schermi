@@ -13,9 +13,11 @@ public class ControllerMain {
     private ObjectCard objCard;
     private Shelf shelf;
 
-//    public ControllerMain(Game game) {
-//        this.game = game;
-//    }
+    /*
+    public ControllerMain(Game game) {
+        this.game = game;
+    }
+     */
 
     // check userName and if it is available, add the player to the game
     public void checkAddPlayer() {
