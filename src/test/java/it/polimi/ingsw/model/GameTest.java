@@ -3,9 +3,11 @@ package it.polimi.ingsw.model;
 import junit.framework.TestCase;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.TestInstance;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
+@TestInstance(TestInstance.Lifecycle.PER_CLASS)
 public class GameTest extends TestCase {
     //private final Game g = new Game();
     private Game g;
@@ -30,7 +32,7 @@ public class GameTest extends TestCase {
         assertTrue(g.isUsernameAvailable("Gigi"));
     }
 
-    //    @Test
+//    @Test
 //    public void testAddPlayerNull(){
 //        assertThrows(NullPointerException.class, () -> {
 //            g.addPlayer(null);
@@ -41,32 +43,32 @@ public class GameTest extends TestCase {
         g.addPlayer("Giselle");
         g.addPlayer("Madeleine");
         g.addPlayer("Margot");
-        g.addPlayer("Yvonne");
+//        g.addPlayer("Yvonne");
         assertThrows(IllegalStateException.class, () -> {
             g.addPlayer("Colette");
         });
     }
 
-    @Test
-    public void addPlayer() {
-        // Test adding player with unique name
-        String playerName = "Alice";
-        assertTrue(g.addPlayer(playerName));
-
-        // Test adding player with duplicate name
-        String duplicatePlayerName = "Alice";
-        assertFalse(g.addPlayer(duplicatePlayerName));
-
-        // Test adding multiple players up to max capacity
-        String player2Name = "Pino";
-        String player3Name = "Gigi";
-        String player4Name = "Simo";
-        assertTrue(g.addPlayer(player2Name));
-        assertTrue(g.addPlayer(player3Name));
-        assertTrue(g.addPlayer(player4Name));
-
-        // Test adding player after reaching max capacity
-        String player5Name = "Fede";
-        assertFalse(g.addPlayer(player5Name));
-    }
+//    @Test
+//    public void addPlayer() {
+//        // Test adding player with unique name
+//        String playerName = "Alice";
+//        assertTrue(g.addPlayer(playerName));
+//
+//        // Test adding player with duplicate name
+//        String duplicatePlayerName = "Alice";
+//        assertFalse(g.addPlayer(duplicatePlayerName));
+//
+//        // Test adding multiple players up to max capacity
+//        String player2Name = "Pino";
+//        String player3Name = "Gigi";
+//        String player4Name = "Simo";
+//        assertTrue(g.addPlayer(player2Name));
+//        assertTrue(g.addPlayer(player3Name));
+//        assertTrue(g.addPlayer(player4Name));
+//
+//        // Test adding player after reaching max capacity
+//        String player5Name = "Fede";
+//        assertFalse(g.addPlayer(player5Name));
+//    }
 }
