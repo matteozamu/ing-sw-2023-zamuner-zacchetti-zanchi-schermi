@@ -14,32 +14,31 @@ import static org.junit.jupiter.api.Assertions.*;
 public class BoardTest extends TestCase {
     private Board b;
     private Coordinate c;
-    private ObjectCard oc;
+    private ObjectCard objectCard;
 
     @BeforeAll
     public void setUp() {
         b = new Board();
         c = new Coordinate(1, 1);
-        oc = new ObjectCard(ObjectCardType.randomObjectCardType(), 0);
+        objectCard = new ObjectCard(ObjectCardType.randomObjectCardType(), 0);
     }
 
     @Test
     public void testKeyAlreadyExists() {
-        b.createCell(c, oc);
+        b.createCell(c, objectCard);
         assertThrows(KeyAlreadyExistsException.class, () -> {
-            b.createCell(c, oc);
+            b.createCell(c, objectCard);
         });
     }
 
     @Test
     public void testNullKey() {
         assertThrows(NullPointerException.class, () -> {
-            b.createCell(null, oc);
+            b.createCell(null, objectCard);
         });
     }
 
     @Test
-
     public void testInvalidCard () {
         assertThrows(InvalidParameterException.class, () -> {
             b.createCell(c, null);
