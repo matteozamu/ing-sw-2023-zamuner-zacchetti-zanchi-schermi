@@ -12,27 +12,23 @@ public class Coordinate {
         return x;
     }
 
-    public void setX(int x) {
-        this.x = x;
-    }
-
     public int getY() {
         return y;
     }
 
-    public Coordinate getU() {
+    public Coordinate getUp() {
         return new Coordinate(x, y - 1);
     }
 
-    public Coordinate getR() {
+    public Coordinate getRight() {
         return new Coordinate(x + 1, y);
     }
 
-    public Coordinate getD() {
+    public Coordinate getDown() {
         return new Coordinate(x, y + 1);
     }
 
-    public Coordinate getL() {
+    public Coordinate getLeft() {
         return new Coordinate(x - 1, y);
     }
 }
