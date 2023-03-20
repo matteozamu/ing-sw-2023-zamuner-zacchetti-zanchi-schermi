@@ -38,9 +38,9 @@ public class CommonCardType7 extends CommonGoal {
             return false;
         }
 
-        Coordinate topRight = topLeft.getR();
-        Coordinate bottomLeft = topLeft.getD();
-        Coordinate bottomRight = topLeft.getR().getD();
+        Coordinate topRight = topLeft.getRight();
+        Coordinate bottomLeft = topLeft.getDown();
+        Coordinate bottomRight = topLeft.getRight().getDown();
 
         ObjectCard topRightCard = shelf.getObjectCard(topRight);
         ObjectCard bottomLeftCard = shelf.getObjectCard(bottomLeft);
