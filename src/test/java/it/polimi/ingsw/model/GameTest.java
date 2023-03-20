@@ -3,6 +3,7 @@ package it.polimi.ingsw.model;
 import junit.framework.TestCase;
 import org.jetbrains.annotations.TestOnly;
 import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.RepeatedTest;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -18,7 +19,7 @@ public class GameTest extends TestCase {
 
     //verifico la funzione che controlla se il nick è stato preso
     @Test
-    public void isUsernameTaken() {
+    public void testIsUsernameTaken() {
         assertFalse(g.isUsernameTaken("Pino"));
         g.addPlayer("Pino");
         assertTrue(g.isUsernameTaken("Pino"));
@@ -29,7 +30,7 @@ public class GameTest extends TestCase {
     }
 
     @Test
-    public void addPlayer() {
+    public void testAddPlayer() {
         // Test adding player with unique name
         String playerName = "Alice";
         assertTrue(g.addPlayer(playerName));
@@ -49,5 +50,11 @@ public class GameTest extends TestCase {
         // Test adding player after reaching max capacity
         String player5Name = "Fede";
         assertFalse(g.addPlayer(player5Name));
+    }
+
+    @Test
+    public void testCreatePersonalGoals(){
+        //TODO
+
     }
 }
