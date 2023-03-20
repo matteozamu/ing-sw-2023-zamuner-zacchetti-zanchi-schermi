@@ -19,10 +19,27 @@ public class Game {
         this.MAX_PLAYER = 4;
         this.players = new ArrayList<>();
         this.temporaryCard = new ArrayList<>();
+        this.board = new Board();
+
+        this.cardContainer = new ArrayList<>();
+        for(int i=0; i<6; i++){
+            List<ObjectCardType> types = List.of(ObjectCardType.values());
+            for(int j=0; j<22; j++){
+                this.cardContainer.add(new ObjectCard(types.get(i), j));
+            }
+        }
     }
 
     public Board getBoard() {
         return board;
+    }
+
+    public List<ObjectCard> getCardContainer() {
+        return cardContainer;
+    }
+
+    public List<ObjectCard> getTemporaryCard() {
+        return temporaryCard;
     }
 
     public ArrayList<PersonalGoal> createPersonalGoals(){
@@ -77,7 +94,7 @@ public class Game {
         return 0;
     }
 
-    private ObjectCard getRandomObjectCard() {
+    public ObjectCard getRandomAvailableObjectCard() {
         Random r = new Random();
         return this.cardContainer.get(r.nextInt(this.cardContainer.size()-1));
     }
@@ -88,13 +105,13 @@ public class Game {
             for (int row = 1; row <= 5; row++) {
                 for (int col = 1; col < 2 * row; col++) {
                     c = new Coordinate(5 - row, -5 + col);
-                    this.board.createCell(c, getRandomObjectCard());
+                    this.board.createCell(c, getRandomAvailableObjectCard());
                 }
             }
             for (int row = 5 - 1; row >= 1; row--) {
                 for (int col = 1; col < 2 * row; col++) {
                     c = new Coordinate(-5 + row, -5 + col);
-                    this.board.createCell(c, getRandomObjectCard());
+                    this.board.createCell(c, getRandomAvailableObjectCard());
                 }
             }
         } catch (NullPointerException e) {
@@ -106,8 +123,6 @@ public class Game {
 
     @Override
     public String toString() {
-        return "Game{" +
-                "players=" + players +
-                '}';
+        return "players=" + players;
     }
 }

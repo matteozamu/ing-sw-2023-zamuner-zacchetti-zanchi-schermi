@@ -22,10 +22,10 @@ public class Board {
         //TODO: sistemare
         if (this.grid.containsKey(c)) throw new KeyAlreadyExistsException("Cell " + c.getX() + "," + c.getY() + " already exists");
         if(c == null) throw new NullPointerException("Empty key");
-        if(card == null){
-            throw new InvalidParameterException("Object card invalid");
-        }
+        if(card == null) throw new InvalidParameterException("Object card invalid");
+
         this.grid.put(c, card);
+
         return true;
     }
 
@@ -33,4 +33,28 @@ public class Board {
         this.grid.clear();
     }
 
+    @Override
+    public String toString() {
+        ObjectCard objectCard;
+        String s = "";
+
+
+        for (int row = 1; row <= 5; row++) {
+            for (int espacios = 5 - row; espacios >0; espacios--) s += "\t";
+            for (int col = 1; col < 2 * row; col++) {
+                objectCard = this.grid.get(new Coordinate(5 - row, -5 + col));
+                s += (objectCard + " ");
+            }
+            s += "\n";
+        }
+        for (int row = 5 - 1; row >= 1; row--) {
+            for (int espacios = 5 - row; espacios >0; espacios--) s += "\t";
+            for (int col = 1; col < 2 * row; col++) {
+                objectCard = this.grid.get(new Coordinate(-5 + row, -5 + col));
+                s += (objectCard + " ");
+            }
+            s += "\n";
+        }
+        return s;
+    }
 }
