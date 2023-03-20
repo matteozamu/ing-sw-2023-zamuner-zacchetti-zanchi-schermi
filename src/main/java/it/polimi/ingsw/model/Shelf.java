@@ -29,7 +29,7 @@ public class Shelf {
 
 
     public void addObjectCard(int x, ObjectCard card) {
-        // Da revisionare
+        //TODO: Da revisionare
         int y = getNextAvailableRow(x);
         if (y != -1) {
             grid.put(new Coordinate(x, y), card);

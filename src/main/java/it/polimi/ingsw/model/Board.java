@@ -1,5 +1,7 @@
 package it.polimi.ingsw.model;
 
+import javax.management.openmbean.KeyAlreadyExistsException;
+import java.security.InvalidParameterException;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -16,13 +18,15 @@ public class Board {
         return grid;
     }
 
-    public void addCard(Coordinate c, ObjectCard card) throws NullPointerException, IllegalStateException {
+    public boolean createCell(Coordinate c, ObjectCard card) throws NullPointerException, KeyAlreadyExistsException, InvalidParameterException {
+        //TODO: sistemare
+        if (this.grid.containsKey(c)) throw new KeyAlreadyExistsException("Cell " + c.getX() + "," + c.getY() + " already exists");
         if(c == null) throw new NullPointerException("Empty key");
-        if(this.grid.get(c) == null){
-            this.grid.put(c, card);
-        } else {
-            throw new IllegalStateException("Cell " + c.getX() + "," + c.getY() + " is not empty");
+        if(card == null){
+            throw new InvalidParameterException("Object card invalid");
         }
+        this.grid.put(c, card);
+        return true;
     }
 
     public void clearGrid(){

@@ -61,7 +61,7 @@ public class Game {
     // add a new player to the game
     public boolean addPlayer(String username) throws NullPointerException, IllegalStateException {
         // if (username == null) throw new NullPointerException("Username is null");
-        // if(!this.isUsernameAvailable(username)) throw new IllegalStateException("Username " + username + " already in use");
+        if(!this.isUsernameAvailable(username)) throw new IllegalStateException("Username " + username + " already in use");
         if (players.size() < MAX_PLAYER) {
             Shelf shelf = new Shelf();
             PersonalGoalCard pg = new PersonalGoalCard(this.createPersonalGoals());
@@ -88,13 +88,13 @@ public class Game {
             for (int row = 1; row <= 5; row++) {
                 for (int col = 1; col < 2 * row; col++) {
                     c = new Coordinate(5 - row, -5 + col);
-                    this.board.addCard(c, getRandomObjectCard());
+                    this.board.createCell(c, getRandomObjectCard());
                 }
             }
             for (int row = 5 - 1; row >= 1; row--) {
                 for (int col = 1; col < 2 * row; col++) {
                     c = new Coordinate(-5 + row, -5 + col);
-                    this.board.addCard(c, getRandomObjectCard());
+                    this.board.createCell(c, getRandomObjectCard());
                 }
             }
         } catch (NullPointerException e) {
