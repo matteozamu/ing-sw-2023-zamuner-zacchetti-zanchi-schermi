@@ -9,7 +9,6 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 public class GameTest extends TestCase {
-    //private final Game g = new Game();
     private Game g;
 
     @BeforeAll
@@ -19,28 +18,31 @@ public class GameTest extends TestCase {
 
     @Test
     public void usernameNull(){
+        g = new Game();
         assertThrows (NullPointerException.class, () -> {
             g.isUsernameAvailable(null);
         });
     }
 
     @Test
-    //TODO: verificare come creare test indipendenti tra loro (controllare come "pulire" i test precedenti)
     public void usernameAvailable(){
+        g = new Game();
         assertTrue(g.isUsernameAvailable("Pino"));
-     //   g.addPlayer("Pino");
-        //  assertFalse(g.isUsernameAvailable("Pino"));
+        g.addPlayer("Pino");
+        assertFalse(g.isUsernameAvailable("Pino"));
         assertTrue(g.isUsernameAvailable("Gigi"));
     }
 
     @Test
     public void testAddPlayerNull(){
+        g = new Game();
         assertThrows(NullPointerException.class, () -> {
             g.addPlayer(null);
         });
     }
     @Test
     public void testMaxNumbersOfPlayers(){
+        g = new Game();
         g.addPlayer("Giselle");
         g.addPlayer("Madeleine");
         g.addPlayer("Margot");
@@ -52,10 +54,9 @@ public class GameTest extends TestCase {
 
    @Test
    public void testDuplicateUsername() {
-        //TODO: fix
-         g.addPlayer("Margot");
-        // Test adding player with duplicate name
-        //assertFalse(g.addPlayer(duplicatePlayerName));
+       g = new Game();
+       g.addPlayer("Margot");
+       // Test adding player with duplicate name
        assertThrows(IllegalStateException.class, () -> {
            g.addPlayer("Margot");
        });

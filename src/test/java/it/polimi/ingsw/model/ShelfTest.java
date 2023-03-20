@@ -2,13 +2,9 @@ package it.polimi.ingsw.model;
 
 import junit.framework.TestCase;
 import org.junit.jupiter.api.BeforeAll;
-import static org.junit.jupiter.api.Assertions.*;
 import org.junit.jupiter.api.Test;
-import static org.junit.jupiter.api.Assertions.assertThrows;
-
 
 public class ShelfTest extends TestCase {
-
     private Shelf s;
 
     @BeforeAll
@@ -17,7 +13,6 @@ public class ShelfTest extends TestCase {
     }
 
     @Test
-
     public void testGetNextAvailableRow(){
         //TODO
     }
