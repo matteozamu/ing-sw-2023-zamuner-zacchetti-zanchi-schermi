@@ -23,7 +23,7 @@ public class Shelf {
      * @param x is the column
      * @return number of free cell
      */
-    public int getNextAvailableRow(int x) {
+    public int getAvailableRows(int x) {
         for (int y = 5; y >= 0; y--) {
             Coordinate coordinate = new Coordinate(x, y);
             if (grid.get(coordinate) == null) {
@@ -39,9 +39,8 @@ public class Shelf {
      * @param card
      */
     public void addObjectCard(int x, ObjectCard card) {
-        //TODO: Da revisionare (far sapere a chi chiama se la carta oggetto è stata correttamente aggiunta.
-        // Non aggiungere carte se non c'è spazio nella shelf)
-        int y = getNextAvailableRow(x);
+        //TODO: Da revisionare (far sapere a chi chiama se la carta oggetto è stata correttamente aggiunta. Non aggiungere carte se non c'è spazio nella shelf)
+        int y = getAvailableRows(x);
         if (y != -1) {
             grid.put(new Coordinate(x, y), card);
             numberOfCards++;
@@ -64,8 +63,7 @@ public class Shelf {
     }
 
     /**
-     * Metodo che data una coppia di coordinate "coord" ritorna la carta oggetto presente
-     * nella cella della shelf di coordinate "coord"
+     * Metodo che data una coppia di coordinate "coord" ritorna la carta oggetto presente nella cella della shelf di coordinate "coord"
      * @param coord
      * @return
      */
