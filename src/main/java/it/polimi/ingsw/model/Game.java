@@ -28,8 +28,8 @@ public class Game {
     public ObjectCard getRandomAvailableObjectCard() {
         Random r = new Random();
         int index = r.nextInt(this.objectCardContainer.size()-1);
-        ObjectCard oc = objectCardContainer.get(index);
-        objectCardContainer.remove(index);
+        ObjectCard oc = this.objectCardContainer.get(index);
+        this.objectCardContainer.remove(index);
         return oc;
     }
 
@@ -40,8 +40,8 @@ public class Game {
     public CommonGoal getRandomAvailableCommonGoal() {
         Random r = new Random();
         int index = r.nextInt(this.commonGoalContainer.size()-1);
-        CommonGoal cg = commonGoalContainer.get(index);
-        commonGoalContainer.remove(index);
+        CommonGoal cg = this.commonGoalContainer.get(index);
+        this.commonGoalContainer.remove(index);
         return cg;
     }
 

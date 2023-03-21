@@ -50,8 +50,8 @@ public class ControllerGame {
         if(!this.isUsernameAvailable(username)) throw new IllegalStateException("Username " + username + " already in use");
         if (players.size() < game.MAX_PLAYER) {
             Shelf shelf = new Shelf();
-            PersonalGoalCard pg = new PersonalGoalCard(game.createPersonalGoals());     //TODO assegno una carta personale pescata dal mazzo, quindi non ne creo una nuova (?)
-            Player p = new Player(username, shelf, pg);
+            //PersonalGoalCard pg = new PersonalGoalCard(game.createPersonalGoals());     //TODO assegno una carta personale pescata dal mazzo, quindi non ne creo una nuova (?)
+            Player p = new Player(username, shelf, null /*pg*/);
             players.add(p);
             this.numberOfPlayers++;
             return true;
@@ -124,12 +124,13 @@ public class ControllerGame {
 
     // method used during the game
 
+    //si puo fare una modifica che non rimuova la coordinata della cella ma setti il contenuto a null
     /**
      * pick the ObjectCard from the board (if available)
      * @param coordinate is the coordinate of the ObjectCard clicked by the user
      * @return the ObjectCard with that Coordinate
      */
-    public ObjectCard pickObjectCard(Coordinate coordinate){
+    public ObjectCard pickObjectCard(Coordinate coordinate) {
         if(isAvaible(coordinate)) {
             return board.removeObjectCard(coordinate);
         } else {
