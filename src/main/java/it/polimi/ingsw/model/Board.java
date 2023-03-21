@@ -19,8 +19,8 @@ public class Board {
     }
 
     public boolean createCell(Coordinate c, ObjectCard card) throws NullPointerException, KeyAlreadyExistsException, InvalidParameterException {
-        if (this.grid.containsKey(c)) throw new KeyAlreadyExistsException("Cell " + c.getX() + "," + c.getY() + " already exists");
         if(c == null) throw new NullPointerException("Empty key");
+        if (this.grid.containsKey(c)) throw new KeyAlreadyExistsException("Cell " + c.getX() + "," + c.getY() + " already exists");
         if(card == null) throw new InvalidParameterException("Object card invalid");
 
         this.grid.put(c, card);

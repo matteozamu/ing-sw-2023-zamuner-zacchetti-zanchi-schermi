@@ -100,16 +100,6 @@ public class ControllerGame {
 //        }
 //    }
 
-    // check userName and if it is available, add the player to the game
-    public void checkAddPlayer() {
-
-    }
-
-    // select card from the board and check it that coordinate/card is available
-    public void selectCard() {
-
-    }
-
     // select the column in which you want to add your cards checking that
     // the available spaces are enough for the amount of card the player has
     public void selectColumn() {

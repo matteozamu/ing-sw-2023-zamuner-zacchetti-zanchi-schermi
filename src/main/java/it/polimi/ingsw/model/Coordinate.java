@@ -3,8 +3,8 @@ package it.polimi.ingsw.model;
 import java.util.Objects;
 
 public class Coordinate {
-    private int x;
-    private int y;
+    private int x; //row
+    private int y;  //column
 
     public Coordinate(int x, int y) {
         this.x = x;

@@ -18,8 +18,8 @@ public class Shelf {
     }
 
     /**
-     * Metodo che data una colonna x ritorna il numero y di celle libere nella colonna.
-     * Nel caso in cui non c'è nessuna cella libera ritorna -1
+     * method that return che number (y) of free cells in the x column
+     * if there are no free cells the methods return -1
      * @param x is the column
      * @return number of free cell for the x column
      */
@@ -34,15 +34,15 @@ public class Shelf {
     }
 
     /**
-     * Metodo per aggiungere una carta oggetto nella prima cella libera della colonna x
-     * @param x
+     * method that add an ObjectCard in the first free cell of the x column
+     * @param column
      * @param card
      */
-    public void addObjectCard(int x, ObjectCard card) {
+    public void addObjectCard(int column, ObjectCard card) {
         //TODO: Da revisionare (far sapere a chi chiama se la carta oggetto è stata correttamente aggiunta. Non aggiungere carte se non c'è spazio nella shelf)
-        int y = getAvailableRows(x);
+        int y = getAvailableRows(column);
         if (y != -1) {
-            grid.put(new Coordinate(x, y), card);
+            grid.put(new Coordinate(column, y), card);
             numberOfCards++;
             if (numberOfCards == ROWS * COLUMNS) {
                 isFull = true;
@@ -50,12 +50,16 @@ public class Shelf {
         }
     }
 
+    /**
+     *
+     * @return true if the shelf is full
+     */
     public boolean checkFull() {
         return isFull;
     }
 
     /**
-     * Metodo che ritorna la mappa che rappresenta la griglia della shelf
+     * method that returns the map of the grid
      * @return
      */
     public Map<Coordinate, ObjectCard> getGrid() {
@@ -63,9 +67,9 @@ public class Shelf {
     }
 
     /**
-     * Metodo che data una coppia di coordinate "coord" ritorna la carta oggetto presente nella cella della shelf di coordinate "coord"
+     * method that return che ObjectCard which is in the coordinate "coord" of the shelf
      * @param coord
-     * @return
+     * @return the ObjectCard in that position
      */
     public ObjectCard getObjectCard(Coordinate coord) {
         return grid.get(coord);
