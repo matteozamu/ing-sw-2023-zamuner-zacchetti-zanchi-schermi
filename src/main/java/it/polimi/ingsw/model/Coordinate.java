@@ -2,6 +2,9 @@ package it.polimi.ingsw.model;
 
 import java.util.Objects;
 
+/**
+ * Represents a 2D coordinate in the game grid.
+ */
 public class Coordinate {
     private int x; //row
     private int y;  //column

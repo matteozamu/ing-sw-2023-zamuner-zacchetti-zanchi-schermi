@@ -7,10 +7,12 @@ import java.util.Map;
 
 public class Board {
     private Map<Coordinate, ObjectCard> grid;
+    // TODO : ROWS e COLUMNS possono essere final?
     private int ROWS;
     private int COLUMNS;
 
     public Board() {
+        // TODO : Le righe e le colonne non sono da inizializzare?
         this.grid = new HashMap<>();
     }
 
@@ -19,6 +21,7 @@ public class Board {
     }
 
     public boolean createCell(Coordinate c, ObjectCard card) throws NullPointerException, KeyAlreadyExistsException, InvalidParameterException {
+        // TODO : forse conviene usare IllegalArgumentException al posto di NullPointerException
         if(c == null) throw new NullPointerException("Empty key");
         if (this.grid.containsKey(c)) throw new KeyAlreadyExistsException("Cell " + c.getX() + "," + c.getY() + " already exists");
         if(card == null) throw new InvalidParameterException("Object card invalid");
@@ -35,6 +38,11 @@ public class Board {
     public String toString() {
         ObjectCard objectCard;
         String s = "";
+        //TODO : invece di usare un tipo String conviene usare un tipo StringBuilder
+        // in quanto si sta creando una stringa mano a mano nei cicli e ciò comporta
+        // la crazione ogni volta di nuove istanze della stringa. Quindi si potrebbero
+        // sostituire gli operatori di concatenazione di stringhe (+=) con i metodi append()
+        // dell'oggetto StringBuilder.
 
         for (int row = 1; row <= 5; row++) {
             for (int espacios = 5 - row; espacios >0; espacios--) s += "\t\t";
