@@ -18,6 +18,7 @@ public class Coordinate {
         return y;
     }
 
+    //TODO rivedere le get
     /**
      * Metodo che ritorna la coppia di coordinate superiori
      * @return Coordinate

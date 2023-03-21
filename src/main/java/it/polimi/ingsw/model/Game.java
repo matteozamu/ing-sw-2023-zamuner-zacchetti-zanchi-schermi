@@ -7,25 +7,46 @@ public class Game {
     private List<ObjectCard> objectCardContainer;
     private List<CommonGoal> commonGoalContainer;
 
+    /**
+     *
+     */
     public Game() {
         this.objectCardContainer = new ArrayList<>();
+        List<ObjectCardType> types = List.of(ObjectCardType.values());
         for(int i=0; i<6; i++){
-            List<ObjectCardType> types = List.of(ObjectCardType.values());
             for(int j=0; j<22; j++){
                 this.objectCardContainer.add(new ObjectCard(types.get(i), j));
             }
         }
+        this.commonGoalContainer = new ArrayList<>();
     }
 
     /**
-     * Get a random object card from the container and take the card out from it
+     * Get a random object card out of the container and remove the card from it
      * @return ObjectCard
      */
     public ObjectCard getRandomAvailableObjectCard() {
         Random r = new Random();
-        return this.objectCardContainer.get(r.nextInt(this.objectCardContainer.size()-1));
+        int index = r.nextInt(this.objectCardContainer.size()-1);
+        ObjectCard oc = objectCardContainer.get(index);
+        objectCardContainer.remove(index);
+        return oc;
     }
 
+    /**
+     * Get a random common goal card out of the container and remove the card from it
+     * @return CommonGoal
+     */
+    public CommonGoal getRandomAvailableCommonGoal() {
+        Random r = new Random();
+        int index = r.nextInt(this.commonGoalContainer.size()-1);
+        CommonGoal cg = commonGoalContainer.get(index);
+        commonGoalContainer.remove(index);
+        return cg;
+    }
+
+    //TODO da togliere, i personal goal sono presi dal file json
+    /*
     public ArrayList<PersonalGoal> createPersonalGoals(){
         Random rand = new Random();
         ArrayList<PersonalGoal> goals = new ArrayList<>();
@@ -37,5 +58,6 @@ public class Game {
         }
         return goals;
     }
+     */
 
 }

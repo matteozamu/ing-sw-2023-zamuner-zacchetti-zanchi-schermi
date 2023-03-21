@@ -13,6 +13,10 @@ public class ObjectCard {
         return type;
     }
 
+    public int getId() {
+        return id;
+    }
+
     @Override
     public String toString() {
         return type + "-" + id;

@@ -4,7 +4,6 @@ import it.polimi.ingsw.model.*;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Observable;
 import java.util.UUID;
 
 public class ControllerGame {
@@ -31,8 +30,8 @@ public class ControllerGame {
      * @return true if available, false if not
      * @throws NullPointerException
      */
-    public boolean isUsernameAvailable(String username) throws NullPointerException {
-        if (username == null) throw new NullPointerException("Username is null");
+    public boolean isUsernameAvailable(String username) /*throws NullPointerException */{ //faccio controllo da view
+        //if (username == null) throw new NullPointerException("Username is null");
         for (Player p : players){
             if (p.getName().equals(username)) return false;
         }
@@ -51,7 +50,7 @@ public class ControllerGame {
         if(!this.isUsernameAvailable(username)) throw new IllegalStateException("Username " + username + " already in use");
         if (players.size() < game.MAX_PLAYER) {
             Shelf shelf = new Shelf();
-            PersonalGoalCard pg = new PersonalGoalCard(game.createPersonalGoals());
+            PersonalGoalCard pg = new PersonalGoalCard(game.createPersonalGoals());     //TODO assegno una carta personale pescata dal mazzo, quindi non ne creo una nuova (?)
             Player p = new Player(username, shelf, pg);
             players.add(p);
             this.numberOfPlayers++;
@@ -121,4 +120,30 @@ public class ControllerGame {
     public void loadShelf() {
 
     }
+
+
+    // method used during the game
+
+    /**
+     * pick the ObjectCard from the board (if available)
+     * @param coordinate is the coordinate of the ObjectCard clicked by the user
+     * @return the ObjectCard with that Coordinate
+     */
+    public ObjectCard pickObjectCard(Coordinate coordinate){
+        if(isAvaible(coordinate)) {
+            return board.removeObjectCard(coordinate);
+        } else {
+            return null;
+        }
+    }
+
+    /**
+     * check if the ObjectCard clicked by user is available, so if it has at least one side free
+     * @param coordinate is the coordinate of the ObjectCard clicked by the user
+     * @return true if this ObjectCard is available
+     */
+    private boolean isAvaible(Coordinate coordinate) {
+        return board.isEmptyUp(coordinate) || board.isEmptyDown(coordinate) || board.isEmptyRight(coordinate) || board.isEmptyLeft(coordinate);
+    }
 }
+

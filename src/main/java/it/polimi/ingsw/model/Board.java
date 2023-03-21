@@ -7,8 +7,8 @@ import java.util.Map;
 
 public class Board {
     private Map<Coordinate, ObjectCard> grid;
-    public int ROWS;
-    public int COLUMNS;
+    private int ROWS;
+    private int COLUMNS;
 
     public Board() {
         this.grid = new HashMap<>();
@@ -53,5 +53,58 @@ public class Board {
             s += "|\n";
         }
         return s;
+    }
+
+    /**
+     * this function check if there is an ObjectCard over the coordinate given
+     * @param coordinate is the coordinate of the ObjectCard clicked by the user
+     * @return false if in the map there is the coordinate over the one passed by parameter
+     */
+    public boolean isEmptyUp(Coordinate coordinate) {
+        Coordinate tmp = new Coordinate(coordinate.getX() + 1, coordinate.getY());
+        if (grid.containsKey(tmp)) {
+            return false;
+        } else {
+            return true;
+        }
+    }
+
+    /**
+     * this function check if there is an ObjectCard down the coordinate given
+     * @param coordinate is the coordinate of the ObjectCard clicked by the user
+     * @return false if in the map there is the coordinate under the one passed by parameter
+     */
+    public boolean isEmptyDown(Coordinate coordinate) {
+        Coordinate tmp = new Coordinate(coordinate.getX() - 1, coordinate.getY());
+        return !grid.containsKey(tmp);
+    }
+
+    /**
+     * this function check if there is an ObjectCard on the right of the coordinate given
+     * @param coordinate is the coordinate of the ObjectCard clicked by the user
+     * @return false if in the map there is the coordinate on the right of the one passed by parameter
+     */
+    public boolean isEmptyRight(Coordinate coordinate) {
+        Coordinate tmp = new Coordinate(coordinate.getX(), coordinate.getY() + 1 );
+        return !grid.containsKey(tmp);
+    }
+
+    /**
+     * this function check if there is an ObjectCard on the left of the coordinate given
+     * @param coordinate is the coordinate of the ObjectCard clicked by the user
+     * @return false if in the map there is the coordinate on the left of the one passed by parameter
+     */
+    public boolean isEmptyLeft(Coordinate coordinate) {
+        Coordinate tmp = new Coordinate(coordinate.getX(), coordinate.getY() - 1 );
+        return !grid.containsKey(tmp);
+    }
+
+    /**
+     * remove the ObjectCard from the board
+     * @param coordinate of the ObjectCard to remove
+     * @return the ObjectCard removed
+     */
+    public ObjectCard removeObjectCard(Coordinate coordinate) {
+        return grid.remove(coordinate);
     }
 }
