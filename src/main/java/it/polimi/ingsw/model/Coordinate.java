@@ -18,18 +18,34 @@ public class Coordinate {
         return y;
     }
 
+    /**
+     * Metodo che ritorna la coppia di coordinate superiori
+     * @return Coordinate
+     */
     public Coordinate getUp() {
         return new Coordinate(x, y - 1);
     }
 
+    /**
+     * Metodo che ritorna la coppia di coordinate di destra
+     * @return Coordinate
+     */
     public Coordinate getRight() {
         return new Coordinate(x + 1, y);
     }
 
+    /**
+     * Metodo che ritorna la coppia di coordinate inferiori
+     * @return Coordinate
+     */
     public Coordinate getDown() {
         return new Coordinate(x, y + 1);
     }
 
+    /**
+     * Metodo che ritorna la coppia di coordinate di sinistra
+     * @return Coordinate
+     */
     public Coordinate getLeft() {
         return new Coordinate(x - 1, y);
     }

@@ -8,7 +8,10 @@ import java.util.Set;
 
 // Quattro tessere dello stesso tipo ai quattro angoli della Libreria.
 
-public class CommonCardType3 extends CommonGoal {
+public class CommonGoalType3 extends CommonGoal {
+
+    public CommonGoalType3() {
+    }
 
     @Override
     public boolean checkGoal(Shelf shelf) {

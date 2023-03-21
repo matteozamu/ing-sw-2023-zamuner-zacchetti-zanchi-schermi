@@ -3,7 +3,10 @@ package it.polimi.ingsw.model;
 //OK
 
 // Cinque tessere dello stesso tipo che formano una diagonale
-public class CommonCardType2 extends CommonGoal {
+public class CommonGoalType2 extends CommonGoal {
+
+    public CommonGoalType2() {
+    }
 
     @Override
     public boolean checkGoal(Shelf shelf) {
@@ -43,8 +46,5 @@ public class CommonCardType2 extends CommonGoal {
             }
         }
         return true;
-    }
-
-    public CommonCardType2() {
     }
 }

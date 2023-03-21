@@ -10,6 +10,9 @@ import java.util.Map;
 
 public class CommonGoalType12 extends CommonGoal {
 
+    public CommonGoalType12() {
+    }
+
     @Override
     public boolean checkGoal(Shelf shelf) {
         return checkDescendingStair(shelf) || checkAscendingStair(shelf);
