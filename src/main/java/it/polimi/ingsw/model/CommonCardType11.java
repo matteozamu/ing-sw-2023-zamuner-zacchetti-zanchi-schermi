@@ -3,6 +3,8 @@ package it.polimi.ingsw.model;
 import java.util.HashMap;
 import java.util.Map;
 
+//OK
+
 // Otto tessere dello stesso tipo. Non ci sono restrizioni sulla posizione di queste tessere.
 
 public class CommonCardType11 extends CommonGoal {
