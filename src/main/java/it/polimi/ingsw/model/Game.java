@@ -3,7 +3,7 @@ package it.polimi.ingsw.model;
 import java.util.*;
 
 public class Game {
-    public int MAX_PLAYER = 4;
+    public static final int MAX_PLAYER = 4;
     private List<ObjectCard> objectCardContainer;
     private List<CommonGoal> commonGoalContainer;
 
@@ -11,6 +11,9 @@ public class Game {
      *
      */
     public Game() {
+        //TODO : per rendere il costruttore più pulito si potrebbero inizializzare le liste
+        // direttamente nella dichiarazione? Non conviene spostare la logica di creazione delle carte
+        // in un metodo separato dal costruttore?
         this.objectCardContainer = new ArrayList<>();
         List<ObjectCardType> types = List.of(ObjectCardType.values());
         for(int i=0; i<6; i++){

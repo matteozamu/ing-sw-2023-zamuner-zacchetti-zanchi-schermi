@@ -12,7 +12,6 @@ public class CommonGoalType6 extends CommonGoal {
     public CommonGoalType6() {
     }
 
-
     @Override
     public boolean checkGoal(Shelf shelf) {
         Map<ObjectCardType, Integer> typeCount = new HashMap<>();
