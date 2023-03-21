@@ -10,11 +10,14 @@ import java.util.Map;
 
 public class CommonCardType4 extends CommonGoal {
     Map<ObjectCardType, Integer> typeCount = new HashMap<>();
+
+
     @Override
     public boolean checkGoal(Shelf shelf) {
-    for (int i = 0; i < 5; i++){
-        for (int j = 0; j < 4; j++){
-            Coordinate coord = new Coordinate(i, j);
+    for (int row = 0; row < 5; row++){
+
+        for (int column = 0; column < 4; column++){
+            Coordinate coord = new Coordinate(row, column);
             ObjectCard card = shelf.getGrid().get(coord);
 
 

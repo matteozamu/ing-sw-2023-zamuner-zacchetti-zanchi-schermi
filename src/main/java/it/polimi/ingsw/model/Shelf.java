@@ -20,7 +20,7 @@ public class Shelf {
     /**
      *
      * @param x is the column
-     * @return number of free cell
+     * @return number of free cell for the x column
      */
     public int getNextAvailableRow(int x) {
         for (int y = 5; y >= 0; y--) {
