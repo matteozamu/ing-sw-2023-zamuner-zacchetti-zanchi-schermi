@@ -2,7 +2,10 @@ package it.polimi.ingsw.model;
 
 // Due righe formate ciascuna da 5 diversi tipi di tessere.
 
-public class CommonCardType8 extends CommonGoal {
+public class CommonGoalType8 extends CommonGoal {
+
+    public CommonGoalType8() {
+    }
 
     @Override
     public boolean checkGoal(Shelf shelf) {

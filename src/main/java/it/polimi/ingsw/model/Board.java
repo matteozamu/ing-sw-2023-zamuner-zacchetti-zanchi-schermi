@@ -19,13 +19,11 @@ public class Board {
     }
 
     public boolean createCell(Coordinate c, ObjectCard card) throws NullPointerException, KeyAlreadyExistsException, InvalidParameterException {
-        //TODO: sistemare
         if (this.grid.containsKey(c)) throw new KeyAlreadyExistsException("Cell " + c.getX() + "," + c.getY() + " already exists");
         if(c == null) throw new NullPointerException("Empty key");
         if(card == null) throw new InvalidParameterException("Object card invalid");
 
         this.grid.put(c, card);
-
         return true;
     }
 
@@ -37,7 +35,6 @@ public class Board {
     public String toString() {
         ObjectCard objectCard;
         String s = "";
-
 
         for (int row = 1; row <= 5; row++) {
             for (int espacios = 5 - row; espacios >0; espacios--) s += "\t\t";
