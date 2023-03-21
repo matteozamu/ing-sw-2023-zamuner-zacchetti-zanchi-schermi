@@ -38,8 +38,8 @@ public class Shelf {
      * @param column
      * @param card
      */
-    public void addObjectCard(int column, ObjectCard card) {
-        //TODO: Da revisionare (far sapere a chi chiama se la carta oggetto è stata correttamente aggiunta. Non aggiungere carte se non c'è spazio nella shelf)
+    public boolean addObjectCard(int column, ObjectCard card) {
+        //TODO: Da revisionare
         int y = getAvailableRows(column);
         if (y != -1) {
             grid.put(new Coordinate(column, y), card);
@@ -47,7 +47,9 @@ public class Shelf {
             if (numberOfCards == ROWS * COLUMNS) {
                 isFull = true;
             }
+            return true;
         }
+        return false;
     }
 
     /**

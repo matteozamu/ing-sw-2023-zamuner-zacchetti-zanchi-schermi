@@ -1,10 +1,10 @@
 package it.polimi.ingsw.model;
 
 public class Player {
-    private String name;
+    private final String name;
     private int currentPoints;
     private Shelf shelf;
-    private PersonalGoalCard personalGoalCard;
+    private final PersonalGoalCard personalGoalCard;
 
     public Player(String name, Shelf shelf, PersonalGoalCard personalGoalCard) {
         this.name = name;
