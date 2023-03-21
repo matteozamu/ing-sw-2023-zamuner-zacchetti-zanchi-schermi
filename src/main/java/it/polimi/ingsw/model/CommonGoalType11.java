@@ -8,7 +8,10 @@ import java.util.Map;
 // Otto tessere dello stesso tipo. Non ci sono restrizioni sulla posizione di queste tessere.
 
 public class CommonGoalType11 extends CommonGoal {
-// In lavorazione
+
+    public CommonGoalType11() {
+    }
+
     @Override
     public boolean checkGoal(Shelf shelf) {
         Map<ObjectCardType, Integer> typeCount = new HashMap<>();
