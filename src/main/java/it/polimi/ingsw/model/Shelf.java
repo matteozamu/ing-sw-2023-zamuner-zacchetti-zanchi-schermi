@@ -38,7 +38,7 @@ public class Shelf {
      * @param card
      */
     public void addObjectCard(int x, ObjectCard card) {
-        //TODO: Da revisionare (far sapere a chi chiama se la carta oggetto è stata correttamente aggiunta
+        //TODO: Da revisionare (far sapere a chi chiama se la carta oggetto è stata correttamente aggiunta. Non aggiungere carte se non c'è spazio nella shelf)
         int y = getNextAvailableRow(x);
         if (y != -1) {
             grid.put(new Coordinate(x, y), card);
