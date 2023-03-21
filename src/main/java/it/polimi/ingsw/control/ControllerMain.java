@@ -23,20 +23,14 @@ public class ControllerMain {
      */
 
     //update function, funzione update vista dal prof
-    //ipotizzo che dalla view arrivi una stringa Usarname
+    //ipotizzo che dalla view arrivi una stringa Usarname non nulla
     //ricopio la funzione con observer e observable //TODO da sostituire
     public String update(Observable o, String username) {   // si può ritornare una stringa alla view???
-        if (username instanceof String) {
-            if (game.isUsernameAvailable(username)) {   // controllando che la stringa non sia null posso togliere il controllo nel model
-                game.addPlayer(username);
-                return "Utente inserito";
-            } else {
-                return "Nome non disponibile";
-            }
-
+        if (game.isUsernameAvailable(username)) {
+            game.addPlayer(username);
+            return "Utente inserito";
         } else {
-            /* Unknown event */
-            return "Inserire un nome";
+            return "Nome non disponibile";
         }
     }
 

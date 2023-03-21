@@ -5,7 +5,7 @@ import java.util.Map;
 
 // Otto tessere dello stesso tipo. Non ci sono restrizioni sulla posizione di queste tessere.
 
-public class CommonCardType11 extends CommonGoal {
+public class CommonGoalType11 extends CommonGoal {
 // In lavorazione
     @Override
     public boolean checkGoal(Shelf shelf) {

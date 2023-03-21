@@ -42,4 +42,7 @@ public class CommonCardType2 extends CommonGoal {
         }
         return true;
     }
+
+    public CommonCardType2() {
+    }
 }

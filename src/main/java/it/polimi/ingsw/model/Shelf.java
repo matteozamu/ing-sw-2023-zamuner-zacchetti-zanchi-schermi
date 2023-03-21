@@ -17,6 +17,11 @@ public class Shelf {
         this.numberOfCards = 0;
     }
 
+    /**
+     *
+     * @param x is the column
+     * @return number of free cell
+     */
     public int getNextAvailableRow(int x) {
         for (int y = 5; y >= 0; y--) {
             Coordinate coordinate = new Coordinate(x, y);

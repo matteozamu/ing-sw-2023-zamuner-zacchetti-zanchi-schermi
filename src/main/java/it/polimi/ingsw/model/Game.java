@@ -68,7 +68,7 @@ public class Game {
 
     // check if the username is already used by another player
     public boolean isUsernameAvailable(String username) throws NullPointerException {
-        if (username == null) throw new NullPointerException("Username is null");
+        if (username == null) throw new NullPointerException("Username is null"); // inutile
         for (Player p : players){
             if (p.getName().equals(username)) return false;
         }
@@ -76,6 +76,14 @@ public class Game {
     }
 
     // add a new player to the game
+
+    /**
+     *
+     * @param username
+     * @return
+     * @throws NullPointerException
+     * @throws IllegalStateException
+     */
     public boolean addPlayer(String username) throws NullPointerException, IllegalStateException {
         // if (username == null) throw new NullPointerException("Username is null");
         if(!this.isUsernameAvailable(username)) throw new IllegalStateException("Username " + username + " already in use");

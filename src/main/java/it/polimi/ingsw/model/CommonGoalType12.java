@@ -6,7 +6,7 @@ import java.util.Map;
 // a partire dalla prima colonna a sinistra o a destra, ogni colonna successiva deve essere formata da una tessera in più.
 // Le tessere possono essere di qualsiasi tipo.
 
-public class CommonCardType12 extends CommonGoal {
+public class CommonGoalType12 extends CommonGoal {
 
     @Override
     public boolean checkGoal(Shelf shelf) {
