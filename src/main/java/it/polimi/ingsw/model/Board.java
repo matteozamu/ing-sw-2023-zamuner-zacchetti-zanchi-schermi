@@ -40,20 +40,20 @@ public class Board {
 
 
         for (int row = 1; row <= 5; row++) {
-            for (int espacios = 5 - row; espacios >0; espacios--) s += "\t";
+            for (int espacios = 5 - row; espacios >0; espacios--) s += "\t\t";
             for (int col = 1; col < 2 * row; col++) {
                 objectCard = this.grid.get(new Coordinate(5 - row, -5 + col));
-                s += (objectCard + " ");
+                s += ("|" + objectCard);
             }
-            s += "\n";
+            s += "|\n";
         }
         for (int row = 5 - 1; row >= 1; row--) {
-            for (int espacios = 5 - row; espacios >0; espacios--) s += "\t";
+            for (int espacios = 5 - row; espacios >0; espacios--) s += "\t\t";
             for (int col = 1; col < 2 * row; col++) {
                 objectCard = this.grid.get(new Coordinate(-5 + row, -5 + col));
-                s += (objectCard + " ");
+                s += ("|"+ objectCard);
             }
-            s += "\n";
+            s += "|\n";
         }
         return s;
     }
