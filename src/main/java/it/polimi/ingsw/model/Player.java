@@ -27,8 +27,6 @@ public class Player {
 
     @Override
     public String toString() {
-        return "name='" + name + '\'' +
-                ", currentPoints=" + currentPoints +
-                ", personalGoalCard=" + personalGoalCard;
+        return name + ", points=" + currentPoints + ", personalGoalCard=" + personalGoalCard;
     }
 }

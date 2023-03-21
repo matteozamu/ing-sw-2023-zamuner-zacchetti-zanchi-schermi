@@ -4,6 +4,8 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
+//OK
+
 // Quattro tessere dello stesso tipo ai quattro angoli della Libreria.
 
 public class CommonCardType3 extends CommonGoal {
