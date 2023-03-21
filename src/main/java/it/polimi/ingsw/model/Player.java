@@ -13,14 +13,27 @@ public class Player {
         this.personalGoalCard = personalGoalCard;
     }
 
+    /**
+     * Method adding points
+     * @param points
+     * @return
+     */
     public int addPoints(int points) {
         return 0;
     }
 
+    /**
+     * Method returning player's name
+     * @return name
+     */
     public String getName(){
         return this.name;
     }
 
+    /**
+     * Method returning player's Shelf
+     * @return Shelf
+     */
     public Shelf getShelf() {
         return shelf;
     }

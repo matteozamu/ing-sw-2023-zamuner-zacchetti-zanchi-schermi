@@ -4,7 +4,7 @@ public abstract class CommonGoal {
     private int currentPoints;
 
     /**
-     * Metodo che aggiorna i punti ottenibili con la CommonGoalCard corrente
+     * Update the points obtainable with the current CommonGoalCard
      * @param points
      * @return
      */
@@ -13,7 +13,7 @@ public abstract class CommonGoal {
     }
 
     /**
-     * Metodo astratto padre dei metodi delle classi CommonGoalTypeX
+     * Abstract parent method of CommonGoalTypeX class methods.
      * @param shelf
      * @return
      */

@@ -20,7 +20,7 @@ public class Coordinate {
 
     //TODO rivedere le get
     /**
-     * Metodo che ritorna la coppia di coordinate superiori
+     * Method returning the upper coordinate pair
      * @return Coordinate
      */
     public Coordinate getUp() {
@@ -28,7 +28,7 @@ public class Coordinate {
     }
 
     /**
-     * Metodo che ritorna la coppia di coordinate di destra
+     * Method returning the right coordinate pair
      * @return Coordinate
      */
     public Coordinate getRight() {
@@ -36,7 +36,7 @@ public class Coordinate {
     }
 
     /**
-     * Metodo che ritorna la coppia di coordinate inferiori
+     * Method returning the lower coordinate pair
      * @return Coordinate
      */
     public Coordinate getDown() {
@@ -44,7 +44,7 @@ public class Coordinate {
     }
 
     /**
-     * Metodo che ritorna la coppia di coordinate di sinistra
+     * Method returning the left coordinate pair
      * @return Coordinate
      */
     public Coordinate getLeft() {
