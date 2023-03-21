@@ -18,7 +18,8 @@ public class Shelf {
     }
 
     /**
-     * Metodo che data una colonna x ritorna il numero y di celle libere nella colonna. Nel caso in cui non c'è nessuna cella libera ritorna -1
+     * Metodo che data una colonna x ritorna il numero y di celle libere nella colonna.
+     * Nel caso in cui non c'è nessuna cella libera ritorna -1
      * @param x is the column
      * @return number of free cell
      */
@@ -38,7 +39,8 @@ public class Shelf {
      * @param card
      */
     public void addObjectCard(int x, ObjectCard card) {
-        //TODO: Da revisionare (far sapere a chi chiama se la carta oggetto è stata correttamente aggiunta. Non aggiungere carte se non c'è spazio nella shelf)
+        //TODO: Da revisionare (far sapere a chi chiama se la carta oggetto è stata correttamente aggiunta.
+        // Non aggiungere carte se non c'è spazio nella shelf)
         int y = getNextAvailableRow(x);
         if (y != -1) {
             grid.put(new Coordinate(x, y), card);
@@ -62,7 +64,8 @@ public class Shelf {
     }
 
     /**
-     * Metodo che data una coppia di coordinate "coord" ritorna la carta oggetto presente nella cella della shelf di coordinate "coord"
+     * Metodo che data una coppia di coordinate "coord" ritorna la carta oggetto presente
+     * nella cella della shelf di coordinate "coord"
      * @param coord
      * @return
      */
