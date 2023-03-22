@@ -30,8 +30,8 @@ public class ControllerGame {
      * @return true if available, false if not
      * @throws NullPointerException
      */
-    public boolean isUsernameAvailable(String username) /*throws NullPointerException */{ //faccio controllo da view
-        //if (username == null) throw new NullPointerException("Username is null");
+    public boolean isUsernameAvailable(String username) throws NullPointerException { //faccio controllo da view
+        if (username == null) throw new NullPointerException("Username is null");
         for (Player p : players){
             if (p.getName().equals(username)) return false;
         }
@@ -50,7 +50,8 @@ public class ControllerGame {
         if(!this.isUsernameAvailable(username)) throw new IllegalStateException("Username " + username + " already in use");
         if (players.size() < game.MAX_PLAYER) {
             Shelf shelf = new Shelf();
-            //PersonalGoalCard pg = new PersonalGoalCard(game.createPersonalGoals());     //TODO assegno una carta personale pescata dal mazzo, quindi non ne creo una nuova (?)
+            //TODO assegno una carta personale pescata dal mazzo, quindi non ne creo una nuova
+            //PersonalGoalCard pg = new PersonalGoalCard(game.createPersonalGoals());
             Player p = new Player(username, shelf, null /*pg*/);
             players.add(p);
             this.numberOfPlayers++;
@@ -64,6 +65,10 @@ public class ControllerGame {
         return null;
     }
 
+    /**
+     * fill the board with objectCards based on the number of player
+     */
+    // TODO parametrizzare sul numero di giocatori
     public void fillBoard(){
         Coordinate c;
         try {
@@ -113,7 +118,6 @@ public class ControllerGame {
 
 
     // method used during the game
-
     //si puo fare una modifica che non rimuova la coordinata della cella ma setti il contenuto a null
     /**
      * pick the ObjectCard from the board (if available)
@@ -121,7 +125,7 @@ public class ControllerGame {
      * @return the ObjectCard with that Coordinate
      */
     public ObjectCard pickObjectCard(Coordinate coordinate) {
-        if(isAvaible(coordinate)) {
+        if(isAvailable(coordinate)) {
             return board.removeObjectCard(coordinate);
         } else {
             return null;
@@ -133,7 +137,7 @@ public class ControllerGame {
      * @param coordinate is the coordinate of the ObjectCard clicked by the user
      * @return true if this ObjectCard is available
      */
-    private boolean isAvaible(Coordinate coordinate) {
+    private boolean isAvailable(Coordinate coordinate) {
         return board.isEmptyUp(coordinate) || board.isEmptyDown(coordinate) || board.isEmptyRight(coordinate) || board.isEmptyLeft(coordinate);
     }
 }

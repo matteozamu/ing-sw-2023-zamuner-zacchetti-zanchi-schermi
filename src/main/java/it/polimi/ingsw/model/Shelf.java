@@ -39,7 +39,7 @@ public class Shelf {
      * @param card
      */
     public boolean addObjectCard(int column, ObjectCard card) {
-        //TODO: Da revisionare
+        //TODO: OK ma da spostare nel controller
         int y = getAvailableRows(column);
         if (y != -1) {
             grid.put(new Coordinate(column, y), card);

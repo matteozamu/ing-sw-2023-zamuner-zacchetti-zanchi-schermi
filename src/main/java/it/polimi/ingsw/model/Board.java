@@ -7,12 +7,8 @@ import java.util.Map;
 
 public class Board {
     private Map<Coordinate, ObjectCard> grid;
-    // TODO : ROWS e COLUMNS possono essere final?
-    private int ROWS;
-    private int COLUMNS;
 
     public Board() {
-        // TODO : Le righe e le colonne non sono da inizializzare?
         this.grid = new HashMap<>();
     }
 
@@ -20,10 +16,19 @@ public class Board {
         return grid;
     }
 
+    /**
+     * Create a new cell of the board
+     * @param c
+     * @param card
+     * @return
+     * @throws NullPointerException
+     * @throws KeyAlreadyExistsException
+     * @throws InvalidParameterException
+     */
     public boolean createCell(Coordinate c, ObjectCard card) throws NullPointerException, KeyAlreadyExistsException, InvalidParameterException {
         // TODO : forse conviene usare IllegalArgumentException al posto di NullPointerException
         if(c == null) throw new NullPointerException("Empty key");
-        if (this.grid.containsKey(c)) throw new KeyAlreadyExistsException("Cell " + c.getX() + "," + c.getY() + " already exists");
+        if (this.grid.containsKey(c)) throw new KeyAlreadyExistsException("Cell " + c.getColumn() + "," + c.getRow() + " already exists");
         if(card == null) throw new InvalidParameterException("Object card invalid");
 
         this.grid.put(c, card);
@@ -38,11 +43,7 @@ public class Board {
     public String toString() {
         ObjectCard objectCard;
         String s = "";
-        //TODO : invece di usare un tipo String conviene usare un tipo StringBuilder
-        // in quanto si sta creando una stringa mano a mano nei cicli e ciò comporta
-        // la crazione ogni volta di nuove istanze della stringa. Quindi si potrebbero
-        // sostituire gli operatori di concatenazione di stringhe (+=) con i metodi append()
-        // dell'oggetto StringBuilder.
+        // piu efficiente con StringBuilder?
 
         for (int row = 1; row <= 5; row++) {
             for (int espacios = 5 - row; espacios >0; espacios--) s += "\t\t";
@@ -69,7 +70,7 @@ public class Board {
      * @return false if in the map there is the coordinate over the one passed by parameter
      */
     public boolean isEmptyUp(Coordinate coordinate) {
-        Coordinate tmp = new Coordinate(coordinate.getX() + 1, coordinate.getY());
+        Coordinate tmp = new Coordinate(coordinate.getColumn() + 1, coordinate.getRow());
         if (grid.containsKey(tmp)) {
             return false;
         } else {
@@ -83,7 +84,7 @@ public class Board {
      * @return false if in the map there is the coordinate under the one passed by parameter
      */
     public boolean isEmptyDown(Coordinate coordinate) {
-        Coordinate tmp = new Coordinate(coordinate.getX() - 1, coordinate.getY());
+        Coordinate tmp = new Coordinate(coordinate.getColumn() - 1, coordinate.getRow());
         return !grid.containsKey(tmp);
     }
 
@@ -93,7 +94,7 @@ public class Board {
      * @return false if in the map there is the coordinate on the right of the one passed by parameter
      */
     public boolean isEmptyRight(Coordinate coordinate) {
-        Coordinate tmp = new Coordinate(coordinate.getX(), coordinate.getY() + 1 );
+        Coordinate tmp = new Coordinate(coordinate.getColumn(), coordinate.getRow() + 1 );
         return !grid.containsKey(tmp);
     }
 
@@ -103,7 +104,7 @@ public class Board {
      * @return false if in the map there is the coordinate on the left of the one passed by parameter
      */
     public boolean isEmptyLeft(Coordinate coordinate) {
-        Coordinate tmp = new Coordinate(coordinate.getX(), coordinate.getY() - 1 );
+        Coordinate tmp = new Coordinate(coordinate.getColumn(), coordinate.getRow() - 1 );
         return !grid.containsKey(tmp);
     }
 

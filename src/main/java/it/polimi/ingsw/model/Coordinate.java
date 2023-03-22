@@ -6,28 +6,27 @@ import java.util.Objects;
  * Represents a 2D coordinate in the game grid.
  */
 public class Coordinate {
-    private int x; //row
-    private int y;  //column
+    private int column;
+    private int row;
 
-    public Coordinate(int x, int y) {
-        this.x = x;
-        this.y = y;
+    public Coordinate(int column, int row) {
+        this.column = column;
+        this.row = row;
     }
-    public int getX() {
-        return x;
-    }
-
-    public int getY() {
-        return y;
+    public int getColumn() {
+        return column;
     }
 
-    //TODO rivedere le get
+    public int getRow() {
+        return row;
+    }
+
     /**
      * Method returning the upper coordinate pair
      * @return Coordinate
      */
     public Coordinate getUp() {
-        return new Coordinate(x, y - 1);
+        return new Coordinate(column, row + 1);
     }
 
     /**
@@ -35,7 +34,7 @@ public class Coordinate {
      * @return Coordinate
      */
     public Coordinate getRight() {
-        return new Coordinate(x + 1, y);
+        return new Coordinate(column + 1, row);
     }
 
     /**
@@ -43,7 +42,7 @@ public class Coordinate {
      * @return Coordinate
      */
     public Coordinate getDown() {
-        return new Coordinate(x, y + 1);
+        return new Coordinate(column, row - 1);
     }
 
     /**
@@ -51,7 +50,7 @@ public class Coordinate {
      * @return Coordinate
      */
     public Coordinate getLeft() {
-        return new Coordinate(x - 1, y);
+        return new Coordinate(column - 1, row);
     }
 
     @Override
@@ -59,16 +58,16 @@ public class Coordinate {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Coordinate that = (Coordinate) o;
-        return x == that.x && y == that.y;
+        return column == that.column && row == that.row;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(x, y);
+        return Objects.hash(column, row);
     }
 
     @Override
     public String toString() {
-        return "[" + x + ", " + y + ']';
+        return "[" + column + ", " + row + ']';
     }
 }

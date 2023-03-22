@@ -26,7 +26,7 @@ public class CommonGoalType2 extends CommonGoal {
 
     private boolean checkDiagonalFromTopLeft(Shelf shelf, Coordinate start, ObjectCardType type) {
         for (int i = 0; i < 5; i++) {
-            Coordinate currentCoordinate = new Coordinate(start.getX() + i, start.getY() + i);
+            Coordinate currentCoordinate = new Coordinate(start.getColumn() + i, start.getRow() + i);
             ObjectCard currentCard = shelf.getObjectCard(currentCoordinate);
 
             if (currentCard == null || !currentCard.getType().equals(type)) {
@@ -38,7 +38,7 @@ public class CommonGoalType2 extends CommonGoal {
 
     private boolean checkDiagonalFromTopRight(Shelf shelf, Coordinate start, ObjectCardType type) {
         for (int i = 0; i < 5; i++) {
-            Coordinate currentCoordinate = new Coordinate(start.getX() - i, start.getY() + i);
+            Coordinate currentCoordinate = new Coordinate(start.getColumn() - i, start.getRow() + i);
             ObjectCard currentCard = shelf.getObjectCard(currentCoordinate);
 
             if (currentCard == null || !currentCard.getType().equals(type)) {
