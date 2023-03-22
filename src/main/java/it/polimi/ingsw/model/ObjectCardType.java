@@ -3,6 +3,9 @@ package it.polimi.ingsw.model;
 import java.util.List;
 import java.util.Random;
 
+/**
+ * Represents the type of an object card in the game.
+ */
 public enum ObjectCardType {
     gatto("Gatto"),
     libro("Libro"),

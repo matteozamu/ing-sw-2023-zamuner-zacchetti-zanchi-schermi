@@ -1,5 +1,7 @@
 package it.polimi.ingsw.model;
 
+// TODO : Le classi figlie di CommonGoal potrebbero essere finali?
+// TODO : Modificare il nuemero di colonne e righe con shelf.COLUMNS e shelf.ROWS nelle classi figlie
 public abstract class CommonGoal {
     private int currentPoints;
 

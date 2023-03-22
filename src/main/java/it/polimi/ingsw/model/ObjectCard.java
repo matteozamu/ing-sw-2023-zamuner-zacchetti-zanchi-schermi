@@ -1,5 +1,8 @@
 package it.polimi.ingsw.model;
 
+/**
+ * Represents an object card in the game.
+ */
 public class ObjectCard {
     private ObjectCardType type;
     private int id; // da 0 a 21

@@ -6,7 +6,11 @@ import java.util.Set;
 
 //OK
 
-// Quattro tessere dello stesso tipo ai quattro angoli della Libreria.
+/**
+ * Classe che rappresenta un obiettivo comune di tipo 3.
+ * L'obiettivo è raggiunto quando le quattro tessere ai quattro angoli della Shelf
+ * sono dello stesso tipo.
+ */
 
 public class CommonGoalType3 extends CommonGoal {
 
