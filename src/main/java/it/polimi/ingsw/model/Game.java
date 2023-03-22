@@ -24,6 +24,8 @@ public class Game {
         this.commonGoalContainer = new ArrayList<>();
     }
 
+    // TODO: i due metodi getRandomAvailableObjectCard() e getRandomAvailableCommonGoal()
+    //  si possono accorpare?
     /**
      * Get a random object card out of the container and remove the card from it
      * @return ObjectCard
