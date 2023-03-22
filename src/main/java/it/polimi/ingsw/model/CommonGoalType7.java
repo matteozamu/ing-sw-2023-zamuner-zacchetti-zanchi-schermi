@@ -1,25 +1,26 @@
 package it.polimi.ingsw.model;
 
-// OK for TESTING
+/**
+ * Due gruppi separati di 4 tessere dello stesso tipo che formano un quadrato 2x2.
+ * Le tessere dei due gruppi devono essere dello stesso tipo.
+ */
 
-// Due gruppi separati di 4 tessere dello stesso tipo che formano un quadrato 2x2.
-// Le tessere dei due gruppi devono essere dello stesso tipo.
-
-public class CommonGoalType7 extends CommonGoal {
+public final class CommonGoalType7 extends CommonGoal {
 
     public CommonGoalType7() {
     }
 
     @Override
     public boolean checkGoal(Shelf shelf) {
-        for (int row1 = 0; row1 < 5; row1++) {
-            for (int col1 = 0; col1 < 4; col1++) {
+        for (int row1 = 0; row1 < shelf.ROWS; row1++) {
+            for (int col1 = 0; col1 < shelf.COLUMNS; col1++) {
                 Coordinate topLeft1 = new Coordinate(col1, row1);
                 ObjectCardType type1 = shelf.getObjectCard(topLeft1) != null ? shelf.getObjectCard(topLeft1).getType() : null;
 
                 if (type1 != null && isSquare(shelf, topLeft1, type1)) {
                     for (int row2 = 0; row2 < 4; row2++) {
                         for (int col2 = 0; col2 < 4; col2++) {
+                            // TODO : ricontrollare intervalli for
                             if (Math.abs(col1 - col2) > 1 || Math.abs(row1 - row2) > 1) {
                                 Coordinate topLeft2 = new Coordinate(col2, row2);
                                 ObjectCardType type2 = shelf.getObjectCard(topLeft2) != null ? shelf.getObjectCard(topLeft2).getType() : null;

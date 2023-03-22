@@ -1,9 +1,11 @@
 package it.polimi.ingsw.model;
 
-// Quattro gruppi separati formati ciascuno da quattro tessere adiacenti dello stesso tipo.
-// Le tessere di un gruppo possono essere diverse da quelle di un altro gruppo.
+/**
+ * Quattro gruppi separati formati ciascuno da quattro tessere adiacenti dello stesso tipo.
+ * Le tessere di un gruppo possono essere diverse da quelle di un altro gruppo.
+ */
 
-public class CommonGoalType5 extends CommonGoal {
+public final class CommonGoalType5 extends CommonGoal {
 
     public CommonGoalType5() {
     }

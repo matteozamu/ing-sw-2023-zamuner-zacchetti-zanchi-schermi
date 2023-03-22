@@ -5,9 +5,11 @@ import java.util.Map;
 
 // OK for TESTING
 
-// Otto tessere dello stesso tipo. Non ci sono restrizioni sulla posizione di queste tessere.
+/**
+ * Otto tessere dello stesso tipo. Non ci sono restrizioni sulla posizione di queste tessere.
+ */
 
-public class CommonGoalType11 extends CommonGoal {
+public final class CommonGoalType11 extends CommonGoal {
 
     public CommonGoalType11() {
     }
@@ -15,9 +17,11 @@ public class CommonGoalType11 extends CommonGoal {
     @Override
     public boolean checkGoal(Shelf shelf) {
         Map<ObjectCardType, Integer> typeCount = new HashMap<>();
+        Map<Coordinate, ObjectCard> grid = shelf.getGrid();
 
-        for (Coordinate coord : shelf.getGrid().keySet()) {
-            ObjectCard objectCard = shelf.getGrid().get(coord);
+
+        for (Coordinate coord : grid.keySet()) {
+            ObjectCard objectCard = grid.get(coord);
             ObjectCardType cardType = objectCard.getType();
             typeCount.put(cardType, typeCount.getOrDefault(cardType, 0) + 1);
 

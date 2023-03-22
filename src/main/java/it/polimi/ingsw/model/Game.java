@@ -4,28 +4,25 @@ import java.util.*;
 
 public class Game {
     public static final int MAX_PLAYER = 4;
-    private List<ObjectCard> objectCardContainer;
-    private List<CommonGoal> commonGoalContainer;
+    private List<ObjectCard> objectCardContainer = new ArrayList<>();
+    private List<CommonGoal> commonGoalContainer = new ArrayList<>();
 
     /**
      *
      */
     public Game() {
-        //TODO : per rendere il costruttore più pulito si potrebbero inizializzare le liste
-        // direttamente nella dichiarazione? Non conviene spostare la logica di creazione delle carte
-        // in un metodo separato dal costruttore?
-        this.objectCardContainer = new ArrayList<>();
+        //TODO : Non conviene spostare la logica di creazione delle carte in un metodo separato dal costruttore?
         List<ObjectCardType> types = List.of(ObjectCardType.values());
+
         for(int i=0; i<6; i++){
             for(int j=0; j<22; j++){
                 this.objectCardContainer.add(new ObjectCard(types.get(i), j));
             }
         }
-        this.commonGoalContainer = new ArrayList<>();
     }
 
     // TODO: i due metodi getRandomAvailableObjectCard() e getRandomAvailableCommonGoal()
-    //  si possono accorpare?
+    //  si possono accorpare in quanto simili?
     /**
      * Get a random object card out of the container and remove the card from it
      * @return ObjectCard

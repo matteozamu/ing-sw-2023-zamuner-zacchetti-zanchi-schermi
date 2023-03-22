@@ -25,11 +25,16 @@ public class Board {
      * @throws KeyAlreadyExistsException
      * @throws InvalidParameterException
      */
-    public boolean createCell(Coordinate c, ObjectCard card) throws NullPointerException, KeyAlreadyExistsException, InvalidParameterException {
-        // TODO : forse conviene usare IllegalArgumentException al posto di NullPointerException
-        if(c == null) throw new NullPointerException("Empty key");
-        if (this.grid.containsKey(c)) throw new KeyAlreadyExistsException("Cell " + c.getColumn() + "," + c.getRow() + " already exists");
-        if(card == null) throw new InvalidParameterException("Object card invalid");
+    public boolean createCell(Coordinate c, ObjectCard card) throws IllegalArgumentException, KeyAlreadyExistsException, InvalidParameterException {
+        if(c == null) {
+            throw new IllegalArgumentException("Empty key");
+        }
+        if (this.grid.containsKey(c)) {
+            throw new KeyAlreadyExistsException("Cell " + c.getColumn() + "," + c.getRow() + " already exists");
+        }
+        if(card == null) {
+            throw new InvalidParameterException("Object card invalid");
+        }
 
         this.grid.put(c, card);
         return true;

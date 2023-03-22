@@ -5,11 +5,16 @@ package it.polimi.ingsw.model;
  */
 public class ObjectCard {
     private ObjectCardType type;
-    private int id; // da 0 a 21
+    private int id;
 
     public ObjectCard(ObjectCardType type, int id) {
         this.type = type;
-        this.id = id;
+        if(id >= 0 && id <= 21){
+            this.id = id;
+        } else {
+            throw new IllegalArgumentException("Value must be between 0 and 21");
+        }
+
     }
 
     public ObjectCardType getType() {

@@ -20,15 +20,14 @@ public class Shelf {
     /**
      * method that return che number (y) of free cells in the x column
      * if there are no free cells the methods return -1
-     * @param x is the column
+     * @param col is the column
      * @return number of free cell for the x column
      */
-    public int getAvailableRows(int x) {
-        // TODO : shelf.ROWS
-        for (int y = 5; y >= 0; y--) {
-            Coordinate coordinate = new Coordinate(x, y);
+    public int getAvailableRows(int col) {
+        for (int row = ROWS - 1; row >= 0; row--) {
+            Coordinate coordinate = new Coordinate(col, row);
             if (grid.get(coordinate) == null) {
-                return y; //TODO : forse è y-1
+                return row; //TODO : forse è row-1
             }
         }
         return -1;
@@ -40,7 +39,7 @@ public class Shelf {
      * @param card
      */
     public boolean addObjectCard(int column, ObjectCard card) {
-        //TODO: OK ma da spostare nel controller
+        //TODO: OK, da spostare nel controller
         int y = getAvailableRows(column);
         if (y != -1) {
             grid.put(new Coordinate(column, y), card);

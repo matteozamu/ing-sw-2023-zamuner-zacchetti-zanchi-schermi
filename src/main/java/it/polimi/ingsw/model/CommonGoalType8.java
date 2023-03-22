@@ -1,8 +1,10 @@
 package it.polimi.ingsw.model;
 
-// Due righe formate ciascuna da 5 diversi tipi di tessere.
+/**
+ * Due righe formate ciascuna da 5 diversi tipi di tessere.
+ */
 
-public class CommonGoalType8 extends CommonGoal {
+public final class CommonGoalType8 extends CommonGoal {
 
     public CommonGoalType8() {
     }

@@ -12,7 +12,7 @@ import java.util.Set;
  * sono dello stesso tipo.
  */
 
-public class CommonGoalType3 extends CommonGoal {
+public final class CommonGoalType3 extends CommonGoal {
 
     public CommonGoalType3() {
     }
