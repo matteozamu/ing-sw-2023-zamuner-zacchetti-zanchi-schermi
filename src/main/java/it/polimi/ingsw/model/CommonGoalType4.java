@@ -9,9 +9,6 @@ import java.util.Map;
  */
 public final class CommonGoalType4 extends CommonGoal {
 
-    public CommonGoalType4() {
-    }
-
     @Override
     public boolean checkGoal(Shelf shelf) {
         Map<Coordinate, ObjectCard> grid = shelf.getGrid();

@@ -11,9 +11,6 @@ import java.util.Map;
  */
 public final class CommonGoalType6 extends CommonGoal {
 
-    public CommonGoalType6() {
-    }
-
     /**
      * Controlla se l'obiettivo comune di tipo 6 è stato raggiunto.
      * L'obiettivo è raggiunto quando ci sono due colonne nella Shelf formate ciascuna da 6 diversi tipi di carte oggetto.

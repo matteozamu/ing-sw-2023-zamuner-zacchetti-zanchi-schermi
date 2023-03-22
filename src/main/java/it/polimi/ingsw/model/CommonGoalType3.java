@@ -14,9 +14,6 @@ import java.util.Set;
 
 public final class CommonGoalType3 extends CommonGoal {
 
-    public CommonGoalType3() {
-    }
-
     @Override
     public boolean checkGoal(Shelf shelf) {
         Map<Coordinate, ObjectCard> grid = shelf.getGrid();

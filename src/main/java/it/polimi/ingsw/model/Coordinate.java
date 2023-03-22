@@ -2,6 +2,10 @@ package it.polimi.ingsw.model;
 
 import java.util.Objects;
 
+//TODO : siccome la Shelf e la Board hanno due sistemi di riferimento differenti
+// conviene creare due classi figlie della classe Coordinate (ad esempio ShelfCoordinate e BoardCoordinate).
+// Per poter gestire più facilmente i casi in cui ci si muove con le coordinate al di fuori dei limiti della Shelf o della Board.
+
 /**
  * Represents a 2D coordinate in the game grid.
  */

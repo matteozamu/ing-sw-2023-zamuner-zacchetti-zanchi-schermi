@@ -11,9 +11,6 @@ import java.util.Map;
 
 public final class CommonGoalType11 extends CommonGoal {
 
-    public CommonGoalType11() {
-    }
-
     @Override
     public boolean checkGoal(Shelf shelf) {
         Map<ObjectCardType, Integer> typeCount = new HashMap<>();

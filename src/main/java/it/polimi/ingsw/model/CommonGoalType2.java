@@ -8,9 +8,6 @@ package it.polimi.ingsw.model;
 
 public final class CommonGoalType2 extends CommonGoal {
 
-    public CommonGoalType2() {
-    }
-
     @Override
     public boolean checkGoal(Shelf shelf) {
         for (int row = 0; row < 2; row++) {

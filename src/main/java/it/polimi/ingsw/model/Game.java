@@ -11,7 +11,7 @@ public class Game {
      *
      */
     public Game() {
-        //TODO : Non conviene spostare la logica di creazione delle carte in un metodo separato dal costruttore?
+        //TODO : Non conviene spostare la logica di creazione delle carte in un metodo (initializeCards()) separato dal costruttore?
         List<ObjectCardType> types = List.of(ObjectCardType.values());
 
         for(int i=0; i<6; i++){
@@ -21,8 +21,6 @@ public class Game {
         }
     }
 
-    // TODO: i due metodi getRandomAvailableObjectCard() e getRandomAvailableCommonGoal()
-    //  si possono accorpare in quanto simili?
     /**
      * Get a random object card out of the container and remove the card from it
      * @return ObjectCard

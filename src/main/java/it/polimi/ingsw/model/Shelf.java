@@ -27,7 +27,7 @@ public class Shelf {
         for (int row = ROWS - 1; row >= 0; row--) {
             Coordinate coordinate = new Coordinate(col, row);
             if (grid.get(coordinate) == null) {
-                return row; //TODO : forse è row-1
+                return row;
             }
         }
         return -1;
@@ -40,9 +40,9 @@ public class Shelf {
      */
     public boolean addObjectCard(int column, ObjectCard card) {
         //TODO: OK, da spostare nel controller
-        int y = getAvailableRows(column);
-        if (y != -1) {
-            grid.put(new Coordinate(column, y), card);
+        int row = getAvailableRows(column);
+        if (row != -1) {
+            grid.put(new Coordinate(column, row), card);
             numberOfCards++;
             if (numberOfCards == ROWS * COLUMNS) {
                 isFull = true;

@@ -38,8 +38,17 @@ public class Player {
         return shelf;
     }
 
+    public int getCurrentPoints() {
+        return currentPoints;
+    }
+
+    public PersonalGoalCard getPersonalGoalCard() {
+        return personalGoalCard;
+    }
+
     @Override
     public String toString() {
         return name + ", points=" + currentPoints + ", personalGoalCard=" + personalGoalCard;
     }
+
 }
