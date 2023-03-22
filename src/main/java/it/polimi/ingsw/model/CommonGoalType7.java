@@ -1,6 +1,6 @@
 package it.polimi.ingsw.model;
 
-//OK
+// OK for TESTING
 
 // Due gruppi separati di 4 tessere dello stesso tipo che formano un quadrato 2x2.
 // Le tessere dei due gruppi devono essere dello stesso tipo.

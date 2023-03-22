@@ -31,9 +31,10 @@ public final class CommonGoalType6 extends CommonGoal {
             for (int row = 0; row < shelf.ROWS; row++) {
                 Coordinate coordinate = new Coordinate(col, row);
                 ObjectCard objectCard = shelf.getObjectCard(coordinate);
+                ObjectCardType cardType = objectCard.getType();
 
                 if (objectCard != null) {
-                    uniqueObjectCards.put(objectCard.getType(), uniqueObjectCards.getOrDefault(objectCard.getType(), 0) + 1);
+                    uniqueObjectCards.put(cardType, uniqueObjectCards.getOrDefault(cardType, 0) + 1);
                 }
             }
 

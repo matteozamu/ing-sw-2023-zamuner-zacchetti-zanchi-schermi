@@ -4,7 +4,7 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
-//OK
+// OK for TESTING
 
 /**
  * Classe che rappresenta un obiettivo comune di tipo 3.

@@ -1,6 +1,6 @@
 package it.polimi.ingsw.model;
 
-//OK
+// OK for TESTING
 
 // Cinque tessere dello stesso tipo che formano una diagonale
 public class CommonGoalType2 extends CommonGoal {
