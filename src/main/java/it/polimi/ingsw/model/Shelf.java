@@ -24,6 +24,7 @@ public class Shelf {
      * @return number of free cell for the x column
      */
     public int getAvailableRows(int x) {
+        // TODO : shelf.ROWS
         for (int y = 5; y >= 0; y--) {
             Coordinate coordinate = new Coordinate(x, y);
             if (grid.get(coordinate) == null) {
