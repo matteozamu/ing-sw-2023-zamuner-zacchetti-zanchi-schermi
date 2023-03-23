@@ -23,14 +23,14 @@ public class Shelf {
      * @param col is the column
      * @return number of free cell for the x column
      */
-    public int getAvailableRows(int col) {
+    public int getAvailableRows(int col) throws NullPointerException {
         for (int row = ROWS - 1; row >= 0; row--) {
             Coordinate coordinate = new Coordinate(col, row);
             if (grid.get(coordinate) == null) {
                 return row;
             }
         }
-        return -1;
+        throw new NullPointerException("Chosen column is full");
     }
 
     /**
@@ -59,7 +59,6 @@ public class Shelf {
     public Boolean getFull() {
         return isFull;
     }
-
     /**
      * method that returns the map of the grid
      * @return

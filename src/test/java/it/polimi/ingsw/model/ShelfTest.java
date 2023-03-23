@@ -3,24 +3,40 @@ package it.polimi.ingsw.model;
 import junit.framework.TestCase;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import static org.junit.jupiter.api.Assertions.*;
 
 public class ShelfTest extends TestCase {
     private Shelf s;
+    private ObjectCard oc;
 
     @BeforeEach
     public void setUp() {
         s = new Shelf();
+        oc = new ObjectCard(ObjectCardType.randomObjectCardType(), 1);
     }
 
-    @Test
-    public void testGetNextAvailableRow() {
-        // TODO
-    }
 
     @Test
-    public void testAddObjectCard() {
-        // TODO
+    void testGetAvailableRowsReturnsCorrectRow() {
+
+        s.addObjectCard(0, oc);
+
+        int result = s.getAvailableRows(0);
+
+        assertEquals(4, result);
     }
+
+
+    @Test
+    void testGetAvailableRowsThrowsNullPointerExceptionWhenColumnIsFull() {
+        for (int i = 0; i < s.ROWS; i++) {
+            s.addObjectCard(0, oc);
+        }
+
+        assertThrows(NullPointerException.class, () -> s.getAvailableRows(0));
+    }
+
+
 
     @Test
     public void testCheckFull() {
