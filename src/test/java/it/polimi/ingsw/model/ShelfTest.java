@@ -18,11 +18,8 @@ public class ShelfTest extends TestCase {
 
     @Test
     void testGetAvailableRowsReturnsCorrectRow() {
-
         s.addObjectCard(0, oc);
-
         int result = s.getAvailableRows(0);
-
         assertEquals(4, result);
     }
 
@@ -32,7 +29,6 @@ public class ShelfTest extends TestCase {
         for (int i = 0; i < s.ROWS; i++) {
             s.addObjectCard(0, oc);
         }
-
         assertThrows(NullPointerException.class, () -> s.getAvailableRows(0));
     }
 
@@ -42,7 +38,6 @@ public class ShelfTest extends TestCase {
     public void testCheckFull() {
         // Assumiamo che la Shelf sia inizialmente vuota.
         assertFalse(s.getFull());
-
         // Riempire la Shelf con carte oggetto.
         for (int row = 0; row < 6; row++) {
             for (int col = 0; col < 5; col++) {
@@ -50,9 +45,7 @@ public class ShelfTest extends TestCase {
                 assertTrue(s.addObjectCard(col, card));
             }
         }
-
         // Verifica che la Shelf sia piena.
         assertTrue(s.getFull());
     }
-
 }
