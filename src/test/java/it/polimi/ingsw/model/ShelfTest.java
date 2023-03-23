@@ -13,9 +13,10 @@ public class ShelfTest extends TestCase {
     }
 
     @Test
-    public void testGetNextAvailableRow() {
-        // TODO
+    void testGetAvailableRows() {
+        //TODO
     }
+
 
     @Test
     public void testAddObjectCard() {

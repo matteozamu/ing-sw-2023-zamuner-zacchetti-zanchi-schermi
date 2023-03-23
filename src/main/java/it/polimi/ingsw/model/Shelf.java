@@ -17,20 +17,26 @@ public class Shelf {
         this.numberOfCards = 0;
     }
 
+    public class NoAvailableRowsException extends RuntimeException {
+        public NoAvailableRowsException(String message) {
+            super(message);
+        }
+    }
+
     /**
      * method that return che number (y) of free cells in the x column
      * if there are no free cells the methods return -1
      * @param col is the column
      * @return number of free cell for the x column
      */
-    public int getAvailableRows(int col) {
+    public int getAvailableRows(int col) throws NoAvailableRowsException {
         for (int row = ROWS - 1; row >= 0; row--) {
             Coordinate coordinate = new Coordinate(col, row);
             if (grid.get(coordinate) == null) {
                 return row;
             }
         }
-        return -1;
+        throw new NoAvailableRowsException("No available rows in column " + col);
     }
 
     /**
