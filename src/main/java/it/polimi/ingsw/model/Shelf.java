@@ -18,10 +18,10 @@ public class Shelf {
     }
 
     /**
-     * method that return che number (y) of free cells in the x column
-     * if there are no free cells the methods return -1
+     * method that return the number (row) of free cells in the col column
+     * if there are no free cells the method throws an exception
      * @param col is the column
-     * @return number of free cell for the x column
+     * @return number of free cell for the col column
      */
     public int getAvailableRows(int col) throws NullPointerException {
         for (int row = ROWS - 1; row >= 0; row--) {
@@ -34,15 +34,15 @@ public class Shelf {
     }
 
     /**
-     * method that add an ObjectCard in the first free cell of the x column
-     * @param column
+     * method that add an ObjectCard in the first free cell of the col column
+     * @param col
      * @param card
      */
-    public boolean addObjectCard(int column, ObjectCard card) {
+    public boolean addObjectCard(int col, ObjectCard card) {
         //TODO: OK, da spostare nel controller
-        int row = getAvailableRows(column);
+        int row = getAvailableRows(col);
         if (row != -1) {
-            grid.put(new Coordinate(column, row), card);
+            grid.put(new Coordinate(col, row), card);
             numberOfCards++;
             if (numberOfCards == ROWS * COLUMNS) {
                 isFull = true;

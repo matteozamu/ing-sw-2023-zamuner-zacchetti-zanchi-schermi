@@ -2,13 +2,16 @@ package it.polimi.ingsw.model;
 
 import java.util.*;
 
+/**
+ * Represents the main game logic, including object card and common goal management.
+ */
 public class Game {
     public static final int MAX_PLAYER = 4;
     private List<ObjectCard> objectCardContainer = new ArrayList<>();
     private List<CommonGoal> commonGoalContainer = new ArrayList<>();
 
     /**
-     *
+     * Constructs a new Game and initializes the object cards.
      */
     public Game() {
         //TODO : Non conviene spostare la logica di creazione delle carte in un metodo (initializeCards()) separato dal costruttore?
@@ -22,24 +25,26 @@ public class Game {
     }
 
     /**
-     * Get a random object card out of the container and remove the card from it
-     * @return ObjectCard
+     * Get a random object card out of the container and remove the card from it.
+     *
+     * @return An ObjectCard randomly selected from the container.
      */
     public ObjectCard getRandomAvailableObjectCard() {
-        Random r = new Random();
-        int index = r.nextInt(this.objectCardContainer.size()-1);
+        Random RANDOM = new Random();
+        int index = RANDOM.nextInt(this.objectCardContainer.size() - 1);
         ObjectCard oc = this.objectCardContainer.get(index);
         this.objectCardContainer.remove(index);
         return oc;
     }
 
     /**
-     * Get a random common goal card out of the container and remove the card from it
-     * @return CommonGoal
+     * Get a random common goal card out of the container and remove the card from it.
+     *
+     * @return A CommonGoal randomly selected from the container.
      */
     public CommonGoal getRandomAvailableCommonGoal() {
-        Random r = new Random();
-        int index = r.nextInt(this.commonGoalContainer.size()-1);
+        Random RANDOM = new Random();
+        int index = RANDOM.nextInt(this.commonGoalContainer.size() - 1);
         CommonGoal cg = this.commonGoalContainer.get(index);
         this.commonGoalContainer.remove(index);
         return cg;

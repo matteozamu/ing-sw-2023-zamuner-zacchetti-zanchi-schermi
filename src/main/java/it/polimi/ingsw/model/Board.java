@@ -5,6 +5,11 @@ import java.security.InvalidParameterException;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * Represents the game board, consisting of a grid of ObjectCards with associated coordinates.
+ * Provides methods for creating cells, checking if cells are empty, and removing ObjectCards from the board.
+ */
+
 public class Board {
     private Map<Coordinate, ObjectCard> grid;
 
@@ -17,31 +22,42 @@ public class Board {
     }
 
     /**
-     * Create a new cell of the board
-     * @param c
-     * @param card
-     * @return
-     * @throws NullPointerException
-     * @throws KeyAlreadyExistsException
-     * @throws InvalidParameterException
+     * Remove the ObjectCard from the board at the specified coordinate.
+     *
+     * @param coordinate The coordinate of the ObjectCard to remove.
+     * @return The ObjectCard that was removed, or null if there was no ObjectCard at the given coordinate.
      */
-    public boolean createCell(Coordinate c, ObjectCard card) throws IllegalArgumentException, KeyAlreadyExistsException, InvalidParameterException {
-        if(c == null) {
+    public ObjectCard removeObjectCard(Coordinate coordinate) {
+        return grid.remove(coordinate);
+    }
+
+    public void clearGrid(){
+        this.grid.clear();
+    }
+
+    /**
+     * Create a new cell of the board with the given coordinate and object card.
+     *
+     * @param coord     The coordinate of the cell to create.
+     * @param card  The object card to place at the cell's coordinate.
+     * @return      True if the cell is successfully created and added to the board, false otherwise.
+     * @throws IllegalArgumentException      If the coordinate is null.
+     * @throws KeyAlreadyExistsException     If a cell with the same coordinate already exists.
+     * @throws InvalidParameterException     If the object card is null.
+     */
+    public boolean createCell(Coordinate coord, ObjectCard card) throws IllegalArgumentException, KeyAlreadyExistsException, InvalidParameterException {
+        if(coord == null) {
             throw new IllegalArgumentException("Empty key");
         }
-        if (this.grid.containsKey(c)) {
-            throw new KeyAlreadyExistsException("Cell " + c.getColumn() + "," + c.getRow() + " already exists");
+        if (this.grid.containsKey(coord)) {
+            throw new KeyAlreadyExistsException("Cell " + coord.getColumn() + "," + coord.getRow() + " already exists");
         }
         if(card == null) {
             throw new InvalidParameterException("Object card invalid");
         }
 
-        this.grid.put(c, card);
+        this.grid.put(coord, card);
         return true;
-    }
-
-    public void clearGrid(){
-        this.grid.clear();
     }
 
     @Override
@@ -70,55 +86,46 @@ public class Board {
     }
 
     /**
-     * this function check if there is an ObjectCard over the coordinate given
-     * @param coordinate is the coordinate of the ObjectCard clicked by the user
-     * @return false if in the map there is the coordinate over the one passed by parameter
+     * Check if there is an ObjectCard above the given coordinate.
+     *
+     * @param coord The coordinate of the ObjectCard to check.
+     * @return True if there is no ObjectCard above the given coordinate, false otherwise.
      */
-    public boolean isEmptyUp(Coordinate coordinate) {
-        Coordinate tmp = new Coordinate(coordinate.getColumn() + 1, coordinate.getRow());
-        if (grid.containsKey(tmp)) {
-            return false;
-        } else {
-            return true;
-        }
-    }
-
-    /**
-     * this function check if there is an ObjectCard down the coordinate given
-     * @param coordinate is the coordinate of the ObjectCard clicked by the user
-     * @return false if in the map there is the coordinate under the one passed by parameter
-     */
-    public boolean isEmptyDown(Coordinate coordinate) {
-        Coordinate tmp = new Coordinate(coordinate.getColumn() - 1, coordinate.getRow());
+    public boolean isEmptyUp(Coordinate coord) {
+        Coordinate tmp = new Coordinate(coord.getColumn() + 1, coord.getRow());
         return !grid.containsKey(tmp);
     }
 
     /**
-     * this function check if there is an ObjectCard on the right of the coordinate given
-     * @param coordinate is the coordinate of the ObjectCard clicked by the user
-     * @return false if in the map there is the coordinate on the right of the one passed by parameter
+     * Check if there is an ObjectCard below the given coordinate.
+     *
+     * @param coord The coordinate of the ObjectCard to check.
+     * @return True if there is no ObjectCard below the given coordinate, false otherwise.
      */
-    public boolean isEmptyRight(Coordinate coordinate) {
-        Coordinate tmp = new Coordinate(coordinate.getColumn(), coordinate.getRow() + 1 );
+    public boolean isEmptyDown(Coordinate coord) {
+        Coordinate tmp = new Coordinate(coord.getColumn() - 1, coord.getRow());
         return !grid.containsKey(tmp);
     }
 
     /**
-     * this function check if there is an ObjectCard on the left of the coordinate given
-     * @param coordinate is the coordinate of the ObjectCard clicked by the user
-     * @return false if in the map there is the coordinate on the left of the one passed by parameter
+     * Check if there is an ObjectCard to the right of the given coordinate.
+     *
+     * @param coord The coordinate of the ObjectCard to check.
+     * @return True if there is no ObjectCard to the right of the given coordinate, false otherwise.
      */
-    public boolean isEmptyLeft(Coordinate coordinate) {
-        Coordinate tmp = new Coordinate(coordinate.getColumn(), coordinate.getRow() - 1 );
+    public boolean isEmptyRight(Coordinate coord) {
+        Coordinate tmp = new Coordinate(coord.getColumn(), coord.getRow() + 1 );
         return !grid.containsKey(tmp);
     }
 
     /**
-     * remove the ObjectCard from the board
-     * @param coordinate of the ObjectCard to remove
-     * @return the ObjectCard removed
+     * Check if there is an ObjectCard to the left of the given coordinate.
+     *
+     * @param coord The coordinate of the ObjectCard to check.
+     * @return True if there is no ObjectCard to the left of the given coordinate, false otherwise.
      */
-    public ObjectCard removeObjectCard(Coordinate coordinate) {
-        return grid.remove(coordinate);
+    public boolean isEmptyLeft(Coordinate coord) {
+        Coordinate tmp = new Coordinate(coord.getColumn(), coord.getRow() - 1 );
+        return !grid.containsKey(tmp);
     }
 }

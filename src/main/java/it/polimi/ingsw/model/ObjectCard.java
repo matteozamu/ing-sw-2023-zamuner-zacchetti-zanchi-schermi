@@ -7,24 +7,45 @@ public class ObjectCard {
     private ObjectCardType type;
     private int id;
 
-    public ObjectCard(ObjectCardType type, int id) {
+    /**
+     * Constructs a new ObjectCard with the given type and ID.
+     *
+     * @param type The type of the object card.
+     * @param id The ID of the object card.
+     * @throws IllegalArgumentException If the ID is not between 0 and 21.
+     */
+    public ObjectCard(ObjectCardType type, int id) throws IllegalArgumentException {
         this.type = type;
         if(id >= 0 && id <= 21){
             this.id = id;
         } else {
             throw new IllegalArgumentException("Value must be between 0 and 21");
         }
-
     }
 
+    /**
+     * Gets the type of the object card.
+     *
+     * @return The ObjectCardType of the object card.
+     */
     public ObjectCardType getType() {
         return type;
     }
 
+    /**
+     * Gets the ID of the object card.
+     *
+     * @return The ID of the object card.
+     */
     public int getId() {
         return id;
     }
 
+    /**
+     * Returns a string representation of the object card.
+     *
+     * @return A string representation of the object card in the format "type-id".
+     */
     @Override
     public String toString() {
         return type + "-" + id;
