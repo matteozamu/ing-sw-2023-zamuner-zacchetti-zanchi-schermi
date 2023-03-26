@@ -5,6 +5,7 @@ import it.polimi.ingsw.model.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
+import java.util.Iterator;
 
 public class ControllerGame {
     private UUID id;
@@ -55,6 +56,10 @@ public class ControllerGame {
             //TODO assegno una carta personale pescata dal mazzo, quindi non ne creo una nuova
             //PersonalGoalCard pg = new PersonalGoalCard(game.createPersonalGoals());
             Player p = new Player(username, shelf, null /*pg*/);
+            //se è il primo giocatore lo assegno a currentPlayer
+            if(players.size() == 0){
+                currentPlayer = p;
+            }
             players.add(p);
             this.numberOfPlayers++;
             return true;
@@ -63,8 +68,18 @@ public class ControllerGame {
         }
     }
 
+
+    /**
+     *
+     * @return the next player
+     */
     public Player nextPlayer() {
-        return null;
+        if (players.get(players.indexOf(currentPlayer) + 1) == null ){
+            currentPlayer = players.get(0);
+            return currentPlayer;
+        }
+        currentPlayer = players.get(players.indexOf(currentPlayer) + 1);
+        return currentPlayer;
     }
 
     /**
