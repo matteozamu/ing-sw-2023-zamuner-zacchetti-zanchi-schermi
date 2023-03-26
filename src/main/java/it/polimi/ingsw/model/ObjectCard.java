@@ -3,9 +3,11 @@ package it.polimi.ingsw.model;
 /**
  * Represents an object card in the game.
  */
+
+//TODO : se si pensa che la classe rimarrà cosi in futuro la si può sostituire con un record
 public class ObjectCard {
-    private ObjectCardType type;
-    private int id;
+    private final ObjectCardType type;
+    private final int id;
 
     /**
      * Constructs a new ObjectCard with the given type and ID.

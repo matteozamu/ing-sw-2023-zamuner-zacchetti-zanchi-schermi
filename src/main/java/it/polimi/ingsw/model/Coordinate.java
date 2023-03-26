@@ -10,8 +10,8 @@ import java.util.Objects;
  * Represents a 2D coordinate in the game grid with methods to obtain neighboring coordinates.
  */
 public class Coordinate {
-    private int column;
-    private int row;
+    private final int column;
+    private final int row;
 
     /**
      * Constructs a new Coordinate with the given column and row values.
