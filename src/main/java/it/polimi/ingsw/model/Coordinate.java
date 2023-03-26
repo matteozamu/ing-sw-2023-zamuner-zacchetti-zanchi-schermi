@@ -19,7 +19,7 @@ public class Coordinate {
      * @param column The column value for the coordinate.
      * @param row    The row value for the coordinate.
      */
-    public Coordinate(int column, int row) {
+    public Coordinate(int row, int column){
         this.column = column;
         this.row = row;
     }
@@ -37,7 +37,7 @@ public class Coordinate {
      * @return A new Coordinate object representing the upper coordinate.
      */
     public Coordinate getUp() {
-        return new Coordinate(column, row + 1);
+        return new Coordinate(row + 1, column);
     }
 
     /**
@@ -46,7 +46,7 @@ public class Coordinate {
      * @return A new Coordinate object representing the right coordinate.
      */
     public Coordinate getRight() {
-        return new Coordinate(column + 1, row);
+        return new Coordinate(row, column + 1);
     }
 
     /**
@@ -55,7 +55,7 @@ public class Coordinate {
      * @return A new Coordinate object representing the lower coordinate.
      */
     public Coordinate getDown() {
-        return new Coordinate(column, row - 1);
+        return new Coordinate(row - 1, column);
     }
 
     /**
@@ -64,7 +64,7 @@ public class Coordinate {
      * @return A new Coordinate object representing the left coordinate.
      */
     public Coordinate getLeft() {
-        return new Coordinate(column - 1, row);
+        return new Coordinate(row, column - 1);
     }
 
     @Override
@@ -81,11 +81,11 @@ public class Coordinate {
 
     @Override
     public int hashCode() {
-        return Objects.hash(column, row);
+        return Objects.hash(row, column);
     }
 
     @Override
     public String toString() {
-        return "[" + column + ", " + row + ']';
+        return "[" + row + "," + column + ']';
     }
 }
