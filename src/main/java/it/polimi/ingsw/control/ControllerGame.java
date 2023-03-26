@@ -14,6 +14,7 @@ public class ControllerGame {
     private Player currentPlayer;
     private int numberOfPlayers;
     private Game game;
+    private ObjectCard[] limbo;
 
     public ControllerGame() {
         this.id = UUID.randomUUID();
@@ -22,6 +23,7 @@ public class ControllerGame {
         this.game = new Game();
         this.numberOfPlayers = 0;
         this.commonGoals = new ArrayList<>();
+        this.limbo = new ObjectCard[3];
     }
 
     /**
@@ -139,6 +141,27 @@ public class ControllerGame {
      */
     private boolean isAvailable(Coordinate coordinate) {
         return board.isEmptyUp(coordinate) || board.isEmptyDown(coordinate) || board.isEmptyRight(coordinate) || board.isEmptyLeft(coordinate);
+    }
+
+    /**
+     *
+     * @param limbo is the limbo zone where the objectCard selected from the board are put before beiing putted in the shelf
+     * @param objectCard is the objectCard selected
+     * @throws NullPointerException if the objectCard is null (this case shouldn't happen)
+     */
+    public void addObjectCardToLimbo(ObjectCard[] limbo, ObjectCard objectCard) throws NullPointerException{
+        if (objectCard == null){
+            throw new NullPointerException("selezionare una tessera oggetto");
+        }
+        int i = 0;
+        while (limbo[i] != null){
+            i++;
+        }
+        if (i==4){
+            System.out.println("limbo pieno");
+            return;
+        }
+        limbo[i] = objectCard;
     }
 }
 
