@@ -5,6 +5,8 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
+// TODO : non manca il test del metodo addObjectCard(int col, ObjectCard card)?
+
 public class ShelfTest extends TestCase {
     private Shelf s;
     private ObjectCard oc;
@@ -15,7 +17,6 @@ public class ShelfTest extends TestCase {
         oc = new ObjectCard(ObjectCardType.randomObjectCardType(), 1);
     }
 
-
     @Test
     void testGetAvailableRowsReturnsCorrectRow() {
         s.addObjectCard(0, oc);
@@ -23,16 +24,13 @@ public class ShelfTest extends TestCase {
         assertEquals(4, result);
     }
 
-
     @Test
-    void testGetAvailableRowsThrowsNullPointerExceptionWhenColumnIsFull() {
+    void testGetAvailableRowsThrowsIllegalStateExceptionWhenColumnIsFull() {
         for (int i = 0; i < s.ROWS; i++) {
             s.addObjectCard(0, oc);
         }
-        assertThrows(NullPointerException.class, () -> s.getAvailableRows(0));
+        assertThrows(IllegalStateException.class, () -> s.getAvailableRows(0));
     }
-
-
 
     @Test
     public void testCheckFull() {

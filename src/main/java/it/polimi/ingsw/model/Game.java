@@ -31,7 +31,7 @@ public class Game {
      */
     public ObjectCard getRandomAvailableObjectCard() {
         Random RANDOM = new Random();
-        int index = RANDOM.nextInt(this.objectCardContainer.size() - 1);
+        int index = RANDOM.nextInt(this.objectCardContainer.size());
         ObjectCard oc = this.objectCardContainer.get(index);
         this.objectCardContainer.remove(index);
         return oc;
@@ -44,7 +44,7 @@ public class Game {
      */
     public CommonGoal getRandomAvailableCommonGoal() {
         Random RANDOM = new Random();
-        int index = RANDOM.nextInt(this.commonGoalContainer.size() - 1);
+        int index = RANDOM.nextInt(this.commonGoalContainer.size());
         CommonGoal cg = this.commonGoalContainer.get(index);
         this.commonGoalContainer.remove(index);
         return cg;
