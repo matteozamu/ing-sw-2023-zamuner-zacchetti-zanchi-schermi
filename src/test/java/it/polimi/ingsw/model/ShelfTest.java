@@ -35,7 +35,7 @@ public class ShelfTest extends TestCase {
     @Test
     public void testCheckFull() {
         // Assumiamo che la Shelf sia inizialmente vuota.
-        assertFalse(s.checkFull());
+        assertFalse(s.getFull());
         // Riempire la Shelf con carte oggetto.
         for (int row = 0; row < 6; row++) {
             for (int col = 0; col < 5; col++) {
@@ -44,6 +44,6 @@ public class ShelfTest extends TestCase {
             }
         }
         // Verifica che la Shelf sia piena.
-        assertTrue(s.checkFull());
+        assertTrue(s.getFull());
     }
 }
