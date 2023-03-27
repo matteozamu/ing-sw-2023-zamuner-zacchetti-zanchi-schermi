@@ -63,7 +63,7 @@ public class Shelf {
      *
      * @return true if the shelf is full
      */
-    public boolean getFull() {
+    public boolean checkFull() {
         return isFull;
     }
 
