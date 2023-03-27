@@ -11,11 +11,16 @@ public abstract class CommonGoal {
     /**
      * Update the points obtainable with the current CommonGoalCard.
      *
-     * @param points The number of points to update.
+     * @param numberOfPlayers is the number of player in the game
      * @return The updated number of points for the current CommonGoalCard.
      */
-    public int updateCurrentPoints(int points) {
-        return 0;
+    public int updateCurrentPoints(int numberOfPlayers) {
+        if(numberOfPlayers == 4 || numberOfPlayers == 3){
+            currentPoints -= 2;
+        } else if (numberOfPlayers == 2){
+            currentPoints -=4;
+        }
+        return currentPoints;
     }
 
     /**

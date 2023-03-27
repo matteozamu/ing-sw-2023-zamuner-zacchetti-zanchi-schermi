@@ -124,13 +124,26 @@ public class ControllerGame {
 
     // select the column in which you want to add your cards checking that
     // the available spaces are enough for the amount of card the player has
-    public void selectColumn() {
 
+    /**
+     * select the column where the user want to add che ObjectCard, need to check if there is enough space
+     * @param column is where the user want to add che ObjectCard
+     */
+    public void selectColumn(int column) {
+        System.out.println("Seleziona una colonna: [0, 1, 2, 3, 4]");
+        while (currentPlayer.getShelf().getAvailableRows(column) < limbo.length){
+            System.out.println("La colonna selezionata non ha abbastanza spazi");
+            System.out.println("Seleziona una colonna: [0, 1, 2, 3, 4]");
+        }
     }
 
-    // load your shelf with the selected card
-    public void loadShelf() {
-
+    /**
+     * load the shelf with the ObjectCard, the order has already been established
+     * @param column is the number of the column where the ObjectCard is added
+     * @param objectCard is the ObjectCard to add in the current player's shelf
+     */
+    public void loadShelf(int column, ObjectCard objectCard) {
+        currentPlayer.getShelf().addObjectCard(column, objectCard);
     }
 
 
