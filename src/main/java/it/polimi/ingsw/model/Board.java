@@ -86,46 +86,43 @@ public class Board {
     }
 
     /**
-     * Check if there is an ObjectCard above the given coordinate.
-     *
-     * @param coord The coordinate of the ObjectCard to check.
-     * @return True if there is no ObjectCard above the given coordinate, false otherwise.
+     * Represents the four possible directions: UP, DOWN, LEFT, and RIGHT.
      */
-    public boolean isEmptyUp(Coordinate coord) {
-        Coordinate tmp = new Coordinate(coord.getColumn() + 1, coord.getRow());
-        return !grid.containsKey(tmp);
+    public enum Direction {
+        UP,
+        DOWN,
+        LEFT,
+        RIGHT
     }
 
     /**
-     * Check if there is an ObjectCard below the given coordinate.
+     * Checks if there is no ObjectCard in the specified direction from the given coordinate.
      *
-     * @param coord The coordinate of the ObjectCard to check.
-     * @return True if there is no ObjectCard below the given coordinate, false otherwise.
+     * @param coord     The coordinate of the ObjectCard to check.
+     * @param direction The direction in which to check for an empty cell (UP, DOWN, LEFT, or RIGHT).
+     * @return True if there is no ObjectCard in the specified direction from the given coordinate, false otherwise.
+     * @throws IllegalArgumentException If the direction parameter is invalid.
      */
-    public boolean isEmptyDown(Coordinate coord) {
-        Coordinate tmp = new Coordinate(coord.getColumn() - 1, coord.getRow());
-        return !grid.containsKey(tmp);
-    }
+    public boolean isEmptyAtDirection(Coordinate coord, Direction direction) {
+        Coordinate tmp;
 
-    /**
-     * Check if there is an ObjectCard to the right of the given coordinate.
-     *
-     * @param coord The coordinate of the ObjectCard to check.
-     * @return True if there is no ObjectCard to the right of the given coordinate, false otherwise.
-     */
-    public boolean isEmptyRight(Coordinate coord) {
-        Coordinate tmp = new Coordinate(coord.getColumn(), coord.getRow() + 1 );
-        return !grid.containsKey(tmp);
-    }
+        switch (direction) {
+            case UP:
+                tmp = new Coordinate(coord.getColumn() + 1, coord.getRow());
+                break;
+            case DOWN:
+                tmp = new Coordinate(coord.getColumn() - 1, coord.getRow());
+                break;
+            case LEFT:
+                tmp = new Coordinate(coord.getColumn(), coord.getRow() - 1);
+                break;
+            case RIGHT:
+                tmp = new Coordinate(coord.getColumn(), coord.getRow() + 1);
+                break;
+            default:
+                throw new IllegalArgumentException("Invalid direction");
+        }
 
-    /**
-     * Check if there is an ObjectCard to the left of the given coordinate.
-     *
-     * @param coord The coordinate of the ObjectCard to check.
-     * @return True if there is no ObjectCard to the left of the given coordinate, false otherwise.
-     */
-    public boolean isEmptyLeft(Coordinate coord) {
-        Coordinate tmp = new Coordinate(coord.getColumn(), coord.getRow() - 1 );
         return !grid.containsKey(tmp);
     }
 }

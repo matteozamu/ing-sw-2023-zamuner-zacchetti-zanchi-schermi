@@ -3,6 +3,13 @@ package it.polimi.ingsw.model;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.List;
+
+class NotEnoughSpaceException extends Exception {
+    public NotEnoughSpaceException(String message) {
+        super(message);
+    }
+}
 
 /**
  * Represents a Shelf in the game, which holds ObjectCards.
@@ -34,29 +41,69 @@ public class Shelf {
         for (int row = ROWS - 1; row >= 0; row--) {
             Coordinate coordinate = new Coordinate(col, row);
             if (grid.get(coordinate) == null) {
-                return row;
+                return row + 1;
             }
         }
         throw new NullPointerException("Chosen column is full");
     }
 
     /**
-     * method that add an ObjectCard in the first free cell of the col column
-     * @param col is the column where to enter the object card
-     * @param card is the object card to be inserted in the column col
+     * Returns a map with the number of free cells for each column in the Shelf.
+     *
+     * @return A Map<Integer, Integer> where the key represents the column index and the value
+     * represents the number of free cells in that column.
      */
-    public boolean addObjectCard(int col, ObjectCard card) {
+    public Map<Integer, Integer> getFreeCellsPerColumn() {
+        Map<Integer, Integer> freeCellsPerColumn = new HashMap<>();
+
+        for (int col = 0; col < COLUMNS; col++) {
+            try {
+                int freeRows = getAvailableRows(col);
+                freeCellsPerColumn.put(col, freeRows);
+            } catch (NullPointerException e) {
+                freeCellsPerColumn.put(col, 0);
+            }
+        }
+
+        return freeCellsPerColumn;
+    }
+
+    /**
+     * Method that adds a list of ObjectCards in the first available cells of the specified column.
+     *
+     * @param col   is the column where to insert the object cards.
+     * @param cards is the list of object cards to be inserted in the column col.
+     * @return true if the cards are successfully added.
+     * @throws NotEnoughSpaceException if there is not enough space to add the cards.
+     */
+    public boolean addObjectCards(int col, List<ObjectCard> cards) throws NotEnoughSpaceException {
         //TODO: OK, da spostare nel controller
-        int row = getAvailableRows(col);
-        if (row != -1) {
+        if (cards.size() < 1 || cards.size() > 3) {
+            throw new IllegalArgumentException("The list of cards must have a size between 1 and 3.");
+        }
+
+        int row;
+        try {
+            row = getAvailableRows(col);
+        } catch (NullPointerException e) {
+            throw new NotEnoughSpaceException("Not enough space in the column: " + col);
+        }
+
+        if (row - cards.size() + 1 < 0) {
+            throw new NotEnoughSpaceException("Not enough space in the column: " + col);
+        }
+
+        for (ObjectCard card : cards) {
             grid.put(new Coordinate(col, row), card);
             numberOfCards++;
-            if (numberOfCards == ROWS * COLUMNS) {
-                isFull = true;
-            }
-            return true;
+            row--;
         }
-        return false;
+
+        if (numberOfCards == ROWS * COLUMNS) {
+            isFull = true;
+        }
+
+        return true;
     }
 
     /**

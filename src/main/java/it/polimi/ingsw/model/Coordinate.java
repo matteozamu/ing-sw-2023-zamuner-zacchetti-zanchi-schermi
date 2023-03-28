@@ -2,10 +2,6 @@ package it.polimi.ingsw.model;
 
 import java.util.Objects;
 
-//TODO : siccome la Shelf e la Board hanno due sistemi di riferimento differenti
-// conviene creare due classi figlie della classe Coordinate (ad esempio ShelfCoordinate e BoardCoordinate).
-// Per poter gestire più facilmente i casi in cui ci si muove con le coordinate al di fuori dei limiti della Shelf o della Board.
-
 /**
  * Represents a 2D coordinate in the game grid with methods to obtain neighboring coordinates.
  */
@@ -32,39 +28,36 @@ public class Coordinate {
     }
 
     /**
-     * Returns the coordinate above the current coordinate.
-     *
-     * @return A new Coordinate object representing the upper coordinate.
+     * Represents the four possible directions for moving from a coordinate in a 2D grid.
      */
-    public Coordinate getUp() {
-        return new Coordinate(row + 1, column);
+    public enum Direction {
+        UP,
+        DOWN,
+        LEFT,
+        RIGHT
     }
 
     /**
-     * Returns the coordinate to the right of the current coordinate.
+     * Returns the coordinate adjacent to the current coordinate in the specified direction.
      *
-     * @return A new Coordinate object representing the right coordinate.
+     * @param direction The direction of the adjacent coordinate to retrieve.
+     *                  Must be one of the values in the {@link Direction} enumeration.
+     * @return A new Coordinate object representing the adjacent coordinate in the specified direction.
+     * @throws IllegalArgumentException If the direction parameter is not a valid value in the {@link Direction} enumeration.
      */
-    public Coordinate getRight() {
-        return new Coordinate(row, column + 1);
-    }
-
-    /**
-     * Returns the coordinate below the current coordinate.
-     *
-     * @return A new Coordinate object representing the lower coordinate.
-     */
-    public Coordinate getDown() {
-        return new Coordinate(row - 1, column);
-    }
-
-    /**
-     * Returns the coordinate to the left of the current coordinate.
-     *
-     * @return A new Coordinate object representing the left coordinate.
-     */
-    public Coordinate getLeft() {
-        return new Coordinate(row, column - 1);
+    public Coordinate getAdjacent(Direction direction) {
+        switch (direction) {
+            case UP:
+                return new Coordinate(row + 1, column);
+            case DOWN:
+                return new Coordinate(row - 1, column);
+            case LEFT:
+                return new Coordinate(row, column - 1);
+            case RIGHT:
+                return new Coordinate(row, column + 1);
+            default:
+                throw new IllegalArgumentException("Invalid direction: " + direction);
+        }
     }
 
     @Override
