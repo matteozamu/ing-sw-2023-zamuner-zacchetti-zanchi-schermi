@@ -1,5 +1,13 @@
 package it.polimi.ingsw.model;
 
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
+
+import java.io.FileReader;
+import java.io.Reader;
+import java.lang.reflect.Type;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.*;
 
 public class Game {
@@ -7,9 +15,6 @@ public class Game {
     private List<ObjectCard> objectCardContainer = new ArrayList<>();
     private List<CommonGoal> commonGoalContainer = new ArrayList<>();
 
-    /**
-     *
-     */
     public Game() {
         //TODO : Non conviene spostare la logica di creazione delle carte in un metodo (initializeCards()) separato dal costruttore?
         List<ObjectCardType> types = List.of(ObjectCardType.values());
@@ -60,4 +65,19 @@ public class Game {
     }
      */
 
+    public void readPersonalGoaldCards() {
+            Gson gson = new Gson();
+            try (FileReader reader = new FileReader("test.json")) {
+                List<PersonalGoalCard> goalsDataList = gson.fromJson(reader, new TypeToken<List<PersonalGoalCard>>(){}.getType());
+                System.out.println(goalsDataList);
+                for (PersonalGoalCard goalsData : goalsDataList) {
+                    List<PersonalGoal> goals = goalsData.getGoals();
+                    for (PersonalGoal goal : goals) {
+                        System.out.println(goal);
+                    }
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+    }
 }

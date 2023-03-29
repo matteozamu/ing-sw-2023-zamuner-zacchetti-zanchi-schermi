@@ -26,15 +26,9 @@ public class Board {
      * @throws InvalidParameterException
      */
     public boolean createCell(Coordinate c, ObjectCard card) throws IllegalArgumentException, KeyAlreadyExistsException, InvalidParameterException {
-        if(c == null) {
-            throw new IllegalArgumentException("Empty key");
-        }
-        if (this.grid.containsKey(c)) {
-            throw new KeyAlreadyExistsException("Cell " + c.getColumn() + "," + c.getRow() + " already exists");
-        }
-        if(card == null) {
-            throw new InvalidParameterException("Object card invalid");
-        }
+        if(c == null) throw new IllegalArgumentException("Empty key");
+        if (this.grid.containsKey(c)) throw new KeyAlreadyExistsException("Cell " + c.getColumn() + "," + c.getRow() + " already exists");
+        if(card == null) throw new InvalidParameterException("Object card invalid");
 
         this.grid.put(c, card);
         return true;
@@ -76,11 +70,8 @@ public class Board {
      */
     public boolean isEmptyUp(Coordinate coordinate) {
         Coordinate tmp = new Coordinate(coordinate.getColumn() + 1, coordinate.getRow());
-        if (grid.containsKey(tmp)) {
-            return false;
-        } else {
-            return true;
-        }
+        if (grid.containsKey(tmp)) return false;
+        else return true;
     }
 
     /**

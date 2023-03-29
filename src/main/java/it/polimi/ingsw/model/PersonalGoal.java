@@ -10,4 +10,17 @@ public class PersonalGoal {
         this.column = column;
         this.type = type;
     }
+
+//    public ObjectCardType getType() {
+//        return type;
+//    }
+
+    @Override
+    public String toString() {
+        return "PersonalGoal{" +
+                "row=" + row +
+                ", column=" + column +
+                ", type=" + type +
+                '}';
+    }
 }

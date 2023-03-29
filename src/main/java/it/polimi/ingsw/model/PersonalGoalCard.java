@@ -13,8 +13,19 @@ public class PersonalGoalCard {
        this.goals = goals;
     }
 
+    public ArrayList<PersonalGoal> getGoals() {
+        return goals;
+    }
+
     public int calculatePoints(Player p) {
         return 0;
     }
 
+    @Override
+    public String toString() {
+        return "PersonalGoalCard{" +
+                "goals=" + goals +
+                ", targetsReached=" + targetsReached +
+                '}';
+    }
 }
