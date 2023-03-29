@@ -16,6 +16,11 @@ public enum ObjectCardType {
 
     private final String text;
 
+    /**
+     * Constructs an ObjectCardType with the given text representation.
+     *
+     * @param text The text representation of the ObjectCardType.
+     */
     ObjectCardType(final String text) {
         this.text = text;
     }
@@ -25,10 +30,20 @@ public enum ObjectCardType {
     private static final int SIZE = VALUES.size();
     private static final Random RANDOM = new Random();
 
+    /**
+     * Returns a random ObjectCardType.
+     *
+     * @return A randomly selected ObjectCardType.
+     */
     public static ObjectCardType randomObjectCardType()  {
         return VALUES.get(RANDOM.nextInt(SIZE));
     }
 
+    /**
+     * Returns the text representation of the ObjectCardType.
+     *
+     * @return The text representation of the ObjectCardType.
+     */
     @Override
     public String toString() {
         return text;

@@ -5,6 +5,7 @@ import it.polimi.ingsw.model.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
+import java.util.Iterator;
 
 public class ControllerGame {
     private UUID id;
@@ -14,6 +15,7 @@ public class ControllerGame {
     private Player currentPlayer;
     private int numberOfPlayers;
     private Game game;
+    private ObjectCard[] limbo;
 
     public ControllerGame() {
         this.id = UUID.randomUUID();
@@ -22,6 +24,7 @@ public class ControllerGame {
         this.game = new Game();
         this.numberOfPlayers = 0;
         this.commonGoals = new ArrayList<>();
+        this.limbo = new ObjectCard[3];
     }
 
     /**
@@ -53,6 +56,10 @@ public class ControllerGame {
             //TODO assegno una carta personale pescata dal mazzo, quindi non ne creo una nuova
             //PersonalGoalCard pg = new PersonalGoalCard(game.createPersonalGoals());
             Player p = new Player(username, shelf, null /*pg*/);
+            //se è il primo giocatore lo assegno a currentPlayer
+            if(players.size() == 0){
+                currentPlayer = p;
+            }
             players.add(p);
             this.numberOfPlayers++;
             return true;
@@ -61,8 +68,18 @@ public class ControllerGame {
         }
     }
 
+
+    /**
+     *
+     * @return the next player
+     */
     public Player nextPlayer() {
-        return null;
+        if (players.get(players.indexOf(currentPlayer) + 1) == null ){
+            currentPlayer = players.get(0);
+            return currentPlayer;
+        }
+        currentPlayer = players.get(players.indexOf(currentPlayer) + 1);
+        return currentPlayer;
     }
 
     /**
@@ -107,13 +124,26 @@ public class ControllerGame {
 
     // select the column in which you want to add your cards checking that
     // the available spaces are enough for the amount of card the player has
-    public void selectColumn() {
 
+    /**
+     * select the column where the user want to add che ObjectCard, need to check if there is enough space
+     * @param column is where the user want to add che ObjectCard
+     */
+    public void selectColumn(int column) {
+        System.out.println("Seleziona una colonna: [0, 1, 2, 3, 4]");
+        while (currentPlayer.getShelf().getAvailableRows(column) < limbo.length){
+            System.out.println("La colonna selezionata non ha abbastanza spazi");
+            System.out.println("Seleziona una colonna: [0, 1, 2, 3, 4]");
+        }
     }
 
-    // load your shelf with the selected card
-    public void loadShelf() {
-
+    /**
+     * load the shelf with the ObjectCard, the order has already been established
+     * @param column is the number of the column where the ObjectCard is added
+     * @param objectCard is the ObjectCard to add in the current player's shelf
+     */
+    public void loadShelf(int column, ObjectCard objectCard) {
+        currentPlayer.getShelf().addObjectCard(column, objectCard);
     }
 
 
@@ -139,6 +169,27 @@ public class ControllerGame {
      */
     private boolean isAvailable(Coordinate coordinate) {
         return board.isEmptyUp(coordinate) || board.isEmptyDown(coordinate) || board.isEmptyRight(coordinate) || board.isEmptyLeft(coordinate);
+    }
+
+    /**
+     *
+     * @param limbo is the limbo zone where the objectCard selected from the board are put before beiing putted in the shelf
+     * @param objectCard is the objectCard selected
+     * @throws NullPointerException if the objectCard is null (this case shouldn't happen)
+     */
+    public void addObjectCardToLimbo(ObjectCard[] limbo, ObjectCard objectCard) throws NullPointerException{
+        if (objectCard == null){
+            throw new NullPointerException("selezionare una tessera oggetto");
+        }
+        int i = 0;
+        while (limbo[i] != null){
+            i++;
+        }
+        if (i==4){
+            System.out.println("limbo pieno");
+            return;
+        }
+        limbo[i] = objectCard;
     }
 }
 

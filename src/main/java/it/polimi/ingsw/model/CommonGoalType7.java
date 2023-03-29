@@ -15,9 +15,9 @@ public final class CommonGoalType7 extends CommonGoal {
                 ObjectCardType type1 = shelf.getObjectCard(topLeft1) != null ? shelf.getObjectCard(topLeft1).getType() : null;
 
                 if (type1 != null && isSquare(shelf, topLeft1, type1)) {
-                    for (int row2 = 0; row2 < 4; row2++) {
-                        for (int col2 = 0; col2 < 4; col2++) {
-                            // TODO : ricontrollare intervalli for
+                    for (int row2 = 0; row2 < shelf.ROWS - 1; row2++) {
+                        for (int col2 = 0; col2 < shelf.COLUMNS - 1; col2++) {
+                            // TODO : ricontrollare intervalli for (in precedenza erano row2 < 4 e col2 < 4)
                             if (Math.abs(col1 - col2) > 1 || Math.abs(row1 - row2) > 1) {
                                 Coordinate topLeft2 = new Coordinate(col2, row2);
                                 ObjectCardType type2 = shelf.getObjectCard(topLeft2) != null ? shelf.getObjectCard(topLeft2).getType() : null;
