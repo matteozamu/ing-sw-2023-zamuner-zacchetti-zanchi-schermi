@@ -9,17 +9,16 @@ public final class CommonGoalType7 extends CommonGoal {
 
     @Override
     public boolean checkGoal(Shelf shelf) {
-        for (int row1 = 0; row1 < shelf.ROWS; row1++) {
-            for (int col1 = 0; col1 < shelf.COLUMNS; col1++) {
-                Coordinate topLeft1 = new Coordinate(col1, row1);
+        for (int row1 = 0; row1 < shelf.ROWS - 1; row1++) {
+            for (int col1 = 0; col1 < shelf.COLUMNS - 1; col1++) {
+                Coordinate topLeft1 = new Coordinate(row1, col1);
                 ObjectCardType type1 = shelf.getObjectCard(topLeft1) != null ? shelf.getObjectCard(topLeft1).getType() : null;
 
                 if (type1 != null && isSquare(shelf, topLeft1, type1)) {
                     for (int row2 = 0; row2 < shelf.ROWS - 1; row2++) {
                         for (int col2 = 0; col2 < shelf.COLUMNS - 1; col2++) {
-                            // TODO : ricontrollare intervalli for (in precedenza erano row2 < 4 e col2 < 4)
                             if (Math.abs(col1 - col2) > 1 || Math.abs(row1 - row2) > 1) {
-                                Coordinate topLeft2 = new Coordinate(col2, row2);
+                                Coordinate topLeft2 = new Coordinate(row2, col2);
                                 ObjectCardType type2 = shelf.getObjectCard(topLeft2) != null ? shelf.getObjectCard(topLeft2).getType() : null;
 
                                 if (type1 == type2 && isSquare(shelf, topLeft2, type2)) {
@@ -41,9 +40,9 @@ public final class CommonGoalType7 extends CommonGoal {
             return false;
         }
 
-        Coordinate topRight = topLeft.getRight();
-        Coordinate bottomLeft = topLeft.getDown();
-        Coordinate bottomRight = topLeft.getRight().getDown();
+        Coordinate topRight = topLeft.getAdjacent(Coordinate.Direction.RIGHT);
+        Coordinate bottomLeft = topLeft.getAdjacent(Coordinate.Direction.DOWN);
+        Coordinate bottomRight = topRight.getAdjacent(Coordinate.Direction.DOWN);
 
         ObjectCard topRightCard = shelf.getObjectCard(topRight);
         ObjectCard bottomLeftCard = shelf.getObjectCard(bottomLeft);
@@ -53,6 +52,4 @@ public final class CommonGoalType7 extends CommonGoal {
                 type.equals(bottomLeftCard != null ? bottomLeftCard.getType() : null) &&
                 type.equals(bottomRightCard != null ? bottomRightCard.getType() : null);
     }
-
-
 }
