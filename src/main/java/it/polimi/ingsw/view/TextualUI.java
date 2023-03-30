@@ -1,14 +1,13 @@
 package it.polimi.ingsw.view;
 
-import it.polimi.ingsw.util.Observable;
+import java.util.Scanner;
 
-public class TextualUI extends Observable<Object> implements Runnable {
+public class TextualUI {
 
-    @Override
-    public void run() {
-        //noinspection InfiniteLoopStatement
-        while (true) {
-
-        }
+    public void createPlayer() {
+        System.out.print("Write here your username: ");
+        Scanner s = new Scanner(System.in);
+        String input = s.next();
     }
+
 }

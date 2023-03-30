@@ -28,6 +28,14 @@ public class ControllerGame {
         this.limbo = new ArrayList<>();
     }
 
+    public List<Player> getPlayers() {
+        return players;
+    }
+
+    public Player getCurrentPlayer() {
+        return currentPlayer;
+    }
+
     /**
      * Check if the username is available
      * @param username
@@ -52,14 +60,16 @@ public class ControllerGame {
     public boolean addPlayer(String username) throws NullPointerException, IllegalStateException {
 //      if (username == null) throw new NullPointerException("Username is null");
         if(!this.isUsernameAvailable(username)) throw new IllegalStateException("Username " + username + " already in use");
-        if (players.size() < game.MAX_PLAYER) {
+
+        if (this.players.size() < this.game.MAX_PLAYER) {
             Shelf shelf = new Shelf();
             PersonalGoalCard pg = game.getRandomAvailablePersonalGoalCard();
+
             Player p = new Player(username, shelf, pg);
-            //se è il primo giocatore lo assegno a currentPlayer
-            if(numberOfPlayers == 0) currentPlayer = p;
-            players.add(p);
+            if(this.numberOfPlayers == 0) this.currentPlayer = p;
+            this.players.add(p);
             this.numberOfPlayers++;
+
             return true;
         } else {
             throw new IllegalStateException("Max number of players reached");
@@ -70,20 +80,15 @@ public class ControllerGame {
      * Move to the next player
      * @return the next player
      */
-    public Player nextPlayer() {
+    public Player nextPlayer() throws IllegalStateException{
+        if(this.players.size() == 0) throw new IllegalStateException("No players");
+
         this.limbo.clear();
-        if (players.indexOf(currentPlayer) == numberOfPlayers -1 ) return players.get(0);
-        else return players.get(players.indexOf(currentPlayer) + 1);
+        if (this.players.indexOf(this.currentPlayer) == this.players.size() - 1) this.currentPlayer = this.players.get(0);
+        else this.currentPlayer = players.get(players.indexOf(currentPlayer) + 1);
+
+        return this.currentPlayer;
     }
-//    public Player nextPlayer() {
-//        this.limbo.clear();
-//        if (players.get(players.indexOf(currentPlayer) + 1) == null ){
-//            currentPlayer = players.get(0);
-//            return currentPlayer;
-//        }
-//        currentPlayer = players.get(players.indexOf(currentPlayer) + 1);
-//        return currentPlayer;
-//    }
 
     /**
      * fill the board with objectCards based on the number of player
@@ -123,6 +128,7 @@ public class ControllerGame {
 //        }
 //    }
 
+    // TODO: da spostare nella view
     /**
      * Select the column where the user want to add che ObjectCard, need to check if there is enough space
      * @param column is where the user want to add che ObjectCard

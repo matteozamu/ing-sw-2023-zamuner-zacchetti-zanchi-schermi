@@ -30,25 +30,25 @@ public class CoordinateTest extends TestCase {
 
     @Test
     public void testGetUp() {
-        Coordinate c = coord.getUp();
+        Coordinate c = coord.getAdjacent(Coordinate.Direction.UP);
         assertEquals(c.getRow(), 3);
     }
 
     @Test
     public void testGetRight() {
-        Coordinate c = coord.getRight();
+        Coordinate c = coord.getAdjacent(Coordinate.Direction.RIGHT);
         assertEquals(c.getColumn(), 2);
     }
 
     @Test
     public void testGetDown() {
-        Coordinate c = coord.getDown();
+        Coordinate c = coord.getAdjacent(Coordinate.Direction.DOWN);
         assertEquals(c.getRow(), 1);
     }
 
     @Test
     public void testGetLeft() {
-        Coordinate c = coord.getLeft();
+        Coordinate c = coord.getAdjacent(Coordinate.Direction.LEFT);
         assertEquals(c.getColumn(), 0);
     }
 

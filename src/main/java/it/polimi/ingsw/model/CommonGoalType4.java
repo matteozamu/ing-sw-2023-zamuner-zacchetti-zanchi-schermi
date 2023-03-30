@@ -20,9 +20,9 @@ public final class CommonGoalType4 extends CommonGoal {
             for (int col = 0; col < shelf.COLUMNS; col++) {
                 Coordinate coordinate = new Coordinate(col, row);
                 ObjectCard objectCard = grid.get(coordinate);
-                ObjectCardType cardType = objectCard.getType();
 
                 if (objectCard != null) {
+                    ObjectCardType cardType = objectCard.getType();
                     rowTypeCount.put(cardType, rowTypeCount.getOrDefault(cardType, 0) + 1);
                 }
             }

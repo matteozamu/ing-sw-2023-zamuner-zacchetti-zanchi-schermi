@@ -12,7 +12,7 @@ import java.util.List;
 public class Shelf {
     private Map<Coordinate, ObjectCard> grid;
     private boolean isFull;
-    private int numberOfCards;
+    public int numberOfCards;
     public final int ROWS = 6;
     public final int COLUMNS = 5;
 

@@ -1,5 +1,6 @@
 package it.polimi.ingsw.control;
 
+import it.polimi.ingsw.model.Player;
 import junit.framework.TestCase;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -54,5 +55,26 @@ public class ControllerGameTest extends TestCase {
        assertThrows(IllegalStateException.class, () -> {
            cg.addPlayer("Margot");
        });
+    }
+
+    @Test
+    public void testNextPlayerNoPlayers() {
+        assertThrows(IllegalStateException.class, () -> {
+            Player p = cg.nextPlayer();
+        });
+    }
+    @Test
+    public void testNextPlayer() {
+        cg.addPlayer("Ember");
+        cg.addPlayer("Addison");
+
+        assertEquals(cg.getPlayers().get(0), cg.getCurrentPlayer());
+
+        Player p = cg.nextPlayer();
+        assertEquals(cg.getCurrentPlayer(), p);
+        assertEquals(cg.getPlayers().get(1), p);
+
+        p = cg.nextPlayer();
+        assertEquals(cg.getPlayers().get(0), p);
     }
 }
