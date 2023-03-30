@@ -7,6 +7,8 @@ import java.util.List;
 import java.util.UUID;
 import java.util.Iterator;
 
+import static it.polimi.ingsw.model.Board.Direction.*;
+
 public class ControllerGame {
     private UUID id;
     private List<Player> players;
@@ -142,8 +144,8 @@ public class ControllerGame {
      * @param column is the number of the column where the ObjectCard is added
      * @param objectCard is the ObjectCard to add in the current player's shelf
      */
-    public void loadShelf(int column, ObjectCard objectCard) {
-        currentPlayer.getShelf().addObjectCard(column, objectCard);
+    public void loadShelf(int column, List<ObjectCard> objectCard) {
+        currentPlayer.getShelf().addObjectCards(column, objectCard);
     }
 
 
@@ -168,7 +170,7 @@ public class ControllerGame {
      * @return true if this ObjectCard is available
      */
     private boolean isAvailable(Coordinate coordinate) {
-        return board.isEmptyUp(coordinate) || board.isEmptyDown(coordinate) || board.isEmptyRight(coordinate) || board.isEmptyLeft(coordinate);
+        return board.isEmptyAtDirection(coordinate, UP) || board.isEmptyAtDirection(coordinate, DOWN) || board.isEmptyAtDirection(coordinate, RIGHT) || board.isEmptyAtDirection(coordinate, LEFT);
     }
 
     /**

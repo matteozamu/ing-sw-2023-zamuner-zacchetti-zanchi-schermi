@@ -46,15 +46,9 @@ public class Board {
      * @throws InvalidParameterException     If the object card is null.
      */
     public boolean createCell(Coordinate coord, ObjectCard card) throws IllegalArgumentException, KeyAlreadyExistsException, InvalidParameterException {
-        if(coord == null) {
-            throw new IllegalArgumentException("Empty key");
-        }
-        if (this.grid.containsKey(coord)) {
-            throw new KeyAlreadyExistsException("Cell " + coord.getColumn() + "," + coord.getRow() + " already exists");
-        }
-        if(card == null) {
-            throw new InvalidParameterException("Object card invalid");
-        }
+        if(coord == null) throw new IllegalArgumentException("Empty key");
+        if (this.grid.containsKey(coord)) throw new KeyAlreadyExistsException("Cell " + coord.getColumn() + "," + coord.getRow() + " already exists");
+        if(card == null) throw new InvalidParameterException("Object card invalid");
 
         this.grid.put(coord, card);
         return true;

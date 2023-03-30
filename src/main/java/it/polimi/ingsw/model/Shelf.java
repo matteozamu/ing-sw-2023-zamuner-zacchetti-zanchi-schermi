@@ -5,12 +5,6 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.List;
 
-class NotEnoughSpaceException extends Exception {
-    public NotEnoughSpaceException(String message) {
-        super(message);
-    }
-}
-
 /**
  * Represents a Shelf in the game, which holds ObjectCards.
  * The origin of the coordinates in the grid is in the lower left corner.
@@ -74,9 +68,9 @@ public class Shelf {
      * @param col   is the column where to insert the object cards.
      * @param cards is the list of object cards to be inserted in the column col.
      * @return true if the cards are successfully added.
-     * @throws NotEnoughSpaceException if there is not enough space to add the cards.
+     * @throws IllegalStateException if there is not enough space to add the cards.
      */
-    public boolean addObjectCards(int col, List<ObjectCard> cards) throws NotEnoughSpaceException {
+    public boolean addObjectCards(int col, List<ObjectCard> cards) throws IllegalStateException {
         //TODO: OK, da spostare nel controller
         if (cards.size() < 1 || cards.size() > 3) {
             throw new IllegalArgumentException("The list of cards must have a size between 1 and 3.");
@@ -86,11 +80,11 @@ public class Shelf {
         try {
             row = getAvailableRows(col);
         } catch (NullPointerException e) {
-            throw new NotEnoughSpaceException("Not enough space in the column: " + col);
+            throw new IllegalStateException("Not enough space in the column: " + col);
         }
 
         if (row - cards.size() + 1 < 0) {
-            throw new NotEnoughSpaceException("Not enough space in the column: " + col);
+            throw new IllegalStateException("Not enough space in the column: " + col);
         }
 
         for (ObjectCard card : cards) {

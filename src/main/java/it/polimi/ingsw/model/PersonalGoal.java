@@ -20,4 +20,13 @@ public class PersonalGoal {
         this.column = col;
         this.type = type;
     }
+
+    @Override
+    public String toString() {
+        return "PersonalGoal{" +
+                "row=" + row +
+                ", column=" + column +
+                ", type=" + type +
+                '}';
+    }
 }
