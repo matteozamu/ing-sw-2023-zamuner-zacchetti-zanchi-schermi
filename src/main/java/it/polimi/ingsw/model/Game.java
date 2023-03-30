@@ -66,6 +66,8 @@ public class Game {
      * @return A PersonalGoalCard randomly selected from the container.
      */
     public PersonalGoalCard getRandomAvailablePersonalGoalCard() {
+        if(this.personalGoalCardsContainer.size() == 0) return null;
+
         Random RANDOM = new Random();
         int index = RANDOM.nextInt(this.personalGoalCardsContainer.size());
         PersonalGoalCard pg = this.personalGoalCardsContainer.get(index);
