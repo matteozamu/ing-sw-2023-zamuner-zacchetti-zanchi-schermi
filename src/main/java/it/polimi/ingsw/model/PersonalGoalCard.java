@@ -1,6 +1,7 @@
 package it.polimi.ingsw.model;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Random;
 
 /**
@@ -30,4 +31,7 @@ public class PersonalGoalCard {
         return 0;
     }
 
+    public ArrayList<PersonalGoal> getGoals() {
+        return goals;
+    }
 }

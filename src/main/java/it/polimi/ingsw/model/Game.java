@@ -1,5 +1,9 @@
 package it.polimi.ingsw.model;
 
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
+
+import java.io.FileReader;
 import java.util.*;
 
 /**
@@ -65,4 +69,19 @@ public class Game {
     }
      */
 
+    public void readPersonalGoaldCards() {
+        Gson gson = new Gson();
+        try (FileReader reader = new FileReader("test.json")) {
+            List<PersonalGoalCard> goalsDataList = gson.fromJson(reader, new TypeToken<List<PersonalGoalCard>>(){}.getType());
+            System.out.println(goalsDataList);
+            for (PersonalGoalCard goalsData : goalsDataList) {
+                List<PersonalGoal> goals = goalsData.getGoals();
+                for (PersonalGoal goal : goals) {
+                    System.out.println(goal);
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
 }
