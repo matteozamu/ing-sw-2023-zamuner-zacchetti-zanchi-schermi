@@ -17,6 +17,16 @@ public class Board {
         this.grid = new HashMap<>();
     }
 
+    /**
+     * Represents the four possible directions: UP, DOWN, LEFT, and RIGHT.
+     */
+    public enum Direction {
+        UP,
+        DOWN,
+        LEFT,
+        RIGHT
+    }
+
     public Map<Coordinate, ObjectCard> getGrid() {
         return grid;
     }
@@ -46,53 +56,12 @@ public class Board {
      * @throws InvalidParameterException     If the object card is null.
      */
     public boolean createCell(Coordinate coord, ObjectCard card) throws IllegalArgumentException, KeyAlreadyExistsException, InvalidParameterException {
-        if(coord == null) {
-            throw new IllegalArgumentException("Empty key");
-        }
-        if (this.grid.containsKey(coord)) {
-            throw new KeyAlreadyExistsException("Cell " + coord.getColumn() + "," + coord.getRow() + " already exists");
-        }
-        if(card == null) {
-            throw new InvalidParameterException("Object card invalid");
-        }
+        if(coord == null) throw new IllegalArgumentException("Empty key");
+        if (this.grid.containsKey(coord)) throw new KeyAlreadyExistsException("Cell " + coord.getColumn() + "," + coord.getRow() + " already exists");
+        if(card == null) throw new InvalidParameterException("Object card invalid");
 
         this.grid.put(coord, card);
         return true;
-    }
-
-    @Override
-    public String toString() {
-        ObjectCard objectCard;
-        String s = "";
-        // piu efficiente con StringBuilder?
-
-        for (int row = 1; row <= 5; row++) {
-            for (int espacios = 5 - row; espacios >0; espacios--) s += "\t\t";
-            for (int col = 1; col < 2 * row; col++) {
-                objectCard = this.grid.get(new Coordinate(5 - row, -5 + col));
-                s += ("|" + objectCard);
-            }
-            s += "|\n";
-        }
-        for (int row = 5 - 1; row >= 1; row--) {
-            for (int espacios = 5 - row; espacios >0; espacios--) s += "\t\t";
-            for (int col = 1; col < 2 * row; col++) {
-                objectCard = this.grid.get(new Coordinate(-5 + row, -5 + col));
-                s += ("|"+ objectCard);
-            }
-            s += "|\n";
-        }
-        return s;
-    }
-
-    /**
-     * Represents the four possible directions: UP, DOWN, LEFT, and RIGHT.
-     */
-    public enum Direction {
-        UP,
-        DOWN,
-        LEFT,
-        RIGHT
     }
 
     /**
@@ -124,5 +93,30 @@ public class Board {
         }
 
         return !grid.containsKey(tmp);
+    }
+
+    @Override
+    public String toString() {
+        ObjectCard objectCard;
+        String s = "";
+        // piu efficiente con StringBuilder?
+
+        for (int row = 1; row <= 5; row++) {
+            for (int espacios = 5 - row; espacios >0; espacios--) s += "\t\t";
+            for (int col = 1; col < 2 * row; col++) {
+                objectCard = this.grid.get(new Coordinate(5 - row, -5 + col));
+                s += ("|" + objectCard);
+            }
+            s += "|\n";
+        }
+        for (int row = 5 - 1; row >= 1; row--) {
+            for (int espacios = 5 - row; espacios >0; espacios--) s += "\t\t";
+            for (int col = 1; col < 2 * row; col++) {
+                objectCard = this.grid.get(new Coordinate(-5 + row, -5 + col));
+                s += ("|"+ objectCard);
+            }
+            s += "|\n";
+        }
+        return s;
     }
 }
