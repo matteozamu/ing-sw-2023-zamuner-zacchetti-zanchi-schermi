@@ -29,10 +29,10 @@ public class CommonGoalType5 extends CommonGoal {
 
     private boolean isValidGroupOfFour(Shelf shelf, Coordinate coord, ObjectCardType type) {
         Coordinate[] adjacentCoordinates = new Coordinate[]{
-                coord.getUp(),
-                coord.getDown(),
-                coord.getLeft(),
-                coord.getRight()
+                coord.getAdjacent(Coordinate.Direction.UP),
+                coord.getAdjacent(Coordinate.Direction.DOWN),
+                coord.getAdjacent(Coordinate.Direction.LEFT),
+                coord.getAdjacent(Coordinate.Direction.RIGHT)
         };
 
         int adjacentSameTypeCount = 0;

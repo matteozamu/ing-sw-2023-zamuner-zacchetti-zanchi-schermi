@@ -46,18 +46,13 @@ public class Coordinate {
      * @throws IllegalArgumentException If the direction parameter is not a valid value in the {@link Direction} enumeration.
      */
     public Coordinate getAdjacent(Direction direction) {
-        switch (direction) {
-            case UP:
-                return new Coordinate(row + 1, column);
-            case DOWN:
-                return new Coordinate(row - 1, column);
-            case LEFT:
-                return new Coordinate(row, column - 1);
-            case RIGHT:
-                return new Coordinate(row, column + 1);
-            default:
-                throw new IllegalArgumentException("Invalid direction: " + direction);
-        }
+        return switch (direction) {
+            case UP -> new Coordinate(row + 1, column);
+            case DOWN -> new Coordinate(row - 1, column);
+            case LEFT -> new Coordinate(row, column - 1);
+            case RIGHT -> new Coordinate(row, column + 1);
+            default -> throw new IllegalArgumentException("Invalid direction: " + direction);
+        };
     }
 
     @Override
