@@ -11,7 +11,7 @@ package it.polimi.ingsw.util;
  * @implNote
  * This class is a Generic Implementation of the deprecated {@link java.util.Observer}.
  */
-public interface Observer<> {
+public interface Observer<SubjectType extends it.polimi.ingsw.util.Observable<ArgType>, ArgType> {
     /**
      * This method is called whenever the observed object is changed. An
      * application calls an {@code Observable} object's
