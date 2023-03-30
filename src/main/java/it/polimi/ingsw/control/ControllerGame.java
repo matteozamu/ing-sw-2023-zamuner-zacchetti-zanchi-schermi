@@ -5,7 +5,6 @@ import it.polimi.ingsw.model.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
-import java.util.Iterator;
 
 import static it.polimi.ingsw.model.Board.Direction.*;
 
@@ -17,7 +16,7 @@ public class ControllerGame {
     private Player currentPlayer;
     private int numberOfPlayers;
     private Game game;
-    private ObjectCard[] limbo;
+    private List<ObjectCard> limbo;
 
     public ControllerGame() {
         this.id = UUID.randomUUID();
@@ -26,7 +25,7 @@ public class ControllerGame {
         this.game = new Game();
         this.numberOfPlayers = 0;
         this.commonGoals = new ArrayList<>();
-        this.limbo = new ObjectCard[3];
+        this.limbo = new ArrayList<>();
     }
 
     /**
@@ -51,17 +50,14 @@ public class ControllerGame {
      * @throws IllegalStateException
      */
     public boolean addPlayer(String username) throws NullPointerException, IllegalStateException {
-        // if (username == null) throw new NullPointerException("Username is null");
+//      if (username == null) throw new NullPointerException("Username is null");
         if(!this.isUsernameAvailable(username)) throw new IllegalStateException("Username " + username + " already in use");
         if (players.size() < game.MAX_PLAYER) {
             Shelf shelf = new Shelf();
-            //TODO assegno una carta personale pescata dal mazzo, quindi non ne creo una nuova
-            //PersonalGoalCard pg = new PersonalGoalCard(game.createPersonalGoals());
-            Player p = new Player(username, shelf, null /*pg*/);
+            PersonalGoalCard pg = game.getRandomAvailablePersonalGoalCard();
+            Player p = new Player(username, shelf, pg);
             //se è il primo giocatore lo assegno a currentPlayer
-            if(players.size() == 0){
-                currentPlayer = p;
-            }
+            if(numberOfPlayers == 0) currentPlayer = p;
             players.add(p);
             this.numberOfPlayers++;
             return true;
@@ -72,17 +68,23 @@ public class ControllerGame {
 
 
     /**
-     *
+     * Move to the next player
      * @return the next player
      */
     public Player nextPlayer() {
-        if (players.get(players.indexOf(currentPlayer) + 1) == null ){
-            currentPlayer = players.get(0);
-            return currentPlayer;
-        }
-        currentPlayer = players.get(players.indexOf(currentPlayer) + 1);
-        return currentPlayer;
+        this.limbo.clear();
+        if (players.indexOf(currentPlayer) == numberOfPlayers -1 ) return players.get(0);
+        else return players.get(players.indexOf(currentPlayer) + 1);
     }
+//    public Player nextPlayer() {
+//        this.limbo.clear();
+//        if (players.get(players.indexOf(currentPlayer) + 1) == null ){
+//            currentPlayer = players.get(0);
+//            return currentPlayer;
+//        }
+//        currentPlayer = players.get(players.indexOf(currentPlayer) + 1);
+//        return currentPlayer;
+//    }
 
     /**
      * fill the board with objectCards based on the number of player
@@ -110,8 +112,6 @@ public class ControllerGame {
         }
     }
 
-
-
     //update function, funzione update vista dal prof
     //ipotizzo che dalla view arrivi una stringa Usarname non nulla
     //ricopio la funzione con observer e observable //TODO da sostituire
@@ -124,23 +124,20 @@ public class ControllerGame {
 //        }
 //    }
 
-    // select the column in which you want to add your cards checking that
-    // the available spaces are enough for the amount of card the player has
-
     /**
-     * select the column where the user want to add che ObjectCard, need to check if there is enough space
+     * Select the column where the user want to add che ObjectCard, need to check if there is enough space
      * @param column is where the user want to add che ObjectCard
      */
     public void selectColumn(int column) {
         System.out.println("Seleziona una colonna: [0, 1, 2, 3, 4]");
-        while (currentPlayer.getShelf().getAvailableRows(column) < limbo.length){
+        while (currentPlayer.getShelf().getAvailableRows(column) < limbo.size()){
             System.out.println("La colonna selezionata non ha abbastanza spazi");
             System.out.println("Seleziona una colonna: [0, 1, 2, 3, 4]");
         }
     }
 
     /**
-     * load the shelf with the ObjectCard, the order has already been established
+     * Load the shelf with the ObjectCard, the order has already been established
      * @param column is the number of the column where the ObjectCard is added
      * @param objectCard is the ObjectCard to add in the current player's shelf
      */
@@ -157,11 +154,8 @@ public class ControllerGame {
      * @return the ObjectCard with that Coordinate
      */
     public ObjectCard pickObjectCard(Coordinate coordinate) {
-        if(isAvailable(coordinate)) {
-            return board.removeObjectCard(coordinate);
-        } else {
-            return null;
-        }
+        if(isAvailable(coordinate)) return board.removeObjectCard(coordinate);
+        else return null;
     }
 
     /**
@@ -174,24 +168,16 @@ public class ControllerGame {
     }
 
     /**
-     *
-     * @param limbo is the limbo zone where the objectCard selected from the board are put before beiing putted in the shelf
+     * Add an object card to the limbo area
+     * @param limbo is the zone where the objectCards selected from the board are put before being added in the shelf
      * @param objectCard is the objectCard selected
      * @throws NullPointerException if the objectCard is null (this case shouldn't happen)
      */
-    public void addObjectCardToLimbo(ObjectCard[] limbo, ObjectCard objectCard) throws NullPointerException{
-        if (objectCard == null){
-            throw new NullPointerException("selezionare una tessera oggetto");
-        }
-        int i = 0;
-        while (limbo[i] != null){
-            i++;
-        }
-        if (i==4){
-            System.out.println("limbo pieno");
-            return;
-        }
-        limbo[i] = objectCard;
+    public void addObjectCardToLimbo(List<ObjectCard> limbo, ObjectCard objectCard) throws NullPointerException{
+        if (objectCard == null) throw new NullPointerException("ObjectCard is null");
+
+        if (limbo.size() < 3) limbo.add(objectCard);
+        else System.out.println("Limbo is full");
     }
 }
 

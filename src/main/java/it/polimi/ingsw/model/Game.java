@@ -13,6 +13,7 @@ public class Game {
     public static final int MAX_PLAYER = 4;
     private List<ObjectCard> objectCardContainer = new ArrayList<>();
     private List<CommonGoal> commonGoalContainer = new ArrayList<>();
+    private List<PersonalGoalCard> personalGoalCardsContainer = new ArrayList<>();
 
     /**
      * Constructs a new Game and initializes the object cards.
@@ -54,29 +55,30 @@ public class Game {
         return cg;
     }
 
-    //TODO da togliere, i personal goal sono presi dal file json
-    /*
-    public ArrayList<PersonalGoal> createPersonalGoals(){
-        Random rand = new Random();
-        ArrayList<PersonalGoal> goals = new ArrayList<>();
-        ObjectCardType[] objTypes = ObjectCardType.values();
-
-        for (int i = 0; i < 6; i++){
-            PersonalGoal pg = new PersonalGoal(rand.nextInt(6), rand.nextInt(5), objTypes[i]);
-            goals.add(pg);
-        }
-        return goals;
-    }
+    /**
+     * Get a random personal goal card out of the container and remove the card from it.
+     *
+     * @return A PersonalGoalCard randomly selected from the container.
      */
+    public PersonalGoalCard getRandomAvailablePersonalGoalCard() {
+        Random RANDOM = new Random();
+        int index = RANDOM.nextInt(this.personalGoalCardsContainer.size());
+        PersonalGoalCard pg = this.personalGoalCardsContainer.get(index);
+        this.personalGoalCardsContainer.remove(index);
+        return pg;
+    }
 
-    public void readPersonalGoaldCards() {
+    /**
+     * Load into the game all the personal goal cards from a json file
+     */
+    public void loadPersonalGoaldCards() {
         Gson gson = new Gson();
-        try (FileReader reader = new FileReader("test.json")) {
-            List<PersonalGoalCard> goalsDataList = gson.fromJson(reader, new TypeToken<List<PersonalGoalCard>>(){}.getType());
+        try (FileReader reader = new FileReader("personalGoalCards.json")) {
+            this.personalGoalCardsContainer = gson.fromJson(reader, new TypeToken<List<PersonalGoalCard>>(){}.getType());
 
-            for (PersonalGoalCard goalsData : goalsDataList) {
-                List<PersonalGoal> goals = goalsData.getGoals();
-
+            for (PersonalGoalCard personalGoal : this.personalGoalCardsContainer) {
+                List<PersonalGoal> goals = personalGoal.getGoals();
+                System.out.println("--------------------");
                 for (PersonalGoal goal : goals) {
                     System.out.println(goal);
                 }
