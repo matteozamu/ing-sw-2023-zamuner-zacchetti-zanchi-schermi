@@ -1,8 +1,6 @@
 package it.polimi.ingsw.model;
 
 import java.util.ArrayList;
-import java.util.List;
-import java.util.Random;
 
 /**
  * Represents a personal goal card in the game, containing a list of personal goals and tracking the number of goals reached.

@@ -66,7 +66,6 @@ public class ControllerGame {
         }
     }
 
-
     /**
      * Move to the next player
      * @return the next player
@@ -145,8 +144,6 @@ public class ControllerGame {
         currentPlayer.getShelf().addObjectCards(column, objectCard);
     }
 
-
-    // method used during the game
     //si puo fare una modifica che non rimuova la coordinata della cella ma setti il contenuto a null
     /**
      * pick the ObjectCard from the board (if available)
@@ -154,7 +151,7 @@ public class ControllerGame {
      * @return the ObjectCard with that Coordinate
      */
     public ObjectCard pickObjectCard(Coordinate coordinate) {
-        if(isAvailable(coordinate)) return board.removeObjectCard(coordinate);
+        if(isObjectCardAvailable(coordinate)) return board.removeObjectCard(coordinate);
         else return null;
     }
 
@@ -163,7 +160,7 @@ public class ControllerGame {
      * @param coordinate is the coordinate of the ObjectCard clicked by the user
      * @return true if this ObjectCard is available
      */
-    private boolean isAvailable(Coordinate coordinate) {
+    private boolean isObjectCardAvailable(Coordinate coordinate) {
         return board.isEmptyAtDirection(coordinate, UP) || board.isEmptyAtDirection(coordinate, DOWN) || board.isEmptyAtDirection(coordinate, RIGHT) || board.isEmptyAtDirection(coordinate, LEFT);
     }
 

@@ -15,11 +15,16 @@ public class Game {
     private List<CommonGoal> commonGoalContainer = new ArrayList<>();
     private List<PersonalGoalCard> personalGoalCardsContainer = new ArrayList<>();
 
-    /**
-     * Constructs a new Game and initializes the object cards.
-     */
     public Game() {
-        //TODO : Non conviene spostare la logica di creazione delle carte in un metodo (initializeCards()) separato dal costruttore?
+        this.objectCardContainer = new ArrayList<>();
+        this.commonGoalContainer = new ArrayList<>();
+        this.personalGoalCardsContainer = new ArrayList<>();
+    }
+
+    /**
+     * Load into the game all the object cards
+     */
+    public void loadObjectCards() {
         List<ObjectCardType> types = List.of(ObjectCardType.values());
 
         for(int i=0; i<6; i++){
