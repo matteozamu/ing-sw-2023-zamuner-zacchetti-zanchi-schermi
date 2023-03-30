@@ -1,6 +1,8 @@
 package it.polimi.ingsw.control;
 
 import it.polimi.ingsw.model.*;
+import it.polimi.ingsw.util.Observer;
+import it.polimi.ingsw.view.TextualUI;
 
 import java.util.ArrayList;
 import java.util.List;

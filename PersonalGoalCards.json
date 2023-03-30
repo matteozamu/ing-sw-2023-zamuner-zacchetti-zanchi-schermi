@@ -1,6 +1,5 @@
 [
   {
-    "targetsReached": 0,
     "goals": [
       {
         "row": 44,
@@ -31,6 +30,142 @@
         "row": 0,
         "column": 1,
         "type": "Gatto"
+      }
+    ]
+  },
+  {
+    "goals": [
+      {
+        "row": 0,
+        "column": 1,
+        "type": "Pianta"
+      },
+      {
+        "row": 2,
+        "column": 2,
+        "type": "Pianta"
+      },
+      {
+        "row": 0,
+        "column": 1,
+        "type": "Gatto"
+      },
+      {
+        "row": 4,
+        "column": 4,
+        "type": "Pianta"
+      },
+      {
+        "row": 0,
+        "column": 1,
+        "type": "Pianta"
+      },
+      {
+        "row": 0,
+        "column": 1,
+        "type": "Pianta"
+      }
+    ]
+  },
+  {
+    "goals": [
+      {
+        "row": 0,
+        "column": 1,
+        "type": "Pianta"
+      },
+      {
+        "row": 2,
+        "column": 2,
+        "type": "Pianta"
+      },
+      {
+        "row": 0,
+        "column": 1,
+        "type": "Gatto"
+      },
+      {
+        "row": 4,
+        "column": 4,
+        "type": "Pianta"
+      },
+      {
+        "row": 0,
+        "column": 1,
+        "type": "Pianta"
+      },
+      {
+        "row": 0,
+        "column": 1,
+        "type": "Pianta"
+      }
+    ]
+  },
+  {
+    "goals": [
+      {
+        "row": 0,
+        "column": 1,
+        "type": "Pianta"
+      },
+      {
+        "row": 2,
+        "column": 2,
+        "type": "Pianta"
+      },
+      {
+        "row": 0,
+        "column": 1,
+        "type": "Gatto"
+      },
+      {
+        "row": 4,
+        "column": 4,
+        "type": "Pianta"
+      },
+      {
+        "row": 0,
+        "column": 1,
+        "type": "Pianta"
+      },
+      {
+        "row": 0,
+        "column": 1,
+        "type": "Pianta"
+      }
+    ]
+  },
+  {
+    "goals": [
+      {
+        "row": 0,
+        "column": 1,
+        "type": "Pianta"
+      },
+      {
+        "row": 2,
+        "column": 2,
+        "type": "Pianta"
+      },
+      {
+        "row": 0,
+        "column": 1,
+        "type": "Gatto"
+      },
+      {
+        "row": 4,
+        "column": 4,
+        "type": "Pianta"
+      },
+      {
+        "row": 0,
+        "column": 1,
+        "type": "Pianta"
+      },
+      {
+        "row": 0,
+        "column": 1,
+        "type": "Pianta"
       }
     ]
   },
