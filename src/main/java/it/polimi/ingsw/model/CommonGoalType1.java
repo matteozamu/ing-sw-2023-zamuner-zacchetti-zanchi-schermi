@@ -30,7 +30,7 @@ public final class CommonGoalType1 extends CommonGoal {
 
     private boolean checkAdjacent(Coordinate coord, ObjectCard card, Map<Coordinate, ObjectCard> grid) {
         ObjectCardType targetType = card.getType();
-        Coordinate[] adjacentCoords = {coord.getUp(), coord.getRight(), coord.getDown(), coord.getLeft()};
+        Coordinate[] adjacentCoords = {coord.getAdjacent(Coordinate.Direction.UP), coord.getAdjacent(Coordinate.Direction.RIGHT), coord.getAdjacent(Coordinate.Direction.DOWN), coord.getAdjacent(Coordinate.Direction.LEFT)};
 
         for (Coordinate adjacentCoord : adjacentCoords) {
             ObjectCard adjacentCard = grid.get(adjacentCoord);
