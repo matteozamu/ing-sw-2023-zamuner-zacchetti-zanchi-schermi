@@ -8,6 +8,9 @@ import java.util.UUID;
 
 import static it.polimi.ingsw.model.Board.Direction.*;
 
+/**
+ * Controller for the game, handling game logic and interactions between model components.
+ */
 public class ControllerGame {
     private UUID id;
     private List<Player> players;
@@ -18,6 +21,9 @@ public class ControllerGame {
     private Game game;
     private List<ObjectCard> limbo;
 
+    /**
+     * Constructor for the ControllerGame class, initializing the game state.
+     */
     public ControllerGame() {
         this.id = UUID.randomUUID();
         this.players = new ArrayList<>();
@@ -46,7 +52,7 @@ public class ControllerGame {
 
     /**
      * Check if the username is available
-     * @param username
+     * @param username is the username of the player
      * @return true if available, false if not
      * @throws NullPointerException
      */
@@ -99,7 +105,8 @@ public class ControllerGame {
     }
 
     /**
-     * fill the board with objectCards based on the number of player
+     * Fills the game board with object cards based on the number of players.
+     * This method should be called at the beginning of the game to set up the board.
      */
     // TODO parametrizzare sul numero di giocatori
     public void fillBoard(){
@@ -154,7 +161,7 @@ public class ControllerGame {
         if (availableRows < this.limbo.size()) throw new IllegalStateException("Not enough space in the column: " + col);
 
         for (ObjectCard card : this.limbo) {
-            s.getGrid().put(new Coordinate(col, 6 - availableRows), card);
+            s.getGrid().put(new Coordinate(6 - availableRows, col), card);
 //            s.setNumberOfCards(s.getNumberOfCards() + 1);
             availableRows--;
         }
@@ -189,18 +196,24 @@ public class ControllerGame {
 //    }
 
     /**
-     * check if the ObjectCard clicked by user is available, so if it has at least one side free
-     * @param coordinate is the coordinate of the ObjectCard clicked by the user
-     * @return true if this ObjectCard is available
+     * Checks if the object card at the given coordinate is available (i.e., has at least one free side).
+     * This method is used to determine if a player can pick up an object card from the board.
+     *
+     * @param coordinate The coordinate of the object card to check.
+     * @return True if the object card is available, false otherwise.
      */
     private boolean isObjectCardAvailable(Coordinate coordinate) {
         return board.isEmptyAtDirection(coordinate, UP) || board.isEmptyAtDirection(coordinate, DOWN) || board.isEmptyAtDirection(coordinate, RIGHT) || board.isEmptyAtDirection(coordinate, LEFT);
     }
 
     /**
-     * Add an object card to the limbo area
-     * @param coordinate is the objectCard selected
-     * @throws NullPointerException if the objectCard is null (this case shouldn't happen)
+     * Adds the object card at the specified coordinate to the limbo area.
+     * The limbo area is used to store object cards that a player has picked up but not yet placed on their shelf.
+     *
+     * @param coordinate The coordinate of the object card to add to the limbo area.
+     * @throws NullPointerException If the object card is null (should not happen).
+     * @throws IllegalStateException If the object card is not available.
+     * @throws IllegalArgumentException If the limbo area is already full.
      */
     public void addObjectCardToLimbo(Coordinate coordinate) throws NullPointerException, IllegalStateException, IllegalArgumentException{
         if (coordinate == null) throw new NullPointerException("ObjectCard is null");

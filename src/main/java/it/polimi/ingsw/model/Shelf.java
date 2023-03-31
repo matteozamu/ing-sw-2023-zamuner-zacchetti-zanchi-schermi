@@ -1,6 +1,5 @@
 package it.polimi.ingsw.model;
 
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -25,6 +24,8 @@ public class Shelf {
         this.grid = new HashMap<>();
         this.isFull = false;
         this.numberOfCards = 0;
+
+        //TODO: in quanto costanti non è meglio inizializzarle quando le si dichiara?
         this.ROWS = 6;
         this.COLUMNS = 5;
     }
@@ -41,7 +42,7 @@ public class Shelf {
      *
      * @return true if the shelf is full
      */
-    public boolean getFull() {
+    public boolean isFull() {
         return isFull;
     }
 
@@ -64,17 +65,17 @@ public class Shelf {
      * @return number of free cell for the col column
      */
     public int getAvailableRows(int col) {
-        int availableRows = 6;
+        int availableRows = ROWS;
         Coordinate coordinate;
 
-        for (int i = 0; i < this.ROWS; i++) {
-            coordinate = new Coordinate(i, col);
+        for (int row = 0; row < this.ROWS; row++) {
+            coordinate = new Coordinate(row, col);
             if (this.grid.containsKey(coordinate) && this.grid.get(coordinate) != null) availableRows--;
         }
         return availableRows;
     }
 
-    // TODO CI SERVE?
+    // TODO CI SERVE? Spoiler: no. Ma se serve c'è
     /**
      * Returns a map with the number of free cells for each column in the Shelf.
      *
@@ -85,16 +86,13 @@ public class Shelf {
         Map<Integer, Integer> freeCellsPerColumn = new HashMap<>();
 
         for (int col = 0; col < COLUMNS; col++) {
-            try {
-                int freeRows = getAvailableRows(col);
-                freeCellsPerColumn.put(col, freeRows);
-            } catch (NullPointerException e) {
-                freeCellsPerColumn.put(col, 0);
-            }
+            int freeRows = getAvailableRows(col);
+            freeCellsPerColumn.put(col, freeRows);
         }
 
         return freeCellsPerColumn;
     }
+
 
     /**
      * Returns the ObjectCard at the specified coordinate in the shelf.

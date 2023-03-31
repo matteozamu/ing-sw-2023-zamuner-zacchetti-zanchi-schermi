@@ -4,10 +4,6 @@ import junit.framework.TestCase;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import java.util.Collections;
-
-import static org.junit.jupiter.api.Assertions.*;
-
 public class ShelfTest extends TestCase {
     private Shelf s;
     private ObjectCard oc;
@@ -21,7 +17,7 @@ public class ShelfTest extends TestCase {
 
     @Test
     public void testAvailableRowsEmpty() {
-        assertFalse(this.s.getFull());
+        assertFalse(this.s.isFull());
         assertEquals(6, this.s.getAvailableRows(0));
     }
 

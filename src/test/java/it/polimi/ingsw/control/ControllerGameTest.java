@@ -100,7 +100,7 @@ public class ControllerGameTest extends TestCase {
 
     @Test
     public void testAddObjectCardsThrowsStateException () {
-        cg.addPlayer("Elisa");
+        cg.addPlayer("Matteo");
 
         cg.getLimbo().add(new ObjectCard(ObjectCardType.randomObjectCardType(), 1));
         cg.getLimbo().add(new ObjectCard(ObjectCardType.randomObjectCardType(), 2));
@@ -118,7 +118,7 @@ public class ControllerGameTest extends TestCase {
 
     @Test
     public void testAddObjectCards () {
-        cg.addPlayer("Elisa");
+        cg.addPlayer("Fede");
 
         cg.getLimbo().add(new ObjectCard(ObjectCardType.randomObjectCardType(), 1));
         cg.getLimbo().add(new ObjectCard(ObjectCardType.randomObjectCardType(), 2));
@@ -156,7 +156,7 @@ public class ControllerGameTest extends TestCase {
 
         cg.getLimbo().add(new ObjectCard(ObjectCardType.randomObjectCardType(), 1));
         cg.addObjectCards(5);
-        assertTrue(cg.getCurrentPlayer().getShelf().getFull());
+        assertTrue(cg.getCurrentPlayer().getShelf().isFull());
     }
 
     @Test
