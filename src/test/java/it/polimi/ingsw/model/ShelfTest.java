@@ -3,7 +3,7 @@ package it.polimi.ingsw.model;
 import junit.framework.TestCase;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-
+import java.util.Map;
 import java.util.Collections;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -33,6 +33,16 @@ public class ShelfTest extends TestCase {
         }
         assertThrows(IllegalStateException.class, () -> s.getAvailableRows(0));
     }
+
+    @Test
+    //TODO: expected: 6 - actual: 5
+    void testGetFreeCellsPerColumnEmptyShelf() {
+        Map<Integer, Integer> freeCells1 = s.getFreeCellsPerColumn();
+        for (int i = 0; i < s.COLUMNS; i++) {
+            assertEquals((Object)s.ROWS, freeCells1.get(i));
+        }
+    }
+
 
 
     @Test
