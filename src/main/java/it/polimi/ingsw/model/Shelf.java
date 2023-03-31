@@ -50,6 +50,14 @@ public class Shelf {
     }
 
     /**
+     * method that returns the map of the grid
+     * @return The grid representing the Shelf
+     */
+    public Map<Coordinate, ObjectCard> getGrid() {
+        return this.grid;
+    }
+
+    /**
      * return the number (row) of free cells in the col column
      * if there are no free cells the method throws an exception
      * @param col is the column
@@ -66,6 +74,7 @@ public class Shelf {
         return availableRows;
     }
 
+    // TODO CI SERVE?
     /**
      * Returns a map with the number of free cells for each column in the Shelf.
      *
@@ -85,14 +94,6 @@ public class Shelf {
         }
 
         return freeCellsPerColumn;
-    }
-
-    /**
-     * method that returns the map of the grid
-     * @return The grid representing the Shelf
-     */
-    public Map<Coordinate, ObjectCard> getGrid() {
-        return this.grid;
     }
 
     /**

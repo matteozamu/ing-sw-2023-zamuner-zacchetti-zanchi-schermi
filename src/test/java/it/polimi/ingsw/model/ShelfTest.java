@@ -37,26 +37,14 @@ public class ShelfTest extends TestCase {
 
 //    @Test
 //    public void testCheckFull() {
-//        // Riempire la Shelf con carte oggetto.
-//        for (int row = 0; row < 6; row++) {
-//            for (int col = 0; col < 5; col++) {
-//                ObjectCard card = new ObjectCard(ObjectCardType.gatto, 0);
-//                assertTrue(s.addObjectCards(col, Collections.singletonList(card)));
+//        for (int row = 0; row < s.ROWS; row++) {
+//            for (int col = 0; col < s.COLUMNS; col++) {
+//                this.oc = new ObjectCard(ObjectCardType.gatto, 0);
+//                s.getGrid().put(new Coordinate(row, col), this.oc);
 //            }
 //        }
 //        // Verifica che la Shelf sia piena.
 //        assertTrue(s.getFull());
-//    }
-
-    //    @Test
-//    void testGetAvailableRowsReturnsCorrectRow() {
-//        cg.addPlayer("Elisa");
-//        assertEquals(6, cg.getCurrentPlayer().getShelf().getAvailableRows(0));
-//
-//        cg.addObjectCardToLimbo(new ObjectCard(ObjectCardType.randomObjectCardType(), 0));
-//        cg.addObjectCards(0);
-//
-//        assertEquals(5, cg.getCurrentPlayer().getShelf().getAvailableRows(0));
 //    }
 
 }
