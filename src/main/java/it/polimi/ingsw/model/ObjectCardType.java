@@ -13,6 +13,7 @@ public enum ObjectCardType {
     cornice("Cornice"),
     trofeo("Trofeo"),
     pianta("Pianta");
+//    empty("NoTile");
 
     private final String text;
 
@@ -27,7 +28,7 @@ public enum ObjectCardType {
 
     private static final List<ObjectCardType> VALUES =
             List.of(values());
-    private static final int SIZE = VALUES.size();
+    public static final int SIZE = VALUES.size();
     private static final Random RANDOM = new Random();
 
     /**

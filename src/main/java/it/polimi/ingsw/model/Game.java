@@ -11,9 +11,9 @@ import java.util.*;
  */
 public class Game {
     public static final int MAX_PLAYER = 4;
-    private List<ObjectCard> objectCardContainer = new ArrayList<>();
-    private List<CommonGoal> commonGoalContainer = new ArrayList<>();
-    private List<PersonalGoalCard> personalGoalCardsContainer = new ArrayList<>();
+    private List<ObjectCard> objectCardContainer;
+    private List<CommonGoal> commonGoalContainer;
+    private List<PersonalGoalCard> personalGoalCardsContainer;
 
     public Game() {
         this.objectCardContainer = new ArrayList<>();
@@ -27,10 +27,10 @@ public class Game {
     public void loadObjectCards() {
         List<ObjectCardType> types = List.of(ObjectCardType.values());
 
-        for(int i=0; i<6; i++){
-            for(int j=0; j<22; j++){
-                this.objectCardContainer.add(new ObjectCard(types.get(i), j));
-            }
+        for(int i = 0; i < ObjectCardType.SIZE; i++){
+            for(int j = 0; j < 7; j++) this.objectCardContainer.add(new ObjectCard(types.get(i), 0));
+            for(int j = 0; j < 7; j++) this.objectCardContainer.add(new ObjectCard(types.get(i), 1));
+            for(int j = 0; j < 8; j++) this.objectCardContainer.add(new ObjectCard(types.get(i), 2));
         }
     }
 
@@ -86,9 +86,7 @@ public class Game {
             for (PersonalGoalCard personalGoal : this.personalGoalCardsContainer) {
                 List<PersonalGoal> goals = personalGoal.getGoals();
                 System.out.println("--------------------");
-                for (PersonalGoal goal : goals) {
-                    System.out.println(goal);
-                }
+                for (PersonalGoal goal : goals) System.out.println(goal);
             }
         } catch (Exception e) {
             e.printStackTrace();

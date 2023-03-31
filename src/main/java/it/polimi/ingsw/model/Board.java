@@ -31,6 +31,7 @@ public class Board {
         return grid;
     }
 
+    // TODO non rimuovere la cella ma eliminare solo il suo valore
     /**
      * Remove the ObjectCard from the board at the specified coordinate.
      *

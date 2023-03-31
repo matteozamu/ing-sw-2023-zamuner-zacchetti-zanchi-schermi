@@ -60,7 +60,7 @@ public class ControllerGameTest extends TestCase {
     @Test
     public void testNextPlayerNoPlayers() {
         assertThrows(IllegalStateException.class, () -> {
-            Player p = cg.nextPlayer();
+            cg.nextPlayer();
         });
     }
     @Test
