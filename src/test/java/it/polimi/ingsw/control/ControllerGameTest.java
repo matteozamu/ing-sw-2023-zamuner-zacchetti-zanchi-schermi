@@ -1,5 +1,7 @@
 package it.polimi.ingsw.control;
 
+import it.polimi.ingsw.model.ObjectCard;
+import it.polimi.ingsw.model.ObjectCardType;
 import it.polimi.ingsw.model.Player;
 import junit.framework.TestCase;
 import org.junit.jupiter.api.BeforeEach;
@@ -44,6 +46,7 @@ public class ControllerGameTest extends TestCase {
         cg.addPlayer("Madeleine");
         cg.addPlayer("Margot");
         cg.addPlayer("Yvonne");
+
         assertThrows(IllegalStateException.class, () -> {
             cg.addPlayer("Colette");
         });
@@ -52,6 +55,7 @@ public class ControllerGameTest extends TestCase {
    @Test
    public void testDuplicateUsername() {
        cg.addPlayer("Margot");
+
        assertThrows(IllegalStateException.class, () -> {
            cg.addPlayer("Margot");
        });
