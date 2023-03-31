@@ -31,14 +31,19 @@ public class Shelf {
      * @param col is the column
      * @return number of free cell for the col column
      */
-    public int getAvailableRows(int col) throws NullPointerException {
-        for (int row = ROWS - 1; row >= 0; row--) {
+    public int getAvailableRows(int col) throws IllegalStateException {
+        int row;
+        for (row = 0; row < ROWS; row++) {
             Coordinate coordinate = new Coordinate(col, row);
-            if (grid.get(coordinate) == null) {
-                return row + 1;
+            if (grid.get(coordinate) != null) {
+                return row;
             }
         }
-        throw new NullPointerException("Chosen column is full");
+        // Se tutte le celle sono vuote, restituisci l'ultima riga disponibile
+        if (row == ROWS) {
+            return row - 1;
+        }
+        throw new IllegalStateException("Chosen column is full");
     }
 
     /**
