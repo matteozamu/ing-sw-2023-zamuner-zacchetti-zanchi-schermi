@@ -40,6 +40,10 @@ public class ControllerGame {
         return game;
     }
 
+    public List<ObjectCard> getLimbo() {
+        return limbo;
+    }
+
     /**
      * Check if the username is available
      * @param username
@@ -140,23 +144,23 @@ public class ControllerGame {
      * @return true if the cards are successfully added.
      * @throws IllegalStateException if there is not enough space to add the cards.
      */
-    public boolean addObjectCards(int col) throws IllegalStateException {
+    public boolean addObjectCards(int col) throws IllegalStateException, IllegalArgumentException {
         if (this.limbo.size() == 0 || this.limbo.size() > 3) throw new IllegalArgumentException("The list of cards must have a size between 1 and 3.");
 
         Shelf s = this.currentPlayer.getShelf();
         int availableRows = s.getAvailableRows(col);
 
         if(availableRows == 0) throw new IllegalStateException("Column: " + col + " is full");
-        if (availableRows < this.limbo.size() + 1) throw new IllegalStateException("Not enough space in the column: " + col);
+        if (availableRows < this.limbo.size()) throw new IllegalStateException("Not enough space in the column: " + col);
 
         for (ObjectCard card : this.limbo) {
-            // TODO VA BENE IL PUT O BASTA SETTARE IL VALORE DELLA KEY?
             s.getGrid().put(new Coordinate(col, 6 - availableRows), card);
-            s.setNumberOfCards(s.getNumberOfCards() + 1);
+//            s.setNumberOfCards(s.getNumberOfCards() + 1);
             availableRows--;
         }
 
-        if (s.getNumberOfCards() == s.ROWS * s.COLUMNS) s.setFull(true);
+//        if (s.getNumberOfCards() == s.ROWS * s.COLUMNS) s.setFull(true);
+        if (s.getGrid().size() == s.ROWS * s.COLUMNS) s.setFull(true);
 
         return true;
     }
@@ -176,10 +180,13 @@ public class ControllerGame {
      * @param coordinate is the coordinate of the ObjectCard clicked by the user
      * @return the ObjectCard with that Coordinate
      */
-    public ObjectCard pickObjectCard(Coordinate coordinate) {
-        if(isObjectCardAvailable(coordinate)) return board.removeObjectCard(coordinate);
-        else return null;
-    }
+//    public ObjectCard pickObjectCard(Coordinate coordinate) {
+//        if(isObjectCardAvailable(coordinate)) {
+//
+//            return board.removeObjectCard(coordinate);
+//        }
+//        else return null;
+//    }
 
     /**
      * check if the ObjectCard clicked by user is available, so if it has at least one side free
@@ -192,14 +199,18 @@ public class ControllerGame {
 
     /**
      * Add an object card to the limbo area
-     * @param objectCard is the objectCard selected
+     * @param coordinate is the objectCard selected
      * @throws NullPointerException if the objectCard is null (this case shouldn't happen)
      */
-    public void addObjectCardToLimbo(ObjectCard objectCard) throws NullPointerException{
-        if (objectCard == null) throw new NullPointerException("ObjectCard is null");
-
-        if (this.limbo.size() < 3) this.limbo.add(objectCard);
-        else System.out.println("Limbo is full");
+    public void addObjectCardToLimbo(Coordinate coordinate) throws NullPointerException, IllegalStateException, IllegalArgumentException{
+        if (coordinate == null) throw new NullPointerException("ObjectCard is null");
+        if(!isObjectCardAvailable(coordinate)) {
+            throw new IllegalStateException("ObjectCard not available");
+        } else if(this.limbo.size()==3) {
+            throw new IllegalArgumentException("Limbo is full");
+        } else {
+            this.limbo.add(this.board.removeObjectCard(coordinate));
+        }
     }
 }
 
