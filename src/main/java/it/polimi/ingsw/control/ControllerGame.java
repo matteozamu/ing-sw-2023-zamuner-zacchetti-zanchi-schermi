@@ -36,6 +36,10 @@ public class ControllerGame {
         return currentPlayer;
     }
 
+    public Game getGame() {
+        return game;
+    }
+
     /**
      * Check if the username is available
      * @param username
@@ -116,18 +120,6 @@ public class ControllerGame {
         }
     }
 
-    //update function, funzione update vista dal prof
-    //ipotizzo che dalla view arrivi una stringa Usarname non nulla
-    //ricopio la funzione con observer e observable //TODO da sostituire
-//    public String update(Observable o, String username) {   // si può ritornare una stringa alla view???
-//        if (game.isUsernameAvailable(username)) {
-//            game.addPlayer(username);
-//            return "Utente inserito";
-//        } else {
-//            return "Nome non disponibile";
-//        }
-//    }
-
     // TODO: da spostare nella view
     /**
      * Select the column where the user want to add che ObjectCard, need to check if there is enough space
@@ -142,13 +134,41 @@ public class ControllerGame {
     }
 
     /**
-     * Load the shelf with the ObjectCard, the order has already been established
-     * @param column is the number of the column where the ObjectCard is added
-     * @param objectCard is the ObjectCard to add in the current player's shelf
+     * Method that adds a list of ObjectCards in the first available cells of the specified column.
+     *
+     * @param col is the column where to insert the object cards.
+     * @return true if the cards are successfully added.
+     * @throws IllegalStateException if there is not enough space to add the cards.
      */
-    public void loadShelf(int column, List<ObjectCard> objectCard) {
-        currentPlayer.getShelf().addObjectCards(column, objectCard);
+    public boolean addObjectCards(int col) throws IllegalStateException {
+        if (this.limbo.size() == 0 || this.limbo.size() > 3) throw new IllegalArgumentException("The list of cards must have a size between 1 and 3.");
+
+        Shelf s = this.currentPlayer.getShelf();
+        int availableRows = s.getAvailableRows(col);
+
+        if(availableRows == 0) throw new IllegalStateException("Column: " + col + " is full");
+        if (availableRows < this.limbo.size() + 1) throw new IllegalStateException("Not enough space in the column: " + col);
+
+        for (ObjectCard card : this.limbo) {
+            // TODO VA BENE IL PUT O BASTA SETTARE IL VALORE DELLA KEY?
+            s.getGrid().put(new Coordinate(col, 6 - availableRows), card);
+            s.setNumberOfCards(s.getNumberOfCards() + 1);
+            availableRows--;
+        }
+
+        if (s.getNumberOfCards() == s.ROWS * s.COLUMNS) s.setFull(true);
+
+        return true;
     }
+
+//    /**
+//     * Load the shelf with the ObjectCard, the order has already been established
+//     * @param column is the number of the column where the ObjectCard is added
+//     * @param objectCard is the ObjectCard to add in the current player's shelf
+//     */
+//    public void loadShelf(int column, List<ObjectCard> objectCard) {
+//        currentPlayer.getShelf().addObjectCards(column, objectCard);
+//    }
 
     //si puo fare una modifica che non rimuova la coordinata della cella ma setti il contenuto a null
     /**
@@ -172,14 +192,13 @@ public class ControllerGame {
 
     /**
      * Add an object card to the limbo area
-     * @param limbo is the zone where the objectCards selected from the board are put before being added in the shelf
      * @param objectCard is the objectCard selected
      * @throws NullPointerException if the objectCard is null (this case shouldn't happen)
      */
-    public void addObjectCardToLimbo(List<ObjectCard> limbo, ObjectCard objectCard) throws NullPointerException{
+    public void addObjectCardToLimbo(ObjectCard objectCard) throws NullPointerException{
         if (objectCard == null) throw new NullPointerException("ObjectCard is null");
 
-        if (limbo.size() < 3) limbo.add(objectCard);
+        if (this.limbo.size() < 3) this.limbo.add(objectCard);
         else System.out.println("Limbo is full");
     }
 }
