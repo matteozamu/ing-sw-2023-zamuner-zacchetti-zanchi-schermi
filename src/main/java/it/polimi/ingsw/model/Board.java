@@ -31,7 +31,6 @@ public class Board {
         return grid;
     }
 
-    // TODO non rimuovere la cella ma eliminare solo il suo valore
     /**
      * Remove the ObjectCard from the board at the specified coordinate.
      *
@@ -40,10 +39,6 @@ public class Board {
      */
     public ObjectCard removeObjectCard(Coordinate coordinate) {
         return grid.remove(coordinate);
-    }
-
-    public void clearGrid(){
-        this.grid.clear();
     }
 
     /**
@@ -100,10 +95,9 @@ public class Board {
     public String toString() {
         ObjectCard objectCard;
         String s = "";
-        // piu efficiente con StringBuilder?
 
         for (int row = 1; row <= 5; row++) {
-            for (int espacios = 5 - row; espacios >0; espacios--) s += "\t\t";
+            for (int spaces = 5 - row; spaces > 0; spaces--) s += "\t\t";
             for (int col = 1; col < 2 * row; col++) {
                 objectCard = this.grid.get(new Coordinate(5 - row, -5 + col));
                 s += ("|" + objectCard);
@@ -111,7 +105,7 @@ public class Board {
             s += "|\n";
         }
         for (int row = 5 - 1; row >= 1; row--) {
-            for (int espacios = 5 - row; espacios >0; espacios--) s += "\t\t";
+            for (int spaces = 5 - row; spaces > 0; spaces--) s += "\t\t";
             for (int col = 1; col < 2 * row; col++) {
                 objectCard = this.grid.get(new Coordinate(-5 + row, -5 + col));
                 s += ("|"+ objectCard);

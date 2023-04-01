@@ -13,7 +13,7 @@ import java.util.Map;
 public class Shelf {
     private Map<Coordinate, ObjectCard> grid;
     private boolean isFull;
-    public int numberOfCards;
+//    public int numberOfCards;
     public final int ROWS;
     public final int COLUMNS;
 
@@ -23,20 +23,20 @@ public class Shelf {
     public Shelf() {
         this.grid = new HashMap<>();
         this.isFull = false;
-        this.numberOfCards = 0;
+//        this.numberOfCards = 0;
 
         //TODO: in quanto costanti non è meglio inizializzarle quando le si dichiara?
         this.ROWS = 6;
         this.COLUMNS = 5;
     }
 
-    public int getNumberOfCards() {
-        return numberOfCards;
-    }
+//    public int getNumberOfCards() {
+//        return numberOfCards;
+//    }
 
-    public void setNumberOfCards(int numberOfCards) {
-        this.numberOfCards = numberOfCards;
-    }
+//    public void setNumberOfCards(int numberOfCards) {
+//        this.numberOfCards = numberOfCards;
+//    }
 
     /**
      *
@@ -75,7 +75,7 @@ public class Shelf {
         return availableRows;
     }
 
-    // TODO CI SERVE? Spoiler: no. Ma se serve c'è
+    // TODO CI SERVE? Spoiler: no. Ma se serve c'è. Decisamente MDR
     /**
      * Returns a map with the number of free cells for each column in the Shelf.
      *
@@ -106,8 +106,6 @@ public class Shelf {
 
     @Override
     public String toString() {
-        return "Shelf{" +
-                "grid=" + grid +
-                '}';
+        return "Shelf{" + "grid=" + grid + '}';
     }
 }

@@ -47,28 +47,21 @@ public class ControllerGameTest extends TestCase {
         cg.addPlayer("Margot");
         cg.addPlayer("Yvonne");
 
-        assertThrows(IllegalStateException.class, () -> {
-            cg.addPlayer("Colette");
-        });
+        assertFalse(cg.addPlayer("Colette"));
     }
 
    @Test
    public void testDuplicateUsername() {
        cg.addPlayer("Margot");
 
-       assertThrows(IllegalStateException.class, () -> {
-           cg.addPlayer("Margot");
-       });
+       assertFalse(cg.addPlayer("Margot"));
     }
 
     @Test
     public void testNextPlayerNoPlayers() {
-        assertThrows(IllegalStateException.class, () -> {
-            cg.nextPlayer();
-        });
+        assertNull(cg.nextPlayer());
     }
     @Test
-    // da dividere in unità ?
     public void testNextPlayer() {
         cg.addPlayer("Ember");
         cg.addPlayer("Addison");
@@ -84,26 +77,24 @@ public class ControllerGameTest extends TestCase {
     }
 
     @Test
-    public void testAddObjectCardsThrowsArgumentException () {
-        assertThrows(IllegalArgumentException.class, () -> {
-            cg.addObjectCards(1);
-                });
+    public void testAddObjectEmptyLimbo () {
+        assertFalse(cg.addObjectCards(1));
+    }
+
+    @Test
+    public void testAddObjectLimboTooBig () {
         cg.getLimbo().add(new ObjectCard(ObjectCardType.randomObjectCardType(), 1));
         cg.getLimbo().add(new ObjectCard(ObjectCardType.randomObjectCardType(), 2));
         cg.getLimbo().add(new ObjectCard(ObjectCardType.randomObjectCardType(), 0));
         cg.getLimbo().add(new ObjectCard(ObjectCardType.randomObjectCardType(), 2));
-        assertThrows(IllegalArgumentException.class, () -> {
-            cg.addObjectCards(1);
-        });
+
+        assertFalse(cg.addObjectCards(1));
 
     }
 
     @Test
-    public void testAddObjectCardsThrowsStateException () {
-        cg.addPlayer("Matteo");
-
-        cg.getLimbo().add(new ObjectCard(ObjectCardType.randomObjectCardType(), 1));
-        cg.getLimbo().add(new ObjectCard(ObjectCardType.randomObjectCardType(), 2));
+    public void testAddObjectCardsNoSpaceShelfColumn () {
+        cg.addPlayer("Estela");
 
         cg.getCurrentPlayer().getShelf().getGrid().put(new Coordinate(0,0),new ObjectCard(ObjectCardType.randomObjectCardType(), 1) );
         cg.getCurrentPlayer().getShelf().getGrid().put(new Coordinate(1,0),new ObjectCard(ObjectCardType.randomObjectCardType(), 1) );
@@ -111,38 +102,40 @@ public class ControllerGameTest extends TestCase {
         cg.getCurrentPlayer().getShelf().getGrid().put(new Coordinate(3,0),new ObjectCard(ObjectCardType.randomObjectCardType(), 1) );
         cg.getCurrentPlayer().getShelf().getGrid().put(new Coordinate(4,0),new ObjectCard(ObjectCardType.randomObjectCardType(), 1) );
 
-        assertThrows(IllegalStateException.class, () -> {
-            cg.addObjectCards(0);
-        });
+        cg.getLimbo().add(new ObjectCard(ObjectCardType.randomObjectCardType(), 1));
+        cg.getLimbo().add(new ObjectCard(ObjectCardType.randomObjectCardType(), 2));
+
+        assertFalse(cg.addObjectCards(0));
     }
 
     @Test
     public void testAddObjectCards () {
-        cg.addPlayer("Fede");
-
-        cg.getLimbo().add(new ObjectCard(ObjectCardType.randomObjectCardType(), 1));
-        cg.getLimbo().add(new ObjectCard(ObjectCardType.randomObjectCardType(), 2));
+        cg.addPlayer("Laia");
 
         cg.getCurrentPlayer().getShelf().getGrid().put(new Coordinate(0,0),new ObjectCard(ObjectCardType.randomObjectCardType(), 1) );
         cg.getCurrentPlayer().getShelf().getGrid().put(new Coordinate(1,0),new ObjectCard(ObjectCardType.randomObjectCardType(), 1) );
         cg.getCurrentPlayer().getShelf().getGrid().put(new Coordinate(2,0),new ObjectCard(ObjectCardType.randomObjectCardType(), 1) );
         cg.getCurrentPlayer().getShelf().getGrid().put(new Coordinate(3,0),new ObjectCard(ObjectCardType.randomObjectCardType(), 1) );
 
+        cg.getLimbo().add(new ObjectCard(ObjectCardType.randomObjectCardType(), 1));
+        cg.getLimbo().add(new ObjectCard(ObjectCardType.randomObjectCardType(), 2));
+
         assertTrue(cg.addObjectCards(0));
     }
 
     @Test
-    public void testAddObjectCardsFillingShelf() {
-        cg.addPlayer("Simo");
+    public void testAddObjectCardsCardRightPositionShelf() {
+        cg.addPlayer("Ines");
         ObjectCard oc = new ObjectCard(ObjectCardType.randomObjectCardType(), 2);
         cg.getLimbo().add(oc);
+
         cg.addObjectCards(0);
         assertEquals(cg.getCurrentPlayer().getShelf().getGrid().get(new Coordinate(0, 0)), oc );
     }
 
     @Test
-    public void testAddObjectCardsCheckIsFull() {
-        cg.addPlayer("Fez");
+    public void testAddObjectCardsShelfIsFull() {
+        cg.addPlayer("Juanita");
         for(int i=0; i< 6; i++) {
             for (int j=0; j<4; j++) {
                 cg.getCurrentPlayer().getShelf().getGrid().put(new Coordinate(i, j),new ObjectCard(ObjectCardType.randomObjectCardType(), 1) );
@@ -155,21 +148,15 @@ public class ControllerGameTest extends TestCase {
         cg.getCurrentPlayer().getShelf().getGrid().put(new Coordinate(4, 5),new ObjectCard(ObjectCardType.randomObjectCardType(), 1) );
 
         cg.getLimbo().add(new ObjectCard(ObjectCardType.randomObjectCardType(), 1));
+
         cg.addObjectCards(5);
         assertTrue(cg.getCurrentPlayer().getShelf().isFull());
     }
 
     @Test
-    public void testAddObjectCardToLimboThrowsNullPointerException() {
+    public void testAddObjectCardToLimboNullPointerException() {
         assertThrows(NullPointerException.class, () -> {
             cg.addObjectCardToLimbo(null);
         });
     }
-
-//    @Test
-//    public void testAddObjectCardToLimboThrowsIllegalStateException() {
-//        assertThrows(IllegalStateException.class, () -> {
-//            cg.addObjectCardToLimbo(new Coordinate(0,0));
-//        });
-//    }
 }

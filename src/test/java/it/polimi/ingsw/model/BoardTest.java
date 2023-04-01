@@ -32,14 +32,14 @@ public class BoardTest extends TestCase {
         assertEquals(expected, b.getGrid());
     }
 
-
-
     @Test
     void testRemoveObjectCard() {
         Coordinate c2 = new Coordinate(2, 2);
         ObjectCard objectCard2 = new ObjectCard(ObjectCardType.randomObjectCardType(), 1);
+
         b.createCell(c, objectCard);
         b.createCell(c2, objectCard2);
+
         //da separare in unità??
         ObjectCard removedCard = b.removeObjectCard(c);
         assertEquals(objectCard, removedCard);
@@ -49,11 +49,10 @@ public class BoardTest extends TestCase {
 
     @Test
     void testRemovedCardIsNull() {
+        b.removeObjectCard(c);
         ObjectCard nullCard = b.removeObjectCard(c);
-        nullCard = b.removeObjectCard(c);
         assertNull(nullCard);
     }
-
 
     @Test
     public void testKeyAlreadyExists() {

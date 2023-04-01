@@ -17,7 +17,7 @@ public class ControllerGame {
     private Board board;
     private List<CommonGoal> commonGoals;
     private Player currentPlayer;
-    private int numberOfPlayers;
+//    private int numberOfPlayers;
     private Game game;
     private List<ObjectCard> limbo;
 
@@ -29,7 +29,7 @@ public class ControllerGame {
         this.players = new ArrayList<>();
         this.board = new Board();
         this.game = new Game();
-        this.numberOfPlayers = 0;
+//        this.numberOfPlayers = 0;
         this.commonGoals = new ArrayList<>();
         this.limbo = new ArrayList<>();
     }
@@ -56,7 +56,7 @@ public class ControllerGame {
      * @return true if available, false if not
      * @throws NullPointerException
      */
-    public boolean isUsernameAvailable(String username) throws NullPointerException { //faccio controllo da view
+    public boolean isUsernameAvailable(String username) throws NullPointerException {
         if (username == null) throw new NullPointerException("Username is null");
         for (Player p : players){
             if (p.getName().equals(username)) return false;
@@ -71,31 +71,27 @@ public class ControllerGame {
      * @throws NullPointerException
      * @throws IllegalStateException
      */
-    public boolean addPlayer(String username) throws NullPointerException, IllegalStateException {
-//      if (username == null) throw new NullPointerException("Username is null");
-        if(!this.isUsernameAvailable(username)) throw new IllegalStateException("Username " + username + " already in use");
+    public boolean addPlayer(String username) {
+        if(!this.isUsernameAvailable(username)) return false;
 
         if (this.players.size() < this.game.MAX_PLAYER) {
             Shelf shelf = new Shelf();
             PersonalGoalCard pg = game.getRandomAvailablePersonalGoalCard();
 
             Player p = new Player(username, shelf, pg);
-            if(this.numberOfPlayers == 0) this.currentPlayer = p;
+            if(this.players.size() == 0) this.currentPlayer = p;
             this.players.add(p);
-            this.numberOfPlayers++;
-
+//            this.numberOfPlayers++;
             return true;
-        } else {
-            throw new IllegalStateException("Max number of players reached");
-        }
+        } else return false;
     }
 
     /**
      * Move to the next player
      * @return the next player
      */
-    public Player nextPlayer() throws IllegalStateException{
-        if(this.players.size() == 0) throw new IllegalStateException("No players");
+    public Player nextPlayer() {
+        if(this.players.size() == 0) return null;
 
         this.limbo.clear();
         if (this.players.indexOf(this.currentPlayer) == this.players.size() - 1) this.currentPlayer = this.players.get(0);
@@ -151,21 +147,18 @@ public class ControllerGame {
      * @return true if the cards are successfully added.
      * @throws IllegalStateException if there is not enough space to add the cards.
      */
-    public boolean addObjectCards(int col) throws IllegalStateException, IllegalArgumentException {
-        if (this.limbo.size() == 0 || this.limbo.size() > 3) throw new IllegalArgumentException("The list of cards must have a size between 1 and 3.");
+    public boolean addObjectCards(int col) {
+        if (this.limbo.size() == 0 || this.limbo.size() > 3) return false;
 
         Shelf s = this.currentPlayer.getShelf();
         int availableRows = s.getAvailableRows(col);
-
-        if(availableRows == 0) throw new IllegalStateException("Column: " + col + " is full");
-        if (availableRows < this.limbo.size()) throw new IllegalStateException("Not enough space in the column: " + col);
+        if (availableRows < this.limbo.size()) return false;
 
         for (ObjectCard card : this.limbo) {
             s.getGrid().put(new Coordinate(6 - availableRows, col), card);
 //            s.setNumberOfCards(s.getNumberOfCards() + 1);
             availableRows--;
         }
-
 //        if (s.getNumberOfCards() == s.ROWS * s.COLUMNS) s.setFull(true);
         if (s.getGrid().size() == s.ROWS * s.COLUMNS) s.setFull(true);
 
@@ -202,7 +195,7 @@ public class ControllerGame {
      * @param coordinate The coordinate of the object card to check.
      * @return True if the object card is available, false otherwise.
      */
-    private boolean isObjectCardAvailable(Coordinate coordinate) {
+    public boolean isObjectCardAvailable(Coordinate coordinate) {
         return board.isEmptyAtDirection(coordinate, UP) || board.isEmptyAtDirection(coordinate, DOWN) || board.isEmptyAtDirection(coordinate, RIGHT) || board.isEmptyAtDirection(coordinate, LEFT);
     }
 
@@ -215,15 +208,14 @@ public class ControllerGame {
      * @throws IllegalStateException If the object card is not available.
      * @throws IllegalArgumentException If the limbo area is already full.
      */
-    public void addObjectCardToLimbo(Coordinate coordinate) throws NullPointerException, IllegalStateException, IllegalArgumentException{
-        if (coordinate == null) throw new NullPointerException("ObjectCard is null");
-        if(!isObjectCardAvailable(coordinate)) {
-            throw new IllegalStateException("ObjectCard not available");
-        } else if(this.limbo.size()==3) {
-            throw new IllegalArgumentException("Limbo is full");
-        } else {
-            this.limbo.add(this.board.removeObjectCard(coordinate));
-        }
+    public boolean addObjectCardToLimbo(Coordinate coordinate) throws NullPointerException {
+        if(coordinate == null) throw new NullPointerException("ObjectCard is null");
+
+        if(!isObjectCardAvailable(coordinate) || this.limbo.size() == 3) return false;
+
+        this.limbo.add(this.board.removeObjectCard(coordinate));
+
+        return true;
     }
 }
 
