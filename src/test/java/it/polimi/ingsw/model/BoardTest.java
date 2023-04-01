@@ -1,16 +1,11 @@
 package it.polimi.ingsw.model;
 
 import junit.framework.TestCase;
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
 import java.util.HashMap;
 import java.util.Map;
-
-import javax.management.openmbean.KeyAlreadyExistsException;
-
-import java.security.InvalidParameterException;
 
 import static org.junit.jupiter.api.Assertions.*;
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
@@ -21,15 +16,15 @@ public class BoardTest extends TestCase {
 
     @BeforeEach
     public void setUp() {
-        b = new Board();
-        c = new Coordinate(1, 1);
-        objectCard = new ObjectCard(ObjectCardType.randomObjectCardType(), 0);
+        this.b = new Board();
+        this.c = new Coordinate(1, 1);
+        this.objectCard = new ObjectCard(ObjectCardType.randomObjectCardType(), 0);
     }
 
     @Test
     void testGetGrid() {
         Map<Coordinate, ObjectCard> expected = new HashMap<>();
-        assertEquals(expected, b.getGrid());
+        assertEquals(expected, this.b.getGrid());
     }
 
     @Test
@@ -37,43 +32,41 @@ public class BoardTest extends TestCase {
         Coordinate c2 = new Coordinate(2, 2);
         ObjectCard objectCard2 = new ObjectCard(ObjectCardType.randomObjectCardType(), 1);
 
-        b.createCell(c, objectCard);
-        b.createCell(c2, objectCard2);
+        this.b.createCell(this.c, this.objectCard);
+        this.b.createCell(c2, objectCard2);
 
         //da separare in unità??
-        ObjectCard removedCard = b.removeObjectCard(c);
-        assertEquals(objectCard, removedCard);
-        assertFalse(b.getGrid().containsKey(c));
-        assertTrue(b.getGrid().containsKey(c2));
+        ObjectCard removedCard = this.b.removeObjectCard(this.c);
+        assertEquals(this.objectCard, removedCard);
+        assertFalse(this.b.getGrid().containsKey(this.c));
+        assertTrue(this.b.getGrid().containsKey(c2));
     }
 
     @Test
-    void testRemovedCardIsNull() {
-        b.removeObjectCard(c);
-        ObjectCard nullCard = b.removeObjectCard(c);
-        assertNull(nullCard);
-    }
-
-    @Test
-    public void testKeyAlreadyExists() {
-        b.createCell(c, objectCard);
-        assertThrows(KeyAlreadyExistsException.class, () -> {
-            b.createCell(c, objectCard);
-        });
-    }
-
-    @Test
-    public void testNullKey() {
+    public void testCreateCellNullKey() {
         assertThrows(NullPointerException.class, () -> {
-            b.createCell(null, objectCard);
+            b.createCell(null, this.objectCard);
         });
     }
 
     @Test
     public void testInvalidCard () {
-        assertThrows(InvalidParameterException.class, () -> {
+        assertThrows(IllegalArgumentException.class, () -> {
             b.createCell(c, null);
         });
+    }
+    @Test
+    void testRemovedObjectCardIsNull() {
+        this.b.removeObjectCard(this.c);
+        ObjectCard nullCard = this.b.removeObjectCard(this.c);
+        assertNull(nullCard);
+    }
+
+    @Test
+    public void testCreateCellKeyAlreadyExists() {
+        this.b.createCell(this.c, this.objectCard);
+
+        assertFalse(this.b.createCell(this.c, this.objectCard));
     }
 }
 

@@ -1,7 +1,5 @@
 package it.polimi.ingsw.model;
 
-import javax.management.openmbean.KeyAlreadyExistsException;
-import java.security.InvalidParameterException;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -47,14 +45,13 @@ public class Board {
      * @param coord     The coordinate of the cell to create.
      * @param card  The object card to place at the cell's coordinate.
      * @return      True if the cell is successfully created and added to the board, false otherwise.
-     * @throws IllegalArgumentException      If the coordinate is null.
-     * @throws KeyAlreadyExistsException     If a cell with the same coordinate already exists.
-     * @throws InvalidParameterException     If the object card is null.
+     * @throws NullPointerException          If the coordinate is null.
+     * @throws IllegalArgumentException      If the object card is null.
      */
-    public boolean createCell(Coordinate coord, ObjectCard card) throws IllegalArgumentException, KeyAlreadyExistsException, InvalidParameterException {
-        if(coord == null) throw new IllegalArgumentException("Empty key");
-        if (this.grid.containsKey(coord)) throw new KeyAlreadyExistsException("Cell " + coord.getColumn() + "," + coord.getRow() + " already exists");
-        if(card == null) throw new InvalidParameterException("Object card invalid");
+    public boolean createCell(Coordinate coord, ObjectCard card) throws NullPointerException, IllegalArgumentException {
+        if(coord == null) throw new NullPointerException("Empty key");
+        if(card == null) throw new IllegalArgumentException("Object card invalid");
+        if (this.grid.containsKey(coord)) return false;
 
         this.grid.put(coord, card);
         return true;
