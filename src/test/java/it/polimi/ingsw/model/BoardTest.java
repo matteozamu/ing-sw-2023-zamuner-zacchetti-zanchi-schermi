@@ -28,6 +28,13 @@ public class BoardTest extends TestCase {
     }
 
     @Test
+    void testRemovedObjectCardIsNull() {
+        this.b.removeObjectCard(this.c);
+        ObjectCard nullCard = this.b.removeObjectCard(this.c);
+        assertNull(nullCard);
+    }
+
+    @Test
     void testRemoveObjectCard() {
         Coordinate c2 = new Coordinate(2, 2);
         ObjectCard objectCard2 = new ObjectCard(ObjectCardType.randomObjectCardType(), 1);
@@ -50,22 +57,15 @@ public class BoardTest extends TestCase {
     }
 
     @Test
-    public void testInvalidCard () {
+    public void testCreateCellInvalidCard () {
         assertThrows(IllegalArgumentException.class, () -> {
             b.createCell(c, null);
         });
-    }
-    @Test
-    void testRemovedObjectCardIsNull() {
-        this.b.removeObjectCard(this.c);
-        ObjectCard nullCard = this.b.removeObjectCard(this.c);
-        assertNull(nullCard);
     }
 
     @Test
     public void testCreateCellKeyAlreadyExists() {
         this.b.createCell(this.c, this.objectCard);
-
         assertFalse(this.b.createCell(this.c, this.objectCard));
     }
 }
