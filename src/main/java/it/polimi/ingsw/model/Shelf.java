@@ -31,14 +31,6 @@ public class Shelf {
         this.COLUMNS = 5;
     }
 
-//    public int getNumberOfCards() {
-//        return numberOfCards;
-//    }
-
-//    public void setNumberOfCards(int numberOfCards) {
-//        this.numberOfCards = numberOfCards;
-//    }
-
     /**
      *
      * @return true if the shelf is full

@@ -66,24 +66,13 @@ public class Board {
      * @throws IllegalArgumentException If the direction parameter is invalid.
      */
     public boolean isEmptyAtDirection(Coordinate coord, Direction direction) {
-        Coordinate tmp;
-
-        switch (direction) {
-            case UP:
-                tmp = new Coordinate(coord.getColumn() + 1, coord.getRow());
-                break;
-            case DOWN:
-                tmp = new Coordinate(coord.getColumn() - 1, coord.getRow());
-                break;
-            case LEFT:
-                tmp = new Coordinate(coord.getColumn(), coord.getRow() - 1);
-                break;
-            case RIGHT:
-                tmp = new Coordinate(coord.getColumn(), coord.getRow() + 1);
-                break;
-            default:
-                throw new IllegalArgumentException("Invalid direction");
-        }
+        Coordinate tmp = switch (direction) {
+            case UP -> new Coordinate(coord.getRow() + 1, coord.getColumn());
+            case DOWN -> new Coordinate(coord.getRow() - 1, coord.getColumn());
+            case LEFT -> new Coordinate(coord.getRow(), coord.getColumn() - 1);
+            case RIGHT -> new Coordinate(coord.getRow(), coord.getColumn() + 1);
+            default -> throw new IllegalArgumentException("Invalid direction");
+        };
 
         return !grid.containsKey(tmp);
     }
