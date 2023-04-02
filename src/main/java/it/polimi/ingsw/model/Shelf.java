@@ -1,5 +1,6 @@
 package it.polimi.ingsw.model;
 
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -59,6 +60,38 @@ public class Shelf {
     }
 
     /**
+     * Prints the layout of object cards on the Shelf, including both the type and ID of each card.
+     * Cards are printed in reverse row order, starting from the last row and proceeding towards the first.
+     * Each card is represented as "type-id", where "type" is the card type and "id" is its ID.
+     * In case a cell is empty, a placeholder with dashes ("-") will be printed.
+     */
+    public void printShelf() {
+        int maxLength = Arrays.stream(ObjectCardType.values())
+                .map(ObjectCardType::toString)
+                .mapToInt(String::length)
+                .max()
+                .orElse(0);
+
+        maxLength += 2; // Adds space for ID and separator "-"
+
+        for (int row = ROWS - 1; row >= 0; row--) {
+            for (int col = 0; col < COLUMNS; col++) {
+                Coordinate coord = new Coordinate(row, col);
+                ObjectCard card = getObjectCard(coord);
+                if (card == null) {
+                    System.out.print("-".repeat(maxLength));
+                } else {
+                    String cardText = card.toString();
+                    int padding = maxLength - cardText.length();
+                    System.out.print(cardText + " ".repeat(padding));
+                }
+                System.out.print("\t");
+            }
+            System.out.println();
+        }
+    }
+
+    /**
      * return the number (row) of free cells in the col column
      * if there are no free cells the method throws an exception
      * @param col is the column
@@ -92,7 +125,6 @@ public class Shelf {
 
         return freeCellsPerColumn;
     }
-
 
     /**
      * Returns the ObjectCard at the specified coordinate in the shelf.
