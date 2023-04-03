@@ -3,6 +3,8 @@ package it.polimi.ingsw.model;
 import java.util.HashMap;
 import java.util.Map;
 
+// OK for TESTING
+
 /**
  * Quattro righe formate ciascuna da 5 tessere di uno, due o tre tipi differenti.
  * Righe diverse possono avere combinazioni diverse di tipi di tessere.

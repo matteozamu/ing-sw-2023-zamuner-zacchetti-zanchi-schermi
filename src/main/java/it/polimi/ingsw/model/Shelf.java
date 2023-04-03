@@ -15,7 +15,6 @@ import java.util.Map;
 public class Shelf {
     private Map<Coordinate, ObjectCard> grid;
     private boolean isFull;
-//    public int numberOfCards;
     public final int ROWS;
     public final int COLUMNS;
 
@@ -25,7 +24,6 @@ public class Shelf {
     public Shelf() {
         this.grid = new HashMap<>();
         this.isFull = false;
-//        this.numberOfCards = 0;
 
         //TODO: in quanto costanti non è meglio inizializzarle quando le si dichiara?
         this.ROWS = 6;
