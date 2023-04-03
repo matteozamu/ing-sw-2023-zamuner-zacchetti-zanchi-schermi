@@ -22,20 +22,20 @@ public class BoardTest extends TestCase {
     }
 
     @Test
-    void testGetGrid() {
+    public void testGetGrid() {
         Map<Coordinate, ObjectCard> expected = new HashMap<>();
         assertEquals(expected, this.b.getGrid());
     }
 
     @Test
-    void testRemovedObjectCardIsNull() {
+    public void testRemovedObjectCardIsNull() {
         this.b.removeObjectCard(this.c);
         ObjectCard nullCard = this.b.removeObjectCard(this.c);
         assertNull(nullCard);
     }
 
     @Test
-    void testRemoveObjectCard() {
+    public void testRemoveObjectCard() {
         Coordinate c2 = new Coordinate(2, 2);
         ObjectCard objectCard2 = new ObjectCard(ObjectCardType.randomObjectCardType(), 1);
 
@@ -68,6 +68,64 @@ public class BoardTest extends TestCase {
         this.b.createCell(this.c, this.objectCard);
         assertFalse(this.b.createCell(this.c, this.objectCard));
     }
+
+
+
+    @Test
+    public void testIsEmptyAtDirectionTrue() {
+        this.b.createCell(this.c, this.objectCard);
+
+        // Test UP is empty
+        assertTrue(this.b.isEmptyAtDirection(this.c, Board.Direction.UP));
+
+        // Test DOWN is empty
+        assertTrue(this.b.isEmptyAtDirection(this.c, Board.Direction.DOWN));
+
+        // Test LEFT is empty
+        assertTrue(this.b.isEmptyAtDirection(this.c, Board.Direction.LEFT));
+
+        // Test RIGHT is empty
+        assertTrue(this.b.isEmptyAtDirection(this.c, Board.Direction.RIGHT));
+    }
+
+    @Test
+    public void testIsEmptyAtDirectionFalse() {
+        Coordinate c1 = new Coordinate(2, 1);
+        Coordinate c2 = new Coordinate(0, 1);
+        Coordinate c3 = new Coordinate(1, 0);
+        Coordinate c4 = new Coordinate(1, 2);
+
+        this.b.createCell(this.c, this.objectCard);
+
+        this.b.createCell(c1, this.objectCard);
+        this.b.createCell(c2, this.objectCard);
+        this.b.createCell(c3, this.objectCard);
+        this.b.createCell(c4, this.objectCard);
+
+        // Test UP is  not empty
+        assertFalse(this.b.isEmptyAtDirection(this.c, Board.Direction.UP));
+
+        // Test DOWN is not empty
+        assertFalse(this.b.isEmptyAtDirection(this.c, Board.Direction.DOWN));
+
+        // Test LEFT is not empty
+        assertFalse(this.b.isEmptyAtDirection(this.c, Board.Direction.LEFT));
+
+        // Test RIGHT is not empty
+        assertFalse(this.b.isEmptyAtDirection(this.c, Board.Direction.RIGHT));
+    }
+
+    //TODO: rifare test quando sono sistemate le eccezioni
+//    @Test
+//    public void testIsEmptyAtDirectionIllegalArgumentException(){
+//        assertThrows(IllegalArgumentException.class, () -> {
+//            this.b.isEmptyAtDirection(this.c, null);
+//        });
+//    }
+
+
+
+
+
 }
 
-//manca isEmptyAtDirection

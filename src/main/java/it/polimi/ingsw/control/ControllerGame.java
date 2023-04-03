@@ -2,6 +2,7 @@ package it.polimi.ingsw.control;
 
 import it.polimi.ingsw.distributed.Client;
 import it.polimi.ingsw.model.*;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
@@ -52,6 +53,10 @@ public class ControllerGame {
 
     public List<ObjectCard> getLimbo() {
         return limbo;
+    }
+
+    public Board getBoard() {
+        return board;
     }
 
     /**
@@ -196,6 +201,10 @@ public class ControllerGame {
      * @return True if the object card is available, false otherwise.
      */
     public boolean isObjectCardAvailable(Coordinate coordinate) {
+        System.out.println(board.isEmptyAtDirection(coordinate, UP));
+        System.out.println(board.isEmptyAtDirection(coordinate, DOWN));
+        System.out.println(board.isEmptyAtDirection(coordinate, RIGHT));
+        System.out.println(board.isEmptyAtDirection(coordinate, LEFT));
         return board.isEmptyAtDirection(coordinate, UP) || board.isEmptyAtDirection(coordinate, DOWN) || board.isEmptyAtDirection(coordinate, RIGHT) || board.isEmptyAtDirection(coordinate, LEFT);
     }
 
@@ -227,6 +236,25 @@ public class ControllerGame {
         /*
         operazioni da aggiungere
          */
+    }
+
+    /**
+     * Calculate the points of the currentPlayer. Each time the method counts the points starting from 0.
+     * Then set the points to the currentPlayer.
+     * @return the point of the currentPlayer
+     */
+    public int pointsCalculator() {
+        int points = 0;
+        points += this.currentPlayer.getPersonalGoalCard().calculatePoints();
+        for(CommonGoal c: this.commonGoals){
+            if(c.checkGoal(this.currentPlayer.getShelf())) points += c.updateCurrentPoints(this.players.size());
+        }
+        points += this.currentPlayer.getShelf().closeObjectCardsPoints();
+        if(this.currentPlayer.getShelf().isFull()) points++;
+
+        this.currentPlayer.setCurrentPoints(points);
+
+        return points;
     }
 }
 

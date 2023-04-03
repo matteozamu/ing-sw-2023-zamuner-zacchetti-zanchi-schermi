@@ -22,10 +22,16 @@ public class PersonalGoalCard {
     /**
      * Calculates the points earned by a player based on their personal goal card.
      *
-     * @param p The Player for whom the points are calculated.
      * @return The number of points earned by the player.
      */
-    public int calculatePoints(Player p) {
+    public int calculatePoints() {
+        if(this.targetsReached == 1) return 1;
+        if(this.targetsReached == 2) return 2;
+        if(this.targetsReached == 3) return 4;
+        if(this.targetsReached == 4) return 6;
+        if(this.targetsReached == 5) return 9;
+        if(this.targetsReached == 6) return 12;
+
         return 0;
     }
 

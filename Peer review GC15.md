@@ -18,6 +18,6 @@ Inoltre, da quanto emerge dal diagramma delle classi del modello, il gioco non c
 
 ## Confronto tra le architetture
 
-Analizzando il nostro modello, notiamo una similarità di pensiero, ciò significa che stiamo procedendo nella stessa direzione per la realizzazione del progetto. Ad ogni modo, abbiamo trovato alcune idee da cui potremmo prendere spunto per migliorare la nostra implementazione tra cui la gestione delle carte disponibili in una classe apposita "TileBag" e la possibilità di avere una cella della board riempita con un valore fittizio per indicare l'assenza di carte al suo interno.
+Analizzando il nostro modello, notiamo una similarità di pensiero, ciò significa che stiamo procedendo nella stessa direzione per la realizzazione del progetto. Ad ogni modo, abbiamo trovato alcune idee da cui potremmo prendere spunto per migliorare la nostra implementazione tra cui la gestione delle carte disponibili in una classe apposita "TileBag" e la possibilità di avere una cella della "Board" riempita con un valore fittizio per indicare l'assenza di carte al suo interno.
 
 Infine, confrontando i nostri UML, identifichiamo una differenza data dalla presenza di una classe "CartaObiettivoPersonale" che rappresenta la carta fisica del gioco. Ad essa viene poi associata una istanza di "ObiettivoPersonale" che contiene le caratteristiche dei vari obiettivi di quella specifica carta.

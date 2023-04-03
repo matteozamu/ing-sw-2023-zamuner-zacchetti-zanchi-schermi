@@ -3,6 +3,8 @@ package it.polimi.ingsw.model;
 import java.util.HashSet;
 import java.util.Set;
 
+// OK for TESTING
+
 /**
  * Tre colonne formate ciascuna da 6 tessere di uno, due o tre tipi differenti.
  * Colonne diverse possono avere combinazioni diverse di tipi di tessere.

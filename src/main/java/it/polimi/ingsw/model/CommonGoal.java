@@ -6,7 +6,11 @@ package it.polimi.ingsw.model;
  * Note: Child classes don't need a constructor.
  */
 public abstract class CommonGoal {
-    private int currentPoints = 8;
+    private int currentPoints;
+
+    public CommonGoal() {
+        this.currentPoints = 8;
+    }
 
     /**
      * Update the points obtainable with the current CommonGoalCard.
@@ -16,9 +20,9 @@ public abstract class CommonGoal {
      */
     public int updateCurrentPoints(int numberOfPlayers) {
         if(numberOfPlayers == 4 || numberOfPlayers == 3){
-            currentPoints -= 2;
+            this.currentPoints -= 2;
         } else if (numberOfPlayers == 2){
-            currentPoints -=4;
+            this.currentPoints -=4;
         }
         return currentPoints;
     }
