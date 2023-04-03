@@ -26,7 +26,7 @@ public enum ObjectCardType {
         this.text = text;
     }
 
-    private static final List<ObjectCardType> VALUES =
+    public static final List<ObjectCardType> VALUES =
             List.of(values());
     public static final int SIZE = VALUES.size();
     private static final Random RANDOM = new Random();

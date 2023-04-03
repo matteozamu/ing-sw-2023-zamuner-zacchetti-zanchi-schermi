@@ -24,16 +24,6 @@ public class Player {
     }
 
     /**
-     * Adds points to the player's current points.
-     *
-     * @param points The number of points to add.
-     * @return The updated number of points.
-     */
-    public int addPoints(int points) {
-        return 0;
-    }
-
-    /**
      * Returns the player's name.
      *
      * @return The name of the player.
@@ -67,6 +57,10 @@ public class Player {
      */
     public PersonalGoalCard getPersonalGoalCard() {
         return personalGoalCard;
+    }
+
+    public void setCurrentPoints(int currentPoints) {
+        this.currentPoints = currentPoints;
     }
 
     /**

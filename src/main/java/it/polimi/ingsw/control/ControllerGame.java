@@ -217,5 +217,24 @@ public class ControllerGame {
 
         return true;
     }
+
+    /**
+     * Calculate the points of the currentPlayer. Each time the method counts the points starting from 0.
+     * Then set the points to the currentPlayer.
+     * @return the point of the currentPlayer
+     */
+    public int pointsCalculator() {
+        int points = 0;
+        points += this.currentPlayer.getPersonalGoalCard().calculatePoints();
+        for(CommonGoal c: this.commonGoals){
+            if(c.checkGoal(this.currentPlayer.getShelf())) points += c.updateCurrentPoints(this.players.size());
+        }
+        points += this.currentPlayer.getShelf().closeObjectCardsPoints();
+        if(this.currentPlayer.getShelf().isFull()) points++;
+
+        this.currentPlayer.setCurrentPoints(points);
+
+        return points;
+    }
 }
 
