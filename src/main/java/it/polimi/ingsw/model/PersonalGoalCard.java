@@ -19,6 +19,14 @@ public class PersonalGoalCard {
         this.goals = goals;
     }
 
+    public ArrayList<PersonalGoal> getGoals() {
+        return goals;
+    }
+
+    public void setTargetsReached(int targetsReached) {
+        this.targetsReached = targetsReached;
+    }
+
     /**
      * Calculates the points earned by a player based on their personal goal card.
      *
@@ -33,9 +41,5 @@ public class PersonalGoalCard {
         if(this.targetsReached == 6) return 12;
 
         return 0;
-    }
-
-    public ArrayList<PersonalGoal> getGoals() {
-        return goals;
     }
 }

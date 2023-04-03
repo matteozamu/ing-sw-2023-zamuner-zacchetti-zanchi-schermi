@@ -196,10 +196,6 @@ public class ControllerGame {
      * @return True if the object card is available, false otherwise.
      */
     public boolean isObjectCardAvailable(Coordinate coordinate) {
-        System.out.println(board.isEmptyAtDirection(coordinate, UP));
-        System.out.println(board.isEmptyAtDirection(coordinate, DOWN));
-        System.out.println(board.isEmptyAtDirection(coordinate, RIGHT));
-        System.out.println(board.isEmptyAtDirection(coordinate, LEFT));
         return board.isEmptyAtDirection(coordinate, UP) || board.isEmptyAtDirection(coordinate, DOWN) || board.isEmptyAtDirection(coordinate, RIGHT) || board.isEmptyAtDirection(coordinate, LEFT);
     }
 

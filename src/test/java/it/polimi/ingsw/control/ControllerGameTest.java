@@ -188,21 +188,12 @@ public class ControllerGameTest extends TestCase {
 //        testare se il limbo ha <3 carte e se la carta è disponibile
 //    }
 
-
-
-
-
-
-
     @Test
     public void testAddObjectCardToLimboNullPointerException() {
         assertThrows(NullPointerException.class, () -> {
             cg.addObjectCardToLimbo(null);
         });
     }
-
-
-
 
     @Test
     public void testPointsCalculatorNoCompletedRows() {
@@ -211,33 +202,24 @@ public class ControllerGameTest extends TestCase {
     }
 
     @Test
-
-    // TODO: non passa
-
-    public void testPointsCalculatorOneCompletedRow() {
+    public void testPointsCalculatorOneCompletedRowInShelf() {
         cg.addPlayer("Alice");
+
         ObjectCardType type = ObjectCardType.randomObjectCardType();
-        ObjectCard oc1 = new ObjectCard(type, 0);
-        ObjectCard oc2 = new ObjectCard(type, 1);
-        ObjectCard oc3 = new ObjectCard(type, 2);
-        ObjectCard oc4 = new ObjectCard(type, 0);
-        ObjectCard oc5 = new ObjectCard(type, 1);
+        ObjectCard oc = new ObjectCard(type, 0);
 
-        cg.getCurrentPlayer().getShelf().getGrid().put(new Coordinate(5, 0), oc1);
-        cg.getCurrentPlayer().getShelf().getGrid().put(new Coordinate(4, 0), oc2);
-        cg.getCurrentPlayer().getShelf().getGrid().put(new Coordinate(3, 0), oc3);
-        cg.getCurrentPlayer().getShelf().getGrid().put(new Coordinate(2, 0), oc4);
-        cg.getCurrentPlayer().getShelf().getGrid().put(new Coordinate(1, 0), oc5);
+        for(int i = 0; i < 5; i++) cg.getCurrentPlayer().getShelf().getGrid().put(new Coordinate(i, 0), oc);
 
-        assertEquals(1, cg.pointsCalculator());
+        assertEquals(5, cg.pointsCalculator());
+    }
+    @Test
+    public void testPointsCalculatorPersonalGoalCard() {
+        cg.addPlayer("Karol");
+        cg.getCurrentPlayer().getPersonalGoalCard().setTargetsReached(4);
+        assertEquals(6,cg.pointsCalculator());
     }
 
-    //TODO: finire pointsCalculator
-
-
-//    public void testPointsCalculatorTwoCompletedRows() {
-//       da fare risolto il problema di testPointsCalculatorOneCompletedRow
-//    }
+    //TODO: pointsCalculator su checkCommonGoal
 
 
 
