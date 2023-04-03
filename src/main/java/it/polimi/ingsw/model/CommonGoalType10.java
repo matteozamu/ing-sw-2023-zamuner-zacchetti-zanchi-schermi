@@ -3,6 +3,8 @@ package it.polimi.ingsw.model;
 import java.util.List;
 import java.util.Map;
 
+// OK for TESTING
+
 /**
  * Cinque tessere dello stesso tipo che formano una X.
  */
