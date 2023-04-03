@@ -2,6 +2,8 @@ package it.polimi.ingsw.model;
 
 import java.util.Map;
 
+// OK for TESTING
+
 /**
  * Sei gruppi separati formati ciascuno da due tessere adiacenti dello stesso tipo.
  * Le tessere di un gruppo possono essere diverse da quelle di un altro gruppo.
