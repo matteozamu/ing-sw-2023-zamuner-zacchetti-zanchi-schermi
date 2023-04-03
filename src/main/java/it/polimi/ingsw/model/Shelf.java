@@ -80,7 +80,7 @@ public class Shelf {
             for (int row = 0; row < this.ROWS; row++) {
                 for (int col = 0; col < this.COLUMNS; col++) {
                     card = this.grid.get(new Coordinate(row, col));
-                    if (card.getType().equals(type)) {
+                    if (card != null && card.getType().equals(type)) {
                         if (this.grid.get(new Coordinate(row - 1, col)).getType().equals(card.getType())) closeCards++;
                         else if (this.grid.get(new Coordinate(row + 1, col)).getType().equals(card.getType())) closeCards++;
                         else if (this.grid.get(new Coordinate(row, col - 1)).getType().equals(card.getType())) closeCards++;

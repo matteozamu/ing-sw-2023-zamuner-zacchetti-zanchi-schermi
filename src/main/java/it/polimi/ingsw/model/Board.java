@@ -65,7 +65,10 @@ public class Board {
      * @return True if there is no ObjectCard in the specified direction from the given coordinate, false otherwise.
      * @throws IllegalArgumentException If the direction parameter is invalid.
      */
-    public boolean isEmptyAtDirection(Coordinate coord, Direction direction) {
+
+    //TODO: aggiungere eccezione in caso di coordinate nulle/invalide
+    //TODO: il caso di default è irraggiungibile
+    public boolean isEmptyAtDirection(Coordinate coord, Direction direction) throws IllegalArgumentException {
         Coordinate tmp = switch (direction) {
             case UP -> new Coordinate(coord.getRow() + 1, coord.getColumn());
             case DOWN -> new Coordinate(coord.getRow() - 1, coord.getColumn());
