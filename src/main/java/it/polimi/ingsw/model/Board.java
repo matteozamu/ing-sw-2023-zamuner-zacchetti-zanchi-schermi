@@ -1,7 +1,5 @@
 package it.polimi.ingsw.model;
 
-import javax.management.openmbean.KeyAlreadyExistsException;
-import java.security.InvalidParameterException;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -41,24 +39,19 @@ public class Board {
         return grid.remove(coordinate);
     }
 
-    public void clearGrid(){
-        this.grid.clear();
-    }
-
     /**
      * Create a new cell of the board with the given coordinate and object card.
      *
      * @param coord     The coordinate of the cell to create.
      * @param card  The object card to place at the cell's coordinate.
      * @return      True if the cell is successfully created and added to the board, false otherwise.
-     * @throws IllegalArgumentException      If the coordinate is null.
-     * @throws KeyAlreadyExistsException     If a cell with the same coordinate already exists.
-     * @throws InvalidParameterException     If the object card is null.
+     * @throws NullPointerException          If the coordinate is null.
+     * @throws IllegalArgumentException      If the object card is null.
      */
-    public boolean createCell(Coordinate coord, ObjectCard card) throws IllegalArgumentException, KeyAlreadyExistsException, InvalidParameterException {
-        if(coord == null) throw new IllegalArgumentException("Empty key");
-        if (this.grid.containsKey(coord)) throw new KeyAlreadyExistsException("Cell " + coord.getColumn() + "," + coord.getRow() + " already exists");
-        if(card == null) throw new InvalidParameterException("Object card invalid");
+    public boolean createCell(Coordinate coord, ObjectCard card) throws NullPointerException, IllegalArgumentException {
+        if(coord == null) throw new NullPointerException("Empty key");
+        if(card == null) throw new IllegalArgumentException("Object card invalid");
+        if (this.grid.containsKey(coord)) return false;
 
         this.grid.put(coord, card);
         return true;
@@ -73,24 +66,13 @@ public class Board {
      * @throws IllegalArgumentException If the direction parameter is invalid.
      */
     public boolean isEmptyAtDirection(Coordinate coord, Direction direction) {
-        Coordinate tmp;
-
-        switch (direction) {
-            case UP:
-                tmp = new Coordinate(coord.getColumn() + 1, coord.getRow());
-                break;
-            case DOWN:
-                tmp = new Coordinate(coord.getColumn() - 1, coord.getRow());
-                break;
-            case LEFT:
-                tmp = new Coordinate(coord.getColumn(), coord.getRow() - 1);
-                break;
-            case RIGHT:
-                tmp = new Coordinate(coord.getColumn(), coord.getRow() + 1);
-                break;
-            default:
-                throw new IllegalArgumentException("Invalid direction");
-        }
+        Coordinate tmp = switch (direction) {
+            case UP -> new Coordinate(coord.getRow() + 1, coord.getColumn());
+            case DOWN -> new Coordinate(coord.getRow() - 1, coord.getColumn());
+            case LEFT -> new Coordinate(coord.getRow(), coord.getColumn() - 1);
+            case RIGHT -> new Coordinate(coord.getRow(), coord.getColumn() + 1);
+            default -> throw new IllegalArgumentException("Invalid direction");
+        };
 
         return !grid.containsKey(tmp);
     }
@@ -99,10 +81,9 @@ public class Board {
     public String toString() {
         ObjectCard objectCard;
         String s = "";
-        // piu efficiente con StringBuilder?
 
         for (int row = 1; row <= 5; row++) {
-            for (int espacios = 5 - row; espacios >0; espacios--) s += "\t\t";
+            for (int spaces = 5 - row; spaces > 0; spaces--) s += "\t\t";
             for (int col = 1; col < 2 * row; col++) {
                 objectCard = this.grid.get(new Coordinate(5 - row, -5 + col));
                 s += ("|" + objectCard);
@@ -110,7 +91,7 @@ public class Board {
             s += "|\n";
         }
         for (int row = 5 - 1; row >= 1; row--) {
-            for (int espacios = 5 - row; espacios >0; espacios--) s += "\t\t";
+            for (int spaces = 5 - row; spaces > 0; spaces--) s += "\t\t";
             for (int col = 1; col < 2 * row; col++) {
                 objectCard = this.grid.get(new Coordinate(-5 + row, -5 + col));
                 s += ("|"+ objectCard);

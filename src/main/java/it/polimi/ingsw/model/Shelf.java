@@ -1,9 +1,11 @@
 package it.polimi.ingsw.model;
 
-import java.util.Collections;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.List;
+
+// TODO CREAZIONE MAPPA DELLA SHELF SE NO NON POSSIAMO ITERARE OPPURE
+//  CAMBiArE IL MODO DI CONTROLLARE IL NUMERO DI RIGHE DISPONIBILI
 
 /**
  * Represents a Shelf in the game, which holds ObjectCards.
@@ -12,9 +14,9 @@ import java.util.List;
 public class Shelf {
     private Map<Coordinate, ObjectCard> grid;
     private boolean isFull;
-    public int numberOfCards;
-    public final int ROWS = 6;
-    public final int COLUMNS = 5;
+//    public int numberOfCards;
+    public final int ROWS;
+    public final int COLUMNS;
 
     /**
      * Constructs a new Shelf.
@@ -22,25 +24,83 @@ public class Shelf {
     public Shelf() {
         this.grid = new HashMap<>();
         this.isFull = false;
-        this.numberOfCards = 0;
+//        this.numberOfCards = 0;
+
+        //TODO: in quanto costanti non è meglio inizializzarle quando le si dichiara?
+        this.ROWS = 6;
+        this.COLUMNS = 5;
     }
 
     /**
-     * method that return the number (row) of free cells in the col column
+     *
+     * @return true if the shelf is full
+     */
+    public boolean isFull() {
+        return isFull;
+    }
+
+    public void setFull(boolean full) {
+        isFull = full;
+    }
+
+    /**
+     * method that returns the map of the grid
+     * @return The grid representing the Shelf
+     */
+    public Map<Coordinate, ObjectCard> getGrid() {
+        return this.grid;
+    }
+
+    /**
+     * Prints the layout of object cards on the Shelf, including both the type and ID of each card.
+     * Cards are printed in reverse row order, starting from the last row and proceeding towards the first.
+     * Each card is represented as "type-id", where "type" is the card type and "id" is its ID.
+     * In case a cell is empty, a placeholder with dashes ("-") will be printed.
+     */
+    public void printShelf() {
+        int maxLength = Arrays.stream(ObjectCardType.values())
+                .map(ObjectCardType::toString)
+                .mapToInt(String::length)
+                .max()
+                .orElse(0);
+
+        maxLength += 2; // Adds space for ID and separator "-"
+
+        for (int row = ROWS - 1; row >= 0; row--) {
+            for (int col = 0; col < COLUMNS; col++) {
+                Coordinate coord = new Coordinate(row, col);
+                ObjectCard card = getObjectCard(coord);
+                if (card == null) {
+                    System.out.print("-".repeat(maxLength));
+                } else {
+                    String cardText = card.toString();
+                    int padding = maxLength - cardText.length();
+                    System.out.print(cardText + " ".repeat(padding));
+                }
+                System.out.print("\t");
+            }
+            System.out.println();
+        }
+    }
+
+    /**
+     * return the number (row) of free cells in the col column
      * if there are no free cells the method throws an exception
      * @param col is the column
      * @return number of free cell for the col column
      */
-    public int getAvailableRows(int col) throws NullPointerException {
-        for (int row = ROWS - 1; row >= 0; row--) {
-            Coordinate coordinate = new Coordinate(col, row);
-            if (grid.get(coordinate) == null) {
-                return row + 1;
-            }
+    public int getAvailableRows(int col) {
+        int availableRows = ROWS;
+        Coordinate coordinate;
+
+        for (int row = 0; row < this.ROWS; row++) {
+            coordinate = new Coordinate(row, col);
+            if (this.grid.containsKey(coordinate) && this.grid.get(coordinate) != null) availableRows--;
         }
-        throw new NullPointerException("Chosen column is full");
+        return availableRows;
     }
 
+    // TODO CI SERVE? Spoiler: no. Ma se serve c'è. Decisamente MDR
     /**
      * Returns a map with the number of free cells for each column in the Shelf.
      *
@@ -51,69 +111,11 @@ public class Shelf {
         Map<Integer, Integer> freeCellsPerColumn = new HashMap<>();
 
         for (int col = 0; col < COLUMNS; col++) {
-            try {
-                int freeRows = getAvailableRows(col);
-                freeCellsPerColumn.put(col, freeRows);
-            } catch (NullPointerException e) {
-                freeCellsPerColumn.put(col, 0);
-            }
+            int freeRows = getAvailableRows(col);
+            freeCellsPerColumn.put(col, freeRows);
         }
 
         return freeCellsPerColumn;
-    }
-
-    /**
-     * Method that adds a list of ObjectCards in the first available cells of the specified column.
-     *
-     * @param col   is the column where to insert the object cards.
-     * @param cards is the list of object cards to be inserted in the column col.
-     * @return true if the cards are successfully added.
-     * @throws IllegalStateException if there is not enough space to add the cards.
-     */
-    public boolean addObjectCards(int col, List<ObjectCard> cards) throws IllegalStateException {
-        //TODO: OK, da spostare nel controller
-        if (cards.size() < 1 || cards.size() > 3) {
-            throw new IllegalArgumentException("The list of cards must have a size between 1 and 3.");
-        }
-
-        int row;
-        try {
-            row = getAvailableRows(col);
-        } catch (NullPointerException e) {
-            throw new IllegalStateException("Not enough space in the column: " + col);
-        }
-
-        if (row - cards.size() + 1 < 0) {
-            throw new IllegalStateException("Not enough space in the column: " + col);
-        }
-
-        for (ObjectCard card : cards) {
-            grid.put(new Coordinate(col, row), card);
-            numberOfCards++;
-            row--;
-        }
-
-        if (numberOfCards == ROWS * COLUMNS) {
-            isFull = true;
-        }
-
-        return true;
-    }
-
-    /**
-     *
-     * @return true if the shelf is full
-     */
-    public boolean getFull() {
-        return isFull;
-    }
-
-    /**
-     * method that returns the map of the grid
-     * @return The grid representing the Shelf
-     */
-    public Map<Coordinate, ObjectCard> getGrid() {
-        return Collections.unmodifiableMap(grid);
     }
 
     /**
@@ -126,5 +128,8 @@ public class Shelf {
         return grid.get(coord);
     }
 
-
+    @Override
+    public String toString() {
+        return "Shelf{" + "grid=" + grid + '}';
+    }
 }

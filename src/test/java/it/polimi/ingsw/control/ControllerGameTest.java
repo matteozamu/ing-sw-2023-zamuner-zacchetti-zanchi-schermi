@@ -1,6 +1,6 @@
 package it.polimi.ingsw.control;
 
-import it.polimi.ingsw.model.Player;
+import it.polimi.ingsw.model.*;
 import junit.framework.TestCase;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -44,24 +44,20 @@ public class ControllerGameTest extends TestCase {
         cg.addPlayer("Madeleine");
         cg.addPlayer("Margot");
         cg.addPlayer("Yvonne");
-        assertThrows(IllegalStateException.class, () -> {
-            cg.addPlayer("Colette");
-        });
+
+        assertFalse(cg.addPlayer("Colette"));
     }
 
    @Test
    public void testDuplicateUsername() {
        cg.addPlayer("Margot");
-       assertThrows(IllegalStateException.class, () -> {
-           cg.addPlayer("Margot");
-       });
+
+       assertFalse(cg.addPlayer("Margot"));
     }
 
     @Test
     public void testNextPlayerNoPlayers() {
-        assertThrows(IllegalStateException.class, () -> {
-            Player p = cg.nextPlayer();
-        });
+        assertNull(cg.nextPlayer());
     }
     @Test
     public void testNextPlayer() {
@@ -76,5 +72,89 @@ public class ControllerGameTest extends TestCase {
 
         p = cg.nextPlayer();
         assertEquals(cg.getPlayers().get(0), p);
+    }
+
+    @Test
+    public void testAddObjectEmptyLimbo () {
+        assertFalse(cg.addObjectCards(1));
+    }
+
+    @Test
+    public void testAddObjectLimboTooBig () {
+        cg.getLimbo().add(new ObjectCard(ObjectCardType.randomObjectCardType(), 1));
+        cg.getLimbo().add(new ObjectCard(ObjectCardType.randomObjectCardType(), 2));
+        cg.getLimbo().add(new ObjectCard(ObjectCardType.randomObjectCardType(), 0));
+        cg.getLimbo().add(new ObjectCard(ObjectCardType.randomObjectCardType(), 2));
+
+        assertFalse(cg.addObjectCards(1));
+
+    }
+
+    @Test
+    public void testAddObjectCardsNoSpaceShelfColumn () {
+        cg.addPlayer("Estela");
+
+        cg.getCurrentPlayer().getShelf().getGrid().put(new Coordinate(0,0),new ObjectCard(ObjectCardType.randomObjectCardType(), 1) );
+        cg.getCurrentPlayer().getShelf().getGrid().put(new Coordinate(1,0),new ObjectCard(ObjectCardType.randomObjectCardType(), 1) );
+        cg.getCurrentPlayer().getShelf().getGrid().put(new Coordinate(2,0),new ObjectCard(ObjectCardType.randomObjectCardType(), 1) );
+        cg.getCurrentPlayer().getShelf().getGrid().put(new Coordinate(3,0),new ObjectCard(ObjectCardType.randomObjectCardType(), 1) );
+        cg.getCurrentPlayer().getShelf().getGrid().put(new Coordinate(4,0),new ObjectCard(ObjectCardType.randomObjectCardType(), 1) );
+
+        cg.getLimbo().add(new ObjectCard(ObjectCardType.randomObjectCardType(), 1));
+        cg.getLimbo().add(new ObjectCard(ObjectCardType.randomObjectCardType(), 2));
+
+        assertFalse(cg.addObjectCards(0));
+    }
+
+    @Test
+    public void testAddObjectCards () {
+        cg.addPlayer("Laia");
+
+        cg.getCurrentPlayer().getShelf().getGrid().put(new Coordinate(0,0),new ObjectCard(ObjectCardType.randomObjectCardType(), 1) );
+        cg.getCurrentPlayer().getShelf().getGrid().put(new Coordinate(1,0),new ObjectCard(ObjectCardType.randomObjectCardType(), 1) );
+        cg.getCurrentPlayer().getShelf().getGrid().put(new Coordinate(2,0),new ObjectCard(ObjectCardType.randomObjectCardType(), 1) );
+        cg.getCurrentPlayer().getShelf().getGrid().put(new Coordinate(3,0),new ObjectCard(ObjectCardType.randomObjectCardType(), 1) );
+
+        cg.getLimbo().add(new ObjectCard(ObjectCardType.randomObjectCardType(), 1));
+        cg.getLimbo().add(new ObjectCard(ObjectCardType.randomObjectCardType(), 2));
+
+        assertTrue(cg.addObjectCards(0));
+    }
+
+    @Test
+    public void testAddObjectCardsCardRightPositionShelf() {
+        cg.addPlayer("Ines");
+        ObjectCard oc = new ObjectCard(ObjectCardType.randomObjectCardType(), 2);
+        cg.getLimbo().add(oc);
+
+        cg.addObjectCards(0);
+        assertEquals(cg.getCurrentPlayer().getShelf().getGrid().get(new Coordinate(0, 0)), oc );
+    }
+
+    @Test
+    public void testAddObjectCardsShelfIsFull() {
+        cg.addPlayer("Juanita");
+        for(int i=0; i< 6; i++) {
+            for (int j=0; j<4; j++) {
+                cg.getCurrentPlayer().getShelf().getGrid().put(new Coordinate(i, j),new ObjectCard(ObjectCardType.randomObjectCardType(), 1) );
+            }
+        }
+        cg.getCurrentPlayer().getShelf().getGrid().put(new Coordinate(0, 5),new ObjectCard(ObjectCardType.randomObjectCardType(), 1) );
+        cg.getCurrentPlayer().getShelf().getGrid().put(new Coordinate(1, 5),new ObjectCard(ObjectCardType.randomObjectCardType(), 1) );
+        cg.getCurrentPlayer().getShelf().getGrid().put(new Coordinate(2, 5),new ObjectCard(ObjectCardType.randomObjectCardType(), 1) );
+        cg.getCurrentPlayer().getShelf().getGrid().put(new Coordinate(3, 5),new ObjectCard(ObjectCardType.randomObjectCardType(), 1) );
+        cg.getCurrentPlayer().getShelf().getGrid().put(new Coordinate(4, 5),new ObjectCard(ObjectCardType.randomObjectCardType(), 1) );
+
+        cg.getLimbo().add(new ObjectCard(ObjectCardType.randomObjectCardType(), 1));
+
+        cg.addObjectCards(5);
+        assertTrue(cg.getCurrentPlayer().getShelf().isFull());
+    }
+
+    @Test
+    public void testAddObjectCardToLimboNullPointerException() {
+        assertThrows(NullPointerException.class, () -> {
+            cg.addObjectCardToLimbo(null);
+        });
     }
 }

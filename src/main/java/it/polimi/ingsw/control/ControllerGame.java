@@ -8,22 +8,28 @@ import java.util.UUID;
 
 import static it.polimi.ingsw.model.Board.Direction.*;
 
+/**
+ * Controller for the game, handling game logic and interactions between model components.
+ */
 public class ControllerGame {
     private UUID id;
     private List<Player> players;
     private Board board;
     private List<CommonGoal> commonGoals;
     private Player currentPlayer;
-    private int numberOfPlayers;
+//    private int numberOfPlayers;
     private Game game;
     private List<ObjectCard> limbo;
 
+    /**
+     * Constructor for the ControllerGame class, initializing the game state.
+     */
     public ControllerGame() {
         this.id = UUID.randomUUID();
         this.players = new ArrayList<>();
         this.board = new Board();
         this.game = new Game();
-        this.numberOfPlayers = 0;
+//        this.numberOfPlayers = 0;
         this.commonGoals = new ArrayList<>();
         this.limbo = new ArrayList<>();
     }
@@ -36,13 +42,21 @@ public class ControllerGame {
         return currentPlayer;
     }
 
+    public Game getGame() {
+        return game;
+    }
+
+    public List<ObjectCard> getLimbo() {
+        return limbo;
+    }
+
     /**
      * Check if the username is available
-     * @param username
+     * @param username is the username of the player
      * @return true if available, false if not
-     * @throws NullPointerException
+     * @throws NullPointerException if username is null
      */
-    public boolean isUsernameAvailable(String username) throws NullPointerException { //faccio controllo da view
+    public boolean isUsernameAvailable(String username) throws NullPointerException {
         if (username == null) throw new NullPointerException("Username is null");
         for (Player p : players){
             if (p.getName().equals(username)) return false;
@@ -52,36 +66,30 @@ public class ControllerGame {
 
     /**
      * Add a new player to the game
-     * @param username
+     * @param username is the username of the player
      * @return true if successful, false otherwise
-     * @throws NullPointerException
-     * @throws IllegalStateException
      */
-    public boolean addPlayer(String username) throws NullPointerException, IllegalStateException {
-//      if (username == null) throw new NullPointerException("Username is null");
-        if(!this.isUsernameAvailable(username)) throw new IllegalStateException("Username " + username + " already in use");
+    public boolean addPlayer(String username) {
+        if(!this.isUsernameAvailable(username)) return false;
 
         if (this.players.size() < this.game.MAX_PLAYER) {
             Shelf shelf = new Shelf();
             PersonalGoalCard pg = game.getRandomAvailablePersonalGoalCard();
 
             Player p = new Player(username, shelf, pg);
-            if(this.numberOfPlayers == 0) this.currentPlayer = p;
+            if(this.players.size() == 0) this.currentPlayer = p;
             this.players.add(p);
-            this.numberOfPlayers++;
-
+//            this.numberOfPlayers++;
             return true;
-        } else {
-            throw new IllegalStateException("Max number of players reached");
-        }
+        } else return false;
     }
 
     /**
      * Move to the next player
      * @return the next player
      */
-    public Player nextPlayer() throws IllegalStateException{
-        if(this.players.size() == 0) throw new IllegalStateException("No players");
+    public Player nextPlayer() {
+        if(this.players.size() == 0) return null;
 
         this.limbo.clear();
         if (this.players.indexOf(this.currentPlayer) == this.players.size() - 1) this.currentPlayer = this.players.get(0);
@@ -91,7 +99,8 @@ public class ControllerGame {
     }
 
     /**
-     * fill the board with objectCards based on the number of player
+     * Fills the game board with object cards based on the number of players.
+     * This method should be called at the beginning of the game to set up the board.
      */
     // TODO parametrizzare sul numero di giocatori
     public void fillBoard(){
@@ -116,18 +125,6 @@ public class ControllerGame {
         }
     }
 
-    //update function, funzione update vista dal prof
-    //ipotizzo che dalla view arrivi una stringa Usarname non nulla
-    //ricopio la funzione con observer e observable //TODO da sostituire
-//    public String update(Observable o, String username) {   // si può ritornare una stringa alla view???
-//        if (game.isUsernameAvailable(username)) {
-//            game.addPlayer(username);
-//            return "Utente inserito";
-//        } else {
-//            return "Nome non disponibile";
-//        }
-//    }
-
     // TODO: da spostare nella view
     /**
      * Select the column where the user want to add che ObjectCard, need to check if there is enough space
@@ -142,13 +139,36 @@ public class ControllerGame {
     }
 
     /**
-     * Load the shelf with the ObjectCard, the order has already been established
-     * @param column is the number of the column where the ObjectCard is added
-     * @param objectCard is the ObjectCard to add in the current player's shelf
+     * Method that adds a list of ObjectCards in the first available cells of the specified column.
+     *
+     * @param col is the column where to insert the object cards.
+     * @return true if the cards are successfully added.
+     * @throws IllegalStateException if there is not enough space to add the cards.
      */
-    public void loadShelf(int column, List<ObjectCard> objectCard) {
-        currentPlayer.getShelf().addObjectCards(column, objectCard);
+    public boolean addObjectCards(int col) {
+        if (this.limbo.size() == 0 || this.limbo.size() > 3) return false;
+
+        Shelf s = this.currentPlayer.getShelf();
+        int availableRows = s.getAvailableRows(col);
+        if (availableRows < this.limbo.size()) return false;
+
+        for (ObjectCard card : this.limbo) {
+            s.getGrid().put(new Coordinate(6 - availableRows, col), card);
+            availableRows--;
+        }
+        if (s.getGrid().size() == s.ROWS * s.COLUMNS) s.setFull(true);
+
+        return true;
     }
+
+//    /**
+//     * Load the shelf with the ObjectCard, the order has already been established
+//     * @param column is the number of the column where the ObjectCard is added
+//     * @param objectCard is the ObjectCard to add in the current player's shelf
+//     */
+//    public void loadShelf(int column, List<ObjectCard> objectCard) {
+//        currentPlayer.getShelf().addObjectCards(column, objectCard);
+//    }
 
     //si puo fare una modifica che non rimuova la coordinata della cella ma setti il contenuto a null
     /**
@@ -156,31 +176,42 @@ public class ControllerGame {
      * @param coordinate is the coordinate of the ObjectCard clicked by the user
      * @return the ObjectCard with that Coordinate
      */
-    public ObjectCard pickObjectCard(Coordinate coordinate) {
-        if(isObjectCardAvailable(coordinate)) return board.removeObjectCard(coordinate);
-        else return null;
-    }
+//    public ObjectCard pickObjectCard(Coordinate coordinate) {
+//        if(isObjectCardAvailable(coordinate)) {
+//
+//            return board.removeObjectCard(coordinate);
+//        }
+//        else return null;
+//    }
 
     /**
-     * check if the ObjectCard clicked by user is available, so if it has at least one side free
-     * @param coordinate is the coordinate of the ObjectCard clicked by the user
-     * @return true if this ObjectCard is available
+     * Checks if the object card at the given coordinate is available (i.e., has at least one free side).
+     * This method is used to determine if a player can pick up an object card from the board.
+     *
+     * @param coordinate The coordinate of the object card to check.
+     * @return True if the object card is available, false otherwise.
      */
-    private boolean isObjectCardAvailable(Coordinate coordinate) {
+    public boolean isObjectCardAvailable(Coordinate coordinate) {
         return board.isEmptyAtDirection(coordinate, UP) || board.isEmptyAtDirection(coordinate, DOWN) || board.isEmptyAtDirection(coordinate, RIGHT) || board.isEmptyAtDirection(coordinate, LEFT);
     }
 
     /**
-     * Add an object card to the limbo area
-     * @param limbo is the zone where the objectCards selected from the board are put before being added in the shelf
-     * @param objectCard is the objectCard selected
-     * @throws NullPointerException if the objectCard is null (this case shouldn't happen)
+     * Adds the object card at the specified coordinate to the limbo area.
+     * The limbo area is used to store object cards that a player has picked up but not yet placed on their shelf.
+     *
+     * @param coordinate The coordinate of the object card to add to the limbo area.
+     * @throws NullPointerException If the object card is null (should not happen).
+     * @throws IllegalStateException If the object card is not available.
+     * @throws IllegalArgumentException If the limbo area is already full.
      */
-    public void addObjectCardToLimbo(List<ObjectCard> limbo, ObjectCard objectCard) throws NullPointerException{
-        if (objectCard == null) throw new NullPointerException("ObjectCard is null");
+    public boolean addObjectCardToLimbo(Coordinate coordinate) throws NullPointerException {
+        if(coordinate == null) throw new NullPointerException("ObjectCard is null");
 
-        if (limbo.size() < 3) limbo.add(objectCard);
-        else System.out.println("Limbo is full");
+        if(!isObjectCardAvailable(coordinate) || this.limbo.size() == 3) return false;
+
+        this.limbo.add(this.board.removeObjectCard(coordinate));
+
+        return true;
     }
 }
 
