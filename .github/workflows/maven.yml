@@ -8,14 +8,14 @@
 
 name: Test Java Project
 
-on: push
+on:
+  push:
+    branches: [ "main" ]
 
 jobs:
   windows:
     name: tests (windows-latest)
-
     runs-on: windows-latest
-
     steps:
       - uses: actions/checkout@v3
       - name: Set up JDK 19
@@ -28,7 +28,7 @@ jobs:
         run: mvn -B package --file pom.xml
 
   ubuntu:
-    name: tests (ubuntu-latest, 6.0)
+    name: tests (ubuntu-latest)
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
