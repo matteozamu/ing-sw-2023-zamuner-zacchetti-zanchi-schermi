@@ -4,7 +4,9 @@ import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
 import java.io.FileReader;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Random;
 
 /**
  * Represents the main game logic, including object card and common goal management.
@@ -21,16 +23,20 @@ public class Game {
         this.personalGoalCardsContainer = new ArrayList<>();
     }
 
+    public void setPersonalGoalCardsContainer(List<PersonalGoalCard> personalGoalCardsContainer) {
+        this.personalGoalCardsContainer = personalGoalCardsContainer;
+    }
+
     /**
      * Load into the game all the object cards
      */
     public void loadObjectCards() {
         List<ObjectCardType> types = List.of(ObjectCardType.values());
 
-        for(int i = 0; i < ObjectCardType.SIZE; i++){
-            for(int j = 0; j < 7; j++) this.objectCardContainer.add(new ObjectCard(types.get(i), 0));
-            for(int j = 0; j < 7; j++) this.objectCardContainer.add(new ObjectCard(types.get(i), 1));
-            for(int j = 0; j < 8; j++) this.objectCardContainer.add(new ObjectCard(types.get(i), 2));
+        for (int i = 0; i < ObjectCardType.SIZE; i++) {
+            for (int j = 0; j < 7; j++) this.objectCardContainer.add(new ObjectCard(types.get(i), 0));
+            for (int j = 0; j < 7; j++) this.objectCardContainer.add(new ObjectCard(types.get(i), 1));
+            for (int j = 0; j < 8; j++) this.objectCardContainer.add(new ObjectCard(types.get(i), 2));
         }
     }
 
@@ -40,7 +46,7 @@ public class Game {
      * @return An ObjectCard randomly selected from the container.
      */
     public ObjectCard getRandomAvailableObjectCard() {
-        if(this.objectCardContainer.size() == 0) return null;
+        if (this.objectCardContainer.size() == 0) return null;
 
         Random RANDOM = new Random();
         int index = RANDOM.nextInt(this.objectCardContainer.size());
@@ -68,7 +74,7 @@ public class Game {
      * @return A PersonalGoalCard randomly selected from the container.
      */
     public PersonalGoalCard getRandomAvailablePersonalGoalCard() {
-        if(this.personalGoalCardsContainer.size() == 0) return null;
+        if (this.personalGoalCardsContainer == null || this.personalGoalCardsContainer.size() == 0) return null;
 
         Random RANDOM = new Random();
         int index = RANDOM.nextInt(this.personalGoalCardsContainer.size());
@@ -83,7 +89,8 @@ public class Game {
     public void loadPersonalGoaldCards() {
         Gson gson = new Gson();
         try (FileReader reader = new FileReader("personalGoalCards.json")) {
-            this.personalGoalCardsContainer = gson.fromJson(reader, new TypeToken<List<PersonalGoalCard>>(){}.getType());
+            this.personalGoalCardsContainer = gson.fromJson(reader, new TypeToken<List<PersonalGoalCard>>() {
+            }.getType());
 
 //            for (PersonalGoalCard personalGoal : this.personalGoalCardsContainer) {
 //                List<PersonalGoal> goals = personalGoal.getGoals();

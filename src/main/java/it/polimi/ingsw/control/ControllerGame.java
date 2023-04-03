@@ -17,7 +17,7 @@ public class ControllerGame {
     private Board board;
     private List<CommonGoal> commonGoals;
     private Player currentPlayer;
-//    private int numberOfPlayers;
+    //    private int numberOfPlayers;
     private Game game;
     private List<ObjectCard> limbo;
 
@@ -56,13 +56,14 @@ public class ControllerGame {
 
     /**
      * Check if the username is available
+     *
      * @param username is the username of the player
      * @return true if available, false if not
      * @throws NullPointerException if username is null
      */
     public boolean isUsernameAvailable(String username) throws NullPointerException {
         if (username == null) throw new NullPointerException("Username is null");
-        for (Player p : players){
+        for (Player p : players) {
             if (p.getName().equals(username)) return false;
         }
         return true;
@@ -70,18 +71,22 @@ public class ControllerGame {
 
     /**
      * Add a new player to the game
+     *
      * @param username is the username of the player
      * @return true if successful, false otherwise
      */
     public boolean addPlayer(String username) {
-        if(!this.isUsernameAvailable(username)) return false;
+        if (!this.isUsernameAvailable(username)) return false;
 
         if (this.players.size() < this.game.MAX_PLAYER) {
             Shelf shelf = new Shelf();
             PersonalGoalCard pg = game.getRandomAvailablePersonalGoalCard();
 
+            if (pg == null) return false;
+
             Player p = new Player(username, shelf, pg);
-            if(this.players.size() == 0) this.currentPlayer = p;
+            if (this.players.size() == 0) this.currentPlayer = p;
+
             this.players.add(p);
 //            this.numberOfPlayers++;
             return true;
@@ -90,13 +95,15 @@ public class ControllerGame {
 
     /**
      * Move to the next player
+     *
      * @return the next player
      */
     public Player nextPlayer() {
-        if(this.players.size() == 0) return null;
+        if (this.players.size() == 0) return null;
 
         this.limbo.clear();
-        if (this.players.indexOf(this.currentPlayer) == this.players.size() - 1) this.currentPlayer = this.players.get(0);
+        if (this.players.indexOf(this.currentPlayer) == this.players.size() - 1)
+            this.currentPlayer = this.players.get(0);
         else this.currentPlayer = players.get(players.indexOf(currentPlayer) + 1);
 
         return this.currentPlayer;
@@ -107,7 +114,7 @@ public class ControllerGame {
      * This method should be called at the beginning of the game to set up the board.
      */
     // TODO parametrizzare sul numero di giocatori
-    public void fillBoard(){
+    public void fillBoard() {
         Coordinate c;
         try {
             for (int row = 1; row <= 5; row++) {
@@ -130,13 +137,15 @@ public class ControllerGame {
     }
 
     // TODO: da spostare nella view
+
     /**
      * Select the column where the user want to add che ObjectCard, need to check if there is enough space
+     *
      * @param column is where the user want to add che ObjectCard
      */
     public void selectColumn(int column) {
         System.out.println("Seleziona una colonna: [0, 1, 2, 3, 4]");
-        while (currentPlayer.getShelf().getAvailableRows(column) < limbo.size()){
+        while (currentPlayer.getShelf().getAvailableRows(column) < limbo.size()) {
             System.out.println("La colonna selezionata non ha abbastanza spazi");
             System.out.println("Seleziona una colonna: [0, 1, 2, 3, 4]");
         }
@@ -204,14 +213,14 @@ public class ControllerGame {
      * The limbo area is used to store object cards that a player has picked up but not yet placed on their shelf.
      *
      * @param coordinate The coordinate of the object card to add to the limbo area.
-     * @throws NullPointerException If the object card is null (should not happen).
-     * @throws IllegalStateException If the object card is not available.
+     * @throws NullPointerException     If the object card is null (should not happen).
+     * @throws IllegalStateException    If the object card is not available.
      * @throws IllegalArgumentException If the limbo area is already full.
      */
     public boolean addObjectCardToLimbo(Coordinate coordinate) throws NullPointerException {
-        if(coordinate == null) throw new NullPointerException("ObjectCard is null");
+        if (coordinate == null) throw new NullPointerException("ObjectCard is null");
 
-        if(!isObjectCardAvailable(coordinate) || this.limbo.size() == 3) return false;
+        if (!isObjectCardAvailable(coordinate) || this.limbo.size() == 3) return false;
 
         this.limbo.add(this.board.removeObjectCard(coordinate));
 
@@ -221,16 +230,17 @@ public class ControllerGame {
     /**
      * Calculate the points of the currentPlayer. Each time the method counts the points starting from 0.
      * Then set the points to the currentPlayer.
+     *
      * @return the point of the currentPlayer
      */
     public int pointsCalculator() {
         int points = 0;
         points += this.currentPlayer.getPersonalGoalCard().calculatePoints();
-        for(CommonGoal c: this.commonGoals){
-            if(c.checkGoal(this.currentPlayer.getShelf())) points += c.updateCurrentPoints(this.players.size());
+        for (CommonGoal c : this.commonGoals) {
+            if (c.checkGoal(this.currentPlayer.getShelf())) points += c.updateCurrentPoints(this.players.size());
         }
         points += this.currentPlayer.getShelf().closeObjectCardsPoints();
-        if(this.currentPlayer.getShelf().isFull()) points++;
+        if (this.currentPlayer.getShelf().isFull()) points++;
 
         this.currentPlayer.setCurrentPoints(points);
 

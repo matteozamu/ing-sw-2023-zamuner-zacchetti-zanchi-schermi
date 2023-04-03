@@ -1,6 +1,9 @@
 package it.polimi.ingsw.control;
 
-import it.polimi.ingsw.model.*;
+import it.polimi.ingsw.model.Coordinate;
+import it.polimi.ingsw.model.ObjectCard;
+import it.polimi.ingsw.model.ObjectCardType;
+import it.polimi.ingsw.model.Player;
 import junit.framework.TestCase;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -20,14 +23,14 @@ public class ControllerGameTest extends TestCase {
     }
 
     @Test
-    public void testUsernameNull(){
-        assertThrows (NullPointerException.class, () -> {
+    public void testUsernameNull() {
+        assertThrows(NullPointerException.class, () -> {
             cg.isUsernameAvailable(null);
         });
     }
 
     @Test
-    public void testUsernameAvailable(){
+    public void testUsernameAvailable() {
         assertTrue(cg.isUsernameAvailable("Pino"));
         cg.addPlayer("Pino");
         assertFalse(cg.isUsernameAvailable("Pino"));
@@ -35,13 +38,20 @@ public class ControllerGameTest extends TestCase {
     }
 
     @Test
-    public void testAddPlayerNull(){
+    public void testAddPlayerNull() {
         assertThrows(NullPointerException.class, () -> {
             cg.addPlayer(null);
         });
     }
+
     @Test
-    public void testMaxNumbersOfPlayers(){
+    public void testAddPlayerAttributes() {
+        cg.getGame().setPersonalGoalCardsContainer(null);
+        assertFalse(cg.addPlayer("Ayra"));
+    }
+
+    @Test
+    public void testMaxNumbersOfPlayers() {
         cg.addPlayer("Giselle");
         cg.addPlayer("Madeleine");
         cg.addPlayer("Margot");
@@ -50,17 +60,18 @@ public class ControllerGameTest extends TestCase {
         assertFalse(cg.addPlayer("Colette"));
     }
 
-   @Test
-   public void testDuplicateUsername() {
-       cg.addPlayer("Margot");
+    @Test
+    public void testDuplicateUsername() {
+        cg.addPlayer("Margot");
 
-       assertFalse(cg.addPlayer("Margot"));
+        assertFalse(cg.addPlayer("Margot"));
     }
 
     @Test
     public void testNextPlayerNoPlayers() {
         assertNull(cg.nextPlayer());
     }
+
     @Test
     public void testNextPlayer() {
         cg.addPlayer("Ember");
@@ -77,12 +88,12 @@ public class ControllerGameTest extends TestCase {
     }
 
     @Test
-    public void testAddObjectEmptyLimbo () {
+    public void testAddObjectEmptyLimbo() {
         assertFalse(cg.addObjectCards(1));
     }
 
     @Test
-    public void testAddObjectLimboTooBig () {
+    public void testAddObjectLimboTooBig() {
         cg.getLimbo().add(new ObjectCard(ObjectCardType.randomObjectCardType(), 1));
         cg.getLimbo().add(new ObjectCard(ObjectCardType.randomObjectCardType(), 2));
         cg.getLimbo().add(new ObjectCard(ObjectCardType.randomObjectCardType(), 0));
@@ -93,14 +104,14 @@ public class ControllerGameTest extends TestCase {
     }
 
     @Test
-    public void testAddObjectCardsNoSpaceShelfColumn () {
+    public void testAddObjectCardsNoSpaceShelfColumn() {
         cg.addPlayer("Estela");
 
-        cg.getCurrentPlayer().getShelf().getGrid().put(new Coordinate(0,0),new ObjectCard(ObjectCardType.randomObjectCardType(), 1) );
-        cg.getCurrentPlayer().getShelf().getGrid().put(new Coordinate(1,0),new ObjectCard(ObjectCardType.randomObjectCardType(), 1) );
-        cg.getCurrentPlayer().getShelf().getGrid().put(new Coordinate(2,0),new ObjectCard(ObjectCardType.randomObjectCardType(), 1) );
-        cg.getCurrentPlayer().getShelf().getGrid().put(new Coordinate(3,0),new ObjectCard(ObjectCardType.randomObjectCardType(), 1) );
-        cg.getCurrentPlayer().getShelf().getGrid().put(new Coordinate(4,0),new ObjectCard(ObjectCardType.randomObjectCardType(), 1) );
+        cg.getCurrentPlayer().getShelf().getGrid().put(new Coordinate(0, 0), new ObjectCard(ObjectCardType.randomObjectCardType(), 1));
+        cg.getCurrentPlayer().getShelf().getGrid().put(new Coordinate(1, 0), new ObjectCard(ObjectCardType.randomObjectCardType(), 1));
+        cg.getCurrentPlayer().getShelf().getGrid().put(new Coordinate(2, 0), new ObjectCard(ObjectCardType.randomObjectCardType(), 1));
+        cg.getCurrentPlayer().getShelf().getGrid().put(new Coordinate(3, 0), new ObjectCard(ObjectCardType.randomObjectCardType(), 1));
+        cg.getCurrentPlayer().getShelf().getGrid().put(new Coordinate(4, 0), new ObjectCard(ObjectCardType.randomObjectCardType(), 1));
 
         cg.getLimbo().add(new ObjectCard(ObjectCardType.randomObjectCardType(), 1));
         cg.getLimbo().add(new ObjectCard(ObjectCardType.randomObjectCardType(), 2));
@@ -109,13 +120,13 @@ public class ControllerGameTest extends TestCase {
     }
 
     @Test
-    public void testAddObjectCards () {
+    public void testAddObjectCards() {
         cg.addPlayer("Laia");
 
-        cg.getCurrentPlayer().getShelf().getGrid().put(new Coordinate(0,0),new ObjectCard(ObjectCardType.randomObjectCardType(), 1) );
-        cg.getCurrentPlayer().getShelf().getGrid().put(new Coordinate(1,0),new ObjectCard(ObjectCardType.randomObjectCardType(), 1) );
-        cg.getCurrentPlayer().getShelf().getGrid().put(new Coordinate(2,0),new ObjectCard(ObjectCardType.randomObjectCardType(), 1) );
-        cg.getCurrentPlayer().getShelf().getGrid().put(new Coordinate(3,0),new ObjectCard(ObjectCardType.randomObjectCardType(), 1) );
+        cg.getCurrentPlayer().getShelf().getGrid().put(new Coordinate(0, 0), new ObjectCard(ObjectCardType.randomObjectCardType(), 1));
+        cg.getCurrentPlayer().getShelf().getGrid().put(new Coordinate(1, 0), new ObjectCard(ObjectCardType.randomObjectCardType(), 1));
+        cg.getCurrentPlayer().getShelf().getGrid().put(new Coordinate(2, 0), new ObjectCard(ObjectCardType.randomObjectCardType(), 1));
+        cg.getCurrentPlayer().getShelf().getGrid().put(new Coordinate(3, 0), new ObjectCard(ObjectCardType.randomObjectCardType(), 1));
 
         cg.getLimbo().add(new ObjectCard(ObjectCardType.randomObjectCardType(), 1));
         cg.getLimbo().add(new ObjectCard(ObjectCardType.randomObjectCardType(), 2));
@@ -130,22 +141,22 @@ public class ControllerGameTest extends TestCase {
         cg.getLimbo().add(oc);
 
         cg.addObjectCards(0);
-        assertEquals(cg.getCurrentPlayer().getShelf().getGrid().get(new Coordinate(0, 0)), oc );
+        assertEquals(cg.getCurrentPlayer().getShelf().getGrid().get(new Coordinate(0, 0)), oc);
     }
 
     @Test
     public void testAddObjectCardsShelfIsFull() {
         cg.addPlayer("Juanita");
-        for(int i=0; i< 6; i++) {
-            for (int j=0; j<4; j++) {
-                cg.getCurrentPlayer().getShelf().getGrid().put(new Coordinate(i, j),new ObjectCard(ObjectCardType.randomObjectCardType(), 1) );
+        for (int i = 0; i < 6; i++) {
+            for (int j = 0; j < 4; j++) {
+                cg.getCurrentPlayer().getShelf().getGrid().put(new Coordinate(i, j), new ObjectCard(ObjectCardType.randomObjectCardType(), 1));
             }
         }
-        cg.getCurrentPlayer().getShelf().getGrid().put(new Coordinate(0, 5),new ObjectCard(ObjectCardType.randomObjectCardType(), 1) );
-        cg.getCurrentPlayer().getShelf().getGrid().put(new Coordinate(1, 5),new ObjectCard(ObjectCardType.randomObjectCardType(), 1) );
-        cg.getCurrentPlayer().getShelf().getGrid().put(new Coordinate(2, 5),new ObjectCard(ObjectCardType.randomObjectCardType(), 1) );
-        cg.getCurrentPlayer().getShelf().getGrid().put(new Coordinate(3, 5),new ObjectCard(ObjectCardType.randomObjectCardType(), 1) );
-        cg.getCurrentPlayer().getShelf().getGrid().put(new Coordinate(4, 5),new ObjectCard(ObjectCardType.randomObjectCardType(), 1) );
+        cg.getCurrentPlayer().getShelf().getGrid().put(new Coordinate(0, 5), new ObjectCard(ObjectCardType.randomObjectCardType(), 1));
+        cg.getCurrentPlayer().getShelf().getGrid().put(new Coordinate(1, 5), new ObjectCard(ObjectCardType.randomObjectCardType(), 1));
+        cg.getCurrentPlayer().getShelf().getGrid().put(new Coordinate(2, 5), new ObjectCard(ObjectCardType.randomObjectCardType(), 1));
+        cg.getCurrentPlayer().getShelf().getGrid().put(new Coordinate(3, 5), new ObjectCard(ObjectCardType.randomObjectCardType(), 1));
+        cg.getCurrentPlayer().getShelf().getGrid().put(new Coordinate(4, 5), new ObjectCard(ObjectCardType.randomObjectCardType(), 1));
 
         cg.getLimbo().add(new ObjectCard(ObjectCardType.randomObjectCardType(), 1));
 
@@ -154,15 +165,15 @@ public class ControllerGameTest extends TestCase {
     }
 
 
-     @Test
-     public void testIsObjectCardAvailableAllEmptyDirections(){
-        Coordinate c = new Coordinate(0,0);
+    @Test
+    public void testIsObjectCardAvailableAllEmptyDirections() {
+        Coordinate c = new Coordinate(0, 0);
         assertTrue(cg.isObjectCardAvailable(c));
-     }
+    }
 
     @Test
-    public void testIsObjectCardAvailableOneDirectionFull(){
-        Coordinate c = new Coordinate(0,4);
+    public void testIsObjectCardAvailableOneDirectionFull() {
+        Coordinate c = new Coordinate(0, 4);
         cg.addPlayer("Rebecca");
         cg.fillBoard();
 //        cg.getCurrentPlayer().getShelf().getGrid().put(new Coordinate(1, 0), new ObjectCard(ObjectCardType.randomObjectCardType(), 0));
@@ -170,8 +181,8 @@ public class ControllerGameTest extends TestCase {
     }
 
     @Test
-    public void testIsObjectCardAvailableAllDirectiosnFull(){
-        Coordinate c = new Coordinate(0,0);
+    public void testIsObjectCardAvailableAllDirectiosnFull() {
+        Coordinate c = new Coordinate(0, 0);
         cg.addPlayer("Rebecca");
         cg.fillBoard();
         assertFalse(cg.isObjectCardAvailable(c));
@@ -208,15 +219,16 @@ public class ControllerGameTest extends TestCase {
         ObjectCardType type = ObjectCardType.randomObjectCardType();
         ObjectCard oc = new ObjectCard(type, 0);
 
-        for(int i = 0; i < 5; i++) cg.getCurrentPlayer().getShelf().getGrid().put(new Coordinate(i, 0), oc);
+        for (int i = 0; i < 5; i++) cg.getCurrentPlayer().getShelf().getGrid().put(new Coordinate(i, 0), oc);
 
         assertEquals(5, cg.pointsCalculator());
     }
+
     @Test
     public void testPointsCalculatorPersonalGoalCard() {
         cg.addPlayer("Karol");
         cg.getCurrentPlayer().getPersonalGoalCard().setTargetsReached(4);
-        assertEquals(6,cg.pointsCalculator());
+        assertEquals(6, cg.pointsCalculator());
     }
 
     //TODO: pointsCalculator su checkCommonGoal
