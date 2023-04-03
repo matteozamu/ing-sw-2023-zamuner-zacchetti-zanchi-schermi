@@ -15,7 +15,6 @@ import java.util.Map;
 public class Shelf {
     private Map<Coordinate, ObjectCard> grid;
     private boolean isFull;
-//    public int numberOfCards;
     public final int ROWS;
     public final int COLUMNS;
 
