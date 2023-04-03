@@ -29,7 +29,7 @@ public class ControllerGameTest extends TestCase {
         assertTrue(cg.isUsernameAvailable("Pino"));
         cg.addPlayer("Pino");
         assertFalse(cg.isUsernameAvailable("Pino"));
-        assertFalse(cg.isUsernameAvailable("Gigi"));
+        assertTrue(cg.isUsernameAvailable("Gigi"));
     }
 
     @Test
