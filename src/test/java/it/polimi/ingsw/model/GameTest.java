@@ -16,17 +16,27 @@ class GameTest extends TestCase {
     }
 
     @Test
-    //TODO: non passa
     public void testGetRandomAvailablePersonalGoalCardEmptyContainer(){
-        assertNull(g.getRandomAvailableObjectCard());
+        assertNull(g.getRandomAvailablePersonalGoalCard());
     }
 
     @Test
-    public void testGetRandomAvailablePersonalGoalCardFillingContainer(){
+    public void testGetRandomAvailablePersonalGoalCardFullContainer(){
         g.loadPersonalGoaldCards();
         Object o = g.getRandomAvailablePersonalGoalCard();
         assertTrue(o instanceof PersonalGoalCard);
     }
 
+    @Test
+    public void testGetRandomAvailableObjectCardEmptyContainer(){
+        assertNull(g.getRandomAvailableObjectCard());
+    }
+
+    @Test
+    public void testGetRandomAvailableObjectCardFullContainer(){
+        g.loadObjectCards();
+        Object o = g.getRandomAvailableObjectCard();
+        assertTrue(o instanceof ObjectCard);
+    }
 
 }

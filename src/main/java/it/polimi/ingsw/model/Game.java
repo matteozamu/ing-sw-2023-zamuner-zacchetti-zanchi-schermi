@@ -40,6 +40,8 @@ public class Game {
      * @return An ObjectCard randomly selected from the container.
      */
     public ObjectCard getRandomAvailableObjectCard() {
+        if(this.objectCardContainer.size() == 0) return null;
+
         Random RANDOM = new Random();
         int index = RANDOM.nextInt(this.objectCardContainer.size());
         ObjectCard oc = this.objectCardContainer.get(index);
