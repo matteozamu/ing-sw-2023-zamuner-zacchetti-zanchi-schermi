@@ -8,9 +8,7 @@
 
 name: Test Java Project
 
-on:
-  push:
-    branches: [ "actions" ]
+on: push
 
 jobs:
   build:
