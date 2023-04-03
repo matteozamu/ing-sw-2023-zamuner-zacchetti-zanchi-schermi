@@ -54,7 +54,7 @@ public class ControllerGame {
      * Check if the username is available
      * @param username is the username of the player
      * @return true if available, false if not
-     * @throws NullPointerException
+     * @throws NullPointerException if username is null
      */
     public boolean isUsernameAvailable(String username) throws NullPointerException {
         if (username == null) throw new NullPointerException("Username is null");
@@ -66,10 +66,8 @@ public class ControllerGame {
 
     /**
      * Add a new player to the game
-     * @param username
+     * @param username is the username of the player
      * @return true if successful, false otherwise
-     * @throws NullPointerException
-     * @throws IllegalStateException
      */
     public boolean addPlayer(String username) {
         if(!this.isUsernameAvailable(username)) return false;
@@ -156,10 +154,8 @@ public class ControllerGame {
 
         for (ObjectCard card : this.limbo) {
             s.getGrid().put(new Coordinate(6 - availableRows, col), card);
-//            s.setNumberOfCards(s.getNumberOfCards() + 1);
             availableRows--;
         }
-//        if (s.getNumberOfCards() == s.ROWS * s.COLUMNS) s.setFull(true);
         if (s.getGrid().size() == s.ROWS * s.COLUMNS) s.setFull(true);
 
         return true;
