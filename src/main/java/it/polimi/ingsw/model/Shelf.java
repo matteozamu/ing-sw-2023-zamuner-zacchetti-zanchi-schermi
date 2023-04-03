@@ -25,7 +25,6 @@ public class Shelf {
     public Shelf() {
         this.grid = new HashMap<>();
         this.isFull = false;
-//        this.numberOfCards = 0;
 
         //TODO: in quanto costanti non è meglio inizializzarle quando le si dichiara?
         this.ROWS = 6;
