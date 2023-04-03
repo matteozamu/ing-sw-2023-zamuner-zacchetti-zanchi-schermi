@@ -15,9 +15,7 @@ on:
 jobs:
   windows:
     name: tests (windows-latest)
-
     runs-on: windows-latest
-
     steps:
       - uses: actions/checkout@v3
       - name: Set up JDK 19
