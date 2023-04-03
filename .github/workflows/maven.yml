@@ -28,7 +28,7 @@ jobs:
         run: mvn -B package --file pom.xml
 
   ubuntu:
-    name: tests (ubuntu-latest, 6.0)
+    name: tests (ubuntu-latest)
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
