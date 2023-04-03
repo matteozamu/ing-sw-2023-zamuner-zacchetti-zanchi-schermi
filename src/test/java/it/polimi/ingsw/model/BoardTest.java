@@ -69,7 +69,7 @@ public class BoardTest extends TestCase {
         assertFalse(this.b.createCell(this.c, this.objectCard));
     }
 
-//manca isEmptyAtDirection
+
 
     @Test
     public void testIsEmptyAtDirectionTrue() {

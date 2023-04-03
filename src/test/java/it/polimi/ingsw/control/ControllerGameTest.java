@@ -162,23 +162,18 @@ public class ControllerGameTest extends TestCase {
 
     @Test
     public void testIsObjectCardAvailableOneDirectionFull(){
-        Coordinate c = new Coordinate(0,0);
+        Coordinate c = new Coordinate(0,4);
         cg.addPlayer("Rebecca");
-        cg.getCurrentPlayer().getShelf().getGrid().put(new Coordinate(1, 0), new ObjectCard(ObjectCardType.randomObjectCardType(), 0));
+        cg.fillBoard();
+//        cg.getCurrentPlayer().getShelf().getGrid().put(new Coordinate(1, 0), new ObjectCard(ObjectCardType.randomObjectCardType(), 0));
         assertTrue(cg.isObjectCardAvailable(c));
     }
 
     @Test
-
-    //TODO: non passa
-
     public void testIsObjectCardAvailableAllDirectiosnFull(){
         Coordinate c = new Coordinate(0,0);
         cg.addPlayer("Rebecca");
-        cg.getCurrentPlayer().getShelf().getGrid().put(new Coordinate(1, 0), new ObjectCard(ObjectCardType.randomObjectCardType(), 0));
-        cg.getCurrentPlayer().getShelf().getGrid().put(new Coordinate(0, 1), new ObjectCard(ObjectCardType.randomObjectCardType(), 1));
-        cg.getCurrentPlayer().getShelf().getGrid().put(new Coordinate(-1, 0), new ObjectCard(ObjectCardType.randomObjectCardType(), 2));
-        cg.getCurrentPlayer().getShelf().getGrid().put(new Coordinate(0, -1), new ObjectCard(ObjectCardType.randomObjectCardType(), 0));
+        cg.fillBoard();
         assertFalse(cg.isObjectCardAvailable(c));
     }
 
@@ -217,7 +212,7 @@ public class ControllerGameTest extends TestCase {
 
     @Test
 
-    // TODO: Cannot invoke "it.polimi.ingsw.model.ObjectCard.getType()" because the return value of "java.util.Map.get(Object)" is null
+    // TODO: non passa
 
     public void testPointsCalculatorOneCompletedRow() {
         cg.addPlayer("Alice");

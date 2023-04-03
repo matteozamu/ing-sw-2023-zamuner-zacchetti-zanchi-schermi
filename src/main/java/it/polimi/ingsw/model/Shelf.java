@@ -81,10 +81,18 @@ public class Shelf {
                 for (int col = 0; col < this.COLUMNS; col++) {
                     card = this.grid.get(new Coordinate(row, col));
                     if (card != null && card.getType().equals(type)) {
-                        if (this.grid.get(new Coordinate(row - 1, col)).getType().equals(card.getType())) closeCards++;
-                        else if (this.grid.get(new Coordinate(row + 1, col)).getType().equals(card.getType())) closeCards++;
-                        else if (this.grid.get(new Coordinate(row, col - 1)).getType().equals(card.getType())) closeCards++;
-                        else if (this.grid.get(new Coordinate(row, col + 1)).getType().equals(card.getType())) closeCards++;
+                        if (this.grid.get(new Coordinate(row - 1, col)) != null){
+                            if(this.grid.get(new Coordinate(row - 1, col)).getType().equals(card.getType())) closeCards++;
+                        }
+                        else if (this.grid.get(new Coordinate(row + 1, col)) != null){
+                            if(this.grid.get(new Coordinate(row + 1, col)).getType().equals(card.getType())) closeCards++;
+                        }
+                        else if (this.grid.get(new Coordinate(row, col - 1)) != null){
+                            if(this.grid.get(new Coordinate(row, col - 1)).getType().equals(card.getType())) closeCards++;
+                        }
+                        else if (this.grid.get(new Coordinate(row, col + 1)) != null){
+                            if(this.grid.get(new Coordinate(row, col + 1)).getType().equals(card.getType())) closeCards++;
+                        }
                     }
                 }
             }
@@ -143,7 +151,6 @@ public class Shelf {
             int freeRows = getAvailableRows(col);
             freeCellsPerColumn.put(col, freeRows);
         }
-
         return freeCellsPerColumn;
     }
 

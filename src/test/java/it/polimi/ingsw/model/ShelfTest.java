@@ -32,8 +32,9 @@ public class ShelfTest extends TestCase {
     }
 
 
-        //TODO: non passa, errore get(Object)
+
         @Test
+        //TODO: non passa
         public void testCloseObjectCardsPoints() {
 
             // 0 close object cards
@@ -54,22 +55,22 @@ public class ShelfTest extends TestCase {
             assertEquals(2, points);
 
             // 4 close object cards
-            s.getGrid().put(new Coordinate(1, 0), new ObjectCard(type, 5));
+            s.getGrid().put(new Coordinate(1, 0), new ObjectCard(type, 2));
             points = s.closeObjectCardsPoints();
             assertEquals(3, points);
 
             // 5 close object cards
-            s.getGrid().put(new Coordinate(0, 2), new ObjectCard(type, 6));
+            s.getGrid().put(new Coordinate(0, 2), new ObjectCard(type, 1));
             points = s.closeObjectCardsPoints();
             assertEquals(5, points);
 
             // 6 close object cards
-            s.getGrid().put(new Coordinate(1, 2), new ObjectCard(type, 7));
+            s.getGrid().put(new Coordinate(1, 2), new ObjectCard(type, 0));
             points = s.closeObjectCardsPoints();
             assertEquals(8, points);
 
             // 7 close object cards
-            s.getGrid().put(new Coordinate(2, 2), new ObjectCard(type, 8));
+            s.getGrid().put(new Coordinate(2, 2), new ObjectCard(type, 1));
             points = s.closeObjectCardsPoints();
             assertEquals(8, points);
 
