@@ -1,7 +1,7 @@
 package it.polimi.ingsw.control;
 
+import it.polimi.ingsw.distributed.Client;
 import it.polimi.ingsw.model.*;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
@@ -12,6 +12,8 @@ import static it.polimi.ingsw.model.Board.Direction.*;
  * Controller for the game, handling game logic and interactions between model components.
  */
 public class ControllerGame {
+    private final Game model;
+    private final Client view;
     private UUID id;
     private List<Player> players;
     private Board board;
@@ -24,7 +26,9 @@ public class ControllerGame {
     /**
      * Constructor for the ControllerGame class, initializing the game state.
      */
-    public ControllerGame() {
+    public ControllerGame(Game model, Client view) {
+        this.model = model;
+        this.view = view;
         this.id = UUID.randomUUID();
         this.players = new ArrayList<>();
         this.board = new Board();
@@ -212,6 +216,17 @@ public class ControllerGame {
         this.limbo.add(this.board.removeObjectCard(coordinate));
 
         return true;
+    }
+
+
+    public void update(Client o, Object arg) {
+        if (!o.equals(view)) {
+            System.err.println("Discarding notification from " + o);
+            return;
+        }
+        /*
+        operazioni da aggiungere
+         */
     }
 }
 

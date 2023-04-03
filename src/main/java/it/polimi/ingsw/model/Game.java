@@ -2,14 +2,18 @@ package it.polimi.ingsw.model;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
-
+import it.polimi.ingsw.util.Observable;
 import java.io.FileReader;
 import java.util.*;
 
 /**
  * Represents the main game logic, including object card and common goal management.
  */
-public class Game {
+public class Game extends Observable<Game.Event> {
+    public enum Event {
+
+    }
+
     public static final int MAX_PLAYER = 4;
     private List<ObjectCard> objectCardContainer;
     private List<CommonGoal> commonGoalContainer;
@@ -91,5 +95,10 @@ public class Game {
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    private void setChangedAndNotifyObservers(Event arg) {
+        setChanged();
+        notifyObservers(arg);
     }
 }
