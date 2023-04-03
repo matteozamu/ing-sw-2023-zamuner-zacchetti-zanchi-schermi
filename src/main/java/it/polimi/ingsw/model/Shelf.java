@@ -149,7 +149,6 @@ public class Shelf {
             int freeRows = getAvailableRows(col);
             freeCellsPerColumn.put(col, freeRows);
         }
-
         return freeCellsPerColumn;
     }
 

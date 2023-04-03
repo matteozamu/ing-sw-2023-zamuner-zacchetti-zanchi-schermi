@@ -15,17 +15,19 @@ public class ControllerGameTest extends TestCase {
     @BeforeEach
     public void setUp() {
         cg = new ControllerGame();
+        cg.getGame().loadPersonalGoaldCards();
+        cg.getGame().loadObjectCards();
     }
 
     @Test
-    public void usernameNull(){
+    public void testUsernameNull(){
         assertThrows (NullPointerException.class, () -> {
             cg.isUsernameAvailable(null);
         });
     }
 
     @Test
-    public void usernameAvailable(){
+    public void testUsernameAvailable(){
         assertTrue(cg.isUsernameAvailable("Pino"));
         cg.addPlayer("Pino");
         assertFalse(cg.isUsernameAvailable("Pino"));
@@ -151,10 +153,96 @@ public class ControllerGameTest extends TestCase {
         assertTrue(cg.getCurrentPlayer().getShelf().isFull());
     }
 
+
+     @Test
+     public void testIsObjectCardAvailableAllEmptyDirections(){
+        Coordinate c = new Coordinate(0,0);
+        assertTrue(cg.isObjectCardAvailable(c));
+     }
+
+    @Test
+    public void testIsObjectCardAvailableOneDirectionFull(){
+        Coordinate c = new Coordinate(0,4);
+        cg.addPlayer("Rebecca");
+        cg.fillBoard();
+//        cg.getCurrentPlayer().getShelf().getGrid().put(new Coordinate(1, 0), new ObjectCard(ObjectCardType.randomObjectCardType(), 0));
+        assertTrue(cg.isObjectCardAvailable(c));
+    }
+
+    @Test
+    public void testIsObjectCardAvailableAllDirectiosnFull(){
+        Coordinate c = new Coordinate(0,0);
+        cg.addPlayer("Rebecca");
+        cg.fillBoard();
+        assertFalse(cg.isObjectCardAvailable(c));
+    }
+
+//    @Test
+//    public void testAddObjectCardToLimboFalse(){
+//       testare se il limbo ha 3 carte e se la carta non è disponibile
+//    }
+
+
+    //    @Test
+//    public void testAddObjectCardToLimboTrue(){
+//        testare se il limbo ha <3 carte e se la carta è disponibile
+//    }
+
+
+
+
+
+
+
     @Test
     public void testAddObjectCardToLimboNullPointerException() {
         assertThrows(NullPointerException.class, () -> {
             cg.addObjectCardToLimbo(null);
         });
     }
+
+
+
+
+    @Test
+    public void testPointsCalculatorNoCompletedRows() {
+        cg.addPlayer("Alice");
+        assertEquals(0, cg.pointsCalculator());
+    }
+
+    @Test
+
+    // TODO: non passa
+
+    public void testPointsCalculatorOneCompletedRow() {
+        cg.addPlayer("Alice");
+        ObjectCardType type = ObjectCardType.randomObjectCardType();
+        ObjectCard oc1 = new ObjectCard(type, 0);
+        ObjectCard oc2 = new ObjectCard(type, 1);
+        ObjectCard oc3 = new ObjectCard(type, 2);
+        ObjectCard oc4 = new ObjectCard(type, 0);
+        ObjectCard oc5 = new ObjectCard(type, 1);
+
+        cg.getCurrentPlayer().getShelf().getGrid().put(new Coordinate(5, 0), oc1);
+        cg.getCurrentPlayer().getShelf().getGrid().put(new Coordinate(4, 0), oc2);
+        cg.getCurrentPlayer().getShelf().getGrid().put(new Coordinate(3, 0), oc3);
+        cg.getCurrentPlayer().getShelf().getGrid().put(new Coordinate(2, 0), oc4);
+        cg.getCurrentPlayer().getShelf().getGrid().put(new Coordinate(1, 0), oc5);
+
+        assertEquals(1, cg.pointsCalculator());
+    }
+
+    //TODO: finire pointsCalculator
+
+
+//    public void testPointsCalculatorTwoCompletedRows() {
+//       da fare risolto il problema di testPointsCalculatorOneCompletedRow
+//    }
+
+
+
+
+
+
+
 }
