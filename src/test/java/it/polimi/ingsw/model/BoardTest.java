@@ -22,20 +22,20 @@ public class BoardTest extends TestCase {
     }
 
     @Test
-    void testGetGrid() {
+    public void testGetGrid() {
         Map<Coordinate, ObjectCard> expected = new HashMap<>();
         assertEquals(expected, this.b.getGrid());
     }
 
     @Test
-    void testRemovedObjectCardIsNull() {
+    public void testRemovedObjectCardIsNull() {
         this.b.removeObjectCard(this.c);
         ObjectCard nullCard = this.b.removeObjectCard(this.c);
         assertNull(nullCard);
     }
 
     @Test
-    void testRemoveObjectCard() {
+    public void testRemoveObjectCard() {
         Coordinate c2 = new Coordinate(2, 2);
         ObjectCard objectCard2 = new ObjectCard(ObjectCardType.randomObjectCardType(), 1);
 
