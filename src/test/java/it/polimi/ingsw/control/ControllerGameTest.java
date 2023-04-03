@@ -220,11 +220,4 @@ public class ControllerGameTest extends TestCase {
     }
 
     //TODO: pointsCalculator su checkCommonGoal
-
-
-
-
-
-
-
 }
