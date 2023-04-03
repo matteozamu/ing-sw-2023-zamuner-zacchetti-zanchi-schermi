@@ -8,7 +8,9 @@
 
 name: Test Java Project
 
-on: push
+on:
+  push:
+    branches: [ "main" ]
 
 jobs:
   windows:
