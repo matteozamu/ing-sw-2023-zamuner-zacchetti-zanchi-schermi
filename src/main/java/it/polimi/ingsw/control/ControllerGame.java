@@ -74,20 +74,15 @@ public class ControllerGame {
      * @param username is the username of the player
      * @return true if successful, false otherwise
      */
-    public boolean addPlayer(String username) {
-        if (!this.isUsernameAvailable(username)) return false;
+    public boolean addPlayer(String username, Shelf shelf, PersonalGoalCard pg) {
+//        if (!this.isUsernameAvailable(username)) return false;
+        if (username == null || shelf == null || pg == null) return false;
 
         if (this.players.size() < this.game.MAX_PLAYER) {
-            Shelf shelf = new Shelf();
-            PersonalGoalCard pg = game.getRandomAvailablePersonalGoalCard();
-
-            if (pg == null) return false;
-
             Player p = new Player(username, shelf, pg);
             if (this.players.size() == 0) this.currentPlayer = p;
 
             this.players.add(p);
-//            this.numberOfPlayers++;
             return true;
         } else return false;
     }
