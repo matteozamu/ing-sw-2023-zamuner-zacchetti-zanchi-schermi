@@ -194,10 +194,10 @@ public class ControllerGameTest extends TestCase {
 //    }
 
 
-    @Test
-    public void testAddObjectCardToLimboTrue() {
-
-    }
+//    @Test
+//    public void testAddObjectCardToLimboTrue() {
+//      testare se il limbo ha 3 carte e se la carta non è disponibile
+//    }
 
     @Test
     public void testAddObjectCardToLimboNullPointerException() {
