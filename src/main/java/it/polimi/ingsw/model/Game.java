@@ -23,8 +23,20 @@ public class Game {
         this.personalGoalCardsContainer = new ArrayList<>();
     }
 
+    public List<CommonGoal> getCommonGoalContainer() {
+        return commonGoalContainer;
+    }
+
+    public List<PersonalGoalCard> getPersonalGoalCardsContainer() {
+        return personalGoalCardsContainer;
+    }
+
     public void setPersonalGoalCardsContainer(List<PersonalGoalCard> personalGoalCardsContainer) {
         this.personalGoalCardsContainer = personalGoalCardsContainer;
+    }
+
+    public List<ObjectCard> getObjectCardContainer() {
+        return objectCardContainer;
     }
 
     /**
