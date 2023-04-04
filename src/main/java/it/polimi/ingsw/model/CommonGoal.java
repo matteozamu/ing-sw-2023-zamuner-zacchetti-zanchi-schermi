@@ -34,4 +34,14 @@ public abstract class CommonGoal {
      * @return True if the shelf meets the requirements, false otherwise.
      */
     public abstract boolean checkGoal(Shelf shelf);
+
+    /**
+     * Determines if the given shelf is eligible to be checked for the specific common goal.
+     * Each subclass of CommonGoal should provide its own implementation of this method,
+     * based on the specific conditions that must be met for the goal to be achievable.
+     *
+     * @param shelf The shelf to be checked for eligibility.
+     * @return true if the shelf is eligible for the specific common goal, false otherwise.
+     */
+    protected abstract boolean isShelfEligible(Shelf shelf);
 }

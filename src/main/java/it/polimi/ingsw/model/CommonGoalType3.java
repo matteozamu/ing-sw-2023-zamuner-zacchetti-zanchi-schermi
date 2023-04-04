@@ -14,8 +14,24 @@ import java.util.Set;
 
 public final class CommonGoalType3 extends CommonGoal {
 
+    /**
+     * Checks if the Shelf is eligible for the goal check.
+     * For CommonGoalType3, the Shelf must have at least 4 object cards.
+     *
+     * @param shelf The Shelf to check.
+     * @return true if the Shelf is eligible, false otherwise.
+     */
+    @Override
+    protected boolean isShelfEligible(Shelf shelf) {
+        return shelf.getGrid().size() >= 4;
+    }
+
     @Override
     public boolean checkGoal(Shelf shelf) {
+        if (!isShelfEligible(shelf)) {
+            return false;
+        }
+
         Map<Coordinate, ObjectCard> grid = shelf.getGrid();
         Set<ObjectCardType> cornerTypes = new HashSet<>();
 

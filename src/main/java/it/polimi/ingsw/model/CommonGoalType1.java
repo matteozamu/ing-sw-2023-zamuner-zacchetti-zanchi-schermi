@@ -11,8 +11,25 @@ import java.util.Map;
 
 public final class CommonGoalType1 extends CommonGoal {
 
+    /**
+     * Determines if the given shelf is eligible to be checked for the specific common goal of type 1.
+     * A shelf is considered eligible for this common goal if it contains at least 12 object cards,
+     * as the goal requires the presence of 6 separate groups of 2 adjacent object cards of the same type.
+     *
+     * @param shelf The shelf to be checked for eligibility.
+     * @return true if the shelf contains at least 12 object cards, false otherwise.
+     */
+    @Override
+    protected boolean isShelfEligible(Shelf shelf) {
+        return shelf.getGrid().size() >= 12;
+    }
+
     @Override
     public boolean checkGoal(Shelf shelf) {
+        if (!isShelfEligible(shelf)) {
+            return false;
+        }
+
         Map<Coordinate, ObjectCard> grid = shelf.getGrid();
         int matchedPairs = 0;
 

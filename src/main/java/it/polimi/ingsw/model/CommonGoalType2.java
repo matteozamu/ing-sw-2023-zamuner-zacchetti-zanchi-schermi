@@ -8,8 +8,24 @@ package it.polimi.ingsw.model;
 
 public final class CommonGoalType2 extends CommonGoal {
 
+    /**
+     * Checks if the Shelf is eligible for the goal check.
+     * For CommonGoalType2, the Shelf must have at least 5 object cards.
+     *
+     * @param shelf The Shelf to check.
+     * @return true if the Shelf is eligible, false otherwise.
+     */
+    @Override
+    protected boolean isShelfEligible(Shelf shelf) {
+        return shelf.getGrid().size() >= 5;
+    }
+
     @Override
     public boolean checkGoal(Shelf shelf) {
+        if (!isShelfEligible(shelf)) {
+            return false;
+        }
+
         for (int row = 0; row < 2; row++) {
             for (int col : new int[] {0, 4}) {
                 Coordinate coordinate = new Coordinate(col, row);
