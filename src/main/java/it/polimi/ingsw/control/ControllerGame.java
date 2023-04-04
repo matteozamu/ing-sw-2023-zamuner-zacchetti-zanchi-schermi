@@ -113,7 +113,8 @@ public class ControllerGame {
      * Fills the game board with object cards based on the number of players.
      * This method should be called at the beginning of the game to set up the board.
      */
-    // TODO parametrizzare sul numero di giocatori
+    // TODO: parametrizzare sul numero di giocatori
+    // TODO: non sarebbe meglio spostarlo nel model?
     public void fillBoard() {
         Coordinate c;
         try {
