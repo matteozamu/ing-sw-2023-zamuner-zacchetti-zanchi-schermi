@@ -17,7 +17,6 @@ public class ControllerGame {
     private Board board;
     private List<CommonGoal> commonGoals;
     private Player currentPlayer;
-    //    private int numberOfPlayers;
     private Game game;
     private List<ObjectCard> limbo;
 
@@ -184,18 +183,18 @@ public class ControllerGame {
 //    }
 
     //si puo fare una modifica che non rimuova la coordinata della cella ma setti il contenuto a null
+
     /**
      * pick the ObjectCard from the board (if available)
+     *
      * @param coordinate is the coordinate of the ObjectCard clicked by the user
      * @return the ObjectCard with that Coordinate
      */
-//    public ObjectCard pickObjectCard(Coordinate coordinate) {
-//        if(isObjectCardAvailable(coordinate)) {
-//
-//            return board.removeObjectCard(coordinate);
-//        }
-//        else return null;
-//    }
+    public ObjectCard pickObjectCard(Coordinate coordinate) {
+        if (isObjectCardAvailable(coordinate)) {
+            return board.removeObjectCard(coordinate);
+        } else return null;
+    }
 
     /**
      * Checks if the object card at the given coordinate is available (i.e., has at least one free side).
@@ -212,18 +211,14 @@ public class ControllerGame {
      * Adds the object card at the specified coordinate to the limbo area.
      * The limbo area is used to store object cards that a player has picked up but not yet placed on their shelf.
      *
-     * @param coordinate The coordinate of the object card to add to the limbo area.
-     * @throws NullPointerException     If the object card is null (should not happen).
-     * @throws IllegalStateException    If the object card is not available.
-     * @throws IllegalArgumentException If the limbo area is already full.
+     * @param card The object card to add to the limbo area.
+     * @throws NullPointerException If the object card is null (should not happen).
      */
-    public boolean addObjectCardToLimbo(Coordinate coordinate) throws NullPointerException {
-        if (coordinate == null) throw new NullPointerException("ObjectCard is null");
+    public boolean addObjectCardToLimbo(ObjectCard card) throws NullPointerException {
+        if (card == null) throw new NullPointerException("ObjectCard is null");
+        if (this.limbo.size() == 3) return false;
 
-        if (!isObjectCardAvailable(coordinate) || this.limbo.size() == 3) return false;
-
-        this.limbo.add(this.board.removeObjectCard(coordinate));
-
+        this.limbo.add(card);
         return true;
     }
 

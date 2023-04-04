@@ -100,12 +100,14 @@ public class ControllerGameTest extends TestCase {
 
     @Test
     public void testAddObjectLimboTooBig() {
+        cg.addPlayer("Kelleigh");
+
         cg.getLimbo().add(new ObjectCard(ObjectCardType.randomObjectCardType(), 1));
         cg.getLimbo().add(new ObjectCard(ObjectCardType.randomObjectCardType(), 2));
         cg.getLimbo().add(new ObjectCard(ObjectCardType.randomObjectCardType(), 0));
-        cg.getLimbo().add(new ObjectCard(ObjectCardType.randomObjectCardType(), 2));
+        cg.getLimbo().add(new ObjectCard(ObjectCardType.randomObjectCardType(), 0));
 
-        assertFalse(cg.addObjectCards(1));
+        assertFalse(cg.addObjectCards(0));
 
     }
 
@@ -113,13 +115,11 @@ public class ControllerGameTest extends TestCase {
     public void testAddObjectCardsNoSpaceShelfColumn() {
         cg.addPlayer("Estela");
 
-        for (int i = 0; i < 5; i++) {
+        for (int i = 0; i < 6; i++) {
             cg.getCurrentPlayer().getShelf().getGrid().put(new Coordinate(i, 0), new ObjectCard(ObjectCardType.randomObjectCardType(), 1));
         }
 
-        cg.getLimbo().add(new ObjectCard(ObjectCardType.randomObjectCardType(), 1));
         cg.getLimbo().add(new ObjectCard(ObjectCardType.randomObjectCardType(), 2));
-
         assertFalse(cg.addObjectCards(0));
     }
 
@@ -127,10 +127,9 @@ public class ControllerGameTest extends TestCase {
     public void testAddObjectCards() {
         cg.addPlayer("Laia");
 
-        cg.getCurrentPlayer().getShelf().getGrid().put(new Coordinate(0, 0), new ObjectCard(ObjectCardType.randomObjectCardType(), 1));
-        cg.getCurrentPlayer().getShelf().getGrid().put(new Coordinate(1, 0), new ObjectCard(ObjectCardType.randomObjectCardType(), 1));
-        cg.getCurrentPlayer().getShelf().getGrid().put(new Coordinate(2, 0), new ObjectCard(ObjectCardType.randomObjectCardType(), 1));
-        cg.getCurrentPlayer().getShelf().getGrid().put(new Coordinate(3, 0), new ObjectCard(ObjectCardType.randomObjectCardType(), 1));
+        for (int i = 0; i < 4; i++) {
+            cg.getCurrentPlayer().getShelf().getGrid().put(new Coordinate(i, 0), new ObjectCard(ObjectCardType.randomObjectCardType(), 1));
+        }
 
         cg.getLimbo().add(new ObjectCard(ObjectCardType.randomObjectCardType(), 1));
         cg.getLimbo().add(new ObjectCard(ObjectCardType.randomObjectCardType(), 2));
@@ -178,9 +177,7 @@ public class ControllerGameTest extends TestCase {
     @Test
     public void testIsObjectCardAvailableOneDirectionFull() {
         Coordinate c = new Coordinate(0, 4);
-        cg.addPlayer("Rebecca");
         cg.fillBoard();
-//        cg.getCurrentPlayer().getShelf().getGrid().put(new Coordinate(1, 0), new ObjectCard(ObjectCardType.randomObjectCardType(), 0));
         assertTrue(cg.isObjectCardAvailable(c));
     }
 
@@ -192,19 +189,21 @@ public class ControllerGameTest extends TestCase {
         assertFalse(cg.isObjectCardAvailable(c));
     }
 
-//    @Test
-//    public void testAddObjectCardToLimboFalse(){
-//       testare se il limbo ha 3 carte e se la carta non è disponibile
-//    }
-
-
-//    @Test
-//    public void testAddObjectCardToLimboTrue() {
-//      testare se il limbo ha 3 carte e se la carta non è disponibile
-//    }
+    @Test
+    public void testAddObjectCardToLimbo() {
+        assertTrue(cg.addObjectCardToLimbo(new ObjectCard(ObjectCardType.randomObjectCardType(), 1)));
+    }
 
     @Test
-    public void testAddObjectCardToLimboNullPointerException() {
+    public void testAddObjectCardToLimboSizeLimit() {
+        cg.addObjectCardToLimbo(new ObjectCard(ObjectCardType.randomObjectCardType(), 1));
+        cg.addObjectCardToLimbo(new ObjectCard(ObjectCardType.randomObjectCardType(), 1));
+        cg.addObjectCardToLimbo(new ObjectCard(ObjectCardType.randomObjectCardType(), 1));
+        assertFalse(cg.addObjectCardToLimbo(new ObjectCard(ObjectCardType.randomObjectCardType(), 1)));
+    }
+
+    @Test
+    public void testAddObjectCardToLimboNullCard() {
         assertThrows(NullPointerException.class, () -> {
             cg.addObjectCardToLimbo(null);
         });
