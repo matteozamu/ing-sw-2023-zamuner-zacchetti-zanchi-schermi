@@ -13,7 +13,7 @@ import static it.polimi.ingsw.model.Board.Direction.*;
  */
 public class ControllerGame {
     private UUID id;
-    private Player currentPlayer;
+    // private Player currentPlayer;
     private Game game;
     private List<ObjectCard> limbo;
 
@@ -27,18 +27,21 @@ public class ControllerGame {
         this.limbo = new ArrayList<>();
     }
 
-    public Player getCurrentPlayer() {
-        return currentPlayer;
-    }
-
-    public void setCurrentPlayer(Player currentPlayer) {
-        this.currentPlayer = currentPlayer;
-    }
+//    public Player getCurrentPlayer() {
+//        return currentPlayer;
+//    }
+//
+//    public void setCurrentPlayer(Player currentPlayer) {
+//        this.currentPlayer = currentPlayer;
+//    }
 
     public Game getGame() {
         return game;
     }
 
+    /**
+     * @return the array list containing the one, two or three ObjectCard selected
+     */
     public List<ObjectCard> getLimbo() {
         return limbo;
     }
@@ -56,37 +59,6 @@ public class ControllerGame {
             if (p.getName().equals(username)) return false;
         }
         return true;
-    }
-
-    /**
-     * Add a new player to the game
-     *
-     * @param p is the object Player
-     * @return true if successful, false otherwise
-     */
-    public boolean addPlayer(Player p) {
-        if (p == null) return false;
-        if (this.game.getPlayers().size() < this.game.MAX_PLAYER) {
-//            if (this.players.size() == 0) this.currentPlayer = p;
-            this.game.getPlayers().add(p);
-            return true;
-        } else return false;
-    }
-
-    /**
-     * Move to the next player
-     *
-     * @return the next player
-     */
-    public Player nextPlayer() {
-        if (this.game.getPlayers().size() == 0) return null;
-
-        this.limbo.clear();
-        if (this.game.getPlayers().indexOf(this.currentPlayer) == this.game.getPlayers().size() - 1)
-            this.currentPlayer = this.game.getPlayers().get(0);
-        else this.currentPlayer = this.game.getPlayers().get(this.game.getPlayers().indexOf(currentPlayer) + 1);
-
-        return this.currentPlayer;
     }
 
     /**
@@ -126,34 +98,13 @@ public class ControllerGame {
      */
     public void selectColumn(int column) {
         System.out.println("Seleziona una colonna: [0, 1, 2, 3, 4]");
-        while (currentPlayer.getShelf().getAvailableRows(column) < limbo.size()) {
+        while (game.getCurrentPlayer().getShelf().getAvailableRows(column) < limbo.size()) {
             System.out.println("La colonna selezionata non ha abbastanza spazi");
             System.out.println("Seleziona una colonna: [0, 1, 2, 3, 4]");
         }
     }
 
-    /**
-     * Method that adds a list of ObjectCards in the first available cells of the specified column.
-     *
-     * @param col is the column where to insert the object cards.
-     * @return true if the cards are successfully added.
-     * @throws IllegalStateException if there is not enough space to add the cards.
-     */
-    public boolean addObjectCards(int col) {
-        if (this.limbo.size() == 0 || this.limbo.size() > 3) return false;
-
-        Shelf s = this.currentPlayer.getShelf();
-        int availableRows = s.getAvailableRows(col);
-        if (availableRows < this.limbo.size()) return false;
-
-        for (ObjectCard card : this.limbo) {
-            s.getGrid().put(new Coordinate(6 - availableRows, col), card);
-            availableRows--;
-        }
-        if (s.getGrid().size() == s.ROWS * s.COLUMNS) s.setFull(true);
-
-        return true;
-    }
+    //TODO aggiungere controllo su colonne disponibili e chiamare metodo del game addObjectCardsToShelf
 
 //    /**
 //     * Load the shelf with the ObjectCard, the order has already been established
@@ -166,17 +117,7 @@ public class ControllerGame {
 
     //si puo fare una modifica che non rimuova la coordinata della cella ma setti il contenuto a null
 
-    /**
-     * pick the ObjectCard from the board (if available)
-     *
-     * @param coordinate is the coordinate of the ObjectCard clicked by the user
-     * @return the ObjectCard with that Coordinate
-     */
-    public ObjectCard pickObjectCard(Coordinate coordinate) {
-        if (isObjectCardAvailable(coordinate)) {
-            return this.game.getBoard().removeObjectCard(coordinate);
-        } else return null;
-    }
+
 
     /**
      * Checks if the object card at the given coordinate is available (i.e., has at least one free side).
@@ -205,6 +146,18 @@ public class ControllerGame {
     }
 
     /**
+     * pick the ObjectCard from the board
+     *
+     * @param coordinate is the coordinate of the ObjectCard clicked by the user
+     * @return the ObjectCard with that Coordinate
+     */
+    public ObjectCard pickObjectCard(Coordinate coordinate) {
+        if (isObjectCardAvailable(coordinate)) {
+            return this.game.getBoard().removeObjectCard(coordinate);
+        } else return null;
+    }
+
+    /**
      * Calculate the points of the currentPlayer. Each time the method counts the points starting from 0.
      * Then set the points to the currentPlayer.
      *
@@ -213,15 +166,15 @@ public class ControllerGame {
     public int pointsCalculator() {
         int points = 0;
 
-        points += this.currentPlayer.getPersonalGoalCard().calculatePoints();
+        points += this.game.getCurrentPlayer().getPersonalGoalCard().calculatePoints();
         for (CommonGoal c : this.game.getCommonGoals()) {
-            if (c.checkGoal(this.currentPlayer.getShelf()))
+            if (c.checkGoal(this.game.getCurrentPlayer().getShelf()))
                 points += c.updateCurrentPoints(this.game.getPlayers().size());
         }
-        points += this.currentPlayer.getShelf().closeObjectCardsPoints();
-        if (this.currentPlayer.getShelf().isFull()) points++;
+        points += this.game.getCurrentPlayer().getShelf().closeObjectCardsPoints();
+        if (this.game.getCurrentPlayer().getShelf().isFull()) points++;
 
-        this.currentPlayer.setCurrentPoints(points);
+        this.game.getCurrentPlayer().setCurrentPoints(points);
 
         return points;
     }

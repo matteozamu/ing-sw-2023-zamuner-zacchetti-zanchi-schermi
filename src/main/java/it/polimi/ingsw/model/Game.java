@@ -17,9 +17,13 @@ public class Game {
     private List<CommonGoal> commonGoalContainer;
     private List<PersonalGoalCard> personalGoalCardsContainer;
     private List<Player> players;
+    private Player currentPlayer;
     private Board board;
     private List<CommonGoal> commonGoals;
 
+    /**
+     * constructor of the class
+     */
     public Game() {
         this.objectCardContainer = new ArrayList<>();
         this.commonGoalContainer = new ArrayList<>();
@@ -49,6 +53,28 @@ public class Game {
         return players;
     }
 
+    /**
+     * Add a new player to the game
+     *
+     * @param p is the object Player
+     * @return true if successful, false otherwise
+     */
+    public boolean addPlayer(Player p) {
+        if (p == null) return false;
+        if (this.players.size() < MAX_PLAYER) {
+            this.players.add(p);
+            return true;
+        } else return false;
+    }
+
+    public Player getCurrentPlayer() {
+        return currentPlayer;
+    }
+
+    public void setCurrentPlayer(Player currentPlayer) {
+        this.currentPlayer = currentPlayer;
+    }
+
     public Board getBoard() {
         return board;
     }
@@ -57,8 +83,46 @@ public class Game {
         return commonGoals;
     }
 
+
     /**
-     * Load into the game all the object cards
+     * Move to the next player
+     *
+     * @return the next player
+     */
+    public Player nextPlayer() {
+        if (this.players.size() == 0) return null;
+
+        //this.limbo.clear();
+        if (this.players.indexOf(this.currentPlayer) == this.players.size() - 1)
+            this.currentPlayer = this.players.get(0);
+        else this.currentPlayer = this.players.get(this.players.indexOf(currentPlayer) + 1);
+
+        return this.currentPlayer;
+    }
+
+    /**
+     * Method that adds a list of ObjectCards in the first available cells of the specified column.
+     *
+     * @param col is the column where to insert the object cards.
+     * @return true if the cards are successfully added.
+     * @throws IllegalStateException if there is not enough space to add the cards.
+     */
+    public boolean addObjectCardsToShelf(List<ObjectCard> limbo, int col) {
+        Shelf s = this.currentPlayer.getShelf();
+        int availableRows = s.getAvailableRows(col);
+        if (availableRows < limbo.size()) return false;
+
+        for (ObjectCard card : limbo) {
+            s.getGrid().put(new Coordinate(6 - availableRows, col), card);
+            availableRows--;
+        }
+        if (s.getGrid().size() == s.ROWS * s.COLUMNS) s.setFull(true);
+
+        return true;
+    }
+
+    /**
+     * Load into the objectCardContainer all the object cards
      */
     public void loadObjectCards() {
         List<ObjectCardType> types = List.of(ObjectCardType.values());
@@ -76,7 +140,7 @@ public class Game {
      * @return An ObjectCard randomly selected from the container.
      */
     public ObjectCard getRandomAvailableObjectCard() {
-        if (this.objectCardContainer.size() == 0) return null;
+        if (this.objectCardContainer == null || this.objectCardContainer.size() == 0) return null;
 
         Random RANDOM = new Random();
         int index = RANDOM.nextInt(this.objectCardContainer.size());
@@ -91,6 +155,8 @@ public class Game {
      * @return A CommonGoal randomly selected from the container.
      */
     public CommonGoal getRandomAvailableCommonGoal() {
+        if (this.commonGoalContainer == null || this.commonGoalContainer.size() == 0) return null;
+
         Random RANDOM = new Random();
         int index = RANDOM.nextInt(this.commonGoalContainer.size());
         CommonGoal cg = this.commonGoalContainer.get(index);
@@ -114,7 +180,7 @@ public class Game {
     }
 
     /**
-     * Load into the game all personal goal cards from a json file
+     * Load into the personalGoalCardsContainer all personal goal cards from a json file
      */
     public void loadPersonalGoaldCards() {
         Gson gson = new Gson();
