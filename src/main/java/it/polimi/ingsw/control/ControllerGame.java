@@ -13,9 +13,6 @@ import static it.polimi.ingsw.model.Board.Direction.*;
  */
 public class ControllerGame {
     private UUID id;
-    private List<Player> players;
-    private Board board;
-    private List<CommonGoal> commonGoals;
     private Player currentPlayer;
     private Game game;
     private List<ObjectCard> limbo;
@@ -25,20 +22,17 @@ public class ControllerGame {
      */
     public ControllerGame() {
         this.id = UUID.randomUUID();
-        this.players = new ArrayList<>();
-        this.board = new Board();
         this.game = new Game();
 //        this.numberOfPlayers = 0;
-        this.commonGoals = new ArrayList<>();
         this.limbo = new ArrayList<>();
-    }
-
-    public List<Player> getPlayers() {
-        return players;
     }
 
     public Player getCurrentPlayer() {
         return currentPlayer;
+    }
+
+    public void setCurrentPlayer(Player currentPlayer) {
+        this.currentPlayer = currentPlayer;
     }
 
     public Game getGame() {
@@ -47,10 +41,6 @@ public class ControllerGame {
 
     public List<ObjectCard> getLimbo() {
         return limbo;
-    }
-
-    public Board getBoard() {
-        return board;
     }
 
     /**
@@ -62,7 +52,7 @@ public class ControllerGame {
      */
     public boolean isUsernameAvailable(String username) throws NullPointerException {
         if (username == null) throw new NullPointerException("Username is null");
-        for (Player p : players) {
+        for (Player p : this.game.getPlayers()) {
             if (p.getName().equals(username)) return false;
         }
         return true;
@@ -71,18 +61,14 @@ public class ControllerGame {
     /**
      * Add a new player to the game
      *
-     * @param username is the username of the player
+     * @param p is the object Player
      * @return true if successful, false otherwise
      */
-    public boolean addPlayer(String username, Shelf shelf, PersonalGoalCard pg) {
-//        if (!this.isUsernameAvailable(username)) return false;
-        if (username == null || shelf == null || pg == null) return false;
-
-        if (this.players.size() < this.game.MAX_PLAYER) {
-            Player p = new Player(username, shelf, pg);
-            if (this.players.size() == 0) this.currentPlayer = p;
-
-            this.players.add(p);
+    public boolean addPlayer(Player p) {
+        if (p == null) return false;
+        if (this.game.getPlayers().size() < this.game.MAX_PLAYER) {
+//            if (this.players.size() == 0) this.currentPlayer = p;
+            this.game.getPlayers().add(p);
             return true;
         } else return false;
     }
@@ -93,12 +79,12 @@ public class ControllerGame {
      * @return the next player
      */
     public Player nextPlayer() {
-        if (this.players.size() == 0) return null;
+        if (this.game.getPlayers().size() == 0) return null;
 
         this.limbo.clear();
-        if (this.players.indexOf(this.currentPlayer) == this.players.size() - 1)
-            this.currentPlayer = this.players.get(0);
-        else this.currentPlayer = players.get(players.indexOf(currentPlayer) + 1);
+        if (this.game.getPlayers().indexOf(this.currentPlayer) == this.game.getPlayers().size() - 1)
+            this.currentPlayer = this.game.getPlayers().get(0);
+        else this.currentPlayer = this.game.getPlayers().get(this.game.getPlayers().indexOf(currentPlayer) + 1);
 
         return this.currentPlayer;
     }
@@ -114,13 +100,13 @@ public class ControllerGame {
             for (int row = 1; row <= 5; row++) {
                 for (int col = 1; col < 2 * row; col++) {
                     c = new Coordinate(5 - row, -5 + col);
-                    this.board.createCell(c, game.getRandomAvailableObjectCard());
+                    this.game.getBoard().createCell(c, game.getRandomAvailableObjectCard());
                 }
             }
             for (int row = 5 - 1; row >= 1; row--) {
                 for (int col = 1; col < 2 * row; col++) {
                     c = new Coordinate(-5 + row, -5 + col);
-                    this.board.createCell(c, game.getRandomAvailableObjectCard());
+                    this.game.getBoard().createCell(c, game.getRandomAvailableObjectCard());
                 }
             }
         } catch (NullPointerException e) {
@@ -187,7 +173,7 @@ public class ControllerGame {
      */
     public ObjectCard pickObjectCard(Coordinate coordinate) {
         if (isObjectCardAvailable(coordinate)) {
-            return board.removeObjectCard(coordinate);
+            return this.game.getBoard().removeObjectCard(coordinate);
         } else return null;
     }
 
@@ -199,7 +185,7 @@ public class ControllerGame {
      * @return True if the object card is available, false otherwise.
      */
     public boolean isObjectCardAvailable(Coordinate coordinate) {
-        return board.isEmptyAtDirection(coordinate, UP) || board.isEmptyAtDirection(coordinate, DOWN) || board.isEmptyAtDirection(coordinate, RIGHT) || board.isEmptyAtDirection(coordinate, LEFT);
+        return this.game.getBoard().isEmptyAtDirection(coordinate, UP) || this.game.getBoard().isEmptyAtDirection(coordinate, DOWN) || this.game.getBoard().isEmptyAtDirection(coordinate, RIGHT) || this.game.getBoard().isEmptyAtDirection(coordinate, LEFT);
     }
 
     /**
@@ -225,9 +211,11 @@ public class ControllerGame {
      */
     public int pointsCalculator() {
         int points = 0;
+
         points += this.currentPlayer.getPersonalGoalCard().calculatePoints();
-        for (CommonGoal c : this.commonGoals) {
-            if (c.checkGoal(this.currentPlayer.getShelf())) points += c.updateCurrentPoints(this.players.size());
+        for (CommonGoal c : this.game.getCommonGoals()) {
+            if (c.checkGoal(this.currentPlayer.getShelf()))
+                points += c.updateCurrentPoints(this.game.getPlayers().size());
         }
         points += this.currentPlayer.getShelf().closeObjectCardsPoints();
         if (this.currentPlayer.getShelf().isFull()) points++;

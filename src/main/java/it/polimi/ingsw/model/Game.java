@@ -16,11 +16,17 @@ public class Game {
     private List<ObjectCard> objectCardContainer;
     private List<CommonGoal> commonGoalContainer;
     private List<PersonalGoalCard> personalGoalCardsContainer;
+    private List<Player> players;
+    private Board board;
+    private List<CommonGoal> commonGoals;
 
     public Game() {
         this.objectCardContainer = new ArrayList<>();
         this.commonGoalContainer = new ArrayList<>();
         this.personalGoalCardsContainer = new ArrayList<>();
+        this.players = new ArrayList<>();
+        this.board = new Board();
+        this.commonGoals = new ArrayList<>();
     }
 
     public List<CommonGoal> getCommonGoalContainer() {
@@ -37,6 +43,18 @@ public class Game {
 
     public List<ObjectCard> getObjectCardContainer() {
         return objectCardContainer;
+    }
+
+    public List<Player> getPlayers() {
+        return players;
+    }
+
+    public Board getBoard() {
+        return board;
+    }
+
+    public List<CommonGoal> getCommonGoals() {
+        return commonGoals;
     }
 
     /**
