@@ -45,6 +45,12 @@ public class ControllerGameTest extends TestCase {
     }
 
     @Test
+    public void testAddPlayerCurrentPlayer() {
+        cg.addPlayer("Rebecca");
+        assertEquals(cg.getPlayers().get(0), cg.getCurrentPlayer());
+    }
+
+    @Test
     public void testAddPlayerAttributes() {
         cg.getGame().setPersonalGoalCardsContainer(null);
         assertFalse(cg.addPlayer("Ayra"));
@@ -107,11 +113,9 @@ public class ControllerGameTest extends TestCase {
     public void testAddObjectCardsNoSpaceShelfColumn() {
         cg.addPlayer("Estela");
 
-        cg.getCurrentPlayer().getShelf().getGrid().put(new Coordinate(0, 0), new ObjectCard(ObjectCardType.randomObjectCardType(), 1));
-        cg.getCurrentPlayer().getShelf().getGrid().put(new Coordinate(1, 0), new ObjectCard(ObjectCardType.randomObjectCardType(), 1));
-        cg.getCurrentPlayer().getShelf().getGrid().put(new Coordinate(2, 0), new ObjectCard(ObjectCardType.randomObjectCardType(), 1));
-        cg.getCurrentPlayer().getShelf().getGrid().put(new Coordinate(3, 0), new ObjectCard(ObjectCardType.randomObjectCardType(), 1));
-        cg.getCurrentPlayer().getShelf().getGrid().put(new Coordinate(4, 0), new ObjectCard(ObjectCardType.randomObjectCardType(), 1));
+        for (int i = 0; i < 5; i++) {
+            cg.getCurrentPlayer().getShelf().getGrid().put(new Coordinate(i, 0), new ObjectCard(ObjectCardType.randomObjectCardType(), 1));
+        }
 
         cg.getLimbo().add(new ObjectCard(ObjectCardType.randomObjectCardType(), 1));
         cg.getLimbo().add(new ObjectCard(ObjectCardType.randomObjectCardType(), 2));
