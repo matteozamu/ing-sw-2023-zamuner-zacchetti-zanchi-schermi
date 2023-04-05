@@ -21,7 +21,7 @@
 //        this.pg = cg.getGame().getRandomAvailablePersonalGoalCard();
 //        this.shelf = new Shelf();
 //    }
-//
+
 //    @Test
 //    public void testUsernameNull() {
 //        assertThrows(NullPointerException.class, () -> {
@@ -48,14 +48,15 @@
 //    @Test
 //    public void testAddObjectLimboTooBig() {
 //        Player p = new Player("Kelleigh", this.shelf, this.pg);
-//        cg.addPlayer(p);
+//        cg.getGame().addPlayer(p);
+//        cg.getGame().setCurrentPlayer(p);
 //
 //        cg.getLimbo().add(new ObjectCard(ObjectCardType.randomObjectCardType(), 1));
 //        cg.getLimbo().add(new ObjectCard(ObjectCardType.randomObjectCardType(), 2));
 //        cg.getLimbo().add(new ObjectCard(ObjectCardType.randomObjectCardType(), 0));
 //        cg.getLimbo().add(new ObjectCard(ObjectCardType.randomObjectCardType(), 0));
 //
-//        assertFalse(cg.addObjectCards(0));
+//        assertFalse(cg.getGame().addObjectCardsToShelf(cg.getLimbo(), 0));
 //
 //    }
 //
