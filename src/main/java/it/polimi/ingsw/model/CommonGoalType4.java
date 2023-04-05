@@ -21,7 +21,6 @@ public final class CommonGoalType4 extends CommonGoal {
     @Override
     protected boolean isShelfEligible(Shelf shelf) {
         return shelf.getGrid().size() >= 20;
-
     }
 
     @Override
