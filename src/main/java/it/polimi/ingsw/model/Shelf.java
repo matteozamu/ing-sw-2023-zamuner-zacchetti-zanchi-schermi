@@ -142,23 +142,17 @@ public class Shelf {
      * In case a cell is empty, a placeholder with dashes ("-") will be printed.
      */
     public void printShelf() {
-        int maxLength = Arrays.stream(ObjectCardType.values())
-                .map(ObjectCardType::toString)
-                .mapToInt(String::length)
-                .max()
-                .orElse(0);
-
-        maxLength += 2; // Adds space for ID and separator "-"
+        int maxLengthType = 9;
 
         for (int row = this.ROWS - 1; row >= 0; row--) {
             for (int col = 0; col < this.COLUMNS; col++) {
                 Coordinate coord = new Coordinate(row, col);
                 ObjectCard card = getObjectCard(coord);
                 if (card == null) {
-                    System.out.print("-".repeat(maxLength));
+                    System.out.print("-".repeat(maxLengthType));
                 } else {
                     String cardText = card.toString();
-                    int padding = maxLength - cardText.length();
+                    int padding = maxLengthType - cardText.length();
                     System.out.print(cardText + " ".repeat(padding));
                 }
                 System.out.print("\t");
