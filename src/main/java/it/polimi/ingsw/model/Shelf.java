@@ -1,6 +1,5 @@
 package it.polimi.ingsw.model;
 
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -63,7 +62,7 @@ public class Shelf {
      * @param col is the column
      * @return number of free cell for the col column
      */
-    public int getAvailableRows(int col) {
+    public int getFreeCellsPerColumn(int col) {
         int availableRows = this.ROWS;
         Coordinate coord;
 
@@ -161,18 +160,18 @@ public class Shelf {
         }
     }
 
-    // TODO CI SERVE? Si
+    // TODO: ci serve? Forse, se serve c'è
     /**
      * Returns a map with the number of free cells for each column in the Shelf.
      *
      * @return A Map<Integer, Integer> where the key represents the column index and the value
      * represents the number of free cells in that column.
      */
-    public Map<Integer, Integer> getFreeCellsPerColumn() {
+    public Map<Integer, Integer> getFreeCellsPerColumnMap() {
         Map<Integer, Integer> freeCellsPerColumn = new HashMap<>();
 
         for (int col = 0; col < COLUMNS; col++) {
-            int freeRows = getAvailableRows(col);
+            int freeRows = getFreeCellsPerColumn(col);
             freeCellsPerColumn.put(col, freeRows);
         }
         return freeCellsPerColumn;

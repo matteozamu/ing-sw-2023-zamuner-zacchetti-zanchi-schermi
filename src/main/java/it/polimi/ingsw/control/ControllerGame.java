@@ -136,7 +136,7 @@ public class ControllerGame {
      */
     public void selectColumn(int column) {
         System.out.println("Seleziona una colonna: [0, 1, 2, 3, 4]");
-        while (currentPlayer.getShelf().getAvailableRows(column) < limbo.size()){
+        while (currentPlayer.getShelf().getFreeCellsPerColumn(column) < limbo.size()){
             System.out.println("La colonna selezionata non ha abbastanza spazi");
             System.out.println("Seleziona una colonna: [0, 1, 2, 3, 4]");
         }
@@ -153,7 +153,7 @@ public class ControllerGame {
         if (this.limbo.size() == 0 || this.limbo.size() > 3) return false;
 
         Shelf s = this.currentPlayer.getShelf();
-        int availableRows = s.getAvailableRows(col);
+        int availableRows = s.getFreeCellsPerColumn(col);
         if (availableRows < this.limbo.size()) return false;
 
         for (ObjectCard card : this.limbo) {
