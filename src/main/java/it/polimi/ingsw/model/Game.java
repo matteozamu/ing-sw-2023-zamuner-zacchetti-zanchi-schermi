@@ -109,7 +109,7 @@ public class Game {
      */
     public boolean addObjectCardsToShelf(List<ObjectCard> limbo, int col) {
         Shelf s = this.currentPlayer.getShelf();
-        int availableRows = s.getAvailableRows(col);
+        int availableRows = s.getFreeCellsPerColumn(col);
         if (availableRows < limbo.size()) return false;
 
         for (ObjectCard card : limbo) {

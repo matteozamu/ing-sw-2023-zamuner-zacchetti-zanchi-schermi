@@ -18,7 +18,7 @@ public class ShelfTest extends TestCase {
     @Test
     public void testAvailableRowsEmpty() {
         assertFalse(this.s.isFull());
-        assertEquals(6, this.s.getAvailableRows(0));
+        assertEquals(6, this.s.getFreeCellsPerColumn(0));
     }
 
     @Test
@@ -28,7 +28,7 @@ public class ShelfTest extends TestCase {
             this.oc = new ObjectCard(ObjectCardType.gatto, 0);
             s.getGrid().put(new Coordinate(row, 0), this.oc);
         }
-        assertEquals(6 - cards, this.s.getAvailableRows(0));
+        assertEquals(6 - cards, this.s.getFreeCellsPerColumn(0));
     }
 
     @Test
