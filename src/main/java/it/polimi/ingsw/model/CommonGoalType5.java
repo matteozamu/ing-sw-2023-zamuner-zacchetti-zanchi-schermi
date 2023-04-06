@@ -12,8 +12,24 @@ import java.util.Map;
 
 public class CommonGoalType5 extends CommonGoal {
 
+    /**
+     * Checks if the Shelf is eligible for the goal check.
+     * For CommonGoalType5, the Shelf must have at least 16 object cards.
+     *
+     * @param shelf The Shelf to check.
+     * @return true if the Shelf is eligible, false otherwise.
+     */
+    @Override
+    protected boolean isShelfEligible(Shelf shelf) {
+        return shelf.getGrid().size() >= 16;
+    }
+
     @Override
     public boolean checkGoal(Shelf shelf) {
+        if (!isShelfEligible(shelf)) {
+            return false;
+        }
+
         Map<ObjectCardType, Integer> groupsCount = new HashMap<>();
 
         for (Map.Entry<Coordinate, ObjectCard> entry : shelf.getGrid().entrySet()) {

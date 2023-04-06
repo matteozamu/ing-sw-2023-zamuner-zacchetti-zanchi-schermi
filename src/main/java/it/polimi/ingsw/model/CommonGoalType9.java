@@ -11,8 +11,25 @@ import java.util.Set;
  */
 public final class CommonGoalType9 extends CommonGoal {
 
+    /**
+     * Checks if the Shelf is eligible for the goal check.
+     * For CommonGoalType9, the Shelf must have at least 18 object cards.
+     *
+     * @param shelf The Shelf to check.
+     * @return true if the Shelf is eligible, false otherwise.
+     */
+    @Override
+    protected boolean isShelfEligible(Shelf shelf) {
+        return shelf.getGrid().size() >= 18;
+    }
+
+
     @Override
     public boolean checkGoal(Shelf shelf) {
+        if (!isShelfEligible(shelf)) {
+            return false;
+        }
+
         int columnCount = 0;
 
         for (int col = 0; col < shelf.COLUMNS; col++) {

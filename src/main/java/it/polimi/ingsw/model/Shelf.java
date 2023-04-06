@@ -5,9 +5,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-// TODO CREAZIONE MAPPA DELLA SHELF SE NO NON POSSIAMO ITERARE OPPURE
-//  CAMBiArE IL MODO DI CONTROLLARE IL NUMERO DI RIGHE DISPONIBILI
-
 /**
  * Represents a Shelf in the game, which holds ObjectCards.
  * The origin of the coordinates in the grid is in the lower left corner.
@@ -51,6 +48,16 @@ public class Shelf {
     }
 
     /**
+     * Returns the ObjectCard at the specified coordinate in the shelf.
+     *
+     * @param coord The Coordinate object representing the position in the shelf.
+     * @return The ObjectCard at the given position, or null if the position is empty.
+     */
+    public ObjectCard getObjectCard(Coordinate coord) {
+        return grid.get(coord);
+    }
+
+    /**
      * return the number (row) of free cells in the col column
      * if there are no free cells the method throws an exception
      * @param col is the column
@@ -58,11 +65,13 @@ public class Shelf {
      */
     public int getAvailableRows(int col) {
         int availableRows = this.ROWS;
-        Coordinate coordinate;
+        Coordinate coord;
 
         for (int row = 0; row < this.ROWS; row++) {
-            coordinate = new Coordinate(row, col);
-            if (this.grid.containsKey(coordinate) && this.grid.get(coordinate) != null) availableRows--;
+            coord = new Coordinate(row, col);
+            if (this.grid.containsKey(coord) && getObjectCard(coord) != null) {
+                availableRows--;
+            }
         }
         return availableRows;
     }
@@ -77,19 +86,27 @@ public class Shelf {
             closeCards = 0;
             for (int row = 0; row < this.ROWS; row++) {
                 for (int col = 0; col < this.COLUMNS; col++) {
-                    card = this.grid.get(new Coordinate(row, col));
+                    card = getObjectCard(new Coordinate(row, col));
                     if (card != null && card.getType().equals(type)) {
-                        if (this.grid.get(new Coordinate(row - 1, col)) != null){
-                            if(this.grid.get(new Coordinate(row - 1, col)).getType().equals(card.getType())) closeCards++;
+                        if (getObjectCard(new Coordinate(row - 1, col)) != null){
+                            if(getObjectCard(new Coordinate(row - 1, col)).getType().equals(card.getType())) {
+                                closeCards++;
+                            }
                         }
-                        else if (this.grid.get(new Coordinate(row + 1, col)) != null){
-                            if(this.grid.get(new Coordinate(row + 1, col)).getType().equals(card.getType())) closeCards++;
+                        else if (getObjectCard(new Coordinate(row + 1, col)) != null){
+                            if(getObjectCard(new Coordinate(row + 1, col)).getType().equals(card.getType())) {
+                                closeCards++;
+                            }
                         }
-                        else if (this.grid.get(new Coordinate(row, col - 1)) != null){
-                            if(this.grid.get(new Coordinate(row, col - 1)).getType().equals(card.getType())) closeCards++;
+                        else if (getObjectCard(new Coordinate(row, col - 1)) != null){
+                            if(getObjectCard(new Coordinate(row, col - 1)).getType().equals(card.getType())) {
+                                closeCards++;
+                            }
                         }
-                        else if (this.grid.get(new Coordinate(row, col + 1)) != null){
-                            if(this.grid.get(new Coordinate(row, col + 1)).getType().equals(card.getType())) closeCards++;
+                        else if (getObjectCard(new Coordinate(row, col + 1)) != null){
+                            if(getObjectCard(new Coordinate(row, col + 1)).getType().equals(card.getType())) {
+                                closeCards++;
+                            }
                         }
                     }
                 }
@@ -121,7 +138,7 @@ public class Shelf {
         for (int row = this.ROWS - 1; row >= 0; row--) {
             for (int col = 0; col < this.COLUMNS; col++) {
                 Coordinate coord = new Coordinate(row, col);
-                ObjectCard card = this.grid.get(coord);
+                ObjectCard card = getObjectCard(coord);
                 if (card == null) {
                     System.out.print("-".repeat(maxLength));
                 } else {
@@ -135,7 +152,7 @@ public class Shelf {
         }
     }
 
-    // TODO CI SERVE? Spoiler: no. Ma se serve c'è. Decisamente MDR
+    // TODO CI SERVE? Si
     /**
      * Returns a map with the number of free cells for each column in the Shelf.
      *
@@ -150,16 +167,6 @@ public class Shelf {
             freeCellsPerColumn.put(col, freeRows);
         }
         return freeCellsPerColumn;
-    }
-
-    /**
-     * Returns the ObjectCard at the specified coordinate in the shelf.
-     *
-     * @param coord The Coordinate object representing the position in the shelf.
-     * @return The ObjectCard at the given position, or null if the position is empty.
-     */
-    public ObjectCard getObjectCard(Coordinate coord) {
-        return grid.get(coord);
     }
 
     @Override
