@@ -76,6 +76,21 @@ public class Shelf {
         return availableRows;
     }
 
+    /**
+     * Calculates and returns the total points earned for ObjectCards that are adjacent
+     * to each other with the same type. Points are awarded based on the number of
+     * adjacent cards with the same type.
+     *
+     * - 3 adjacent cards: 2 points
+     * - 4 adjacent cards: 3 points
+     * - 5 adjacent cards: 5 points
+     * - 6 or more adjacent cards: 8 points
+     *
+     * The method iterates through each ObjectCardType and for each type, it checks
+     * for adjacent cards with the same type in the Shelf grid.
+     *
+     * @return The total points earned for adjacent ObjectCards with the same type.
+     */
     public int closeObjectCardsPoints() {
         ObjectCard card;
         int closeCards;
