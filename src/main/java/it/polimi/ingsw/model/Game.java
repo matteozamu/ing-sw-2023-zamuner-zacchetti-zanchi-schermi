@@ -59,6 +59,8 @@ public class Game {
      * @param p is the object Player
      * @return true if successful, false otherwise
      */
+
+    //TESTED
     public boolean addPlayer(Player p) {
         if (p == null) return false;
         if (this.players.size() < MAX_PLAYER) {
@@ -89,6 +91,8 @@ public class Game {
      *
      * @return the next player
      */
+
+    //TESTED
     public Player nextPlayer() {
         if (this.players.size() == 0) return null;
 
@@ -107,6 +111,9 @@ public class Game {
      * @return true if the cards are successfully added.
      * @throws IllegalStateException if there is not enough space to add the cards.
      */
+
+    //TESTED
+    //TODO: gestire caso limbo vuoto (ora torna true)
     public boolean addObjectCardsToShelf(List<ObjectCard> limbo, int col) {
         Shelf s = this.currentPlayer.getShelf();
         int availableRows = s.getFreeCellsPerColumn(col);
@@ -139,6 +146,8 @@ public class Game {
      *
      * @return An ObjectCard randomly selected from the container.
      */
+
+    //TESTED
     public ObjectCard getRandomAvailableObjectCard() {
         if (this.objectCardContainer == null || this.objectCardContainer.size() == 0) return null;
 
@@ -154,6 +163,7 @@ public class Game {
      *
      * @return A CommonGoal randomly selected from the container.
      */
+    //TESTED
     public CommonGoal getRandomAvailableCommonGoal() {
         if (this.commonGoalContainer == null || this.commonGoalContainer.size() == 0) return null;
 
@@ -169,6 +179,8 @@ public class Game {
      *
      * @return A PersonalGoalCard randomly selected from the container.
      */
+
+    //TESTED
     public PersonalGoalCard getRandomAvailablePersonalGoalCard() {
         if (this.personalGoalCardsContainer == null || this.personalGoalCardsContainer.size() == 0) return null;
 

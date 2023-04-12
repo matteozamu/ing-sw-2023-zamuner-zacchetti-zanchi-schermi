@@ -53,6 +53,8 @@ public class ControllerGame {
      * @return true if available, false if not
      * @throws NullPointerException if username is null
      */
+
+    //TESTED
     public boolean isUsernameAvailable(String username) throws NullPointerException {
         if (username == null) throw new NullPointerException("Username is null");
         for (Player p : this.game.getPlayers()) {
@@ -126,6 +128,7 @@ public class ControllerGame {
      * @param coordinate The coordinate of the object card to check.
      * @return True if the object card is available, false otherwise.
      */
+    //TESTED
     public boolean isObjectCardAvailable(Coordinate coordinate) {
         return this.game.getBoard().isEmptyAtDirection(coordinate, UP) || this.game.getBoard().isEmptyAtDirection(coordinate, DOWN) || this.game.getBoard().isEmptyAtDirection(coordinate, RIGHT) || this.game.getBoard().isEmptyAtDirection(coordinate, LEFT);
     }
@@ -137,6 +140,8 @@ public class ControllerGame {
      * @param card The object card to add to the limbo area.
      * @throws NullPointerException If the object card is null (should not happen).
      */
+
+    //TESTED
     public boolean addObjectCardToLimbo(ObjectCard card) throws NullPointerException {
         if (card == null) throw new NullPointerException("ObjectCard is null");
         if (this.limbo.size() == 3) return false;
@@ -163,6 +168,8 @@ public class ControllerGame {
      *
      * @return the point of the currentPlayer
      */
+
+    //TESTED
     public int pointsCalculator() {
         int points = 0;
 
