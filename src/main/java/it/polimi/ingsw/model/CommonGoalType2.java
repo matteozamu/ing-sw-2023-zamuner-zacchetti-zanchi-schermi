@@ -1,6 +1,5 @@
 package it.polimi.ingsw.model;
 
-// OK for TESTING
 
 /**
  * Cinque tessere dello stesso tipo che formano una diagonale
@@ -40,7 +39,7 @@ public final class CommonGoalType2 extends CommonGoal {
         return false;
     }
 
-    private boolean checkDiagonalFromTopLeft(Shelf shelf, Coordinate start, ObjectCardType type) {
+    public boolean checkDiagonalFromTopLeft(Shelf shelf, Coordinate start, ObjectCardType type) {
         for (int i = 0; i < 5; i++) {
             Coordinate currentCoordinate = new Coordinate(start.getColumn() + i, start.getRow() + i);
             ObjectCard currentCard = shelf.getObjectCard(currentCoordinate);
@@ -52,7 +51,7 @@ public final class CommonGoalType2 extends CommonGoal {
         return true;
     }
 
-    private boolean checkDiagonalFromTopRight(Shelf shelf, Coordinate start, ObjectCardType type) {
+    public boolean checkDiagonalFromTopRight(Shelf shelf, Coordinate start, ObjectCardType type) {
         for (int i = 0; i < 5; i++) {
             Coordinate currentCoordinate = new Coordinate(start.getColumn() - i, start.getRow() + i);
             ObjectCard currentCard = shelf.getObjectCard(currentCoordinate);

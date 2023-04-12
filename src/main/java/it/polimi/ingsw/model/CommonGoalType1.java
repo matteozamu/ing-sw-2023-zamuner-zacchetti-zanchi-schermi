@@ -2,7 +2,6 @@ package it.polimi.ingsw.model;
 
 import java.util.Map;
 
-// OK for TESTING
 
 /**
  * Sei gruppi separati formati ciascuno da due tessere adiacenti dello stesso tipo.
@@ -46,8 +45,8 @@ public final class CommonGoalType1 extends CommonGoal {
         }
         return false;
     }
-
-    private boolean checkAdjacent(Coordinate coord, ObjectCard card, Map<Coordinate, ObjectCard> grid) {
+    // public per testare
+    public boolean checkAdjacent(Coordinate coord, ObjectCard card, Map<Coordinate, ObjectCard> grid) {
         ObjectCardType targetType = card.getType();
         Coordinate[] adjacentCoords = {coord.getAdjacent(Coordinate.Direction.UP), coord.getAdjacent(Coordinate.Direction.RIGHT), coord.getAdjacent(Coordinate.Direction.DOWN), coord.getAdjacent(Coordinate.Direction.LEFT)};
 
