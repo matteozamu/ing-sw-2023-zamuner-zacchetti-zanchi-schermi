@@ -25,9 +25,9 @@ public final class CommonGoalType2 extends CommonGoal {
             return false;
         }
 
-        for (int row = 0; row < 2; row++) {
+        for (int row = 5; row >= 4; row--) {
             for (int col : new int[] {0, 4}) {
-                Coordinate coordinate = new Coordinate(col, row);
+                Coordinate coordinate = new Coordinate(row, col);
                 ObjectCardType currentType = shelf.getObjectCard(coordinate).getType();
 
                 if ((col == 0 && checkDiagonalFromTopLeft(shelf, coordinate, currentType)) ||
@@ -41,7 +41,7 @@ public final class CommonGoalType2 extends CommonGoal {
 
     public boolean checkDiagonalFromTopLeft(Shelf shelf, Coordinate start, ObjectCardType type) {
         for (int i = 0; i < 5; i++) {
-            Coordinate currentCoordinate = new Coordinate(start.getColumn() + i, start.getRow() + i);
+            Coordinate currentCoordinate = new Coordinate(start.getRow() - i, start.getColumn() + i);
             ObjectCard currentCard = shelf.getObjectCard(currentCoordinate);
 
             if (currentCard == null || !currentCard.getType().equals(type)) {
@@ -53,7 +53,7 @@ public final class CommonGoalType2 extends CommonGoal {
 
     public boolean checkDiagonalFromTopRight(Shelf shelf, Coordinate start, ObjectCardType type) {
         for (int i = 0; i < 5; i++) {
-            Coordinate currentCoordinate = new Coordinate(start.getColumn() - i, start.getRow() + i);
+            Coordinate currentCoordinate = new Coordinate(start.getRow() - i, start.getColumn() - i);
             ObjectCard currentCard = shelf.getObjectCard(currentCoordinate);
 
             if (currentCard == null || !currentCard.getType().equals(type)) {
