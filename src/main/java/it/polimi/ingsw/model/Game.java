@@ -9,10 +9,11 @@ import java.util.*;
 /**
  * Represents the main game logic, including object card and common goal management.
  */
-public class Game extends Observable<Game.Event> {
-    public enum Event {
-
+public class Game extends Observable<Game.GameState> {
+    public enum GameState {
+        START, INIT, CHOOSE_OBJECT_CARD, WAITING_FOR_PLAYER, END, VALID_COORDINATE
     }
+
 
     public static final int MAX_PLAYER = 4;
     private List<ObjectCard> objectCardContainer;
@@ -36,6 +37,8 @@ public class Game extends Observable<Game.Event> {
             for(int j = 0; j < 7; j++) this.objectCardContainer.add(new ObjectCard(types.get(i), 1));
             for(int j = 0; j < 8; j++) this.objectCardContainer.add(new ObjectCard(types.get(i), 2));
         }
+
+        setChangedAndNotifyObservers(GameState.CHOOSE_OBJECT_CARD);
     }
 
     /**
@@ -97,7 +100,7 @@ public class Game extends Observable<Game.Event> {
         }
     }
 
-    private void setChangedAndNotifyObservers(Event arg) {
+    private void setChangedAndNotifyObservers(GameState arg) {
         setChanged();
         notifyObservers(arg);
     }

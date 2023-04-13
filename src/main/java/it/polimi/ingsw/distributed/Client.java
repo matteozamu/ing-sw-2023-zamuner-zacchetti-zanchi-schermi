@@ -11,5 +11,5 @@ public interface Client extends Remote {
      * @param o     The resulting model view
      * @param arg   The causing event
      */
-    void update(GameView o, Game.Event arg) throws RemoteException;
+    void update(GameView o, Game.GameState arg) throws RemoteException;
 }

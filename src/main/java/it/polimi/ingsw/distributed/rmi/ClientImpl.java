@@ -41,7 +41,7 @@ public class ClientImpl extends UnicastRemoteObject implements Client, Runnable 
     }
 
     @Override
-    public void update(GameView o, Game.Event arg){
+    public void update(GameView o, Game.GameState arg){
         view.update(o, arg);
     }
 

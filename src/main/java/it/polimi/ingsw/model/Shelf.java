@@ -39,7 +39,7 @@ public class Shelf {
     }
 
     public void setFull(boolean full) {
-        isFull = full;
+        isFull = true;
     }
 
     /**

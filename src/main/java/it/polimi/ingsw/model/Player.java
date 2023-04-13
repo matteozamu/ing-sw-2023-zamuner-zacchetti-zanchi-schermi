@@ -4,6 +4,15 @@ package it.polimi.ingsw.model;
  * Represents a player in the game, including their name, current points, shelf, and personal goal card.
  */
 public class Player {
+    public enum PlayerState {
+        WAITING_FOR_GAME,
+        WAITING_FOR_SERVER,
+        WAITING_FOR_PLAYERS,
+        CHOOSE_OBJECT_CARD,
+        CHOOSE_COLUMN,
+        CHOOSE_ORDER
+    }
+
     private final String name;
     private int currentPoints;
     private Shelf shelf;
