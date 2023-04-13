@@ -3,8 +3,6 @@ package it.polimi.ingsw.model;
 import java.util.List;
 import java.util.Map;
 
-// OK for TESTING
-
 /**
  * Cinque tessere dello stesso tipo che formano una X.
  */
@@ -28,11 +26,9 @@ public final class CommonGoalType10 extends CommonGoal {
             return false;
         }
 
-        Map<Coordinate, ObjectCard> grid = shelf.getGrid();
-
         // Check the center coordinate
         Coordinate centerCoordinate = new Coordinate(2, 2);
-        ObjectCard centerObjectCard = grid.get(centerCoordinate);
+        ObjectCard centerObjectCard = shelf.getObjectCard(centerCoordinate);
 
         if (centerObjectCard == null) {
             return false;
@@ -49,7 +45,7 @@ public final class CommonGoalType10 extends CommonGoal {
         );
 
         for (Coordinate coordinate : xShapeCoordinates) {
-            ObjectCard objectCard = grid.get(coordinate);
+            ObjectCard objectCard = shelf.getObjectCard(coordinate);
             if (objectCard == null || objectCard.getType() != centerType) {
                 return false;
             }

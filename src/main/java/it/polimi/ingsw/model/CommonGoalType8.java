@@ -36,8 +36,8 @@ public final class CommonGoalType8 extends CommonGoal {
             boolean completeRow = true;
 
             for (int col = 0; col < shelf.COLUMNS; col++) {
-                Coordinate coordinate = new Coordinate(col, row);
-                ObjectCard objectCard = shelf.getGrid().get(coordinate);
+                Coordinate coordinate = new Coordinate(row, col);
+                ObjectCard objectCard = shelf.getObjectCard(coordinate);
 
                 if (objectCard == null) {
                     completeRow = false;

@@ -29,15 +29,14 @@ public final class CommonGoalType4 extends CommonGoal {
             return false;
         }
 
-        Map<Coordinate, ObjectCard> grid = shelf.getGrid();
         int validRowCount = 0;
 
         for (int row = 0; row < shelf.ROWS; row++) {
             Map<ObjectCardType, Integer> rowTypeCount = new HashMap<>();
 
             for (int col = 0; col < shelf.COLUMNS; col++) {
-                Coordinate coordinate = new Coordinate(col, row);
-                ObjectCard objectCard = grid.get(coordinate);
+                Coordinate coordinate = new Coordinate(row, col);
+                ObjectCard objectCard = shelf.getObjectCard(coordinate);
 
                 if (objectCard != null) {
                     ObjectCardType cardType = objectCard.getType();

@@ -42,7 +42,7 @@ public final class CommonGoalType6 extends CommonGoal {
             Map<ObjectCardType, Integer> uniqueObjectCards = new HashMap<>();
 
             for (int row = 0; row < shelf.ROWS; row++) {
-                Coordinate coordinate = new Coordinate(col, row);
+                Coordinate coordinate = new Coordinate(row, col);
                 ObjectCard objectCard = shelf.getObjectCard(coordinate);
 
                 if (objectCard != null) {

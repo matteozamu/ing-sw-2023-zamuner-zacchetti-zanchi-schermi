@@ -2,8 +2,6 @@ package it.polimi.ingsw.model;
 
 import java.util.Map;
 
-// OK for TESTING
-
 /**
  * Cinque colonne di altezza crescente o decrescente:
  * a partire dalla prima colonna a sinistra o a destra, ogni colonna successiva

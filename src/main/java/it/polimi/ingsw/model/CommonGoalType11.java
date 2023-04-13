@@ -3,8 +3,6 @@ package it.polimi.ingsw.model;
 import java.util.HashMap;
 import java.util.Map;
 
-// OK for TESTING
-
 /**
  * Otto tessere dello stesso tipo. Non ci sono restrizioni sulla posizione di queste tessere.
  */
