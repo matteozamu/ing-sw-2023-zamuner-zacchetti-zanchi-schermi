@@ -5,7 +5,7 @@ import junit.framework.TestCase;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import java.util.List;
+import java.util.ArrayList;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
@@ -19,10 +19,17 @@ public class ControllerGameTest extends TestCase {
     @BeforeEach
     public void setUp() {
         this.cg = new ControllerGame();
-        this.cg.getGame().loadPersonalGoaldCards();
         this.cg.getGame().loadObjectCards();
 
-        this.pg = cg.getGame().getRandomAvailablePersonalGoalCard();
+        ArrayList<PersonalGoal> goals = new ArrayList<>();
+        goals.add(new PersonalGoal(1, 1, ObjectCardType.randomObjectCardType()));
+        goals.add(new PersonalGoal(2, 2, ObjectCardType.randomObjectCardType()));
+        goals.add(new PersonalGoal(2, 3, ObjectCardType.randomObjectCardType()));
+        goals.add(new PersonalGoal(4, 5, ObjectCardType.randomObjectCardType()));
+        goals.add(new PersonalGoal(5, 2, ObjectCardType.randomObjectCardType()));
+        goals.add(new PersonalGoal(3, 6, ObjectCardType.randomObjectCardType()));
+
+        this.pg = new PersonalGoalCard(goals);
         this.shelf = new Shelf();
     }
 
@@ -44,7 +51,7 @@ public class ControllerGameTest extends TestCase {
         assertTrue(cg.isUsernameAvailable("Daphne"));
     }
 
-//    @Test
+    //    @Test
 //    public void testAddObjectEmptyLimbo() {
 //        assertFalse(cg.addObjectCards(1));
 //    }
