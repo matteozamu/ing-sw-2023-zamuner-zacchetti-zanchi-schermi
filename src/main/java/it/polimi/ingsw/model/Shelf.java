@@ -1,8 +1,9 @@
 package it.polimi.ingsw.model;
 
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Represents a Shelf in the game, which holds ObjectCards.
@@ -160,21 +161,22 @@ public class Shelf {
         }
     }
 
-    // TODO: ci serve? Forse, se serve c'è
     /**
-     * Returns a map with the number of free cells for each column in the Shelf.
+     * Returns a list of column indices in the Shelf with at least n free cells.
      *
-     * @return A Map<Integer, Integer> where the key represents the column index and the value
-     * represents the number of free cells in that column.
+     * @param n The minimum number of free cells desired in a column.
+     * @return A List of column indices with at least n free cells.
      */
-    public Map<Integer, Integer> getFreeCellsPerColumnMap() {
-        Map<Integer, Integer> freeCellsPerColumn = new HashMap<>();
+    public List<Integer> getAvailableColumns(int n) {
+        List<Integer> columnsWithNFreeCells = new ArrayList<>();
 
         for (int col = 0; col < COLUMNS; col++) {
             int freeRows = getFreeCellsPerColumn(col);
-            freeCellsPerColumn.put(col, freeRows);
+            if (freeRows >= n) {
+                columnsWithNFreeCells.add(col);
+            }
         }
-        return freeCellsPerColumn;
+        return columnsWithNFreeCells;
     }
 
     @Override
