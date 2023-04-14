@@ -45,24 +45,33 @@ public class CommonGoalType5 extends CommonGoal {
     }
 
 
-    private boolean isValidGroupOfFour(Shelf shelf, Coordinate coord, ObjectCardType type) {
-        Coordinate[] adjacentCoordinates = new Coordinate[]{
-                coord.getAdjacent(Coordinate.Direction.UP),
-                coord.getAdjacent(Coordinate.Direction.DOWN),
-                coord.getAdjacent(Coordinate.Direction.LEFT),
-                coord.getAdjacent(Coordinate.Direction.RIGHT)
+    public boolean isValidGroupOfFour(Shelf shelf, Coordinate coord, ObjectCardType type) {
+        Coordinate[][] possibleGroups = new Coordinate[][]{
+                // Quadrato
+                {coord.getAdjacent(Coordinate.Direction.UP), coord.getAdjacent(Coordinate.Direction.RIGHT),
+                        coord.getAdjacent(Coordinate.Direction.UP).getAdjacent(Coordinate.Direction.RIGHT)},
+                // Fila di quattro tessere
+                {coord.getAdjacent(Coordinate.Direction.RIGHT), coord.getAdjacent(Coordinate.Direction.RIGHT).getAdjacent(Coordinate.Direction.RIGHT),
+                        coord.getAdjacent(Coordinate.Direction.RIGHT).getAdjacent(Coordinate.Direction.RIGHT).getAdjacent(Coordinate.Direction.RIGHT)},
+                // Colonna di quattro tessere
+                {coord.getAdjacent(Coordinate.Direction.UP), coord.getAdjacent(Coordinate.Direction.UP).getAdjacent(Coordinate.Direction.UP),
+                        coord.getAdjacent(Coordinate.Direction.UP).getAdjacent(Coordinate.Direction.UP).getAdjacent(Coordinate.Direction.UP)}
         };
 
-        int adjacentSameTypeCount = 0;
-
-        for (Coordinate adjacentCoord : adjacentCoordinates) {
-            ObjectCard adjacentCard = shelf.getGrid().get(adjacentCoord);
-            if (adjacentCard != null && adjacentCard.getType() == type) {
-                adjacentSameTypeCount++;
+        for (Coordinate[] group : possibleGroups) {
+            boolean isGroupValid = true;
+            for (Coordinate groupCoord : group) {
+                ObjectCard adjacentCard = shelf.getObjectCard(groupCoord);
+                if (adjacentCard == null || adjacentCard.getType() != type) {
+                    isGroupValid = false;
+                    break;
+                }
+            }
+            if (isGroupValid) {
+                return true;
             }
         }
 
-        return adjacentSameTypeCount == 3;
+        return false;
     }
-
 }

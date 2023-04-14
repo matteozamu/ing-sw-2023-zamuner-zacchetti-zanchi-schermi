@@ -36,9 +36,9 @@ public final class CommonGoalType3 extends CommonGoal {
         Set<ObjectCardType> cornerTypes = new HashSet<>();
 
         ObjectCard topLeft = grid.get(new Coordinate(0, 0));
-        ObjectCard topRight = grid.get(new Coordinate(4, 0));
-        ObjectCard bottomLeft = grid.get(new Coordinate(0, 5));
-        ObjectCard bottomRight = grid.get(new Coordinate(4, 5));
+        ObjectCard topRight = grid.get(new Coordinate(0, 4));
+        ObjectCard bottomLeft = grid.get(new Coordinate(5, 0));
+        ObjectCard bottomRight = grid.get(new Coordinate(5, 4));
 
         if (topLeft != null) {
             cornerTypes.add(topLeft.getType());
