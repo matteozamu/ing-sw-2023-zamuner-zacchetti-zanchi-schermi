@@ -13,7 +13,7 @@ import java.util.Random;
  */
 public class Game extends Observable<Game.GameState> {
     public enum GameState {
-        START, INIT, CHOOSE_OBJECT_CARD, WAITING_FOR_PLAYER, END, VALID_COORDINATE
+        START, INIT, CHOOSE_OBJECT_CARD, WAITING_FOR_PLAYER, END, VALID_COORDINATE, INVALID_COORDINATE, COLUMN_CHOSEN
     }
 
 

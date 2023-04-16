@@ -1,11 +1,10 @@
 package it.polimi.ingsw.view;
 
-import it.polimi.ingsw.model.Coordinate;
-import it.polimi.ingsw.model.Game;
-import it.polimi.ingsw.model.GameView;
+import it.polimi.ingsw.model.*;
 import it.polimi.ingsw.util.Observable;
 
 import javax.swing.text.GapContent;
+import java.util.ArrayList;
 import java.util.Scanner;
 
 public class TextualUI extends Observable<Object> implements Runnable {
@@ -16,6 +15,7 @@ public class TextualUI extends Observable<Object> implements Runnable {
         VALID_COORDINATE, // se la coordinata inserita è valida
         INVALID_COORDINATE, //se la coordinata inserita non è valida
         CHOICE_ENDED, //una volta finita la scelta delle object card
+        ORDER_OBJ_CARD, // l'utente ordina le tessere scelte
     }
     private State state = State.CHOOSE_OBJECT_CARD;
     private final Object lock = new Object();
@@ -65,17 +65,34 @@ public class TextualUI extends Observable<Object> implements Runnable {
             }
             case VALID_COORDINATE -> {
                 setState(State.VALID_COORDINATE);
+
+                //verifico che vengano scelte al massimo 3 objcard
+                int ObjCardChoosen = model.getNumberOfObjCardChoosen(); //ritorna il numero di carte scelte, e quindi nel limbo
+                if(ObjCardChoosen >= 3) {
+                    setState(State.CHOICE_ENDED);
+                    showLimbo(model);
+                    int column = chooseColumn(model);
+                    setChanged();
+                    notifyObservers(column);
+                    break;
+                }
+
                 Coordinate c = askObjCard();
-                // TODO verifica che siano un massimo di 3
                 if (c != null){
                     setState(State.VERIFY_COORDINATE);
                     setChanged();
                     notifyObservers(c);
                 } else {
                     setState(State.CHOICE_ENDED);
-                    //TODO continuare da qui
+                    showLimbo(model);
+                    int column = chooseColumn(model);
+                    setChanged();
+                    notifyObservers(column);
                 }
-
+            }
+            case INVALID_COORDINATE ->
+            case COLUMN_CHOSEN -> {
+                setState(State.ORDER_OBJ_CARD);
             }
         }
     }
@@ -90,6 +107,10 @@ public class TextualUI extends Observable<Object> implements Runnable {
 
     }
 
+    /**
+     * method that ask the user to enter the coordinate of the object card he want
+     * @return the coordinate of the Object card choosen by the user
+     */
     private Coordinate askObjCard(){
         Scanner s = new Scanner(System.in);
         String input;
@@ -112,15 +133,53 @@ public class TextualUI extends Observable<Object> implements Runnable {
         }
     }
 
+    /**
+     * method that print the board
+     * @param model is the model on which the method is called
+     */
     private void showBoard(GameView model){
         System.out.println("stampa board");
         // model.printDashBoard();
     }
 
-    public void chooseObjectCard(GameView model){
-        model.
+    /**
+     * method that show the user the object card selected oh the board
+     * @param model is the model on which the method is called
+     */
+    private void showLimbo(GameView model){
+        ArrayList<ObjectCardType> limbo = model.getLimbo(); //TODO ritorna l'oggetto limbo
+        System.out.println("The object card you choose are: ");
+        for (ObjectCardType objectCard : limbo){
+            System.out.println(objectCard);
+        }
+
+        /*
+        ArrayList<ObjectCard> limbo = model.getLimbo(); //TODO ritorna l'oggetto limbo
+        System.out.println("The object card you choose are: ");
+        for (ObjectCard objectCard : limbo){
+            System.out.println(objectCard.getType());
+        }
+         */
     }
 
+    /**
+     *
+     * @param model is the model on which the method is called
+     * @return the column number choosen by the user
+     */
+    private int chooseColumn(GameView model){
+        System.out.println("Choose a column: ");
+        // da sostituire con un model.getAvailableColumn
+        System.out.println("0, 2, 3");
+        // fare il controllo sul numero della colonna
+        Scanner s = new Scanner(System.in);
+        return s.nextInt();
+    }
+
+    /**
+     * method that ask the username
+     * @return the string containing the username
+     */
     public String askUsername(){
         Scanner s = new Scanner(System.in);
         System.out.println("Inserisci uno username");

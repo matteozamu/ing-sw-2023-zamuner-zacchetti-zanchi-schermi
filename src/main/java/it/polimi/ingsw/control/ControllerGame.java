@@ -38,17 +38,17 @@ public class ControllerGame {
 //
 //    public void setCurrentPlayer(Player currentPlayer) {
 //        this.currentPlayer = currentPlayer;
+
 //    }
-
-    public Game getGame() {
-        return game;
-    }
-
     /**
      * @return the array list containing the one, two or three ObjectCard selected
      */
     public List<ObjectCard> getLimbo() {
         return limbo;
+    }
+
+    public Game getGame() {
+        return game;
     }
 
     /**
