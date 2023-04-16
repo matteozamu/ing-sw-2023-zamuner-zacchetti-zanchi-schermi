@@ -11,6 +11,7 @@ import java.util.Map;
  */
 public final class CommonGoalType6 extends CommonGoal {
 
+
     /**
      * Checks if the Shelf is eligible for the goal check.
      * For CommonGoalType6, the Shelf must have at least 12 object cards.

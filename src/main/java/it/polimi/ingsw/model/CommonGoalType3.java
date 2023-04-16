@@ -4,8 +4,6 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
-// OK for TESTING
-
 /**
  * Classe che rappresenta un obiettivo comune di tipo 3.
  * L'obiettivo è raggiunto quando le quattro tessere ai quattro angoli della Shelf
