@@ -3,6 +3,8 @@ package it.polimi.ingsw.model;
 import java.util.HashMap;
 import java.util.Map;
 
+// OK for TESTING
+
 /**
  * Otto tessere dello stesso tipo. Non ci sono restrizioni sulla posizione di queste tessere.
  */
@@ -32,7 +34,7 @@ public final class CommonGoalType11 extends CommonGoal {
 
 
         for (Coordinate coord : grid.keySet()) {
-            ObjectCard objectCard = grid.get(coord);
+            ObjectCard objectCard = shelf.getObjectCard(coord);
             ObjectCardType cardType = objectCard.getType();
             typeCount.put(cardType, typeCount.getOrDefault(cardType, 0) + 1);
 

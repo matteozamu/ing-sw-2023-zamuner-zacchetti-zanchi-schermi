@@ -1,6 +1,6 @@
 package it.polimi.ingsw.model;
 
-import java.util.Map;
+// OK for TESTING
 
 /**
  * Cinque colonne di altezza crescente o decrescente:
@@ -33,12 +33,12 @@ public final class CommonGoalType12 extends CommonGoal {
     }
 
     private boolean checkDescendingStair(Shelf shelf) {
-        Map<Coordinate, ObjectCard> grid = shelf.getGrid();
+
         for (int col = 0; col < shelf.COLUMNS; col++) {
             int maxHeight = 5 - col;
             int countD = 0;
             for (int row = 0; row < shelf.ROWS; row++) {
-                if (grid.get(new Coordinate(col, row)) != null) {
+                if (shelf.getObjectCard(new Coordinate(col, row)) != null) {
                     countD++;
                 }
             }
@@ -50,12 +50,12 @@ public final class CommonGoalType12 extends CommonGoal {
     }
 
     private boolean checkAscendingStair(Shelf shelf) {
-        Map<Coordinate, ObjectCard> grid = shelf.getGrid();
+
         for (int col = shelf.COLUMNS - 1; col >= 0; col--) {
             int maxHeight = col + 1;
             int countA = 0;
             for (int row = 0; row < 6; row++) {
-                if (grid.get(new Coordinate(col, row)) != null) {
+                if (shelf.getObjectCard(new Coordinate(col, row)) != null) {
                     countA++;
                 }
             }
