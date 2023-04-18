@@ -1,24 +1,15 @@
 package it.polimi.ingsw.view;
 
-import it.polimi.ingsw.model.*;
+import it.polimi.ingsw.model.Coordinate;
+import it.polimi.ingsw.model.Game;
+import it.polimi.ingsw.model.GameView;
 import it.polimi.ingsw.util.Observable;
 
-import javax.swing.text.GapContent;
-import java.util.ArrayList;
 import java.util.Scanner;
 
 public class TextualUI extends Observable<Object> implements Runnable {
-    private enum State {
-        CHOOSE_OBJECT_CARD,
-        WAITING_FOR_PLAYERS,
-        VERIFY_COORDINATE, // verifico se la coordinata inserita è valida
-        VALID_COORDINATE, // se la coordinata inserita è valida
-        INVALID_COORDINATE, //se la coordinata inserita non è valida
-        CHOICE_ENDED, //una volta finita la scelta delle object card
-        ORDER_OBJ_CARD, // l'utente ordina le tessere scelte
-    }
-    private State state = State.CHOOSE_OBJECT_CARD;
     private final Object lock = new Object();
+    private State state = State.CHOOSE_OBJECT_CARD;
 
     private State getState() {
         synchronized (lock) {
@@ -41,7 +32,7 @@ public class TextualUI extends Observable<Object> implements Runnable {
 
     @Override
     public void run() {
-        while (true){
+        while (true) {
             while (getState() == State.WAITING_FOR_PLAYERS) {
                 synchronized (lock) {
                     try {
@@ -55,7 +46,7 @@ public class TextualUI extends Observable<Object> implements Runnable {
         }
     }
 
-    public void update(GameView model, Game.GameState arg){
+    public void update(GameView model, Game.GameState arg) {
         switch (arg) {
             case START -> {
                 showBoard(model);
@@ -67,8 +58,9 @@ public class TextualUI extends Observable<Object> implements Runnable {
                 setState(State.VALID_COORDINATE);
 
                 //verifico che vengano scelte al massimo 3 objcard
-                int ObjCardChoosen = model.getNumberOfObjCardChoosen(); //ritorna il numero di carte scelte, e quindi nel limbo
-                if(ObjCardChoosen >= 3) {
+//                int ObjCardChoosen = model.getNumberOfObjCardChoosen(); //ritorna il numero di carte scelte, e quindi nel limbo
+//                if(ObjCardChoosen >= 3) {
+                if (3 >= 3) {
                     setState(State.CHOICE_ENDED);
                     showLimbo(model);
                     int column = chooseColumn(model);
@@ -78,7 +70,7 @@ public class TextualUI extends Observable<Object> implements Runnable {
                 }
 
                 Coordinate c = askObjCard();
-                if (c != null){
+                if (c != null) {
                     setState(State.VERIFY_COORDINATE);
                     setChanged();
                     notifyObservers(c);
@@ -90,14 +82,14 @@ public class TextualUI extends Observable<Object> implements Runnable {
                     notifyObservers(column);
                 }
             }
-            case INVALID_COORDINATE ->
+//            case INVALID_COORDINATE ->
             case COLUMN_CHOSEN -> {
                 setState(State.ORDER_OBJ_CARD);
             }
         }
     }
 
-    private void play(){
+    private void play() {
         System.out.println("It's your turn");
         setState(State.CHOOSE_OBJECT_CARD);
         Coordinate c = askObjCard();
@@ -109,13 +101,15 @@ public class TextualUI extends Observable<Object> implements Runnable {
 
     /**
      * method that ask the user to enter the coordinate of the object card he want
+     *
      * @return the coordinate of the Object card choosen by the user
      */
-    private Coordinate askObjCard(){
+    private Coordinate askObjCard() {
         Scanner s = new Scanner(System.in);
         String input;
-        while (getState() == State.VALID_COORDINATE){
-            System.out.println("Do you want to choose another object card? Enter yes or no");{
+        while (getState() == State.VALID_COORDINATE) {
+            System.out.println("Do you want to choose another object card? Enter yes or no");
+            {
                 if (s.nextLine().toLowerCase().equals("no")) return null;
             }
         }
@@ -127,7 +121,7 @@ public class TextualUI extends Observable<Object> implements Runnable {
                 int x = Integer.parseInt(parts[0]);
                 int y = Integer.parseInt(parts[1]);
                 return new Coordinate(x, y);
-            } catch (IllegalArgumentException e){
+            } catch (IllegalArgumentException e) {
                 System.out.println("Bad formatting, insert the cordinate properly");
             }
         }
@@ -135,23 +129,25 @@ public class TextualUI extends Observable<Object> implements Runnable {
 
     /**
      * method that print the board
+     *
      * @param model is the model on which the method is called
      */
-    private void showBoard(GameView model){
+    private void showBoard(GameView model) {
         System.out.println("stampa board");
         // model.printDashBoard();
     }
 
     /**
      * method that show the user the object card selected oh the board
+     *
      * @param model is the model on which the method is called
      */
-    private void showLimbo(GameView model){
-        ArrayList<ObjectCardType> limbo = model.getLimbo(); //TODO ritorna l'oggetto limbo
+    private void showLimbo(GameView model) {
+//        ArrayList<ObjectCardType> limbo = model.getLimbo(); //TODO ritorna l'oggetto limbo
         System.out.println("The object card you choose are: ");
-        for (ObjectCardType objectCard : limbo){
-            System.out.println(objectCard);
-        }
+//        for (ObjectCardType objectCard : limbo) {
+//            System.out.println(objectCard);
+//        }
 
         /*
         ArrayList<ObjectCard> limbo = model.getLimbo(); //TODO ritorna l'oggetto limbo
@@ -163,11 +159,10 @@ public class TextualUI extends Observable<Object> implements Runnable {
     }
 
     /**
-     *
      * @param model is the model on which the method is called
      * @return the column number choosen by the user
      */
-    private int chooseColumn(GameView model){
+    private int chooseColumn(GameView model) {
         System.out.println("Choose a column: ");
         // da sostituire con un model.getAvailableColumn
         System.out.println("0, 2, 3");
@@ -178,12 +173,23 @@ public class TextualUI extends Observable<Object> implements Runnable {
 
     /**
      * method that ask the username
+     *
      * @return the string containing the username
      */
-    public String askUsername(){
+    public String askUsername() {
         Scanner s = new Scanner(System.in);
         System.out.println("Inserisci uno username");
         return s.next();
+    }
+
+    private enum State {
+        CHOOSE_OBJECT_CARD,
+        WAITING_FOR_PLAYERS,
+        VERIFY_COORDINATE, // verifico se la coordinata inserita è valida
+        VALID_COORDINATE, // se la coordinata inserita è valida
+        INVALID_COORDINATE, //se la coordinata inserita non è valida
+        CHOICE_ENDED, //una volta finita la scelta delle object card
+        ORDER_OBJ_CARD, // l'utente ordina le tessere scelte
     }
 
 }
