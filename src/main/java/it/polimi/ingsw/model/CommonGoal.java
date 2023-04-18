@@ -13,6 +13,15 @@ public abstract class CommonGoal {
     }
 
     /**
+     * Gets the current points for this common goal.
+     *
+     * @return The current points for this common goal.
+     */
+    public int getCurrentPoints() {
+        return currentPoints;
+    }
+
+    /**
      * Update the points obtainable with the current CommonGoalCard.
      *
      * @param numberOfPlayers is the number of player in the game
