@@ -19,7 +19,7 @@ public interface ViewObserver {
      *
      * @param nickname the nickname to be sent.
      */
-    void onUpdateNickname(String nickname);
+    void onUpdateUsername(String nickname);
 //
 //    /**
 //     * Sends a message to the server with the player number chosen by the user.

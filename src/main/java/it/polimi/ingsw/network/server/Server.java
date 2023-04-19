@@ -30,15 +30,16 @@ public class Server {
         this.lock = new Object();
     }
 
-//    /**
-//     * Adds a client to be managed by the server instance.
-//     *
-//     * @param nickname      the nickname associated with the client.
-//     * @param clientHandler the ClientHandler associated with the client.
-//     */
-//    public void addClient(String nickname, ClientHandler clientHandler) {
-//        VirtualView vv = new VirtualView(clientHandler);
-//
+    /**
+     * Adds a client to be managed by the server instance.
+     *
+     * @param nickname      the nickname associated with the client.
+     * @param clientHandler the ClientHandler associated with the client.
+     */
+    public void addClient(String nickname, ClientHandler clientHandler) {
+        VirtualView vv = new VirtualView(clientHandler);
+
+        clientHandlerMap.put(nickname, clientHandler);
 //        if (!gameController.isGameStarted()) {
 //            if (gameController.checkLoginNickname(nickname, vv)) {
 //                clientHandlerMap.put(nickname, clientHandler);
@@ -48,8 +49,8 @@ public class Server {
 //            vv.showLoginResult(true, false, null);
 //            clientHandler.disconnect();
 //        }
-//
-//    }
+
+    }
 //
 //    /**
 //     * Removes a client given his nickname.

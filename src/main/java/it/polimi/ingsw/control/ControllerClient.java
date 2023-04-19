@@ -13,7 +13,7 @@ public class ControllerClient implements ViewObserver, Observer {
     private final View view;
 
     private Client client;
-    private String nickname;
+    private String username;
 
     private final ExecutorService taskQueue;
     public ControllerClient(View view) {
@@ -27,7 +27,9 @@ public class ControllerClient implements ViewObserver, Observer {
     }
 
     @Override
-    public void onUpdateNickname(String nickname) {
-
+    public void onUpdateUsername(String username) {
+        this.username = username;
+        System.out.println("ciao "+ username);
+        //client.sendMessage(new LoginRequest(this.nickname));
     }
 }

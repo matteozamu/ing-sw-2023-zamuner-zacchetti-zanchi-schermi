@@ -9,6 +9,6 @@ public interface View {
     /**
      * Asks the user to choose a Nickname.
      */
-    void askNickname();
+    void askUsername();
 
 }

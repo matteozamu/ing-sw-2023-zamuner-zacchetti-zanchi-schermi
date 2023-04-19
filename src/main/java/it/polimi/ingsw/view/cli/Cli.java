@@ -17,11 +17,31 @@ import java.util.stream.Collectors;
 public class Cli extends ViewObservable implements View {
 
     public void init(){
-
+        System.out.println("Welcome to MyShelfie");
+        askUsername();
+//        Map<String, String> serverInfo = new HashMap<>();
+//        String defaultAddress = "localhost";
+//        String defaultPort = "16847";
+//        System.out.println("Please specify the following settings. The default value is shown between brackets.");
+//        // print default value
+//
+//        serverInfo.put("address", defaultAddress);
+//        serverInfo.put("port", defaultPort);
+//
+//        notifyObserver(obs -> obs.onUpdateServerInfo(serverInfo));
     }
 
     @Override
-    public void askNickname() {
+    public void askUsername() {
+        Scanner s = new Scanner(System.in);
+        String username = null;
+        do {
+            System.out.println("Enter your username: ");
+            username = s.nextLine();
+        } while (username == null);
 
+        String finalUsername = username;
+        notifyObserver(obs -> obs.onUpdateUsername(finalUsername));
     }
+
 }
