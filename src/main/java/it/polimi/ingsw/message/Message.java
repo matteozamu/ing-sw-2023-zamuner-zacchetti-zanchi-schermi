@@ -10,16 +10,16 @@ import java.io.Serializable;
 public abstract class Message implements Serializable {
     private static final long serialVersionUID = 6589184250663958343L;
 
-    private final String nickname;
+    private final String username;
     private final MessageType messageType;
 
-    Message(String nickname, MessageType messageType) {
-        this.nickname = nickname;
+    Message(String username, MessageType messageType) {
+        this.username = username;
         this.messageType = messageType;
     }
 
     public String getNickname() {
-        return nickname;
+        return username;
     }
 
     public MessageType getMessageType() {
@@ -29,7 +29,7 @@ public abstract class Message implements Serializable {
     @Override
     public String toString() {
         return "Message{" +
-                "nickname=" + nickname +
+                "username=" + username +
                 ", messageType=" + messageType +
                 '}';
     }

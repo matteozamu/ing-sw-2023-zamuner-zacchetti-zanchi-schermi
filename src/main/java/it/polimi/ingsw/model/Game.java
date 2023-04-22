@@ -9,10 +9,11 @@ import java.util.List;
 import java.util.Random;
 
 /**
- * Represents the main game logic, including object card and common goal management.
+ * Represents the main game model, including object card and common goal management.
  */
 public class Game {
     public static final int MAX_PLAYER = 4;
+    public static final String SERVER_NICKNAME = "server";
     private List<ObjectCard> objectCardContainer;
     private List<CommonGoal> commonGoalContainer;
     private List<PersonalGoalCard> personalGoalCardsContainer;
