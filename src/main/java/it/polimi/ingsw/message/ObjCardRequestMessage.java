@@ -31,10 +31,9 @@ public class ObjCardRequestMessage extends Message{
     }
 
     @Override
-    public String toString(){
-        return  "PlayerObjectCardRequest{" +
-                "username= " + getNickname() +
-                ", ObjCard = [" + objectCards.toString() + "]}";
-
+    public String toString() {
+        return "ObjCardRequestMessage{" +
+                "objectCards=" + objectCards +
+                '}';
     }
 }

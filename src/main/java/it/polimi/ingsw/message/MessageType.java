@@ -14,6 +14,7 @@ public enum MessageType {
     CHOOSEN_COLUMN,
     ORDERED_OBJ_CARD,
     SHELF,
+    END_GAME,
 
 
     //utility:
