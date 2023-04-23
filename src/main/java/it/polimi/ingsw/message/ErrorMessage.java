@@ -21,7 +21,7 @@ public class ErrorMessage extends Message {
     @Override
     public String toString() {
         return "ErrorMessage{" +
-                "nickname=" + getNickname() +
+                "nickname=" + getUsername() +
                 ", error=" + error +
                 '}';
     }

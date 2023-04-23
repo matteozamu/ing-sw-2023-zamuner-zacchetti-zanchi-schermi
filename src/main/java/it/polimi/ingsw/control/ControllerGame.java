@@ -1,32 +1,111 @@
 package it.polimi.ingsw.control;
 
+import it.polimi.ingsw.message.Message;
 import it.polimi.ingsw.model.*;
+import it.polimi.ingsw.network.server.Server;
+import it.polimi.ingsw.view.VirtualView;
+import it.polimi.ingsw.observer.Observer;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.UUID;
+import java.io.Serializable;
+import java.util.*;
 
 import static it.polimi.ingsw.model.Board.Direction.*;
 
 /**
  * Controller for the game, handling game logic and interactions between model components.
  */
-public class ControllerGame {
-    private UUID id;
-    // private Player currentPlayer;
+public class ControllerGame implements Observer, Serializable {
+    private static final long serialVersionUID = 4951303731052728724L;
+
     private Game game;
+    private transient Map<String, VirtualView> virtualViewMap;
     private List<ObjectCard> limbo;
+
+    private GameState gameState;
+//    private TurnController turnController;
+//    private InputController inputController;
+    private static final String STR_INVALID_STATE = "Invalid game state!";
+
 
     /**
      * Constructor for the ControllerGame class, initializing the game state.
      */
     public ControllerGame() {
-        this.id = UUID.randomUUID();
         this.game = new Game();
 //        this.numberOfPlayers = 0;
         this.limbo = new ArrayList<>();
+        this.virtualViewMap = Collections.synchronizedMap(new HashMap<>());
+//        this.inputController = new InputController(virtualViewMap, this);
+        setGameState(GameState.LOGIN);
     }
 
+    /**
+     * set the state of the game
+     * @param gameState is the state to set
+     */
+    private void setGameState(GameState gameState) {
+        this.gameState = gameState;
+    }
+
+    //***** INIT METHODS *****//
+    /**
+     * Handles the login of a player. If the player is new, his VirtualView is saved, otherwise it's discarded
+     * and the player is notified.
+     * If it's the first Player then ask number of Players he wants, add Player to the Game otherwise change the GameState.
+     *
+     * @param username    the username of the player.
+     * @param virtualView the virtualview of the player.
+     */
+    public void loginHandler(String username, VirtualView virtualView) {
+
+        if (virtualViewMap.isEmpty()) { // First player logged. Ask number of players.
+            addVirtualView(username, virtualView);
+            // TODO completare personal goal
+            game.addPlayer(new Player(username, new Shelf(), new PersonalGoalCard(null)));
+
+            virtualView.showLoginResult(true, true, Game.SERVER_NICKNAME);
+        }
+//        } else if (virtualViewMap.size() < game.getChosenPlayersNumber()) {
+//            addVirtualView(username, virtualView);
+//            game.addPlayer(new Player(username));
+//            virtualView.showLoginResult(true, true, Game.SERVER_NICKNAME);
+//
+//            if (game.getNumCurrentPlayers() == game.getChosenPlayersNumber()) { // If all players logged
+//
+//                // check saved matches.
+//                StorageData storageData = new StorageData();
+//                GameController savedGameController = storageData.restore();
+//                if (savedGameController != null &&
+//                        game.getPlayersNicknames().containsAll(savedGameController.getTurnController().getNicknameQueue())) {
+//                    restoreControllers(savedGameController);
+//                    broadcastRestoreMessages();
+//                    Server.LOGGER.info("Saved Match restored.");
+//                    turnController.newTurn();
+//                } else {
+//                    initGame();
+//                }
+//            }
+//        } else {
+//            virtualView.showLoginResult(true, false, Game.SERVER_NICKNAME);
+//        }
+    }
+
+
+    //***** VIRTUAL VIEW METHODS *****//
+
+    /**
+     * Adds a Player VirtualView to the controller if the first player max_players is not exceeded.
+     * Then adds a controller observer to the view.
+     * Adds the VirtualView to the game and board model observers.
+     *
+     * @param nickname    the player nickname to identify his associated VirtualView.
+     * @param virtualView the VirtualView to be added.
+     */
+    public void addVirtualView(String nickname, VirtualView virtualView) {
+        virtualViewMap.put(nickname, virtualView);
+        game.addObserver(virtualView);
+//        game.getBoard().addObserver(virtualView);
+    }
 //    public Player getCurrentPlayer() {
 //        return currentPlayer;
 //    }
@@ -184,6 +263,17 @@ public class ControllerGame {
         this.game.getCurrentPlayer().setCurrentPoints(points);
 
         return points;
+    }
+
+    /**
+     * Receives an update message from the effect model.
+     *
+     * @param message the update message.
+     */
+    @Override
+    public void update(Message message) {
+
+
     }
 }
 

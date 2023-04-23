@@ -2,8 +2,10 @@ package it.polimi.ingsw.model;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
+import it.polimi.ingsw.observer.Observable;
 
 import java.io.FileReader;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -11,7 +13,7 @@ import java.util.Random;
 /**
  * Represents the main game model, including object card and common goal management.
  */
-public class Game {
+public class Game extends Observable implements Serializable {
     public static final int MAX_PLAYER = 4;
     public static final String SERVER_NICKNAME = "server";
     private List<ObjectCard> objectCardContainer;

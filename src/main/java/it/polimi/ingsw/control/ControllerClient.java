@@ -1,5 +1,6 @@
 package it.polimi.ingsw.control;
 
+import it.polimi.ingsw.message.LoginReply;
 import it.polimi.ingsw.message.LoginRequest;
 import it.polimi.ingsw.message.Message;
 import it.polimi.ingsw.model.Coordinate;
@@ -53,13 +54,20 @@ public class ControllerClient implements ViewObserver, Observer {
 
     @Override
     public void update(Message message) {
+        switch (message.getMessageType()){
+            case LOGIN_REPLY:
+                LoginReply loginReply = (LoginReply) message;
+                taskQueue.execute(() -> view.showLoginResult(loginReply.isUsernameAccepted(), loginReply.isConnectionSuccessful(), this.username));
+                break;
+            default:
+                break;
+        }
 
     }
 
     @Override
     public void onUpdateUsername(String username) {
         this.username = username;
-        System.out.println("ciao "+ username);
         client.sendMessage(new LoginRequest(this.username));
     }
 

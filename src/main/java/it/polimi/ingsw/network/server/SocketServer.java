@@ -47,11 +47,11 @@ public class SocketServer implements Runnable {
     /**
      * Handles the addition of a new client.
      *
-     * @param nickname      the nickname of the new client.
+     * @param username      the nickname of the new client.
      * @param clientHandler the ClientHandler of the new client.
      */
-    public void addClient(String nickname, ClientHandler clientHandler) {
-        server.addClient(nickname, clientHandler);
+    public void addClient(String username, ClientHandler clientHandler) {
+        server.addClient(username, clientHandler);
     }
 //
 //    /**

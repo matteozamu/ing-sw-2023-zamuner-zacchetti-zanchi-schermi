@@ -20,8 +20,8 @@ public interface View {
      */
     void askUsername();
 
-    void askObjCard();
 
+    void askObjCard();
 
     /**
      * Shows an error message.

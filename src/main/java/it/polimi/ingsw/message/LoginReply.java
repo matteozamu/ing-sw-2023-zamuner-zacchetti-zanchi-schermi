@@ -17,7 +17,7 @@ public class LoginReply extends Message {
         this.connectionSuccessful = connectionSuccessful;
     }
 
-    public boolean isNicknameAccepted() {
+    public boolean isUsernameAccepted() {
         return nicknameAccepted;
     }
 
@@ -28,7 +28,7 @@ public class LoginReply extends Message {
     @Override
     public String toString() {
         return "LoginReply{" +
-                "nickname=" + getNickname() +
+                "nickname=" + getUsername() +
                 ", nicknameAccepted=" + nicknameAccepted +
                 ", connectionSuccessful=" + connectionSuccessful +
                 '}';

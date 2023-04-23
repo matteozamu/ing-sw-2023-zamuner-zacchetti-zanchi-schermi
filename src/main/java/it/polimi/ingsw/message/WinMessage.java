@@ -22,7 +22,7 @@ public class WinMessage extends Message {
     @Override
     public String toString() {
         return "WinMessage{" +
-                "nickname=" + getNickname() +
+                "nickname=" + getUsername() +
                 ", winnerNickname=" + winnerNickname +
                 '}';
     }

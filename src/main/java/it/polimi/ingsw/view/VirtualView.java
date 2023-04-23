@@ -47,7 +47,7 @@ public class VirtualView implements View, Observer {
 
     @Override
     public void askUsername() {
-        //clientHandler.sendMessage(new LoginReply(false, true));
+        clientHandler.sendMessage(new LoginReply(false, true));
     }
 
     @Override

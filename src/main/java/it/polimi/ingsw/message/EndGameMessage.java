@@ -14,6 +14,6 @@ public class EndGameMessage extends Message {
 
     @Override
     public String toString() {
-        return "EndGameMessage{username= " + getNickname() +"}";
+        return "EndGameMessage{username= " + getUsername() +"}";
     }
 }

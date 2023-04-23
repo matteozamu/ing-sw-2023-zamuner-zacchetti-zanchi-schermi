@@ -24,7 +24,6 @@ public class Cli extends ViewObservable implements View {
     public void init(){
         out.println("Welcome to MyShelfie");
         askServerInfo();
-        askUsername();
     }
 
     public void askServerInfo(){ // si puo aggiungere Execution exception se lo stream di input è interrotto

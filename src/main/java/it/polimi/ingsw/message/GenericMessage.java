@@ -24,7 +24,7 @@ public class GenericMessage extends Message {
     @Override
     public String toString() {
         return "GenericMessage{" +
-                "nickname=" + getNickname() +
+                "nickname=" + getUsername() +
                 ", message=" + message +
                 '}';
     }

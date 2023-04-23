@@ -18,7 +18,7 @@ public abstract class Message implements Serializable {
         this.messageType = messageType;
     }
 
-    public String getNickname() {
+    public String getUsername() {
         return username;
     }
 

@@ -33,13 +33,15 @@ public class Server {
     /**
      * Adds a client to be managed by the server instance.
      *
-     * @param nickname      the nickname associated with the client.
+     * @param username      the nickname associated with the client.
      * @param clientHandler the ClientHandler associated with the client.
      */
-    public void addClient(String nickname, ClientHandler clientHandler) {
+    public void addClient(String username, ClientHandler clientHandler) {
         VirtualView vv = new VirtualView(clientHandler);
 
-        clientHandlerMap.put(nickname, clientHandler);
+        clientHandlerMap.put(username, clientHandler);
+        gameController.loginHandler(username, vv);
+
 //        if (!gameController.isGameStarted()) {
 //            if (gameController.checkLoginNickname(nickname, vv)) {
 //                clientHandlerMap.put(nickname, clientHandler);
