@@ -1,11 +1,13 @@
 package it.polimi.ingsw.view;
 
+import it.polimi.ingsw.message.ErrorMessage;
+import it.polimi.ingsw.message.LoginReply;
 import it.polimi.ingsw.message.Message;
 import it.polimi.ingsw.model.Game;
 import it.polimi.ingsw.network.server.ClientHandler;
 import it.polimi.ingsw.observer.Observer;
 
-import java.util.List;
+// questa classe è quella che "genera i messaggi"
 
 /**
  * Hides the network implementation from the controller.
@@ -24,6 +26,16 @@ public class VirtualView implements View, Observer {
         this.clientHandler = clientHandler;
     }
 
+    @Override
+    public void showLoginResult(boolean nicknameAccepted, boolean connectionSuccessful, String nickname) {
+        clientHandler.sendMessage(new LoginReply(nicknameAccepted, connectionSuccessful));
+    }
+
+    @Override
+    public void showErrorAndExit(String error) {
+        clientHandler.sendMessage(new ErrorMessage(Game.SERVER_NICKNAME, error));
+    }
+
     /**
      * Returns the client handler associated to a client.
      *
@@ -36,6 +48,11 @@ public class VirtualView implements View, Observer {
     @Override
     public void askUsername() {
         //clientHandler.sendMessage(new LoginReply(false, true));
+    }
+
+    @Override
+    public void askObjCard(){
+
     }
 
 
