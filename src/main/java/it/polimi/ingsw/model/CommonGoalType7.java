@@ -51,7 +51,7 @@ public final class CommonGoalType7 extends CommonGoal {
         return false;
     }
 
-    private boolean isSquare(Shelf shelf, Coordinate bottomLeft, ObjectCardType type) {
+    public boolean isSquare(Shelf shelf, Coordinate bottomLeft, ObjectCardType type) {
         ObjectCard bottomLeftCard = shelf.getObjectCard(bottomLeft);
 
         if (bottomLeftCard == null || !bottomLeftCard.getType().equals(type)) {

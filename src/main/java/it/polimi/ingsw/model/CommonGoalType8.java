@@ -11,6 +11,7 @@ import java.util.Set;
 
 public final class CommonGoalType8 extends CommonGoal {
 
+
     /**
      * Checks if the Shelf is eligible for the goal check.
      * For CommonGoalType8, the Shelf must have at least 10 object cards.
