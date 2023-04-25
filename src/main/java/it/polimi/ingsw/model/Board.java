@@ -88,24 +88,28 @@ public class Board {
     @Override
     public String toString() {
         ObjectCard objectCard;
-        String s = "";
+        StringBuilder sb = new StringBuilder();
 
         for (int row = 1; row <= 5; row++) {
-            for (int spaces = 5 - row; spaces > 0; spaces--) s += "\t\t";
+            sb.append("\t".repeat(5 - row));
             for (int col = 1; col < 2 * row; col++) {
-                objectCard = this.grid.get(new Coordinate(5 - row, -5 + col));
-                s += ("|" + objectCard);
+                int x = 5 - row;
+                int y = -5 + col;
+                objectCard = this.grid.get(new Coordinate(x, y));
+                sb.append("| ").append(objectCard).append(" (").append(x).append(",").append(y).append(") ");
             }
-            s += "|\n";
+            sb.append("|\n");
         }
         for (int row = 5 - 1; row >= 1; row--) {
-            for (int spaces = 5 - row; spaces > 0; spaces--) s += "\t\t";
+            sb.append("\t".repeat(Math.max(0, 5 - row)));
             for (int col = 1; col < 2 * row; col++) {
-                objectCard = this.grid.get(new Coordinate(-5 + row, -5 + col));
-                s += ("|"+ objectCard);
+                int x = -5 + row;
+                int y = -5 + col;
+                objectCard = this.grid.get(new Coordinate(x, y));
+                sb.append("| ").append(objectCard).append(" (").append(x).append(",").append(y).append(") ");
             }
-            s += "|\n";
+            sb.append("|\n");
         }
-        return s;
+        return sb.toString();
     }
 }
