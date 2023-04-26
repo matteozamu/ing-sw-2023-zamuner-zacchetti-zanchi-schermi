@@ -66,14 +66,14 @@ public class Server {
 //        LOGGER.info(() -> "Removed " + nickname + " from the client list.");
 //    }
 //
-//    /**
-//     * Forwards a received message from the client to the GameController.
-//     *
-//     * @param message the message to be forwarded.
-//     */
-//    public void onMessageReceived(Message message) {
-//        gameController.onMessageReceived(message);
-//    }
+    /**
+     * Forwards a received message from the client to the GameController.
+     *
+     * @param message the message to be forwarded.
+     */
+    public void onMessageReceived(Message message) {
+        gameController.onMessageReceived(message);
+    }
 //
 //    /**
 //     * Handles the disconnection of a client.

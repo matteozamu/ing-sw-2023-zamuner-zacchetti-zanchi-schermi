@@ -24,6 +24,13 @@ public interface ViewObserver {
      */
     void onUpdateUsername(String nickname);
 
+    /**
+     * Sends a message to the server with the player number chosen by the user.
+     *
+     * @param playersNumber is the number of players.
+     */
+    void onUpdatePlayersNumber(int playersNumber);
+
     void onUpdateObjCard(List<Coordinate> coordinates);
 //
 //    /**

@@ -16,10 +16,29 @@ public interface View {
     void showLoginResult(boolean usernameAccepted, boolean connectionSuccessful, String username);
 
     /**
+     * Shows a generic message.
+     *
+     * @param genericMessage the generic message to be shown.
+     */
+    void showGenericMessage(String genericMessage);
+
+    /**
+     * Shows the lobby with connected players.
+     *
+     * @param nicknameList list of players.
+     * @param numPlayers   number of players.
+     */
+    void showLobby(List<String> nicknameList, int numPlayers);
+
+    /**
      * Asks the user to choose a Nickname.
      */
     void askUsername();
 
+    /**
+     * Asks the user the number of players he wants to play with.
+     */
+    void askPlayersNumber();
 
     void askObjCard();
 

@@ -1,6 +1,7 @@
 package it.polimi.ingsw.control;
 
 import it.polimi.ingsw.message.Message;
+import it.polimi.ingsw.message.PlayersNumberReply;
 import it.polimi.ingsw.model.*;
 import it.polimi.ingsw.network.server.Server;
 import it.polimi.ingsw.view.VirtualView;
@@ -9,6 +10,7 @@ import it.polimi.ingsw.observer.Observer;
 import java.io.Serializable;
 import java.util.*;
 
+import static it.polimi.ingsw.message.MessageType.PLAYERS_NUMBER_REPLY;
 import static it.polimi.ingsw.model.Board.Direction.*;
 
 /**
@@ -23,7 +25,7 @@ public class ControllerGame implements Observer, Serializable {
 
     private GameState gameState;
 //    private TurnController turnController;
-//    private InputController inputController;
+    private InputController inputController;
     private static final String STR_INVALID_STATE = "Invalid game state!";
 
 
@@ -35,7 +37,7 @@ public class ControllerGame implements Observer, Serializable {
 //        this.numberOfPlayers = 0;
         this.limbo = new ArrayList<>();
         this.virtualViewMap = Collections.synchronizedMap(new HashMap<>());
-//        this.inputController = new InputController(virtualViewMap, this);
+        this.inputController = new InputController(virtualViewMap, this);
         setGameState(GameState.LOGIN);
     }
 
@@ -64,6 +66,7 @@ public class ControllerGame implements Observer, Serializable {
             game.addPlayer(new Player(username, new Shelf(), new PersonalGoalCard(null)));
 
             virtualView.showLoginResult(true, true, Game.SERVER_NICKNAME);
+            virtualView.askPlayersNumber();
         }
 //        } else if (virtualViewMap.size() < game.getChosenPlayersNumber()) {
 //            addVirtualView(username, virtualView);
@@ -90,6 +93,52 @@ public class ControllerGame implements Observer, Serializable {
 //        }
     }
 
+    /**
+     * Switch on Game State.
+     *
+     * @param receivedMessage Message from Active Player.
+     */
+    public void onMessageReceived(Message receivedMessage) {
+
+        VirtualView virtualView = virtualViewMap.get(receivedMessage.getUsername());
+        switch (gameState) {
+            case LOGIN:
+                loginState(receivedMessage);
+                break;
+//            case INIT:
+//                if (inputController.checkUser(receivedMessage)) {
+//                    initState(receivedMessage, virtualView);
+//                }
+//                break;
+//            case IN_GAME:
+//                if (inputController.checkUser(receivedMessage)) {
+//                    inGameState(receivedMessage);
+//                }
+//                break;
+            default: // Should never reach this condition
+                Server.LOGGER.warning(STR_INVALID_STATE);
+                break;
+        }
+    }
+
+    //***** 3 MAIN STATE METHODS *****//
+
+    /**
+     * Switch on Login Messages' Types.
+     *
+     * @param receivedMessage Message from Active Player.
+     */
+    private void loginState(Message receivedMessage) {
+        if (receivedMessage.getMessageType() == PLAYERS_NUMBER_REPLY) {
+            if (inputController.verifyReceivedData(receivedMessage)) {
+                game.setChosenMaxPlayers(((PlayersNumberReply) receivedMessage).getPlayerNumber());
+                broadcastGenericMessage("Waiting for other Players . . .");
+            }
+        } else {
+            Server.LOGGER.warning("Wrong message received from client.");
+        }
+    }
+
 
     //***** VIRTUAL VIEW METHODS *****//
 
@@ -106,6 +155,18 @@ public class ControllerGame implements Observer, Serializable {
         game.addObserver(virtualView);
 //        game.getBoard().addObserver(virtualView);
     }
+
+    /**
+     * Sends a Message which contains Game Information to every {@link Player} in Game.
+     *
+     * @param messageToNotify Message to send.
+     */
+    public void broadcastGenericMessage(String messageToNotify) {
+        for (VirtualView vv : virtualViewMap.values()) {
+            vv.showGenericMessage(messageToNotify);
+        }
+    }
+
 //    public Player getCurrentPlayer() {
 //        return currentPlayer;
 //    }

@@ -1,8 +1,6 @@
 package it.polimi.ingsw.control;
 
-import it.polimi.ingsw.message.LoginReply;
-import it.polimi.ingsw.message.LoginRequest;
-import it.polimi.ingsw.message.Message;
+import it.polimi.ingsw.message.*;
 import it.polimi.ingsw.model.Coordinate;
 import it.polimi.ingsw.network.client.Client;
 import it.polimi.ingsw.network.client.SocketClient;
@@ -33,6 +31,29 @@ public class ControllerClient implements ViewObserver, Observer {
         taskQueue = Executors.newSingleThreadExecutor();
     }
 
+    @Override
+    public void update(Message message) {
+        switch (message.getMessageType()){
+            case LOGIN_REPLY:
+                LoginReply loginReply = (LoginReply) message;
+                taskQueue.execute(() -> view.showLoginResult(loginReply.isUsernameAccepted(), loginReply.isConnectionSuccessful(), this.username));
+                break;
+            case PLAYERS_NUMBER_REQUEST:
+                taskQueue.execute(view::askPlayersNumber);
+                break;
+            case LOBBY:
+                LobbyMessage lobbyMessage = (LobbyMessage) message;
+                taskQueue.execute(() -> view.showLobby(lobbyMessage.getNicknameList(), lobbyMessage.getMaxPlayers()));
+                break;
+            case GENERIC_MESSAGE:
+                taskQueue.execute(() -> view.showGenericMessage(((GenericMessage) message).getMessage()));
+                break;
+            default:
+                break;
+        }
+
+    }
+
     /**
      * Create a new Socket Connection to the server with the updated info.
      * An error view is shown if connection cannot be established.
@@ -52,23 +73,26 @@ public class ControllerClient implements ViewObserver, Observer {
         }
     }
 
-    @Override
-    public void update(Message message) {
-        switch (message.getMessageType()){
-            case LOGIN_REPLY:
-                LoginReply loginReply = (LoginReply) message;
-                taskQueue.execute(() -> view.showLoginResult(loginReply.isUsernameAccepted(), loginReply.isConnectionSuccessful(), this.username));
-                break;
-            default:
-                break;
-        }
-
-    }
-
+    /**
+     * Sends a message to the server with the updated nickname.
+     * The nickname is also stored locally for later usages.
+     *
+     * @param username the nickname to be sent.
+     */
     @Override
     public void onUpdateUsername(String username) {
         this.username = username;
         client.sendMessage(new LoginRequest(this.username));
+    }
+
+    /**
+     * Sends a message to the server with the player number chosen by the user.
+     *
+     * @param playersNumber the number of players.
+     */
+    @Override
+    public void onUpdatePlayersNumber(int playersNumber) {
+        client.sendMessage(new PlayersNumberReply(this.username, playersNumber));
     }
 
     @Override

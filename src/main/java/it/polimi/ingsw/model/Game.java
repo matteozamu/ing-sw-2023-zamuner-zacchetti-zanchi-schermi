@@ -2,6 +2,7 @@ package it.polimi.ingsw.model;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
+import it.polimi.ingsw.message.LobbyMessage;
 import it.polimi.ingsw.observer.Observable;
 
 import java.io.FileReader;
@@ -14,8 +15,10 @@ import java.util.Random;
  * Represents the main game model, including object card and common goal management.
  */
 public class Game extends Observable implements Serializable {
-    public static final int MAX_PLAYER = 4;
+    public static final int MAX_PLAYERS = 4;
     public static final String SERVER_NICKNAME = "server";
+    private static Game instance;
+
     private List<ObjectCard> objectCardContainer;
     private List<CommonGoal> commonGoalContainer;
     private List<PersonalGoalCard> personalGoalCardsContainer;
@@ -23,6 +26,7 @@ public class Game extends Observable implements Serializable {
     private Player currentPlayer;
     private Board board;
     private List<CommonGoal> commonGoals;
+    private int chosenPlayersNumber;
 
     /**
      * constructor of the class
@@ -34,6 +38,14 @@ public class Game extends Observable implements Serializable {
         this.players = new ArrayList<>();
         this.board = new Board();
         this.commonGoals = new ArrayList<>();
+    }
+    /**
+     * @return the singleton instance.
+     */
+    public static Game getInstance() {
+        if (instance == null)
+            instance = new Game();
+        return instance;
     }
 
     public List<CommonGoal> getCommonGoalContainer() {
@@ -57,16 +69,28 @@ public class Game extends Observable implements Serializable {
     }
 
     /**
+     * Returns a list of player nicknames that are already in-game.
+     *
+     * @return a list with all nicknames in the Game
+     */
+    public List<String> getPlayersNicknames() {
+        List<String> nicknames = new ArrayList<>();
+        for (Player p : players) {
+            nicknames.add(p.getName());
+        }
+        return nicknames;
+    }
+
+    /**
      * Add a new player to the game
      *
      * @param p is the object Player
      * @return true if successful, false otherwise
      */
-
     //TESTED
     public boolean addPlayer(Player p) {
         if (p == null) return false;
-        if (this.players.size() < MAX_PLAYER) {
+        if (this.players.size() < MAX_PLAYERS) {
             this.players.add(p);
             return true;
         } else return false;
@@ -212,4 +236,20 @@ public class Game extends Observable implements Serializable {
             e.printStackTrace();
         }
     }
+
+    /**
+     * Sets the max number of players chosen by the first player joining the game.
+     *
+     * @param chosenMaxPlayers the max players number. Value can be {@code 0 < x < MAX_PLAYERS}.
+     * @return {@code true} if the argument value is {@code 0 < x < MAX_PLAYERS}, {@code false} otherwise.
+     */
+    public boolean setChosenMaxPlayers(int chosenMaxPlayers) {
+        if (chosenMaxPlayers > 0 && chosenMaxPlayers <= MAX_PLAYERS) {
+            this.chosenPlayersNumber = chosenMaxPlayers;
+            notifyObserver(new LobbyMessage(getPlayersNicknames(), this.chosenPlayersNumber));
+            return true;
+        }
+        return false;
+    }
+
 }
