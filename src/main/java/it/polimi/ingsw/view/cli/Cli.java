@@ -185,4 +185,29 @@ public class Cli extends ViewObservable implements View {
         System.exit(1);
     }
 
+    /**
+     * Shows the lobby screen on the terminal.
+     *
+     * @param nicknameList list of players.
+     * @param numPlayers   number of players.
+     */
+    @Override
+    public void showLobby(List<String> nicknameList, int numPlayers) {
+        out.println("LOBBY:");
+        for (String nick : nicknameList) {
+            out.println(nick + "\n");
+        }
+        out.println("Current players in lobby: " + nicknameList.size() + " / " + numPlayers);
+    }
+
+    /**
+     * Shows a Generic Message from Server
+     *
+     * @param genericMessage Generic Message from Server.
+     */
+    @Override
+    public void showGenericMessage(String genericMessage) {
+        out.println(genericMessage);
+    }
+
 }

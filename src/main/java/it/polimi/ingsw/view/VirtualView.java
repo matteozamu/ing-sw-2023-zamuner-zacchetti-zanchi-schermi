@@ -5,6 +5,8 @@ import it.polimi.ingsw.model.Game;
 import it.polimi.ingsw.network.server.ClientHandler;
 import it.polimi.ingsw.observer.Observer;
 
+import java.util.List;
+
 // questa classe è quella che "genera i messaggi"
 
 /**
@@ -37,6 +39,11 @@ public class VirtualView implements View, Observer {
     @Override
     public void showErrorAndExit(String error) {
         clientHandler.sendMessage(new ErrorMessage(Game.SERVER_NICKNAME, error));
+    }
+
+    @Override
+    public void showLobby(List<String> nicknameList, int numPlayers) {
+        clientHandler.sendMessage(new LobbyMessage(nicknameList, numPlayers));
     }
 
     /**

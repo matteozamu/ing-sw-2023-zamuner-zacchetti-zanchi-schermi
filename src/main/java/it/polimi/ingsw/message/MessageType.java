@@ -8,6 +8,7 @@ public enum MessageType {
     LOGIN_REPLY,
     PLAYERS_NUMBER_REQUEST,
     PLAYERS_NUMBER_REPLY,
+    LOBBY,
     BOARD,
     WIN,
     OBJ_CARD_REQUEST,
