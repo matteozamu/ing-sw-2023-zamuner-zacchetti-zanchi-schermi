@@ -5,12 +5,9 @@ import it.polimi.ingsw.control.ControllerGame;
 import it.polimi.ingsw.message.Message;
 import it.polimi.ingsw.view.VirtualView;
 
-import java.io.IOException;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.UUID;
-import java.util.logging.Level;
 import java.util.logging.Logger;
 
 /**
@@ -28,44 +25,6 @@ public class Server {
         this.gameController = gameController;
         this.clientHandlerMap = Collections.synchronizedMap(new HashMap<>());
         this.lock = new Object();
-    }
-
-    private void playerLogin(String username, Connection connection) throws IOException {
-        if (gameManager.getGameInstance().isGameStarted()) { // Game Started
-            connection.sendMessage(
-                    new ConnectionResponse("Game is already started!", null, MessageStatus.ERROR)
-            );
-
-            connection.disconnect();
-            LOGGER.log(Level.INFO, "{0} attempted to connect!", username);
-        } else if (gameManager.isLobbyFull()) { // Lobby Full
-            connection.sendMessage(
-                    new ConnectionResponse("Max number of player reached", null, MessageStatus.ERROR)
-            );
-
-            connection.disconnect();
-            LOGGER.log(Level.INFO, "{0} tried to connect but game is full!", username);
-        } else { // New player
-            if (isUsernameLegit(username)) { // Username legit
-                clients.put(username, connection);
-
-                String token = UUID.randomUUID().toString();
-                connection.setToken(token);
-
-                connection.sendMessage(
-                        new ConnectionResponse("Successfully connected", token, MessageStatus.OK)
-                );
-
-                LOGGER.log(Level.INFO, "{0} connected to server!", username);
-            } else { // Username not legit
-                connection.sendMessage(
-                        new ConnectionResponse("Invalid Username", null, MessageStatus.ERROR)
-                );
-
-                connection.disconnect();
-                LOGGER.log(Level.INFO, "{0} tried to connect with invalid name!", username);
-            }
-        }
     }
 
     /**

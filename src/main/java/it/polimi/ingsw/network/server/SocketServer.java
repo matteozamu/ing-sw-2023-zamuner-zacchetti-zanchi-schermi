@@ -53,10 +53,6 @@ public class SocketServer implements Runnable {
         server.addClient(username, clientHandler);
     }
 
-    public void playerLogin(String username, ClientHandler clientHandler) {
-        server.playerLogin(username, clientHandler);
-    }
-
     /**
      * Forwards a received message from the client to the Server.
      *

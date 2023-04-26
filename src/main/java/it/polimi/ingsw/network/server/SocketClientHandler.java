@@ -69,7 +69,7 @@ public class SocketClientHandler implements ClientHandler, Runnable {
                         Server.LOGGER.severe("DEBUG: Message: " + message);
 
                         if (message.getMessageType() == MessageType.LOGIN_REQUEST) {
-                            socketServer.playerLogin(message.getUsername(), this);
+                            socketServer.addClient(message.getUsername(), this);
                         } else {
                             Server.LOGGER.info(() -> "Received: " + message);
                             socketServer.onMessageReceived(message);
