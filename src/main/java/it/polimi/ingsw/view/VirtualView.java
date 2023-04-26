@@ -1,8 +1,6 @@
 package it.polimi.ingsw.view;
 
-import it.polimi.ingsw.message.ErrorMessage;
-import it.polimi.ingsw.message.LoginReply;
-import it.polimi.ingsw.message.Message;
+import it.polimi.ingsw.message.*;
 import it.polimi.ingsw.model.Game;
 import it.polimi.ingsw.network.server.ClientHandler;
 import it.polimi.ingsw.observer.Observer;
@@ -32,12 +30,17 @@ public class VirtualView implements View, Observer {
     }
 
     @Override
+    public void showGenericMessage(String genericMessage) {
+        clientHandler.sendMessage(new GenericMessage(genericMessage));
+    }
+
+    @Override
     public void showErrorAndExit(String error) {
         clientHandler.sendMessage(new ErrorMessage(Game.SERVER_NICKNAME, error));
     }
 
     /**
-     * Returns the client handler associated to a client.
+     * returns the client handler associated to a client.
      *
      * @return client handler.
      */
@@ -45,9 +48,20 @@ public class VirtualView implements View, Observer {
         return clientHandler;
     }
 
+    /**
+     * send a new login reply message
+     */
     @Override
     public void askUsername() {
         clientHandler.sendMessage(new LoginReply(false, true));
+    }
+
+    /**
+     * send a message with the number of player the user wants to play with
+     */
+    @Override
+    public void askPlayersNumber() {
+        clientHandler.sendMessage(new PlayersNumberRequest());
     }
 
     @Override

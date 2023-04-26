@@ -53,16 +53,16 @@ public class SocketServer implements Runnable {
     public void addClient(String username, ClientHandler clientHandler) {
         server.addClient(username, clientHandler);
     }
-//
-//    /**
-//     * Forwards a received message from the client to the Server.
-//     *
-//     * @param message the message to be forwarded.
-//     */
-//    public void onMessageReceived(Message message) {
-//        server.onMessageReceived(message);
-//    }
-//
+
+    /**
+     * Forwards a received message from the client to the Server.
+     *
+     * @param message the message to be forwarded.
+     */
+    public void onMessageReceived(Message message) {
+        server.onMessageReceived(message);
+    }
+
 //    /**
 //     * Handles a client disconnection.
 //     *

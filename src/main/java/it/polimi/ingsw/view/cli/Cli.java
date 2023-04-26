@@ -115,6 +115,30 @@ public class Cli extends ViewObservable implements View {
         notifyObserver(obs -> obs.onUpdateUsername(finalUsername));
     }
 
+    @Override
+    public void askPlayersNumber() {
+        int playerNumber;
+
+        playerNumber = playerNumber();
+        notifyObserver(obs -> obs.onUpdatePlayersNumber(playerNumber));
+    }
+
+    private int playerNumber(){
+        Scanner s = new Scanner(System.in);
+        int players = 2;
+
+        try {
+            do{
+                out.println("How many players are going to play? (You can choose between 2 and 4 players, default is 2): ");
+                players = s.nextInt();
+            } while (players < 2 || players > 4);
+        } catch (InputMismatchException e){
+            out.println("Invalid input");
+        }
+
+        return players;
+    }
+
     /**
      * this method ask the user to choose 1, 2 or 3 Object Card
      * the usern will enter the coordinate of the Object Card
