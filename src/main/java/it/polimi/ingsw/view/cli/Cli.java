@@ -3,15 +3,10 @@ package it.polimi.ingsw.view.cli;
 
 import it.polimi.ingsw.control.ControllerClient;
 import it.polimi.ingsw.model.Coordinate;
-import it.polimi.ingsw.model.ObjectCard;
 import it.polimi.ingsw.observer.ViewObservable;
 import it.polimi.ingsw.view.View;
 
-import java.io.PrintStream;
 import java.util.*;
-import java.util.concurrent.ExecutionException;
-import java.util.concurrent.FutureTask;
-import java.util.stream.Collectors;
 
 import static java.lang.System.out;
 
@@ -21,12 +16,18 @@ import static java.lang.System.out;
  */
 public class Cli extends ViewObservable implements View {
 
-    public void init(){
-        out.println("Welcome to MyShelfie");
+    public void init() {
+        out.println("███╗   ███╗██╗   ██╗    ███████╗██╗  ██╗███████╗██╗     ███████╗██╗███████╗");
+        out.println("████╗ ████║╚██╗ ██╔╝    ██╔════╝██║  ██║██╔════╝██║     ██╔════╝██║██╔════╝");
+        out.println("██╔████╔██║ ╚████╔╝     ███████╗███████║█████╗  ██║     █████╗  ██║█████╗  ");
+        out.println("██╔████╔██║ ╚████╔╝     ███████╗███████║█████╗  ██║     █████╗  ██║█████╗  ");
+        out.println("██║╚██╔╝██║  ╚██╔╝      ╚════██║██╔══██║██╔══╝  ██║     ██╔══╝  ██║██╔══╝  ");
+        out.println("██║ ╚═╝ ██║   ██║       ███████║██║  ██║███████╗███████╗██║     ██║███████╗");
+        out.println("╚═╝     ╚═╝   ╚═╝       ╚══════╝╚═╝  ╚═╝╚══════╝╚══════╝╚═╝     ╚═╝╚══════╝");
         askServerInfo();
     }
 
-    public void askServerInfo(){ // si puo aggiungere Execution exception se lo stream di input è interrotto
+    public void askServerInfo() { // si puo aggiungere Execution exception se lo stream di input è interrotto
         Map<String, String> serverInfo = new HashMap<>();
         String defaultAddress = "localhost";
         String defaultPort = "16847";
@@ -120,7 +121,7 @@ public class Cli extends ViewObservable implements View {
      * the usern will enter the coordinate of the Object Card
      */
     @Override
-    public void askObjCard(){
+    public void askObjCard() {
         List<Coordinate> coordinates = new ArrayList<>();
         Scanner s = new Scanner(System.in);
         int i = 0;
