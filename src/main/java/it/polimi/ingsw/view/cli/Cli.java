@@ -31,7 +31,7 @@ public class Cli extends ViewObservable implements View {
         Map<String, String> serverInfo = new HashMap<>();
         String defaultAddress = "localhost";
         String defaultPort = "16847";
-        boolean validInput;
+        boolean validInput = false;
         Scanner s = new Scanner(System.in);
 
         do {
@@ -71,7 +71,6 @@ public class Cli extends ViewObservable implements View {
         } while (!validInput);
 
         notifyObserver(obs -> obs.onUpdateServerInfo(serverInfo));
-
     }
 
     /**
@@ -108,7 +107,7 @@ public class Cli extends ViewObservable implements View {
         Scanner s = new Scanner(System.in);
         String username = null;
         do {
-            out.println("Enter your username: ");
+            out.print("Enter your username: ");
             username = s.nextLine();
         } while (username == null);
 
@@ -124,16 +123,16 @@ public class Cli extends ViewObservable implements View {
         notifyObserver(obs -> obs.onUpdatePlayersNumber(playerNumber));
     }
 
-    private int playerNumber(){
+    private int playerNumber() {
         Scanner s = new Scanner(System.in);
         int players = 2;
 
         try {
-            do{
-                out.println("How many players are going to play? (You can choose between 2 and 4 players, default is 2): ");
+            do {
+                out.print("How many players are going to play? [2] (Between 2 and 4 players): ");
                 players = s.nextInt();
             } while (players < 2 || players > 4);
-        } catch (InputMismatchException e){
+        } catch (InputMismatchException e) {
             out.println("Invalid input");
         }
 

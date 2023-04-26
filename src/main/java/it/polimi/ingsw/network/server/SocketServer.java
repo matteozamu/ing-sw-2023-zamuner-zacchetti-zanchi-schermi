@@ -32,7 +32,6 @@ public class SocketServer implements Runnable {
         while (!Thread.currentThread().isInterrupted()) {
             try {
                 Socket client = serverSocket.accept();
-
                 client.setSoTimeout(5000);
 
                 SocketClientHandler clientHandler = new SocketClientHandler(this, client);
@@ -52,6 +51,10 @@ public class SocketServer implements Runnable {
      */
     public void addClient(String username, ClientHandler clientHandler) {
         server.addClient(username, clientHandler);
+    }
+
+    public void playerLogin(String username, ClientHandler clientHandler) {
+        server.playerLogin(username, clientHandler);
     }
 
     /**

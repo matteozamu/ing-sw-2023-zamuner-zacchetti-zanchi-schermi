@@ -16,14 +16,13 @@ import java.util.concurrent.Executors;
 
 public class ControllerClient implements ViewObserver, Observer {
     private final View view;
-
+    private final ExecutorService taskQueue;
     private Client client;
     private String username;
 
-    private final ExecutorService taskQueue;
-
     /**
      * controller constructor
+     *
      * @param view is the view to controll
      */
     public ControllerClient(View view) {
@@ -31,9 +30,38 @@ public class ControllerClient implements ViewObserver, Observer {
         taskQueue = Executors.newSingleThreadExecutor();
     }
 
+    /**
+     * Validates the given IPv4 address by using a regex.
+     *
+     * @param ip the string of the ip address to be validated
+     * @return {@code true} if the ip is valid, {@code false} otherwise.
+     */
+    public static boolean isValidIpAddress(String ip) {
+        String regex = "^([01]?\\d\\d?|2[0-4]\\d|25[0-5])\\." +
+                "([01]?\\d\\d?|2[0-4]\\d|25[0-5])\\." +
+                "([01]?\\d\\d?|2[0-4]\\d|25[0-5])\\." +
+                "([01]?\\d\\d?|2[0-4]\\d|25[0-5])$";
+        return ip.matches(regex);
+    }
+
+    /**
+     * Checks if the given port string is in the range of allowed ports.
+     *
+     * @param portStr the ports to be checked.
+     * @return {@code true} if the port is valid, {@code false} otherwise.
+     */
+    public static boolean isValidPort(String portStr) {
+        try {
+            int port = Integer.parseInt(portStr);
+            return port >= 1 && port <= 65535;
+        } catch (NumberFormatException e) {
+            return false;
+        }
+    }
+
     @Override
     public void update(Message message) {
-        switch (message.getMessageType()){
+        switch (message.getMessageType()) {
             case LOGIN_REPLY:
                 LoginReply loginReply = (LoginReply) message;
                 taskQueue.execute(() -> view.showLoginResult(loginReply.isUsernameAccepted(), loginReply.isConnectionSuccessful(), this.username));
@@ -98,34 +126,5 @@ public class ControllerClient implements ViewObserver, Observer {
     @Override
     public void onUpdateObjCard(List<Coordinate> coordinates) {
 
-    }
-
-    /**
-     * Validates the given IPv4 address by using a regex.
-     *
-     * @param ip the string of the ip address to be validated
-     * @return {@code true} if the ip is valid, {@code false} otherwise.
-     */
-    public static boolean isValidIpAddress(String ip) {
-        String regex = "^([01]?\\d\\d?|2[0-4]\\d|25[0-5])\\." +
-                "([01]?\\d\\d?|2[0-4]\\d|25[0-5])\\." +
-                "([01]?\\d\\d?|2[0-4]\\d|25[0-5])\\." +
-                "([01]?\\d\\d?|2[0-4]\\d|25[0-5])$";
-        return ip.matches(regex);
-    }
-
-    /**
-     * Checks if the given port string is in the range of allowed ports.
-     *
-     * @param portStr the ports to be checked.
-     * @return {@code true} if the port is valid, {@code false} otherwise.
-     */
-    public static boolean isValidPort(String portStr) {
-        try {
-            int port = Integer.parseInt(portStr);
-            return port >= 1 && port <= 65535;
-        } catch (NumberFormatException e) {
-            return false;
-        }
     }
 }

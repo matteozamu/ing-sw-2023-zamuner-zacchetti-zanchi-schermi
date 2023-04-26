@@ -14,12 +14,9 @@ import java.net.Socket;
 public class SocketClientHandler implements ClientHandler, Runnable {
     private final Socket client;
     private final SocketServer socketServer;
-
-    private boolean connected;
-
     private final Object inputLock;
     private final Object outputLock;
-
+    private boolean connected;
     private ObjectOutputStream output;
     private ObjectInputStream input;
 
@@ -69,8 +66,10 @@ public class SocketClientHandler implements ClientHandler, Runnable {
                     Message message = (Message) input.readObject();
 
                     if (message != null && message.getMessageType() != MessageType.PING) {
+                        Server.LOGGER.severe("DEBUG: Message: " + message);
+
                         if (message.getMessageType() == MessageType.LOGIN_REQUEST) {
-                            socketServer.addClient(message.getUsername(), this);
+                            socketServer.playerLogin(message.getUsername(), this);
                         } else {
                             Server.LOGGER.info(() -> "Received: " + message);
                             socketServer.onMessageReceived(message);
