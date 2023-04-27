@@ -42,15 +42,15 @@ public class Server {
         clientHandlerMap.put(username, clientHandler);
         gameController.loginHandler(username, vv);
 
-//        if (!gameController.isGameStarted()) {
-//            if (gameController.checkLoginNickname(nickname, vv)) {
-//                clientHandlerMap.put(nickname, clientHandler);
-//                gameController.loginHandler(nickname, vv);
-//            }
-//        } else {
-//            vv.showLoginResult(true, false, null);
-//            clientHandler.disconnect();
-//        }
+        if (!gameController.isGameStarted()) {
+            if (gameController.checkLoginNickname(username, vv)) {
+                clientHandlerMap.put(username, clientHandler);
+                gameController.loginHandler(username, vv);
+            }
+        } else {
+            vv.showLoginResult(true, false, null);
+            clientHandler.disconnect();
+        }
 
     }
 //

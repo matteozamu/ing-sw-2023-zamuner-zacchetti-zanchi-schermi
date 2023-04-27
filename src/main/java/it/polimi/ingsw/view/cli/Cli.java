@@ -84,7 +84,6 @@ public class Cli extends ViewObservable implements View {
     @Override
     public void showLoginResult(boolean nicknameAccepted, boolean connectionSuccessful, String nickname) {
 //        clearCli();
-
         if (nicknameAccepted && connectionSuccessful) {
             out.println("Hi, " + nickname + "! You connected to the server.");
         } else if (connectionSuccessful) {
