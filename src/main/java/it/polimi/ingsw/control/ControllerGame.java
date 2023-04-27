@@ -59,7 +59,6 @@ public class ControllerGame implements Observer, Serializable {
      * @param virtualView the virtualview of the player.
      */
     public void loginHandler(String username, VirtualView virtualView) {
-
         if (virtualViewMap.isEmpty()) { // First player logged. Ask number of players.
             addVirtualView(username, virtualView);
             // TODO completare personal goal
@@ -217,7 +216,7 @@ public class ControllerGame implements Observer, Serializable {
      * @param view     the view of the player who is logging in.
      * @return true if the clien can be logged to the game
      */
-    public boolean checkLoginNickname(String username, View view) {
+    public boolean checkLoginUsername(String username, View view) {
         return inputController.checkLoginUsername(username, view);
     }
 

@@ -59,7 +59,7 @@ public class InputController implements Serializable {
             view.showGenericMessage("Forbidden name.");
             view.showLoginResult(false, true, null);
             return false;
-        } else if (gameController.isUsernameAvailable(username)) {
+        } else if (!gameController.isUsernameAvailable(username)) {
             view.showGenericMessage("username already taken.");
             view.showLoginResult(false, true, null);
             return false;

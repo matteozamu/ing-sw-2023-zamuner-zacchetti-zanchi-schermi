@@ -74,6 +74,22 @@ public class Cli extends ViewObservable implements View {
     }
 
     /**
+     * ask the username to the user
+     */
+    @Override
+    public void askUsername() {
+        Scanner s = new Scanner(System.in);
+        String username = null;
+        do {
+            out.println("Enter your username: ");
+            username = s.nextLine();
+        } while (username == null);
+
+        String finalUsername = username;
+        notifyObserver(obs -> obs.onUpdateUsername(finalUsername));
+    }
+
+    /**
      * Shows the login result.
      * On login fail, the program is terminated immediatly.
      *
@@ -96,22 +112,6 @@ public class Cli extends ViewObservable implements View {
         } else {
             showErrorAndExit("Could not contact server.");
         }
-    }
-
-    /**
-     * ask the username to the user
-     */
-    @Override
-    public void askUsername() {
-        Scanner s = new Scanner(System.in);
-        String username = null;
-        do {
-            out.println("Enter your username: ");
-            username = s.nextLine();
-        } while (username == null);
-
-        String finalUsername = username;
-        notifyObserver(obs -> obs.onUpdateUsername(finalUsername));
     }
 
     @Override

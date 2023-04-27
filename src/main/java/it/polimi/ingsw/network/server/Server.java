@@ -39,11 +39,8 @@ public class Server {
     public void addClient(String username, ClientHandler clientHandler) {
         VirtualView vv = new VirtualView(clientHandler);
 
-        clientHandlerMap.put(username, clientHandler);
-        gameController.loginHandler(username, vv);
-
         if (!gameController.isGameStarted()) {
-            if (gameController.checkLoginNickname(username, vv)) {
+            if (gameController.checkLoginUsername(username, vv)) {
                 clientHandlerMap.put(username, clientHandler);
                 gameController.loginHandler(username, vv);
             }
