@@ -13,6 +13,15 @@ public abstract class CommonGoal {
     }
 
     /**
+     * Gets the current points for this common goal.
+     *
+     * @return The current points for this common goal.
+     */
+    public int getCurrentPoints() {
+        return currentPoints;
+    }
+
+    /**
      * Update the points obtainable with the current CommonGoalCard.
      *
      * @param numberOfPlayers is the number of player in the game
@@ -34,4 +43,14 @@ public abstract class CommonGoal {
      * @return True if the shelf meets the requirements, false otherwise.
      */
     public abstract boolean checkGoal(Shelf shelf);
+
+    /**
+     * Determines if the given shelf is eligible to be checked for the specific common goal.
+     * Each subclass of CommonGoal should provide its own implementation of this method,
+     * based on the specific conditions that must be met for the goal to be achievable.
+     *
+     * @param shelf The shelf to be checked for eligibility.
+     * @return true if the shelf is eligible for the specific common goal, false otherwise.
+     */
+    protected abstract boolean isShelfEligible(Shelf shelf);
 }

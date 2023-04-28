@@ -1,12 +1,9 @@
 package it.polimi.ingsw.model;
 
-import java.util.Arrays;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
-
-// TODO CREAZIONE MAPPA DELLA SHELF SE NO NON POSSIAMO ITERARE OPPURE
-//  CAMBiArE IL MODO DI CONTROLLARE IL NUMERO DI RIGHE DISPONIBILI
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Represents a Shelf in the game, which holds ObjectCards.
@@ -51,6 +48,16 @@ public class Shelf {
     }
 
     /**
+     * Returns the ObjectCard at the specified coordinate in the shelf.
+     *
+     * @param coord The Coordinate object representing the position in the shelf.
+     * @return The ObjectCard at the given position, or null if the position is empty.
+     */
+    public ObjectCard getObjectCard(Coordinate coord) {
+        return grid.get(coord);
+    }
+
+    /**
      * return the number (row) of free cells in the col column
      * if there are no free cells the method throws an exception
      * @param col is the column
@@ -58,15 +65,32 @@ public class Shelf {
      */
     public int getFreeCellsPerColumn(int col) {
         int availableRows = this.ROWS;
-        Coordinate coordinate;
+        Coordinate coord;
 
         for (int row = 0; row < this.ROWS; row++) {
-            coordinate = new Coordinate(row, col);
-            if (this.grid.containsKey(coordinate) && this.grid.get(coordinate) != null) availableRows--;
+            coord = new Coordinate(row, col);
+            if (this.grid.containsKey(coord) && getObjectCard(coord) != null) {
+                availableRows--;
+            }
         }
         return availableRows;
     }
 
+    /**
+     * Calculates and returns the total points earned for ObjectCards that are adjacent
+     * to each other with the same type. Points are awarded based on the number of
+     * adjacent cards with the same type.
+     *
+     * - 3 adjacent cards: 2 points
+     * - 4 adjacent cards: 3 points
+     * - 5 adjacent cards: 5 points
+     * - 6 or more adjacent cards: 8 points
+     *
+     * The method iterates through each ObjectCardType and for each type, it checks
+     * for adjacent cards with the same type in the Shelf grid.
+     *
+     * @return The total points earned for adjacent ObjectCards with the same type.
+     */
     public int closeObjectCardsPoints() {
         ObjectCard card;
         int closeCards;
@@ -77,19 +101,27 @@ public class Shelf {
             closeCards = 0;
             for (int row = 0; row < this.ROWS; row++) {
                 for (int col = 0; col < this.COLUMNS; col++) {
-                    card = this.grid.get(new Coordinate(row, col));
+                    card = getObjectCard(new Coordinate(row, col));
                     if (card != null && card.getType().equals(type)) {
-                        if (this.grid.get(new Coordinate(row - 1, col)) != null){
-                            if(this.grid.get(new Coordinate(row - 1, col)).getType().equals(card.getType())) closeCards++;
+                        if (getObjectCard(new Coordinate(row - 1, col)) != null){
+                            if(getObjectCard(new Coordinate(row - 1, col)).getType().equals(card.getType())) {
+                                closeCards++;
+                            }
                         }
-                        else if (this.grid.get(new Coordinate(row + 1, col)) != null){
-                            if(this.grid.get(new Coordinate(row + 1, col)).getType().equals(card.getType())) closeCards++;
+                        else if (getObjectCard(new Coordinate(row + 1, col)) != null){
+                            if(getObjectCard(new Coordinate(row + 1, col)).getType().equals(card.getType())) {
+                                closeCards++;
+                            }
                         }
-                        else if (this.grid.get(new Coordinate(row, col - 1)) != null){
-                            if(this.grid.get(new Coordinate(row, col - 1)).getType().equals(card.getType())) closeCards++;
+                        else if (getObjectCard(new Coordinate(row, col - 1)) != null){
+                            if(getObjectCard(new Coordinate(row, col - 1)).getType().equals(card.getType())) {
+                                closeCards++;
+                            }
                         }
-                        else if (this.grid.get(new Coordinate(row, col + 1)) != null){
-                            if(this.grid.get(new Coordinate(row, col + 1)).getType().equals(card.getType())) closeCards++;
+                        else if (getObjectCard(new Coordinate(row, col + 1)) != null){
+                            if(getObjectCard(new Coordinate(row, col + 1)).getType().equals(card.getType())) {
+                                closeCards++;
+                            }
                         }
                     }
                 }
@@ -110,23 +142,17 @@ public class Shelf {
      * In case a cell is empty, a placeholder with dashes ("-") will be printed.
      */
     public void printShelf() {
-        int maxLength = Arrays.stream(ObjectCardType.values())
-                .map(ObjectCardType::toString)
-                .mapToInt(String::length)
-                .max()
-                .orElse(0);
-
-        maxLength += 2; // Adds space for ID and separator "-"
+        int maxLengthType = 9;
 
         for (int row = this.ROWS - 1; row >= 0; row--) {
             for (int col = 0; col < this.COLUMNS; col++) {
                 Coordinate coord = new Coordinate(row, col);
-                ObjectCard card = this.grid.get(coord);
+                ObjectCard card = getObjectCard(coord);
                 if (card == null) {
-                    System.out.print("-".repeat(maxLength));
+                    System.out.print("-".repeat(maxLengthType));
                 } else {
                     String cardText = card.toString();
-                    int padding = maxLength - cardText.length();
+                    int padding = maxLengthType - cardText.length();
                     System.out.print(cardText + " ".repeat(padding));
                 }
                 System.out.print("\t");
@@ -135,31 +161,22 @@ public class Shelf {
         }
     }
 
-    // TODO CI SERVE? Spoiler: no. Ma se serve c'è. Decisamente MDR
     /**
-     * Returns a map with the number of free cells for each column in the Shelf.
+     * Returns a list of column indices in the Shelf with at least n free cells.
      *
-     * @return A Map<Integer, Integer> where the key represents the column index and the value
-     * represents the number of free cells in that column.
+     * @param n The minimum number of free cells desired in a column.
+     * @return A List of column indices with at least n free cells.
      */
-    public Map<Integer, Integer> getFreeCellsPerColumnMap() {
-        Map<Integer, Integer> freeCellsPerColumn = new HashMap<>();
+    public List<Integer> getAvailableColumns(int n) {
+        List<Integer> columnsWithNFreeCells = new ArrayList<>();
 
         for (int col = 0; col < COLUMNS; col++) {
             int freeRows = getFreeCellsPerColumn(col);
-            freeCellsPerColumn.put(col, freeRows);
+            if (freeRows >= n) {
+                columnsWithNFreeCells.add(col);
+            }
         }
-        return freeCellsPerColumn;
-    }
-
-    /**
-     * Returns the ObjectCard at the specified coordinate in the shelf.
-     *
-     * @param coord The Coordinate object representing the position in the shelf.
-     * @return The ObjectCard at the given position, or null if the position is empty.
-     */
-    public ObjectCard getObjectCard(Coordinate coord) {
-        return grid.get(coord);
+        return columnsWithNFreeCells;
     }
 
     @Override

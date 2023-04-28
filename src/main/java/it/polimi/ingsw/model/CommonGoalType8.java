@@ -11,8 +11,25 @@ import java.util.Set;
 
 public final class CommonGoalType8 extends CommonGoal {
 
+
+    /**
+     * Checks if the Shelf is eligible for the goal check.
+     * For CommonGoalType8, the Shelf must have at least 10 object cards.
+     *
+     * @param shelf The Shelf to check.
+     * @return true if the Shelf is eligible, false otherwise.
+     */
+    @Override
+    protected boolean isShelfEligible(Shelf shelf) {
+        return shelf.getGrid().size() >= 10;
+    }
+
     @Override
     public boolean checkGoal(Shelf shelf) {
+        if (!isShelfEligible(shelf)) {
+            return false;
+        }
+
         int rowCount = 0;
 
         for (int row = 0; row < shelf.ROWS; row++) {
@@ -20,8 +37,8 @@ public final class CommonGoalType8 extends CommonGoal {
             boolean completeRow = true;
 
             for (int col = 0; col < shelf.COLUMNS; col++) {
-                Coordinate coordinate = new Coordinate(col, row);
-                ObjectCard objectCard = shelf.getGrid().get(coordinate);
+                Coordinate coordinate = new Coordinate(row, col);
+                ObjectCard objectCard = shelf.getObjectCard(coordinate);
 
                 if (objectCard == null) {
                     completeRow = false;
