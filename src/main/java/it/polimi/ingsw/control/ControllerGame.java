@@ -4,9 +4,9 @@ import it.polimi.ingsw.message.Message;
 import it.polimi.ingsw.message.PlayersNumberReply;
 import it.polimi.ingsw.model.*;
 import it.polimi.ingsw.network.server.Server;
+import it.polimi.ingsw.observer.Observer;
 import it.polimi.ingsw.view.View;
 import it.polimi.ingsw.view.VirtualView;
-import it.polimi.ingsw.observer.Observer;
 
 import java.io.Serializable;
 import java.util.*;
@@ -19,14 +19,13 @@ import static it.polimi.ingsw.model.Board.Direction.*;
  */
 public class ControllerGame implements Observer, Serializable {
     private static final long serialVersionUID = 4951303731052728724L;
-
+    private static final String STR_INVALID_STATE = "Invalid game state!";
     private Game game;
     private transient Map<String, VirtualView> virtualViewMap;
     private List<ObjectCard> limbo;
     private GameState gameState;
     private TurnController turnController;
     private InputController inputController;
-    private static final String STR_INVALID_STATE = "Invalid game state!";
 
 
     /**
@@ -43,6 +42,7 @@ public class ControllerGame implements Observer, Serializable {
 
     /**
      * set the state of the game
+     *
      * @param gameState is the state to set
      */
     private void setGameState(GameState gameState) {
@@ -50,6 +50,7 @@ public class ControllerGame implements Observer, Serializable {
     }
 
     //***** INIT METHODS *****//
+
     /**
      * Handles the login of a player. If the player is new, his VirtualView is saved, otherwise it's discarded and the player is notified.
      * If it's the first Player then ask number of Players he wants, add Player to the Game otherwise change the GameState.
@@ -62,7 +63,7 @@ public class ControllerGame implements Observer, Serializable {
         if (virtualViewMap.isEmpty()) { // First player logged. Ask number of players.
             addVirtualView(username, virtualView);
             // TODO completare personal goal
-            game.addPlayer(new Player(username, new Shelf(), new PersonalGoalCard(null)));
+            game.addPlayer(new Player(username, new Shelf(), game.getRandomAvailablePersonalGoalCard()));
             System.out.println(game.getPlayers());
 
             virtualView.showLoginResult(true, true, Game.SERVER_NICKNAME);
@@ -191,7 +192,6 @@ public class ControllerGame implements Observer, Serializable {
 //    }
 
     /**
-     *
      * @return the Game classe
      */
     // forse non serve, viene chiamato solo nei test
@@ -298,7 +298,6 @@ public class ControllerGame implements Observer, Serializable {
 //    }
 
     //si puo fare una modifica che non rimuova la coordinata della cella ma setti il contenuto a null
-
 
 
     /**

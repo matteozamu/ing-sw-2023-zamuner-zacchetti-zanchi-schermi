@@ -116,7 +116,7 @@ public class Cli extends ViewObservable implements View {
     }
 
     @Override
-    public void showMatchInfo(List<String> players, Map<Coordinate, ObjectCard> board, String activePlayer){
+    public void showMatchInfo(List<String> players, Map<Coordinate, ObjectCard> board, String activePlayer) {
         //do nothing
     }
 
@@ -157,7 +157,7 @@ public class Cli extends ViewObservable implements View {
         out.println("Choose your object card, you can choose 1, 2 or 3 of them.");
 
         while (i < 3) {
-            out.print("Enter the coordinates separated by a space:");
+            out.print("Enter the coordinates separated by a space: ");
             int x = s.nextInt();
             int y = s.nextInt();
 
