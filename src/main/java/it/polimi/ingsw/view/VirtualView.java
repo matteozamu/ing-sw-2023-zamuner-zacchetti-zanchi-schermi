@@ -1,11 +1,15 @@
 package it.polimi.ingsw.view;
 
 import it.polimi.ingsw.message.*;
+import it.polimi.ingsw.model.Board;
+import it.polimi.ingsw.model.Coordinate;
 import it.polimi.ingsw.model.Game;
+import it.polimi.ingsw.model.ObjectCard;
 import it.polimi.ingsw.network.server.ClientHandler;
 import it.polimi.ingsw.observer.Observer;
 
 import java.util.List;
+import java.util.Map;
 
 // questa classe è quella che "genera i messaggi"
 
@@ -69,6 +73,17 @@ public class VirtualView implements View, Observer {
     @Override
     public void askPlayersNumber() {
         clientHandler.sendMessage(new PlayersNumberRequest());
+    }
+
+    /** shows match info such as the board
+     *
+     * @param players is the list of players in the game
+     * @param board is the game board
+     * @param activePlayer is the player of the current turn
+     */
+    @Override
+    public void showMatchInfo(List<String> players, Map<Coordinate, ObjectCard> board, String activePlayer) {
+        clientHandler.sendMessage(new BoardMessage(Game.SERVER_NICKNAME, MessageType.BOARD, players, board, activePlayer));
     }
 
     @Override

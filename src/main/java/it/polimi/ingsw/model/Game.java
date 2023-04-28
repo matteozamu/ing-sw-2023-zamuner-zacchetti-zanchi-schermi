@@ -26,7 +26,7 @@ public class Game extends Observable implements Serializable {
     private Player currentPlayer;
     private Board board;
     private List<CommonGoal> commonGoals;
-    private int chosenPlayersNumber;
+    private int chosenPlayersNumber = 0;
 
     /**
      * constructor of the class
@@ -95,6 +95,9 @@ public class Game extends Observable implements Serializable {
         if (p == null) return false;
         if (this.players.size() < MAX_PLAYERS) {
             this.players.add(p);
+            if (chosenPlayersNumber != 0) {
+                notifyObserver(new LobbyMessage(getPlayersNicknames(), this.chosenPlayersNumber));
+            }
             return true;
         } else return false;
     }

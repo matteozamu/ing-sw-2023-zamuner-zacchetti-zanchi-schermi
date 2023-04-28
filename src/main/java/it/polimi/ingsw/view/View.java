@@ -1,6 +1,11 @@
 package it.polimi.ingsw.view;
 
+import it.polimi.ingsw.model.Board;
+import it.polimi.ingsw.model.Coordinate;
+import it.polimi.ingsw.model.ObjectCard;
+
 import java.util.List;
+import java.util.Map;
 
 /**
  * Defines a generic view to be implemented by each view type (e.g. CLI, GUI in JavaFX, ...).
@@ -39,6 +44,8 @@ public interface View {
      * Asks the user the number of players he wants to play with.
      */
     void askPlayersNumber();
+
+    void showMatchInfo(List<String> players, Map<Coordinate, ObjectCard> board, String activePlayer);
 
     void askObjCard();
 

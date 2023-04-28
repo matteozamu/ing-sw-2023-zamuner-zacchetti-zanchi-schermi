@@ -3,6 +3,7 @@ package it.polimi.ingsw.view.cli;
 
 import it.polimi.ingsw.control.ControllerClient;
 import it.polimi.ingsw.model.Coordinate;
+import it.polimi.ingsw.model.ObjectCard;
 import it.polimi.ingsw.observer.ViewObservable;
 import it.polimi.ingsw.view.View;
 
@@ -112,6 +113,11 @@ public class Cli extends ViewObservable implements View {
         } else {
             showErrorAndExit("Could not contact server.");
         }
+    }
+
+    @Override
+    public void showMatchInfo(List<String> players, Map<Coordinate, ObjectCard> board, String activePlayer){
+        //do nothing
     }
 
     @Override

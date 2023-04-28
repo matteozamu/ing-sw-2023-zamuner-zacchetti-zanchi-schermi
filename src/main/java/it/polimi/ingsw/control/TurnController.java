@@ -23,7 +23,7 @@ public class TurnController implements Serializable {
 
     private static final long serialVersionUID = -598005L;
     private final Game game;
-    private final List<String> nicknameQueue;
+    private final List<String> usernameQueue;
     private String activePlayer;
     // private Effect appliedEffect; per ora non serve
 
@@ -41,9 +41,9 @@ public class TurnController implements Serializable {
      */
     public TurnController(Map<String, VirtualView> virtualViewMap, ControllerGame gameController) {
         this.game = Game.getInstance();
-        this.nicknameQueue = new ArrayList<>(game.getPlayersNicknames());
+        this.usernameQueue = new ArrayList<>(game.getPlayersNicknames());
 
-        this.activePlayer = nicknameQueue.get(0); // set first active player
+        this.activePlayer = usernameQueue.get(0); // set first active player
         this.virtualViewMap = virtualViewMap;
         this.gameController = gameController;
     }
@@ -69,7 +69,7 @@ public class TurnController implements Serializable {
      */
     public void broadcastMatchInfo() {
         for (VirtualView vv : virtualViewMap.values()) {
-            vv.showMatchInfo(nicknameQueue, game.getBoard(), activePlayer);
+            vv.showMatchInfo(usernameQueue, game.getBoard().getGrid(), activePlayer);
         }
     }
 }

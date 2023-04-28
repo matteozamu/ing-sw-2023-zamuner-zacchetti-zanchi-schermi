@@ -3,7 +3,7 @@ package it.polimi.ingsw.message;
 /**
  * this message is sent by the clien to notify which column the user has selected
  */
-public class ColumnMessage extends Message{
+public class ColumnMessage extends Message {
     private static final long serialVersionUID = 63494362L;
     private final int column;
 

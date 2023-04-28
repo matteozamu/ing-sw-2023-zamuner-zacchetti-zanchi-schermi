@@ -33,7 +33,7 @@ public class ControllerGame implements Observer, Serializable {
      * Constructor for the ControllerGame class, initializing the game state.
      */
     public ControllerGame() {
-        this.game = new Game();
+        this.game = Game.getInstance();
 //        this.numberOfPlayers = 0;
         this.limbo = new ArrayList<>();
         this.virtualViewMap = Collections.synchronizedMap(new HashMap<>());
@@ -58,10 +58,12 @@ public class ControllerGame implements Observer, Serializable {
      * @param virtualView the virtualview of the player.
      */
     public void loginHandler(String username, VirtualView virtualView) {
+
         if (virtualViewMap.isEmpty()) { // First player logged. Ask number of players.
             addVirtualView(username, virtualView);
             // TODO completare personal goal
             game.addPlayer(new Player(username, new Shelf(), new PersonalGoalCard(null)));
+            System.out.println(game.getPlayers());
 
             virtualView.showLoginResult(true, true, Game.SERVER_NICKNAME);
             virtualView.askPlayersNumber();
@@ -72,7 +74,6 @@ public class ControllerGame implements Observer, Serializable {
             virtualView.showLoginResult(true, true, Game.SERVER_NICKNAME);
 
             if (game.getNumCurrentPlayers() == game.getChosenPlayersNumber()) { // If all players logged
-
 //                // check saved matches.
 //                StorageData storageData = new StorageData();
 //                GameController savedGameController = storageData.restore();
@@ -86,12 +87,26 @@ public class ControllerGame implements Observer, Serializable {
 //                    initGame();
 //                }
                 // da togliere
-                //initGame();
+                startGame();
             }
         } else {
             virtualView.showLoginResult(true, false, Game.SERVER_NICKNAME);
         }
     }
+
+    /**
+     * Change gameState into INIT. Initialize TurnController
+     */
+    private void startGame() {
+        setGameState(GameState.IN_GAME);
+        turnController = new TurnController(virtualViewMap, this);
+        broadcastGenericMessage("All Players are connected. ");
+        broadcastGenericMessage("Game Started!");
+
+        turnController.broadcastMatchInfo();
+        //turnController.newTurn();
+    }
+
 
     /**
      * Switch on Game State.
