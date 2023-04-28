@@ -16,12 +16,9 @@ import java.util.logging.Logger;
  */
 public class Server {
 
-    private final ControllerGame gameController;
-
-    private final Map<String, ClientHandler> clientHandlerMap;
-
     public static final Logger LOGGER = Logger.getLogger(Server.class.getName());
-
+    private final ControllerGame gameController;
+    private final Map<String, ClientHandler> clientHandlerMap;
     private final Object lock;
 
     public Server(ControllerGame gameController) {
@@ -63,6 +60,7 @@ public class Server {
 //        LOGGER.info(() -> "Removed " + nickname + " from the client list.");
 //    }
 //
+
     /**
      * Forwards a received message from the client to the GameController.
      *

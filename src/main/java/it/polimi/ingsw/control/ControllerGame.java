@@ -23,7 +23,6 @@ public class ControllerGame implements Observer, Serializable {
     private Game game;
     private transient Map<String, VirtualView> virtualViewMap;
     private List<ObjectCard> limbo;
-
     private GameState gameState;
     private TurnController turnController;
     private InputController inputController;
@@ -87,8 +86,7 @@ public class ControllerGame implements Observer, Serializable {
 //                    initGame();
 //                }
                 // da togliere
-
-                initGame();
+                //initGame();
             }
         } else {
             virtualView.showLoginResult(true, false, Game.SERVER_NICKNAME);
@@ -121,30 +119,6 @@ public class ControllerGame implements Observer, Serializable {
                 Server.LOGGER.warning(STR_INVALID_STATE);
                 break;
         }
-    }
-
-    /**
-     * Change gameState into INIT. Initialize TurnController and fill the board
-     */
-    private void initGame() {
-        setGameState(GameState.INIT);
-
-        turnController = new TurnController(virtualViewMap, this);
-        broadcastGenericMessage("All Players are connected. ");
-
-        //TODO carica la board con le object card
-        startGame();
-    }
-
-    /**
-     * Initializes the game after all Clients are connected and all Gods, Workers and Colors are setted up.
-     */
-    private void startGame() {
-        setGameState(GameState.IN_GAME);
-        broadcastGenericMessage("Game Started!");
-
-        turnController.broadcastMatchInfo();
-        turnController.newTurn();
     }
 
     //***** 3 MAIN STATE METHODS *****//

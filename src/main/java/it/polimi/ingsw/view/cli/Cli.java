@@ -3,15 +3,10 @@ package it.polimi.ingsw.view.cli;
 
 import it.polimi.ingsw.control.ControllerClient;
 import it.polimi.ingsw.model.Coordinate;
-import it.polimi.ingsw.model.ObjectCard;
 import it.polimi.ingsw.observer.ViewObservable;
 import it.polimi.ingsw.view.View;
 
-import java.io.PrintStream;
 import java.util.*;
-import java.util.concurrent.ExecutionException;
-import java.util.concurrent.FutureTask;
-import java.util.stream.Collectors;
 
 import static java.lang.System.out;
 
@@ -21,16 +16,22 @@ import static java.lang.System.out;
  */
 public class Cli extends ViewObservable implements View {
 
-    public void init(){
-        out.println("Welcome to MyShelfie");
+    public void init() {
+        out.println("███╗   ███╗██╗   ██╗    ███████╗██╗  ██╗███████╗██╗     ███████╗██╗███████╗");
+        out.println("████╗ ████║╚██╗ ██╔╝    ██╔════╝██║  ██║██╔════╝██║     ██╔════╝██║██╔════╝");
+        out.println("██╔████╔██║ ╚████╔╝     ███████╗███████║█████╗  ██║     █████╗  ██║█████╗  ");
+        out.println("██╔████╔██║ ╚████╔╝     ███████╗███████║█████╗  ██║     █████╗  ██║█████╗  ");
+        out.println("██║╚██╔╝██║  ╚██╔╝      ╚════██║██╔══██║██╔══╝  ██║     ██╔══╝  ██║██╔══╝  ");
+        out.println("██║ ╚═╝ ██║   ██║       ███████║██║  ██║███████╗███████╗██║     ██║███████╗");
+        out.println("╚═╝     ╚═╝   ╚═╝       ╚══════╝╚═╝  ╚═╝╚══════╝╚══════╝╚═╝     ╚═╝╚══════╝");
         askServerInfo();
     }
 
-    public void askServerInfo(){ // si puo aggiungere Execution exception se lo stream di input è interrotto
+    public void askServerInfo() { // si puo aggiungere Execution exception se lo stream di input è interrotto
         Map<String, String> serverInfo = new HashMap<>();
         String defaultAddress = "localhost";
         String defaultPort = "16847";
-        boolean validInput;
+        boolean validInput = false;
         Scanner s = new Scanner(System.in);
 
         do {
@@ -70,7 +71,6 @@ public class Cli extends ViewObservable implements View {
         } while (!validInput);
 
         notifyObserver(obs -> obs.onUpdateServerInfo(serverInfo));
-
     }
 
     /**
@@ -81,7 +81,7 @@ public class Cli extends ViewObservable implements View {
         Scanner s = new Scanner(System.in);
         String username = null;
         do {
-            out.println("Enter your username: ");
+            out.print("Enter your username: ");
             username = s.nextLine();
         } while (username == null);
 
@@ -122,16 +122,16 @@ public class Cli extends ViewObservable implements View {
         notifyObserver(obs -> obs.onUpdatePlayersNumber(playerNumber));
     }
 
-    private int playerNumber(){
+    private int playerNumber() {
         Scanner s = new Scanner(System.in);
         int players = 2;
 
         try {
-            do{
-                out.println("How many players are going to play? (You can choose between 2 and 4 players, default is 2): ");
+            do {
+                out.print("How many players are going to play? [2] (Between 2 and 4 players): ");
                 players = s.nextInt();
             } while (players < 2 || players > 4);
-        } catch (InputMismatchException e){
+        } catch (InputMismatchException e) {
             out.println("Invalid input");
         }
 
@@ -143,7 +143,7 @@ public class Cli extends ViewObservable implements View {
      * the usern will enter the coordinate of the Object Card
      */
     @Override
-    public void askObjCard(){
+    public void askObjCard() {
         List<Coordinate> coordinates = new ArrayList<>();
         Scanner s = new Scanner(System.in);
         int i = 0;
@@ -151,7 +151,7 @@ public class Cli extends ViewObservable implements View {
         out.println("Choose your object card, you can choose 1, 2 or 3 of them.");
 
         while (i < 3) {
-            out.println("Enter the coordinates separated by a space:");
+            out.print("Enter the coordinates separated by a space:");
             int x = s.nextInt();
             int y = s.nextInt();
 

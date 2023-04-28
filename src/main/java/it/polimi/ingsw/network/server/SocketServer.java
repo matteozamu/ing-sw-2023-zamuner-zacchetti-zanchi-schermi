@@ -32,7 +32,6 @@ public class SocketServer implements Runnable {
         while (!Thread.currentThread().isInterrupted()) {
             try {
                 Socket client = serverSocket.accept();
-
                 client.setSoTimeout(5000);
 
                 SocketClientHandler clientHandler = new SocketClientHandler(this, client);

@@ -38,7 +38,10 @@ public class Game extends Observable implements Serializable {
         this.players = new ArrayList<>();
         this.board = new Board();
         this.commonGoals = new ArrayList<>();
+
+        this.loadPersonalGoaldCards();
     }
+
     /**
      * @return the singleton instance.
      */
