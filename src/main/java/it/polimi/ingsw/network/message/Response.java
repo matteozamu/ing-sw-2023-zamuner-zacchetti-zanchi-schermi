@@ -1,8 +1,8 @@
 package it.polimi.ingsw.network.message;
 
-import enumerations.MessageContent;
-import enumerations.MessageStatus;
-import utility.GameConstants;
+import it.polimi.ingsw.utility.GameConstants;
+import it.polimi.ingsw.utility.MessageContent;
+import it.polimi.ingsw.utility.MessageStatus;
 
 /**
  * Generic response to a request

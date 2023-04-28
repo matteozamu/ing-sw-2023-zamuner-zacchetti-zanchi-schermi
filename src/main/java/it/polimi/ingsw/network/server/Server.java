@@ -1,11 +1,12 @@
 package it.polimi.ingsw.network.server;
 
 import it.polimi.ingsw.control.ControllerGame;
-import it.polimi.ingsw.model.Game;
 import it.polimi.ingsw.model.Player;
-import it.polimi.ingsw.network.message.*;
-import it.polimi.ingsw.utility.GameConstants;
-import it.polimi.ingsw.utility.MoveTimer;
+import it.polimi.ingsw.network.message.ConnectionResponse;
+import it.polimi.ingsw.network.message.Message;
+import it.polimi.ingsw.network.message.Response;
+import it.polimi.ingsw.utility.MessageContent;
+import it.polimi.ingsw.utility.MessageStatus;
 
 import java.io.IOException;
 import java.text.DateFormat;
@@ -62,11 +63,10 @@ public class Server implements Runnable {
     /**
      * Starts the server with a new game
      *
-     * @param bot          {@code true} if the bot is present, {@code false} otherwise
-     * @param skullNum     number of skull
-     * @param confFilePath path of the config file
+     * @param bot      {@code true} if the bot is present, {@code false} otherwise
+     * @param skullNum number of skull
      */
-    public Server(boolean bot, int skullNum, String confFilePath) {
+    public Server(boolean bot, int skullNum) {
         initLogger();
         synchronized (clientsLock) {
             clients = new HashMap<>();
@@ -75,7 +75,7 @@ public class Server implements Runnable {
 
         startServers();
 
-        controllerGame = new ControllerGame(this, bot, skullNum, startTime);
+        controllerGame = new ControllerGame();
 
         Thread pingThread = new Thread(this);
         pingThread.start();
@@ -84,55 +84,11 @@ public class Server implements Runnable {
     }
 
     public static void main(String[] args) {
-        String confFilePath = DEFAULT_CONF_FILE_PATH;
         boolean terminator = false;
         int skullNum = 5;
         boolean reloadGame = false;
 
-        // normal complete Server launch should have the following parameters: -l "confFilePath.txt" -b true/false -s #skulls
-        // normal complete Server launch with game Reload should have the following parameter: -l "confFilePath.txt" -r
-
-        if (args.length > 0 && args.length < 7) {
-            int i = 0;
-            while (i < args.length) {
-                if (args[i].charAt(0) == '-' && args[i].length() == 2 && args.length >= i + 1) {
-                    switch (args[i].charAt(1)) {
-                        case 'l':
-                            confFilePath = args[i + 1];
-                            ++i;
-                            break;
-                        case 'b':
-                            terminator = Boolean.parseBoolean(args[i + 1]);
-                            ++i;
-                            break;
-                        case 's':
-                            skullNum = Integer.parseInt(args[i + 1]);
-                            ++i;
-                            break;
-                        case 'r':
-                            reloadGame = true;
-                            break;
-                        default:
-                            break;
-                    }
-                }
-
-                ++i;
-            }
-        }
-
-        // if the starting command contains -r it means that a game is going to be reloaded
-        if (reloadGame) {
-            new Server(confFilePath);
-            return;
-        }
-
-        // if the passed value is correct it is used for the game, if not DEFAULT value is set back to 5
-        if (skullNum < 5 || skullNum > 8) {
-            skullNum = 5;
-        }
-
-        new Server(terminator, skullNum, confFilePath);
+        new Server(terminator, skullNum);
     }
 
     private void initLogger() {
@@ -184,7 +140,7 @@ public class Server implements Runnable {
         try {
             synchronized (clientsLock) {
                 if (clients.containsKey(username)) {
-                    knownPlayerLogin(username, connection);
+//                    knownPlayerLogin(username, connection);
                 } else {
                     newPlayerLogin(username, connection);
                 }
@@ -201,41 +157,41 @@ public class Server implements Runnable {
      * @param connection connection of the client
      * @throws IOException when send message fails
      */
-    private void knownPlayerLogin(String username, Connection connection) throws IOException {
-        if (clients.get(username) == null || !clients.get(username).isConnected()) { // Player Reconnection
-            clients.replace(username, connection);
-
-            String token = UUID.randomUUID().toString();
-            connection.setToken(token);
-
-            if (waitForLoad) {// Game in lobby state for load a game
-                connection.sendMessage(
-                        new GameLoadResponse("Successfully reconnected", token,
-                                controllerGame.getUserPlayerState(username), controllerGame.getGame().isBotPresent())
-                );
-                checkLoadReady();
-            } else {
-                if (controllerGame.getGameState() == PossibleGameState.GAME_ROOM) { // Game in lobby state
-                    connection.sendMessage(
-                            new ConnectionResponse("Successfully reconnected", token, MessageStatus.OK)
-                    );
-                } else { // Game started
-                    connection.sendMessage(
-                            controllerGame.onConnectionMessage(new LobbyMessage(username, token, null, false))
-                    );
-                }
-            }
-
-            LOGGER.log(Level.INFO, "{0} reconnected to server!", username);
-        } else { // Player already connected
-            connection.sendMessage(
-                    new ConnectionResponse("Player already connected", null, MessageStatus.ERROR)
-            );
-
-            connection.disconnect();
-            LOGGER.log(Level.INFO, "{0} already connected to server!", username);
-        }
-    }
+//    private void knownPlayerLogin(String username, Connection connection) throws IOException {
+//        if (clients.get(username) == null || !clients.get(username).isConnected()) { // Player Reconnection
+//            clients.replace(username, connection);
+//
+//            String token = UUID.randomUUID().toString();
+//            connection.setToken(token);
+//
+//            if (waitForLoad) {// Game in lobby state for load a game
+//                connection.sendMessage(
+//                        new GameLoadResponse("Successfully reconnected", token,
+//                                controllerGame.getUserPlayerState(username), controllerGame.getGame().isBotPresent())
+//                );
+//                checkLoadReady();
+//            } else {
+//                if (controllerGame.getGameState() == PossibleGameState.GAME_ROOM) { // Game in lobby state
+//                    connection.sendMessage(
+//                            new ConnectionResponse("Successfully reconnected", token, MessageStatus.OK)
+//                    );
+//                } else { // Game started
+//                    connection.sendMessage(
+//                            controllerGame.onConnectionMessage(new LobbyMessage(username, token, null, false))
+//                    );
+//                }
+//            }
+//
+//            LOGGER.log(Level.INFO, "{0} reconnected to server!", username);
+//        } else { // Player already connected
+//            connection.sendMessage(
+//                    new ConnectionResponse("Player already connected", null, MessageStatus.ERROR)
+//            );
+//
+//            connection.disconnect();
+//            LOGGER.log(Level.INFO, "{0} already connected to server!", username);
+//        }
+//    }
 
     /**
      * Handles a new player login
@@ -245,69 +201,25 @@ public class Server implements Runnable {
      * @throws IOException when send message fails
      */
     private void newPlayerLogin(String username, Connection connection) throws IOException {
-        if (controllerGame.getGame().isGameStarted()) { // Game Started
+        if (controllerGame.getGame().isHasStarted()) { // Game Started
             connection.sendMessage(
                     new ConnectionResponse("Game is already started!", null, MessageStatus.ERROR)
             );
 
             connection.disconnect();
             LOGGER.log(Level.INFO, "{0} attempted to connect!", username);
-        } else if (controllerGame.isLobbyFull()) { // Lobby Full
+        } else {
+            clients.put(username, connection);
+
+            String token = UUID.randomUUID().toString();
+            connection.setToken(token);
+
             connection.sendMessage(
-                    new ConnectionResponse("Max number of player reached", null, MessageStatus.ERROR)
+                    new ConnectionResponse("Successfully connected", token, MessageStatus.OK)
             );
 
-            connection.disconnect();
-            LOGGER.log(Level.INFO, "{0} tried to connect but game is full!", username);
-        } else { // New player
-            if (isUsernameLegit(username)) { // Username legit
-                clients.put(username, connection);
-
-                String token = UUID.randomUUID().toString();
-                connection.setToken(token);
-
-                connection.sendMessage(
-                        new ConnectionResponse("Successfully connected", token, MessageStatus.OK)
-                );
-
-                LOGGER.log(Level.INFO, "{0} connected to server!", username);
-            } else { // Username not legit
-                connection.sendMessage(
-                        new ConnectionResponse("Invalid Username", null, MessageStatus.ERROR)
-                );
-
-                connection.disconnect();
-                LOGGER.log(Level.INFO, "{0} tried to connect with invalid name!", username);
-            }
+            LOGGER.log(Level.INFO, "{0} connected to server!", username);
         }
-    }
-
-    /**
-     * Checks if all player of the loaded game have joined the game
-     */
-    private void checkLoadReady() {
-        synchronized (clientsLock) {
-            if (clients.entrySet().stream().noneMatch(entry -> entry.getValue() == null || !entry.getValue().isConnected())) {
-                waitForLoad = false;
-                controllerGame.sendPrivateUpdates();
-            }
-        }
-    }
-
-    /**
-     * Checks if a username is legit by checking that is not equal to a forbidden username
-     *
-     * @param username username to check
-     * @return if a username is legit
-     */
-    private boolean isUsernameLegit(String username) {
-        for (String forbidden : GameConstants.getForbiddenUsernames()) {
-            if (username.equalsIgnoreCase(forbidden)) {
-                return false;
-            }
-        }
-
-        return true;
     }
 
     /**
@@ -334,32 +246,11 @@ public class Server implements Runnable {
             if (conn == null) {
                 LOGGER.log(Level.INFO, "Message Request {0} - Unknown username {1}", new Object[]{message.getContent().name(), message.getSenderUsername()});
             } else if (msgToken.equals(conn.getToken())) { // Checks that sender is the real player
-                Message response = controllerGame.onMessage(message);
-
-                updateTimer();
-
+//                Message response = controllerGame.onMessage(message);
+                Message response = new Response("MEESSAGGGIOOOOO", MessageStatus.ERROR);
                 // send message to client
                 sendMessage(message.getSenderUsername(), response);
             }
-        }
-    }
-
-    /**
-     * Updates the timer state
-     */
-    private void updateTimer() {
-        if (Game.getInstance().isGameStarted()) {
-            Connection conn;
-
-            synchronized (clientsLock) {
-                conn = clients.get(controllerGame.getTurnOwnerUsername());
-            }
-
-            moveTimer.cancel();
-            moveTimer = new Timer();
-            moveTimer.schedule(new MoveTimer(conn, controllerGame.getTurnOwnerUsername()), moveTime);
-
-            LOGGER.log(Level.INFO, "Move timer reset for user {0}, {1} seconds left", new Object[]{controllerGame.getTurnOwnerUsername(), moveTime / 1000});
         }
     }
 
@@ -368,24 +259,24 @@ public class Server implements Runnable {
      *
      * @param playerConnection connection of the player that just disconnected
      */
-    void onDisconnect(Connection playerConnection) {
-        String username = getUsernameByConnection(playerConnection);
-
-        if (username != null) {
-            LOGGER.log(Level.INFO, "{0} disconnected from server!", username);
-
-            if (controllerGame.getGameState() == PossibleGameState.GAME_ROOM) {
-                synchronized (clientsLock) {
-                    clients.remove(username);
-                }
-                controllerGame.onMessage(new LobbyMessage(username, null, null, true));
-                LOGGER.log(Level.INFO, "{0} removed from client list!", username);
-            } else {
-                controllerGame.onConnectionMessage(new LobbyMessage(username, null, null, true));
-                sendMessageToAll(new DisconnectionMessage(username));
-            }
-        }
-    }
+//    void onDisconnect(Connection playerConnection) {
+//        String username = getUsernameByConnection(playerConnection);
+//
+//        if (username != null) {
+//            LOGGER.log(Level.INFO, "{0} disconnected from server!", username);
+//
+//            if (controllerGame.getGameState() == PossibleGameState.GAME_ROOM) {
+//                synchronized (clientsLock) {
+//                    clients.remove(username);
+//                }
+//                controllerGame.onMessage(new LobbyMessage(username, null, null, true));
+//                LOGGER.log(Level.INFO, "{0} removed from client list!", username);
+//            } else {
+//                controllerGame.onConnectionMessage(new LobbyMessage(username, null, null, true));
+//                sendMessageToAll(new DisconnectionMessage(username));
+//            }
+//        }
+//    }
 
     /**
      * Sends a message to all clients

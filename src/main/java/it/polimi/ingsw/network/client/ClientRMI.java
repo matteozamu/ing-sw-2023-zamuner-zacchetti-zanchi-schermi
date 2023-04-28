@@ -1,7 +1,7 @@
 package it.polimi.ingsw.network.client;
 
-import network.message.Message;
-import network.server.RMIHandler;
+import it.polimi.ingsw.network.message.Message;
+import it.polimi.ingsw.network.server.RMIHandler;
 
 import java.io.IOException;
 import java.rmi.NotBoundException;

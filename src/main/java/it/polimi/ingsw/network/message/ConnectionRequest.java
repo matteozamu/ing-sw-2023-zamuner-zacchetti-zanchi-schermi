@@ -1,6 +1,6 @@
 package it.polimi.ingsw.network.message;
 
-import enumerations.MessageContent;
+import it.polimi.ingsw.utility.MessageContent;
 
 /**
  * Message class of connection request

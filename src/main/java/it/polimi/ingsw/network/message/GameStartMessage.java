@@ -1,7 +1,7 @@
 package it.polimi.ingsw.network.message;
 
-import enumerations.MessageContent;
-import utility.GameConstants;
+import it.polimi.ingsw.utility.GameConstants;
+import it.polimi.ingsw.utility.MessageContent;
 
 /**
  * Message class to tell the clients that the game is started

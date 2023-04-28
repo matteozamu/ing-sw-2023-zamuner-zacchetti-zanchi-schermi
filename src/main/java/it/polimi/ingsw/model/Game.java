@@ -20,6 +20,7 @@ public class Game {
     private Player currentPlayer;
     private Board board;
     private List<CommonGoal> commonGoals;
+    private boolean hasStarted;
 
     /**
      * constructor of the class
@@ -31,6 +32,15 @@ public class Game {
         this.players = new ArrayList<>();
         this.board = new Board();
         this.commonGoals = new ArrayList<>();
+        this.hasStarted = false;
+    }
+
+    public boolean isHasStarted() {
+        return hasStarted;
+    }
+
+    public void setHasStarted(boolean hasStarted) {
+        this.hasStarted = hasStarted;
     }
 
     public List<CommonGoal> getCommonGoalContainer() {

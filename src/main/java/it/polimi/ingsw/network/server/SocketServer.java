@@ -1,6 +1,6 @@
 package it.polimi.ingsw.network.server;
 
-import network.message.Message;
+import it.polimi.ingsw.network.message.Message;
 
 import java.io.IOException;
 import java.net.ServerSocket;
@@ -46,7 +46,7 @@ public class SocketServer extends Thread {
         server.onMessage(message);
     }
 
-    void onDisconnect(Connection playerConnection) {
-        server.onDisconnect(playerConnection);
-    }
+//    void onDisconnect(Connection playerConnection) {
+//        server.onDisconnect(playerConnection);
+//    }
 }

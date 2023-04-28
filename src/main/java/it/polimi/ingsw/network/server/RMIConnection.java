@@ -1,7 +1,7 @@
 package it.polimi.ingsw.network.server;
 
-import network.client.RMIClientConnection;
-import network.message.Message;
+import it.polimi.ingsw.network.client.RMIClientConnection;
+import it.polimi.ingsw.network.message.Message;
 
 import java.rmi.RemoteException;
 
@@ -58,7 +58,7 @@ public class RMIConnection extends Connection {
                 //
             }
 
-            server.onDisconnect(this);
+//            server.onDisconnect(this);
         }
     }
 
