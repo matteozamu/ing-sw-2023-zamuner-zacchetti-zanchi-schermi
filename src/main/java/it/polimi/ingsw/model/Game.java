@@ -104,15 +104,6 @@ public class Game extends Observable implements Serializable {
         this.currentPlayer = currentPlayer;
     }
 
-    public Board getBoard() {
-        return board;
-    }
-
-    public List<CommonGoal> getCommonGoals() {
-        return commonGoals;
-    }
-
-
     /**
      * Move to the next player
      *
@@ -130,6 +121,46 @@ public class Game extends Observable implements Serializable {
 
         return this.currentPlayer;
     }
+
+    /**
+     * Sets the max number of players chosen by the first player joining the game.
+     *
+     * @param chosenMaxPlayers the max players number. Value can be {@code 0 < x < MAX_PLAYERS}.
+     * @return {@code true} if the argument value is {@code 0 < x < MAX_PLAYERS}, {@code false} otherwise.
+     */
+    public boolean setChosenMaxPlayers(int chosenMaxPlayers) {
+        if (chosenMaxPlayers > 0 && chosenMaxPlayers <= MAX_PLAYERS) {
+            this.chosenPlayersNumber = chosenMaxPlayers;
+            notifyObserver(new LobbyMessage(getPlayersNicknames(), this.chosenPlayersNumber));
+            return true;
+        }
+        return false;
+    }
+
+    /**
+     * @return the number of players chosen by the first player.
+     */
+    public int getChosenPlayersNumber() {
+        return chosenPlayersNumber;
+    }
+
+    /**
+     * Number of current players added in the game.
+     *
+     * @return the number of players.
+     */
+    public int getNumCurrentPlayers() {
+        return players.size();
+    }
+
+    public Board getBoard() {
+        return board;
+    }
+
+    public List<CommonGoal> getCommonGoals() {
+        return commonGoals;
+    }
+
 
     /**
      * Method that adds a list of ObjectCards in the first available cells of the specified column.
@@ -237,19 +268,5 @@ public class Game extends Observable implements Serializable {
         }
     }
 
-    /**
-     * Sets the max number of players chosen by the first player joining the game.
-     *
-     * @param chosenMaxPlayers the max players number. Value can be {@code 0 < x < MAX_PLAYERS}.
-     * @return {@code true} if the argument value is {@code 0 < x < MAX_PLAYERS}, {@code false} otherwise.
-     */
-    public boolean setChosenMaxPlayers(int chosenMaxPlayers) {
-        if (chosenMaxPlayers > 0 && chosenMaxPlayers <= MAX_PLAYERS) {
-            this.chosenPlayersNumber = chosenMaxPlayers;
-            notifyObserver(new LobbyMessage(getPlayersNicknames(), this.chosenPlayersNumber));
-            return true;
-        }
-        return false;
-    }
 
 }

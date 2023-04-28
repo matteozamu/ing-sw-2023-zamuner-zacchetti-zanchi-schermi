@@ -8,17 +8,17 @@ import it.polimi.ingsw.model.Game;
 public class LoginReply extends Message {
 
     private static final long serialVersionUID = 654321L;
-    private final boolean nicknameAccepted;
+    private final boolean usernameAccepted;
     private final boolean connectionSuccessful;
 
-    public LoginReply(boolean nicknameAccepted, boolean connectionSuccessful) {
+    public LoginReply(boolean usernameAccepted, boolean connectionSuccessful) {
         super(Game.SERVER_NICKNAME, MessageType.LOGIN_REPLY);
-        this.nicknameAccepted = nicknameAccepted;
+        this.usernameAccepted = usernameAccepted;
         this.connectionSuccessful = connectionSuccessful;
     }
 
     public boolean isUsernameAccepted() {
-        return nicknameAccepted;
+        return usernameAccepted;
     }
 
     public boolean isConnectionSuccessful() {
@@ -29,7 +29,7 @@ public class LoginReply extends Message {
     public String toString() {
         return "LoginReply{" +
                 "nickname=" + getUsername() +
-                ", nicknameAccepted=" + nicknameAccepted +
+                ", nicknameAccepted=" + usernameAccepted +
                 ", connectionSuccessful=" + connectionSuccessful +
                 '}';
     }

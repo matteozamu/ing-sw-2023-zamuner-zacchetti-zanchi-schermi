@@ -4,6 +4,7 @@ import it.polimi.ingsw.message.Message;
 import it.polimi.ingsw.message.PlayersNumberReply;
 import it.polimi.ingsw.model.*;
 import it.polimi.ingsw.network.server.Server;
+import it.polimi.ingsw.view.View;
 import it.polimi.ingsw.view.VirtualView;
 import it.polimi.ingsw.observer.Observer;
 
@@ -51,15 +52,13 @@ public class ControllerGame implements Observer, Serializable {
 
     //***** INIT METHODS *****//
     /**
-     * Handles the login of a player. If the player is new, his VirtualView is saved, otherwise it's discarded
-     * and the player is notified.
+     * Handles the login of a player. If the player is new, his VirtualView is saved, otherwise it's discarded and the player is notified.
      * If it's the first Player then ask number of Players he wants, add Player to the Game otherwise change the GameState.
      *
      * @param username    the username of the player.
      * @param virtualView the virtualview of the player.
      */
     public void loginHandler(String username, VirtualView virtualView) {
-
         if (virtualViewMap.isEmpty()) { // First player logged. Ask number of players.
             addVirtualView(username, virtualView);
             // TODO completare personal goal
@@ -67,14 +66,14 @@ public class ControllerGame implements Observer, Serializable {
 
             virtualView.showLoginResult(true, true, Game.SERVER_NICKNAME);
             virtualView.askPlayersNumber();
-        }
-//        } else if (virtualViewMap.size() < game.getChosenPlayersNumber()) {
-//            addVirtualView(username, virtualView);
-//            game.addPlayer(new Player(username));
-//            virtualView.showLoginResult(true, true, Game.SERVER_NICKNAME);
-//
-//            if (game.getNumCurrentPlayers() == game.getChosenPlayersNumber()) { // If all players logged
-//
+
+        } else if (virtualViewMap.size() < game.getChosenPlayersNumber()) {
+            addVirtualView(username, virtualView);
+            game.addPlayer(new Player(username, new Shelf(), new PersonalGoalCard(null)));
+            virtualView.showLoginResult(true, true, Game.SERVER_NICKNAME);
+
+            if (game.getNumCurrentPlayers() == game.getChosenPlayersNumber()) { // If all players logged
+
 //                // check saved matches.
 //                StorageData storageData = new StorageData();
 //                GameController savedGameController = storageData.restore();
@@ -87,10 +86,12 @@ public class ControllerGame implements Observer, Serializable {
 //                } else {
 //                    initGame();
 //                }
-//            }
-//        } else {
-//            virtualView.showLoginResult(true, false, Game.SERVER_NICKNAME);
-//        }
+                // da togliere
+                //initGame();
+            }
+        } else {
+            virtualView.showLoginResult(true, false, Game.SERVER_NICKNAME);
+        }
     }
 
     /**
@@ -175,8 +176,22 @@ public class ControllerGame implements Observer, Serializable {
 //        this.currentPlayer = currentPlayer;
 //    }
 
+    /**
+     *
+     * @return the Game classe
+     */
+    // forse non serve, viene chiamato solo nei test
     public Game getGame() {
         return game;
+    }
+
+    /**
+     * Checks if the game is already started, then no more players can connect.
+     *
+     * @return {@code true} if the game isn't started yet, {@code false} otherwise.
+     */
+    public boolean isGameStarted() {
+        return this.gameState != GameState.LOGIN;
     }
 
     /**
@@ -193,6 +208,17 @@ public class ControllerGame implements Observer, Serializable {
      * @return true if available, false if not
      * @throws NullPointerException if username is null
      */
+
+    /**
+     * Verifies the nickname through the InputController.
+     *
+     * @param username the nickname to be checked.
+     * @param view     the view of the player who is logging in.
+     * @return true if the clien can be logged to the game
+     */
+    public boolean checkLoginUsername(String username, View view) {
+        return inputController.checkLoginUsername(username, view);
+    }
 
     //TESTED
     public boolean isUsernameAvailable(String username) throws NullPointerException {

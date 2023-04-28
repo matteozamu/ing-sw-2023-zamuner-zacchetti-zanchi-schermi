@@ -47,25 +47,25 @@ public class InputController implements Serializable {
     }
 
     //TODO da fare la funzione check login con i metodi da noi creati
-//    /**
-//     * Check if a nickname is valid or not.
-//     *
-//     * @param nickname new client's nickname.
-//     * @param view     view for active client.
-//     * @return {code @true} if it's a valid nickname {code @false} otherwise.
-//     */
-//    public boolean checkLoginNickname(String nickname, View view) {
-//        if (nickname.isEmpty() || nickname.equalsIgnoreCase(Game.SERVER_NICKNAME)) {
-//            view.showGenericMessage("Forbidden name.");
-//            view.showLoginResult(false, true, null);
-//            return false;
-//        } else if (game.isNicknameTaken(nickname)) {
-//            view.showGenericMessage("Nickname already taken.");
-//            view.showLoginResult(false, true, null);
-//            return false;
-//        }
-//        return true;
-//    }
+    /**
+     * Check if a username is valid or not.
+     *
+     * @param username new client's username.
+     * @param view     view for active client.
+     * @return {code @true} if it's a valid username {code @false} otherwise.
+     */
+    public boolean checkLoginUsername(String username, View view) {
+        if (username.isEmpty() || username.equalsIgnoreCase(Game.SERVER_NICKNAME)) {
+            view.showGenericMessage("Forbidden name.");
+            view.showLoginResult(false, true, null);
+            return false;
+        } else if (!gameController.isUsernameAvailable(username)) {
+            view.showGenericMessage("username already taken.");
+            view.showLoginResult(false, true, null);
+            return false;
+        }
+        return true;
+    }
 
     private boolean playerNumberReplyCheck(Message message){
         PlayersNumberReply playerNumberReply = (PlayersNumberReply) message;

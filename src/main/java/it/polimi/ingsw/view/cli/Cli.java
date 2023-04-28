@@ -74,32 +74,6 @@ public class Cli extends ViewObservable implements View {
     }
 
     /**
-     * Shows the login result.
-     * On login fail, the program is terminated immediatly.
-     *
-     * @param nicknameAccepted     indicates if the chosen nickname has been accepted.
-     * @param connectionSuccessful indicates if the connection has been successful.
-     * @param nickname             the nickname of the player to be greeted.
-     */
-    @Override
-    public void showLoginResult(boolean nicknameAccepted, boolean connectionSuccessful, String nickname) {
-//        clearCli();
-
-        if (nicknameAccepted && connectionSuccessful) {
-            out.println("Hi, " + nickname + "! You connected to the server.");
-        } else if (connectionSuccessful) {
-            askUsername();
-        } else if (nicknameAccepted) {
-            out.println("Max players reached. Connection refused.");
-            out.println("EXIT.");
-
-            System.exit(1);
-        } else {
-            showErrorAndExit("Could not contact server.");
-        }
-    }
-
-    /**
      * ask the username to the user
      */
     @Override
@@ -113,6 +87,31 @@ public class Cli extends ViewObservable implements View {
 
         String finalUsername = username;
         notifyObserver(obs -> obs.onUpdateUsername(finalUsername));
+    }
+
+    /**
+     * Shows the login result.
+     * On login fail, the program is terminated immediatly.
+     *
+     * @param nicknameAccepted     indicates if the chosen nickname has been accepted.
+     * @param connectionSuccessful indicates if the connection has been successful.
+     * @param nickname             the nickname of the player to be greeted.
+     */
+    @Override
+    public void showLoginResult(boolean nicknameAccepted, boolean connectionSuccessful, String nickname) {
+//        clearCli();
+        if (nicknameAccepted && connectionSuccessful) {
+            out.println("Hi, " + nickname + "! You connected to the server.");
+        } else if (connectionSuccessful) {
+            askUsername();
+        } else if (nicknameAccepted) {
+            out.println("Max players reached. Connection refused.");
+            out.println("EXIT.");
+
+            System.exit(1);
+        } else {
+            showErrorAndExit("Could not contact server.");
+        }
     }
 
     @Override
