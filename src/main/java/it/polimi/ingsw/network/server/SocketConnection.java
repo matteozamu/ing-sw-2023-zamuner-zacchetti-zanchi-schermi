@@ -1,8 +1,8 @@
 package it.polimi.ingsw.network.server;
 
+import it.polimi.ingsw.enumeration.MessageContent;
 import it.polimi.ingsw.network.message.Message;
 import it.polimi.ingsw.network.message.PingMessage;
-import it.polimi.ingsw.utility.MessageContent;
 
 import java.io.IOException;
 import java.io.ObjectInputStream;

@@ -1,8 +1,8 @@
 package it.polimi.ingsw.network.client;
 
+import it.polimi.ingsw.enumeration.MessageContent;
 import it.polimi.ingsw.network.message.ConnectionRequest;
 import it.polimi.ingsw.network.message.Message;
-import it.polimi.ingsw.utility.MessageContent;
 
 import java.io.IOException;
 import java.io.ObjectInputStream;
@@ -46,7 +46,7 @@ public class ClientSocket extends Client implements Runnable {
         socket = new Socket(getAddress(), getPort());
         out = new ObjectOutputStream(socket.getOutputStream());
         in = new ObjectInputStream(socket.getInputStream());
-
+        
         sendMessage(new ConnectionRequest(getUsername()));
 
         messageReceiver = new Thread(this);

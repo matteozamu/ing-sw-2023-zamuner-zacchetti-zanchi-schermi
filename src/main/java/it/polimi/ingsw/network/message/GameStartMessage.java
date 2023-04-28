@@ -1,7 +1,6 @@
 package it.polimi.ingsw.network.message;
 
-import it.polimi.ingsw.utility.GameConstants;
-import it.polimi.ingsw.utility.MessageContent;
+import it.polimi.ingsw.enumeration.MessageContent;
 
 /**
  * Message class to tell the clients that the game is started
@@ -12,7 +11,7 @@ public class GameStartMessage extends Message {
     private final String firstPlayer;
 
     public GameStartMessage(String firstPlayer) {
-        super(GameConstants.GOD_NAME, null, MessageContent.READY);
+        super("Username", null, MessageContent.READY);
         this.firstPlayer = firstPlayer;
     }
 

@@ -1,12 +1,13 @@
 package it.polimi.ingsw.network.server;
 
 import it.polimi.ingsw.control.ControllerGame;
+import it.polimi.ingsw.enumeration.MessageContent;
+import it.polimi.ingsw.enumeration.MessageStatus;
 import it.polimi.ingsw.model.Player;
 import it.polimi.ingsw.network.message.ConnectionResponse;
+import it.polimi.ingsw.network.message.DisconnectionMessage;
 import it.polimi.ingsw.network.message.Message;
 import it.polimi.ingsw.network.message.Response;
-import it.polimi.ingsw.utility.MessageContent;
-import it.polimi.ingsw.utility.MessageStatus;
 
 import java.io.IOException;
 import java.text.DateFormat;
@@ -26,7 +27,7 @@ public class Server implements Runnable {
     public static final Logger LOGGER = Logger.getLogger("Server");
     private static final String DEFAULT_CONF_FILE_PATH = "conf.json";
     private final Object clientsLock = new Object();
-    private int socketPort;
+    private int socketPort = 2727;
     private int rmiPort;
     private Map<String, Connection> clients;
     private ControllerGame controllerGame;
@@ -36,37 +37,7 @@ public class Server implements Runnable {
 
     private Timer moveTimer;
 
-    /**
-     * Starts the server loading a game
-     *
-     * @param confFilePath path of the config file
-     */
-    private Server(String confFilePath) {
-        initLogger();
-        synchronized (clientsLock) {
-            this.clients = new HashMap<>();
-        }
-        this.waitForLoad = true;
-
-        startServers();
-
-        reserveSlots(controllerGame.getGame().getPlayers());
-
-        LOGGER.log(Level.INFO, "Game loaded successfully.");
-
-        Thread pingThread = new Thread(this);
-        pingThread.start();
-
-        moveTimer = new Timer();
-    }
-
-    /**
-     * Starts the server with a new game
-     *
-     * @param bot      {@code true} if the bot is present, {@code false} otherwise
-     * @param skullNum number of skull
-     */
-    public Server(boolean bot, int skullNum) {
+    public Server() {
         initLogger();
         synchronized (clientsLock) {
             clients = new HashMap<>();
@@ -84,11 +55,7 @@ public class Server implements Runnable {
     }
 
     public static void main(String[] args) {
-        boolean terminator = false;
-        int skullNum = 5;
-        boolean reloadGame = false;
-
-        new Server(terminator, skullNum);
+        new Server();
     }
 
     private void initLogger() {
@@ -111,10 +78,10 @@ public class Server implements Runnable {
 
         LOGGER.info("Socket Server Started");
 
-        RMIServer rmiServer = new RMIServer(this, rmiPort);
-        rmiServer.startServer();
+//        RMIServer rmiServer = new RMIServer(this, rmiPort);
+//        rmiServer.startServer();
 
-        LOGGER.info("RMI Server Started");
+//        LOGGER.info("RMI Server Started");
     }
 
     /**
@@ -259,24 +226,25 @@ public class Server implements Runnable {
      *
      * @param playerConnection connection of the player that just disconnected
      */
-//    void onDisconnect(Connection playerConnection) {
-//        String username = getUsernameByConnection(playerConnection);
-//
-//        if (username != null) {
-//            LOGGER.log(Level.INFO, "{0} disconnected from server!", username);
-//
+    void onDisconnect(Connection playerConnection) {
+        String username = getUsernameByConnection(playerConnection);
+
+        if (username != null) {
+            LOGGER.log(Level.INFO, "{0} disconnected from server!", username);
+
 //            if (controllerGame.getGameState() == PossibleGameState.GAME_ROOM) {
 //                synchronized (clientsLock) {
 //                    clients.remove(username);
 //                }
-//                controllerGame.onMessage(new LobbyMessage(username, null, null, true));
-//                LOGGER.log(Level.INFO, "{0} removed from client list!", username);
-//            } else {
-//                controllerGame.onConnectionMessage(new LobbyMessage(username, null, null, true));
-//                sendMessageToAll(new DisconnectionMessage(username));
+//                controllerGame.onMessage(new LobbyMessage(username, null, true));
+//            LOGGER.log(Level.INFO, "{0} removed from client list!", username);
 //            }
-//        }
-//    }
+//        else {
+//                controllerGame.onConnectionMessage(new LobbyMessage(username, null, true));
+            sendMessageToAll(new DisconnectionMessage(username));
+//            }
+        }
+    }
 
     /**
      * Sends a message to all clients

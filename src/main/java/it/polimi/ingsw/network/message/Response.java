@@ -1,8 +1,7 @@
 package it.polimi.ingsw.network.message;
 
-import it.polimi.ingsw.utility.GameConstants;
-import it.polimi.ingsw.utility.MessageContent;
-import it.polimi.ingsw.utility.MessageStatus;
+import it.polimi.ingsw.enumeration.MessageContent;
+import it.polimi.ingsw.enumeration.MessageStatus;
 
 /**
  * Generic response to a request
@@ -14,7 +13,7 @@ public class Response extends Message {
     private final MessageStatus status;
 
     public Response(String message, MessageStatus status) {
-        super(GameConstants.GOD_NAME, null, MessageContent.RESPONSE);
+        super("Username", null, MessageContent.RESPONSE);
 
         this.message = message;
         this.status = status;

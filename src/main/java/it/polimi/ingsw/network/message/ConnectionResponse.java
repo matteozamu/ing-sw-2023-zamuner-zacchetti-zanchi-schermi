@@ -1,8 +1,7 @@
 package it.polimi.ingsw.network.message;
 
-import it.polimi.ingsw.utility.GameConstants;
-import it.polimi.ingsw.utility.MessageContent;
-import it.polimi.ingsw.utility.MessageStatus;
+import it.polimi.ingsw.enumeration.MessageContent;
+import it.polimi.ingsw.enumeration.MessageStatus;
 
 /**
  * Message class of response after a connection request
@@ -15,7 +14,7 @@ public class ConnectionResponse extends Message {
     private final MessageStatus status;
 
     public ConnectionResponse(String message, String newToken, MessageStatus status) {
-        super(GameConstants.GOD_NAME, null, MessageContent.CONNECTION_RESPONSE);
+        super("Username", null, MessageContent.CONNECTION_RESPONSE);
         this.message = message;
         this.newToken = newToken;
         this.status = status;

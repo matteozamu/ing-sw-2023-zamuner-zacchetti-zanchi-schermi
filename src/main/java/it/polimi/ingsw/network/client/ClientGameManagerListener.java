@@ -1,11 +1,7 @@
 package it.polimi.ingsw.network.client;
 
-import enumerations.PlayerColor;
-import enumerations.PossibleAction;
-import model.player.PlayerPoints;
-import network.message.ConnectionResponse;
-import network.message.GameVoteResponse;
-import network.message.Response;
+import it.polimi.ingsw.network.message.ConnectionResponse;
+import it.polimi.ingsw.network.message.Response;
 
 import java.util.List;
 
@@ -25,11 +21,6 @@ interface ClientGameManagerListener {
     void loadResponse();
 
     /**
-     * Asks to the user the player color
-     */
-    void askColor(List<PlayerColor> availableColors);
-
-    /**
      * Handles the response to the lobby join
      *
      * @param response to the lobby join
@@ -44,149 +35,7 @@ interface ClientGameManagerListener {
     void playersLobbyUpdate(List<String> users);
 
     /**
-     * Handles the response to a vote
-     *
-     * @param gameVoteResponse the response to the vote
-     */
-    void voteResponse(GameVoteResponse gameVoteResponse);
-
-    /**
-     * Communicates who is the first player
-     *
-     * @param username first player username
-     */
-    void firstPlayerCommunication(String username);
-
-    /**
      * Tells the client that is not his turn
      */
     void notYourTurn(String turnOwner);
-
-    /**
-     * Tells the client what are the possible actions
-     *
-     * @param possibleActions list of possible actions
-     */
-    void displayActions(List<PossibleAction> possibleActions);
-
-    /**
-     * Handles a game state update
-     */
-    void gameStateUpdate();
-
-    /**
-     * Displays the response error
-     *
-     * @param error error message
-     */
-    void responseError(String error);
-
-    /**
-     * Requests the client the bot spawn
-     */
-    void botSpawn();
-
-    /**
-     * Requests the client the bot respawn
-     */
-    void botRespawn();
-
-    /**
-     * Requests the client the player spawn
-     */
-    void spawn();
-
-    /**
-     * Requests the client a player move
-     */
-    void move();
-
-    /**
-     * Requests the client a player move and pick
-     */
-    void moveAndPick();
-
-    /**
-     * Requests the client a shoot
-     */
-    void shoot();
-
-    /**
-     * Requests the client an adrenaline player move and pick
-     */
-    void adrenalinePick();
-
-    /**
-     * Requests the client an adrenaline player shoot
-     */
-    void adrenalineShoot();
-
-    /**
-     * Requests the client a frenzy player move
-     */
-    void frenzyMove();
-
-    /**
-     * Requests the client a frenzy player move and pick
-     */
-    void frenzyPick();
-
-    /**
-     * Requests the client a frenzy shoot
-     */
-    void frenzyShoot();
-
-    /**
-     * Requests the client a light frenzy player move and pick
-     */
-    void lightFrenzyPick();
-
-    /**
-     * Requests the client a light frenzy shoot
-     */
-    void lightFrenzyShoot();
-
-    /**
-     * Requests the client a bot action
-     */
-    void botAction();
-
-    /**
-     * Requests the client a targeting scope usage
-     */
-    void targetingScope();
-
-    /**
-     * Requests the client a tagback grenade usage
-     */
-    void tagbackGrenade();
-
-    /**
-     * Requests the client a reload
-     */
-    void reload();
-
-    /**
-     * Requests the client a powerup usage
-     */
-    void powerup();
-
-    /**
-     * Request the client a pass turn
-     */
-    void passTurn();
-
-    /**
-     * Notifies the client about a player disconnection
-     *
-     * @param username of the player who disconnected
-     */
-    void onPlayerDisconnect(String username);
-
-    /**
-     * Notifies the client about the game end
-     *
-     * @param winners list of winner players
-     */
-    void notifyGameEnd(List<PlayerPoints> winners);
 }

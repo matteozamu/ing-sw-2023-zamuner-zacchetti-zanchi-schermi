@@ -1,6 +1,7 @@
 package it.polimi.ingsw.network.client;
 
-import network.message.Message;
+
+import it.polimi.ingsw.network.message.Message;
 
 /**
  * This interface is used to notify the implementer of an incoming message

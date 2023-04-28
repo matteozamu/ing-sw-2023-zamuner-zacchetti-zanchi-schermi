@@ -1,8 +1,8 @@
 package it.polimi.ingsw.network.message;
 
-import enumerations.MessageContent;
-import enumerations.UserPlayerState;
-import utility.GameConstants;
+
+import it.polimi.ingsw.enumeration.MessageContent;
+import it.polimi.ingsw.enumeration.UserPlayerState;
 
 /**
  * Message class that is sent when a load game is completed successfully
@@ -16,7 +16,7 @@ public class GameLoadResponse extends Message {
     private final Boolean botPresent;
 
     public GameLoadResponse(String message, String newToken, UserPlayerState userPlayerState, Boolean botPresent) {
-        super(GameConstants.GOD_NAME, null, MessageContent.GAME_LOAD);
+        super("Username", null, MessageContent.GAME_LOAD);
         this.message = message;
         this.newToken = newToken;
         this.userPlayerState = userPlayerState;

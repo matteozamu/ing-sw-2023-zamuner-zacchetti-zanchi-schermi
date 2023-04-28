@@ -1,16 +1,12 @@
 package it.polimi.ingsw.network.client;
 
-import enumerations.GameClientState;
-import enumerations.UserPlayerState;
-import exceptions.game.InvalidGameStateException;
-import exceptions.player.ClientRoundManagerException;
+import it.polimi.ingsw.enumeration.GameClientState;
+import it.polimi.ingsw.enumeration.UserPlayerState;
 
 /**
  * Owns the game state machine for a client
  */
 class ClientRoundManager {
-
-    private final boolean botPresent;
     private UserPlayerState playerState;
     private GameClientState gameClientState;
     private boolean secondFrenzyAction;
@@ -20,11 +16,6 @@ class ClientRoundManager {
     private boolean roundStarted;
 
     ClientRoundManager(boolean botPresent) {
-        this.roundStarted = false;
-        this.botPresent = botPresent;
-        this.botMoved = false;
-        this.botCanMove = true;
-
         this.playerState = UserPlayerState.SPAWN;
         this.gameClientState = GameClientState.NORMAL;
 
@@ -36,55 +27,55 @@ class ClientRoundManager {
      */
     void nextState() {
         if (!roundStarted)
-            throw new ClientRoundManagerException("Error, round not started yet (before call nextState() you must call beginRound())");
+//            throw new ClientRoundManagerException("Error, round not started yet (before call nextState() you must call beginRound())");
 
-        switch (playerState) {
-            case BOT_SPAWN:
-                playerState = UserPlayerState.SPAWN;
-                break;
+            switch (playerState) {
+                case BOT_SPAWN:
+                    playerState = UserPlayerState.SPAWN;
+                    break;
 
-            case SPAWN:
-                handleBegin();
-                break;
+                case SPAWN:
+                    handleBegin();
+                    break;
 
-            case FIRST_ACTION:
-                playerState = UserPlayerState.SECOND_ACTION;
-                break;
+                case FIRST_ACTION:
+                    playerState = UserPlayerState.SECOND_ACTION;
+                    break;
 
-            case SECOND_ACTION:
-            case SECOND_FRENZY_ACTION:
-            case SECOND_SCOPE_USAGE:
-                handleSecondMove();
-                break;
+                case SECOND_ACTION:
+                case SECOND_FRENZY_ACTION:
+                case SECOND_SCOPE_USAGE:
+                    handleSecondMove();
+                    break;
 
-            case FIRST_FRENZY_ACTION:
-                handleFirstFrenzy();
-                break;
+                case FIRST_FRENZY_ACTION:
+                    handleFirstFrenzy();
+                    break;
 
-            case FIRST_SCOPE_USAGE:
-                handleFirstScope();
-                break;
+                case FIRST_SCOPE_USAGE:
+                    handleFirstScope();
+                    break;
 
-            case BOT_ACTION:
-                playerState = UserPlayerState.ENDING_PHASE;
-                break;
+                case BOT_ACTION:
+                    playerState = UserPlayerState.ENDING_PHASE;
+                    break;
 
-            case ENDING_PHASE:
-            case BOT_RESPAWN:
-                playerState = UserPlayerState.END;
-                break;
+                case ENDING_PHASE:
+                case BOT_RESPAWN:
+                    playerState = UserPlayerState.END;
+                    break;
 
-            case DEAD:
-            case GRENADE_USAGE:
-                playerState = UserPlayerState.FIRST_ACTION;
-                break;
+                case DEAD:
+                case GRENADE_USAGE:
+                    playerState = UserPlayerState.FIRST_ACTION;
+                    break;
 
-            case END:
-                throw new ClientRoundManagerException("Error, in the UserPlayerState.END state you must call the endRound() method");
+                case END:
+//                throw new ClientRoundManagerException("Error, in the UserPlayerState.END state you must call the endRound() method");
 
-            default:
-                throw new ClientRoundManagerException("Invalid State!");
-        }
+                default:
+//                throw new ClientRoundManagerException("Invalid State!");
+            }
     }
 
     /**
@@ -102,7 +93,7 @@ class ClientRoundManager {
      * Handles the next state after the second move of the player
      */
     private void handleSecondMove() {
-        if (botPresent && !botMoved && botCanMove) {
+        if (!botMoved && botCanMove) {
             playerState = UserPlayerState.BOT_ACTION;
         } else {
             playerState = UserPlayerState.ENDING_PHASE;
@@ -116,7 +107,7 @@ class ClientRoundManager {
         if (secondFrenzyAction) {
             playerState = UserPlayerState.SECOND_FRENZY_ACTION;
         } else {
-            if (botPresent && !botMoved && botCanMove) {
+            if (!botMoved && botCanMove) {
                 playerState = UserPlayerState.BOT_ACTION;
             } else {
                 playerState = UserPlayerState.ENDING_PHASE;
@@ -143,34 +134,6 @@ class ClientRoundManager {
     }
 
     /**
-     * Set the state to the grenade state
-     */
-    void grenade() {
-        playerState = UserPlayerState.GRENADE_USAGE;
-    }
-
-    /**
-     * Set the state to the bot spawn state
-     */
-    void botSpawn() {
-        playerState = UserPlayerState.BOT_SPAWN;
-    }
-
-    /**
-     * Set the state to the bot respawn state
-     */
-    void botRespawn() {
-        playerState = UserPlayerState.BOT_RESPAWN;
-    }
-
-    /**
-     * Set the state to the player spawn
-     */
-    void spawn() {
-        playerState = UserPlayerState.SPAWN;
-    }
-
-    /**
      * Set the state to the targeting scope state
      */
     void targetingScope() {
@@ -179,7 +142,7 @@ class ClientRoundManager {
         } else if (playerState == UserPlayerState.SECOND_ACTION || playerState == UserPlayerState.SECOND_FRENZY_ACTION) {
             playerState = UserPlayerState.SECOND_SCOPE_USAGE;
         } else {
-            throw new InvalidGameStateException();
+//            throw new InvalidGameStateException();
         }
     }
 
@@ -247,13 +210,6 @@ class ClientRoundManager {
      */
     boolean hasBotMoved() {
         return botMoved;
-    }
-
-    /**
-     * @return {@code true} if bot is present
-     */
-    boolean isBotPresent() {
-        return botPresent;
     }
 
     /**

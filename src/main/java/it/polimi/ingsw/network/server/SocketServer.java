@@ -46,7 +46,7 @@ public class SocketServer extends Thread {
         server.onMessage(message);
     }
 
-//    void onDisconnect(Connection playerConnection) {
-//        server.onDisconnect(playerConnection);
-//    }
+    void onDisconnect(Connection playerConnection) {
+        server.onDisconnect(playerConnection);
+    }
 }
