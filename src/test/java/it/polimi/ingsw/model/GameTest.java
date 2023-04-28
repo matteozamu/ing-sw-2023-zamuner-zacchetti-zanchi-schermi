@@ -8,7 +8,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 class GameTest extends TestCase {
-
     private Game g;
     private PersonalGoalCard pg;
     private Shelf shelf;
@@ -186,7 +185,5 @@ class GameTest extends TestCase {
     void testGetRandomAvailableCommonGoalEmptyContainer() {
         assertNull(g.getRandomAvailableCommonGoal());
     }
-
-
 
 }
