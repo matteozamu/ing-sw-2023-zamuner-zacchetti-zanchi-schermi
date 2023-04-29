@@ -11,6 +11,12 @@ import java.util.Set;
  */
 public final class CommonGoalType9 extends CommonGoal {
 
+    public int type = 9;
+
+    public int getType() {
+        return type;
+    }
+
     /**
      * Checks if the Shelf is eligible for the goal check.
      * For CommonGoalType9, the Shelf must have at least 18 object cards.

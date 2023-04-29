@@ -11,6 +11,12 @@ package it.polimi.ingsw.model;
 
 public final class CommonGoalType12 extends CommonGoal {
 
+    public int type = 12;
+
+    public int getType() {
+        return type;
+    }
+
     /**
      * Checks if the Shelf is eligible for the goal check.
      * For CommonGoalType12, the Shelf must have at least 15 object cards.

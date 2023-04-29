@@ -10,6 +10,12 @@ import java.util.Map;
 
 public final class CommonGoalType1 extends CommonGoal {
 
+    public int type = 1;
+
+    public int getType() {
+        return type;
+    }
+
     /**
      * Determines if the given shelf is eligible to be checked for the specific common goal of type 1.
      * A shelf is considered eligible for this common goal if it contains at least 12 object cards,

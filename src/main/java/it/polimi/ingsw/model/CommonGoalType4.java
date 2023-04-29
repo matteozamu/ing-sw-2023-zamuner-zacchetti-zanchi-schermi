@@ -10,6 +10,11 @@ import java.util.Map;
  */
 public final class CommonGoalType4 extends CommonGoal {
 
+    public int type = 4;
+
+    public int getType() {
+        return type;
+    }
 
     /**
      * Checks if the Shelf is eligible for the goal check.

@@ -9,6 +9,12 @@ package it.polimi.ingsw.model;
 
 public final class CommonGoalType7 extends CommonGoal {
 
+    public int type = 7;
+
+    public int getType() {
+        return type;
+    }
+
     /**
      * Checks if the Shelf is eligible for the goal check.
      * For CommonGoalType7, the Shelf must have at least 8 object cards.

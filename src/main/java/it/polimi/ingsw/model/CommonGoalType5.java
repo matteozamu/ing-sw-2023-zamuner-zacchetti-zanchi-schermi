@@ -11,6 +11,12 @@ import java.util.Map;
 
 public class CommonGoalType5 extends CommonGoal {
 
+    public int type = 5;
+
+    public int getType() {
+        return type;
+    }
+
     /**
      * Checks if the Shelf is eligible for the goal check.
      * For CommonGoalType5, the Shelf must have at least 16 object cards.

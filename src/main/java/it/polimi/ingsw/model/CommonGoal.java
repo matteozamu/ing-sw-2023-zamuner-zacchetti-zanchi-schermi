@@ -53,4 +53,6 @@ public abstract class CommonGoal {
      * @return true if the shelf is eligible for the specific common goal, false otherwise.
      */
     protected abstract boolean isShelfEligible(Shelf shelf);
+
+    public abstract int getType();
 }

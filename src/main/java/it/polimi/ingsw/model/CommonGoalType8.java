@@ -11,6 +11,11 @@ import java.util.Set;
 
 public final class CommonGoalType8 extends CommonGoal {
 
+    public int type = 8;
+
+    public int getType() {
+        return type;
+    }
 
     /**
      * Checks if the Shelf is eligible for the goal check.
