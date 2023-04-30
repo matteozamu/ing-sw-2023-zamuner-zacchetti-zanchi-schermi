@@ -1,7 +1,6 @@
 package it.polimi.ingsw.utility;
 
 import it.polimi.ingsw.model.Player;
-import it.polimi.ingsw.network.message.LobbyMessage;
 import it.polimi.ingsw.network.message.Message;
 import it.polimi.ingsw.network.server.Server;
 
@@ -43,7 +42,9 @@ public class InputValidator {
                 case LOBBY_VOTE:
                     return true;
                 case GET_IN_LOBBY:
-                    return checkNullsInLobby((LobbyMessage) checkingMessage);
+                    return true;
+                case NUMBER_OF_PLAYERS:
+                    return true;
                 default:    // always one of this kind of messages needs to be validated
                     return false;
             }
@@ -59,19 +60,11 @@ public class InputValidator {
             return false;
         }
 
-        if (message.getSenderUsername().equalsIgnoreCase("Username") || message.getSenderUsername().equalsIgnoreCase("Botname")) {
+        if (message.getSenderUsername().equalsIgnoreCase("ServerUser") || message.getSenderUsername().equalsIgnoreCase("Botname")) {
             return false;
         }
 
         return message.getContent() != null;
-    }
-
-    private static boolean checkNullsInLobby(LobbyMessage lobbyMessage) {
-//        if (!lobbyMessage.isDisconnection()) {
-//            return lobbyMessage.getChosenColor() != null;
-//        } else {
-        return true;
-//        }
     }
 
     private static boolean checkDuplicatesInArguments(List<?> checkingList) {

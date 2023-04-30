@@ -11,7 +11,7 @@ public class DisconnectionMessage extends Message {
     private final String username;
 
     public DisconnectionMessage(String username) {
-        super("Username", null, MessageContent.DISCONNECTION);
+        super("ServerUser", null, MessageContent.DISCONNECTION);
         this.username = username;
     }
 

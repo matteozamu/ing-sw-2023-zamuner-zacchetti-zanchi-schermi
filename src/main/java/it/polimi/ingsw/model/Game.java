@@ -12,7 +12,8 @@ import java.util.Random;
  * Represents the main game logic, including object card and common goal management.
  */
 public class Game {
-    public static final int MAX_PLAYER = 4;
+    public static final int MAX_PLAYERS = 4;
+    public static final int MIN_PLAYERS = 2;
     private List<ObjectCard> objectCardContainer;
     private List<CommonGoal> commonGoalContainer;
     private List<PersonalGoalCard> personalGoalCardsContainer;
@@ -21,6 +22,7 @@ public class Game {
     private Board board;
     private List<CommonGoal> commonGoals;
     private boolean hasStarted;
+    private int numberOfPlayers;
 
     /**
      * constructor of the class
@@ -33,6 +35,15 @@ public class Game {
         this.board = new Board();
         this.commonGoals = new ArrayList<>();
         this.hasStarted = false;
+        this.numberOfPlayers = -1;
+    }
+
+    public int getNumberOfPlayers() {
+        return numberOfPlayers;
+    }
+
+    public void setNumberOfPlayers(int numberOfPlayers) {
+        this.numberOfPlayers = numberOfPlayers;
     }
 
     public boolean isHasStarted() {
@@ -63,17 +74,16 @@ public class Game {
         return players;
     }
 
-    /**
-     * Add a new player to the game
-     *
-     * @param p is the object Player
-     * @return true if successful, false otherwise
-     */
+    public boolean doesPlayerExists(String username) {
+        for (Player p : players) {
+            if (p.getName().equals(username)) return true;
+        }
+        return false;
+    }
 
-    //TESTED
     public boolean addPlayer(Player p) {
         if (p == null) return false;
-        if (this.players.size() < MAX_PLAYER) {
+        if (this.players.size() < MAX_PLAYERS) {
             this.players.add(p);
             return true;
         } else return false;

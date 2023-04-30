@@ -20,16 +20,12 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.logging.SimpleFormatter;
 
-/**
- * Handles the game advancement and listen for the reception of messages
- */
 public abstract class ClientGameManager implements ClientGameManagerListener, ClientUpdateListener, Runnable {
     public static final Logger LOGGER = Logger.getLogger("adrenaline_client");
 
     public static final String SEND_ERROR = "Error while sending the request";
     protected static final String INVALID_STRING = "Invalid String!";
     private final BlockingQueue<Runnable> queue = new LinkedBlockingQueue<>();
-    private final Object gameSerializedLock = new Object(); // handles GameSerialized parallelism
 
     private Client client;
     private boolean joinedLobby;
@@ -40,24 +36,9 @@ public abstract class ClientGameManager implements ClientGameManagerListener, Cl
     private ClientRoundManager roundManager; // manage the rounds of this client
     //    private GameSerialized gameSerialized;
     private ClientUpdater clientUpdater;
-
-    private String firstPlayer;
-    private String turnOwner;
-    private boolean turnOwnerChanged;
-    private boolean loadGame = false;
-
-    private boolean firstTurn;
-    private boolean yourTurn;
-
-    private boolean noChangeStateRequest; // Identify a request that doesn't have to change the player state
-
     private boolean gameEnded = false;
 
     public ClientGameManager() {
-        firstTurn = true;
-        noChangeStateRequest = false;
-        turnOwnerChanged = false;
-
         joinedLobby = false;
 
         Date date = GregorianCalendar.getInstance().getTime();
@@ -97,17 +78,19 @@ public abstract class ClientGameManager implements ClientGameManagerListener, Cl
 
     @Override
     public void onUpdate(Message message) {
+        LOGGER.log(Level.INFO, "Received: {0}", message);
+
         if (gameEnded) {
             return;
         }
 
         switch (message.getContent()) {
-            case PLAYERS_IN_LOBBY:
-                handlePlayersInLobby((LobbyPlayersResponse) message);
-                break;
-
             case CONNECTION_RESPONSE:
                 handleConnectionResponse((ConnectionResponse) message);
+                break;
+
+            case PLAYERS_IN_LOBBY:
+                handlePlayersInLobby((LobbyPlayersResponse) message);
                 break;
 
             case RESPONSE:
@@ -120,8 +103,6 @@ public abstract class ClientGameManager implements ClientGameManagerListener, Cl
 
             default:
         }
-
-        LOGGER.log(Level.INFO, "Received: {0}", message);
     }
 
     public boolean sendRequest(Message message) {
@@ -138,12 +119,6 @@ public abstract class ClientGameManager implements ClientGameManagerListener, Cl
         return true;
     }
 
-
-    /**
-     * Handles the response to the server connection
-     *
-     * @param connectionResponse response received
-     */
     private void handleConnectionResponse(ConnectionResponse connectionResponse) {
         if (connectionResponse.getStatus().equals(MessageStatus.OK)) {
             client.setToken(connectionResponse.getNewToken());
@@ -155,21 +130,11 @@ public abstract class ClientGameManager implements ClientGameManagerListener, Cl
         queue.add(() -> connectionResponse(connectionResponse));
     }
 
-    /**
-     * Handles the message of a new player in lobby
-     *
-     * @param message message received
-     */
     private void handlePlayersInLobby(LobbyPlayersResponse message) {
         lobbyPlayers = message.getUsers();
-        queue.add(() -> playersLobbyUpdate(message.getUsers()));
+        queue.add(() -> playersWaitingUpdate(message.getUsers()));
     }
 
-    /**
-     * Handles the generic response after a action request
-     *
-     * @param response response received
-     */
     private void handleResponse(Response response) {
         if (!joinedLobby) {
             joinedLobby = response.getStatus() == MessageStatus.OK;
@@ -193,15 +158,6 @@ public abstract class ClientGameManager implements ClientGameManagerListener, Cl
         }
     }
 
-    /**
-     * Creates a connection with the server based on user input data
-     *
-     * @param connection type of connection (0 for Socket, 1 for RMI)
-     * @param username   username of the player
-     * @param address    address of the server
-     * @param port       port of the serve
-     * @throws Exception if something goes wrong with the creation of the connection
-     */
     public void createConnection(int connection, String username, String address, int port, DisconnectionListener disconnectionListener) throws Exception {
         if (connection == 0) {
             client = new ClientSocket(username, address, port, disconnectionListener);
@@ -213,9 +169,6 @@ public abstract class ClientGameManager implements ClientGameManagerListener, Cl
         startUpdater();
     }
 
-    /**
-     * Closes the connection with the server
-     */
     public void closeConnection() {
         if (clientUpdater != null) {
             clientUpdater.stop();
@@ -230,9 +183,6 @@ public abstract class ClientGameManager implements ClientGameManagerListener, Cl
         client = null;
     }
 
-    /**
-     * Starts the updater for listening the reception of messages
-     */
     private void startUpdater() {
         clientUpdater = new ClientUpdater(client, this);
     }

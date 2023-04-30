@@ -3,11 +3,11 @@ package it.polimi.ingsw.network.server;
 import it.polimi.ingsw.control.ControllerGame;
 import it.polimi.ingsw.enumeration.MessageContent;
 import it.polimi.ingsw.enumeration.MessageStatus;
-import it.polimi.ingsw.model.Player;
+import it.polimi.ingsw.enumeration.UserPlayerState;
 import it.polimi.ingsw.network.message.ConnectionResponse;
 import it.polimi.ingsw.network.message.DisconnectionMessage;
+import it.polimi.ingsw.network.message.GameLoadResponse;
 import it.polimi.ingsw.network.message.Message;
-import it.polimi.ingsw.network.message.Response;
 
 import java.io.IOException;
 import java.text.DateFormat;
@@ -25,15 +25,11 @@ import java.util.stream.Collectors;
  */
 public class Server implements Runnable {
     public static final Logger LOGGER = Logger.getLogger("Server");
-    private static final String DEFAULT_CONF_FILE_PATH = "conf.json";
     private final Object clientsLock = new Object();
     private int socketPort = 2727;
     private int rmiPort;
     private Map<String, Connection> clients;
     private ControllerGame controllerGame;
-    private boolean waitForLoad;
-    private int startTime;
-    private int moveTime;
 
     private Timer moveTimer;
 
@@ -42,11 +38,10 @@ public class Server implements Runnable {
         synchronized (clientsLock) {
             clients = new HashMap<>();
         }
-        waitForLoad = false;
 
         startServers();
 
-        controllerGame = new ControllerGame();
+        controllerGame = new ControllerGame(this);
 
         Thread pingThread = new Thread(this);
         pingThread.start();
@@ -84,30 +79,11 @@ public class Server implements Runnable {
 //        LOGGER.info("RMI Server Started");
     }
 
-    /**
-     * Reserves server slots for player loaded from the game save
-     *
-     * @param loadedPlayers from the game save
-     */
-    private void reserveSlots(List<Player> loadedPlayers) {
-        synchronized (clientsLock) {
-            for (Player player : loadedPlayers) {
-                clients.put(player.getName(), null);
-            }
-        }
-    }
-
-    /**
-     * Adds or reconnects a player to the server
-     *
-     * @param username   username of the player
-     * @param connection connection of the client
-     */
     void login(String username, Connection connection) {
         try {
             synchronized (clientsLock) {
                 if (clients.containsKey(username)) {
-//                    knownPlayerLogin(username, connection);
+                    knownPlayerLogin(username, connection);
                 } else {
                     newPlayerLogin(username, connection);
                 }
@@ -117,25 +93,18 @@ public class Server implements Runnable {
         }
     }
 
-    /**
-     * Handles a known player login
-     *
-     * @param username   username of the player who is trying to login
-     * @param connection connection of the client
-     * @throws IOException when send message fails
-     */
-//    private void knownPlayerLogin(String username, Connection connection) throws IOException {
-//        if (clients.get(username) == null || !clients.get(username).isConnected()) { // Player Reconnection
-//            clients.replace(username, connection);
-//
-//            String token = UUID.randomUUID().toString();
-//            connection.setToken(token);
-//
+    private void knownPlayerLogin(String username, Connection connection) throws IOException {
+        if (clients.get(username) == null || !clients.get(username).isConnected()) { // Player Reconnection
+            clients.replace(username, connection);
+
+            String token = UUID.randomUUID().toString();
+            connection.setToken(token);
+
 //            if (waitForLoad) {// Game in lobby state for load a game
-//                connection.sendMessage(
-//                        new GameLoadResponse("Successfully reconnected", token,
-//                                controllerGame.getUserPlayerState(username), controllerGame.getGame().isBotPresent())
-//                );
+            connection.sendMessage(
+                    new GameLoadResponse("Successfully reconnected", token,
+                            UserPlayerState.FIRST_ACTION)
+            );
 //                checkLoadReady();
 //            } else {
 //                if (controllerGame.getGameState() == PossibleGameState.GAME_ROOM) { // Game in lobby state
@@ -148,52 +117,32 @@ public class Server implements Runnable {
 //                    );
 //                }
 //            }
-//
-//            LOGGER.log(Level.INFO, "{0} reconnected to server!", username);
-//        } else { // Player already connected
-//            connection.sendMessage(
-//                    new ConnectionResponse("Player already connected", null, MessageStatus.ERROR)
-//            );
-//
-//            connection.disconnect();
-//            LOGGER.log(Level.INFO, "{0} already connected to server!", username);
-//        }
-//    }
 
-    /**
-     * Handles a new player login
-     *
-     * @param username   username of the player who is trying to login
-     * @param connection connection of the client
-     * @throws IOException when send message fails
-     */
-    private void newPlayerLogin(String username, Connection connection) throws IOException {
-        if (controllerGame.getGame().isHasStarted()) { // Game Started
+            LOGGER.log(Level.INFO, "{0} reconnected to server!", username);
+        } else { // Player already connected
             connection.sendMessage(
-                    new ConnectionResponse("Game is already started!", null, MessageStatus.ERROR)
+                    new ConnectionResponse("Player already connected", null, MessageStatus.ERROR)
             );
 
+            connection.disconnect();
+            LOGGER.log(Level.INFO, "{0} already connected to server!", username);
+        }
+    }
+
+    private void newPlayerLogin(String username, Connection connection) throws IOException {
+        if (controllerGame.getGame().isHasStarted()) {
+            connection.sendMessage(new ConnectionResponse("Game is already started!", null, MessageStatus.ERROR));
             connection.disconnect();
             LOGGER.log(Level.INFO, "{0} attempted to connect!", username);
         } else {
             clients.put(username, connection);
-
             String token = UUID.randomUUID().toString();
             connection.setToken(token);
-
-            connection.sendMessage(
-                    new ConnectionResponse("Successfully connected", token, MessageStatus.OK)
-            );
-
+            connection.sendMessage(new ConnectionResponse("Successfully connected", token, MessageStatus.OK));
             LOGGER.log(Level.INFO, "{0} connected to server!", username);
         }
     }
 
-    /**
-     * Process a message sent to server
-     *
-     * @param message message sent to server
-     */
     void onMessage(Message message) {
         if (message != null && message.getSenderUsername() != null && (message.getToken() != null || message.getSenderUsername().equals("god"))) {
             if (message.getContent().equals(MessageContent.SHOOT)) {
@@ -213,19 +162,13 @@ public class Server implements Runnable {
             if (conn == null) {
                 LOGGER.log(Level.INFO, "Message Request {0} - Unknown username {1}", new Object[]{message.getContent().name(), message.getSenderUsername()});
             } else if (msgToken.equals(conn.getToken())) { // Checks that sender is the real player
-//                Message response = controllerGame.onMessage(message);
-                Message response = new Response("MEESSAGGGIOOOOO", MessageStatus.ERROR);
+                Message response = controllerGame.onMessage(message);
                 // send message to client
                 sendMessage(message.getSenderUsername(), response);
             }
         }
     }
 
-    /**
-     * Called when a player disconnects
-     *
-     * @param playerConnection connection of the player that just disconnected
-     */
     void onDisconnect(Connection playerConnection) {
         String username = getUsernameByConnection(playerConnection);
 
@@ -246,11 +189,6 @@ public class Server implements Runnable {
         }
     }
 
-    /**
-     * Sends a message to all clients
-     *
-     * @param message message to send
-     */
     public void sendMessageToAll(Message message) {
         for (Map.Entry<String, Connection> client : clients.entrySet()) {
             if (client.getValue() != null && client.getValue().isConnected()) {
@@ -264,12 +202,6 @@ public class Server implements Runnable {
         LOGGER.log(Level.INFO, "Send to all: {0}", message);
     }
 
-    /**
-     * Sends a message to a client
-     *
-     * @param username username of the client who will receive the message
-     * @param message  message to send
-     */
     public void sendMessage(String username, Message message) {
         synchronized (clientsLock) {
             for (Map.Entry<String, Connection> client : clients.entrySet()) {
@@ -287,12 +219,6 @@ public class Server implements Runnable {
         LOGGER.log(Level.INFO, "Send: {0}, {1}", new Object[]{message.getSenderUsername(), message});
     }
 
-    /**
-     * Returns the username of the connection owner
-     *
-     * @param connection connection to check
-     * @return the username
-     */
     private String getUsernameByConnection(Connection connection) {
         Set<String> usernameList;
         synchronized (clientsLock) {
@@ -309,9 +235,6 @@ public class Server implements Runnable {
         }
     }
 
-    /**
-     * Process that pings all the clients to check if they are still connected
-     */
     @Override
     public void run() {
         while (!Thread.currentThread().isInterrupted()) {

@@ -11,7 +11,7 @@ public class GameStartMessage extends Message {
     private final String firstPlayer;
 
     public GameStartMessage(String firstPlayer) {
-        super("Username", null, MessageContent.READY);
+        super("ServerUser", null, MessageContent.READY);
         this.firstPlayer = firstPlayer;
     }
 

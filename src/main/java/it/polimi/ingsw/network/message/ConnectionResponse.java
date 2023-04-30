@@ -14,7 +14,7 @@ public class ConnectionResponse extends Message {
     private final MessageStatus status;
 
     public ConnectionResponse(String message, String newToken, MessageStatus status) {
-        super("Username", null, MessageContent.CONNECTION_RESPONSE);
+        super("ServerUser", null, MessageContent.CONNECTION_RESPONSE);
         this.message = message;
         this.newToken = newToken;
         this.status = status;

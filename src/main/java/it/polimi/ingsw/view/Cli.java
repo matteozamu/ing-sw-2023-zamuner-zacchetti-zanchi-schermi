@@ -1,4 +1,4 @@
-package it.polimi.ingsw.view.cli;
+package it.polimi.ingsw.view;
 
 import it.polimi.ingsw.enumeration.MessageStatus;
 import it.polimi.ingsw.network.client.ClientGameManager;
@@ -8,31 +8,26 @@ import it.polimi.ingsw.network.message.Response;
 import it.polimi.ingsw.utility.MessageBuilder;
 import it.polimi.ingsw.utility.ServerAddressValidator;
 
+import java.io.PrintStream;
 import java.util.List;
 import java.util.Scanner;
 
 public class Cli extends ClientGameManager implements DisconnectionListener {
     private Scanner in;
-    private AdrenalinePrintStream out;
+    private PrintStream out;
 
     public Cli() {
         super();
 
         this.in = new Scanner(System.in);
-        this.out = new AdrenalinePrintStream();
+        this.out = new PrintStream(System.out, true);
     }
 
-    /**
-     * Starts the view.cli
-     */
     public void start() {
         printLogo();
         doConnection();
     }
 
-    /**
-     * Prints Adrenaline Logo
-     */
     private void printLogo() {
         out.println("███╗   ███╗██╗   ██╗    ███████╗██╗  ██╗███████╗██╗     ███████╗██╗███████╗");
         out.println("████╗ ████║╚██╗ ██╔╝    ██╔════╝██║  ██║██╔════╝██║     ██╔════╝██║██╔════╝");
@@ -44,24 +39,16 @@ public class Cli extends ClientGameManager implements DisconnectionListener {
     }
 
     private boolean promptInputError(boolean firstError, String errorMessage) {
-        out.print(AnsiCode.CLEAR_LINE);
-        if (!firstError) {
-            out.print(AnsiCode.CLEAR_LINE);
-        }
+//        out.print(AnsiCode.CLEAR_LINE);
+//        if (!firstError) {
+//            out.print(AnsiCode.CLEAR_LINE);
+//        }
 
         out.println(errorMessage);
         return false;
     }
 
-    /**
-     * Prompts a generic error
-     *
-     * @param errorMessage the error message
-     * @param close        {@code true} if you want to close the shell
-     */
     private void promptError(String errorMessage, boolean close) {
-        CliPrinter.clearConsole(out);
-
         out.println("ERROR: " + errorMessage);
 
         if (close) {
@@ -71,9 +58,6 @@ public class Cli extends ClientGameManager implements DisconnectionListener {
         }
     }
 
-    /**
-     * Asks the username
-     */
     private String askUsername() {
         boolean firstError = true;
         String username = null;
@@ -97,42 +81,36 @@ public class Cli extends ClientGameManager implements DisconnectionListener {
             }
         } while (username == null);
 
-        CliPrinter.clearConsole(out);
         return username;
     }
 
-    /**
-     * Asks the connection type
-     */
     private void doConnection() {
         boolean validConnection = false;
         boolean firstError = true;
-        int connection = -1;
+        int connection = 0;
 
         String username = askUsername();
 
         out.printf("Hi %s!%n", username);
-        out.println("\nEnter the connection type (0 = Sockets or 1 = RMI):");
+//        out.println("\nEnter the connection type (0 = Sockets or 1 = RMI):");
 
         do {
-            out.print(">>> ");
+//            out.print(">>> ");
 
-            if (in.hasNextInt()) {
-                connection = in.nextInt();
-                in.nextLine();
+//            if (in.hasNextInt()) {
+//                connection = in.nextInt();
+//                in.nextLine();
 
-                if (connection >= 0 && connection <= 1) {
-                    validConnection = true;
-                } else {
-                    firstError = promptInputError(firstError, "Invalid selection!");
-                }
+            if (connection >= 0 && connection <= 1) {
+                validConnection = true;
             } else {
-                in.nextLine();
-                firstError = promptInputError(firstError, "Invalid integer!");
+                firstError = promptInputError(firstError, "Invalid selection!");
             }
+//            } else {
+//                in.nextLine();
+//                firstError = promptInputError(firstError, "Invalid integer!");
+//            }
         } while (!validConnection);
-
-        CliPrinter.clearConsole(out);
 
         if (connection == 0) {
             out.println("You chose Socket connection\n");
@@ -140,10 +118,12 @@ public class Cli extends ClientGameManager implements DisconnectionListener {
             out.println("You chose RMI connection\n");
         }
 
-        String address = askAddress();
+//        String address = askAddress();
+        String address = "localhost";
         out.println("\nServer Address: " + address);
 
-        int port = askPort(connection);
+//        int port = askPort(connection);
+        int port = 2727;
         out.println("\nServer Port: " + port);
 
         try {
@@ -153,11 +133,6 @@ public class Cli extends ClientGameManager implements DisconnectionListener {
         }
     }
 
-    /**
-     * Asks and verify the address
-     *
-     * @return a verified address
-     */
     private String askAddress() {
         String address;
         boolean firstError = true;
@@ -184,12 +159,6 @@ public class Cli extends ClientGameManager implements DisconnectionListener {
         } while (true);
     }
 
-    /**
-     * Asks and verify the port
-     *
-     * @param connection type to set the default port
-     * @return a verified port
-     */
     private int askPort(int connection) {
         boolean firstError = true;
 
@@ -222,49 +191,77 @@ public class Cli extends ClientGameManager implements DisconnectionListener {
     /**
      * Send a lobby join request to the server
      */
-    private void sendLobbyJoinRequest() {
+    private void addPlayerToGame() {
         if (!sendRequest(MessageBuilder.buildGetInLobbyMessage(getClientToken(), getUsername(), false))) {
             promptError(SEND_ERROR, true);
         }
     }
 
+    private int askNumberOfPlayers() {
+        int gamePlayers = 2;
+        boolean firstError = true;
+
+        out.println("How many players in the game [2] (2 - 4)?");
+        in.reset();
+
+        do {
+            out.print(">>> ");
+
+            if (in.hasNextLine()) {
+                String line = in.nextLine();
+
+                if (line.equals("")) {
+                    return gamePlayers;
+                } else {
+                    gamePlayers = Integer.parseInt(line);
+                    if (gamePlayers >= 2 && gamePlayers <= 4) {
+                        return gamePlayers;
+                    } else {
+                        firstError = promptInputError(firstError, "Invalid number!");
+                    }
+                }
+            } else {
+                in.nextLine();
+                firstError = promptInputError(firstError, INVALID_STRING);
+            }
+        } while (true);
+    }
+
     @Override
     public void connectionResponse(ConnectionResponse response) {
-        CliPrinter.clearConsole(out);
-
         if (response.getStatus().equals(MessageStatus.ERROR)) {
             promptError(response.getMessage(), false);
             out.println();
             doConnection();
         } else {
             out.println("Connected to server with username " + getUsername());
-//            sendUnusedColorsRequest();
+            addPlayerToGame();
         }
     }
 
     @Override
     public void loadResponse() {
-        CliPrinter.clearConsole(out);
-
         out.println("You joined a loaded game.\nWaiting for other players!");
     }
 
     @Override
     public void lobbyJoinResponse(Response response) {
-        CliPrinter.clearConsole(out);
-
         if (response.getStatus() == MessageStatus.ERROR) {
             out.println(response.getMessage());
             out.println();
-//            sendUnusedColorsRequest();
         } else {
             out.println("You joined the lobby!\n\nWait for the game to start...\n");
-//            askVoteMap();
+            int numberOfPlayers = askNumberOfPlayers();
+            if (sendRequest(MessageBuilder.buildNumberOfPlayerMessage(getClientToken(), getUsername(), numberOfPlayers))) {
+//                votedMap();
+//            } else {
+//                promptError(SEND_ERROR, true);
+            }
         }
     }
 
     @Override
-    public void playersLobbyUpdate(List<String> users) {
+    public void playersWaitingUpdate(List<String> users) {
         StringBuilder players = new StringBuilder();
 
         for (String user : users) {
@@ -272,7 +269,7 @@ public class Cli extends ClientGameManager implements DisconnectionListener {
             players.append(", ");
         }
 
-        out.println("Players in lobby: " + players.substring(0, players.length() - 2));
+        out.println("Players waiting: " + players.substring(0, players.length() - 2));
     }
 
     @Override

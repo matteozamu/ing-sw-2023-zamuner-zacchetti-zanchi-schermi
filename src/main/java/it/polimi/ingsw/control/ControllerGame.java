@@ -1,10 +1,18 @@
 package it.polimi.ingsw.control;
 
+import it.polimi.ingsw.enumeration.MessageContent;
+import it.polimi.ingsw.enumeration.MessageStatus;
+import it.polimi.ingsw.enumeration.PossibleGameState;
 import it.polimi.ingsw.model.*;
+import it.polimi.ingsw.network.message.*;
+import it.polimi.ingsw.network.server.Server;
+import it.polimi.ingsw.utility.InputValidator;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
+import java.util.logging.Level;
+import java.util.stream.Collectors;
 
 import static it.polimi.ingsw.model.Board.Direction.*;
 
@@ -12,28 +20,22 @@ import static it.polimi.ingsw.model.Board.Direction.*;
  * Controller for the game, handling game logic and interactions between model components.
  */
 public class ControllerGame {
+    private final transient Server server;
     private UUID id;
     // private Player currentPlayer;
     private Game game;
     private List<ObjectCard> limbo;
+    private PossibleGameState gameState = PossibleGameState.GAME_ROOM;
 
     /**
      * Constructor for the ControllerGame class, initializing the game state.
      */
-    public ControllerGame() {
+    public ControllerGame(Server server) {
+        this.server = server;
         this.id = UUID.randomUUID();
         this.game = new Game();
-//        this.numberOfPlayers = 0;
         this.limbo = new ArrayList<>();
     }
-
-//    public Player getCurrentPlayer() {
-//        return currentPlayer;
-//    }
-//
-//    public void setCurrentPlayer(Player currentPlayer) {
-//        this.currentPlayer = currentPlayer;
-//    }
 
     public Game getGame() {
         return game;
@@ -46,6 +48,113 @@ public class ControllerGame {
         return limbo;
     }
 
+    private Message firstStateHandler(Message receivedMessage) {
+        Server.LOGGER.log(Level.SEVERE, "FIRST STATE HANDLER: {0}", receivedMessage);
+        switch (receivedMessage.getContent()) {
+            case GET_IN_LOBBY:
+                return lobbyMessageHandler((LobbyMessage) receivedMessage);
+            case NUMBER_OF_PLAYERS:
+                return numberOfPlayersMessageHandler((NumberOfPlayersMessage) receivedMessage);
+            default:
+                return buildInvalidResponse();
+        }
+    }
+
+    private Response numberOfPlayersMessageHandler(NumberOfPlayersMessage numberOfPlayersMessage) {
+        int numberOfPlayers = numberOfPlayersMessage.getNumberOfPlayers();
+
+        if (numberOfPlayersMessage.getContent() == MessageContent.NUMBER_OF_PLAYERS && numberOfPlayers >= Game.MIN_PLAYERS && numberOfPlayers <= game.MAX_PLAYERS) {
+            this.game.setNumberOfPlayers(numberOfPlayersMessage.getNumberOfPlayers());
+
+            Server.LOGGER.log(Level.INFO, "Number of players for the game: {0}", numberOfPlayersMessage.getNumberOfPlayers());
+        } else {
+            return buildInvalidResponse();
+        }
+
+        return new Response("Number of players set", MessageStatus.OK);
+    }
+
+    private Response lobbyMessageHandler(LobbyMessage lobbyMessage) {
+        List<Player> inLobbyPlayers = game.getPlayers();
+
+        if (lobbyMessage.getContent() == MessageContent.GET_IN_LOBBY && isUsernameAvailable(lobbyMessage.getSenderUsername()) && !lobbyMessage.isDisconnection()) {
+            if (game.getPlayers().size() < this.game.MAX_PLAYERS) {
+                game.addPlayer(new Player(lobbyMessage.getSenderUsername(), new Shelf(), game.getRandomAvailablePersonalGoalCard()));
+
+                server.sendMessageToAll(new LobbyPlayersResponse(new ArrayList<>(game.getPlayers().stream().map(player -> player.getName()).collect(Collectors.toList()))));
+                Server.LOGGER.log(Level.INFO, "{0} joined the lobby", lobbyMessage.getSenderUsername());
+            } else {
+                return buildInvalidResponse();
+            }
+        } else {
+            return buildInvalidResponse();
+        }
+
+        return checkLobby();
+    }
+
+    private Response buildInvalidResponse() {
+        return new Response("Invalid message", MessageStatus.ERROR);
+    }
+
+    private Response checkLobby() {
+        List<Player> inLobbyPlayers = game.getPlayers();
+
+        if (inLobbyPlayers.size() == this.game.getNumberOfPlayers()) {
+            gameSetupHandler();
+            return new Response("Last player added to lobby, game is starting...", MessageStatus.OK);
+        } else {
+            return new Response("Player added to lobby", MessageStatus.OK);
+        }
+    }
+
+    private void gameSetupHandler() {
+        if (game.getPlayers().size() >= 2) {
+            System.out.println("INIZIO IL GIOCOOOOOOO");
+//            startingStateHandler();
+        }
+    }
+
+    public Message onMessage(Message receivedMessage) {
+        Server.LOGGER.log(Level.SEVERE, "ONMESSAGE: {0}", receivedMessage);
+
+        if (gameState == PossibleGameState.GAME_ENDED) {
+            return new Response("GAME ENDED", MessageStatus.ERROR);
+        }
+
+        if (!InputValidator.validateInput(receivedMessage) || (gameState != PossibleGameState.GAME_ROOM && !this.getGame().doesPlayerExists(receivedMessage.getSenderUsername()))) {
+            return buildInvalidResponse();
+        }
+
+        // on the game setup messages can be received from any player
+        if (gameState == PossibleGameState.GAME_ROOM) {
+            return firstStateHandler(receivedMessage);
+        }
+
+        return new Response("GAME STATE ERROR FOR THIS MESSAGE", MessageStatus.ERROR);
+    }
+
+//    private void startingStateHandler() {
+//        // first I start the game, the turnManager and set the state of the game
+//        gameInstance.startGame();
+//        roundManager.initTurnManager();
+//        changeState(PossibleGameState.GAME_STARTED);
+//
+//        UserPlayer firstPlayer = roundManager.getTurnManager().getTurnOwner();
+//
+//        // if the game has the terminator I set the first player state depending on the presence of the terminator
+//        if (gameInstance.isBotPresent()) {
+//            firstPlayer.changePlayerState(PossiblePlayerState.SPAWN_TERMINATOR);
+//        } // else the state remains first spawn and it's ok to start
+//
+//        // I first need to pick the two powerups for the first player playing
+//        roundManager.pickTwoPowerups();
+//
+//        sendPrivateUpdates();
+//        server.sendMessageToAll(new GameStartMessage(roundManager.getTurnManager().getTurnOwner().getUsername()));
+//    }
+
+
     /**
      * Check if the username is available
      *
@@ -53,8 +162,6 @@ public class ControllerGame {
      * @return true if available, false if not
      * @throws NullPointerException if username is null
      */
-
-    //TESTED
     public boolean isUsernameAvailable(String username) throws NullPointerException {
         if (username == null) throw new NullPointerException("Username is null");
         for (Player p : this.game.getPlayers()) {
@@ -118,7 +225,6 @@ public class ControllerGame {
 //    }
 
     //si puo fare una modifica che non rimuova la coordinata della cella ma setti il contenuto a null
-
 
 
     /**

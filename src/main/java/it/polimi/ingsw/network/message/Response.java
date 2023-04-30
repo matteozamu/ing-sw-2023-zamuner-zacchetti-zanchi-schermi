@@ -13,7 +13,7 @@ public class Response extends Message {
     private final MessageStatus status;
 
     public Response(String message, MessageStatus status) {
-        super("Username", null, MessageContent.RESPONSE);
+        super("ServerUser", null, MessageContent.RESPONSE);
 
         this.message = message;
         this.status = status;

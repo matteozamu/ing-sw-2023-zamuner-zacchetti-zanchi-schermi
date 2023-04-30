@@ -2,29 +2,25 @@ package it.polimi.ingsw.network.message;
 
 import it.polimi.ingsw.enumeration.MessageContent;
 
-/**
- * Message class used to join or leave the lobby
- */
-public class LobbyMessage extends Message {
+public class NumberOfPlayersMessage extends Message {
     private static final long serialVersionUID = -8420070827032848314L;
 
-    private final boolean disconnection;
+    private final int numberOfPlayers;
 
-    public LobbyMessage(String username, String token, boolean disconnection) {
-        super(username, token, MessageContent.GET_IN_LOBBY);
-        this.disconnection = disconnection;
+    public NumberOfPlayersMessage(String username, String token, int numberOfPlayers) {
+        super(username, token, MessageContent.NUMBER_OF_PLAYERS);
+        this.numberOfPlayers = numberOfPlayers;
     }
 
-    public boolean isDisconnection() {
-        return this.disconnection;
+    public int getNumberOfPlayers() {
+        return numberOfPlayers;
     }
 
-    // a Lobby message is equal to an other (in our case) if its the same message or if it has the same user sender name
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        LobbyMessage that = (LobbyMessage) o;
+        NumberOfPlayersMessage that = (NumberOfPlayersMessage) o;
         return getSenderUsername().equals(that.getSenderUsername());
     }
 
@@ -33,7 +29,7 @@ public class LobbyMessage extends Message {
         return "LobbyMessage{" +
                 "senderUsername=" + getSenderUsername() +
                 ", content=" + getContent() +
-                ", disconnection=" + disconnection +
+                ", numberOfPlayers=" + numberOfPlayers +
                 '}';
     }
 }

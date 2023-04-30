@@ -1,6 +1,6 @@
 package it.polimi.ingsw.network.client;
 
-import it.polimi.ingsw.view.cli.Cli;
+import it.polimi.ingsw.view.Cli;
 
 public class ClientMain {
     public static void main(String[] args) {

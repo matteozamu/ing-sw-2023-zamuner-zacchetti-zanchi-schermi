@@ -1,6 +1,7 @@
 package it.polimi.ingsw.control;
 
 import it.polimi.ingsw.model.*;
+import it.polimi.ingsw.network.server.Server;
 import junit.framework.TestCase;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -18,7 +19,7 @@ public class ControllerGameTest extends TestCase {
 
     @BeforeEach
     public void setUp() {
-        this.cg = new ControllerGame();
+        this.cg = new ControllerGame(new Server());
         this.cg.getGame().loadObjectCards();
 
         ArrayList<PersonalGoal> goals = new ArrayList<>();

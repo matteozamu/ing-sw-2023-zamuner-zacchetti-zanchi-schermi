@@ -32,7 +32,7 @@ interface ClientGameManagerListener {
      *
      * @param users list of users in the lobby
      */
-    void playersLobbyUpdate(List<String> users);
+    void playersWaitingUpdate(List<String> users);
 
     /**
      * Tells the client that is not his turn

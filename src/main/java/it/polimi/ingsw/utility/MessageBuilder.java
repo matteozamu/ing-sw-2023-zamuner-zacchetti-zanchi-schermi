@@ -3,6 +3,7 @@ package it.polimi.ingsw.utility;
 
 import it.polimi.ingsw.network.message.ConnectionRequest;
 import it.polimi.ingsw.network.message.LobbyMessage;
+import it.polimi.ingsw.network.message.NumberOfPlayersMessage;
 
 public class MessageBuilder {
 
@@ -23,5 +24,9 @@ public class MessageBuilder {
 
     public static LobbyMessage buildGetInLobbyMessage(String token, String username, boolean disconnection) {
         return new LobbyMessage(username, token, disconnection);
+    }
+
+    public static NumberOfPlayersMessage buildNumberOfPlayerMessage(String token, String username, int numberOfPlayers) {
+        return new NumberOfPlayersMessage(username, token, numberOfPlayers);
     }
 }
