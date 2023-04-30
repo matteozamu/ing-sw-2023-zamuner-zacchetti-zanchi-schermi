@@ -38,7 +38,7 @@ public final class CommonGoalType12 extends CommonGoal {
         return checkDescendingStair(shelf) || checkAscendingStair(shelf);
     }
 
-    private boolean checkDescendingStair(Shelf shelf) {
+    public boolean checkDescendingStair(Shelf shelf) {
 
         for (int col = 0; col < shelf.COLUMNS; col++) {
             int maxHeight = 5 - col;
@@ -55,7 +55,7 @@ public final class CommonGoalType12 extends CommonGoal {
         return true;
     }
 
-    private boolean checkAscendingStair(Shelf shelf) {
+    public boolean checkAscendingStair(Shelf shelf) {
 
         for (int col = shelf.COLUMNS - 1; col >= 0; col--) {
             int maxHeight = col + 1;
