@@ -115,17 +115,21 @@ public class BoardTest extends TestCase {
         assertFalse(this.b.isEmptyAtDirection(this.c, Board.Direction.RIGHT));
     }
 
-    //TODO: rifare test quando sono sistemate le eccezioni. Sono state sistemate
-//    @Test
-//    public void testIsEmptyAtDirectionIllegalArgumentException(){
-//        assertThrows(IllegalArgumentException.class, () -> {
-//            this.b.isEmptyAtDirection(this.c, null);
-//        });
-//    }
+    @Test
+    public void testIsEmptyAtDirectionIllegalArgumentException(){
+        assertThrows(IllegalArgumentException.class, () -> {
+            this.b.isEmptyAtDirection(this.c, null);
+        });
+    }
 
+    @Test
+    public void testIsEmptyAtDirectionNullPointerException(){
+        assertThrows(NullPointerException.class, () -> {
+            this.b.isEmptyAtDirection(null, Board.Direction.UP);
+        });
+    }
 
-
-
+    // TODO: testing toString
 
 }
 

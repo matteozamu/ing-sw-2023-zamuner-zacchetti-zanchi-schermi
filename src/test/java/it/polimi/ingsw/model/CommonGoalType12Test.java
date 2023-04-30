@@ -65,6 +65,8 @@ class CommonGoalType12Test {
         assertFalse(goal.checkDescendingStair(shelf));
     }
 
+
+    //TODO: expected true returns false
 //    @Test
 //    public void testCheckAscendingStairReturnsTrue(){
 //        CommonGoalType12 goal = new CommonGoalType12();
