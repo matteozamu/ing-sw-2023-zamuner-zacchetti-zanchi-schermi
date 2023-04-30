@@ -22,7 +22,7 @@ public class MessageBuilder {
         return new ConnectionRequest(username);
     }
 
-    public static LobbyMessage buildGetInLobbyMessage(String token, String username, boolean disconnection) {
+    public static LobbyMessage buildAddPlayerToGameMessage(String token, String username, boolean disconnection) {
         return new LobbyMessage(username, token, disconnection);
     }
 

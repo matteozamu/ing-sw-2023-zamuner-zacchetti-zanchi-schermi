@@ -37,11 +37,10 @@ public class InputValidator {
 
         try {
             switch (checkingMessage.getContent()) {
-                case COLOR:
                 case PASS_TURN:
                 case LOBBY_VOTE:
                     return true;
-                case GET_IN_LOBBY:
+                case ADD_PLAYER:
                     return true;
                 case NUMBER_OF_PLAYERS:
                     return true;

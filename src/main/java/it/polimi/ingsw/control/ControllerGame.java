@@ -7,7 +7,9 @@ import it.polimi.ingsw.model.*;
 import it.polimi.ingsw.network.message.*;
 import it.polimi.ingsw.network.server.Server;
 import it.polimi.ingsw.utility.InputValidator;
+import it.polimi.ingsw.utility.TimerRunListener;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
@@ -19,13 +21,15 @@ import static it.polimi.ingsw.model.Board.Direction.*;
 /**
  * Controller for the game, handling game logic and interactions between model components.
  */
-public class ControllerGame {
+public class ControllerGame implements TimerRunListener, Serializable  {
     private final transient Server server;
     private UUID id;
     // private Player currentPlayer;
     private Game game;
     private List<ObjectCard> limbo;
     private PossibleGameState gameState = PossibleGameState.GAME_ROOM;
+    private boolean isLobbyFull;
+
 
     /**
      * Constructor for the ControllerGame class, initializing the game state.
@@ -51,7 +55,7 @@ public class ControllerGame {
     private Message firstStateHandler(Message receivedMessage) {
         Server.LOGGER.log(Level.SEVERE, "FIRST STATE HANDLER: {0}", receivedMessage);
         switch (receivedMessage.getContent()) {
-            case GET_IN_LOBBY:
+            case ADD_PLAYER:
                 return lobbyMessageHandler((LobbyMessage) receivedMessage);
             case NUMBER_OF_PLAYERS:
                 return numberOfPlayersMessageHandler((NumberOfPlayersMessage) receivedMessage);
@@ -77,11 +81,11 @@ public class ControllerGame {
     private Response lobbyMessageHandler(LobbyMessage lobbyMessage) {
         List<Player> inLobbyPlayers = game.getPlayers();
 
-        if (lobbyMessage.getContent() == MessageContent.GET_IN_LOBBY && isUsernameAvailable(lobbyMessage.getSenderUsername()) && !lobbyMessage.isDisconnection()) {
-            if (game.getPlayers().size() < this.game.MAX_PLAYERS) {
+        if (lobbyMessage.getContent() == MessageContent.ADD_PLAYER && isUsernameAvailable(lobbyMessage.getSenderUsername()) && !lobbyMessage.isDisconnection()) {
+            if (inLobbyPlayers.size() < this.game.MAX_PLAYERS) {
                 game.addPlayer(new Player(lobbyMessage.getSenderUsername(), new Shelf(), game.getRandomAvailablePersonalGoalCard()));
 
-                server.sendMessageToAll(new LobbyPlayersResponse(new ArrayList<>(game.getPlayers().stream().map(player -> player.getName()).collect(Collectors.toList()))));
+                server.sendMessageToAll(new LobbyPlayersResponse(new ArrayList<>(inLobbyPlayers.stream().map(player -> player.getName()).collect(Collectors.toList()))));
                 Server.LOGGER.log(Level.INFO, "{0} joined the lobby", lobbyMessage.getSenderUsername());
             } else {
                 return buildInvalidResponse();
@@ -95,6 +99,20 @@ public class ControllerGame {
 
     private Response buildInvalidResponse() {
         return new Response("Invalid message", MessageStatus.ERROR);
+    }
+
+    /**
+     * @return {@code true} if the lobby is full, otherwise false
+     */
+    public boolean getIsLobbyFull() {
+        return isLobbyFull;
+    }
+
+    /**
+     * @param lobbyFull tells if the lobby is full or not
+     */
+    public void setIsLobbyFull(boolean lobbyFull){
+        this.isLobbyFull = lobbyFull;
     }
 
     private Response checkLobby() {
@@ -290,6 +308,11 @@ public class ControllerGame {
         this.game.getCurrentPlayer().setCurrentPoints(points);
 
         return points;
+    }
+
+    @Override
+    public void onTimerRun() {
+        // TODO
     }
 }
 

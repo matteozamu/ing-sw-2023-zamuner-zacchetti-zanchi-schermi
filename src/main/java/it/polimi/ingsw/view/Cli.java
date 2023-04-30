@@ -191,8 +191,8 @@ public class Cli extends ClientGameManager implements DisconnectionListener {
     /**
      * Send a lobby join request to the server
      */
-    private void addPlayerToGame() {
-        if (!sendRequest(MessageBuilder.buildGetInLobbyMessage(getClientToken(), getUsername(), false))) {
+    private void addPlayerToGameRequest() {
+        if (!sendRequest(MessageBuilder.buildAddPlayerToGameMessage(getClientToken(), getUsername(), false))) {
             promptError(SEND_ERROR, true);
         }
     }
@@ -235,7 +235,7 @@ public class Cli extends ClientGameManager implements DisconnectionListener {
             doConnection();
         } else {
             out.println("Connected to server with username " + getUsername());
-            addPlayerToGame();
+            addPlayerToGameRequest();
         }
     }
 
@@ -275,6 +275,11 @@ public class Cli extends ClientGameManager implements DisconnectionListener {
     @Override
     public void notYourTurn(String turnOwner) {
         out.println(turnOwner + " is playing. Wait for your turn...");
+    }
+
+    @Override
+    public void firstPlayerCommunication(String username) {
+
     }
 
     @Override

@@ -119,6 +119,11 @@ public abstract class ClientGameManager implements ClientGameManagerListener, Cl
         return true;
     }
 
+    /**
+     * Handles the response to the server connection
+     *
+     * @param connectionResponse response received
+     */
     private void handleConnectionResponse(ConnectionResponse connectionResponse) {
         if (connectionResponse.getStatus().equals(MessageStatus.OK)) {
             client.setToken(connectionResponse.getNewToken());

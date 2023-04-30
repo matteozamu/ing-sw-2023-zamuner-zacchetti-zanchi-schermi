@@ -25,7 +25,7 @@ public class ClientSocket extends Client implements Runnable {
     private transient Thread messageReceiver;
 
     /**
-     * Constructs a RMI client
+     * Constructs a socket client
      *
      * @param username username of the player
      * @param address  address of the server

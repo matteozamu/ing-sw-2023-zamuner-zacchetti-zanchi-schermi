@@ -79,6 +79,12 @@ public class Server implements Runnable {
 //        LOGGER.info("RMI Server Started");
     }
 
+    /**
+     * Adds or reconnects a player to the server
+     *
+     * @param username   username of the player
+     * @param connection connection of the client
+     */
     void login(String username, Connection connection) {
         try {
             synchronized (clientsLock) {
@@ -93,6 +99,13 @@ public class Server implements Runnable {
         }
     }
 
+    /**
+     * Handles a known player login
+     *
+     * @param username   username of the player who is trying to login
+     * @param connection connection of the client
+     * @throws IOException when send message fails
+     */
     private void knownPlayerLogin(String username, Connection connection) throws IOException {
         if (clients.get(username) == null || !clients.get(username).isConnected()) { // Player Reconnection
             clients.replace(username, connection);
@@ -130,11 +143,18 @@ public class Server implements Runnable {
     }
 
     private void newPlayerLogin(String username, Connection connection) throws IOException {
-        if (controllerGame.getGame().isHasStarted()) {
+        if (controllerGame.getGame().isHasStarted()) {  // Game Started
             connection.sendMessage(new ConnectionResponse("Game is already started!", null, MessageStatus.ERROR));
             connection.disconnect();
             LOGGER.log(Level.INFO, "{0} attempted to connect!", username);
-        } else {
+        } else if (controllerGame.getIsLobbyFull()) { // Lobby Full
+            connection.sendMessage(
+                    new ConnectionResponse("Max number of player reached", null, MessageStatus.ERROR)
+            );
+
+            connection.disconnect();
+            LOGGER.log(Level.INFO, "{0} tried to connect but game is full!", username);
+        } else { // New player
             clients.put(username, connection);
             String token = UUID.randomUUID().toString();
             connection.setToken(token);
@@ -144,13 +164,8 @@ public class Server implements Runnable {
     }
 
     void onMessage(Message message) {
-        if (message != null && message.getSenderUsername() != null && (message.getToken() != null || message.getSenderUsername().equals("god"))) {
-            if (message.getContent().equals(MessageContent.SHOOT)) {
-                String messageString = message.toString();
-                LOGGER.log(Level.INFO, messageString);
-            } else {
-                LOGGER.log(Level.INFO, "Received: {0}", message);
-            }
+        if (message != null && message.getSenderUsername() != null && (message.getToken() != null || message.getSenderUsername().equals("serverUser"))) {
+            LOGGER.log(Level.INFO, "Received: {0}", message);
 
             String msgToken = message.getToken();
             Connection conn;

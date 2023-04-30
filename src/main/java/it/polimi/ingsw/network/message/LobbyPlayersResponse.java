@@ -14,7 +14,7 @@ public class LobbyPlayersResponse extends Message {
     private ArrayList<String> users;
 
     public LobbyPlayersResponse(List<String> users) {
-        super("username", null, MessageContent.PLAYERS_IN_LOBBY);
+        super("serverUser", null, MessageContent.PLAYERS_IN_LOBBY);
         this.users = (ArrayList<String>) users;
     }
 

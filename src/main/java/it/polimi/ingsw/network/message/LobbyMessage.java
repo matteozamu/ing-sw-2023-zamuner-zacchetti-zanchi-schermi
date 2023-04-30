@@ -11,7 +11,7 @@ public class LobbyMessage extends Message {
     private final boolean disconnection;
 
     public LobbyMessage(String username, String token, boolean disconnection) {
-        super(username, token, MessageContent.GET_IN_LOBBY);
+        super(username, token, MessageContent.ADD_PLAYER);
         this.disconnection = disconnection;
     }
 

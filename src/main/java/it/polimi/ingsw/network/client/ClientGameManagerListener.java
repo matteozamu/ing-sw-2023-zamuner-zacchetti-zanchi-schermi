@@ -38,4 +38,11 @@ interface ClientGameManagerListener {
      * Tells the client that is not his turn
      */
     void notYourTurn(String turnOwner);
+
+    /**
+     * Communicates who is the first player
+     *
+     * @param username first player username
+     */
+    void firstPlayerCommunication(String username);
 }

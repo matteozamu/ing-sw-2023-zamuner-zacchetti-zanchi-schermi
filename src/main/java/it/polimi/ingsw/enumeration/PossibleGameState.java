@@ -14,6 +14,8 @@ public enum PossibleGameState {
      */
     GAME_STARTED,
     GAME_ENDED,
+
+    // da togliere
     FINAL_FRENZY,
     SECOND_ACTION,
     MISSING_TERMINATOR_ACTION,
