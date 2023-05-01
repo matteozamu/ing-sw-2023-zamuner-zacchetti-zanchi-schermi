@@ -115,10 +115,10 @@ public class Cli extends ViewObservable implements View {
         }
     }
 
-    @Override
-    public void showMatchInfo(List<String> players, Map<Coordinate, ObjectCard> board, String activePlayer) {
-        //do nothing
-    }
+//    @Override
+//    public void showMatchInfo(List<String> players, Map<Coordinate, ObjectCard> board, String activePlayer) {
+//        //do nothing
+//    }
 
     @Override
     public void askPlayersNumber() {
@@ -213,6 +213,30 @@ public class Cli extends ViewObservable implements View {
     @Override
     public void showGenericMessage(String genericMessage) {
         out.println(genericMessage);
+    }
+
+    @Override
+    public void showBoard(Map<Coordinate, ObjectCard> grid) {
+        ObjectCard objectCard;
+        String s = "";
+
+        for (int row = 1; row <= 5; row++) {
+            for (int spaces = 5 - row; spaces > 0; spaces--) s += "\t\t";
+            for (int col = 1; col < 2 * row; col++) {
+                objectCard = grid.get(new Coordinate(5 - row, -5 + col));
+                s += ("|" + objectCard);
+            }
+            s += "|\n";
+        }
+        for (int row = 5 - 1; row >= 1; row--) {
+            for (int spaces = 5 - row; spaces > 0; spaces--) s += "\t\t";
+            for (int col = 1; col < 2 * row; col++) {
+                objectCard = grid.get(new Coordinate(-5 + row, -5 + col));
+                s += ("|"+ objectCard);
+            }
+            s += "|\n";
+        }
+        out.println(s);
     }
 
 }

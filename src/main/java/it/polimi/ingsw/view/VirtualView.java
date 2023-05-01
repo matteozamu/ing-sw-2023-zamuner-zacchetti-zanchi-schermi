@@ -50,6 +50,11 @@ public class VirtualView implements View, Observer {
         clientHandler.sendMessage(new LobbyMessage(nicknameList, numPlayers));
     }
 
+    @Override
+    public void showBoard(Map<Coordinate, ObjectCard> board){
+        clientHandler.sendMessage(new BoardMessage(board));
+    }
+
     /**
      * returns the client handler associated to a client.
      *
@@ -75,16 +80,16 @@ public class VirtualView implements View, Observer {
         clientHandler.sendMessage(new PlayersNumberRequest());
     }
 
-    /** shows match info such as the board
-     *
-     * @param players is the list of players in the game
-     * @param board is the game board
-     * @param activePlayer is the player of the current turn
-     */
-    @Override
-    public void showMatchInfo(List<String> players, Map<Coordinate, ObjectCard> board, String activePlayer) {
-        clientHandler.sendMessage(new BoardMessage(Game.SERVER_NICKNAME, MessageType.BOARD, players, board, activePlayer));
-    }
+//    /** shows match info such as the board
+//     *
+//     * @param players is the list of players in the game
+//     * @param board is the game board
+//     * @param activePlayer is the player of the current turn
+//     */
+//    @Override
+//    public void showMatchInfo(List<String> players, Map<Coordinate, ObjectCard> board, String activePlayer) {
+//        clientHandler.sendMessage(new BoardMessage(Game.SERVER_NICKNAME, MessageType.BOARD, players, board, activePlayer));
+//    }
 
     @Override
     public void askObjCard(){

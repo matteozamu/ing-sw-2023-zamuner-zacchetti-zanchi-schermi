@@ -45,7 +45,9 @@ public interface View {
      */
     void askPlayersNumber();
 
-    void showMatchInfo(List<String> players, Map<Coordinate, ObjectCard> board, String activePlayer);
+//    void showMatchInfo(List<String> players, Map<Coordinate, ObjectCard> board, String activePlayer);
+
+    void showBoard(Map<Coordinate, ObjectCard> board);
 
     void askObjCard();
 

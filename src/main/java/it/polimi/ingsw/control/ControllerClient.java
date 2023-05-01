@@ -76,6 +76,9 @@ public class ControllerClient implements ViewObserver, Observer {
             case GENERIC_MESSAGE:
                 taskQueue.execute(() -> view.showGenericMessage(((GenericMessage) message).getMessage()));
                 break;
+            case BOARD:
+                taskQueue.execute(() -> view.showBoard(((BoardMessage) message).getBoard()));
+                break;
             default:
                 break;
         }

@@ -21,6 +21,7 @@ public enum MessageType {
 
 
     //utility:
+    INFO,
     GAME_LOAD,
     MATCH_INFO,
     DISCONNECTION,

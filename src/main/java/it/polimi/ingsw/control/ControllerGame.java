@@ -104,8 +104,7 @@ public class ControllerGame implements Observer, Serializable {
         broadcastGenericMessage("All Players are connected. ");
         broadcastGenericMessage("Game Started!");
 
-        turnController.broadcastMatchInfo();
-        //turnController.newTurn();
+        turnController.newTurn();
     }
 
 
