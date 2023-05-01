@@ -21,7 +21,7 @@ import static it.polimi.ingsw.model.Board.Direction.*;
 /**
  * Controller for the game, handling game logic and interactions between model components.
  */
-public class ControllerGame implements TimerRunListener, Serializable  {
+public class ControllerGame implements TimerRunListener, Serializable {
     private final transient Server server;
     private UUID id;
     // private Player currentPlayer;
@@ -43,13 +43,6 @@ public class ControllerGame implements TimerRunListener, Serializable  {
 
     public Game getGame() {
         return game;
-    }
-
-    /**
-     * @return the array list containing the one, two or three ObjectCard selected
-     */
-    public List<ObjectCard> getLimbo() {
-        return limbo;
     }
 
     private Message firstStateHandler(Message receivedMessage) {
@@ -111,7 +104,7 @@ public class ControllerGame implements TimerRunListener, Serializable  {
     /**
      * @param lobbyFull tells if the lobby is full or not
      */
-    public void setIsLobbyFull(boolean lobbyFull){
+    public void setIsLobbyFull(boolean lobbyFull) {
         this.isLobbyFull = lobbyFull;
     }
 
@@ -119,6 +112,7 @@ public class ControllerGame implements TimerRunListener, Serializable  {
         List<Player> inLobbyPlayers = game.getPlayers();
 
         if (inLobbyPlayers.size() == this.game.getNumberOfPlayers()) {
+            this.isLobbyFull = true;
             gameSetupHandler();
             return new Response("Last player added to lobby, game is starting...", MessageStatus.OK);
         } else {
@@ -127,9 +121,9 @@ public class ControllerGame implements TimerRunListener, Serializable  {
     }
 
     private void gameSetupHandler() {
-        if (game.getPlayers().size() >= 2) {
-            System.out.println("INIZIO IL GIOCOOOOOOO");
-//            startingStateHandler();
+        if (game.getPlayers().size() == game.getNumberOfPlayers()) {
+            System.out.println("SERVER: INIZIO IL GIOCOOOOOOO");
+            startingStateHandler();
         }
     }
 
@@ -152,25 +146,19 @@ public class ControllerGame implements TimerRunListener, Serializable  {
         return new Response("GAME STATE ERROR FOR THIS MESSAGE", MessageStatus.ERROR);
     }
 
-//    private void startingStateHandler() {
-//        // first I start the game, the turnManager and set the state of the game
+    private void startingStateHandler() {
 //        gameInstance.startGame();
 //        roundManager.initTurnManager();
-//        changeState(PossibleGameState.GAME_STARTED);
-//
+        gameState = PossibleGameState.GAME_STARTED;
+
 //        UserPlayer firstPlayer = roundManager.getTurnManager().getTurnOwner();
-//
-//        // if the game has the terminator I set the first player state depending on the presence of the terminator
-//        if (gameInstance.isBotPresent()) {
-//            firstPlayer.changePlayerState(PossiblePlayerState.SPAWN_TERMINATOR);
-//        } // else the state remains first spawn and it's ok to start
-//
-//        // I first need to pick the two powerups for the first player playing
+
+        // I first need to pick the two powerups for the first player playing
 //        roundManager.pickTwoPowerups();
-//
+
 //        sendPrivateUpdates();
 //        server.sendMessageToAll(new GameStartMessage(roundManager.getTurnManager().getTurnOwner().getUsername()));
-//    }
+    }
 
 
     /**

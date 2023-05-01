@@ -183,7 +183,6 @@ public class Game {
      *
      * @return A CommonGoal randomly selected from the container.
      */
-    //TESTED
     public CommonGoal getRandomAvailableCommonGoal() {
         if (this.commonGoalContainer == null || this.commonGoalContainer.size() == 0) return null;
 

@@ -20,12 +20,16 @@ interface ClientGameManagerListener {
      */
     void loadResponse();
 
+    void responseError(String error);
+
     /**
      * Handles the response to the lobby join
      *
      * @param response to the lobby join
      */
     void lobbyJoinResponse(Response response);
+
+    void numberOfPlayersResponse(Response response);
 
     /**
      * Notifies an update of players in the lobby

@@ -15,7 +15,7 @@ class ClientRoundManager {
 
     private boolean roundStarted;
 
-    ClientRoundManager(boolean botPresent) {
+    ClientRoundManager() {
         this.playerState = UserPlayerState.SPAWN;
         this.gameClientState = GameClientState.NORMAL;
 

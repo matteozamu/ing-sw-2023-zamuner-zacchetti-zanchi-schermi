@@ -1,11 +1,7 @@
 package it.polimi.ingsw.network.client;
 
 import it.polimi.ingsw.enumeration.MessageStatus;
-import it.polimi.ingsw.enumeration.UserPlayerState;
-import it.polimi.ingsw.network.message.ConnectionResponse;
-import it.polimi.ingsw.network.message.LobbyPlayersResponse;
-import it.polimi.ingsw.network.message.Message;
-import it.polimi.ingsw.network.message.Response;
+import it.polimi.ingsw.network.message.*;
 
 import java.io.IOException;
 import java.text.DateFormat;
@@ -31,7 +27,10 @@ public abstract class ClientGameManager implements ClientGameManagerListener, Cl
     private boolean joinedLobby;
     private List<String> lobbyPlayers;
 
-    private boolean votedMap;
+    private String firstPlayer;
+    private String turnOwner;
+    private boolean firstTurn;
+    private boolean yourTurn;
 
     private ClientRoundManager roundManager; // manage the rounds of this client
     //    private GameSerialized gameSerialized;
@@ -97,12 +96,25 @@ public abstract class ClientGameManager implements ClientGameManagerListener, Cl
                 handleResponse((Response) message);
                 break;
 
+            case READY:
+                handleGameStartMessage((GameStartMessage) message);
+                break;
+
             case DISCONNECTION:
 //                handleDisconnection((DisconnectionMessage) message);
                 break;
 
             default:
         }
+    }
+
+    private void handleGameStartMessage(GameStartMessage gameStartMessage) {
+//        synchronized (gameSerializedLock) {
+        firstPlayer = gameStartMessage.getFirstPlayer();
+        turnOwner = gameStartMessage.getFirstPlayer();
+
+        startGame();
+//        }
     }
 
     public boolean sendRequest(Message message) {
@@ -144,23 +156,24 @@ public abstract class ClientGameManager implements ClientGameManagerListener, Cl
         if (!joinedLobby) {
             joinedLobby = response.getStatus() == MessageStatus.OK;
             queue.add(() -> lobbyJoinResponse(response));
-        } else if (votedMap) {
-            votedMap = false;
+
+            if (lobbyPlayers.size() == 1) queue.add(() -> numberOfPlayersResponse(response));
+
+        }
+        if (response.getStatus() == MessageStatus.ERROR) {
+            queue.add(() -> responseError(response.getMessage()));
         } else {
-            if (response.getStatus() == MessageStatus.ERROR) {
-            } else {
-                onPositiveResponse(response);
-            }
+            onPositiveResponse(response);
         }
     }
 
     private void onPositiveResponse(Response response) {
-        if (response.getStatus() == MessageStatus.NEED_PLAYER_ACTION) {
+//        if (response.getStatus() == MessageStatus.NEED_PLAYER_ACTION) {
 //            roundManager.targetingScope();
-        } else if (roundManager.getUserPlayerState() == UserPlayerState.ENDING_PHASE) {
+//        } else if (roundManager.getUserPlayerState() == UserPlayerState.ENDING_PHASE) {
 //            roundManager.botRespawn();
-        } else {
-        }
+//        } else {
+//        }
     }
 
     public void createConnection(int connection, String username, String address, int port, DisconnectionListener disconnectionListener) throws Exception {
@@ -192,23 +205,18 @@ public abstract class ClientGameManager implements ClientGameManagerListener, Cl
         clientUpdater = new ClientUpdater(client, this);
     }
 
-//    private void startGame() {
-//        roundManager = new ClientRoundManager(isBotPresent);
-//
-//        if (firstTurn) { // First round
-//            if (firstPlayer.equals(getUsername())) { // First player to play
-//                yourTurn = true;
-//
-//                if (isBotPresent) {
-//                    roundManager.botSpawn();
-//                    roundManager.setBotFirstTurn();
-//                }
-//            }
-//
-//            queue.add(() -> firstPlayerCommunication(firstPlayer));
-//            firstTurn = false;
-//        }
-//
+    private void startGame() {
+        roundManager = new ClientRoundManager();
+
+        if (firstTurn) { // First round
+            if (firstPlayer.equals(getUsername())) { // First player to play
+                yourTurn = true;
+            }
+
+            queue.add(() -> firstPlayerCommunication(firstPlayer));
+            firstTurn = false;
+        }
+
 //        newTurn();
-//    }
+    }
 }

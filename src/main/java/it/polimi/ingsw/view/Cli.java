@@ -251,12 +251,14 @@ public class Cli extends ClientGameManager implements DisconnectionListener {
             out.println();
         } else {
             out.println("You joined the lobby!\n\nWait for the game to start...\n");
-            int numberOfPlayers = askNumberOfPlayers();
-            if (sendRequest(MessageBuilder.buildNumberOfPlayerMessage(getClientToken(), getUsername(), numberOfPlayers))) {
-//                votedMap();
-//            } else {
-//                promptError(SEND_ERROR, true);
-            }
+        }
+    }
+
+    @Override
+    public void numberOfPlayersResponse(Response response) {
+        int numberOfPlayers = askNumberOfPlayers();
+        if (!sendRequest(MessageBuilder.buildNumberOfPlayerMessage(getClientToken(), getUsername(), numberOfPlayers))) {
+            promptError(SEND_ERROR, true);
         }
     }
 
@@ -269,7 +271,10 @@ public class Cli extends ClientGameManager implements DisconnectionListener {
             players.append(", ");
         }
 
-        out.println("Players waiting: " + players.substring(0, players.length() - 2));
+        if (users.size() == 1)
+            out.println("There is " + users.size() + " player waiting: " + players.substring(0, players.length() - 2));
+        else
+            out.println("There are " + users.size() + " players waiting: " + players.substring(0, players.length() - 2));
     }
 
     @Override
@@ -278,8 +283,13 @@ public class Cli extends ClientGameManager implements DisconnectionListener {
     }
 
     @Override
-    public void firstPlayerCommunication(String username) {
+    public void responseError(String error) {
+        promptError(error + "\n", false);
+    }
 
+    @Override
+    public void firstPlayerCommunication(String username) {
+        out.println(username + " first player communication");
     }
 
     @Override
