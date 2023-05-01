@@ -42,9 +42,15 @@ public final class CommonGoalType2 extends CommonGoal {
         }
 
         for (int row = 5; row >= 4; row--) {
-            for (int col : new int[] {0, 4}) {
+            for (int col : new int[]{0, 4}) {
                 Coordinate coordinate = new Coordinate(row, col);
-                ObjectCardType currentType = shelf.getObjectCard(coordinate).getType();
+                ObjectCard objectCard = shelf.getObjectCard(coordinate);
+
+                if (objectCard == null) {
+                    continue;
+                }
+
+                ObjectCardType currentType = objectCard.getType();
 
                 if ((col == 0 && checkDiagonalFromTopLeft(shelf, coordinate, currentType)) ||
                         (col == 4 && checkDiagonalFromTopRight(shelf, coordinate, currentType))) {
@@ -54,6 +60,7 @@ public final class CommonGoalType2 extends CommonGoal {
         }
         return false;
     }
+
 
     public boolean checkDiagonalFromTopLeft(Shelf shelf, Coordinate start, ObjectCardType type) {
         for (int i = 0; i < 5; i++) {

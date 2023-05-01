@@ -110,19 +110,18 @@ class CommonGoalType2Test {
         assertTrue(goal.checkGoal(shelf));
     }
 
-    //TODO: non passa
-//    @Test
-//    public void testCheckGoalReturnsFalse(){
-//        Shelf shelf = new Shelf();
-//        shelf.getGrid().put(new Coordinate(5, 0), new ObjectCard(ObjectCardType.gatto, 2));
-//        shelf.getGrid().put(new Coordinate(4, 1), new ObjectCard(ObjectCardType.gatto, 0));
-//        shelf.getGrid().put(new Coordinate(3, 2), new ObjectCard(ObjectCardType.pianta, 1));
-//        shelf.getGrid().put(new Coordinate(2, 3), new ObjectCard(ObjectCardType.gatto, 0));
-//        shelf.getGrid().put(new Coordinate(1, 4), new ObjectCard(ObjectCardType.gatto, 2));
-//        shelf.getGrid().put(new Coordinate(0, 5), new ObjectCard(ObjectCardType.gatto, 1));
-//        CommonGoalType2 goal = new CommonGoalType2();
-//        assertFalse(goal.checkGoal(shelf));
-//    }
+    @Test
+    public void testCheckGoalReturnsFalse(){
+        Shelf shelf = new Shelf();
+        shelf.getGrid().put(new Coordinate(5, 0), new ObjectCard(ObjectCardType.gatto, 2));
+        shelf.getGrid().put(new Coordinate(4, 1), new ObjectCard(ObjectCardType.gatto, 0));
+        shelf.getGrid().put(new Coordinate(3, 2), new ObjectCard(ObjectCardType.pianta, 1));
+        shelf.getGrid().put(new Coordinate(2, 3), new ObjectCard(ObjectCardType.gatto, 0));
+        shelf.getGrid().put(new Coordinate(1, 4), new ObjectCard(ObjectCardType.gatto, 2));
+        shelf.getGrid().put(new Coordinate(0, 5), new ObjectCard(ObjectCardType.gatto, 1));
+        CommonGoalType2 goal = new CommonGoalType2();
+        assertFalse(goal.checkGoal(shelf));
+    }
 
     @Test
     public void testCheckGoalShelfNotEligible(){
