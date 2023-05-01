@@ -115,8 +115,7 @@ public class Game {
     //TESTED
     public Player nextPlayer() {
         if (this.players.size() == 0) return null;
-
-        //this.limbo.clear();
+        
         if (this.players.indexOf(this.currentPlayer) == this.players.size() - 1)
             this.currentPlayer = this.players.get(0);
         else this.currentPlayer = this.players.get(this.players.indexOf(currentPlayer) + 1);
