@@ -26,6 +26,7 @@ public class ControllerGame implements Observer, Serializable {
     private GameState gameState;
     private TurnController turnController;
     private InputController inputController;
+    private CommonGoal[] commonGoals = new CommonGoal[2];
 
 
     /**
@@ -88,6 +89,7 @@ public class ControllerGame implements Observer, Serializable {
 //                    initGame();
 //                }
                 // da togliere
+                initGame();
                 startGame();
             }
         } else {
@@ -96,7 +98,18 @@ public class ControllerGame implements Observer, Serializable {
     }
 
     /**
-     * Change gameState into INIT. Initialize TurnController
+     * create the board and select two common goal card
+     */
+    private void initGame(){
+        setGameState(GameState.INIT);
+        commonGoals[0] = game.getRandomAvailableCommonGoal();
+        commonGoals[1] = game.getRandomAvailableCommonGoal();
+
+    }
+
+
+    /**
+     * Change gameState into IN_GAME and create the board. Initialize TurnController
      */
     private void startGame() {
         setGameState(GameState.IN_GAME);
