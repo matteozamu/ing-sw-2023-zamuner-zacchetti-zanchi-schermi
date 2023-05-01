@@ -17,6 +17,16 @@ public final class CommonGoalType1 extends CommonGoal {
     }
 
     /**
+     * Returns a string representation of the common goal, describing its requirements and conditions.
+     *
+     * @return A string representing the common goal.
+     */
+    @Override
+    public String toString() {
+        return "Sei gruppi separati formati ciascuno da due tessere adiacenti dello stesso tipo. Le tessere di un gruppo possono essere diverse da quelle di un altro gruppo.";
+    }
+
+    /**
      * Determines if the given shelf is eligible to be checked for the specific common goal of type 1.
      * A shelf is considered eligible for this common goal if it contains at least 12 object cards,
      * as the goal requires the presence of 6 separate groups of 2 adjacent object cards of the same type.

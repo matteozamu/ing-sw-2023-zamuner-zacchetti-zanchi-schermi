@@ -18,6 +18,16 @@ public class CommonGoalType5 extends CommonGoal {
     }
 
     /**
+     * Returns a string representation of the common goal, describing its requirements and conditions.
+     *
+     * @return A string representing the common goal.
+     */
+    @Override
+    public String toString() {
+        return "Quattro gruppi separati formati ciascuno da quattro tessere adiacenti dello stesso tipo. Le tessere di un gruppo possono essere diverse da quelle di un altro gruppo.";
+    }
+
+    /**
      * Checks if the Shelf is eligible for the goal check.
      * For CommonGoalType5, the Shelf must have at least 16 object cards.
      *

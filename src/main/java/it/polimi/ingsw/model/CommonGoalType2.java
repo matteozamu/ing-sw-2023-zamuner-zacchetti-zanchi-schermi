@@ -14,6 +14,16 @@ public final class CommonGoalType2 extends CommonGoal {
     }
 
     /**
+     * Returns a string representation of the common goal, describing its requirements and conditions.
+     *
+     * @return A string representing the common goal.
+     */
+    @Override
+    public String toString() {
+        return "Cinque tessere dello stesso tipo che formano una diagonale.";
+    }
+
+    /**
      * Checks if the Shelf is eligible for the goal check.
      * For CommonGoalType2, the Shelf must have at least 5 object cards.
      *

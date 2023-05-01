@@ -18,6 +18,16 @@ public final class CommonGoalType12 extends CommonGoal {
     }
 
     /**
+     * Returns a string representation of the common goal, describing its requirements and conditions.
+     *
+     * @return A string representing the common goal.
+     */
+    @Override
+    public String toString() {
+        return "Cinque colonne di altezza crescente o decrescente: a partire dalla prima colonna a sinistra o a destra, ogni colonna successiva deve essere formata da una tessera in più. Le tessere possono essere di qualsiasi tipo.";
+    }
+
+    /**
      * Checks if the Shelf is eligible for the goal check.
      * For CommonGoalType12, the Shelf must have at least 15 object cards.
      *

@@ -55,4 +55,11 @@ public abstract class CommonGoal {
     protected abstract boolean isShelfEligible(Shelf shelf);
 
     public abstract int getType();
+
+    /**
+     * Returns a string representation of the common goal, describing its requirements and conditions.
+     *
+     * @return A string representing the common goal.
+     */
+    public abstract String toString();
 }

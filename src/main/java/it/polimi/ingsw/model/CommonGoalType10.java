@@ -1,7 +1,6 @@
 package it.polimi.ingsw.model;
 
 import java.util.List;
-import java.util.Map;
 
 /**
  * Cinque tessere dello stesso tipo che formano una X.
@@ -12,6 +11,16 @@ public final class CommonGoalType10 extends CommonGoal {
 
     public int getType() {
         return type;
+    }
+
+    /**
+     * Returns a string representation of the common goal, describing its requirements and conditions.
+     *
+     * @return A string representing the common goal.
+     */
+    @Override
+    public String toString() {
+        return "Cinque tessere dello stesso tipo che formano una X.";
     }
 
     /**

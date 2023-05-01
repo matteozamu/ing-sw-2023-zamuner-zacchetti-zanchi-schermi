@@ -6,7 +6,6 @@ import java.util.Map;
 // OK for TESTING
 
 /**
- * Classe che rappresenta un obiettivo comune di tipo 6.
  * L'obiettivo è raggiunto quando ci sono due colonne nella Shelf formate ciascuna da 6 diversi tipi di carte oggetto.
  */
 public final class CommonGoalType6 extends CommonGoal {
@@ -15,6 +14,16 @@ public final class CommonGoalType6 extends CommonGoal {
 
     public int getType() {
         return type;
+    }
+
+    /**
+     * Returns a string representation of the common goal, describing its requirements and conditions.
+     *
+     * @return A string representing the common goal.
+     */
+    @Override
+    public String toString() {
+        return "L'obiettivo è raggiunto quando ci sono due colonne nella Shelf formate ciascuna da 6 diversi tipi di carte oggetto.";
     }
 
     /**

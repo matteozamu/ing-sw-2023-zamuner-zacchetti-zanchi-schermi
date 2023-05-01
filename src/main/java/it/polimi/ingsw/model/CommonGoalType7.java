@@ -16,6 +16,16 @@ public final class CommonGoalType7 extends CommonGoal {
     }
 
     /**
+     * Returns a string representation of the common goal, describing its requirements and conditions.
+     *
+     * @return A string representing the common goal.
+     */
+    @Override
+    public String toString() {
+        return "Due gruppi separati di 4 tessere dello stesso tipo che formano un quadrato 2x2. Le tessere dei due gruppi devono essere dello stesso tipo.";
+    }
+
+    /**
      * Checks if the Shelf is eligible for the goal check.
      * For CommonGoalType7, the Shelf must have at least 8 object cards.
      *

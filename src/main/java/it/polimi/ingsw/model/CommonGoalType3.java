@@ -5,7 +5,6 @@ import java.util.Map;
 import java.util.Set;
 
 /**
- * Classe che rappresenta un obiettivo comune di tipo 3.
  * L'obiettivo è raggiunto quando le quattro tessere ai quattro angoli della Shelf
  * sono dello stesso tipo.
  */
@@ -16,6 +15,16 @@ public final class CommonGoalType3 extends CommonGoal {
 
     public int getType() {
         return type;
+    }
+
+    /**
+     * Returns a string representation of the common goal, describing its requirements and conditions.
+     *
+     * @return A string representing the common goal.
+     */
+    @Override
+    public String toString() {
+        return "L'obiettivo è raggiunto quando le quattro tessere ai quattro angoli della Shelf sono dello stesso tipo.";
     }
 
     /**

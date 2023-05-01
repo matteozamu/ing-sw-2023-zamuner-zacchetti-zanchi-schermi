@@ -18,6 +18,16 @@ public final class CommonGoalType8 extends CommonGoal {
     }
 
     /**
+     * Returns a string representation of the common goal, describing its requirements and conditions.
+     *
+     * @return A string representing the common goal.
+     */
+    @Override
+    public String toString() {
+        return "Due righe formate ciascuna da 5 diversi tipi di tessere.";
+    }
+
+    /**
      * Checks if the Shelf is eligible for the goal check.
      * For CommonGoalType8, the Shelf must have at least 10 object cards.
      *
