@@ -14,6 +14,7 @@ import java.util.Random;
 public class Game {
     public static final int MAX_PLAYERS = 4;
     public static final int MIN_PLAYERS = 2;
+    private static Game instance;
     private List<ObjectCard> objectCardContainer;
     private List<CommonGoal> commonGoalContainer;
     private List<PersonalGoalCard> personalGoalCardsContainer;
@@ -36,6 +37,12 @@ public class Game {
         this.commonGoals = new ArrayList<>();
         this.hasStarted = false;
         this.numberOfPlayers = -1;
+    }
+
+    public static Game getInstance() {
+        if (instance == null)
+            instance = new Game();
+        return instance;
     }
 
     public int getNumberOfPlayers() {
@@ -111,16 +118,22 @@ public class Game {
      *
      * @return the next player
      */
-
-    //TESTED
     public Player nextPlayer() {
         if (this.players.size() == 0) return null;
-        
+
         if (this.players.indexOf(this.currentPlayer) == this.players.size() - 1)
             this.currentPlayer = this.players.get(0);
         else this.currentPlayer = this.players.get(this.players.indexOf(currentPlayer) + 1);
 
         return this.currentPlayer;
+    }
+
+    public List<String> getPlayersNames() {
+        List<String> names = new ArrayList<>();
+        for (Player p : players) {
+            names.add(p.getName());
+        }
+        return names;
     }
 
     /**
@@ -130,8 +143,6 @@ public class Game {
      * @return true if the cards are successfully added.
      * @throws IllegalStateException if there is not enough space to add the cards.
      */
-
-    //TESTED
     //TODO: gestire caso limbo vuoto (ora torna true)
     public boolean addObjectCardsToShelf(List<ObjectCard> limbo, int col) {
         Shelf s = this.currentPlayer.getShelf();
@@ -165,8 +176,6 @@ public class Game {
      *
      * @return An ObjectCard randomly selected from the container.
      */
-
-    //TESTED
     public ObjectCard getRandomAvailableObjectCard() {
         if (this.objectCardContainer == null || this.objectCardContainer.size() == 0) return null;
 
@@ -197,8 +206,6 @@ public class Game {
      *
      * @return A PersonalGoalCard randomly selected from the container.
      */
-
-    //TESTED
     public PersonalGoalCard getRandomAvailablePersonalGoalCard() {
         if (this.personalGoalCardsContainer == null || this.personalGoalCardsContainer.size() == 0) return null;
 

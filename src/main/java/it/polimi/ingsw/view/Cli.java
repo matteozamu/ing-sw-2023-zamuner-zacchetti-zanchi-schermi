@@ -250,7 +250,7 @@ public class Cli extends ClientGameManager implements DisconnectionListener {
             out.println(response.getMessage());
             out.println();
         } else {
-            out.println("You joined the lobby!\n\nWait for the game to start...\n");
+            out.println("You joined the lobby!\nWait for the game to start...\n");
         }
     }
 
@@ -275,6 +275,8 @@ public class Cli extends ClientGameManager implements DisconnectionListener {
             out.println("There is " + users.size() + " player waiting: " + players.substring(0, players.length() - 2));
         else
             out.println("There are " + users.size() + " players waiting: " + players.substring(0, players.length() - 2));
+
+        out.println();
     }
 
     @Override

@@ -38,6 +38,7 @@ public abstract class ClientGameManager implements ClientGameManagerListener, Cl
     private boolean gameEnded = false;
 
     public ClientGameManager() {
+        firstTurn = true;
         joinedLobby = false;
 
         Date date = GregorianCalendar.getInstance().getTime();
@@ -112,7 +113,6 @@ public abstract class ClientGameManager implements ClientGameManagerListener, Cl
 //        synchronized (gameSerializedLock) {
         firstPlayer = gameStartMessage.getFirstPlayer();
         turnOwner = gameStartMessage.getFirstPlayer();
-
         startGame();
 //        }
     }
@@ -155,10 +155,9 @@ public abstract class ClientGameManager implements ClientGameManagerListener, Cl
     private void handleResponse(Response response) {
         if (!joinedLobby) {
             joinedLobby = response.getStatus() == MessageStatus.OK;
-            queue.add(() -> lobbyJoinResponse(response));
 
             if (lobbyPlayers.size() == 1) queue.add(() -> numberOfPlayersResponse(response));
-
+            queue.add(() -> lobbyJoinResponse(response));
         }
         if (response.getStatus() == MessageStatus.ERROR) {
             queue.add(() -> responseError(response.getMessage()));
@@ -206,9 +205,10 @@ public abstract class ClientGameManager implements ClientGameManagerListener, Cl
     }
 
     private void startGame() {
-        roundManager = new ClientRoundManager();
-
+//        roundManager = new ClientRoundManager();
+        System.out.println("READYYY");
         if (firstTurn) { // First round
+            System.out.println("FIRST TURN");
             if (firstPlayer.equals(getUsername())) { // First player to play
                 yourTurn = true;
             }

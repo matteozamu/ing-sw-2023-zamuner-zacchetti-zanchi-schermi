@@ -24,6 +24,7 @@ public class GameStartMessage extends Message {
         return "GameStartMessage{" +
                 "senderUsername=" + getSenderUsername() + ", " +
                 "firstPlayer='" + firstPlayer + '\'' +
+                ", content=" + getContent() +
                 '}';
     }
 }

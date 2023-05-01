@@ -1,8 +1,8 @@
 package it.polimi.ingsw.network.server;
 
 import it.polimi.ingsw.control.ControllerGame;
-import it.polimi.ingsw.enumeration.MessageContent;
 import it.polimi.ingsw.enumeration.MessageStatus;
+import it.polimi.ingsw.enumeration.PossibleGameState;
 import it.polimi.ingsw.enumeration.UserPlayerState;
 import it.polimi.ingsw.network.message.ConnectionResponse;
 import it.polimi.ingsw.network.message.DisconnectionMessage;
@@ -178,8 +178,9 @@ public class Server implements Runnable {
                 LOGGER.log(Level.INFO, "Message Request {0} - Unknown username {1}", new Object[]{message.getContent().name(), message.getSenderUsername()});
             } else if (msgToken.equals(conn.getToken())) { // Checks that sender is the real player
                 Message response = controllerGame.onMessage(message);
-                // send message to client
                 sendMessage(message.getSenderUsername(), response);
+                if (controllerGame.getGameState() == PossibleGameState.GAME_ROOM && controllerGame.getIsLobbyFull())
+                    controllerGame.gameSetupHandler();
             }
         }
     }

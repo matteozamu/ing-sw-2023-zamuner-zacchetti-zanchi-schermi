@@ -29,6 +29,7 @@ public class ControllerGame implements TimerRunListener, Serializable {
     private List<ObjectCard> limbo;
     private PossibleGameState gameState = PossibleGameState.GAME_ROOM;
     private boolean isLobbyFull;
+    private transient TurnController turnController;
 
 
     /**
@@ -41,8 +42,22 @@ public class ControllerGame implements TimerRunListener, Serializable {
         this.limbo = new ArrayList<>();
     }
 
-    public Game getGame() {
-        return game;
+    public Message onMessage(Message receivedMessage) {
+        Server.LOGGER.log(Level.SEVERE, "ONMESSAGE: {0}", receivedMessage);
+
+        if (gameState == PossibleGameState.GAME_ROOM) {
+            return firstStateHandler(receivedMessage);
+        }
+
+        if (gameState == PossibleGameState.GAME_ENDED) {
+            return new Response("GAME ENDED", MessageStatus.ERROR);
+        }
+
+        if (!InputValidator.validateInput(receivedMessage) || (gameState != PossibleGameState.GAME_ROOM && !this.getGame().doesPlayerExists(receivedMessage.getSenderUsername()))) {
+            return buildInvalidResponse();
+        }
+
+        return new Response("GAME STATE ERROR FOR THIS MESSAGE", MessageStatus.ERROR);
     }
 
     private Message firstStateHandler(Message receivedMessage) {
@@ -108,47 +123,34 @@ public class ControllerGame implements TimerRunListener, Serializable {
         this.isLobbyFull = lobbyFull;
     }
 
+    public PossibleGameState getGameState() {
+        return gameState;
+    }
+
+    public Game getGame() {
+        return game;
+    }
+
     private Response checkLobby() {
         List<Player> inLobbyPlayers = game.getPlayers();
 
         if (inLobbyPlayers.size() == this.game.getNumberOfPlayers()) {
             this.isLobbyFull = true;
-            gameSetupHandler();
-            return new Response("Last player added to lobby, game is starting...", MessageStatus.OK);
+            return new Response("Last player added, game is starting...", MessageStatus.OK);
         } else {
-            return new Response("Player added to lobby", MessageStatus.OK);
+            return new Response("Player added to the game", MessageStatus.OK);
         }
     }
 
-    private void gameSetupHandler() {
+    public void gameSetupHandler() {
         if (game.getPlayers().size() == game.getNumberOfPlayers()) {
             System.out.println("SERVER: INIZIO IL GIOCOOOOOOO");
             startingStateHandler();
         }
     }
 
-    public Message onMessage(Message receivedMessage) {
-        Server.LOGGER.log(Level.SEVERE, "ONMESSAGE: {0}", receivedMessage);
-
-        if (gameState == PossibleGameState.GAME_ENDED) {
-            return new Response("GAME ENDED", MessageStatus.ERROR);
-        }
-
-        if (!InputValidator.validateInput(receivedMessage) || (gameState != PossibleGameState.GAME_ROOM && !this.getGame().doesPlayerExists(receivedMessage.getSenderUsername()))) {
-            return buildInvalidResponse();
-        }
-
-        // on the game setup messages can be received from any player
-        if (gameState == PossibleGameState.GAME_ROOM) {
-            return firstStateHandler(receivedMessage);
-        }
-
-        return new Response("GAME STATE ERROR FOR THIS MESSAGE", MessageStatus.ERROR);
-    }
-
     private void startingStateHandler() {
-//        gameInstance.startGame();
-//        roundManager.initTurnManager();
+        this.turnController = new TurnController(this);
         gameState = PossibleGameState.GAME_STARTED;
 
 //        UserPlayer firstPlayer = roundManager.getTurnManager().getTurnOwner();
@@ -157,7 +159,7 @@ public class ControllerGame implements TimerRunListener, Serializable {
 //        roundManager.pickTwoPowerups();
 
 //        sendPrivateUpdates();
-//        server.sendMessageToAll(new GameStartMessage(roundManager.getTurnManager().getTurnOwner().getUsername()));
+        server.sendMessageToAll(new GameStartMessage(turnController.getActivePlayer().getName()));
     }
 
 
