@@ -1,8 +1,6 @@
 package it.polimi.ingsw.view;
 
-import it.polimi.ingsw.model.Board;
-import it.polimi.ingsw.model.Coordinate;
-import it.polimi.ingsw.model.ObjectCard;
+import it.polimi.ingsw.model.*;
 
 import java.util.List;
 import java.util.Map;
@@ -47,7 +45,22 @@ public interface View {
 
 //    void showMatchInfo(List<String> players, Map<Coordinate, ObjectCard> board, String activePlayer);
 
+    /**
+     * @param board is the board to show to the user
+     */
     void showBoard(Map<Coordinate, ObjectCard> board);
+
+    /**
+     * shows the common goal of the game
+     * @param commonGoals is and array of common goal
+     */
+    void showCommonGoals(CommonGoal[] commonGoals);
+
+    /**
+     * show to a player his shelf
+     * @param shelf is the player's shelf to show
+     */
+    void showShelf(Shelf shelf);
 
     void askObjCard();
 

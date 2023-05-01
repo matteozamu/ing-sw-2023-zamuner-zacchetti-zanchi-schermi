@@ -67,9 +67,14 @@ public class Game extends Observable implements Serializable {
         return objectCardContainer;
     }
 
+    /**
+     *
+     * @return a list with all the players
+     */
     public List<Player> getPlayers() {
         return players;
     }
+
 
     /**
      * Returns a list of player nicknames that are already in-game.

@@ -1,5 +1,6 @@
 package it.polimi.ingsw.control;
 
+import it.polimi.ingsw.message.CommonGoalsMessage;
 import it.polimi.ingsw.message.Message;
 import it.polimi.ingsw.message.PlayersNumberReply;
 import it.polimi.ingsw.model.*;
@@ -102,9 +103,11 @@ public class ControllerGame implements Observer, Serializable {
      */
     private void initGame(){
         setGameState(GameState.INIT);
+        broadcastGenericMessage("All Players are connected. ");
+        broadcastGenericMessage("Game Started!");
         commonGoals[0] = game.getRandomAvailableCommonGoal();
         commonGoals[1] = game.getRandomAvailableCommonGoal();
-
+        broadcastCommonGoal(commonGoals);
     }
 
 
@@ -114,8 +117,6 @@ public class ControllerGame implements Observer, Serializable {
     private void startGame() {
         setGameState(GameState.IN_GAME);
         turnController = new TurnController(virtualViewMap, this);
-        broadcastGenericMessage("All Players are connected. ");
-        broadcastGenericMessage("Game Started!");
 
         turnController.newTurn();
     }
@@ -192,6 +193,16 @@ public class ControllerGame implements Observer, Serializable {
     public void broadcastGenericMessage(String messageToNotify) {
         for (VirtualView vv : virtualViewMap.values()) {
             vv.showGenericMessage(messageToNotify);
+        }
+    }
+
+    /**
+     * send a message to all players with the common goals
+     * @param commonGoals is an array containing 2 common goals
+     */
+    public void broadcastCommonGoal(CommonGoal[] commonGoals){
+        for (VirtualView vv : virtualViewMap.values()) {
+            vv.showCommonGoals(commonGoals);
         }
     }
 

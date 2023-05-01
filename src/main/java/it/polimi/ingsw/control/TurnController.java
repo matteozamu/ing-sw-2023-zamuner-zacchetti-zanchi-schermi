@@ -1,6 +1,8 @@
 package it.polimi.ingsw.control;
 
 import it.polimi.ingsw.model.Game;
+import it.polimi.ingsw.model.Player;
+import it.polimi.ingsw.model.Shelf;
 import it.polimi.ingsw.view.VirtualView;
 
 import java.io.Serializable;
@@ -23,8 +25,8 @@ public class TurnController implements Serializable {
 
     private static final long serialVersionUID = -598005L;
     private final Game game;
-    private final List<String> usernameQueue;
-    private String activePlayer;
+    private final List<Player> usernameQueue;
+    private Player activePlayer;
     // private Effect appliedEffect; per ora non serve
 
 
@@ -41,9 +43,10 @@ public class TurnController implements Serializable {
      */
     public TurnController(Map<String, VirtualView> virtualViewMap, ControllerGame gameController) {
         this.game = Game.getInstance();
-        this.usernameQueue = new ArrayList<>(game.getPlayersNicknames());
+        this.usernameQueue = new ArrayList<>(game.getPlayers());
 
         this.activePlayer = usernameQueue.get(0); // set first active player
+        game.setCurrentPlayer(activePlayer);
         this.virtualViewMap = virtualViewMap;
         this.gameController = gameController;
     }
@@ -68,8 +71,8 @@ public class TurnController implements Serializable {
      * Initialize a new Turn.
      */
     public void newTurn() {
-        turnControllerNotify("Turn of " + activePlayer, activePlayer);
-        VirtualView vv = virtualViewMap.get(getActivePlayer());
+        turnControllerNotify("Turn of " + activePlayer.getName(), activePlayer.getName());
+        VirtualView vv = virtualViewMap.get(getActivePlayer().getName());
         vv.showGenericMessage("It's your turn!");
 
 //        StorageData storageData = new StorageData();
@@ -77,6 +80,7 @@ public class TurnController implements Serializable {
 
         setPhaseType(PhaseType.CHOOSE_OBJ_CARD);
         showBoard(vv);
+        showShelf(vv);
     }
 
     /**
@@ -84,6 +88,11 @@ public class TurnController implements Serializable {
      */
     public void showBoard(VirtualView vv){
         vv.showBoard(game.getBoard().getGrid());
+    }
+
+    public void showShelf(VirtualView vv){
+        Shelf shelf = game.getCurrentPlayer().getShelf();
+        vv.showShelf(shelf);
     }
 
     /**
@@ -101,9 +110,9 @@ public class TurnController implements Serializable {
     }
 
     /**
-     * @return the nickname of the active player.
+     * @return the active player.
      */
-    public String getActivePlayer() {
+    public Player getActivePlayer() {
         return activePlayer;
     }
 
@@ -112,7 +121,7 @@ public class TurnController implements Serializable {
      *
      * @param activePlayer the active Player to be set.
      */
-    public void setActivePlayer(String activePlayer) {
+    public void setActivePlayer(Player activePlayer) {
         this.activePlayer = activePlayer;
     }
 

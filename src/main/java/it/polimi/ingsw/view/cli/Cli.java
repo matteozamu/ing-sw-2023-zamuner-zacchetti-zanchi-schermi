@@ -2,8 +2,10 @@ package it.polimi.ingsw.view.cli;
 
 
 import it.polimi.ingsw.control.ControllerClient;
+import it.polimi.ingsw.model.CommonGoal;
 import it.polimi.ingsw.model.Coordinate;
 import it.polimi.ingsw.model.ObjectCard;
+import it.polimi.ingsw.model.Shelf;
 import it.polimi.ingsw.observer.ViewObservable;
 import it.polimi.ingsw.view.View;
 
@@ -237,6 +239,19 @@ public class Cli extends ViewObservable implements View {
             s += "|\n";
         }
         out.println(s);
+    }
+
+    @Override
+    public void showShelf(Shelf shelf){
+        out.println("Your shelf is");
+        out.println(shelf.getGrid());
+    }
+
+    @Override
+    public void showCommonGoals(CommonGoal[] commonGoals) {
+        out.println("Your common goals are: ");
+//        System.out.println(commonGoals[0].toString());
+//        System.out.println(commonGoals[1].toString());
     }
 
 }

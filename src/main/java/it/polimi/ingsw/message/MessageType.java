@@ -10,6 +10,7 @@ public enum MessageType {
     PLAYERS_NUMBER_REPLY,
     LOBBY,
     BOARD,
+    COMMON_GOALS,
     WIN,
     OBJ_CARD_REQUEST,
     OBJ_CARD_REPLY,

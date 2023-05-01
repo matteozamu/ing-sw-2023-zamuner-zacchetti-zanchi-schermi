@@ -2,6 +2,7 @@ package it.polimi.ingsw.control;
 
 import it.polimi.ingsw.message.*;
 import it.polimi.ingsw.model.Coordinate;
+import it.polimi.ingsw.model.Shelf;
 import it.polimi.ingsw.network.client.Client;
 import it.polimi.ingsw.network.client.SocketClient;
 import it.polimi.ingsw.observer.Observer;
@@ -78,6 +79,14 @@ public class ControllerClient implements ViewObserver, Observer {
                 break;
             case BOARD:
                 taskQueue.execute(() -> view.showBoard(((BoardMessage) message).getBoard()));
+                break;
+            case COMMON_GOALS:
+                CommonGoalsMessage commonGoalsMessage = (CommonGoalsMessage) message;
+                taskQueue.execute(() -> view.showCommonGoals(commonGoalsMessage.getCommonGoals()));
+                break;
+            case SHELF:
+                ShelfMessage shelf = (ShelfMessage) message;
+                taskQueue.execute(() -> view.showShelf(shelf.getShelf()));
                 break;
             default:
                 break;

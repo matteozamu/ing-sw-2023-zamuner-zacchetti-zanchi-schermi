@@ -1,10 +1,7 @@
 package it.polimi.ingsw.view;
 
 import it.polimi.ingsw.message.*;
-import it.polimi.ingsw.model.Board;
-import it.polimi.ingsw.model.Coordinate;
-import it.polimi.ingsw.model.Game;
-import it.polimi.ingsw.model.ObjectCard;
+import it.polimi.ingsw.model.*;
 import it.polimi.ingsw.network.server.ClientHandler;
 import it.polimi.ingsw.observer.Observer;
 
@@ -41,19 +38,43 @@ public class VirtualView implements View, Observer {
     }
 
     @Override
+    public void showCommonGoals(CommonGoal[] commonGoals) {
+        clientHandler.sendMessage(new CommonGoalsMessage(commonGoals));
+    }
+
+    @Override
     public void showErrorAndExit(String error) {
         clientHandler.sendMessage(new ErrorMessage(Game.SERVER_NICKNAME, error));
     }
 
+    /**
+     * show the lobby
+     * @param nicknameList list of players in the lobby.
+     * @param numPlayers   number of players.
+     */
     @Override
     public void showLobby(List<String> nicknameList, int numPlayers) {
         clientHandler.sendMessage(new LobbyMessage(nicknameList, numPlayers));
     }
 
+    /**
+     *
+     * @param board is the board to show to the user
+     */
     @Override
     public void showBoard(Map<Coordinate, ObjectCard> board){
         clientHandler.sendMessage(new BoardMessage(board));
     }
+
+    /**
+     *
+     * @param shelf is the player's shelf to show
+     */
+    @Override
+    public void showShelf(Shelf shelf){
+        clientHandler.sendMessage(new ShelfMessage(shelf));
+    }
+
 
     /**
      * returns the client handler associated to a client.
