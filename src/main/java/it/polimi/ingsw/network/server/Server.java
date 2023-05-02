@@ -179,6 +179,7 @@ public class Server implements Runnable {
             } else if (msgToken.equals(conn.getToken())) { // Checks that sender is the real player
                 Message response = controllerGame.onMessage(message);
                 sendMessage(message.getSenderUsername(), response);
+                
                 if (controllerGame.getGameState() == PossibleGameState.GAME_ROOM && controllerGame.getIsLobbyFull())
                     controllerGame.gameSetupHandler();
             }

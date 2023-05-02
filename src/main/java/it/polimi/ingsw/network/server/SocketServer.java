@@ -9,7 +9,6 @@ import java.net.Socket;
 public class SocketServer extends Thread {
     private final Server server;
     private final int port;
-
     private ServerSocket serverSocket;
 
     public SocketServer(Server server, int port) {

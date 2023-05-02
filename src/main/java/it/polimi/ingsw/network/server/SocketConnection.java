@@ -15,12 +15,9 @@ import java.net.Socket;
 class SocketConnection extends Connection implements Runnable {
     private final SocketServer socketServer;
     private final Socket socket;
-
     private final Object outLock = new Object();
     private final Object inLock = new Object();
-
     private boolean connected;
-
     private ObjectInputStream in;
     private ObjectOutputStream out;
 
