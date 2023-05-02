@@ -12,8 +12,19 @@ public final class CommonGoalType1 extends CommonGoal {
 
     public int type = 1;
 
+    @Override
     public int getType() {
         return type;
+    }
+
+    @Override
+    public String cliView() {
+        return """
+                O
+                O
+                x6
+                """;
+
     }
 
     /**
@@ -61,7 +72,7 @@ public final class CommonGoalType1 extends CommonGoal {
         }
         return false;
     }
-    // public per testare
+
     public boolean checkAdjacent(Coordinate coord, ObjectCard card, Map<Coordinate, ObjectCard> grid) {
         ObjectCardType targetType = card.getType();
         Coordinate[] adjacentCoords = {coord.getAdjacent(Coordinate.Direction.UP), coord.getAdjacent(Coordinate.Direction.RIGHT), coord.getAdjacent(Coordinate.Direction.DOWN), coord.getAdjacent(Coordinate.Direction.LEFT)};

@@ -12,8 +12,17 @@ public final class CommonGoalType4 extends CommonGoal {
 
     public int type = 4;
 
+    @Override
     public int getType() {
         return type;
+    }
+
+    @Override
+    public String cliView() {
+        return """
+                O O O O O
+                    x4
+                """;
     }
 
     /**

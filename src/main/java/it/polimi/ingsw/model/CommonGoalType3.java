@@ -13,8 +13,21 @@ public final class CommonGoalType3 extends CommonGoal {
 
     public int type = 3;
 
+    @Override
     public int getType() {
         return type;
+    }
+
+    @Override
+    public String cliView() {
+        return """
+                O - - - O
+                - - - - -
+                - - - - -
+                - - - - -
+                - - - - -
+                O - - - O
+                """;
     }
 
     /**

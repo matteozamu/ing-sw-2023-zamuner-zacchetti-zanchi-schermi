@@ -1,7 +1,5 @@
 package it.polimi.ingsw.model;
 
-// OK for TESTING
-
 /**
  * Cinque colonne di altezza crescente o decrescente:
  * a partire dalla prima colonna a sinistra o a destra, ogni colonna successiva
@@ -13,6 +11,18 @@ public final class CommonGoalType12 extends CommonGoal {
 
     public int type = 12;
 
+    @Override
+    public String cliView() {
+        return """
+                O - - - -
+                O O - - -
+                O O O - -
+                O O O O -
+                O O O O O
+                """;
+    }
+
+    @Override
     public int getType() {
         return type;
     }

@@ -13,8 +13,21 @@ public class CommonGoalType5 extends CommonGoal {
 
     public int type = 5;
 
+    @Override
     public int getType() {
         return type;
+    }
+
+    @Override
+    public String cliView() {
+        return """
+                O
+                O
+                O
+                O
+                x6
+                """;
+
     }
 
     /**
@@ -58,8 +71,6 @@ public class CommonGoalType5 extends CommonGoal {
 
         return groupsCount == 4;
     }
-
-
 
     public boolean isValidGroupOfFour(Shelf shelf, Coordinate coord, ObjectCardType type) {
         Coordinate[][] possibleGroups = new Coordinate[][]{

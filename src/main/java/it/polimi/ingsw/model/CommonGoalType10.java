@@ -9,8 +9,19 @@ public final class CommonGoalType10 extends CommonGoal {
 
     public int type = 10;
 
+    @Override
     public int getType() {
         return type;
+    }
+
+    @Override
+    public String cliView() {
+        return """
+                O   O
+                  O
+                O   O
+                """;
+
     }
 
     /**

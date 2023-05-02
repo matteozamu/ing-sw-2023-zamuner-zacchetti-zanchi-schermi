@@ -3,8 +3,6 @@ package it.polimi.ingsw.model;
 import java.util.HashMap;
 import java.util.Map;
 
-// OK for TESTING
-
 /**
  * Otto tessere dello stesso tipo. Non ci sono restrizioni sulla posizione di queste tessere.
  */
@@ -13,8 +11,19 @@ public final class CommonGoalType11 extends CommonGoal {
 
     public int type = 11;
 
+    @Override
     public int getType() {
         return type;
+    }
+
+    @Override
+    public String cliView() {
+        return """
+                O   O
+                O O O
+                O O O
+                """;
+
     }
 
     /**

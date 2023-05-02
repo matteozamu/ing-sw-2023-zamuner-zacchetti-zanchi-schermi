@@ -3,8 +3,6 @@ package it.polimi.ingsw.model;
 import java.util.HashMap;
 import java.util.Map;
 
-// OK for TESTING
-
 /**
  * L'obiettivo è raggiunto quando ci sono due colonne nella Shelf formate ciascuna da 6 diversi tipi di carte oggetto.
  */
@@ -12,8 +10,22 @@ public final class CommonGoalType6 extends CommonGoal {
 
     public int type = 6;
 
+    @Override
     public int getType() {
         return type;
+    }
+
+    @Override
+    public String cliView() {
+        return """
+                O
+                O
+                O
+                O
+                O
+                O
+                x2
+                """;
     }
 
     /**

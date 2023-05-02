@@ -3,8 +3,6 @@ package it.polimi.ingsw.model;
 import java.util.HashSet;
 import java.util.Set;
 
-// OK for TESTING
-
 /**
  * Tre colonne formate ciascuna da 6 tessere di uno, due o tre tipi differenti.
  * Colonne diverse possono avere combinazioni diverse di tipi di tessere.
@@ -13,8 +11,23 @@ public final class CommonGoalType9 extends CommonGoal {
 
     public int type = 9;
 
+    @Override
     public int getType() {
         return type;
+    }
+
+    @Override
+    public String cliView() {
+        return """
+                O
+                O
+                O
+                O
+                O
+                O
+                x3
+                """;
+
     }
 
     /**
