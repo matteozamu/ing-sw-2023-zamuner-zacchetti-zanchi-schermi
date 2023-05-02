@@ -101,12 +101,21 @@ public abstract class ClientGameManager implements ClientGameManagerListener, Cl
                 handleGameStartMessage((GameStartMessage) message);
                 break;
 
+            case BOARD:
+                System.out.println("Ok board");
+                handleBoardMessage((BoardMessage) message);
+                break;
+
             case DISCONNECTION:
 //                handleDisconnection((DisconnectionMessage) message);
                 break;
 
             default:
         }
+    }
+
+    private void handleBoardMessage(BoardMessage boardMessage) {
+        queue.add(() -> boardPrint(boardMessage.getBoard()));
     }
 
     private void handleGameStartMessage(GameStartMessage gameStartMessage) {
@@ -214,6 +223,7 @@ public abstract class ClientGameManager implements ClientGameManagerListener, Cl
             }
 
             queue.add(() -> firstPlayerCommunication(firstPlayer));
+//            queue.add(() -> boardPrint());
             firstTurn = false;
         }
 

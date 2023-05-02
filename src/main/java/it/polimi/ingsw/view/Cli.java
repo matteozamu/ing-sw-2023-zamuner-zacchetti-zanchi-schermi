@@ -1,6 +1,7 @@
 package it.polimi.ingsw.view;
 
 import it.polimi.ingsw.enumeration.MessageStatus;
+import it.polimi.ingsw.model.Board;
 import it.polimi.ingsw.network.client.ClientGameManager;
 import it.polimi.ingsw.network.client.DisconnectionListener;
 import it.polimi.ingsw.network.message.ConnectionResponse;
@@ -292,6 +293,11 @@ public class Cli extends ClientGameManager implements DisconnectionListener {
     @Override
     public void firstPlayerCommunication(String username) {
         out.println(username + " first player communication");
+    }
+
+    public void boardPrint(Board board) {
+        out.println();
+        out.println(board);
     }
 
     @Override

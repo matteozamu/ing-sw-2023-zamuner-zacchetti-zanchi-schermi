@@ -1,5 +1,6 @@
 package it.polimi.ingsw.network.client;
 
+import it.polimi.ingsw.model.Board;
 import it.polimi.ingsw.network.message.ConnectionResponse;
 import it.polimi.ingsw.network.message.Response;
 
@@ -49,4 +50,6 @@ interface ClientGameManagerListener {
      * @param username first player username
      */
     void firstPlayerCommunication(String username);
+
+    void boardPrint(Board board);
 }

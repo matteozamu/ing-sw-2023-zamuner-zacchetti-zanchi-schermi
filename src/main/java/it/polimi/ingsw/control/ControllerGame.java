@@ -160,6 +160,8 @@ public class ControllerGame implements TimerRunListener, Serializable {
 
 //        sendPrivateUpdates();
         server.sendMessageToAll(new GameStartMessage(turnController.getActivePlayer().getName()));
+
+        server.sendMessageToAll(new BoardMessage(game.getBoard()));
     }
 
 
