@@ -41,6 +41,9 @@ public class RMIHandlerImplementation extends UnicastRemoteObject implements RMI
         server.onMessage(message);
     }
 
+    /**
+     * Disconnects the client from the server
+     */
     @Override
     public void disconnectMe() {
         rmiSession.disconnect();

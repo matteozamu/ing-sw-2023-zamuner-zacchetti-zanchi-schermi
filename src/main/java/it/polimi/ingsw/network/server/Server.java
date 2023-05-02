@@ -53,6 +53,9 @@ public class Server implements Runnable {
         new Server();
     }
 
+    /**
+     * initialize the logger
+     */
     private void initLogger() {
         Date date = GregorianCalendar.getInstance().getTime();
         DateFormat dateFormat = new SimpleDateFormat("dd-MM_HH.mm.ss");
@@ -67,6 +70,9 @@ public class Server implements Runnable {
         }
     }
 
+    /**
+     * starts the RMI server and the socket server
+     */
     private void startServers() {
         SocketServer serverSocket = new SocketServer(this, socketPort);
         serverSocket.startServer();
@@ -163,6 +169,10 @@ public class Server implements Runnable {
         }
     }
 
+    /**
+     *
+     * @param message is the message received to the client
+     */
     void onMessage(Message message) {
         if (message != null && message.getSenderUsername() != null && (message.getToken() != null || message.getSenderUsername().equals("serverUser"))) {
             LOGGER.log(Level.INFO, "Received: {0}", message);

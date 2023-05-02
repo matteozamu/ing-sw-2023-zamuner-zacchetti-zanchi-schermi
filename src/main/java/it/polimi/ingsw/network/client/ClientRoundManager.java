@@ -79,7 +79,7 @@ class ClientRoundManager {
     }
 
     /**
-     * Handles the next state in the begin phase of the game (after the spawn)
+     * Handles the next state in the begin phase of the game
      */
     private void handleBegin() {
         if (gameClientState == GameClientState.NORMAL) {

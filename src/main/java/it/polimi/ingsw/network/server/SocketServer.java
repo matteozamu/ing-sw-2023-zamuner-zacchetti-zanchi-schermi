@@ -29,8 +29,8 @@ public class SocketServer extends Thread {
     public void run() {
         while (!Thread.currentThread().isInterrupted()) {
             try {
-                Socket client = serverSocket.accept();
-                new SocketConnection(this, client);
+                Socket client = serverSocket.accept(); // ricevo un socket client
+                new SocketConnection(this, client);  // creo una socket connection
             } catch (IOException e) {
                 Server.LOGGER.warning(e.getMessage());
             }

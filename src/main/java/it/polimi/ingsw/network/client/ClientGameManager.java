@@ -214,6 +214,7 @@ public abstract class ClientGameManager implements ClientGameManagerListener, Cl
     }
 
     private void startGame() {
+        // TODO fare start game
 //        roundManager = new ClientRoundManager();
         System.out.println("READYYY");
         if (firstTurn) { // First round

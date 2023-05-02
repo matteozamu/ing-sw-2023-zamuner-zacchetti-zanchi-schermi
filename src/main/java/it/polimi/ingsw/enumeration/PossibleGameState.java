@@ -6,7 +6,7 @@ package it.polimi.ingsw.enumeration;
  */
 public enum PossibleGameState {
     /**
-     * Game State when wait to vote and entry in lobby
+     * Game State when wait to entry in lobby
      */
     GAME_ROOM,
     /**

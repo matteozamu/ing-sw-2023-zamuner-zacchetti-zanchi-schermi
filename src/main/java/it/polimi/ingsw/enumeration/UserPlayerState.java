@@ -6,6 +6,7 @@ package it.polimi.ingsw.enumeration;
  * used to reload a game in persistency
  */
 public enum UserPlayerState {
+    // TODO cambiare con gli stati delle azioni di gioco
     BOT_SPAWN,
     SPAWN,
     FIRST_ACTION,
