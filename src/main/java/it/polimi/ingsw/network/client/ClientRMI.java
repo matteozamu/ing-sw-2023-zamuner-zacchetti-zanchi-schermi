@@ -39,7 +39,7 @@ public class ClientRMI extends Client implements RMIClientConnection {
     @Override
     public void startConnection() throws IOException, NotBoundException {
         Registry registry = LocateRegistry.getRegistry(getAddress(), getPort());
-        server = (RMIHandler) registry.lookup("AdrenalineServer");
+        server = (RMIHandler) registry.lookup("MyShelfieServer");
 
         server.login(getUsername(), this);
     }
