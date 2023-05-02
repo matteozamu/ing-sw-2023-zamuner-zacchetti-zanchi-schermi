@@ -188,7 +188,7 @@ public abstract class ClientGameManager implements ClientGameManagerListener, Cl
         if (connection == 0) {
             client = new ClientSocket(username, address, port, disconnectionListener);
         } else {
-//            client = new ClientRMI(username, address, port, disconnectionListener);
+            client = new ClientRMI(username, address, port, disconnectionListener);
         }
 
         client.startConnection();

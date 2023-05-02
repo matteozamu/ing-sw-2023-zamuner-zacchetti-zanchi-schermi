@@ -88,7 +88,7 @@ public class Cli extends ClientGameManager implements DisconnectionListener {
     private void doConnection() {
         boolean validConnection = false;
         boolean firstError = true;
-        int connection = 0;
+        int connection = 1;
 
         String username = askUsername();
 
@@ -119,12 +119,10 @@ public class Cli extends ClientGameManager implements DisconnectionListener {
             out.println("You chose RMI connection\n");
         }
 
-//        String address = askAddress();
-        String address = "localhost";
+        String address = askAddress();
         out.println("\nServer Address: " + address);
 
-//        int port = askPort(connection);
-        int port = 2727;
+        int port = askPort(connection);
         out.println("\nServer Port: " + port);
 
         try {

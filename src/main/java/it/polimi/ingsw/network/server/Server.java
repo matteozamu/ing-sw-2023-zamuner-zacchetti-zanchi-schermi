@@ -27,7 +27,7 @@ public class Server implements Runnable {
     public static final Logger LOGGER = Logger.getLogger("Server");
     private final Object clientsLock = new Object();
     private int socketPort = 2727;
-    private int rmiPort;
+    private int rmiPort = 7272;
     private Map<String, Connection> clients;
     private ControllerGame controllerGame;
 
@@ -73,10 +73,10 @@ public class Server implements Runnable {
 
         LOGGER.info("Socket Server Started");
 
-//        RMIServer rmiServer = new RMIServer(this, rmiPort);
-//        rmiServer.startServer();
+        RMIServer rmiServer = new RMIServer(this, rmiPort);
+        rmiServer.startServer();
 
-//        LOGGER.info("RMI Server Started");
+        LOGGER.info("RMI Server Started");
     }
 
     /**
@@ -179,7 +179,7 @@ public class Server implements Runnable {
             } else if (msgToken.equals(conn.getToken())) { // Checks that sender is the real player
                 Message response = controllerGame.onMessage(message);
                 sendMessage(message.getSenderUsername(), response);
-                
+
                 if (controllerGame.getGameState() == PossibleGameState.GAME_ROOM && controllerGame.getIsLobbyFull())
                     controllerGame.gameSetupHandler();
             }
