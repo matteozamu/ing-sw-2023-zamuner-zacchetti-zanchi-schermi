@@ -30,7 +30,7 @@ class RMIServer {
         try {
             RMIHandlerImplementation rmiHandler = new RMIHandlerImplementation(server);
             Registry registry = LocateRegistry.createRegistry(port);
-            registry.bind("AdrenalineServer", rmiHandler);
+            registry.bind("MyShelfieServer", rmiHandler);
         } catch (IOException | AlreadyBoundException e) {
             Server.LOGGER.severe(e.getMessage());
         }
