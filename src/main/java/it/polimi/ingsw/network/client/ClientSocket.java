@@ -101,7 +101,7 @@ public class ClientSocket extends Client implements Runnable {
         try {
             close();
         } catch (IOException e) {
-            Logger.getLogger("adrenaline_client").severe(e.getMessage());
+            Logger.getLogger("my_shelfie_client").severe(e.getMessage());
         }
     }
 

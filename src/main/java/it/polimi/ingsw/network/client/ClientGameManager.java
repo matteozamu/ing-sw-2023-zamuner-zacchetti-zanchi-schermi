@@ -17,7 +17,7 @@ import java.util.logging.Logger;
 import java.util.logging.SimpleFormatter;
 
 public abstract class ClientGameManager implements ClientGameManagerListener, ClientUpdateListener, Runnable {
-    public static final Logger LOGGER = Logger.getLogger("adrenaline_client");
+    public static final Logger LOGGER = Logger.getLogger("my_shelfie_client");
 
     public static final String SEND_ERROR = "Error while sending the request";
     protected static final String INVALID_STRING = "Invalid String!";
