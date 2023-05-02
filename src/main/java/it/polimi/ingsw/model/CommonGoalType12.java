@@ -49,37 +49,50 @@ public final class CommonGoalType12 extends CommonGoal {
     }
 
     public boolean checkDescendingStair(Shelf shelf) {
+        boolean patternOne = true;
+        boolean patternThree = true;
 
         for (int col = 0; col < shelf.COLUMNS; col++) {
-            int maxHeight = 5 - col;
+            int maxHeightPatternOne = 5 - col;
+            int maxHeightPatternThree = 6 - col;
             int countD = 0;
             for (int row = 0; row < shelf.ROWS; row++) {
-                if (shelf.getObjectCard(new Coordinate(col, row)) != null) {
+                if (shelf.getObjectCard(new Coordinate(row, col)) != null) {
                     countD++;
                 }
             }
-            if (countD != maxHeight) {
-                return false;
+
+            patternOne = patternOne && (countD == maxHeightPatternOne);
+            patternThree = patternThree && (countD == maxHeightPatternThree);
+
+            if (!patternOne && !patternThree) {
+                break;
             }
         }
-        return true;
+        return patternOne || patternThree;
     }
 
     public boolean checkAscendingStair(Shelf shelf) {
+        boolean patternTwo = true;
+        boolean patternFour = true;
 
         for (int col = shelf.COLUMNS - 1; col >= 0; col--) {
-            int maxHeight = col + 1;
+            int maxHeightPatternTwo = col + 1;
+            int maxHeightPatternFour = col + 2;
             int countA = 0;
-            for (int row = 0; row < 6; row++) {
-                if (shelf.getObjectCard(new Coordinate(col, row)) != null) {
+            for (int row = 0; row < shelf.ROWS; row++) {
+                if (shelf.getObjectCard(new Coordinate(row, col)) != null) {
                     countA++;
                 }
             }
-            if (countA != maxHeight) {
-                return false;
+
+            patternTwo = patternTwo && (countA == maxHeightPatternTwo);
+            patternFour = patternFour && (countA == maxHeightPatternFour);
+
+            if (!patternTwo && !patternFour) {
+                break;
             }
         }
-        return true;
+        return patternTwo || patternFour;
     }
-
 }
