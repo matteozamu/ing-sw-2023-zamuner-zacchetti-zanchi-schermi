@@ -88,30 +88,11 @@ public class Cli extends ClientGameManager implements DisconnectionListener {
     private void doConnection() {
         boolean validConnection = false;
         boolean firstError = true;
-        int connection = 1;
 
         String username = askUsername();
 
         out.printf("Hi %s!%n", username);
-//        out.println("\nEnter the connection type (0 = Sockets or 1 = RMI):");
-
-        do {
-//            out.print(">>> ");
-
-//            if (in.hasNextInt()) {
-//                connection = in.nextInt();
-//                in.nextLine();
-
-            if (connection >= 0 && connection <= 1) {
-                validConnection = true;
-            } else {
-                firstError = promptInputError(firstError, "Invalid selection!");
-            }
-//            } else {
-//                in.nextLine();
-//                firstError = promptInputError(firstError, "Invalid integer!");
-//            }
-        } while (!validConnection);
+        int connection = askConnection();
 
         if (connection == 0) {
             out.println("You chose Socket connection\n");
@@ -120,16 +101,50 @@ public class Cli extends ClientGameManager implements DisconnectionListener {
         }
 
         String address = askAddress();
-        out.println("\nServer Address: " + address);
+        out.println("Server Address: " + address);
 
         int port = askPort(connection);
-        out.println("\nServer Port: " + port);
+        out.println("Server Port: " + port);
 
         try {
             createConnection(connection, username, address, port, this);
         } catch (Exception e) {
             promptError(e.getMessage(), true);
         }
+    }
+
+    private int askConnection() {
+        boolean firstError = true;
+        int connection = -1;
+
+        out.println("\nEnter the connection type (0 = Sockets or 1 = RMI) (default is \"Sockets\"):");
+        in.reset();
+
+        do {
+            out.print(">>> ");
+
+            if (in.hasNextLine()) {
+                String line = in.nextLine();
+
+                if (line.equals("")) {
+                    return 0;
+                } else {
+                    try {
+                        connection = Integer.parseInt(line);
+                        if (connection == 0 || connection == 1) {
+                            return connection;
+                        } else {
+                            firstError = promptInputError(firstError, "Invalid connection!");
+                        }
+                    } catch (Exception e) {
+                        firstError = promptInputError(firstError, "Invalid number!");
+                    }
+                }
+            } else {
+                in.nextLine();
+                firstError = promptInputError(firstError, INVALID_STRING);
+            }
+        } while (true);
     }
 
     private String askAddress() {
