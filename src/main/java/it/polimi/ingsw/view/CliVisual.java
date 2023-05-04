@@ -38,7 +38,7 @@ public class CliVisual {
      */
     public static void printShelf(PrintStream out, GameSerialized gameSerialized) {
         Shelf s = gameSerialized.getShelf();
-
+/*
         int maxLength = Arrays.stream(ObjectCardType.values())
                 .map(ObjectCardType::toString)
                 .mapToInt(String::length)
@@ -46,6 +46,9 @@ public class CliVisual {
                 .orElse(0);
 
         maxLength += 2; // Adds space for ID and separator "-"
+ */
+
+        int maxLength = 9;
 
         for (int row = Shelf.ROWS - 1; row >= 0; row--) {
             for (int col = 0; col < Shelf.COLUMNS; col++) {
