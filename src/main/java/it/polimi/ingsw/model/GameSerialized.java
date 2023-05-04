@@ -18,8 +18,6 @@ public class GameSerialized implements Serializable {
     public GameSerialized(String userName) {
         Game instance = Game.getInstance();
 
-        System.out.println(instance);
-
         if (instance.getPlayers() != null) {
             this.players = new ArrayList<>(instance.getPlayers());
         } else {

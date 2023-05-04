@@ -1,5 +1,6 @@
 package it.polimi.ingsw.model;
 
+import java.io.Serializable;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
@@ -12,11 +13,11 @@ import java.util.Map;
  * Represents a Shelf in the game, which holds ObjectCards.
  * The origin of the coordinates in the grid is in the lower left corner.
  */
-public class Shelf {
-    private Map<Coordinate, ObjectCard> grid;
-    private boolean isFull;
+public class Shelf implements Serializable {
     public final int ROWS;
     public final int COLUMNS;
+    private Map<Coordinate, ObjectCard> grid;
+    private boolean isFull;
 
     /**
      * Constructs a new Shelf.
@@ -31,7 +32,6 @@ public class Shelf {
     }
 
     /**
-     *
      * @return true if the shelf is full
      */
     public boolean isFull() {
@@ -44,6 +44,7 @@ public class Shelf {
 
     /**
      * method that returns the map of the grid
+     *
      * @return The grid representing the Shelf
      */
     public Map<Coordinate, ObjectCard> getGrid() {
@@ -53,6 +54,7 @@ public class Shelf {
     /**
      * return the number (row) of free cells in the col column
      * if there are no free cells the method throws an exception
+     *
      * @param col is the column
      * @return number of free cell for the col column
      */
@@ -73,31 +75,32 @@ public class Shelf {
         int points = 0;
         List<ObjectCardType> types = ObjectCardType.VALUES;
 
-        for(ObjectCardType type : types) {
+        for (ObjectCardType type : types) {
             closeCards = 0;
             for (int row = 0; row < this.ROWS; row++) {
                 for (int col = 0; col < this.COLUMNS; col++) {
                     card = this.grid.get(new Coordinate(row, col));
                     if (card != null && card.getType().equals(type)) {
-                        if (this.grid.get(new Coordinate(row - 1, col)) != null){
-                            if(this.grid.get(new Coordinate(row - 1, col)).getType().equals(card.getType())) closeCards++;
-                        }
-                        else if (this.grid.get(new Coordinate(row + 1, col)) != null){
-                            if(this.grid.get(new Coordinate(row + 1, col)).getType().equals(card.getType())) closeCards++;
-                        }
-                        else if (this.grid.get(new Coordinate(row, col - 1)) != null){
-                            if(this.grid.get(new Coordinate(row, col - 1)).getType().equals(card.getType())) closeCards++;
-                        }
-                        else if (this.grid.get(new Coordinate(row, col + 1)) != null){
-                            if(this.grid.get(new Coordinate(row, col + 1)).getType().equals(card.getType())) closeCards++;
+                        if (this.grid.get(new Coordinate(row - 1, col)) != null) {
+                            if (this.grid.get(new Coordinate(row - 1, col)).getType().equals(card.getType()))
+                                closeCards++;
+                        } else if (this.grid.get(new Coordinate(row + 1, col)) != null) {
+                            if (this.grid.get(new Coordinate(row + 1, col)).getType().equals(card.getType()))
+                                closeCards++;
+                        } else if (this.grid.get(new Coordinate(row, col - 1)) != null) {
+                            if (this.grid.get(new Coordinate(row, col - 1)).getType().equals(card.getType()))
+                                closeCards++;
+                        } else if (this.grid.get(new Coordinate(row, col + 1)) != null) {
+                            if (this.grid.get(new Coordinate(row, col + 1)).getType().equals(card.getType()))
+                                closeCards++;
                         }
                     }
                 }
             }
-            if(closeCards == 3) points += 2;
-            if(closeCards == 4) points += 3;
-            if(closeCards == 5) points += 5;
-            if(closeCards >= 6) points += 8;
+            if (closeCards == 3) points += 2;
+            if (closeCards == 4) points += 3;
+            if (closeCards == 5) points += 5;
+            if (closeCards >= 6) points += 8;
         }
 
         return points;
@@ -136,6 +139,7 @@ public class Shelf {
     }
 
     // TODO CI SERVE? Spoiler: no. Ma se serve c'è. Decisamente MDR
+
     /**
      * Returns a map with the number of free cells for each column in the Shelf.
      *

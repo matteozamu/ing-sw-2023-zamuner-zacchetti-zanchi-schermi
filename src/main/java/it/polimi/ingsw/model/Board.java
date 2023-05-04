@@ -1,5 +1,6 @@
 package it.polimi.ingsw.model;
 
+import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -8,7 +9,7 @@ import java.util.Map;
  * Provides methods for creating cells, checking if cells are empty, and removing ObjectCards from the board.
  */
 
-public class Board {
+public class Board implements Serializable {
     private Map<Coordinate, ObjectCard> grid;
 
     public Board() {

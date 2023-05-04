@@ -9,7 +9,6 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
 import java.util.Objects;
-import java.util.Timer;
 import java.util.logging.Logger;
 
 /**
@@ -46,7 +45,7 @@ public class ClientSocket extends Client implements Runnable {
         socket = new Socket(getAddress(), getPort());
         out = new ObjectOutputStream(socket.getOutputStream());
         in = new ObjectInputStream(socket.getInputStream());
-        
+
         sendMessage(new ConnectionRequest(getUsername()));
 
         messageReceiver = new Thread(this);
@@ -81,11 +80,12 @@ public class ClientSocket extends Client implements Runnable {
                     synchronized (messageQueue) {
                         messageQueue.add(message);
                     }
-                } else if (message != null && message.getContent() == MessageContent.PING) {
-                    super.pingTimer.cancel();
-                    super.pingTimer = new Timer();
-                    super.pingTimer.schedule(new PingTimerTask(super.disconnectionListener), Client.DISCONNECTION_TIME);
                 }
+//                else if (message != null && message.getContent() == MessageContent.PING) {
+//                    super.pingTimer.cancel();
+//                    super.pingTimer = new Timer();
+//                    super.pingTimer.schedule(new PingTimerTask(super.disconnectionListener), Client.DISCONNECTION_TIME);
+//                }
             } catch (IOException e) {
                 disconnect();
             } catch (ClassNotFoundException e) {

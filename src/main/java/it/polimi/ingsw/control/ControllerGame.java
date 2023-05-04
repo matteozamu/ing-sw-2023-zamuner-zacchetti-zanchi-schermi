@@ -39,6 +39,7 @@ public class ControllerGame implements TimerRunListener, Serializable {
         this.id = UUID.randomUUID();
         this.game = Game.getInstance();
         this.limbo = new ArrayList<>();
+        fillBoard();
     }
 
     public Message onMessage(Message receivedMessage) {
@@ -157,8 +158,8 @@ public class ControllerGame implements TimerRunListener, Serializable {
         // I first need to pick the two powerups for the first player playing
 //        roundController.pickTwoPowerups();
 
-        sendPrivateUpdates();
         server.sendMessageToAll(new GameStartMessage(game.getCurrentPlayer().getName()));
+        sendPrivateUpdates();
     }
 
     /**
@@ -199,17 +200,18 @@ public class ControllerGame implements TimerRunListener, Serializable {
     // TODO: non sarebbe meglio spostarlo nel model?
     public void fillBoard() {
         Coordinate c;
+        Board b = game.getBoard();
         try {
             for (int row = 1; row <= 5; row++) {
                 for (int col = 1; col < 2 * row; col++) {
                     c = new Coordinate(5 - row, -5 + col);
-                    this.game.getBoard().createCell(c, game.getRandomAvailableObjectCard());
+                    b.createCell(c, game.getRandomAvailableObjectCard());
                 }
             }
             for (int row = 5 - 1; row >= 1; row--) {
                 for (int col = 1; col < 2 * row; col++) {
                     c = new Coordinate(-5 + row, -5 + col);
-                    this.game.getBoard().createCell(c, game.getRandomAvailableObjectCard());
+                    b.createCell(c, game.getRandomAvailableObjectCard());
                 }
             }
         } catch (NullPointerException e) {

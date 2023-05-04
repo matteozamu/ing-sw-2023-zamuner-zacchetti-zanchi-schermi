@@ -71,6 +71,7 @@ class SocketConnection extends Connection implements Runnable {
                     }
                 }
             } catch (IOException e) {
+
                 disconnect();
             } catch (ClassNotFoundException e) {
                 Server.LOGGER.severe(e.getMessage());

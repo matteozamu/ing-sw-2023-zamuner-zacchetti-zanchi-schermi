@@ -37,6 +37,8 @@ public class Game {
         this.commonGoals = new ArrayList<>();
         this.hasStarted = false;
         this.numberOfPlayers = -1;
+
+        loadObjectCards();
     }
 
     public static Game getInstance() {
@@ -137,8 +139,6 @@ public class Game {
     }
 
     public Player getPlayerByName(String name) {
-        System.out.println(players);
-        System.out.println(name);
         for (Player p : players) {
             if (p.getName().equals(name)) return p;
         }
