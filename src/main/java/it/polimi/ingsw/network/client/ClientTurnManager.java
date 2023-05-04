@@ -1,25 +1,17 @@
 package it.polimi.ingsw.network.client;
 
-import it.polimi.ingsw.enumeration.GameClientState;
 import it.polimi.ingsw.enumeration.UserPlayerState;
 
 /**
  * Owns the game state machine for a client
  */
-class ClientRoundManager {
+class ClientTurnManager {
     private UserPlayerState playerState;
-    private GameClientState gameClientState;
-    private boolean secondFrenzyAction;
-    private boolean botMoved;
-    private boolean botCanMove;
 
     private boolean roundStarted;
 
-    ClientRoundManager() {
+    ClientTurnManager() {
         this.playerState = UserPlayerState.SPAWN;
-        this.gameClientState = GameClientState.NORMAL;
-
-        this.secondFrenzyAction = false;
     }
 
     /**
@@ -82,18 +74,21 @@ class ClientRoundManager {
      * Handles the next state in the begin phase of the game
      */
     private void handleBegin() {
-        if (gameClientState == GameClientState.NORMAL) {
-            playerState = UserPlayerState.FIRST_ACTION;
-        } else {
-            playerState = UserPlayerState.FIRST_FRENZY_ACTION;
-        }
+        playerState = UserPlayerState.FIRST_ACTION;
     }
 
     /**
      * Handles the next state after the second move of the player
      */
     private void handleSecondMove() {
-        if (!botMoved && botCanMove) {
+        playerState = UserPlayerState.ENDING_PHASE;
+    }
+
+    /**
+     * Handles the next state after the first frenzy move
+     */
+    private void handleFirstFrenzy() {
+        if (true) {
             playerState = UserPlayerState.BOT_ACTION;
         } else {
             playerState = UserPlayerState.ENDING_PHASE;
@@ -101,29 +96,10 @@ class ClientRoundManager {
     }
 
     /**
-     * Handles the next state after the first frenzy move
-     */
-    private void handleFirstFrenzy() {
-        if (secondFrenzyAction) {
-            playerState = UserPlayerState.SECOND_FRENZY_ACTION;
-        } else {
-            if (!botMoved && botCanMove) {
-                playerState = UserPlayerState.BOT_ACTION;
-            } else {
-                playerState = UserPlayerState.ENDING_PHASE;
-            }
-        }
-    }
-
-    /**
      * Handles the next state in case of scope usage
      */
     private void handleFirstScope() {
-        if (gameClientState == GameClientState.NORMAL) {
-            playerState = UserPlayerState.SECOND_ACTION;
-        } else {
-            handleFirstFrenzy();
-        }
+        playerState = UserPlayerState.SECOND_ACTION;
     }
 
     /**
@@ -166,18 +142,6 @@ class ClientRoundManager {
     void endRound() {
         playerState = UserPlayerState.FIRST_ACTION;
         roundStarted = false;
-
-        botMoved = false;
-        botCanMove = true;
-    }
-
-    /**
-     * Sets the second frenzy action if the player has to do two frenzy action
-     *
-     * @param secondFrenzyAction {@code true} if the player has got two action, {@code false} otherwise
-     */
-    void setSecondFrenzyAction(boolean secondFrenzyAction) {
-        this.secondFrenzyAction = secondFrenzyAction;
     }
 
     /**
@@ -201,56 +165,5 @@ class ClientRoundManager {
      */
     UserPlayerState getUserPlayerState() {
         return playerState;
-    }
-
-    /**
-     * Check if the player has already done the bot move
-     *
-     * @return {@code true} if already moved, {@code false} otherwise
-     */
-    boolean hasBotMoved() {
-        return botMoved;
-    }
-
-    /**
-     * @return {@code true} if bot can move present
-     */
-    boolean isBotCanMove() {
-        return botCanMove;
-    }
-
-    /**
-     * Sets to false botCanMove because at the first turn the bot can't be moved
-     */
-    void setBotFirstTurn() {
-        this.botCanMove = false;
-    }
-
-    /**
-     * Sets that the bot move has been done
-     */
-    void setBotMoved() {
-        this.botMoved = true;
-    }
-
-    /**
-     * Sets the final frenzy game state
-     */
-    void setFinalFrenzy() {
-        this.gameClientState = GameClientState.FINAL_FRENZY;
-    }
-
-    /**
-     * @return the game client state
-     */
-    GameClientState getGameClientState() {
-        return gameClientState;
-    }
-
-    /**
-     * @return {@code true} if the player has got two frenzy moves, {@code false} otherwise
-     */
-    boolean isDoubleActionFrenzy() {
-        return secondFrenzyAction;
     }
 }

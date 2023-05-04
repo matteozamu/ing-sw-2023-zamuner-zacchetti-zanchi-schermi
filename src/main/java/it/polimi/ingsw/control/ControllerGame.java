@@ -24,7 +24,6 @@ import static it.polimi.ingsw.model.Board.Direction.*;
 public class ControllerGame implements TimerRunListener, Serializable {
     private final transient Server server;
     private UUID id;
-    // private Player currentPlayer;
     private Game game;
     private List<ObjectCard> limbo;
     private PossibleGameState gameState = PossibleGameState.GAME_ROOM;
@@ -144,24 +143,35 @@ public class ControllerGame implements TimerRunListener, Serializable {
 
     public void gameSetupHandler() {
         if (game.getPlayers().size() == game.getNumberOfPlayers()) {
-            System.out.println("SERVER: INIZIO IL GIOCOOOOOOO");
+            game.setCurrentPlayer(game.getPlayers().get(0));
             startingStateHandler();
         }
     }
 
     private void startingStateHandler() {
-        this.turnController = new TurnController(this);
+        this.turnController = new TurnController(this.game.getPlayers());
         gameState = PossibleGameState.GAME_STARTED;
 
-//        UserPlayer firstPlayer = roundManager.getTurnManager().getTurnOwner();
+//        UserPlayer firstPlayer = roundController.getTurnManager().getTurnOwner();
 
         // I first need to pick the two powerups for the first player playing
-//        roundManager.pickTwoPowerups();
+//        roundController.pickTwoPowerups();
 
-//        sendPrivateUpdates();
+        sendPrivateUpdates();
         server.sendMessageToAll(new GameStartMessage(turnController.getActivePlayer().getName()));
+    }
 
-        server.sendMessageToAll(new BoardMessage(game.getBoard()));
+    /**
+     * This method sends to all clients the new state of the {@link Game Game}, contained in the
+     * {@link model.GameSerialized GameSerialized}. This method is used to send an update of the
+     * {@link Game Game} everytime that a normal action is completed
+     */
+    public void sendPrivateUpdates() {
+        List<Player> players = game.getPlayers();
+
+        for (Player player : players) {
+            server.sendMessage(player.getName(), new GameStateMessage(player.getName(), game.getCurrentPlayer().getName()));
+        }
     }
 
 
@@ -244,7 +254,6 @@ public class ControllerGame implements TimerRunListener, Serializable {
      * @param coordinate The coordinate of the object card to check.
      * @return True if the object card is available, false otherwise.
      */
-    //TESTED
     public boolean isObjectCardAvailable(Coordinate coordinate) {
         return this.game.getBoard().isEmptyAtDirection(coordinate, UP) || this.game.getBoard().isEmptyAtDirection(coordinate, DOWN) || this.game.getBoard().isEmptyAtDirection(coordinate, RIGHT) || this.game.getBoard().isEmptyAtDirection(coordinate, LEFT);
     }
@@ -256,8 +265,6 @@ public class ControllerGame implements TimerRunListener, Serializable {
      * @param card The object card to add to the limbo area.
      * @throws NullPointerException If the object card is null (should not happen).
      */
-
-    //TESTED
     public boolean addObjectCardToLimbo(ObjectCard card) throws NullPointerException {
         if (card == null) throw new NullPointerException("ObjectCard is null");
         if (this.limbo.size() == 3) return false;

@@ -32,7 +32,7 @@ public abstract class ClientGameManager implements ClientGameManagerListener, Cl
     private boolean firstTurn;
     private boolean yourTurn;
 
-    private ClientRoundManager roundManager; // manage the rounds of this client
+    private ClientTurnManager roundManager; // manage the rounds of this client
     //    private GameSerialized gameSerialized;
     private ClientUpdater clientUpdater;
     private boolean gameEnded = false;
@@ -101,21 +101,12 @@ public abstract class ClientGameManager implements ClientGameManagerListener, Cl
                 handleGameStartMessage((GameStartMessage) message);
                 break;
 
-            case BOARD:
-                System.out.println("Ok board");
-                handleBoardMessage((BoardMessage) message);
-                break;
-
             case DISCONNECTION:
 //                handleDisconnection((DisconnectionMessage) message);
                 break;
 
             default:
         }
-    }
-
-    private void handleBoardMessage(BoardMessage boardMessage) {
-        queue.add(() -> boardPrint(boardMessage.getBoard()));
     }
 
     private void handleGameStartMessage(GameStartMessage gameStartMessage) {
@@ -215,10 +206,9 @@ public abstract class ClientGameManager implements ClientGameManagerListener, Cl
 
     private void startGame() {
         // TODO fare start game
-//        roundManager = new ClientRoundManager();
-        System.out.println("READYYY");
-        if (firstTurn) { // First round
-            System.out.println("FIRST TURN");
+        roundManager = new ClientTurnManager();
+
+        if (firstTurn) {
             if (firstPlayer.equals(getUsername())) { // First player to play
                 yourTurn = true;
             }
@@ -228,6 +218,32 @@ public abstract class ClientGameManager implements ClientGameManagerListener, Cl
             firstTurn = false;
         }
 
-//        newTurn();
+        newTurn();
     }
+
+    /**
+     * Called when a change of turn owner happen
+     */
+    private void newTurn() {
+//        if (loadGame) {
+//            loadGame = false;
+//        }
+
+        if (yourTurn) {
+            roundManager.beginRound();
+
+//            makeMove();
+        } else {
+            queue.add(() -> notYourTurn(turnOwner));
+        }
+    }
+
+    /**
+     * Show the client all the possible actions
+     */
+//    protected void makeMove() {
+//        if (getUsername().equals(turnOwner)) {
+//            queue.add(() -> displayActions(getPossibleActions()));
+//        }
+//    }
 }
