@@ -181,6 +181,24 @@ public class Game {
     }
 
     /**
+     * Load into the game all the common goal cards
+     */
+    public void loadCommonGoalCards() {
+        commonGoalContainer.add(new CommonGoalType1());
+        commonGoalContainer.add(new CommonGoalType2());
+        commonGoalContainer.add(new CommonGoalType3());
+        commonGoalContainer.add(new CommonGoalType4());
+        commonGoalContainer.add(new CommonGoalType5());
+        commonGoalContainer.add(new CommonGoalType6());
+        commonGoalContainer.add(new CommonGoalType7());
+        commonGoalContainer.add(new CommonGoalType8());
+        commonGoalContainer.add(new CommonGoalType9());
+        commonGoalContainer.add(new CommonGoalType10());
+        commonGoalContainer.add(new CommonGoalType11());
+        commonGoalContainer.add(new CommonGoalType12());
+    }
+
+    /**
      * Get a random object card out of the container and remove the card from it.
      *
      * @return An ObjectCard randomly selected from the container.
