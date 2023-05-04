@@ -49,4 +49,9 @@ interface ClientGameManagerListener {
      * @param username first player username
      */
     void firstPlayerCommunication(String username);
+
+    /**
+     * Handles a game state update
+     */
+    void gameStateUpdate();
 }

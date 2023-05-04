@@ -1,6 +1,9 @@
 package it.polimi.ingsw.view;
 
 import it.polimi.ingsw.enumeration.MessageStatus;
+import it.polimi.ingsw.model.Board;
+import it.polimi.ingsw.model.Coordinate;
+import it.polimi.ingsw.model.ObjectCard;
 import it.polimi.ingsw.network.client.ClientGameManager;
 import it.polimi.ingsw.network.client.DisconnectionListener;
 import it.polimi.ingsw.network.message.ConnectionResponse;
@@ -290,6 +293,38 @@ public class Cli extends ClientGameManager implements DisconnectionListener {
             out.println("There are " + users.size() + " players waiting: " + players.substring(0, players.length() - 2));
 
         out.println();
+    }
+
+    @Override
+    public void gameStateUpdate() {
+        printBoard();
+        out.println();
+//        printShelf();
+        out.println();
+    }
+
+    private void printBoard() {
+        ObjectCard objectCard;
+        Board b = getGameSerialized().getBoard();
+
+        for (int row = 1; row <= 5; row++) {
+            String s = "";
+            for (int spaces = 5 - row; spaces > 0; spaces--) s += "\t\t";
+            for (int col = 1; col < 2 * row; col++) {
+                objectCard = b.getGrid().get(new Coordinate(5 - row, -5 + col));
+                s += ("|" + objectCard);
+            }
+            out.println(s);
+        }
+        for (int row = 5 - 1; row >= 1; row--) {
+            String s = "";
+            for (int spaces = 5 - row; spaces > 0; spaces--) s += "\t\t";
+            for (int col = 1; col < 2 * row; col++) {
+                objectCard = b.getGrid().get(new Coordinate(-5 + row, -5 + col));
+                s += ("|" + objectCard);
+            }
+            out.println(s);
+        }
     }
 
     @Override

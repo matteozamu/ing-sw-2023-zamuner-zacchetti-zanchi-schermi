@@ -15,14 +15,8 @@ public class Board {
         this.grid = new HashMap<>();
     }
 
-    /**
-     * Represents the four possible directions: UP, DOWN, LEFT, and RIGHT.
-     */
-    public enum Direction {
-        UP,
-        DOWN,
-        LEFT,
-        RIGHT
+    public Board(Board board) {
+        this.grid = board.getGrid();
     }
 
     public Map<Coordinate, ObjectCard> getGrid() {
@@ -42,15 +36,15 @@ public class Board {
     /**
      * Create a new cell of the board with the given coordinate and object card.
      *
-     * @param coord     The coordinate of the cell to create.
+     * @param coord The coordinate of the cell to create.
      * @param card  The object card to place at the cell's coordinate.
-     * @return      True if the cell is successfully created and added to the board, false otherwise.
-     * @throws NullPointerException          If the coordinate is null.
-     * @throws IllegalArgumentException      If the object card is null.
+     * @return True if the cell is successfully created and added to the board, false otherwise.
+     * @throws NullPointerException     If the coordinate is null.
+     * @throws IllegalArgumentException If the object card is null.
      */
     public boolean createCell(Coordinate coord, ObjectCard card) throws NullPointerException, IllegalArgumentException {
-        if(coord == null) throw new NullPointerException("Empty key");
-        if(card == null) throw new IllegalArgumentException("Object card invalid");
+        if (coord == null) throw new NullPointerException("Empty key");
+        if (card == null) throw new IllegalArgumentException("Object card invalid");
         if (this.grid.containsKey(coord)) return false;
 
         this.grid.put(coord, card);
@@ -102,10 +96,20 @@ public class Board {
             for (int spaces = 5 - row; spaces > 0; spaces--) s += "\t\t";
             for (int col = 1; col < 2 * row; col++) {
                 objectCard = this.grid.get(new Coordinate(-5 + row, -5 + col));
-                s += ("|"+ objectCard);
+                s += ("|" + objectCard);
             }
             s += "|\n";
         }
         return s;
+    }
+
+    /**
+     * Represents the four possible directions: UP, DOWN, LEFT, and RIGHT.
+     */
+    public enum Direction {
+        UP,
+        DOWN,
+        LEFT,
+        RIGHT
     }
 }

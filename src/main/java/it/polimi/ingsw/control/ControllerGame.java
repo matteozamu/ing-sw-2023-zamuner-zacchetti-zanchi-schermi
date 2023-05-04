@@ -37,7 +37,7 @@ public class ControllerGame implements TimerRunListener, Serializable {
     public ControllerGame(Server server) {
         this.server = server;
         this.id = UUID.randomUUID();
-        this.game = new Game();
+        this.game = Game.getInstance();
         this.limbo = new ArrayList<>();
     }
 
@@ -158,7 +158,7 @@ public class ControllerGame implements TimerRunListener, Serializable {
 //        roundController.pickTwoPowerups();
 
         sendPrivateUpdates();
-        server.sendMessageToAll(new GameStartMessage(turnController.getActivePlayer().getName()));
+        server.sendMessageToAll(new GameStartMessage(game.getCurrentPlayer().getName()));
     }
 
     /**
@@ -169,6 +169,7 @@ public class ControllerGame implements TimerRunListener, Serializable {
     public void sendPrivateUpdates() {
         List<Player> players = game.getPlayers();
 
+        // TODO si potrebbe usare sendMessageToAll?
         for (Player player : players) {
             server.sendMessage(player.getName(), new GameStateMessage(player.getName(), game.getCurrentPlayer().getName()));
         }

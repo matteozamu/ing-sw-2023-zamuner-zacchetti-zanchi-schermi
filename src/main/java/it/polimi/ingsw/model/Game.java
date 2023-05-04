@@ -136,6 +136,15 @@ public class Game {
         return names;
     }
 
+    public Player getPlayerByName(String name) {
+        System.out.println(players);
+        System.out.println(name);
+        for (Player p : players) {
+            if (p.getName().equals(name)) return p;
+        }
+        return null;
+    }
+
     /**
      * Method that adds a list of ObjectCards in the first available cells of the specified column.
      *
@@ -233,5 +242,20 @@ public class Game {
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    @Override
+    public String toString() {
+        return "Game{" +
+                "objectCardContainer=" + objectCardContainer +
+                ", commonGoalContainer=" + commonGoalContainer +
+                ", personalGoalCardsContainer=" + personalGoalCardsContainer +
+                ", players=" + players +
+                ", currentPlayer=" + currentPlayer +
+                ", board=" + board +
+                ", commonGoals=" + commonGoals +
+                ", hasStarted=" + hasStarted +
+                ", numberOfPlayers=" + numberOfPlayers +
+                '}';
     }
 }

@@ -1,6 +1,7 @@
 package it.polimi.ingsw.network.client;
 
 import it.polimi.ingsw.enumeration.MessageStatus;
+import it.polimi.ingsw.model.GameSerialized;
 import it.polimi.ingsw.network.message.*;
 
 import java.io.IOException;
@@ -22,20 +23,19 @@ public abstract class ClientGameManager implements ClientGameManagerListener, Cl
     public static final String SEND_ERROR = "Error while sending the request";
     protected static final String INVALID_STRING = "Invalid String!";
     private final BlockingQueue<Runnable> queue = new LinkedBlockingQueue<>();
-
+    private final Object gameSerializedLock = new Object();
     private Client client;
     private boolean joinedLobby;
     private List<String> lobbyPlayers;
-
     private String firstPlayer;
     private String turnOwner;
     private boolean firstTurn;
     private boolean yourTurn;
-
     private ClientTurnManager roundManager; // manage the rounds of this client
     //    private GameSerialized gameSerialized;
     private ClientUpdater clientUpdater;
     private boolean gameEnded = false;
+    private GameSerialized gameSerialized;
 
     public ClientGameManager() {
         firstTurn = true;
@@ -97,6 +97,10 @@ public abstract class ClientGameManager implements ClientGameManagerListener, Cl
                 handleResponse((Response) message);
                 break;
 
+            case GAME_STATE:
+                handleGameStateMessage((GameStateMessage) message);
+                break;
+
             case READY:
                 handleGameStartMessage((GameStartMessage) message);
                 break;
@@ -106,6 +110,12 @@ public abstract class ClientGameManager implements ClientGameManagerListener, Cl
                 break;
 
             default:
+        }
+    }
+
+    public GameSerialized getGameSerialized() {
+        synchronized (gameSerializedLock) {
+            return gameSerialized;
         }
     }
 
@@ -129,6 +139,22 @@ public abstract class ClientGameManager implements ClientGameManagerListener, Cl
         }
 
         return true;
+    }
+
+    /**
+     * Handles the update of the game state
+     *
+     * @param gameStateMessage game state update received
+     */
+    private void handleGameStateMessage(GameStateMessage gameStateMessage) {
+
+        synchronized (gameSerializedLock) {
+            gameSerialized = gameStateMessage.getGameSerialized();
+        }
+
+        queue.add(this::gameStateUpdate);
+
+//        checkTurnChange(gameStateMessage);
     }
 
     /**
