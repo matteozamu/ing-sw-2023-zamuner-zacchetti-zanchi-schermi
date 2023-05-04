@@ -1,6 +1,7 @@
 package it.polimi.ingsw.network.client;
 
 import it.polimi.ingsw.enumeration.MessageStatus;
+import it.polimi.ingsw.model.CommonGoal;
 import it.polimi.ingsw.model.GameSerialized;
 import it.polimi.ingsw.network.message.*;
 
@@ -122,8 +123,9 @@ public abstract class ClientGameManager implements ClientGameManagerListener, Cl
     private void handleGameStartMessage(GameStartMessage gameStartMessage) {
 //        synchronized (gameSerializedLock) {
         firstPlayer = gameStartMessage.getFirstPlayer();
+
         turnOwner = gameStartMessage.getFirstPlayer();
-        startGame();
+        startGame(gameStartMessage.getCommonGoals());
 //        }
     }
 
@@ -230,7 +232,7 @@ public abstract class ClientGameManager implements ClientGameManagerListener, Cl
         clientUpdater = new ClientUpdater(client, this);
     }
 
-    private void startGame() {
+    private void startGame(List<CommonGoal> cg) {
         // TODO fare start game
         roundManager = new ClientTurnManager();
 
@@ -239,7 +241,7 @@ public abstract class ClientGameManager implements ClientGameManagerListener, Cl
                 yourTurn = true;
             }
 
-            queue.add(() -> firstPlayerCommunication(firstPlayer));
+            queue.add(() -> firstPlayerCommunication(firstPlayer, cg));
 //            queue.add(() -> boardPrint());
             firstTurn = false;
         }

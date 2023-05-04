@@ -158,13 +158,13 @@ public class ControllerGame implements TimerRunListener, Serializable {
         // I first need to pick the two powerups for the first player playing
 //        roundController.pickTwoPowerups();
 
-        server.sendMessageToAll(new GameStartMessage(game.getCurrentPlayer().getName()));
+        server.sendMessageToAll(new GameStartMessage(game.getCurrentPlayer().getName(), game.getCommonGoals()));
         sendPrivateUpdates();
     }
 
     /**
      * This method sends to all clients the new state of the {@link Game Game}, contained in the
-     * {@link model.GameSerialized GameSerialized}. This method is used to send an update of the
+     * {@link GameSerialized GameSerialized}. This method is used to send an update of the
      * {@link Game Game} everytime that a normal action is completed
      */
     public void sendPrivateUpdates() {

@@ -1,7 +1,6 @@
 package it.polimi.ingsw.model;
 
 import java.io.Serializable;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -14,8 +13,8 @@ import java.util.Map;
  * The origin of the coordinates in the grid is in the lower left corner.
  */
 public class Shelf implements Serializable {
-    public final int ROWS;
-    public final int COLUMNS;
+    public static final int ROWS = 6;
+    public static final int COLUMNS = 5;
     private Map<Coordinate, ObjectCard> grid;
     private boolean isFull;
 
@@ -25,10 +24,6 @@ public class Shelf implements Serializable {
     public Shelf() {
         this.grid = new HashMap<>();
         this.isFull = false;
-
-        //TODO: in quanto costanti non è meglio inizializzarle quando le si dichiara?
-        this.ROWS = 6;
-        this.COLUMNS = 5;
     }
 
     /**
@@ -105,40 +100,6 @@ public class Shelf implements Serializable {
 
         return points;
     }
-
-    /**
-     * Prints the layout of object cards on the Shelf, including both the type and ID of each card.
-     * Cards are printed in reverse row order, starting from the last row and proceeding towards the first.
-     * Each card is represented as "type-id", where "type" is the card type and "id" is its ID.
-     * In case a cell is empty, a placeholder with dashes ("-") will be printed.
-     */
-    public void printShelf() {
-        int maxLength = Arrays.stream(ObjectCardType.values())
-                .map(ObjectCardType::toString)
-                .mapToInt(String::length)
-                .max()
-                .orElse(0);
-
-        maxLength += 2; // Adds space for ID and separator "-"
-
-        for (int row = this.ROWS - 1; row >= 0; row--) {
-            for (int col = 0; col < this.COLUMNS; col++) {
-                Coordinate coord = new Coordinate(row, col);
-                ObjectCard card = this.grid.get(coord);
-                if (card == null) {
-                    System.out.print("-".repeat(maxLength));
-                } else {
-                    String cardText = card.toString();
-                    int padding = maxLength - cardText.length();
-                    System.out.print(cardText + " ".repeat(padding));
-                }
-                System.out.print("\t");
-            }
-            System.out.println();
-        }
-    }
-
-    // TODO CI SERVE? Spoiler: no. Ma se serve c'è. Decisamente MDR
 
     /**
      * Returns a map with the number of free cells for each column in the Shelf.

@@ -1,5 +1,6 @@
 package it.polimi.ingsw.network.client;
 
+import it.polimi.ingsw.model.CommonGoal;
 import it.polimi.ingsw.network.message.ConnectionResponse;
 import it.polimi.ingsw.network.message.Response;
 
@@ -48,7 +49,7 @@ interface ClientGameManagerListener {
      *
      * @param username first player username
      */
-    void firstPlayerCommunication(String username);
+    void firstPlayerCommunication(String username, List<CommonGoal> cg);
 
     /**
      * Handles a game state update
