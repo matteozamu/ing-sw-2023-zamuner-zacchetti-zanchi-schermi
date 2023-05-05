@@ -40,6 +40,7 @@ public class ControllerGame implements TimerRunListener, Serializable {
         this.game = Game.getInstance();
         this.limbo = new ArrayList<>();
         fillBoard();
+
     }
 
     public Message onMessage(Message receivedMessage) {

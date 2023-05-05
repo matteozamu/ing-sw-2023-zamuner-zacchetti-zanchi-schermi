@@ -11,7 +11,6 @@ public class GameStateMessage extends Message {
 
     private final GameSerialized gameSerialized;
     private final String turnOwner;
-    private boolean grenadeUsage;
 
     public GameStateMessage(String username, String turnOwner) {
         super("serverUser", null, MessageContent.GAME_STATE);

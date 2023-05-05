@@ -4,6 +4,7 @@ import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
 import java.io.FileReader;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -11,7 +12,7 @@ import java.util.Random;
 /**
  * Represents the main game logic, including object card and common goal management.
  */
-public class Game {
+public class Game implements Serializable {
     public static final int MAX_PLAYERS = 4;
     public static final int MIN_PLAYERS = 2;
     private static Game instance;
@@ -39,6 +40,10 @@ public class Game {
         this.numberOfPlayers = -1;
 
         loadObjectCards();
+        loadPersonalGoaldCards();
+        loadCommonGoalCards();
+        commonGoals.add(getRandomAvailableCommonGoal());
+        commonGoals.add(getRandomAvailableCommonGoal());
     }
 
     public static Game getInstance() {

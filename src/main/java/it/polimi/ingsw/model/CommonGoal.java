@@ -1,11 +1,13 @@
 package it.polimi.ingsw.model;
 
+import java.io.Serializable;
+
 /**
  * Represents a common goal in the game.
  * To initialize the children classes, use: CommonGoal goal = new CommonGoalType1();
  * Note: Child classes don't need a constructor.
  */
-public abstract class CommonGoal {
+public abstract class CommonGoal implements Serializable {
     private int currentPoints;
 
     public CommonGoal() {

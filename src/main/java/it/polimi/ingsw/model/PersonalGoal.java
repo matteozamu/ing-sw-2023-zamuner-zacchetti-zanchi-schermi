@@ -1,9 +1,11 @@
 package it.polimi.ingsw.model;
 
+import java.io.Serializable;
+
 /**
  * Represents a personal goal for a player in the game.
  */
-public class PersonalGoal {
+public class PersonalGoal implements Serializable {
     private int row;
     private int column;
     private ObjectCardType type;
