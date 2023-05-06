@@ -1,11 +1,10 @@
 package it.polimi.ingsw.view;
 
 import it.polimi.ingsw.model.*;
-
 import java.io.PrintStream;
-import java.util.Arrays;
 
 public class CliVisual {
+
     /**
      * Prints the personal goal card in the console
      * @param out is the output PrintStream
@@ -24,26 +23,30 @@ public class CliVisual {
      */
     public static void printBoard(PrintStream out, GameSerialized gameSerialized) {
         ObjectCard objectCard;
-        Board b = gameSerialized.getBoard();
+        StringBuilder boardView = new StringBuilder();
+        Board board = gameSerialized.getBoard();
 
         for (int row = 1; row <= 5; row++) {
-            String s = "";
-            for (int spaces = 5 - row; spaces > 0; spaces--) s += "\t\t";
+            boardView.append("\t".repeat(5 - row));
             for (int col = 1; col < 2 * row; col++) {
-                objectCard = b.getGrid().get(new Coordinate(5 - row, -5 + col));
-                s += ("|" + objectCard);
+                int x = 5 - row;
+                int y = -5 + col;
+                objectCard = board.getGrid().get(new Coordinate(x, y));
+                boardView.append("| ").append(objectCard).append(" (").append(x).append(",").append(y).append(") ");
             }
-            out.println(s);
+            boardView.append("|\n");
         }
         for (int row = 5 - 1; row >= 1; row--) {
-            String s = "";
-            for (int spaces = 5 - row; spaces > 0; spaces--) s += "\t\t";
+            boardView.append("\t".repeat(Math.max(0, 5 - row)));
             for (int col = 1; col < 2 * row; col++) {
-                objectCard = b.getGrid().get(new Coordinate(-5 + row, -5 + col));
-                s += ("|" + objectCard);
+                int x = -5 + row;
+                int y = -5 + col;
+                objectCard = board.getGrid().get(new Coordinate(x, y));
+                boardView.append("| ").append(objectCard).append(" (").append(x).append(",").append(y).append(") ");
             }
-            out.println(s);
+            boardView.append("|\n");
         }
+        out.println(boardView);
     }
 
     /**
@@ -54,15 +57,6 @@ public class CliVisual {
      */
     public static void printShelf(PrintStream out, GameSerialized gameSerialized) {
         Shelf s = gameSerialized.getShelf();
-/*
-        int maxLength = Arrays.stream(ObjectCardType.values())
-                .map(ObjectCardType::toString)
-                .mapToInt(String::length)
-                .max()
-                .orElse(0);
-
-        maxLength += 2; // Adds space for ID and separator "-"
- */
 
         int maxLength = 9;
 
