@@ -121,12 +121,12 @@ public abstract class ClientGameManager implements ClientGameManagerListener, Cl
     }
 
     private void handleGameStartMessage(GameStartMessage gameStartMessage) {
-//        synchronized (gameSerializedLock) {
-        firstPlayer = gameStartMessage.getFirstPlayer();
+        synchronized (gameSerializedLock) {
+            firstPlayer = gameStartMessage.getFirstPlayer();
 
-        turnOwner = gameStartMessage.getFirstPlayer();
-        startGame(gameStartMessage.getCommonGoals());
-//        }
+            turnOwner = gameStartMessage.getFirstPlayer();
+            startGame(gameStartMessage.getCommonGoals());
+        }
     }
 
     public boolean sendRequest(Message message) {
@@ -148,6 +148,7 @@ public abstract class ClientGameManager implements ClientGameManagerListener, Cl
      *
      * @param gameStateMessage game state update received
      */
+    // il game state lo mandiamo all'inizio di ogni turno? o anche durante le fasi di gioco in un turno?
     private void handleGameStateMessage(GameStateMessage gameStateMessage) {
 
         synchronized (gameSerializedLock) {
@@ -156,6 +157,7 @@ public abstract class ClientGameManager implements ClientGameManagerListener, Cl
 
         queue.add(this::gameStateUpdate);
 
+        // TODO verificare se e come farlo
 //        checkTurnChange(gameStateMessage);
     }
 
@@ -233,7 +235,6 @@ public abstract class ClientGameManager implements ClientGameManagerListener, Cl
     }
 
     private void startGame(List<CommonGoal> cg) {
-        // TODO fare start game
         roundManager = new ClientTurnManager();
 
         if (firstTurn) {
@@ -242,7 +243,7 @@ public abstract class ClientGameManager implements ClientGameManagerListener, Cl
             }
 
             queue.add(() -> firstPlayerCommunication(firstPlayer, cg));
-//            queue.add(() -> boardPrint());
+//            queue.add(() -> boardPrint());    viene stampata dopo un gameStateMessage da handleGameStateMessage
             firstTurn = false;
         }
 

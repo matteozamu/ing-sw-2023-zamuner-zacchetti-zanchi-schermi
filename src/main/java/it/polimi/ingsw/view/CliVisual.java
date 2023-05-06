@@ -6,6 +6,22 @@ import java.io.PrintStream;
 import java.util.Arrays;
 
 public class CliVisual {
+    /**
+     * Prints the personal goal card in the console
+     * @param out is the output PrintStream
+     * @param gameSerialized is the object containing the board to be printed
+     */
+    public static void printPersonalGoalCards(PrintStream out, GameSerialized gameSerialized) {
+        PersonalGoalCard personalGoalCard = gameSerialized.getPersonalGoalCard();
+        out.println("Your Personal Goal Card is:");
+        out.println(personalGoalCard.toString());
+    }
+
+    /**
+     * Prints the board in the console
+     * @param out is the output PrintStream
+     * @param gameSerialized is the object containing the board to be printed
+     */
     public static void printBoard(PrintStream out, GameSerialized gameSerialized) {
         ObjectCard objectCard;
         Board b = gameSerialized.getBoard();

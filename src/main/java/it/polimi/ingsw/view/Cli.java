@@ -147,6 +147,11 @@ public class Cli extends ClientGameManager implements DisconnectionListener {
         } while (true);
     }
 
+    /**
+     * Asks the user for the server address
+     *
+     * @return the server address
+     */
     private String askAddress() {
         String address;
         boolean firstError = true;
@@ -173,6 +178,12 @@ public class Cli extends ClientGameManager implements DisconnectionListener {
         } while (true);
     }
 
+    /**
+     * Asks the user for the server port
+     *
+     * @param connection the connection type
+     * @return the server port
+     */
     private int askPort(int connection) {
         boolean firstError = true;
 
@@ -211,6 +222,10 @@ public class Cli extends ClientGameManager implements DisconnectionListener {
         }
     }
 
+    /**
+     * ask the user how many players he wants to play with
+     * @return the number of players
+     */
     private int askNumberOfPlayers() {
         int gamePlayers = 2;
         boolean firstError = true;
@@ -295,6 +310,8 @@ public class Cli extends ClientGameManager implements DisconnectionListener {
 
     @Override
     public void gameStateUpdate() {
+        CliVisual.printPersonalGoalCards(out, getGameSerialized());
+        out.println();
         CliVisual.printBoard(out, getGameSerialized());
         out.println();
         CliVisual.printShelf(out, getGameSerialized());
