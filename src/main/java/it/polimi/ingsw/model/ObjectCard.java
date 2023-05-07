@@ -52,6 +52,6 @@ public class ObjectCard implements Serializable {
      */
     @Override
     public String toString() {
-        return type + "-" + id;
+        return type.getColoredText() + "-" + id;
     }
 }

@@ -32,7 +32,11 @@ public class CliVisual {
                 int x = 5 - row;
                 int y = -5 + col;
                 objectCard = board.getGrid().get(new Coordinate(x, y));
-                boardView.append("| ").append(objectCard).append(" (").append(x).append(",").append(y).append(") ");
+                if(objectCard != null) {
+                    boardView.append("| ").append(objectCard).append(" (").append(x).append(",").append(y).append(") ");
+                } else {
+                    boardView.append(" ".repeat(16));
+                }
             }
             boardView.append("|\n");
         }
@@ -42,7 +46,11 @@ public class CliVisual {
                 int x = -5 + row;
                 int y = -5 + col;
                 objectCard = board.getGrid().get(new Coordinate(x, y));
-                boardView.append("| ").append(objectCard).append(" (").append(x).append(",").append(y).append(") ");
+                if(objectCard != null) {
+                    boardView.append("| ").append(objectCard).append(" (").append(x).append(",").append(y).append(") ");
+                } else {
+                    boardView.append(" ".repeat(16));
+                }
             }
             boardView.append("|\n");
         }
