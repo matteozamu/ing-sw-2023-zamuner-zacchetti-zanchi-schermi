@@ -10,6 +10,17 @@ import java.util.Map;
  */
 
 public class Board implements Serializable {
+
+    /**
+     * Represents the four possible directions: UP, DOWN, LEFT, and RIGHT.
+     */
+    public enum Direction {
+        UP,
+        DOWN,
+        LEFT,
+        RIGHT
+    }
+
     private Map<Coordinate, ObjectCard> grid;
 
     public Board() {
@@ -82,35 +93,8 @@ public class Board implements Serializable {
 
     @Override
     public String toString() {
-        ObjectCard objectCard;
-        String s = "";
-
-        for (int row = 1; row <= 5; row++) {
-            for (int spaces = 5 - row; spaces > 0; spaces--) s += "\t\t";
-            for (int col = 1; col < 2 * row; col++) {
-                objectCard = this.grid.get(new Coordinate(5 - row, -5 + col));
-                s += ("|" + objectCard);
-            }
-            s += "|\n";
-        }
-        for (int row = 5 - 1; row >= 1; row--) {
-            for (int spaces = 5 - row; spaces > 0; spaces--) s += "\t\t";
-            for (int col = 1; col < 2 * row; col++) {
-                objectCard = this.grid.get(new Coordinate(-5 + row, -5 + col));
-                s += ("|" + objectCard);
-            }
-            s += "|\n";
-        }
-        return s;
-    }
-
-    /**
-     * Represents the four possible directions: UP, DOWN, LEFT, and RIGHT.
-     */
-    public enum Direction {
-        UP,
-        DOWN,
-        LEFT,
-        RIGHT
+        return "Board{" +
+                "grid=" + grid +
+                '}';
     }
 }
