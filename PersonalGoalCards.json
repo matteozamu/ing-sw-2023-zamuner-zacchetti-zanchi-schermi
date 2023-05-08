@@ -2,19 +2,14 @@
   {
     "goals": [
       {
-        "row": 44,
-        "column": 1,
-        "type": "Gatto"
+        "row": 5,
+        "column": 0,
+        "type": "Pianta"
       },
       {
-        "row": 2,
+        "row": 5,
         "column": 2,
-        "type": "Gatto"
-      },
-      {
-        "row": 0,
-        "column": 1,
-        "type": "Gatto"
+        "type": "Cornice"
       },
       {
         "row": 4,
@@ -22,13 +17,358 @@
         "type": "Gatto"
       },
       {
+        "row": 3,
+        "column": 3,
+        "type": "Libro"
+      },
+      {
+        "row": 2,
+        "column": 1,
+        "type": "Gioco"
+      },
+      {
         "row": 0,
+        "column": 2,
+        "type": "Trofeo"
+      }
+    ]
+  },
+  {
+    "goals": [
+      {
+        "row": 3,
+        "column": 0,
+        "type": "Gatto"
+      },
+      {
+        "row": 4,
+        "column": 1,
+        "type": "Pianta"
+      },
+      {
+        "row": 3,
+        "column": 2,
+        "type": "Gioco"
+      },
+      {
+        "row": 1,
+        "column": 3,
+        "type": "Trofeo"
+      },
+      {
+        "row": 0,
+        "column": 4,
+        "type": "Cornice"
+      },
+      {
+        "row": 2,
+        "column": 4,
+        "type": "Libro"
+      }
+    ]
+  },
+  {
+    "goals": [
+      {
+        "row": 0,
+        "column": 0,
+        "type": "Libro"
+      },
+      {
+        "row": 2,
         "column": 1,
         "type": "Gatto"
       },
       {
-        "row": 0,
+        "row": 3,
+        "column": 2,
+        "type": "Pianta"
+      },
+      {
+        "row": 4,
+        "column": 3,
+        "type": "Gioco"
+      },
+      {
+        "row": 3,
+        "column": 2,
+        "type": "Pianta"
+      },
+      {
+        "row": 4,
+        "column": 0,
+        "type": "Cornice"
+      }
+    ]
+  },
+  {
+    "goals": [
+      {
+        "row": 3,
+        "column": 0,
+        "type": "Trofeo"
+      },
+      {
+        "row": 1,
         "column": 1,
+        "type": "Libro"
+      },
+      {
+        "row": 1,
+        "column": 2,
+        "type": "Gatto"
+      },
+      {
+        "row": 3,
+        "column": 2,
+        "type": "Cornice"
+      },
+      {
+        "row": 2,
+        "column": 3,
+        "type": "Pianta"
+      },
+      {
+        "row": 5,
+        "column": 4,
+        "type": "Gioco"
+      }
+    ]
+  },
+  {
+    "goals": [
+      {
+        "row": 0,
+        "column": 0,
+        "type": "Gioco"
+      },
+      {
+        "row": 2,
+        "column": 1,
+        "type": "Cornice"
+      },
+      {
+        "row": 4,
+        "column": 1,
+        "type": "Trofeo"
+      },
+      {
+        "row": 2,
+        "column": 2,
+        "type": "Libro"
+      },
+      {
+        "row": 0,
+        "column": 3,
+        "type": "Gatto"
+      },
+      {
+        "row": 1,
+        "column": 4,
+        "type": "Pianta"
+      }
+    ]
+  },
+  {
+    "goals": [
+      {
+        "row": 0,
+        "column": 0,
+        "type": "Pianta"
+      },
+      {
+        "row": 1,
+        "column": 1,
+        "type": "Gioco"
+      },
+      {
+        "row": 5,
+        "column": 2,
+        "type": "Trofeo"
+      },
+      {
+        "row": 1,
+        "column": 3,
+        "type": "Cornice"
+      },
+      {
+        "row": 3,
+        "column": 3,
+        "type": "Libro"
+      },
+      {
+        "row": 5,
+        "column": 4,
+        "type": "Gatto"
+      }
+    ]
+  },
+  {
+    "goals": [
+      {
+        "row": 5,
+        "column": 0,
+        "type": "Gatto"
+      },
+      {
+        "row": 2,
+        "column": 0,
+        "type": "Trofeo"
+      },
+      {
+        "row": 3,
+        "column": 1,
+        "type": "Pianta"
+      },
+      {
+        "row": 0,
+        "column": 2,
+        "type": "Libro"
+      },
+      {
+        "row": 4,
+        "column": 3,
+        "type": "Cornice"
+      },
+      {
+        "row": 1,
+        "column": 4,
+        "type": "Gioco"
+      }
+    ]
+  },
+  {
+    "goals": [
+      {
+        "row": 2,
+        "column": 0,
+        "type": "Pianta"
+      },
+      {
+        "row": 4,
+        "column": 1,
+        "type": "Gatto"
+      },
+      {
+        "row": 3,
+        "column": 2,
+        "type": "Trofeo"
+      },
+      {
+        "row": 0,
+        "column": 3,
+        "type": "Gioco"
+      },
+      {
+        "row": 1,
+        "column": 3,
+        "type": "Libro"
+      },
+      {
+        "row": 5,
+        "column": 4,
+        "type": "Cornice"
+      }
+    ]
+  },
+  {
+    "goals": [
+      {
+        "row": 0,
+        "column": 0,
+        "type": "Cornice"
+      },
+      {
+        "row": 1,
+        "column": 1,
+        "type": "Trofeo"
+      },
+      {
+        "row": 3,
+        "column": 2,
+        "type": "Gatto"
+      },
+      {
+        "row": 5,
+        "column": 2,
+        "type": "Gioco"
+      },
+      {
+        "row": 1,
+        "column": 4,
+        "type": "Pianta"
+      },
+      {
+        "row": 2,
+        "column": 4,
+        "type": "Libro"
+      }
+    ]
+  },
+  {
+    "goals": [
+      {
+        "row": 3,
+        "column": 0,
+        "type": "Libro"
+      },
+      {
+        "row": 1,
+        "column": 1,
+        "type": "Cornice"
+      },
+      {
+        "row": 4,
+        "column": 1,
+        "type": "Gioco"
+      },
+      {
+        "row": 0,
+        "column": 3,
+        "type": "Pianta"
+      },
+      {
+        "row": 2,
+        "column": 3,
+        "type": "Gatto"
+      },
+      {
+        "row": 5,
+        "column": 4,
+        "type": "Trofeo"
+      }
+    ]
+  },
+  {
+    "goals": [
+      {
+        "row": 3,
+        "column": 0,
+        "type": "Gioco"
+      },
+      {
+        "row": 4,
+        "column": 1,
+        "type": "Libro"
+      },
+      {
+        "row": 2,
+        "column": 2,
+        "type": "Cornice"
+      },
+      {
+        "row": 5,
+        "column": 2,
+        "type": "Pianta"
+      },
+      {
+        "row": 0,
+        "column": 3,
+        "type": "Trofeo"
+      },
+      {
+        "row": 1,
+        "column": 4,
         "type": "Gatto"
       }
     ]
@@ -37,169 +377,33 @@
     "goals": [
       {
         "row": 0,
-        "column": 1,
-        "type": "Pianta"
-      },
-      {
-        "row": 2,
-        "column": 2,
-        "type": "Pianta"
-      },
-      {
-        "row": 0,
-        "column": 1,
+        "column": 0,
         "type": "Gatto"
       },
       {
         "row": 4,
-        "column": 4,
-        "type": "Pianta"
-      },
-      {
-        "row": 0,
         "column": 1,
         "type": "Pianta"
       },
       {
-        "row": 0,
-        "column": 1,
-        "type": "Pianta"
-      }
-    ]
-  },
-  {
-    "goals": [
+        "row": 3,
+        "column": 2,
+        "type": "Cornice"
+      },
       {
-        "row": 0,
-        "column": 1,
-        "type": "Pianta"
+        "row": 5,
+        "column": 2,
+        "type": "Libro"
       },
       {
         "row": 2,
-        "column": 2,
-        "type": "Pianta"
+        "column": 3,
+        "type": "Trofeo"
       },
       {
-        "row": 0,
-        "column": 1,
-        "type": "Gatto"
-      },
-      {
-        "row": 4,
+        "row": 1,
         "column": 4,
-        "type": "Pianta"
-      },
-      {
-        "row": 0,
-        "column": 1,
-        "type": "Pianta"
-      },
-      {
-        "row": 0,
-        "column": 1,
-        "type": "Pianta"
-      }
-    ]
-  },
-  {
-    "goals": [
-      {
-        "row": 0,
-        "column": 1,
-        "type": "Pianta"
-      },
-      {
-        "row": 2,
-        "column": 2,
-        "type": "Pianta"
-      },
-      {
-        "row": 0,
-        "column": 1,
-        "type": "Gatto"
-      },
-      {
-        "row": 4,
-        "column": 4,
-        "type": "Pianta"
-      },
-      {
-        "row": 0,
-        "column": 1,
-        "type": "Pianta"
-      },
-      {
-        "row": 0,
-        "column": 1,
-        "type": "Pianta"
-      }
-    ]
-  },
-  {
-    "goals": [
-      {
-        "row": 0,
-        "column": 1,
-        "type": "Pianta"
-      },
-      {
-        "row": 2,
-        "column": 2,
-        "type": "Pianta"
-      },
-      {
-        "row": 0,
-        "column": 1,
-        "type": "Gatto"
-      },
-      {
-        "row": 4,
-        "column": 4,
-        "type": "Pianta"
-      },
-      {
-        "row": 0,
-        "column": 1,
-        "type": "Pianta"
-      },
-      {
-        "row": 0,
-        "column": 1,
-        "type": "Pianta"
-      }
-    ]
-  },
-  {
-    "goals": [
-      {
-        "row": 0,
-        "column": 1,
-        "type": "Pianta"
-      },
-      {
-        "row": 2,
-        "column": 2,
-        "type": "Pianta"
-      },
-      {
-        "row": 0,
-        "column": 1,
-        "type": "Gatto"
-      },
-      {
-        "row": 4,
-        "column": 4,
-        "type": "Pianta"
-      },
-      {
-        "row": 0,
-        "column": 1,
-        "type": "Pianta"
-      },
-      {
-        "row": 0,
-        "column": 1,
-        "type": "Pianta"
+        "type": "Gioco"
       }
     ]
   }
