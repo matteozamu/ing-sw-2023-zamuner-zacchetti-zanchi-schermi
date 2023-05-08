@@ -1,7 +1,14 @@
 package it.polimi.ingsw.view;
 
+import com.google.gson.*;
 import it.polimi.ingsw.model.*;
+
+import java.io.FileNotFoundException;
+import java.io.FileReader;
 import java.io.PrintStream;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.util.List;
 
 public class CliVisual {
 
@@ -14,7 +21,40 @@ public class CliVisual {
         PersonalGoalCard personalGoalCard = gameSerialized.getPersonalGoalCard();
         out.println("Your Personal Goal Card is:");
         out.println(personalGoalCard.toString());
+        printPGC(out, personalGoalCard);
     }
+
+    public static void printPGC(PrintStream out, PersonalGoalCard personalGoalCard){
+        List<PersonalGoal> goals = personalGoalCard.getGoals();
+        for (int i = 0; i < 6; i++) {
+            for (int j = 0; j < 5; j++) {
+                boolean found = false;
+                for (PersonalGoal goal : goals) {
+                    if (goal.getRow() == i && goal.getColumn() == j) {
+                        out.print(getColoredText(goal.getType().getR(), goal.getType().getG(), goal.getType().getB()) + " ");
+                        found = true;
+                        break;
+                    }
+                }
+                if (!found) {
+                    out.print("- ");
+                }
+            }
+            out.println();
+        }
+    }
+
+    public static String getColoredText(int r, int g, int b) {
+        // Creazione del codice ANSI per impostare il colore di sfondo
+        String colorCode = String.format("\033[48;2;%d;%d;%dm", r, g, b);
+        // Creazione del codice ANSI per reimpostare il colore di sfondo a quello di default
+        String resetCode = "\033[0m";
+        // Combinazione del codice di sfondo, del testo vuoto e del codice di reset per creare la stringa formattata
+        String coloredText = String.format("%s%s%s", colorCode, " ", resetCode);
+        return coloredText;
+    }
+
+
 
     /**
      * Prints the board in the console

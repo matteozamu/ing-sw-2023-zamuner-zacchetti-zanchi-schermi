@@ -2,6 +2,7 @@ package it.polimi.ingsw.model;
 
 import org.fusesource.jansi.Ansi;
 
+import java.awt.*;
 import java.util.List;
 import java.util.Random;
 
@@ -31,6 +32,18 @@ public enum ObjectCardType {
         this.r = r;
         this.g = g;
         this.b = b;
+    }
+
+    public int getR() {
+        return r;
+    }
+
+    public int getG() {
+        return g;
+    }
+
+    public int getB() {
+        return b;
     }
 
     public String getColoredText() {

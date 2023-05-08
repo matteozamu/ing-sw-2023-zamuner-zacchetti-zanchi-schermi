@@ -23,6 +23,18 @@ public class PersonalGoal implements Serializable {
         this.type = type;
     }
 
+    public int getColumn() {
+        return column;
+    }
+
+    public ObjectCardType getType() {
+        return type;
+    }
+
+    public int getRow() {
+        return row;
+    }
+
     @Override
     public String toString() {
         return "PersonalGoal{" +
