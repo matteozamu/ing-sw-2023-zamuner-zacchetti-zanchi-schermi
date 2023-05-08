@@ -18,6 +18,8 @@ import java.util.stream.Collectors;
 
 import static it.polimi.ingsw.model.Board.Direction.*;
 
+//TODO: Eliminare il codice che non serve più
+
 /**
  * Controller for the game, handling game logic and interactions between model components.
  */
@@ -26,10 +28,10 @@ public class ControllerGame implements TimerRunListener, Serializable {
     private UUID id;
     private Game game;
     private List<ObjectCard> limbo;
+    private List<Coordinate> selectedCoordinates;
     private PossibleGameState gameState = PossibleGameState.GAME_ROOM;
     private boolean isLobbyFull;
     private transient TurnController turnController;
-
 
     /**
      * Constructor for the ControllerGame class, initializing the game state.
@@ -39,6 +41,7 @@ public class ControllerGame implements TimerRunListener, Serializable {
         this.id = UUID.randomUUID();
         this.game = Game.getInstance();
         this.limbo = new ArrayList<>();
+        this.selectedCoordinates = new ArrayList<>();
         fillBoard();
 
     }
@@ -252,15 +255,52 @@ public class ControllerGame implements TimerRunListener, Serializable {
 
 
     /**
-     * Checks if the object card at the given coordinate is available (i.e., has at least one free side).
+     * Checks if the object card at the given coordinate is available for selection.
+     * An object card is considered available if it has at least one free side and,
+     * when other object cards have been selected, it shares a side with one of them.
      * This method is used to determine if a player can pick up an object card from the board.
+     * When three cards have been selected, the list of selected coordinates is cleared.
      *
      * @param coordinate The coordinate of the object card to check.
-     * @return True if the object card is available, false otherwise.
+     * @return True if the object card is available for selection, false otherwise.
      */
+    //TODO: da testare
+    public boolean isObjectCardAvailable(Coordinate coordinate) {
+        if(selectedCoordinates.size() == 3){
+            selectedCoordinates.clear();
+        }
+        if (selectedCoordinates.isEmpty()) {
+            this.selectedCoordinates.add(coordinate);
+            return this.game.getBoard().isEmptyAtDirection(coordinate, UP) ||
+                    this.game.getBoard().isEmptyAtDirection(coordinate, DOWN) ||
+                    this.game.getBoard().isEmptyAtDirection(coordinate, RIGHT) ||
+                    this.game.getBoard().isEmptyAtDirection(coordinate, LEFT);
+        } else {
+            boolean hasFreeSide = this.game.getBoard().isEmptyAtDirection(coordinate, UP) ||
+                    this.game.getBoard().isEmptyAtDirection(coordinate, DOWN) ||
+                    this.game.getBoard().isEmptyAtDirection(coordinate, RIGHT) ||
+                    this.game.getBoard().isEmptyAtDirection(coordinate, LEFT);
+            boolean hasCommonSide = false;
+            for (Coordinate selectedCoordinate : selectedCoordinates) {
+                if (coordinate.getAdjacent(Coordinate.Direction.UP).equals(selectedCoordinate) ||
+                        coordinate.getAdjacent(Coordinate.Direction.DOWN).equals(selectedCoordinate) ||
+                        coordinate.getAdjacent(Coordinate.Direction.LEFT).equals(selectedCoordinate) ||
+                        coordinate.getAdjacent(Coordinate.Direction.RIGHT).equals(selectedCoordinate)) {
+                    hasCommonSide = true;
+                    break;
+                }
+            }
+            this.selectedCoordinates.add(coordinate);
+            return hasFreeSide && hasCommonSide;
+        }
+    }
+    /*
+    Questo è il metodo originale, quello sopra è il metodo aggiornato
     public boolean isObjectCardAvailable(Coordinate coordinate) {
         return this.game.getBoard().isEmptyAtDirection(coordinate, UP) || this.game.getBoard().isEmptyAtDirection(coordinate, DOWN) || this.game.getBoard().isEmptyAtDirection(coordinate, RIGHT) || this.game.getBoard().isEmptyAtDirection(coordinate, LEFT);
     }
+
+     */
 
     /**
      * Adds the object card at the specified coordinate to the limbo area.

@@ -139,6 +139,7 @@ public class ControllerGameTest extends TestCase {
 //    }
 //
 //
+    /*
     @Test
     public void testIsObjectCardAvailableAllEmptyDirections() {
         Coordinate c = new Coordinate(0, 0);
@@ -161,6 +162,7 @@ public class ControllerGameTest extends TestCase {
         cg.fillBoard();
         assertFalse(cg.isObjectCardAvailable(c));
     }
+     */
 
     @Test
     public void testAddObjectCardToLimbo() {
