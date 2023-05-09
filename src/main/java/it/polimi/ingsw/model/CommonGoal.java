@@ -1,11 +1,13 @@
 package it.polimi.ingsw.model;
 
+import java.io.Serializable;
+
 /**
  * Represents a common goal in the game.
  * To initialize the children classes, use: CommonGoal goal = new CommonGoalType1();
  * Note: Child classes don't need a constructor.
  */
-public abstract class CommonGoal {
+public abstract class CommonGoal implements Serializable {
     private int currentPoints;
 
     public CommonGoal() {
@@ -57,10 +59,10 @@ public abstract class CommonGoal {
      * @return The updated number of points for the current CommonGoalCard.
      */
     public int updateCurrentPoints(int numberOfPlayers) {
-        if(numberOfPlayers == 4 || numberOfPlayers == 3){
+        if (numberOfPlayers == 4 || numberOfPlayers == 3) {
             this.currentPoints -= 2;
-        } else if (numberOfPlayers == 2){
-            this.currentPoints -=4;
+        } else if (numberOfPlayers == 2) {
+            this.currentPoints -= 4;
         }
         return currentPoints;
     }
