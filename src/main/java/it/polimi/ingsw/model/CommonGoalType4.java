@@ -10,6 +10,30 @@ import java.util.Map;
  */
 public final class CommonGoalType4 extends CommonGoal {
 
+    public int type = 4;
+
+    @Override
+    public int getType() {
+        return type;
+    }
+
+    @Override
+    public String cliView() {
+        return """
+                O O O O O
+                    x4
+                """;
+    }
+
+    /**
+     * Returns a string representation of the common goal, describing its requirements and conditions.
+     *
+     * @return A string representing the common goal.
+     */
+    @Override
+    public String toString() {
+        return "Quattro righe formate ciascuna da 5 tessere di uno, due o tre tipi differenti. Righe diverse possono avere combinazioni diverse di tipi di tessere.";
+    }
 
     /**
      * Checks if the Shelf is eligible for the goal check.

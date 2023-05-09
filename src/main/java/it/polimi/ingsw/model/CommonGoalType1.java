@@ -10,6 +10,33 @@ import java.util.Map;
 
 public final class CommonGoalType1 extends CommonGoal {
 
+    public int type = 1;
+
+    @Override
+    public int getType() {
+        return type;
+    }
+
+    @Override
+    public String cliView() {
+        return """
+                O
+                O
+                x6
+                """;
+
+    }
+
+    /**
+     * Returns a string representation of the common goal, describing its requirements and conditions.
+     *
+     * @return A string representing the common goal.
+     */
+    @Override
+    public String toString() {
+        return "Sei gruppi separati formati ciascuno da due tessere adiacenti dello stesso tipo. Le tessere di un gruppo possono essere diverse da quelle di un altro gruppo.";
+    }
+
     /**
      * Determines if the given shelf is eligible to be checked for the specific common goal of type 1.
      * A shelf is considered eligible for this common goal if it contains at least 12 object cards,
@@ -45,7 +72,7 @@ public final class CommonGoalType1 extends CommonGoal {
         }
         return false;
     }
-    // public per testare
+
     public boolean checkAdjacent(Coordinate coord, ObjectCard card, Map<Coordinate, ObjectCard> grid) {
         ObjectCardType targetType = card.getType();
         Coordinate[] adjacentCoords = {coord.getAdjacent(Coordinate.Direction.UP), coord.getAdjacent(Coordinate.Direction.RIGHT), coord.getAdjacent(Coordinate.Direction.DOWN), coord.getAdjacent(Coordinate.Direction.LEFT)};

@@ -3,14 +3,37 @@ package it.polimi.ingsw.model;
 import java.util.HashSet;
 import java.util.Set;
 
-// OK for TESTING
-
 /**
  * Due righe formate ciascuna da 5 diversi tipi di tessere.
  */
 
 public final class CommonGoalType8 extends CommonGoal {
 
+    public int type = 8;
+
+    @Override
+    public int getType() {
+        return type;
+    }
+
+    @Override
+    public String cliView() {
+        return """
+                O O O O O
+                x2
+                """;
+
+    }
+
+    /**
+     * Returns a string representation of the common goal, describing its requirements and conditions.
+     *
+     * @return A string representing the common goal.
+     */
+    @Override
+    public String toString() {
+        return "Due righe formate ciascuna da 5 diversi tipi di tessere.";
+    }
 
     /**
      * Checks if the Shelf is eligible for the goal check.

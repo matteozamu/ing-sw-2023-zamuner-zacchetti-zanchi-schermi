@@ -7,6 +7,34 @@ package it.polimi.ingsw.model;
 
 public final class CommonGoalType2 extends CommonGoal {
 
+    public int type = 2;
+
+    @Override
+    public int getType() {
+        return type;
+    }
+
+    @Override
+    public String cliView() {
+        return """
+                O
+                  O
+                    O
+                      O
+                        O
+                """;
+    }
+
+    /**
+     * Returns a string representation of the common goal, describing its requirements and conditions.
+     *
+     * @return A string representing the common goal.
+     */
+    @Override
+    public String toString() {
+        return "Cinque tessere dello stesso tipo che formano una diagonale.";
+    }
+
     /**
      * Checks if the Shelf is eligible for the goal check.
      * For CommonGoalType2, the Shelf must have at least 5 object cards.
@@ -26,9 +54,15 @@ public final class CommonGoalType2 extends CommonGoal {
         }
 
         for (int row = 5; row >= 4; row--) {
-            for (int col : new int[] {0, 4}) {
+            for (int col : new int[]{0, 4}) {
                 Coordinate coordinate = new Coordinate(row, col);
-                ObjectCardType currentType = shelf.getObjectCard(coordinate).getType();
+                ObjectCard objectCard = shelf.getObjectCard(coordinate);
+
+                if (objectCard == null) {
+                    continue;
+                }
+
+                ObjectCardType currentType = objectCard.getType();
 
                 if ((col == 0 && checkDiagonalFromTopLeft(shelf, coordinate, currentType)) ||
                         (col == 4 && checkDiagonalFromTopRight(shelf, coordinate, currentType))) {
@@ -38,6 +72,7 @@ public final class CommonGoalType2 extends CommonGoal {
         }
         return false;
     }
+
 
     public boolean checkDiagonalFromTopLeft(Shelf shelf, Coordinate start, ObjectCardType type) {
         for (int i = 0; i < 5; i++) {

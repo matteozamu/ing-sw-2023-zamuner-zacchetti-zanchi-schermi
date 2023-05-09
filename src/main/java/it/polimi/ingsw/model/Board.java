@@ -1,5 +1,6 @@
 package it.polimi.ingsw.model;
 
+import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -8,12 +9,7 @@ import java.util.Map;
  * Provides methods for creating cells, checking if cells are empty, and removing ObjectCards from the board.
  */
 
-public class Board {
-    private Map<Coordinate, ObjectCard> grid;
-
-    public Board() {
-        this.grid = new HashMap<>();
-    }
+public class Board implements Serializable {
 
     /**
      * Represents the four possible directions: UP, DOWN, LEFT, and RIGHT.
@@ -23,6 +19,16 @@ public class Board {
         DOWN,
         LEFT,
         RIGHT
+    }
+
+    private Map<Coordinate, ObjectCard> grid;
+
+    public Board() {
+        this.grid = new HashMap<>();
+    }
+
+    public Board(Board board) {
+        this.grid = board.getGrid();
     }
 
     public Map<Coordinate, ObjectCard> getGrid() {
@@ -42,15 +48,15 @@ public class Board {
     /**
      * Create a new cell of the board with the given coordinate and object card.
      *
-     * @param coord     The coordinate of the cell to create.
+     * @param coord The coordinate of the cell to create.
      * @param card  The object card to place at the cell's coordinate.
-     * @return      True if the cell is successfully created and added to the board, false otherwise.
-     * @throws NullPointerException          If the coordinate is null.
-     * @throws IllegalArgumentException      If the object card is null.
+     * @return True if the cell is successfully created and added to the board, false otherwise.
+     * @throws NullPointerException     If the coordinate is null.
+     * @throws IllegalArgumentException If the object card is null.
      */
     public boolean createCell(Coordinate coord, ObjectCard card) throws NullPointerException, IllegalArgumentException {
-        if(coord == null) throw new NullPointerException("Empty key");
-        if(card == null) throw new IllegalArgumentException("Object card invalid");
+        if (coord == null) throw new NullPointerException("Empty key");
+        if (card == null) throw new IllegalArgumentException("Object card invalid");
         if (this.grid.containsKey(coord)) return false;
 
         this.grid.put(coord, card);
@@ -87,29 +93,8 @@ public class Board {
 
     @Override
     public String toString() {
-        ObjectCard objectCard;
-        StringBuilder sb = new StringBuilder();
-
-        for (int row = 1; row <= 5; row++) {
-            sb.append("\t".repeat(5 - row));
-            for (int col = 1; col < 2 * row; col++) {
-                int x = 5 - row;
-                int y = -5 + col;
-                objectCard = this.grid.get(new Coordinate(x, y));
-                sb.append("| ").append(objectCard).append(" (").append(x).append(",").append(y).append(") ");
-            }
-            sb.append("|\n");
-        }
-        for (int row = 5 - 1; row >= 1; row--) {
-            sb.append("\t".repeat(Math.max(0, 5 - row)));
-            for (int col = 1; col < 2 * row; col++) {
-                int x = -5 + row;
-                int y = -5 + col;
-                objectCard = this.grid.get(new Coordinate(x, y));
-                sb.append("| ").append(objectCard).append(" (").append(x).append(",").append(y).append(") ");
-            }
-            sb.append("|\n");
-        }
-        return sb.toString();
+        return "Board{" +
+                "grid=" + grid +
+                '}';
     }
 }

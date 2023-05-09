@@ -1,13 +1,38 @@
 package it.polimi.ingsw.model;
 
-// OK for TESTING
-
 /**
  * Due gruppi separati di 4 tessere dello stesso tipo che formano un quadrato 2x2.
  * Le tessere dei due gruppi devono essere dello stesso tipo.
  */
 
 public final class CommonGoalType7 extends CommonGoal {
+
+    public int type = 7;
+
+    @Override
+    public int getType() {
+        return type;
+    }
+
+    @Override
+    public String cliView() {
+        return """
+                O O
+                O O
+                x2
+                """;
+
+    }
+
+    /**
+     * Returns a string representation of the common goal, describing its requirements and conditions.
+     *
+     * @return A string representing the common goal.
+     */
+    @Override
+    public String toString() {
+        return "Due gruppi separati di 4 tessere dello stesso tipo che formano un quadrato 2x2. Le tessere dei due gruppi devono essere dello stesso tipo.";
+    }
 
     /**
      * Checks if the Shelf is eligible for the goal check.

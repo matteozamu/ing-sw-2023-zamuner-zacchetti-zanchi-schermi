@@ -1,11 +1,12 @@
 package it.polimi.ingsw.model;
 
+import java.io.Serializable;
 import java.util.Objects;
 
 /**
  * Represents a 2D coordinate in the game grid with methods to obtain neighboring coordinates.
  */
-public class Coordinate {
+public class Coordinate implements Serializable {
     private final int column;
     private final int row;
 
@@ -15,26 +16,17 @@ public class Coordinate {
      * @param column The column value for the coordinate.
      * @param row    The row value for the coordinate.
      */
-    public Coordinate(int row, int column){
+    public Coordinate(int row, int column) {
         this.column = column;
         this.row = row;
     }
+
     public int getColumn() {
         return column;
     }
 
     public int getRow() {
         return row;
-    }
-
-    /**
-     * Represents the four possible directions for moving from a coordinate in a 2D grid.
-     */
-    public enum Direction {
-        UP,
-        DOWN,
-        LEFT,
-        RIGHT
     }
 
     /**
@@ -75,5 +67,15 @@ public class Coordinate {
     @Override
     public String toString() {
         return "[" + row + "," + column + ']';
+    }
+
+    /**
+     * Represents the four possible directions for moving from a coordinate in a 2D grid.
+     */
+    public enum Direction {
+        UP,
+        DOWN,
+        LEFT,
+        RIGHT
     }
 }

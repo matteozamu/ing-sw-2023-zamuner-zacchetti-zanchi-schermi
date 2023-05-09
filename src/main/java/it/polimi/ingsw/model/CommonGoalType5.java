@@ -11,6 +11,35 @@ import java.util.Map;
 
 public class CommonGoalType5 extends CommonGoal {
 
+    public int type = 5;
+
+    @Override
+    public int getType() {
+        return type;
+    }
+
+    @Override
+    public String cliView() {
+        return """
+                O
+                O
+                O
+                O
+                x6
+                """;
+
+    }
+
+    /**
+     * Returns a string representation of the common goal, describing its requirements and conditions.
+     *
+     * @return A string representing the common goal.
+     */
+    @Override
+    public String toString() {
+        return "Quattro gruppi separati formati ciascuno da quattro tessere adiacenti dello stesso tipo. Le tessere di un gruppo possono essere diverse da quelle di un altro gruppo.";
+    }
+
     /**
      * Checks if the Shelf is eligible for the goal check.
      * For CommonGoalType5, the Shelf must have at least 16 object cards.
@@ -42,8 +71,6 @@ public class CommonGoalType5 extends CommonGoal {
 
         return groupsCount == 4;
     }
-
-
 
     public boolean isValidGroupOfFour(Shelf shelf, Coordinate coord, ObjectCardType type) {
         Coordinate[][] possibleGroups = new Coordinate[][]{

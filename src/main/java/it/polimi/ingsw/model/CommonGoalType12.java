@@ -1,7 +1,5 @@
 package it.polimi.ingsw.model;
 
-// OK for TESTING
-
 /**
  * Cinque colonne di altezza crescente o decrescente:
  * a partire dalla prima colonna a sinistra o a destra, ogni colonna successiva
@@ -10,6 +8,34 @@ package it.polimi.ingsw.model;
  */
 
 public final class CommonGoalType12 extends CommonGoal {
+
+    public int type = 12;
+
+    @Override
+    public String cliView() {
+        return """
+                O - - - -
+                O O - - -
+                O O O - -
+                O O O O -
+                O O O O O
+                """;
+    }
+
+    @Override
+    public int getType() {
+        return type;
+    }
+
+    /**
+     * Returns a string representation of the common goal, describing its requirements and conditions.
+     *
+     * @return A string representing the common goal.
+     */
+    @Override
+    public String toString() {
+        return "Cinque colonne di altezza crescente o decrescente: a partire dalla prima colonna a sinistra o a destra, ogni colonna successiva deve essere formata da una tessera in più. Le tessere possono essere di qualsiasi tipo.";
+    }
 
     /**
      * Checks if the Shelf is eligible for the goal check.
@@ -32,38 +58,51 @@ public final class CommonGoalType12 extends CommonGoal {
         return checkDescendingStair(shelf) || checkAscendingStair(shelf);
     }
 
-    private boolean checkDescendingStair(Shelf shelf) {
+    public boolean checkDescendingStair(Shelf shelf) {
+        boolean patternOne = true;
+        boolean patternThree = true;
 
         for (int col = 0; col < shelf.COLUMNS; col++) {
-            int maxHeight = 5 - col;
+            int maxHeightPatternOne = 5 - col;
+            int maxHeightPatternThree = 6 - col;
             int countD = 0;
             for (int row = 0; row < shelf.ROWS; row++) {
-                if (shelf.getObjectCard(new Coordinate(col, row)) != null) {
+                if (shelf.getObjectCard(new Coordinate(row, col)) != null) {
                     countD++;
                 }
             }
-            if (countD != maxHeight) {
-                return false;
+
+            patternOne = patternOne && (countD == maxHeightPatternOne);
+            patternThree = patternThree && (countD == maxHeightPatternThree);
+
+            if (!patternOne && !patternThree) {
+                break;
             }
         }
-        return true;
+        return patternOne || patternThree;
     }
 
-    private boolean checkAscendingStair(Shelf shelf) {
+    public boolean checkAscendingStair(Shelf shelf) {
+        boolean patternTwo = true;
+        boolean patternFour = true;
 
         for (int col = shelf.COLUMNS - 1; col >= 0; col--) {
-            int maxHeight = col + 1;
+            int maxHeightPatternTwo = col + 1;
+            int maxHeightPatternFour = col + 2;
             int countA = 0;
-            for (int row = 0; row < 6; row++) {
-                if (shelf.getObjectCard(new Coordinate(col, row)) != null) {
+            for (int row = 0; row < shelf.ROWS; row++) {
+                if (shelf.getObjectCard(new Coordinate(row, col)) != null) {
                     countA++;
                 }
             }
-            if (countA != maxHeight) {
-                return false;
+
+            patternTwo = patternTwo && (countA == maxHeightPatternTwo);
+            patternFour = patternFour && (countA == maxHeightPatternFour);
+
+            if (!patternTwo && !patternFour) {
+                break;
             }
         }
-        return true;
+        return patternTwo || patternFour;
     }
-
 }

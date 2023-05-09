@@ -4,6 +4,7 @@ import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
 import java.io.FileReader;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -11,8 +12,10 @@ import java.util.Random;
 /**
  * Represents the main game logic, including object card and common goal management.
  */
-public class Game {
-    public static final int MAX_PLAYER = 4;
+public class Game implements Serializable {
+    public static final int MAX_PLAYERS = 4;
+    public static final int MIN_PLAYERS = 2;
+    private static Game instance;
     private List<ObjectCard> objectCardContainer;
     private List<CommonGoal> commonGoalContainer;
     private List<PersonalGoalCard> personalGoalCardsContainer;
@@ -20,6 +23,8 @@ public class Game {
     private Player currentPlayer;
     private Board board;
     private List<CommonGoal> commonGoals;
+    private boolean hasStarted;
+    private int numberOfPlayers;
 
     /**
      * constructor of the class
@@ -31,6 +36,36 @@ public class Game {
         this.players = new ArrayList<>();
         this.board = new Board();
         this.commonGoals = new ArrayList<>();
+        this.hasStarted = false;
+        this.numberOfPlayers = -1;
+
+        loadObjectCards();
+        loadPersonalGoaldCards();
+        loadCommonGoalCards();
+        commonGoals.add(getRandomAvailableCommonGoal());
+        commonGoals.add(getRandomAvailableCommonGoal());
+    }
+
+    public static Game getInstance() {
+        if (instance == null)
+            instance = new Game();
+        return instance;
+    }
+
+    public int getNumberOfPlayers() {
+        return numberOfPlayers;
+    }
+
+    public void setNumberOfPlayers(int numberOfPlayers) {
+        this.numberOfPlayers = numberOfPlayers;
+    }
+
+    public boolean isHasStarted() {
+        return hasStarted;
+    }
+
+    public void setHasStarted(boolean hasStarted) {
+        this.hasStarted = hasStarted;
     }
 
     public List<CommonGoal> getCommonGoalContainer() {
@@ -53,17 +88,16 @@ public class Game {
         return players;
     }
 
-    /**
-     * Add a new player to the game
-     *
-     * @param p is the object Player
-     * @return true if successful, false otherwise
-     */
+    public boolean doesPlayerExists(String username) {
+        for (Player p : players) {
+            if (p.getName().equals(username)) return true;
+        }
+        return false;
+    }
 
-    //TESTED
     public boolean addPlayer(Player p) {
         if (p == null) return false;
-        if (this.players.size() < MAX_PLAYER) {
+        if (this.players.size() < MAX_PLAYERS) {
             this.players.add(p);
             return true;
         } else return false;
@@ -91,17 +125,29 @@ public class Game {
      *
      * @return the next player
      */
-
-    //TESTED
     public Player nextPlayer() {
         if (this.players.size() == 0) return null;
 
-        //this.limbo.clear();
         if (this.players.indexOf(this.currentPlayer) == this.players.size() - 1)
             this.currentPlayer = this.players.get(0);
         else this.currentPlayer = this.players.get(this.players.indexOf(currentPlayer) + 1);
 
         return this.currentPlayer;
+    }
+
+    public List<String> getPlayersNames() {
+        List<String> names = new ArrayList<>();
+        for (Player p : players) {
+            names.add(p.getName());
+        }
+        return names;
+    }
+
+    public Player getPlayerByName(String name) {
+        for (Player p : players) {
+            if (p.getName().equals(name)) return p;
+        }
+        return null;
     }
 
     /**
@@ -111,8 +157,6 @@ public class Game {
      * @return true if the cards are successfully added.
      * @throws IllegalStateException if there is not enough space to add the cards.
      */
-
-    //TESTED
     //TODO: gestire caso limbo vuoto (ora torna true)
     public boolean addObjectCardsToShelf(List<ObjectCard> limbo, int col) {
         Shelf s = this.currentPlayer.getShelf();
@@ -142,12 +186,28 @@ public class Game {
     }
 
     /**
+     * Load into the game all the common goal cards
+     */
+    public void loadCommonGoalCards() {
+        commonGoalContainer.add(new CommonGoalType1());
+        commonGoalContainer.add(new CommonGoalType2());
+        commonGoalContainer.add(new CommonGoalType3());
+        commonGoalContainer.add(new CommonGoalType4());
+        commonGoalContainer.add(new CommonGoalType5());
+        commonGoalContainer.add(new CommonGoalType6());
+        commonGoalContainer.add(new CommonGoalType7());
+        commonGoalContainer.add(new CommonGoalType8());
+        commonGoalContainer.add(new CommonGoalType9());
+        commonGoalContainer.add(new CommonGoalType10());
+        commonGoalContainer.add(new CommonGoalType11());
+        commonGoalContainer.add(new CommonGoalType12());
+    }
+
+    /**
      * Get a random object card out of the container and remove the card from it.
      *
      * @return An ObjectCard randomly selected from the container.
      */
-
-    //TESTED
     public ObjectCard getRandomAvailableObjectCard() {
         if (this.objectCardContainer == null || this.objectCardContainer.size() == 0) return null;
 
@@ -163,7 +223,6 @@ public class Game {
      *
      * @return A CommonGoal randomly selected from the container.
      */
-    //TESTED
     public CommonGoal getRandomAvailableCommonGoal() {
         if (this.commonGoalContainer == null || this.commonGoalContainer.size() == 0) return null;
 
@@ -179,8 +238,6 @@ public class Game {
      *
      * @return A PersonalGoalCard randomly selected from the container.
      */
-
-    //TESTED
     public PersonalGoalCard getRandomAvailablePersonalGoalCard() {
         if (this.personalGoalCardsContainer == null || this.personalGoalCardsContainer.size() == 0) return null;
 
@@ -208,5 +265,20 @@ public class Game {
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    @Override
+    public String toString() {
+        return "Game{" +
+                "objectCardContainer=" + objectCardContainer +
+                ", commonGoalContainer=" + commonGoalContainer +
+                ", personalGoalCardsContainer=" + personalGoalCardsContainer +
+                ", players=" + players +
+                ", currentPlayer=" + currentPlayer +
+                ", board=" + board +
+                ", commonGoals=" + commonGoals +
+                ", hasStarted=" + hasStarted +
+                ", numberOfPlayers=" + numberOfPlayers +
+                '}';
     }
 }
