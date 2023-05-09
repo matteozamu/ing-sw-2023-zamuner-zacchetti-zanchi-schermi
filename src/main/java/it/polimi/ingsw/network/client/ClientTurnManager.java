@@ -11,7 +11,7 @@ class ClientTurnManager {
     private boolean roundStarted;
 
     ClientTurnManager() {
-        this.playerState = UserPlayerState.SPAWN;
+        this.playerState = UserPlayerState.PICK_CARD_BOARD;
     }
 
     /**
@@ -22,7 +22,7 @@ class ClientTurnManager {
 //            throw new ClientRoundManagerException("Error, round not started yet (before call nextState() you must call beginRound())");
 
             switch (playerState) {
-                case BOT_SPAWN:
+                case PICK_CARD_BOARD:
                     playerState = UserPlayerState.SPAWN;
                     break;
 
@@ -30,13 +30,11 @@ class ClientTurnManager {
                     handleBegin();
                     break;
 
-                case FIRST_ACTION:
+                case GET_CARD_BOARD:
                     playerState = UserPlayerState.SECOND_ACTION;
                     break;
 
                 case SECOND_ACTION:
-                case SECOND_FRENZY_ACTION:
-                case SECOND_SCOPE_USAGE:
                     handleSecondMove();
                     break;
 
@@ -74,7 +72,7 @@ class ClientTurnManager {
      * Handles the next state in the begin phase of the game
      */
     private void handleBegin() {
-        playerState = UserPlayerState.FIRST_ACTION;
+        playerState = UserPlayerState.GET_CARD_BOARD;
     }
 
     /**

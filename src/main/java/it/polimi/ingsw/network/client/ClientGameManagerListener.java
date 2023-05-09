@@ -1,5 +1,6 @@
 package it.polimi.ingsw.network.client;
 
+import it.polimi.ingsw.enumeration.PossibleAction;
 import it.polimi.ingsw.model.CommonGoal;
 import it.polimi.ingsw.network.message.ConnectionResponse;
 import it.polimi.ingsw.network.message.Response;
@@ -55,4 +56,13 @@ interface ClientGameManagerListener {
      * Handles a game state update
      */
     void gameStateUpdate();
+
+    /**
+     * Tells the client what are the possible actions
+     *
+     * @param possibleActions list of possible actions
+     */
+    void displayActions(List<PossibleAction> possibleActions);
+
+    void pickBoardCard();
 }

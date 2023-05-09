@@ -2,7 +2,7 @@ package it.polimi.ingsw.enumeration;
 
 public enum PossibleAction {
     // TODO da cambiare
-    SPAWN_BOT("Choose a bot spawn point"),
+    BOARD_PICK_CARD("Choose a card from the board"),
     RESPAWN_BOT("Choose a bot respawn point"),
     CHOOSE_SPAWN("Choose spawn point"),
     CHOOSE_RESPAWN("Choose respawn point"),

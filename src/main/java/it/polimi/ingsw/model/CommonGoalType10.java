@@ -1,22 +1,60 @@
 package it.polimi.ingsw.model;
 
 import java.util.List;
-import java.util.Map;
-
-// OK for TESTING
 
 /**
  * Cinque tessere dello stesso tipo che formano una X.
  */
 public final class CommonGoalType10 extends CommonGoal {
 
+    public int type = 10;
+
+    @Override
+    public int getType() {
+        return type;
+    }
+
+    @Override
+    public String cliView() {
+        return """
+                O   O
+                  O
+                O   O
+                """;
+
+    }
+
+    /**
+     * Returns a string representation of the common goal, describing its requirements and conditions.
+     *
+     * @return A string representing the common goal.
+     */
+    @Override
+    public String toString() {
+        return "Cinque tessere dello stesso tipo che formano una X.";
+    }
+
+    /**
+     * Checks if the Shelf is eligible for the goal check.
+     * For CommonGoalType10, the Shelf must have at least 5 object cards.
+     *
+     * @param shelf The Shelf to check.
+     * @return true if the Shelf is eligible, false otherwise.
+     */
+    @Override
+    protected boolean isShelfEligible(Shelf shelf) {
+        return shelf.getGrid().size() >= 5;
+    }
+
     @Override
     public boolean checkGoal(Shelf shelf) {
-        Map<Coordinate, ObjectCard> grid = shelf.getGrid();
+        if (!isShelfEligible(shelf)) {
+            return false;
+        }
 
         // Check the center coordinate
         Coordinate centerCoordinate = new Coordinate(2, 2);
-        ObjectCard centerObjectCard = grid.get(centerCoordinate);
+        ObjectCard centerObjectCard = shelf.getObjectCard(centerCoordinate);
 
         if (centerObjectCard == null) {
             return false;
@@ -33,7 +71,7 @@ public final class CommonGoalType10 extends CommonGoal {
         );
 
         for (Coordinate coordinate : xShapeCoordinates) {
-            ObjectCard objectCard = grid.get(coordinate);
+            ObjectCard objectCard = shelf.getObjectCard(coordinate);
             if (objectCard == null || objectCard.getType() != centerType) {
                 return false;
             }

@@ -1,8 +1,10 @@
 package it.polimi.ingsw.network.client;
 
 import it.polimi.ingsw.enumeration.MessageStatus;
+import it.polimi.ingsw.enumeration.PossibleAction;
 import it.polimi.ingsw.model.CommonGoal;
 import it.polimi.ingsw.model.GameSerialized;
+import it.polimi.ingsw.model.Player;
 import it.polimi.ingsw.network.message.*;
 
 import java.io.IOException;
@@ -32,8 +34,7 @@ public abstract class ClientGameManager implements ClientGameManagerListener, Cl
     private String turnOwner;
     private boolean firstTurn;
     private boolean yourTurn;
-    private ClientTurnManager roundManager; // manage the rounds of this client
-    //    private GameSerialized gameSerialized;
+    private ClientTurnManager turnManager; // manage the rounds of this client
     private ClientUpdater clientUpdater;
     private boolean gameEnded = false;
     private GameSerialized gameSerialized;
@@ -130,7 +131,7 @@ public abstract class ClientGameManager implements ClientGameManagerListener, Cl
     }
 
     public boolean sendRequest(Message message) {
-        if (roundManager != null) {
+        if (turnManager != null) {
 //            checkChangeStateRequest(message);
         }
 
@@ -150,6 +151,7 @@ public abstract class ClientGameManager implements ClientGameManagerListener, Cl
      */
     // il game state lo mandiamo all'inizio di ogni turno? o anche durante le fasi di gioco in un turno?
     private void handleGameStateMessage(GameStateMessage gameStateMessage) {
+        System.out.println("GAME STATE MESSAGE");
 
         synchronized (gameSerializedLock) {
             gameSerialized = gameStateMessage.getGameSerialized();
@@ -198,9 +200,9 @@ public abstract class ClientGameManager implements ClientGameManagerListener, Cl
 
     private void onPositiveResponse(Response response) {
 //        if (response.getStatus() == MessageStatus.NEED_PLAYER_ACTION) {
-//            roundManager.targetingScope();
-//        } else if (roundManager.getUserPlayerState() == UserPlayerState.ENDING_PHASE) {
-//            roundManager.botRespawn();
+//            turnManager.targetingScope();
+//        } else if (turnManager.getUserPlayerState() == UserPlayerState.ENDING_PHASE) {
+//            turnManager.botRespawn();
 //        } else {
 //        }
     }
@@ -234,8 +236,28 @@ public abstract class ClientGameManager implements ClientGameManagerListener, Cl
         clientUpdater = new ClientUpdater(client, this);
     }
 
+    /**
+     * Returns a player based on the provided username
+     *
+     * @return the player of the client
+     */
+    public Player getPlayer() {
+        synchronized (gameSerializedLock) {
+            return gameSerialized.getPlayers().stream().filter(p -> p.getName().equals(getUsername())).findFirst().orElse(null);
+        }
+    }
+
+    /**
+     * @return a list of all the players
+     */
+    public List<Player> getPlayers() {
+        synchronized (gameSerializedLock) {
+            return gameSerialized.getPlayers();
+        }
+    }
+
     private void startGame(List<CommonGoal> cg) {
-        roundManager = new ClientTurnManager();
+        turnManager = new ClientTurnManager();
 
         if (firstTurn) {
             if (firstPlayer.equals(getUsername())) { // First player to play
@@ -259,9 +281,9 @@ public abstract class ClientGameManager implements ClientGameManagerListener, Cl
 //        }
 
         if (yourTurn) {
-            roundManager.beginRound();
+            turnManager.beginRound();
 
-//            makeMove();
+            makeMove();
         } else {
             queue.add(() -> notYourTurn(turnOwner));
         }
@@ -270,9 +292,66 @@ public abstract class ClientGameManager implements ClientGameManagerListener, Cl
     /**
      * Show the client all the possible actions
      */
-//    protected void makeMove() {
-//        if (getUsername().equals(turnOwner)) {
-//            queue.add(() -> displayActions(getPossibleActions()));
-//        }
-//    }
+    public void makeMove() {
+        if (getUsername().equals(turnOwner)) {
+            queue.add(() -> displayActions(getPossibleActions()));
+        }
+    }
+
+    /**
+     * @return a list of possible actions based on the current state of the player
+     */
+    private List<PossibleAction> getPossibleActions() {
+        switch (turnManager.getUserPlayerState()) {
+            case PICK_CARD_BOARD:
+                return List.of(PossibleAction.BOARD_PICK_CARD);
+
+            case BOT_RESPAWN:
+                return List.of(PossibleAction.RESPAWN_BOT);
+
+            case SPAWN:
+                return List.of(PossibleAction.CHOOSE_SPAWN);
+
+            case FIRST_SCOPE_USAGE:
+            case SECOND_SCOPE_USAGE:
+                return List.of(PossibleAction.SCOPE_USAGE);
+
+            case BOT_ACTION:
+                return List.of(PossibleAction.BOT_ACTION);
+
+            case GRENADE_USAGE:
+                return List.of(PossibleAction.GRENADE_USAGE);
+
+            case ENDING_PHASE:
+//                return getEndingActions();
+
+            case DEAD:
+                return List.of(PossibleAction.CHOOSE_RESPAWN);
+
+            default:
+                return null;
+//                throw new ClientRoundManagerException("Cannot be here: " + roundManager.getUserPlayerState().name());
+        }
+    }
+
+    /**
+     * Executes the action chosen
+     *
+     * @param chosenAction action chosen by the user
+     */
+    public void doAction(PossibleAction chosenAction) {
+        Runnable action = null;
+
+        switch (chosenAction) {
+            case BOARD_PICK_CARD:
+                System.out.println("SCEGLI CARTA");
+                action = this::pickBoardCard;
+                break;
+
+            default:
+//                throw new ClientRoundManagerException("Invalid Action");
+        }
+
+        queue.add(action);
+    }
 }

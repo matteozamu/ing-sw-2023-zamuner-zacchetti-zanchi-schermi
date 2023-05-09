@@ -1,7 +1,11 @@
 package it.polimi.ingsw.view;
 
 import it.polimi.ingsw.enumeration.MessageStatus;
+import it.polimi.ingsw.enumeration.PossibleAction;
+import it.polimi.ingsw.model.Board;
 import it.polimi.ingsw.model.CommonGoal;
+import it.polimi.ingsw.model.Coordinate;
+import it.polimi.ingsw.model.ObjectCard;
 import it.polimi.ingsw.network.client.ClientGameManager;
 import it.polimi.ingsw.network.client.DisconnectionListener;
 import it.polimi.ingsw.network.message.ConnectionResponse;
@@ -225,6 +229,7 @@ public class Cli extends ClientGameManager implements DisconnectionListener {
 
     /**
      * ask the user how many players he wants to play with
+     *
      * @return the number of players
      */
     private int askNumberOfPlayers() {
@@ -339,6 +344,106 @@ public class Cli extends ClientGameManager implements DisconnectionListener {
             out.println("You are the first player!\n");
         } else out.println(username + " is the first player!\n");
 
+    }
+
+    @Override
+    public void displayActions(List<PossibleAction> possibleActions) {
+        int choose = -1;
+        out.println();
+        out.println("Choose the next move:");
+
+        for (int i = 0; i < possibleActions.size(); i++) {
+            out.println("\t" + (i) + " - " + possibleActions.get(i).getDescription());
+        }
+
+//        LOGGER.log(INFO, "possibleActions: {0}", Arrays.toString(possibleActions.toArray()));
+//        LOGGER.log(INFO, "userplayer: {0}", getPlayer());
+//        LOGGER.log(INFO, "other players: {0}", Arrays.toString(getPlayers().toArray()));
+
+        choose = readInt(0, possibleActions.size() - 1, false);
+
+        doAction(possibleActions.get(choose));
+    }
+
+    /**
+     * Read an integer in the desired interval
+     *
+     * @param minVal      minimum value
+     * @param maxVal      maximum value
+     * @param cancellable {@code true} if the read is cancellable with "-1"
+     * @return the integer read
+     */
+    private Integer readInt(int minVal, int maxVal, boolean cancellable) {
+        boolean firstError = true;
+        boolean accepted = false;
+        Integer choose = Integer.MIN_VALUE;
+
+        do {
+            out.print(">>> ");
+            String line = in.nextLine();
+
+            try {
+                choose = Integer.valueOf(line);
+
+                if (choose >= minVal && choose <= maxVal) {
+                    accepted = true;
+                } else {
+                    firstError = promptInputError(firstError, "Not valid input!");
+                }
+            } catch (NumberFormatException e) {
+                promptInputError(firstError, "Not valid number!");
+            }
+        } while (!accepted);
+
+        return choose;
+    }
+
+    @Override
+    public void pickBoardCard() {
+        Board board = getGameSerialized().getBoard();
+        ObjectCard objectCard = null;
+        boolean validCard = false;
+//        PlayerPosition botSpawnPosition = null;
+
+//        printMap();
+//        out.println("You drew these two powerups, care where to spawn the bot!");
+//        printPowerups();
+
+        out.println("Write the coordinate of the card (0,0 is the centre):");
+        do {
+            objectCard = board.getGrid().get(readCoordinate());
+            if (objectCard != null) validCard = true;
+        } while (!validCard);
+
+        System.out.println(objectCard);
+
+        if (!sendRequest(MessageBuilder.buildPickObjectCardRequest(getPlayer(), getClientToken(), objectCard))) {
+            promptError(SEND_ERROR, true);
+        }
+    }
+
+    private Coordinate readCoordinate() {
+        boolean firstError = true;
+        boolean accepted = false;
+        String stringCoordinate;
+        Coordinate coordinate = null;
+
+        do {
+            out.print(">>> ");
+            stringCoordinate = in.nextLine();
+
+            try {
+                String[] parts = stringCoordinate.split(",");
+                int col = Integer.parseInt(parts[0]);
+                int row = Integer.parseInt(parts[1]);
+                coordinate = new Coordinate(row, col);
+                accepted = true;
+            } catch (Exception e) {
+                firstError = promptInputError(firstError, "Invalid Coordinate");
+            }
+        } while (!accepted);
+
+        return coordinate;
     }
 
     @Override

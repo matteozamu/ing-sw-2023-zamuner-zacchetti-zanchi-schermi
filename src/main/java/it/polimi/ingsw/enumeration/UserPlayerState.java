@@ -7,7 +7,7 @@ package it.polimi.ingsw.enumeration;
  */
 public enum UserPlayerState {
     // TODO cambiare con gli stati delle azioni di gioco
-    BOT_SPAWN,
+    PICK_CARD_BOARD,
     SPAWN,
     FIRST_ACTION,
     SECOND_ACTION,
@@ -21,5 +21,5 @@ public enum UserPlayerState {
     GRENADE_USAGE,
     FIRST_SCOPE_USAGE,
     SECOND_SCOPE_USAGE,
-    GAME_ENDED
+    GET_CARD_BOARD, GAME_ENDED
 }
