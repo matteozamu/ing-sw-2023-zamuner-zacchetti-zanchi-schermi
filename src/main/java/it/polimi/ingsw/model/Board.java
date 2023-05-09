@@ -66,15 +66,20 @@ public class Board {
      * @throws IllegalArgumentException If the direction parameter is invalid.
      */
 
-    //TODO: aggiungere eccezione in caso di coordinate nulle/invalide
-    //TODO: il caso di default è irraggiungibile
-    public boolean isEmptyAtDirection(Coordinate coord, Direction direction) throws IllegalArgumentException {
+    public boolean isEmptyAtDirection(Coordinate coord, Direction direction) throws NullPointerException, IllegalArgumentException {
+        if (coord == null) {
+            throw new NullPointerException("Coordinate cannot be null");
+        }
+
+        if (direction == null) {
+            throw new IllegalArgumentException("Direction cannot be null");
+        }
+
         Coordinate tmp = switch (direction) {
             case UP -> new Coordinate(coord.getRow() + 1, coord.getColumn());
             case DOWN -> new Coordinate(coord.getRow() - 1, coord.getColumn());
             case LEFT -> new Coordinate(coord.getRow(), coord.getColumn() - 1);
             case RIGHT -> new Coordinate(coord.getRow(), coord.getColumn() + 1);
-            default -> throw new IllegalArgumentException("Invalid direction");
         };
 
         return !grid.containsKey(tmp);
