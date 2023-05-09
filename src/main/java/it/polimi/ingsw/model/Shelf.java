@@ -59,7 +59,7 @@ public class Shelf implements Serializable {
 
         for (int row = 0; row < this.ROWS; row++) {
             coordinate = new Coordinate(row, col);
-            if (this.grid.containsKey(coordinate) && this.grid.get(coordinate) != null) availableRows--;
+            if (this.grid.containsKey(coordinate) && getObjectCard(coordinate) != null) availableRows--;
         }
         return availableRows;
     }
@@ -72,21 +72,21 @@ public class Shelf implements Serializable {
 
         for (ObjectCardType type : types) {
             closeCards = 0;
-            for (int row = 0; row < this.ROWS; row++) {
-                for (int col = 0; col < this.COLUMNS; col++) {
-                    card = this.grid.get(new Coordinate(row, col));
+            for (int row = 0; row < ROWS; row++) {
+                for (int col = 0; col < COLUMNS; col++) {
+                    card = getObjectCard(new Coordinate(row, col));
                     if (card != null && card.getType().equals(type)) {
-                        if (this.grid.get(new Coordinate(row - 1, col)) != null) {
-                            if (this.grid.get(new Coordinate(row - 1, col)).getType().equals(card.getType()))
+                        if (getObjectCard(new Coordinate(row - 1, col)) != null) {
+                            if (getObjectCard(new Coordinate(row - 1, col)).getType().equals(card.getType()))
                                 closeCards++;
-                        } else if (this.grid.get(new Coordinate(row + 1, col)) != null) {
-                            if (this.grid.get(new Coordinate(row + 1, col)).getType().equals(card.getType()))
+                        } else if (getObjectCard(new Coordinate(row + 1, col)) != null) {
+                            if (getObjectCard(new Coordinate(row + 1, col)).getType().equals(card.getType()))
                                 closeCards++;
-                        } else if (this.grid.get(new Coordinate(row, col - 1)) != null) {
-                            if (this.grid.get(new Coordinate(row, col - 1)).getType().equals(card.getType()))
+                        } else if (getObjectCard(new Coordinate(row, col - 1)) != null) {
+                            if (getObjectCard(new Coordinate(row, col - 1)).getType().equals(card.getType()))
                                 closeCards++;
-                        } else if (this.grid.get(new Coordinate(row, col + 1)) != null) {
-                            if (this.grid.get(new Coordinate(row, col + 1)).getType().equals(card.getType()))
+                        } else if (getObjectCard(new Coordinate(row, col + 1)) != null) {
+                            if (getObjectCard(new Coordinate(row, col + 1)).getType().equals(card.getType()))
                                 closeCards++;
                         }
                     }
