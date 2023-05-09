@@ -18,15 +18,9 @@ public class CliVisual {
      * @param gameSerialized is the object containing the board to be printed
      */
     public static void printPersonalGoalCards(PrintStream out, GameSerialized gameSerialized) {
-        PersonalGoalCard personalGoalCard = gameSerialized.getPersonalGoalCard();
+        List<PersonalGoal> goals = gameSerialized.getPersonalGoalCard().getGoals();
         out.println("Your Personal Goal Card is:");
-        out.println(personalGoalCard.toString());
-        printPGC(out, personalGoalCard);
-    }
-
-    public static void printPGC(PrintStream out, PersonalGoalCard personalGoalCard){
-        List<PersonalGoal> goals = personalGoalCard.getGoals();
-        for (int i = 0; i < 6; i++) {
+        for (int i = 5; i >= 0; i--) {
             for (int j = 0; j < 5; j++) {
                 boolean found = false;
                 for (PersonalGoal goal : goals) {
@@ -43,6 +37,7 @@ public class CliVisual {
             out.println();
         }
     }
+
 
     public static String getColoredText(int r, int g, int b) {
         // Creazione del codice ANSI per impostare il colore di sfondo
