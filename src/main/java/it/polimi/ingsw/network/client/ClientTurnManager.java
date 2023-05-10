@@ -8,7 +8,7 @@ import it.polimi.ingsw.enumeration.UserPlayerState;
 class ClientTurnManager {
     private UserPlayerState playerState;
 
-    private boolean roundStarted;
+    private boolean turnStarted;
 
     ClientTurnManager() {
         this.playerState = UserPlayerState.PICK_CARD_BOARD;
@@ -18,8 +18,8 @@ class ClientTurnManager {
      * Change the state of the player to the next one
      */
     void nextState() {
-        if (!roundStarted)
-//            throw new ClientRoundManagerException("Error, round not started yet (before call nextState() you must call beginRound())");
+        if (!turnStarted)
+//            throw new ClientRoundManagerException("Error, round not started yet (before call nextState() you must call startTurn())");
 
             switch (playerState) {
                 case PICK_CARD_BOARD:
@@ -130,8 +130,8 @@ class ClientTurnManager {
     /**
      * Begins the round
      */
-    void beginRound() {
-        roundStarted = true;
+    void startTurn() {
+        turnStarted = true;
     }
 
     /**
@@ -139,7 +139,7 @@ class ClientTurnManager {
      */
     void endRound() {
         playerState = UserPlayerState.FIRST_ACTION;
-        roundStarted = false;
+        turnStarted = false;
     }
 
     /**

@@ -332,6 +332,12 @@ public class Cli extends ClientGameManager implements DisconnectionListener {
     }
 
     @Override
+    public void printLimbo() {
+        out.println(getGameSerialized().);
+        out.println();
+    }
+
+    @Override
     public void gameStateUpdate() {
         CliVisual.printPersonalGoalCards(out, getGameSerialized());
         out.println();
@@ -372,11 +378,7 @@ public class Cli extends ClientGameManager implements DisconnectionListener {
             out.println("\t" + (i) + " - " + possibleActions.get(i).getDescription());
         }
 
-//        LOGGER.log(INFO, "possibleActions: {0}", Arrays.toString(possibleActions.toArray()));
-//        LOGGER.log(INFO, "userplayer: {0}", getPlayer());
-//        LOGGER.log(INFO, "other players: {0}", Arrays.toString(getPlayers().toArray()));
-
-        choose = readInt(0, possibleActions.size() - 1, false);
+        choose = readInt(0, possibleActions.size() - 1);
 
         doAction(possibleActions.get(choose));
     }
@@ -384,12 +386,11 @@ public class Cli extends ClientGameManager implements DisconnectionListener {
     /**
      * Read an integer in the desired interval
      *
-     * @param minVal      minimum value
-     * @param maxVal      maximum value
-     * @param cancellable {@code true} if the read is cancellable with "-1"
+     * @param minVal minimum value
+     * @param maxVal maximum value
      * @return the integer read
      */
-    private Integer readInt(int minVal, int maxVal, boolean cancellable) {
+    private Integer readInt(int minVal, int maxVal) {
         boolean firstError = true;
         boolean accepted = false;
         Integer choose = Integer.MIN_VALUE;
@@ -417,23 +418,20 @@ public class Cli extends ClientGameManager implements DisconnectionListener {
     @Override
     public void pickBoardCard() {
         Board board = getGameSerialized().getBoard();
-        ObjectCard objectCard = null;
+        ObjectCard objectCard;
         boolean validCard = false;
-//        PlayerPosition botSpawnPosition = null;
-
-//        printMap();
-//        out.println("You drew these two powerups, care where to spawn the bot!");
-//        printPowerups();
+        Coordinate coordinate;
 
         out.println("Write the coordinate of the card (0,0 is the centre):");
         do {
-            objectCard = board.getGrid().get(readCoordinate());
+            coordinate = readCoordinate();
+            objectCard = board.getGrid().get(coordinate);
             if (objectCard != null) validCard = true;
         } while (!validCard);
 
-        System.out.println(objectCard);
+        System.out.println("Checking card: " + objectCard);
 
-        if (!sendRequest(MessageBuilder.buildPickObjectCardRequest(getPlayer(), getClientToken(), objectCard))) {
+        if (!sendRequest(MessageBuilder.buildPickObjectCardRequest(getPlayer(), getClientToken(), coordinate))) {
             promptError(SEND_ERROR, true);
         }
     }

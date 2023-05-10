@@ -26,7 +26,6 @@ public class ControllerGame implements TimerRunListener, Serializable {
     private final transient Server server;
     private UUID id;
     private Game game;
-    private List<ObjectCard> limbo;
     private List<Coordinate> selectedCoordinates;
     private PossibleGameState gameState = PossibleGameState.GAME_ROOM;
     private boolean isLobbyFull;
@@ -39,7 +38,6 @@ public class ControllerGame implements TimerRunListener, Serializable {
         this.server = server;
         this.id = UUID.randomUUID();
         this.game = Game.getInstance();
-        this.limbo = new ArrayList<>();
         this.selectedCoordinates = new ArrayList<>();
         fillBoard();
 
@@ -62,10 +60,30 @@ public class ControllerGame implements TimerRunListener, Serializable {
 
         switch (receivedMessage.getContent()) {
             case GAME_STATE:
-                return new GameStateMessage(receivedMessage.getSenderUsername(), game.getCurrentPlayer().getName());
+                return new GameStateResponse(receivedMessage.getSenderUsername(), game.getCurrentPlayer().getName());
+
+            case PICK_OBJECT_CARD:
+                System.out.println("PICK OBJECT CARD");
+                return pickObjectCardHandler((ObjectCardRequest) receivedMessage);
         }
 
         return new Response("GAME STATE ERROR FOR THIS MESSAGE", MessageStatus.ERROR);
+    }
+
+    private Response pickObjectCardHandler(ObjectCardRequest objectCardRequest) {
+        Coordinate c = objectCardRequest.getCoordinate();
+
+        if (objectCardRequest.getContent() == MessageContent.PICK_OBJECT_CARD && c != null /*&& isObjectCardAvailable(c)*/) {
+            Server.LOGGER.log(Level.INFO, "Coordinate of the card: {0}", c);
+            this.getGame().getLimbo().put(c, this.getGame().getBoard().removeObjectCard(c));
+
+            sendPrivateUpdates();
+            return new Response("Valid card!", MessageStatus.PRINT_LIMBO);
+//            return new ObjectCardResponse(objectCardRequest.getSenderUsername());
+        } else {
+            System.out.println("Carta non valida");
+            return buildInvalidResponse();
+        }
     }
 
     private Message firstStateHandler(Message receivedMessage) {
@@ -163,9 +181,6 @@ public class ControllerGame implements TimerRunListener, Serializable {
 
 //        UserPlayer firstPlayer = roundController.getTurnManager().getTurnOwner();
 
-        // I first need to pick the two powerups for the first player playing
-//        roundController.pickTwoPowerups();
-
         server.sendMessageToAll(new GameStartMessage(game.getCurrentPlayer().getName(), game.getCommonGoals()));
 //        sendPrivateUpdates();
     }
@@ -179,7 +194,7 @@ public class ControllerGame implements TimerRunListener, Serializable {
         List<Player> players = game.getPlayers();
 
         for (Player player : players) {
-            server.sendMessage(player.getName(), new GameStateMessage(player.getName(), game.getCurrentPlayer().getName()));
+            server.sendMessage(player.getName(), new GameStateResponse(player.getName(), game.getCurrentPlayer().getName()));
         }
     }
 
@@ -237,7 +252,7 @@ public class ControllerGame implements TimerRunListener, Serializable {
      */
     public void selectColumn(int column) {
         System.out.println("Seleziona una colonna: [0, 1, 2, 3, 4]");
-        while (game.getCurrentPlayer().getShelf().getFreeCellsPerColumn(column) < limbo.size()) {
+        while (game.getCurrentPlayer().getShelf().getFreeCellsPerColumn(column) < game.getLimbo().size()) {
             System.out.println("La colonna selezionata non ha abbastanza spazi");
             System.out.println("Seleziona una colonna: [0, 1, 2, 3, 4]");
         }
@@ -312,11 +327,13 @@ public class ControllerGame implements TimerRunListener, Serializable {
      * @param card The object card to add to the limbo area.
      * @throws NullPointerException If the object card is null (should not happen).
      */
+    // TODO aggiustare metodi sapendo che il limbo è una mappa coordinata-carta per un eventuale annullamento
+    // limbo e reinserimento nella board
     public boolean addObjectCardToLimbo(ObjectCard card) throws NullPointerException {
         if (card == null) throw new NullPointerException("ObjectCard is null");
-        if (this.limbo.size() == 3) return false;
+        if (this.getGame().getLimbo().size() == 3) return false;
 
-        this.limbo.add(card);
+//        this.getGame().getLimbo().add(card);
         return true;
     }
 

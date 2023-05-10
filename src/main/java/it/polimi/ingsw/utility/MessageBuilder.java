@@ -1,7 +1,7 @@
 package it.polimi.ingsw.utility;
 
 
-import it.polimi.ingsw.model.ObjectCard;
+import it.polimi.ingsw.model.Coordinate;
 import it.polimi.ingsw.model.Player;
 import it.polimi.ingsw.network.message.*;
 
@@ -38,11 +38,11 @@ public class MessageBuilder {
         return new NumberOfPlayersMessage(username, token, numberOfPlayers);
     }
 
-    public static ObjectCardRequest buildPickObjectCardRequest(Player p, String token, ObjectCard objectCard) {
-        if (p == null || objectCard == null)
-            throw new NullPointerException("Player and spawnSquare cannot be null");
+    public static ObjectCardRequest buildPickObjectCardRequest(Player p, String token, Coordinate coordinate) {
+        if (p == null || coordinate == null)
+            throw new NullPointerException("Player or Coordinate cannot be null");
 
-        return new ObjectCardRequest(p.getName(), token, objectCard);
+        return new ObjectCardRequest(p.getName(), token, coordinate);
     }
 
     public static GameStateRequest buildGameStateRequest(String username, String token) {

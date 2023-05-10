@@ -5,9 +5,7 @@ import com.google.gson.reflect.TypeToken;
 
 import java.io.FileReader;
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Random;
+import java.util.*;
 
 /**
  * Represents the main game logic, including object card and common goal management.
@@ -25,6 +23,7 @@ public class Game implements Serializable {
     private List<CommonGoal> commonGoals;
     private boolean hasStarted;
     private int numberOfPlayers;
+    private Map<Coordinate, ObjectCard> limbo;
 
     /**
      * constructor of the class
@@ -38,6 +37,7 @@ public class Game implements Serializable {
         this.commonGoals = new ArrayList<>();
         this.hasStarted = false;
         this.numberOfPlayers = -1;
+        this.limbo = new HashMap<>();
 
         loadObjectCards();
         loadPersonalGoaldCards();
@@ -58,6 +58,14 @@ public class Game implements Serializable {
 
     public void setNumberOfPlayers(int numberOfPlayers) {
         this.numberOfPlayers = numberOfPlayers;
+    }
+
+    public Map<Coordinate, ObjectCard> getLimbo() {
+        return limbo;
+    }
+
+    public void setLimbo(Map<Coordinate, ObjectCard> limbo) {
+        this.limbo = limbo;
     }
 
     public boolean isHasStarted() {

@@ -100,7 +100,7 @@ public abstract class ClientGameManager implements ClientGameManagerListener, Cl
                 break;
 
             case GAME_STATE:
-                handleGameStateMessage((GameStateMessage) message);
+                handleGameStateResponse((GameStateResponse) message);
                 break;
 
             case READY:
@@ -150,9 +150,7 @@ public abstract class ClientGameManager implements ClientGameManagerListener, Cl
      * @param gameStateMessage game state update received
      */
     // il game state lo mandiamo all'inizio di ogni turno? o anche durante le fasi di gioco in un turno?
-    private void handleGameStateMessage(GameStateMessage gameStateMessage) {
-        System.out.println("GAME STATE MESSAGE");
-
+    private void handleGameStateResponse(GameStateResponse gameStateMessage) {
         synchronized (gameSerializedLock) {
             gameSerialized = gameStateMessage.getGameSerialized();
         }
@@ -200,12 +198,12 @@ public abstract class ClientGameManager implements ClientGameManagerListener, Cl
     }
 
     private void onPositiveResponse(Response response) {
-//        if (response.getStatus() == MessageStatus.NEED_PLAYER_ACTION) {
-//            turnManager.targetingScope();
+        if (response.getStatus() == MessageStatus.PRINT_LIMBO) {
+            queue.add(() -> printLimbo(response.getSenderUsername()));
 //        } else if (turnManager.getUserPlayerState() == UserPlayerState.ENDING_PHASE) {
 //            turnManager.botRespawn();
-//        } else {
-//        }
+        } else {
+        }
     }
 
     public void createConnection(int connection, String username, String address, int port, DisconnectionListener disconnectionListener) throws Exception {
@@ -267,7 +265,7 @@ public abstract class ClientGameManager implements ClientGameManagerListener, Cl
 
             queue.add(() -> firstPlayerCommunication(firstPlayer, cg));
             queue.add(() -> gameStateRequest(getUsername(), getClientToken()));
-//            queue.add(() -> boardPrint());    viene stampata dopo un gameStateMessage da handleGameStateMessage
+//            queue.add(() -> boardPrint());    viene stampata dopo un gameStateMessage da handleGameStateResponse
             firstTurn = false;
         }
     }
@@ -277,8 +275,7 @@ public abstract class ClientGameManager implements ClientGameManagerListener, Cl
      */
     private void newTurn() {
         if (yourTurn) {
-            turnManager.beginRound();
-
+            turnManager.startTurn();
             makeMove();
         } else {
             queue.add(() -> notYourTurn(turnOwner));
@@ -304,19 +301,6 @@ public abstract class ClientGameManager implements ClientGameManagerListener, Cl
 
             case BOT_RESPAWN:
                 return List.of(PossibleAction.RESPAWN_BOT);
-
-            case SPAWN:
-                return List.of(PossibleAction.CHOOSE_SPAWN);
-
-            case FIRST_SCOPE_USAGE:
-            case SECOND_SCOPE_USAGE:
-                return List.of(PossibleAction.SCOPE_USAGE);
-
-            case BOT_ACTION:
-                return List.of(PossibleAction.BOT_ACTION);
-
-            case GRENADE_USAGE:
-                return List.of(PossibleAction.GRENADE_USAGE);
 
             case ENDING_PHASE:
 //                return getEndingActions();
