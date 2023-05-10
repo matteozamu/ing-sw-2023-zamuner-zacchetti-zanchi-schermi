@@ -332,13 +332,6 @@ public class Cli extends ClientGameManager implements DisconnectionListener {
     }
 
     @Override
-    public void printLimbo() {
-        out.println("You have selected these cards:");
-        out.println(getGameSerialized().getLimbo());
-        out.println();
-    }
-
-    @Override
     public void gameStateUpdate() {
         CliVisual.printPersonalGoalCards(out, getGameSerialized());
         out.println();
@@ -459,6 +452,24 @@ public class Cli extends ClientGameManager implements DisconnectionListener {
         } while (!accepted);
 
         return coordinate;
+    }
+
+    @Override
+    public void printLimbo() {
+        out.println("You have selected these cards:");
+        out.println(getGameSerialized().getLimbo());
+        out.println();
+    }
+
+    /**
+     * send a message to the server asking the available columns
+     */
+    // TODO se non ci sono colonne disponibili svuotiamo il limbo e rifacciamo scegliere le carte
+    @Override
+    public void chooseColumn() {
+        if (!sendRequest(MessageBuilder.buildAvailableColumnRequest(getClientToken(), getUsername()))) {
+            promptError(SEND_ERROR, true);
+        }
     }
 
     @Override

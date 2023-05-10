@@ -2,25 +2,9 @@ package it.polimi.ingsw.enumeration;
 
 public enum PossibleAction {
     // TODO da cambiare
-    BOARD_PICK_CARD("Choose a card from the board"),
-    RESPAWN_BOT("Choose a bot respawn point"),
-    CHOOSE_SPAWN("Choose spawn point"),
-    CHOOSE_RESPAWN("Choose respawn point"),
-    POWER_UP("Use a powerup"),
-    GRENADE_USAGE("Use the tagback tagbackGrenade"),
-    SCOPE_USAGE("Choose if use targeting scope"),
-    MOVE("Move up to 3 boxes"),
-    MOVE_AND_PICK("Move up to 1 box and pick up weapon or power up"),
-    SHOOT("Shoot a player"),
-    RELOAD("Reload your weapons"),
-    ADRENALINE_PICK("Move up to 2 boxes and pick up weapon or power up"),
-    ADRENALINE_SHOOT("Move up to 1 box and shoot a player"),
-    FRENZY_MOVE("Move up to 4 boxes"),
-    FRENZY_PICK("Move up to 2 boxes and pick up weapon or power up"),
-    FRENZY_SHOOT("Move up to 1 box and choose first to reload, then shoot a player"),
-    LIGHT_FRENZY_PICK("Move up to 3 boxes and pick up weapon or power up"),
-    LIGHT_FRENZY_SHOOT("Move up to 2 boxes and choose first to reload, then shoot a player"),
-    BOT_ACTION("Do the bot action"),
+    BOARD_PICK_CARD("Choose a card from the board:"),
+    CHOOSE_COLUMN("Choose a column in which you want to put the selected object cards:"),
+    DELETE_LIMBO("Put back the object card you selected in the board:"),
     PASS_TURN("Pass the turn");
 
     private String description;

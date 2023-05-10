@@ -8,7 +8,7 @@ package it.polimi.ingsw.enumeration;
 public enum UserPlayerState {
     // TODO cambiare con gli stati delle azioni di gioco
     PICK_CARD_BOARD,
-    SPAWN,
+    AFTER_FIRST_PICK, // dopo aver pescato la prima carta
     FIRST_ACTION,
     SECOND_ACTION,
     FIRST_FRENZY_ACTION,

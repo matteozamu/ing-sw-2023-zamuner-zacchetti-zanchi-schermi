@@ -71,6 +71,7 @@ public class ControllerGame implements TimerRunListener, Serializable {
         return new Response("GAME STATE ERROR FOR THIS MESSAGE", MessageStatus.ERROR);
     }
 
+    //TODO qui non ritorniamo una ObjectCardResponse ma una generica Response, eliminaiamo ObjectCardResponse?
     private Response pickObjectCardHandler(ObjectCardRequest objectCardRequest) {
         Coordinate c = objectCardRequest.getCoordinate();
 

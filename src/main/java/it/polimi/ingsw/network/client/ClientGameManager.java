@@ -322,14 +322,14 @@ public abstract class ClientGameManager implements ClientGameManagerListener, Cl
             case PICK_CARD_BOARD:
                 return List.of(PossibleAction.BOARD_PICK_CARD);
 
-            case BOT_RESPAWN:
-                return List.of(PossibleAction.RESPAWN_BOT);
+            case AFTER_FIRST_PICK:
+                return List.of(PossibleAction.BOARD_PICK_CARD, PossibleAction.CHOOSE_COLUMN, PossibleAction.DELETE_LIMBO);
 
             case ENDING_PHASE:
 //                return getEndingActions();
 
-            case DEAD:
-                return List.of(PossibleAction.CHOOSE_RESPAWN);
+//            case DEAD:
+//                return List.of(PossibleAction.CHOOSE_RESPAWN);
 
             default:
                 return null;
@@ -350,7 +350,10 @@ public abstract class ClientGameManager implements ClientGameManagerListener, Cl
                 System.out.println("SCEGLI CARTA");
                 action = this::pickBoardCard;
                 break;
-
+            case CHOOSE_COLUMN:
+                System.out.println("SCEGLI COLONNA");
+                action = this::chooseColumn;
+                break;
             default:
 //                throw new ClientRoundManagerException("Invalid Action");
         }

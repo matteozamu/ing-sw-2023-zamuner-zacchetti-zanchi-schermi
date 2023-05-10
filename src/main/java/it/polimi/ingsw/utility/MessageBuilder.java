@@ -48,4 +48,8 @@ public class MessageBuilder {
     public static GameStateRequest buildGameStateRequest(String username, String token) {
         return new GameStateRequest(username, token);
     }
+
+    public static Message buildAvailableColumnRequest(String clientToken, String username) {
+        return new AvailableColumnRequest(username, clientToken);
+    }
 }

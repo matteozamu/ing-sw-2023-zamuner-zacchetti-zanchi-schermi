@@ -23,12 +23,12 @@ class ClientTurnManager {
 
             switch (playerState) {
                 case PICK_CARD_BOARD:
-                    playerState = UserPlayerState.SPAWN;
+//                    playerState = UserPlayerState.SPAWN;
                     break;
 
-                case SPAWN:
-                    handleBegin();
-                    break;
+//                case SPAWN:
+//                    handleBegin();
+//                    break;
 
                 case GET_CARD_BOARD:
                     playerState = UserPlayerState.SECOND_ACTION;
