@@ -77,6 +77,8 @@ public class ControllerGame implements TimerRunListener, Serializable {
             Server.LOGGER.log(Level.INFO, "Coordinate of the card: {0}", c);
             this.getGame().getLimbo().put(c, this.getGame().getBoard().removeObjectCard(c));
 
+            System.out.println(this.getGame().getLimbo());
+
             sendPrivateUpdates();
             return new Response("Valid card!", MessageStatus.PRINT_LIMBO);
 //            return new ObjectCardResponse(objectCardRequest.getSenderUsername());

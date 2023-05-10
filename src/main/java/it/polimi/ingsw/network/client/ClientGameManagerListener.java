@@ -66,7 +66,7 @@ interface ClientGameManagerListener {
 
     void pickBoardCard();
 
-    void printLimbo(String username);
+    void printLimbo();
 
     void gameStateRequest(String username, String token);
 }

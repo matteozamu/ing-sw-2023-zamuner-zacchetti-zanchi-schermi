@@ -333,7 +333,8 @@ public class Cli extends ClientGameManager implements DisconnectionListener {
 
     @Override
     public void printLimbo() {
-        out.println(getGameSerialized().);
+        out.println("You have selected these cards:");
+        out.println(getGameSerialized().getLimbo());
         out.println();
     }
 

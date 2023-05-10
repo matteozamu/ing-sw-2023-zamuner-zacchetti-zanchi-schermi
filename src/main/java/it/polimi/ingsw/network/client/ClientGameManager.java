@@ -157,7 +157,6 @@ public abstract class ClientGameManager implements ClientGameManagerListener, Cl
 
         queue.add(this::gameStateUpdate);
 
-        newTurn();
         // TODO verificare se e come farlo
 //        checkTurnChange(gameStateMessage);
     }
@@ -199,7 +198,7 @@ public abstract class ClientGameManager implements ClientGameManagerListener, Cl
 
     private void onPositiveResponse(Response response) {
         if (response.getStatus() == MessageStatus.PRINT_LIMBO) {
-            queue.add(() -> printLimbo(response.getSenderUsername()));
+            queue.add(() -> printLimbo());
 //        } else if (turnManager.getUserPlayerState() == UserPlayerState.ENDING_PHASE) {
 //            turnManager.botRespawn();
         } else {
@@ -268,6 +267,8 @@ public abstract class ClientGameManager implements ClientGameManagerListener, Cl
 //            queue.add(() -> boardPrint());    viene stampata dopo un gameStateMessage da handleGameStateResponse
             firstTurn = false;
         }
+
+        newTurn();
     }
 
     /**
