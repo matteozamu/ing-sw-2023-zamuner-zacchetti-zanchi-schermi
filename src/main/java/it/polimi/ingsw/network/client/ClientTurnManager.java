@@ -61,7 +61,7 @@ class ClientTurnManager {
                     break;
 
                 case END:
-//                throw new ClientRoundManagerException("Error, in the UserPlayerState.END state you must call the endRound() method");
+//                throw new ClientRoundManagerException("Error, in the UserPlayerState.END state you must call the endTurn() method");
 
                 default:
 //                throw new ClientRoundManagerException("Invalid State!");
@@ -137,7 +137,7 @@ class ClientTurnManager {
     /**
      * Set the state to {@code FIRST_ACTION}, reset {@code botMoved} to false
      */
-    void endRound() {
+    void endTurn() {
         playerState = UserPlayerState.FIRST_ACTION;
         turnStarted = false;
     }

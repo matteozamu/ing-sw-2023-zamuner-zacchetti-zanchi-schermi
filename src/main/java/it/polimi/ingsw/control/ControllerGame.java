@@ -78,8 +78,6 @@ public class ControllerGame implements TimerRunListener, Serializable {
             Server.LOGGER.log(Level.INFO, "Coordinate of the card: {0}", c);
             this.getGame().getLimbo().put(c, this.getGame().getBoard().removeObjectCard(c));
 
-            System.out.println(this.getGame().getLimbo());
-
             sendPrivateUpdates();
             return new Response("Valid card!", MessageStatus.PRINT_LIMBO);
 //            return new ObjectCardResponse(objectCardRequest.getSenderUsername());
@@ -185,8 +183,15 @@ public class ControllerGame implements TimerRunListener, Serializable {
         //non ci serve, abbiamp gia il current player
 //        UserPlayer firstPlayer = roundController.getTurnManager().getTurnOwner();
 
-        server.sendMessageToAll(new GameStartMessage(game.getCurrentPlayer().getName(), game.getCommonGoals()));
+        // TODO cosi riceve prima lo stato del gioco poi stampa inizio partita
 //        sendPrivateUpdates();
+
+        List<Player> players = game.getPlayers();
+
+        for (Player player : players) {
+            server.sendMessage(player.getName(), new GameStartMessage(game.getCurrentPlayer().getName(), game.getCommonGoals(), player.getName()));
+        }
+//        server.sendMessageToAll(new GameStartMessage(game.getCurrentPlayer().getName(), game.getCommonGoals(), player.getName()));
     }
 
     /**

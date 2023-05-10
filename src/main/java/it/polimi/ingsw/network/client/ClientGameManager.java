@@ -2,6 +2,7 @@ package it.polimi.ingsw.network.client;
 
 import it.polimi.ingsw.enumeration.MessageStatus;
 import it.polimi.ingsw.enumeration.PossibleAction;
+import it.polimi.ingsw.enumeration.UserPlayerState;
 import it.polimi.ingsw.model.CommonGoal;
 import it.polimi.ingsw.model.GameSerialized;
 import it.polimi.ingsw.model.Player;
@@ -30,7 +31,7 @@ public abstract class ClientGameManager implements ClientGameManagerListener, Cl
     private Client client;
     private boolean joinedLobby;
     private List<String> lobbyPlayers;
-    private String firstPlayer;
+    private String firstPlayer = null;
     private String turnOwner;
     private boolean firstTurn;
     private boolean yourTurn;
@@ -124,10 +125,11 @@ public abstract class ClientGameManager implements ClientGameManagerListener, Cl
     private void handleGameStartMessage(GameStartMessage gameStartMessage) {
         synchronized (gameSerializedLock) {
             firstPlayer = gameStartMessage.getFirstPlayer();
-
-            turnOwner = gameStartMessage.getFirstPlayer();
-            startGame(gameStartMessage.getCommonGoals());
+            gameSerialized = gameStartMessage.getGameSerialized();
         }
+
+        turnOwner = gameStartMessage.getFirstPlayer();
+        startGame(gameStartMessage.getCommonGoals());
     }
 
     public boolean sendRequest(Message message) {
@@ -188,19 +190,37 @@ public abstract class ClientGameManager implements ClientGameManagerListener, Cl
 
             if (lobbyPlayers.size() == 1) queue.add(() -> numberOfPlayersRequest(response));
             queue.add(() -> lobbyJoinResponse(response));
-        }
-        if (response.getStatus() == MessageStatus.ERROR) {
-            queue.add(() -> responseError(response.getMessage()));
         } else {
-            onPositiveResponse(response);
+            if (response.getStatus() == MessageStatus.ERROR) {
+                queue.add(() -> responseError(response.getMessage()));
+            } else {
+                onPositiveResponse(response);
+            }
         }
+        if (firstPlayer != null) checkNextAction();
+    }
+
+    /**
+     * Check what is the next action for the client
+     */
+    private void checkNextAction() {
+        if (turnManager.getUserPlayerState() != UserPlayerState.END) {
+            makeMove();
+        } else {
+            turnManager.endTurn();
+        }
+
+//        if (yourTurn && turnOwnerChanged) {
+//            turnOwnerChanged = false;
+//            yourTurn = false;
+//
+//            newTurn();
+//        }
     }
 
     private void onPositiveResponse(Response response) {
         if (response.getStatus() == MessageStatus.PRINT_LIMBO) {
             queue.add(() -> printLimbo());
-//        } else if (turnManager.getUserPlayerState() == UserPlayerState.ENDING_PHASE) {
-//            turnManager.botRespawn();
         } else {
         }
     }
@@ -263,8 +283,10 @@ public abstract class ClientGameManager implements ClientGameManagerListener, Cl
             }
 
             queue.add(() -> firstPlayerCommunication(firstPlayer, cg));
-            queue.add(() -> gameStateRequest(getUsername(), getClientToken()));
-//            queue.add(() -> boardPrint());    viene stampata dopo un gameStateMessage da handleGameStateResponse
+            queue.add(this::gameStateUpdate);
+            // TODO cosi stampa prima inizio gioco poi chiede lo stato ma problema di sincro con la ricezione messaggi
+//            queue.add(() -> gameStateRequest(getUsername(), getClientToken()));
+
             firstTurn = false;
         }
 
