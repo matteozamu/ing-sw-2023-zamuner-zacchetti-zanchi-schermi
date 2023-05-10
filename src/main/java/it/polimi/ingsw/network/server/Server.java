@@ -170,7 +170,6 @@ public class Server implements Runnable {
     }
 
     /**
-     *
      * @param message is the message received to the client
      */
     void onMessage(Message message) {
@@ -186,7 +185,7 @@ public class Server implements Runnable {
 
             if (conn == null) {
                 LOGGER.log(Level.INFO, "Message Request {0} - Unknown username {1}", new Object[]{message.getContent().name(), message.getSenderUsername()});
-            } else if (msgToken.equals(conn.getToken())) { // Checks that sender is the real player
+            } else if (msgToken.equals(conn.getToken())) {
                 Message response = controllerGame.onMessage(message);
                 sendMessage(message.getSenderUsername(), response);
 

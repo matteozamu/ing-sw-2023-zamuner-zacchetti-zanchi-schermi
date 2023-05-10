@@ -31,7 +31,7 @@ interface ClientGameManagerListener {
      */
     void lobbyJoinResponse(Response response);
 
-    void numberOfPlayersResponse(Response response);
+    void numberOfPlayersRequest(Response response);
 
     /**
      * Notifies an update of players in the lobby
@@ -65,4 +65,6 @@ interface ClientGameManagerListener {
     void displayActions(List<PossibleAction> possibleActions);
 
     void pickBoardCard();
+
+    void gameStateRequest(String username, String token);
 }

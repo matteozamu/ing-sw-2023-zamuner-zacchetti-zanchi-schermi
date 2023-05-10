@@ -159,6 +159,7 @@ public abstract class ClientGameManager implements ClientGameManagerListener, Cl
 
         queue.add(this::gameStateUpdate);
 
+        newTurn();
         // TODO verificare se e come farlo
 //        checkTurnChange(gameStateMessage);
     }
@@ -188,7 +189,7 @@ public abstract class ClientGameManager implements ClientGameManagerListener, Cl
         if (!joinedLobby) {
             joinedLobby = response.getStatus() == MessageStatus.OK;
 
-            if (lobbyPlayers.size() == 1) queue.add(() -> numberOfPlayersResponse(response));
+            if (lobbyPlayers.size() == 1) queue.add(() -> numberOfPlayersRequest(response));
             queue.add(() -> lobbyJoinResponse(response));
         }
         if (response.getStatus() == MessageStatus.ERROR) {
@@ -265,21 +266,16 @@ public abstract class ClientGameManager implements ClientGameManagerListener, Cl
             }
 
             queue.add(() -> firstPlayerCommunication(firstPlayer, cg));
+            queue.add(() -> gameStateRequest(getUsername(), getClientToken()));
 //            queue.add(() -> boardPrint());    viene stampata dopo un gameStateMessage da handleGameStateMessage
             firstTurn = false;
         }
-
-        newTurn();
     }
 
     /**
      * Called when a change of turn owner happen
      */
     private void newTurn() {
-//        if (loadGame) {
-//            loadGame = false;
-//        }
-
         if (yourTurn) {
             turnManager.beginRound();
 

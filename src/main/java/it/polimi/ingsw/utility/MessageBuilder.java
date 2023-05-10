@@ -3,10 +3,7 @@ package it.polimi.ingsw.utility;
 
 import it.polimi.ingsw.model.ObjectCard;
 import it.polimi.ingsw.model.Player;
-import it.polimi.ingsw.network.message.ConnectionRequest;
-import it.polimi.ingsw.network.message.LobbyMessage;
-import it.polimi.ingsw.network.message.NumberOfPlayersMessage;
-import it.polimi.ingsw.network.message.ObjectCardRequest;
+import it.polimi.ingsw.network.message.*;
 
 public class MessageBuilder {
 
@@ -44,7 +41,11 @@ public class MessageBuilder {
     public static ObjectCardRequest buildPickObjectCardRequest(Player p, String token, ObjectCard objectCard) {
         if (p == null || objectCard == null)
             throw new NullPointerException("Player and spawnSquare cannot be null");
-        
+
         return new ObjectCardRequest(p.getName(), token, objectCard);
+    }
+
+    public static GameStateRequest buildGameStateRequest(String username, String token) {
+        return new GameStateRequest(username, token);
     }
 }
