@@ -3,6 +3,7 @@ package it.polimi.ingsw.model;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 public class GameSerialized implements Serializable {
     private static final long serialVersionUID = 526685006552543525L;
@@ -14,6 +15,7 @@ public class GameSerialized implements Serializable {
     private int points;
     private Shelf shelf;
     private PersonalGoalCard personalGoalCard;
+    private Map<Coordinate, ObjectCard> limbo;
 
     public GameSerialized(String userName) {
         Game instance = Game.getInstance();
@@ -56,5 +58,9 @@ public class GameSerialized implements Serializable {
 
     public PersonalGoalCard getPersonalGoalCard() {
         return personalGoalCard;
+    }
+
+    public Map<Coordinate, ObjectCard> getLimbo() {
+        return limbo;
     }
 }
