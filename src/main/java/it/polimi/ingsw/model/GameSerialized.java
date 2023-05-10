@@ -2,6 +2,7 @@ package it.polimi.ingsw.model;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -27,6 +28,7 @@ public class GameSerialized implements Serializable {
         }
 
         this.board = new Board(instance.getBoard());
+        this.limbo = new HashMap<>(instance.getLimbo());
 
         Player player = Game.getInstance().getPlayerByName(userName);
         this.shelf = player.getShelf();
