@@ -54,6 +54,7 @@ public class ControllerGame implements TimerRunListener, Serializable {
             return new Response("GAME ENDED", MessageStatus.ERROR);
         }
 
+        // TODO da rimettere
 //        if (!InputValidator.validateInput(receivedMessage) || (gameState != PossibleGameState.GAME_ROOM && !this.getGame().doesPlayerExists(receivedMessage.getSenderUsername()))) {
 //            return buildInvalidResponse();
 //        }
@@ -181,6 +182,7 @@ public class ControllerGame implements TimerRunListener, Serializable {
         this.turnController = new TurnController(this.game.getPlayers());
         gameState = PossibleGameState.GAME_STARTED;
 
+        //non ci serve, abbiamp gia il current player
 //        UserPlayer firstPlayer = roundController.getTurnManager().getTurnOwner();
 
         server.sendMessageToAll(new GameStartMessage(game.getCurrentPlayer().getName(), game.getCommonGoals()));
