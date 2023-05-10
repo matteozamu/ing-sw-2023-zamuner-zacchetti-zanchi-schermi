@@ -6,7 +6,6 @@ import it.polimi.ingsw.enumeration.PossibleGameState;
 import it.polimi.ingsw.model.*;
 import it.polimi.ingsw.network.message.*;
 import it.polimi.ingsw.network.server.Server;
-import it.polimi.ingsw.utility.InputValidator;
 import it.polimi.ingsw.utility.TimerRunListener;
 
 import java.io.Serializable;
@@ -57,8 +56,13 @@ public class ControllerGame implements TimerRunListener, Serializable {
             return new Response("GAME ENDED", MessageStatus.ERROR);
         }
 
-        if (!InputValidator.validateInput(receivedMessage) || (gameState != PossibleGameState.GAME_ROOM && !this.getGame().doesPlayerExists(receivedMessage.getSenderUsername()))) {
-            return buildInvalidResponse();
+//        if (!InputValidator.validateInput(receivedMessage) || (gameState != PossibleGameState.GAME_ROOM && !this.getGame().doesPlayerExists(receivedMessage.getSenderUsername()))) {
+//            return buildInvalidResponse();
+//        }
+
+        switch (receivedMessage.getContent()) {
+            case GAME_STATE:
+                return new GameStateMessage(receivedMessage.getSenderUsername(), game.getCurrentPlayer().getName());
         }
 
         return new Response("GAME STATE ERROR FOR THIS MESSAGE", MessageStatus.ERROR);
@@ -163,7 +167,7 @@ public class ControllerGame implements TimerRunListener, Serializable {
 //        roundController.pickTwoPowerups();
 
         server.sendMessageToAll(new GameStartMessage(game.getCurrentPlayer().getName(), game.getCommonGoals()));
-        sendPrivateUpdates();
+//        sendPrivateUpdates();
     }
 
     /**
@@ -174,7 +178,6 @@ public class ControllerGame implements TimerRunListener, Serializable {
     public void sendPrivateUpdates() {
         List<Player> players = game.getPlayers();
 
-        // TODO si potrebbe usare sendMessageToAll?
         for (Player player : players) {
             server.sendMessage(player.getName(), new GameStateMessage(player.getName(), game.getCurrentPlayer().getName()));
         }
@@ -266,7 +269,7 @@ public class ControllerGame implements TimerRunListener, Serializable {
      */
     //TODO: da testare
     public boolean isObjectCardAvailable(Coordinate coordinate) {
-        if(selectedCoordinates.size() == 3){
+        if (selectedCoordinates.size() == 3) {
             selectedCoordinates.clear();
         }
         if (selectedCoordinates.isEmpty()) {

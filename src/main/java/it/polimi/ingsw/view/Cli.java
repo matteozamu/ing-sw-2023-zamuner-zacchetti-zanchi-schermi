@@ -290,7 +290,14 @@ public class Cli extends ClientGameManager implements DisconnectionListener {
     }
 
     @Override
-    public void numberOfPlayersResponse(Response response) {
+    public void gameStateRequest(String username, String token) {
+        if (!sendRequest(MessageBuilder.buildGameStateRequest(getUsername(), getClientToken()))) {
+            promptError(SEND_ERROR, true);
+        }
+    }
+
+    @Override
+    public void numberOfPlayersRequest(Response response) {
         int numberOfPlayers = askNumberOfPlayers();
         if (!sendRequest(MessageBuilder.buildNumberOfPlayerMessage(getClientToken(), getUsername(), numberOfPlayers))) {
             promptError(SEND_ERROR, true);
@@ -338,7 +345,6 @@ public class Cli extends ClientGameManager implements DisconnectionListener {
     public void firstPlayerCommunication(String username, List<CommonGoal> cg) {
         out.println("Game has started!");
         out.println("The common goal cards are: \n" + cg.get(0) + "\n" + cg.get(1));
-        //TODO: da fare il merge con il branch board-shelf-commongoals perché mancano dei componenti
 
         if (username.equals(getUsername())) {
             out.println("You are the first player!\n");
