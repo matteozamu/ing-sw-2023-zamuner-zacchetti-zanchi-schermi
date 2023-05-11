@@ -6,6 +6,7 @@ import it.polimi.ingsw.model.GameSerialized;
 /**
  * Message class to inform the clients about a game state update
  */
+// TODO non usata, pensare se toglierla o no
 public class ObjectCardResponse extends Message {
     private static final long serialVersionUID = 2725986184174583892L;
 
