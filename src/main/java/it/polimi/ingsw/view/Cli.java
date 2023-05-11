@@ -354,7 +354,7 @@ public class Cli extends ClientGameManager implements DisconnectionListener {
     @Override
     public void firstPlayerCommunication(String username, List<CommonGoal> cg) {
         out.println("Game has started!");
-        out.println("The common goal cards are: \n" + cg.get(0) + "\n" + cg.get(1));
+        out.println("The common goal cards are: \n" + cg.get(0) + "\n" + cg.get(0).cliView() + "\n\n" + cg.get(1) + "\n" + cg.get(1).cliView());
 
         if (username.equals(getUsername())) {
             out.println("You are the first player!\n");

@@ -25,7 +25,7 @@ public class CommonGoalType5 extends CommonGoal {
                 O
                 O
                 O
-                x6
+                x4
                 """;
 
     }
