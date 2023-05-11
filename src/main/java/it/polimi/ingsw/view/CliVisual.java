@@ -1,20 +1,16 @@
 package it.polimi.ingsw.view;
 
-import com.google.gson.*;
 import it.polimi.ingsw.model.*;
 
-import java.io.FileNotFoundException;
-import java.io.FileReader;
 import java.io.PrintStream;
-import java.nio.file.Files;
-import java.nio.file.Paths;
 import java.util.List;
 
 public class CliVisual {
 
     /**
      * Prints the personal goal card in the console
-     * @param out is the output PrintStream
+     *
+     * @param out            is the output PrintStream
      * @param gameSerialized is the object containing the board to be printed
      */
     public static void printPersonalGoalCards(PrintStream out, GameSerialized gameSerialized) {
@@ -50,7 +46,8 @@ public class CliVisual {
 
     /**
      * Prints the board in the console
-     * @param out is the output PrintStream
+     *
+     * @param out            is the output PrintStream
      * @param gameSerialized is the object containing the board to be printed
      */
     public static void printBoard(PrintStream out, GameSerialized gameSerialized) {
@@ -65,7 +62,7 @@ public class CliVisual {
             boardView.append(" ".repeat(spaces * 17)); // 17 is an estimate of the length of a cell
             for (int col = 0; col < iterCountsUp[row]; col++) {
                 int x, y;
-                if(row == 1){
+                if (row == 1) {
                     x = row;
                     y = col - (iterCountsUp[row] / 2) + 1;
                 } else {
@@ -73,7 +70,7 @@ public class CliVisual {
                     y = col - (iterCountsUp[row] / 2);
                 }
                 objectCard = board.getGrid().get(new Coordinate(x, y));
-                if(objectCard != null) {
+                if (objectCard != null) {
                     boardView.append("| ").append(objectCard).append(" (").append(x).append(",").append(y).append(") ");
                 } else {
                     boardView.append(" ".repeat(17));
@@ -96,7 +93,7 @@ public class CliVisual {
                     y = col - (iterCountsDown[index] / 2);
                 }
                 objectCard = board.getGrid().get(new Coordinate(x, y));
-                if(objectCard != null) {
+                if (objectCard != null) {
                     boardView.append("| ").append(objectCard).append(" (").append(x).append(",").append(y).append(") ");
                 } else {
                     boardView.append(" ".repeat(17));
@@ -125,15 +122,16 @@ public class CliVisual {
                 Coordinate coord = new Coordinate(row, col);
                 ObjectCard card = s.getGrid().get(coord);
                 if (card == null) {
-                    System.out.print("-".repeat(maxLength));
+                    out.print("-".repeat(maxLength));
                 } else {
-                    String cardText = card.toString();
-                    int padding = maxLength - cardText.length();
-                    System.out.print(cardText + " ".repeat(padding));
+//                    String cardText = card.toString();
+//                    int padding = maxLength - cardText.length();
+//                    System.out.print(cardText + " ".repeat(padding));
+                    out.print(card.toString());
                 }
-                System.out.print("\t");
+                out.print("\t");
             }
-            System.out.println();
+            out.println();
         }
     }
 }

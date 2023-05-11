@@ -221,11 +221,10 @@ public abstract class ClientGameManager implements ClientGameManagerListener, Cl
     private void onPositiveResponse(Response response) {
         if (response.getStatus() == MessageStatus.PRINT_LIMBO) {
             queue.add(() -> printLimbo());
-
-        } else if (turnManager != null) {
+        }
+        if (turnManager != null) {
             turnManager.nextState();
         }
-
     }
 
     public void createConnection(int connection, String username, String address, int port, DisconnectionListener disconnectionListener) throws Exception {

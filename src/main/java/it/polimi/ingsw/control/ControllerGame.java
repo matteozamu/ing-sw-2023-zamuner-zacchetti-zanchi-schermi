@@ -64,19 +64,38 @@ public class ControllerGame implements TimerRunListener, Serializable {
                 return new GameStateResponse(receivedMessage.getSenderUsername(), game.getCurrentPlayer().getName());
 
             case PICK_OBJECT_CARD:
-                System.out.println("PICK OBJECT CARD");
                 return pickObjectCardHandler((ObjectCardRequest) receivedMessage);
+
+            case LOAD_SHELF_REQUEST:
+                return loadShelfHandler((LoadShelfRequest) receivedMessage);
         }
 
         return new Response("GAME STATE ERROR FOR THIS MESSAGE", MessageStatus.ERROR);
     }
 
+    private Response loadShelfHandler(LoadShelfRequest LoadShelfRequest) {
+        int col = LoadShelfRequest.getColumn();
+
+        if (LoadShelfRequest.getContent() == MessageContent.LOAD_SHELF_REQUEST && game.getCurrentPlayer().getShelf().getFreeCellsPerColumn(col) >= game.getLimbo().size()) {
+            Server.LOGGER.log(Level.INFO, "Moving cards to shelf for player: {0}", LoadShelfRequest.getSenderUsername());
+            loadShelf(new ArrayList<>(game.getLimbo().values()), col);
+
+            sendPrivateUpdates();
+            return new Response("Cards moved", MessageStatus.OK);
+        } else {
+            System.out.println("Column does not have enough space");
+            return buildInvalidResponse();
+        }
+    }
+
     //TODO qui non ritorniamo una ObjectCardResponse ma una generica Response, eliminaiamo ObjectCardResponse?
+    // TODO gestire caso carta non valida
     private Response pickObjectCardHandler(ObjectCardRequest objectCardRequest) {
         Coordinate c = objectCardRequest.getCoordinate();
 
         if (objectCardRequest.getContent() == MessageContent.PICK_OBJECT_CARD && c != null /*&& isObjectCardAvailable(c)*/) {
             Server.LOGGER.log(Level.INFO, "Coordinate of the card: {0}", c);
+            // TODO cambiare metodo con pick object card
             this.getGame().getLimbo().put(c, this.getGame().getBoard().removeObjectCard(c));
 
             sendPrivateUpdates();
@@ -238,7 +257,7 @@ public class ControllerGame implements TimerRunListener, Serializable {
             for (int row = 3; row >= 0; row--) {
                 for (int col = 0; col < iterCountsUp[row]; col++) {
                     int x, y;
-                    if(row == 1){
+                    if (row == 1) {
                         x = row;
                         y = col - (iterCountsUp[row] / 2) + 1;
                     } else {
@@ -272,31 +291,15 @@ public class ControllerGame implements TimerRunListener, Serializable {
         }
     }
 
-    // TODO: da spostare nella view
-
     /**
-     * Select the column where the user want to add che ObjectCard, need to check if there is enough space
+     * Load the shelf with the ObjectCard, the order has already been established
      *
-     * @param column is where the user want to add che ObjectCard
+     * @param column      is the number of the column where the ObjectCard is added
+     * @param objectCards is the ObjectCard to add in the current player's shelf
      */
-    public void selectColumn(int column) {
-        System.out.println("Seleziona una colonna: [0, 1, 2, 3, 4]");
-        while (game.getCurrentPlayer().getShelf().getFreeCellsPerColumn(column) < game.getLimbo().size()) {
-            System.out.println("La colonna selezionata non ha abbastanza spazi");
-            System.out.println("Seleziona una colonna: [0, 1, 2, 3, 4]");
-        }
+    public void loadShelf(List<ObjectCard> objectCards, int column) {
+        game.addObjectCardsToShelf(objectCards, column);
     }
-
-    //TODO aggiungere controllo su colonne disponibili e chiamare metodo del game addObjectCardsToShelf
-
-//    /**
-//     * Load the shelf with the ObjectCard, the order has already been established
-//     * @param column is the number of the column where the ObjectCard is added
-//     * @param objectCard is the ObjectCard to add in the current player's shelf
-//     */
-//    public void loadShelf(int column, List<ObjectCard> objectCard) {
-//        currentPlayer.getShelf().addObjectCards(column, objectCard);
-//    }
 
     //si puo fare una modifica che non rimuova la coordinata della cella ma setti il contenuto a null
 
@@ -384,8 +387,6 @@ public class ControllerGame implements TimerRunListener, Serializable {
      *
      * @return the point of the currentPlayer
      */
-
-    //TESTED
     public int pointsCalculator() {
         int points = 0;
 

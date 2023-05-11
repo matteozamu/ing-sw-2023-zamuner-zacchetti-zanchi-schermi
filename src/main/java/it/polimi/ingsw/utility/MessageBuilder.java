@@ -49,7 +49,7 @@ public class MessageBuilder {
         return new GameStateRequest(username, token);
     }
 
-    public static Message buildAvailableColumnRequest(String clientToken, String username) {
-        return new AvailableColumnRequest(username, clientToken);
+    public static Message buildLoadShelfRequest(String clientToken, String username, int column) {
+        return new LoadShelfRequest(username, clientToken, column);
     }
 }

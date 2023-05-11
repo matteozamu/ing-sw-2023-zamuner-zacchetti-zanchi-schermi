@@ -442,8 +442,8 @@ public class Cli extends ClientGameManager implements DisconnectionListener {
 
             try {
                 String[] parts = stringCoordinate.split(",");
-                int col = Integer.parseInt(parts[0]);
-                int row = Integer.parseInt(parts[1]);
+                int row = Integer.parseInt(parts[0]);
+                int col = Integer.parseInt(parts[1]);
                 coordinate = new Coordinate(row, col);
                 accepted = true;
             } catch (Exception e) {
@@ -467,7 +467,7 @@ public class Cli extends ClientGameManager implements DisconnectionListener {
     // TODO se non ci sono colonne disponibili svuotiamo il limbo e rifacciamo scegliere le carte
     @Override
     public void chooseColumn() {
-        if (!sendRequest(MessageBuilder.buildAvailableColumnRequest(getClientToken(), getUsername()))) {
+        if (!sendRequest(MessageBuilder.buildLoadShelfRequest(getClientToken(), getUsername(), 1))) {
             promptError(SEND_ERROR, true);
         }
     }

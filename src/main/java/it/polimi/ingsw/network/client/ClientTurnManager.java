@@ -18,54 +18,54 @@ class ClientTurnManager {
      * Change the state of the player to the next one
      */
     void nextState() {
-        if (!turnStarted)
+//        if (!turnStarted)
 //            throw new ClientRoundManagerException("Error, round not started yet (before call nextState() you must call startTurn())");
 
-            switch (playerState) {
-                case PICK_CARD_BOARD:
-                    playerState = UserPlayerState.AFTER_FIRST_PICK;
-                    break;
+        switch (playerState) {
+            case PICK_CARD_BOARD:
+                playerState = UserPlayerState.AFTER_FIRST_PICK;
+                break;
 
 //                case SPAWN:
 //                    handleBegin();
 //                    break;
 
-                case GET_CARD_BOARD:
-                    playerState = UserPlayerState.SECOND_ACTION;
-                    break;
+            case GET_CARD_BOARD:
+                playerState = UserPlayerState.SECOND_ACTION;
+                break;
 
-                case SECOND_ACTION:
-                    handleSecondMove();
-                    break;
+            case SECOND_ACTION:
+                handleSecondMove();
+                break;
 
-                case FIRST_FRENZY_ACTION:
-                    handleFirstFrenzy();
-                    break;
+            case FIRST_FRENZY_ACTION:
+                handleFirstFrenzy();
+                break;
 
-                case FIRST_SCOPE_USAGE:
-                    handleFirstScope();
-                    break;
+            case FIRST_SCOPE_USAGE:
+                handleFirstScope();
+                break;
 
-                case BOT_ACTION:
-                    playerState = UserPlayerState.ENDING_PHASE;
-                    break;
+            case BOT_ACTION:
+                playerState = UserPlayerState.ENDING_PHASE;
+                break;
 
-                case ENDING_PHASE:
-                case BOT_RESPAWN:
-                    playerState = UserPlayerState.END;
-                    break;
+            case ENDING_PHASE:
+            case BOT_RESPAWN:
+                playerState = UserPlayerState.END;
+                break;
 
-                case DEAD:
-                case GRENADE_USAGE:
-                    playerState = UserPlayerState.FIRST_ACTION;
-                    break;
+            case DEAD:
+            case GRENADE_USAGE:
+                playerState = UserPlayerState.FIRST_ACTION;
+                break;
 
-                case END:
+            case END:
 //                throw new ClientRoundManagerException("Error, in the UserPlayerState.END state you must call the endTurn() method");
 
-                default:
+            default:
 //                throw new ClientRoundManagerException("Invalid State!");
-            }
+        }
     }
 
     /**
