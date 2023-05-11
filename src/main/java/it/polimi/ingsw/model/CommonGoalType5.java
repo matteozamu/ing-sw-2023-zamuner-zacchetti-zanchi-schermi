@@ -13,31 +13,39 @@ public class CommonGoalType5 extends CommonGoal {
 
     public int type = 5;
 
+    public String description = "Quattro gruppi separati formati ciascuno da quattro tessere adiacenti dello stesso tipo. Le tessere di un gruppo possono essere diverse da quelle di un altro gruppo.";
+
+    public String cardView = """
+            ┌───────────┐
+            │     ■     │
+            │     ■     │
+            │     ■     │
+            │     ■     │
+            │     x4    │
+            └───────────┘
+            """;;
+
     @Override
     public int getType() {
         return type;
     }
 
     @Override
-    public String cliView() {
-        return """
-                O
-                O
-                O
-                O
-                x4
-                """;
-
+    public String getDescription() {
+        return description;
+    }
+    @Override
+    public String getCardView() {
+        return cardView;
     }
 
-    /**
-     * Returns a string representation of the common goal, describing its requirements and conditions.
-     *
-     * @return A string representing the common goal.
-     */
     @Override
     public String toString() {
-        return "Quattro gruppi separati formati ciascuno da quattro tessere adiacenti dello stesso tipo. Le tessere di un gruppo possono essere diverse da quelle di un altro gruppo.";
+        return "CommonGoalType5{" +
+                "type=" + type +
+                ", description='" + description + '\'' +
+                ", cardView='" + cardView + '\'' +
+                '}';
     }
 
     /**

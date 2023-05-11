@@ -9,29 +9,38 @@ public final class CommonGoalType7 extends CommonGoal {
 
     public int type = 7;
 
+    public String description = "Due gruppi separati di 4 tessere dello stesso tipo che formano un quadrato 2x2. Le tessere dei due gruppi devono essere dello stesso tipo.";
+
+    public String cardView = """
+            ┌───────┐
+            │  ■ ■  │
+            │  ■ ■  │
+            │  x2   │
+            └───────┘
+            """;
+
     @Override
     public int getType() {
         return type;
     }
 
     @Override
-    public String cliView() {
-        return """
-                O O
-                O O
-                x2
-                """;
-
+    public String getDescription() {
+        return description;
     }
 
-    /**
-     * Returns a string representation of the common goal, describing its requirements and conditions.
-     *
-     * @return A string representing the common goal.
-     */
+    @Override
+    public String getCardView() {
+        return cardView;
+    }
+
     @Override
     public String toString() {
-        return "Due gruppi separati di 4 tessere dello stesso tipo che formano un quadrato 2x2. Le tessere dei due gruppi devono essere dello stesso tipo.";
+        return "CommonGoalType7{" +
+                "type=" + type +
+                ", description='" + description + '\'' +
+                ", cardView='" + cardView + '\'' +
+                '}';
     }
 
     /**
@@ -52,14 +61,14 @@ public final class CommonGoalType7 extends CommonGoal {
             return false;
         }
 
-        for (int row1 = 0; row1 < shelf.ROWS - 1; row1++) {
-            for (int col1 = 0; col1 < shelf.COLUMNS - 1; col1++) {
+        for (int row1 = 0; row1 < Shelf.ROWS - 1; row1++) {
+            for (int col1 = 0; col1 < Shelf.COLUMNS - 1; col1++) {
                 Coordinate bottomLeft1 = new Coordinate(row1, col1);
                 ObjectCardType type1 = shelf.getObjectCard(bottomLeft1) != null ? shelf.getObjectCard(bottomLeft1).getType() : null;
 
                 if (type1 != null && isSquare(shelf, bottomLeft1, type1)) {
-                    for (int row2 = 0; row2 < shelf.ROWS - 1; row2++) {
-                        for (int col2 = 0; col2 < shelf.COLUMNS - 1; col2++) {
+                    for (int row2 = 0; row2 < Shelf.ROWS - 1; row2++) {
+                        for (int col2 = 0; col2 < Shelf.COLUMNS - 1; col2++) {
                             if (Math.abs(col1 - col2) > 1 || Math.abs(row1 - row2) > 1) {
                                 Coordinate bottomLeft2 = new Coordinate(row2, col2);
                                 ObjectCardType type2 = shelf.getObjectCard(bottomLeft2) != null ? shelf.getObjectCard(bottomLeft2).getType() : null;

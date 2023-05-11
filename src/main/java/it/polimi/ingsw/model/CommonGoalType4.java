@@ -3,7 +3,6 @@ package it.polimi.ingsw.model;
 import java.util.HashMap;
 import java.util.Map;
 
-
 /**
  * Quattro righe formate ciascuna da 5 tessere di uno, due o tre tipi differenti.
  * Righe diverse possono avere combinazioni diverse di tipi di tessere.
@@ -12,27 +11,39 @@ public final class CommonGoalType4 extends CommonGoal {
 
     public int type = 4;
 
+    public String description = "Quattro righe formate ciascuna da 5 tessere di uno, due o tre tipi differenti. Righe diverse possono avere combinazioni diverse di tipi di tessere.";
+
+    public String cardView = """
+                ┌───────────┐
+                │           │
+                │ ■ ■ ■ ■ ■ │
+                │    x4     │
+                │           │
+                │           │
+                └───────────┘
+                """;
+
     @Override
     public int getType() {
         return type;
     }
 
     @Override
-    public String cliView() {
-        return """
-                O O O O O
-                    x4
-                """;
+    public String getDescription() {
+        return description;
+    }
+    @Override
+    public String getCardView() {
+        return cardView;
     }
 
-    /**
-     * Returns a string representation of the common goal, describing its requirements and conditions.
-     *
-     * @return A string representing the common goal.
-     */
     @Override
     public String toString() {
-        return "Quattro righe formate ciascuna da 5 tessere di uno, due o tre tipi differenti. Righe diverse possono avere combinazioni diverse di tipi di tessere.";
+        return "CommonGoalType4{" +
+                "type=" + type +
+                ", description='" + description + '\'' +
+                ", cardView='" + cardView + '\'' +
+                '}';
     }
 
     /**
@@ -55,10 +66,10 @@ public final class CommonGoalType4 extends CommonGoal {
 
         int validRowCount = 0;
 
-        for (int row = 0; row < shelf.ROWS; row++) {
+        for (int row = 0; row < Shelf.ROWS; row++) {
             Map<ObjectCardType, Integer> rowTypeCount = new HashMap<>();
 
-            for (int col = 0; col < shelf.COLUMNS; col++) {
+            for (int col = 0; col < Shelf.COLUMNS; col++) {
                 Coordinate coordinate = new Coordinate(row, col);
                 ObjectCard objectCard = shelf.getObjectCard(coordinate);
 
@@ -70,7 +81,7 @@ public final class CommonGoalType4 extends CommonGoal {
 
             if (rowTypeCount.size() >= 1 && rowTypeCount.size() <= 3) {
                 int totalCardsInRow = rowTypeCount.values().stream().mapToInt(Integer::intValue).sum();
-                if (totalCardsInRow == shelf.COLUMNS) {
+                if (totalCardsInRow == Shelf.COLUMNS) {
                     validRowCount++;
                 }
             }

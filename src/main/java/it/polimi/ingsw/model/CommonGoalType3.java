@@ -13,31 +13,40 @@ public final class CommonGoalType3 extends CommonGoal {
 
     public int type = 3;
 
+    public String description = "L'obiettivo è raggiunto quando le quattro tessere ai quattro angoli della Shelf sono dello stesso tipo.";
+
+    public String cardView = """
+                ┌───────────┐
+                │ ■ - - - ■ │
+                │ - - - - - │
+                │ - - - - - │
+                │ - - - - - │
+                │ - - - - - │
+                │ ■ - - - ■ │
+                └───────────┘
+                """;
+
     @Override
     public int getType() {
         return type;
     }
 
     @Override
-    public String cliView() {
-        return """
-                O - - - O
-                - - - - -
-                - - - - -
-                - - - - -
-                - - - - -
-                O - - - O
-                """;
+    public String getDescription() {
+        return description;
+    }
+    @Override
+    public String getCardView() {
+        return cardView;
     }
 
-    /**
-     * Returns a string representation of the common goal, describing its requirements and conditions.
-     *
-     * @return A string representing the common goal.
-     */
     @Override
     public String toString() {
-        return "L'obiettivo è raggiunto quando le quattro tessere ai quattro angoli della Shelf sono dello stesso tipo.";
+        return "CommonGoalType3{" +
+                "type=" + type +
+                ", description='" + description + '\'' +
+                ", cardView='" + cardView + '\'' +
+                '}';
     }
 
     /**
