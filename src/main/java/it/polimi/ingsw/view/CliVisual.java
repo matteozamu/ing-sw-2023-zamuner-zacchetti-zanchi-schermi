@@ -38,7 +38,6 @@ public class CliVisual {
         }
     }
 
-
     public static String getColoredText(int r, int g, int b) {
         // Creazione del codice ANSI per impostare il colore di sfondo
         String colorCode = String.format("\033[48;2;%d;%d;%dm", r, g, b);
@@ -48,8 +47,6 @@ public class CliVisual {
         String coloredText = String.format("%s%s%s", colorCode, " ", resetCode);
         return coloredText;
     }
-
-
 
     /**
      * Prints the board in the console
@@ -61,36 +58,56 @@ public class CliVisual {
         StringBuilder boardView = new StringBuilder();
         Board board = gameSerialized.getBoard();
 
-        for (int row = 1; row <= 5; row++) {
-            boardView.append("\t".repeat(5 - row));
-            for (int col = 1; col < 2 * row; col++) {
-                int x = 5 - row;
-                int y = -5 + col;
+        int[] iterCountsUp = new int[]{7, 6, 3, 2};
+        int maxRowLength = 7;
+        for (int row = 3; row >= 0; row--) {
+            int spaces = (maxRowLength - iterCountsUp[row]) / 2;
+            boardView.append(" ".repeat(spaces * 17)); // 17 is an estimate of the length of a cell
+            for (int col = 0; col < iterCountsUp[row]; col++) {
+                int x, y;
+                if(row == 1){
+                    x = row;
+                    y = col - (iterCountsUp[row] / 2) + 1;
+                } else {
+                    x = row;
+                    y = col - (iterCountsUp[row] / 2);
+                }
                 objectCard = board.getGrid().get(new Coordinate(x, y));
                 if(objectCard != null) {
                     boardView.append("| ").append(objectCard).append(" (").append(x).append(",").append(y).append(") ");
                 } else {
-                    boardView.append(" ".repeat(16));
+                    boardView.append(" ".repeat(17));
                 }
             }
             boardView.append("|\n");
         }
-        for (int row = 5 - 1; row >= 1; row--) {
-            boardView.append("\t".repeat(Math.max(0, 5 - row)));
-            for (int col = 1; col < 2 * row; col++) {
-                int x = -5 + row;
-                int y = -5 + col;
+        int[] iterCountsDown = new int[]{6, 3, 2};
+        int index = 0;
+        for (int row = -1; row >= -3; row--) {
+            int spaces = (maxRowLength - iterCountsDown[index]) / 2;
+            boardView.append(" ".repeat(spaces * 17)); // 17 is an estimate of the length of a cell
+            for (int col = 0; col < iterCountsDown[index]; col++) {
+                int x, y;
+                if (index == 2) {
+                    x = row;
+                    y = col;
+                } else {
+                    x = row;
+                    y = col - (iterCountsDown[index] / 2);
+                }
                 objectCard = board.getGrid().get(new Coordinate(x, y));
                 if(objectCard != null) {
                     boardView.append("| ").append(objectCard).append(" (").append(x).append(",").append(y).append(") ");
                 } else {
-                    boardView.append(" ".repeat(16));
+                    boardView.append(" ".repeat(17));
                 }
             }
+            index++;
             boardView.append("|\n");
         }
         out.println(boardView);
     }
+
 
     /**
      * Prints the layout of object cards on the Shelf, including both the type and ID of each card.

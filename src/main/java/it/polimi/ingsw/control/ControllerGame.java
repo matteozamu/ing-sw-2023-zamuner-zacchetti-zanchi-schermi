@@ -234,15 +234,34 @@ public class ControllerGame implements TimerRunListener, Serializable {
         Coordinate c;
         Board b = game.getBoard();
         try {
-            for (int row = 1; row <= 5; row++) {
-                for (int col = 1; col < 2 * row; col++) {
-                    c = new Coordinate(5 - row, -5 + col);
+            int[] iterCountsUp = new int[]{7, 6, 3, 2};
+            for (int row = 3; row >= 0; row--) {
+                for (int col = 0; col < iterCountsUp[row]; col++) {
+                    int x, y;
+                    if(row == 1){
+                        x = row;
+                        y = col - (iterCountsUp[row] / 2) + 1;
+                    } else {
+                        x = row;
+                        y = col - (iterCountsUp[row] / 2);
+                    }
+                    c = new Coordinate(x, y);
                     b.createCell(c, game.getRandomAvailableObjectCard());
                 }
             }
-            for (int row = 5 - 1; row >= 1; row--) {
-                for (int col = 1; col < 2 * row; col++) {
-                    c = new Coordinate(-5 + row, -5 + col);
+            int[] iterCountsDown = new int[]{6, 3, 2};
+            int index = 0;
+            for (int row = -1; row >= -3; row--) {
+                for (int col = 0; col < iterCountsDown[index]; col++) {
+                    int x, y;
+                    if (index == 2) {
+                        x = row;
+                        y = col;
+                    } else {
+                        x = row;
+                        y = col - (iterCountsDown[index] / 2);
+                    }
+                    c = new Coordinate(x, y);
                     b.createCell(c, game.getRandomAvailableObjectCard());
                 }
             }
