@@ -9,30 +9,38 @@ public final class CommonGoalType2 extends CommonGoal {
 
     public int type = 2;
 
+    public String description = "Cinque tessere dello stesso tipo che formano una diagonale.";
+
+    public String cardView = """
+                ┌──────────┐
+                │■         │
+                │  ■       │
+                │    ■     │
+                │      ■   │
+                │        ■ │
+                └──────────┘
+                """;
+
     @Override
     public int getType() {
         return type;
     }
 
     @Override
-    public String cliView() {
-        return """
-                O
-                  O
-                    O
-                      O
-                        O
-                """;
+    public String getDescription() {
+        return description;
+    }
+    @Override
+    public String getCardView() {
+        return cardView;
     }
 
-    /**
-     * Returns a string representation of the common goal, describing its requirements and conditions.
-     *
-     * @return A string representing the common goal.
-     */
     @Override
     public String toString() {
-        return "Cinque tessere dello stesso tipo che formano una diagonale.";
+        return "CommonGoalType2{" +
+                "type=" + type +
+                ", description='" + description + '\'' +
+                '}';
     }
 
     /**

@@ -16,13 +16,10 @@ public abstract class CommonGoal implements Serializable {
 
     public abstract int getType();
 
-    public abstract String cliView();
+    public abstract String getDescription();
 
-    /**
-     * Returns a string representation of the common goal, describing its requirements and conditions.
-     *
-     * @return A string representing the common goal.
-     */
+    public abstract String getCardView();
+
     public abstract String toString();
 
     /**

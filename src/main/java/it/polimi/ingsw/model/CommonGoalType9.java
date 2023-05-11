@@ -11,33 +11,42 @@ public final class CommonGoalType9 extends CommonGoal {
 
     public int type = 9;
 
+    public String description = "Tre colonne formate ciascuna da 6 tessere di uno, due o tre tipi differenti. Colonne diverse possono avere combinazioni diverse di tipi di tessere.";
+
+    public String cardView = """
+            ┌───────────┐
+            │     ■     │
+            │     ■     │
+            │     ■     │
+            │     ■     │
+            │     ■     │
+            │     ■     │
+            │     x3    │
+            └───────────┘
+            """;
+
     @Override
     public int getType() {
         return type;
     }
 
     @Override
-    public String cliView() {
-        return """
-                O
-                O
-                O
-                O
-                O
-                O
-                x3
-                """;
-
+    public String getDescription() {
+        return description;
     }
 
-    /**
-     * Returns a string representation of the common goal, describing its requirements and conditions.
-     *
-     * @return A string representing the common goal.
-     */
+    @Override
+    public String getCardView() {
+        return cardView;
+    }
+
     @Override
     public String toString() {
-        return "Tre colonne formate ciascuna da 6 tessere di uno, due o tre tipi differenti. Colonne diverse possono avere combinazioni diverse di tipi di tessere.";
+        return "CommonGoalType9{" +
+                "type=" + type +
+                ", description='" + description + '\'' +
+                ", cardView='" + cardView + '\'' +
+                '}';
     }
 
     /**

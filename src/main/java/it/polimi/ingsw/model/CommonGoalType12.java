@@ -11,30 +11,40 @@ public final class CommonGoalType12 extends CommonGoal {
 
     public int type = 12;
 
-    @Override
-    public String cliView() {
-        return """
-                O - - - -
-                O O - - -
-                O O O - -
-                O O O O -
-                O O O O O
+    public String description = "Cinque colonne di altezza crescente o decrescente: a partire dalla prima colonna a sinistra o a destra, ogni colonna successiva deve essere formata da una tessera in più. Le tessere possono essere di qualsiasi tipo.";
+
+    public String cardView = """
+                ┌──────────┐
+                │■ - - - - │
+                │■ ■ - - - │
+                │■ ■ ■ - - │
+                │■ ■ ■ ■ - │
+                │■ ■ ■ ■ ■ │
+                └──────────┘
                 """;
-    }
 
     @Override
     public int getType() {
         return type;
     }
 
-    /**
-     * Returns a string representation of the common goal, describing its requirements and conditions.
-     *
-     * @return A string representing the common goal.
-     */
+    @Override
+    public String getDescription() {
+        return description;
+    }
+
+    @Override
+    public String getCardView() {
+        return cardView;
+    }
+
     @Override
     public String toString() {
-        return "Cinque colonne di altezza crescente o decrescente: a partire dalla prima colonna a sinistra o a destra, ogni colonna successiva deve essere formata da una tessera in più. Le tessere possono essere di qualsiasi tipo.";
+        return "CommonGoalType12{" +
+                "type=" + type +
+                ", description='" + description + '\'' +
+                ", cardView='" + cardView + '\'' +
+                '}';
     }
 
     /**
@@ -62,11 +72,11 @@ public final class CommonGoalType12 extends CommonGoal {
         boolean patternOne = true;
         boolean patternThree = true;
 
-        for (int col = 0; col < shelf.COLUMNS; col++) {
+        for (int col = 0; col < Shelf.COLUMNS; col++) {
             int maxHeightPatternOne = 5 - col;
             int maxHeightPatternThree = 6 - col;
             int countD = 0;
-            for (int row = 0; row < shelf.ROWS; row++) {
+            for (int row = 0; row < Shelf.ROWS; row++) {
                 if (shelf.getObjectCard(new Coordinate(row, col)) != null) {
                     countD++;
                 }
@@ -86,11 +96,11 @@ public final class CommonGoalType12 extends CommonGoal {
         boolean patternTwo = true;
         boolean patternFour = true;
 
-        for (int col = shelf.COLUMNS - 1; col >= 0; col--) {
+        for (int col = Shelf.COLUMNS - 1; col >= 0; col--) {
             int maxHeightPatternTwo = col + 1;
             int maxHeightPatternFour = col + 2;
             int countA = 0;
-            for (int row = 0; row < shelf.ROWS; row++) {
+            for (int row = 0; row < Shelf.ROWS; row++) {
                 if (shelf.getObjectCard(new Coordinate(row, col)) != null) {
                     countA++;
                 }

@@ -10,32 +10,42 @@ public final class CommonGoalType6 extends CommonGoal {
 
     public int type = 6;
 
+    public String description = "Due colonne formate ciascuna da 6 diversi tipi di tessere. ";
+
+    public String cardView = """
+            ┌───────────┐
+            │     ■     │
+            │     ■     │
+            │     ■     │
+            │     ■     │
+            │     ■     │
+            │     ■     │
+            │     x2    │
+            └───────────┘
+            """;
+
     @Override
     public int getType() {
         return type;
     }
 
     @Override
-    public String cliView() {
-        return """
-                O
-                O
-                O
-                O
-                O
-                O
-                x2
-                """;
+    public String getDescription() {
+        return description;
     }
 
-    /**
-     * Returns a string representation of the common goal, describing its requirements and conditions.
-     *
-     * @return A string representing the common goal.
-     */
+    @Override
+    public String getCardView() {
+        return cardView;
+    }
+
     @Override
     public String toString() {
-        return "L'obiettivo è raggiunto quando ci sono due colonne nella Shelf formate ciascuna da 6 diversi tipi di carte oggetto.";
+        return "CommonGoalType6{" +
+                "type=" + type +
+                ", description='" + description + '\'' +
+                ", cardView='" + cardView + '\'' +
+                '}';
     }
 
     /**
@@ -65,10 +75,10 @@ public final class CommonGoalType6 extends CommonGoal {
 
         int columnsWithUniqueObjectCards = 0;
 
-        for (int col = 0; col < shelf.COLUMNS; col++) {
+        for (int col = 0; col < Shelf.COLUMNS; col++) {
             Map<ObjectCardType, Integer> uniqueObjectCards = new HashMap<>();
 
-            for (int row = 0; row < shelf.ROWS; row++) {
+            for (int row = 0; row < Shelf.ROWS; row++) {
                 Coordinate coordinate = new Coordinate(row, col);
                 ObjectCard objectCard = shelf.getObjectCard(coordinate);
 

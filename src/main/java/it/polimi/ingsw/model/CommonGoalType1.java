@@ -11,6 +11,16 @@ import java.util.Map;
 public final class CommonGoalType1 extends CommonGoal {
 
     public int type = 1;
+    public String description = "Sei gruppi separati formati ciascuno da due tessere adiacenti dello stesso tipo. Le tessere di un gruppo possono essere diverse da quelle di un altro gruppo.";
+    public String cardView = """
+            ┌───────────┐
+            │           │
+            │     ■     │
+            │     ■     │
+            │     x6    │
+            │           │
+            └───────────┘
+            """;
 
     @Override
     public int getType() {
@@ -18,23 +28,21 @@ public final class CommonGoalType1 extends CommonGoal {
     }
 
     @Override
-    public String cliView() {
-        return """
-                O
-                O
-                x6
-                """;
-
+    public String getDescription() {
+        return description;
+    }
+    @Override
+    public String getCardView() {
+        return cardView;
     }
 
-    /**
-     * Returns a string representation of the common goal, describing its requirements and conditions.
-     *
-     * @return A string representing the common goal.
-     */
     @Override
     public String toString() {
-        return "Sei gruppi separati formati ciascuno da due tessere adiacenti dello stesso tipo. Le tessere di un gruppo possono essere diverse da quelle di un altro gruppo.";
+        return "CommonGoalType1{" +
+                "type=" + type +
+                ", Description='" + description + '\'' +
+                ", cardView='" + cardView + '\'' +
+                '}';
     }
 
     /**
