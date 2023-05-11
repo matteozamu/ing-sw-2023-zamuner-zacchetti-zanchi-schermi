@@ -354,7 +354,7 @@ public class Cli extends ClientGameManager implements DisconnectionListener {
     @Override
     public void firstPlayerCommunication(String username, List<CommonGoal> cg) {
         out.println("Game has started!");
-        out.println("The common goal cards are: \n" + cg.get(0) + "\n" + cg.get(0).cliView() + "\n\n" + cg.get(1) + "\n" + cg.get(1).cliView());
+        out.println("The common goal cards are: \n" + cg.get(0).getDescription() + "\n" + cg.get(0).getCardView() + "\n\n" + cg.get(1).getDescription() + "\n" + cg.get(1).getCardView());
 
         if (username.equals(getUsername())) {
             out.println("You are the first player!\n");
@@ -456,9 +456,7 @@ public class Cli extends ClientGameManager implements DisconnectionListener {
 
     @Override
     public void printLimbo() {
-        out.println("You have selected these cards:");
-        out.println(getGameSerialized().getLimbo());
-        out.println();
+        CliVisual.printLimbo(out, getGameSerialized());
     }
 
     /**

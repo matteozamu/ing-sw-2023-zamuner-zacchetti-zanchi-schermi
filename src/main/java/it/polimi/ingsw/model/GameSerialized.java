@@ -65,4 +65,10 @@ public class GameSerialized implements Serializable {
     public Map<Coordinate, ObjectCard> getLimbo() {
         return limbo;
     }
+
+    public List<ObjectCard> getAllLimboCards() {
+        List<ObjectCard> allLimboCards = new ArrayList<>(limbo.values());
+
+        return allLimboCards;
+    }
 }

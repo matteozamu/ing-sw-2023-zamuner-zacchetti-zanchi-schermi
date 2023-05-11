@@ -15,24 +15,41 @@ public class CliVisual {
      */
     public static void printPersonalGoalCards(PrintStream out, GameSerialized gameSerialized) {
         List<PersonalGoal> goals = gameSerialized.getPersonalGoalCard().getGoals();
-        out.println("Your Personal Goal Card is:");
+        StringBuilder sb = new StringBuilder();
+
+        sb.append("Your Personal Goal Card is:\n");
+
         for (int i = 5; i >= 0; i--) {
+            StringBuilder line = new StringBuilder();
             for (int j = 0; j < 5; j++) {
                 boolean found = false;
                 for (PersonalGoal goal : goals) {
                     if (goal.getRow() == i && goal.getColumn() == j) {
-                        out.print(getColoredText(goal.getType().getR(), goal.getType().getG(), goal.getType().getB()) + " ");
+                        line.append(getColoredText(goal.getType().getR(), goal.getType().getG(), goal.getType().getB())).append(" ");
                         found = true;
                         break;
                     }
                 }
                 if (!found) {
-                    out.print("- ");
+                    line.append("- ");
                 }
             }
-            out.println();
+
+            String border = new String(new char[10]).replace("\0", "═");
+            if (i == 5) {
+                sb.append("╔").append(border).append("╗\n");
+            }
+
+            sb.append("║").append(line).append("║\n");
+
+            if (i == 0) {
+                sb.append("╚").append(border).append("╝\n");
+            }
         }
+
+        out.print(sb.toString());
     }
+
 
     public static String getColoredText(int r, int g, int b) {
         // Creazione del codice ANSI per impostare il colore di sfondo
@@ -73,7 +90,7 @@ public class CliVisual {
                 if (objectCard != null) {
                     boardView.append("| ").append(objectCard).append(" (").append(x).append(",").append(y).append(") ");
                 } else {
-                    boardView.append(" ".repeat(17));
+                    boardView.append("| ").append(" ".repeat(17));
                 }
             }
             boardView.append("|\n");
@@ -96,7 +113,7 @@ public class CliVisual {
                 if (objectCard != null) {
                     boardView.append("| ").append(objectCard).append(" (").append(x).append(",").append(y).append(") ");
                 } else {
-                    boardView.append(" ".repeat(17));
+                    boardView.append("| ").append(" ".repeat(17));
                 }
             }
             index++;
@@ -115,23 +132,60 @@ public class CliVisual {
     public static void printShelf(PrintStream out, GameSerialized gameSerialized) {
         Shelf s = gameSerialized.getShelf();
 
-        int maxLength = 9;
+        int maxLengthType = 9;
 
         for (int row = Shelf.ROWS - 1; row >= 0; row--) {
             for (int col = 0; col < Shelf.COLUMNS; col++) {
                 Coordinate coord = new Coordinate(row, col);
                 ObjectCard card = s.getGrid().get(coord);
                 if (card == null) {
-                    out.print("-".repeat(maxLength));
+                    out.print("-".repeat(maxLengthType));
                 } else {
-//                    String cardText = card.toString();
-//                    int padding = maxLength - cardText.length();
-//                    System.out.print(cardText + " ".repeat(padding));
-                    out.print(card.toString());
+                    String cardText = card.toString();
+                    String visibleCardText = cardText.replaceAll("\u001B\\[[;\\d]*m", "");
+                    int padding = maxLengthType - visibleCardText.length();
+                    out.print(cardText + " ".repeat(padding));
                 }
                 out.print("\t");
             }
             out.println();
         }
     }
+
+    public static void printLimbo(PrintStream out, GameSerialized gameSerialized) {
+        List<ObjectCard> limboCards = gameSerialized.getAllLimboCards();
+        StringBuilder limbo = new StringBuilder();
+
+        if(limboCards.size() == 1) {
+            limbo.append("You have selected this card:\n");
+        } else {
+            limbo.append("You have selected these cards:\n");
+        }
+
+        if (!limboCards.isEmpty()) {
+            int totalLength = 0;
+            for (int i = 0; i < limboCards.size(); i++) {
+                String visibleCardText = limboCards.get(i).toString().replaceAll("\u001B\\[[;\\d]*m", "");
+                totalLength += visibleCardText.length() + 2;
+                if (i != 0) {
+                    totalLength += 1;
+                }
+            }
+
+            String border = new String(new char[totalLength]).replace("\0", "═");
+            limbo.append("╔").append(border).append("╗\n");
+
+            for (ObjectCard card : limboCards) {
+                limbo.append(String.format("║ %-7s ", card.toString()));
+            }
+            limbo.append("║\n");
+
+            limbo.append("╚").append(border).append("╝\n");
+        }
+
+        limbo.append("\n");
+        out.print(limbo);
+    }
+
+
 }
