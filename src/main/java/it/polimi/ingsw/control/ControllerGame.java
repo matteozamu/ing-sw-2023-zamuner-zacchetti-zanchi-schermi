@@ -93,7 +93,7 @@ public class ControllerGame implements TimerRunListener, Serializable {
     private Response pickObjectCardHandler(ObjectCardRequest objectCardRequest) {
         Coordinate c = objectCardRequest.getCoordinate();
 
-        if (objectCardRequest.getContent() == MessageContent.PICK_OBJECT_CARD && c != null /*&& isObjectCardAvailable(c)*/) {
+        if (objectCardRequest.getContent() == MessageContent.PICK_OBJECT_CARD && c != null && isObjectCardAvailable(c)) {
             Server.LOGGER.log(Level.INFO, "Coordinate of the card: {0}", c);
             // TODO cambiare metodo con pick object card
             this.getGame().getLimbo().put(c, this.getGame().getBoard().removeObjectCard(c));
@@ -315,6 +315,7 @@ public class ControllerGame implements TimerRunListener, Serializable {
      * @return True if the object card is available for selection, false otherwise.
      */
     //TODO: da testare
+    // non funziona il controllo per verificare che le tessere abbiano un lato in comune
     public boolean isObjectCardAvailable(Coordinate coordinate) {
         if (selectedCoordinates.size() == 3) {
             selectedCoordinates.clear();

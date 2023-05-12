@@ -324,8 +324,14 @@ public abstract class ClientGameManager implements ClientGameManagerListener, Cl
             case PICK_CARD_BOARD:
                 return List.of(PossibleAction.BOARD_PICK_CARD);
 
-            case AFTER_FIRST_PICK:
-                return List.of(PossibleAction.BOARD_PICK_CARD, PossibleAction.CHOOSE_COLUMN, PossibleAction.DELETE_LIMBO);
+            case AFTER_FIRST_PICK: {
+                if(gameSerialized.getLimbo().size() == 3){
+                    return List.of(PossibleAction.CHOOSE_COLUMN, PossibleAction.DELETE_LIMBO);
+
+                } else {
+                    return List.of(PossibleAction.BOARD_PICK_CARD, PossibleAction.CHOOSE_COLUMN, PossibleAction.DELETE_LIMBO);
+                }
+            }
 
             case ENDING_PHASE:
 //                return getEndingActions();

@@ -465,7 +465,8 @@ public class Cli extends ClientGameManager implements DisconnectionListener {
     // TODO se non ci sono colonne disponibili svuotiamo il limbo e rifacciamo scegliere le carte
     @Override
     public void chooseColumn() {
-        if (!sendRequest(MessageBuilder.buildLoadShelfRequest(getClientToken(), getUsername(), 1))) {
+        int column = readInt(0, 4);
+        if (!sendRequest(MessageBuilder.buildLoadShelfRequest(getClientToken(), getUsername(), column))) {
             promptError(SEND_ERROR, true);
         }
     }

@@ -31,15 +31,7 @@ class ClientTurnManager {
 //                    break;
 
             case GET_CARD_BOARD:
-                playerState = UserPlayerState.SECOND_ACTION;
-                break;
-
-            case SECOND_ACTION:
-                handleSecondMove();
-                break;
-
-            case FIRST_FRENZY_ACTION:
-                handleFirstFrenzy();
+//                playerState = UserPlayerState.SECOND_ACTION;
                 break;
 
             case FIRST_SCOPE_USAGE:
