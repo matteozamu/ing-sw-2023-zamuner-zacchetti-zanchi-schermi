@@ -33,7 +33,7 @@ public class TurnController implements Serializable {
      * this enumeration rappresents the phases of a single turn
      */
     public enum PhaseType {
-        YOUR_TURN, CHOOSE_OBJ_CARD, CHOOSE_COLUMN,
+        YOUR_TURN, CHOOSE_OBJ_CARD, LOAD_SHELF,
         ORDER_OBJ_CARD
     }
 }

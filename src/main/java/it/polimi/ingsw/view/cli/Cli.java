@@ -14,8 +14,7 @@ import it.polimi.ingsw.utility.MessageBuilder;
 import it.polimi.ingsw.utility.ServerAddressValidator;
 
 import java.io.PrintStream;
-import java.util.List;
-import java.util.Scanner;
+import java.util.*;
 
 public class Cli extends ClientGameManager implements DisconnectionListener {
     private Scanner in;
@@ -452,6 +451,34 @@ public class Cli extends ClientGameManager implements DisconnectionListener {
         } while (!accepted);
 
         return coordinate;
+    }
+
+    @Override
+    public void reorderLimbo(){
+        List<ObjectCard> limbo = getGameSerialized().getAllLimboCards();
+        List<ObjectCard> newLimbo = new ArrayList<>();
+        int choose;
+        boolean firstError = true;
+        boolean accepted = false;
+
+        out.println("Choose the order of the cards in the limbo:");
+
+        for (int i = 0; i < limbo.size(); i++) {
+            out.println("\t" + (i) + " - " + limbo.get(i));
+        }
+
+        do {
+
+            choose = readInt(0, limbo.size() - 1);
+            newLimbo.add(limbo.get(choose));
+            limbo.remove(choose);
+
+            if (limbo.isEmpty()) accepted = true;
+        } while (!accepted);
+
+        if (!sendRequest(MessageBuilder.buildReorderLimboRequest(getUsername(), getClientToken(), newLimbo))) {
+            promptError(SEND_ERROR, true);
+        }
     }
 
     @Override
