@@ -326,10 +326,12 @@ public abstract class ClientGameManager implements ClientGameManagerListener, Cl
 
             case AFTER_FIRST_PICK: {
                 if(gameSerialized.getLimbo().size() == 3){
-                    return List.of(PossibleAction.CHOOSE_COLUMN, PossibleAction.DELETE_LIMBO);
+                    return List.of(PossibleAction.LOAD_SHELF, PossibleAction.REORDER_LIMBO, PossibleAction.DELETE_LIMBO);
 
+                } else if (gameSerialized.getLimbo().size() > 1) {
+                    return List.of(PossibleAction.BOARD_PICK_CARD, PossibleAction.LOAD_SHELF, PossibleAction.REORDER_LIMBO, PossibleAction.DELETE_LIMBO);
                 } else {
-                    return List.of(PossibleAction.BOARD_PICK_CARD, PossibleAction.CHOOSE_COLUMN, PossibleAction.DELETE_LIMBO);
+                    return List.of(PossibleAction.BOARD_PICK_CARD, PossibleAction.LOAD_SHELF, PossibleAction.DELETE_LIMBO);
                 }
             }
 
@@ -358,10 +360,15 @@ public abstract class ClientGameManager implements ClientGameManagerListener, Cl
                 System.out.println("SCEGLI CARTA");
                 action = this::pickBoardCard;
                 break;
-            case CHOOSE_COLUMN:
+            case LOAD_SHELF:
                 System.out.println("SCEGLI COLONNA");
                 action = this::chooseColumn;
                 break;
+            case REORDER_LIMBO:
+                System.out.println("SCEGLI ORDINE");
+                action = this::reorderLimbo;
+                break;
+
             default:
 //                throw new ClientRoundManagerException("Invalid Action");
         }

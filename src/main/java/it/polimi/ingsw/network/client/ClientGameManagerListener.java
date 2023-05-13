@@ -68,6 +68,8 @@ interface ClientGameManagerListener {
 
     void printLimbo();
 
+    void reorderLimbo();
+
     void chooseColumn();
 
     void gameStateRequest(String username, String token);

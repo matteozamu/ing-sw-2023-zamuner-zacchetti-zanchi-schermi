@@ -24,6 +24,7 @@ public class Game implements Serializable {
     private boolean hasStarted;
     private int numberOfPlayers;
     private Map<Coordinate, ObjectCard> limbo;
+    private List<ObjectCard> limboOrder;
 
     /**
      * constructor of the class
@@ -66,6 +67,14 @@ public class Game implements Serializable {
 
     public void setLimbo(Map<Coordinate, ObjectCard> limbo) {
         this.limbo = limbo;
+    }
+
+    public List<ObjectCard> getLimboOrder() {
+        return limboOrder;
+    }
+
+    public void setLimboOrder(List<ObjectCard> limboOrder) {
+        this.limboOrder = limboOrder;
     }
 
     public boolean isHasStarted() {

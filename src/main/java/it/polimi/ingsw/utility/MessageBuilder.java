@@ -2,8 +2,11 @@ package it.polimi.ingsw.utility;
 
 
 import it.polimi.ingsw.model.Coordinate;
+import it.polimi.ingsw.model.ObjectCard;
 import it.polimi.ingsw.model.Player;
 import it.polimi.ingsw.network.message.*;
+
+import java.util.List;
 
 public class MessageBuilder {
 
@@ -49,7 +52,11 @@ public class MessageBuilder {
         return new GameStateRequest(username, token);
     }
 
-    public static Message buildLoadShelfRequest(String clientToken, String username, int column) {
+    public static ReorderLimboRequest buildReorderLimboRequest(String username, String token, List<ObjectCard> order) {
+        return new ReorderLimboRequest(username, token, order);
+    }
+
+    public static LoadShelfRequest buildLoadShelfRequest(String clientToken, String username, int column) {
         return new LoadShelfRequest(username, clientToken, column);
     }
 }

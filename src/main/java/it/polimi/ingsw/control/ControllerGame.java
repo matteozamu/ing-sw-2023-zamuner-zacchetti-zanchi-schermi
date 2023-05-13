@@ -66,6 +66,9 @@ public class ControllerGame implements TimerRunListener, Serializable {
             case PICK_OBJECT_CARD:
                 return pickObjectCardHandler((ObjectCardRequest) receivedMessage);
 
+            case REORDER_LIMBO_REQUEST:
+                return reorderLimboHandler((ReorderLimboRequest) receivedMessage);
+
             case LOAD_SHELF_REQUEST:
                 return loadShelfHandler((LoadShelfRequest) receivedMessage);
         }
@@ -78,12 +81,26 @@ public class ControllerGame implements TimerRunListener, Serializable {
 
         if (LoadShelfRequest.getContent() == MessageContent.LOAD_SHELF_REQUEST && game.getCurrentPlayer().getShelf().getFreeCellsPerColumn(col) >= game.getLimbo().size()) {
             Server.LOGGER.log(Level.INFO, "Moving cards to shelf for player: {0}", LoadShelfRequest.getSenderUsername());
-            loadShelf(new ArrayList<>(game.getLimbo().values()), col);
+            loadShelf(game.getLimboOrder(), col);
 
             sendPrivateUpdates();
             return new Response("Cards moved", MessageStatus.OK);
         } else {
             System.out.println("Column does not have enough space");
+            return buildInvalidResponse();
+        }
+    }
+
+    private Response reorderLimboHandler(ReorderLimboRequest reorderLimboRequest) {
+        List<ObjectCard> limboOrder = reorderLimboRequest.getLimboOrder();
+
+        if (reorderLimboRequest.getContent() == MessageContent.REORDER_LIMBO_REQUEST && limboOrder.size() == game.getLimbo().size()) {
+            Server.LOGGER.log(Level.INFO, "Reordering limbo for player: {0}", reorderLimboRequest.getSenderUsername());
+            game.setLimboOrder(limboOrder);
+
+            return new Response("Limbo reordered", MessageStatus.PRINT_LIMBO);
+        } else {
+            System.out.println("Limbo order is not valid");
             return buildInvalidResponse();
         }
     }
