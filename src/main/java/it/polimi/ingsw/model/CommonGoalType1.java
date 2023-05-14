@@ -11,15 +11,22 @@ import java.util.Map;
 public final class CommonGoalType1 extends CommonGoal {
 
     public int type = 1;
-    public String description = "Sei gruppi separati formati ciascuno da due tessere adiacenti dello stesso tipo. Le tessere di un gruppo possono essere diverse da quelle di un altro gruppo.";
+
+    public String description = """
+            Six groups each containing at least
+            2 tiles of the same type (not necessarily
+            in the depicted shape).
+            The tiles of one group can be different
+            from those of another group.""";
+
     public String cardView = """
-            ┌───────────┐
-            │           │
-            │     ■     │
-            │     ■     │
-            │     x6    │
-            │           │
-            └───────────┘
+            ╔═══════════╗
+            ║           ║
+            ║     ■     ║
+            ║     ■     ║
+            ║     x6    ║
+            ║           ║
+            ╚═══════════╝
             """;
 
     @Override

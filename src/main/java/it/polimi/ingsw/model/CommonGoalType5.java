@@ -13,17 +13,22 @@ public class CommonGoalType5 extends CommonGoal {
 
     public int type = 5;
 
-    public String description = "Quattro gruppi separati formati ciascuno da quattro tessere adiacenti dello stesso tipo. Le tessere di un gruppo possono essere diverse da quelle di un altro gruppo.";
+    public String description = """
+            Four groups each containing at least
+            4 tiles of the same type (not necessarily
+            in the depicted shape).
+            The tiles of one group can be different
+            from those of another group.""";
 
     public String cardView = """
-            ┌───────────┐
-            │     ■     │
-            │     ■     │
-            │     ■     │
-            │     ■     │
-            │     x4    │
-            └───────────┘
-            """;;
+            ╔═══════════╗
+            ║     ■     ║
+            ║     ■     ║
+            ║     ■     ║
+            ║     ■     ║
+            ║     x4    ║
+            ╚═══════════╝
+            """;
 
     @Override
     public int getType() {

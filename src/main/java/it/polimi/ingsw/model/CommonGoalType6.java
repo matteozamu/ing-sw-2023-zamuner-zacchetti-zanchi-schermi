@@ -10,18 +10,17 @@ public final class CommonGoalType6 extends CommonGoal {
 
     public int type = 6;
 
-    public String description = "Due colonne formate ciascuna da 6 diversi tipi di tessere. ";
+    public String description = "Two columns each formed by 6 different types of tiles.";
 
     public String cardView = """
-            ┌───────────┐
-            │     ■     │
-            │     ■     │
-            │     ■     │
-            │     ■     │
-            │     ■     │
-            │     ■     │
-            │     x2    │
-            └───────────┘
+            ╔═════════════╗
+            ║      ■      ║
+            ║      ■      ║
+            ║      ■      ║
+            ║      ■  x2  ║
+            ║      ■      ║
+            ║      ■      ║
+            ╚═════════════╝
             """;
 
     @Override

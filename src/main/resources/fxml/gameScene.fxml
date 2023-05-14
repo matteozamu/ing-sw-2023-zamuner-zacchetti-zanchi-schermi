@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.layout.*?>
+<?import java.net.URL?>
+
+<?import javafx.scene.image.ImageView?>
+<FlowPane
+    fx:id="mainPane"
+    xmlns="http://javafx.com/javafx"
+    xmlns:fx="http://javafx.com/fxml"
+    fx:controller="it.polimi.ingsw.view.gui.GameSceneController">
+
+    <stylesheets>
+        <URL value="@../css/game.css"/>
+    </stylesheets>
+
+    <StackPane fx:id="boardArea">
+        <ImageView StackPane.alignment="CENTER" fx:id="map" styleClass="map"/>
+
+    </StackPane>
+</FlowPane>

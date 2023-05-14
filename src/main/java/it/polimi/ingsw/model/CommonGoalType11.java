@@ -11,14 +11,15 @@ public final class CommonGoalType11 extends CommonGoal {
 
     public int type = 11;
 
-    public String description = "Otto tessere dello stesso tipo. Non ci sono restrizioni sulla posizione di queste tessere.";
+    public String description = "Eight tiles of the same type. There’s no\n" +
+            "restriction about the position of these tiles.";
 
     public String cardView = """
-            ┌─────────┐
-            │  ■   ■  │
-            │  ■ ■ ■  │
-            │  ■ ■ ■  │
-            └─────────┘
+            ╔═════════╗
+            ║  ■   ■  ║
+            ║  ■ ■ ■  ║
+            ║  ■ ■ ■  ║
+            ╚═════════╝
             """;
 
     @Override

@@ -47,9 +47,8 @@ public class CliVisual {
             }
         }
 
-        out.print(sb.toString());
+        out.print(sb);
     }
-
 
     public static String getColoredText(int r, int g, int b) {
         // Creazione del codice ANSI per impostare il colore di sfondo
@@ -57,8 +56,7 @@ public class CliVisual {
         // Creazione del codice ANSI per reimpostare il colore di sfondo a quello di default
         String resetCode = "\033[0m";
         // Combinazione del codice di sfondo, del testo vuoto e del codice di reset per creare la stringa formattata
-        String coloredText = String.format("%s%s%s", colorCode, " ", resetCode);
-        return coloredText;
+        return String.format("%s%s%s", colorCode, " ", resetCode);
     }
 
     /**
@@ -132,25 +130,45 @@ public class CliVisual {
     public static void printShelf(PrintStream out, GameSerialized gameSerialized) {
         Shelf s = gameSerialized.getShelf();
 
-        int maxLengthType = 9;
+        int maxLengthType = 10;
+        StringBuilder shelfView = new StringBuilder();
+
+        String horizontalBorder = "═".repeat(43);
+        String topBorder = "╔" + horizontalBorder + "═╗\n";
+        String bottomBorder = "╚" + horizontalBorder + "═╝\n";
+        String middleBorder = "╠" + horizontalBorder + "═╣\n";
+
+        shelfView.append(topBorder);
 
         for (int row = Shelf.ROWS - 1; row >= 0; row--) {
+            shelfView.append("║");
             for (int col = 0; col < Shelf.COLUMNS; col++) {
                 Coordinate coord = new Coordinate(row, col);
                 ObjectCard card = s.getGrid().get(coord);
                 if (card == null) {
-                    out.print("-".repeat(maxLengthType));
+                    shelfView.append("-".repeat(maxLengthType - 2)); // Subtract 2 to account for cell borders
                 } else {
                     String cardText = card.toString();
                     String visibleCardText = cardText.replaceAll("\u001B\\[[;\\d]*m", "");
-                    int padding = maxLengthType - visibleCardText.length();
-                    out.print(cardText + " ".repeat(padding));
+                    int padding = maxLengthType - visibleCardText.length() - 2; // Subtract 2 to account for cell borders
+                    shelfView.append(" ").append(cardText).append(" ".repeat(padding));
                 }
-                out.print("\t");
+                shelfView.append("║");
             }
-            out.println();
+            shelfView.append("\n");
+            if (row > 0) {
+                shelfView.append(middleBorder);
+            }
         }
+        shelfView.append(bottomBorder);
+
+        out.print(shelfView);
     }
+
+
+
+
+
 
     public static void printLimbo(PrintStream out, GameSerialized gameSerialized) {
         List<ObjectCard> limboCards = gameSerialized.getAllLimboCards();

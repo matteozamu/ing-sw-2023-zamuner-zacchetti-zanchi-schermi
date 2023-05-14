@@ -11,18 +11,21 @@ public final class CommonGoalType9 extends CommonGoal {
 
     public int type = 9;
 
-    public String description = "Tre colonne formate ciascuna da 6 tessere di uno, due o tre tipi differenti. Colonne diverse possono avere combinazioni diverse di tipi di tessere.";
+    public String description = """
+            Three columns each formed by 6 tiles Five tiles of the same type forming an X.
+            of maximum three different types. One
+            column can show the same or a different
+            combination of another column.""";
 
     public String cardView = """
-            ┌───────────┐
-            │     ■     │
-            │     ■     │
-            │     ■     │
-            │     ■     │
-            │     ■     │
-            │     ■     │
-            │     x3    │
-            └───────────┘
+            ╔═════════════╗
+            ║      ■      ║
+            ║      ■      ║
+            ║      ■      ║
+            ║      ■  x3  ║
+            ║      ■      ║
+            ║      ■      ║
+            ╚═════════════╝
             """;
 
     @Override
@@ -70,11 +73,11 @@ public final class CommonGoalType9 extends CommonGoal {
 
         int columnCount = 0;
 
-        for (int col = 0; col < shelf.COLUMNS; col++) {
+        for (int col = 0; col < Shelf.COLUMNS; col++) {
             Set<ObjectCardType> uniqueTypesInColumn = new HashSet<>();
             boolean completeColumn = true;
 
-            for (int row = 0; row < shelf.ROWS; row++) {
+            for (int row = 0; row < Shelf.ROWS; row++) {
                 Coordinate coordinate = new Coordinate(row, col);
                 ObjectCard objectCard = shelf.getObjectCard(coordinate);
 
