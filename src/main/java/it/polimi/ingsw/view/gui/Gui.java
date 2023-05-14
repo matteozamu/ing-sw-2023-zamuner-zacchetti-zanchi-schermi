@@ -16,7 +16,7 @@ public class Gui extends Application {
         primaryStage.setFullScreenExitKeyCombination(KeyCombination.NO_MATCH); //Evita che l'utente possa uscire dalla modalità fullscreen
 
         primaryStage.setScene(new Scene(new Pane(), 600, 600)); // 800 è la larghezza, 600 è l'altezza
-        GuiManager.setLayout(primaryStage.getScene(), "fxml/StartWindow.fxml");
+        GuiManager.setLayout(primaryStage.getScene(), "fxml/startWindow.fxml");
         primaryStage.show();
     }
 
