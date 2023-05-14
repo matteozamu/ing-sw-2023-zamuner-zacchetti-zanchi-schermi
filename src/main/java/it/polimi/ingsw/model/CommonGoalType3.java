@@ -13,17 +13,17 @@ public final class CommonGoalType3 extends CommonGoal {
 
     public int type = 3;
 
-    public String description = "L'obiettivo è raggiunto quando le quattro tessere ai quattro angoli della Shelf sono dello stesso tipo.";
+    public String description = "Four tiles of the same type in the four corners of the bookshelf.";
 
     public String cardView = """
-                ┌───────────┐
-                │ ■ - - - ■ │
-                │ - - - - - │
-                │ - - - - - │
-                │ - - - - - │
-                │ - - - - - │
-                │ ■ - - - ■ │
-                └───────────┘
+                ╔═══════════╗
+                ║ ■ - - - ■ ║
+                ║ - - - - - ║
+                ║ - - - - - ║
+                ║ - - - - - ║
+                ║ - - - - - ║
+                ║ ■ - - - ■ ║
+                ╚═══════════╝
                 """;
 
     @Override

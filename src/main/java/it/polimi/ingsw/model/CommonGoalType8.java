@@ -11,16 +11,20 @@ public final class CommonGoalType8 extends CommonGoal {
 
     public int type = 8;
 
-    public String description = "Due righe formate ciascuna da 5 diversi tipi di tessere.";
+    public String description = """
+            Two lines each formed by 5 different
+            types of tiles. One line can show the
+            same or a different combination of the
+            other line.""";
 
     public String cardView = """
-                ┌───────────┐
-                │           │
-                │ ■ ■ ■ ■ ■ │
-                │    x2     │
-                │           │
-                │           │
-                └───────────┘
+                ╔═══════════╗
+                ║           ║
+                ║ ■ ■ ■ ■ ■ ║
+                ║    x2     ║
+                ║           ║
+                ║           ║
+                ╚═══════════╝
                 """;
 
     @Override
@@ -67,11 +71,11 @@ public final class CommonGoalType8 extends CommonGoal {
 
         int rowCount = 0;
 
-        for (int row = 0; row < shelf.ROWS; row++) {
+        for (int row = 0; row < Shelf.ROWS; row++) {
             Set<ObjectCardType> uniqueTypesInRow = new HashSet<>();
             boolean completeRow = true;
 
-            for (int col = 0; col < shelf.COLUMNS; col++) {
+            for (int col = 0; col < Shelf.COLUMNS; col++) {
                 Coordinate coordinate = new Coordinate(row, col);
                 ObjectCard objectCard = shelf.getObjectCard(coordinate);
 
