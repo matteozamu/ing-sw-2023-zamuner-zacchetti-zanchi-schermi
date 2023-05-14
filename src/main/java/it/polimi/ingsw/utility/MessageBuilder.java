@@ -59,4 +59,8 @@ public class MessageBuilder {
     public static LoadShelfRequest buildLoadShelfRequest(String clientToken, String username, int column) {
         return new LoadShelfRequest(username, clientToken, column);
     }
+
+    public static Message buildDeleteLimboRequest(String username, String clientToken) {
+        return new DeleteLimboRequest(username, clientToken);
+    }
 }

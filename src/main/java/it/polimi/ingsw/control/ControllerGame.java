@@ -69,6 +69,9 @@ public class ControllerGame implements TimerRunListener, Serializable {
             case REORDER_LIMBO_REQUEST:
                 return reorderLimboHandler((ReorderLimboRequest) receivedMessage);
 
+            case DELETE_LIMBO:
+                return deleteLimboHandler((DeleteLimboRequest) receivedMessage);
+
             case LOAD_SHELF_REQUEST:
                 return loadShelfHandler((LoadShelfRequest) receivedMessage);
         }
@@ -87,6 +90,22 @@ public class ControllerGame implements TimerRunListener, Serializable {
             return new Response("Cards moved", MessageStatus.OK);
         } else {
             System.out.println("Column does not have enough space");
+            return buildInvalidResponse();
+        }
+    }
+
+    private Response deleteLimboHandler(DeleteLimboRequest deleteLimboRequest) {
+        if (deleteLimboRequest.getContent() == MessageContent.DELETE_LIMBO) {
+            Server.LOGGER.log(Level.INFO, "Deleting limbo for player: {0}", deleteLimboRequest.getSenderUsername());
+            for(Coordinate coordinate : game.getLimbo().keySet()) {
+                game.getBoard().getGrid().put(coordinate, game.getLimbo().get(coordinate));
+            }
+            game.getLimbo().clear();
+
+            sendPrivateUpdates();
+            return new Response("Limbo deleted", MessageStatus.OK);
+        } else {
+            System.out.println("Limbo order is not valid");
             return buildInvalidResponse();
         }
     }
