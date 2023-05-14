@@ -143,6 +143,11 @@ public class GuiManager extends ClientGameManager implements DisconnectionListen
     }
 
     @Override
+    public void deleteLimbo(){
+
+    }
+
+    @Override
     public void chooseColumn(){
 
     }
