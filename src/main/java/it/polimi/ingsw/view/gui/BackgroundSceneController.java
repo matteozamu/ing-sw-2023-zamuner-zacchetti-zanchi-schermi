@@ -9,12 +9,12 @@ import java.util.Objects;
 
 public class BackgroundSceneController {
     @FXML
-    private Pane mainPane;
+    private Pane mainPane; // è il fx:id del pane di backgroundScene.fxml
 
     @FXML
     public void initialize() {
         // Creazione di un nuovo oggetto Image
-        Image image = new Image(Objects.requireNonNull(getClass().getClassLoader().getResource("img/sfondo.jpg")).toExternalForm());
+        Image image = new Image(Objects.requireNonNull(getClass().getClassLoader().getResource("img/boards/livingroom.png")).toExternalForm());
 
         // Creazione di un nuovo BackgroundImage
         BackgroundSize backgroundSize = new BackgroundSize(100, 100, true, true, true, false);

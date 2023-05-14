@@ -9,14 +9,16 @@ import javafx.scene.layout.*;
 import java.util.Objects;
 
 public class StartWindowController {
+    @FXML
     public Pane mainPane;
+
     @FXML
     private Button startButton;
 
     @FXML
     public void initialize() {
         // Creazione di un nuovo oggetto Image
-        Image image = new Image(Objects.requireNonNull(getClass().getClassLoader().getResource("img/sfondo.jpg")).toExternalForm());
+        Image image = new Image(Objects.requireNonNull(getClass().getClassLoader().getResource("img/misc/sfondo parquet.jpg")).toExternalForm());
 
         // Creazione di un nuovo BackgroundImage
         BackgroundSize backgroundSize = new BackgroundSize(100, 100, true, true, true, false);
