@@ -11,16 +11,20 @@ public final class CommonGoalType4 extends CommonGoal {
 
     public int type = 4;
 
-    public String description = "Quattro righe formate ciascuna da 5 tessere di uno, due o tre tipi differenti. Righe diverse possono avere combinazioni diverse di tipi di tessere.";
+    public String description = """
+            Four lines each formed by 5 tiles of
+            maximum three different types. One
+            line can show the same or a different
+            combination of another line.""";
 
     public String cardView = """
-                ┌───────────┐
-                │           │
-                │ ■ ■ ■ ■ ■ │
-                │    x4     │
-                │           │
-                │           │
-                └───────────┘
+                ╔═══════════╗
+                ║           ║
+                ║ ■ ■ ■ ■ ■ ║
+                ║    x4     ║
+                ║           ║
+                ║           ║
+                ╚═══════════╝
                 """;
 
     @Override

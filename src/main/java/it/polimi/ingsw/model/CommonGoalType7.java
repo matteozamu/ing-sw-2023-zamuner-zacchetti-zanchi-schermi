@@ -9,14 +9,18 @@ public final class CommonGoalType7 extends CommonGoal {
 
     public int type = 7;
 
-    public String description = "Due gruppi separati di 4 tessere dello stesso tipo che formano un quadrato 2x2. Le tessere dei due gruppi devono essere dello stesso tipo.";
+    public String description = """
+            Two groups each containing 4 tiles of
+            the same type in a 2x2 square. The tiles
+            of one square can be different from
+            those of the other square.""";
 
     public String cardView = """
-            ┌───────┐
-            │  ■ ■  │
-            │  ■ ■  │
-            │  x2   │
-            └───────┘
+            ╔═══════╗
+            ║  ■ ■  ║
+            ║  ■ ■  ║
+            ║  x2   ║
+            ╚═══════╝
             """;
 
     @Override

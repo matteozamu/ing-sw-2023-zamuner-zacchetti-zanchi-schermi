@@ -9,16 +9,16 @@ public final class CommonGoalType2 extends CommonGoal {
 
     public int type = 2;
 
-    public String description = "Cinque tessere dello stesso tipo che formano una diagonale.";
+    public String description = "Five tiles of the same type forming a diagonal.";
 
     public String cardView = """
-                ┌──────────┐
-                │■         │
-                │  ■       │
-                │    ■     │
-                │      ■   │
-                │        ■ │
-                └──────────┘
+                ╔══════════╗
+                ║■         ║
+                ║  ■       ║
+                ║    ■     ║
+                ║      ■   ║
+                ║        ■ ║
+                ╚══════════╝
                 """;
 
     @Override
