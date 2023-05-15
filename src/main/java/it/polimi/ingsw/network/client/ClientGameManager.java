@@ -327,8 +327,6 @@ public abstract class ClientGameManager implements ClientGameManagerListener, Cl
             case AFTER_FIRST_PICK: {
                 if(gameSerialized.getLimbo().size() == 3){
                     return List.of(PossibleAction.LOAD_SHELF, PossibleAction.REORDER_LIMBO, PossibleAction.DELETE_LIMBO);
-                } else if(gameSerialized.getLimbo().size() == 1){
-                    return List.of(PossibleAction.BOARD_PICK_CARD);
                 } else if (gameSerialized.getLimbo().size() > 1) {
                     return List.of(PossibleAction.BOARD_PICK_CARD, PossibleAction.LOAD_SHELF, PossibleAction.REORDER_LIMBO, PossibleAction.DELETE_LIMBO);
                 } else {
