@@ -131,8 +131,8 @@ public class Cli extends ClientGameManager implements DisconnectionListener {
             out.println("You chose RMI connection\n");
         }
 
-//        String address = askAddress();
-        String address = "localhost";
+        String address = askAddress();
+//        String address = "localhost";
         out.println("Server Address: " + address);
 
 //        int port = askPort(connection);
