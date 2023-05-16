@@ -5,6 +5,7 @@ import it.polimi.ingsw.model.CommonGoal;
 import it.polimi.ingsw.network.client.ClientGameManager;
 import it.polimi.ingsw.network.message.ConnectionResponse;
 import it.polimi.ingsw.network.client.DisconnectionListener;
+import it.polimi.ingsw.network.message.ConnectionResponse;
 import it.polimi.ingsw.network.message.Response;
 import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
@@ -159,6 +160,11 @@ public class GuiManager extends ClientGameManager implements DisconnectionListen
 
     @Override
     public void chooseColumn(){
+
+    }
+
+    @Override
+    public void printScore() {
 
     }
 

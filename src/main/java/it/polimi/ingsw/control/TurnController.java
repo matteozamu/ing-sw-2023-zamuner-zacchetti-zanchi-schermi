@@ -1,5 +1,6 @@
 package it.polimi.ingsw.control;
 
+import it.polimi.ingsw.model.Game;
 import it.polimi.ingsw.model.Player;
 
 import java.io.Serializable;
@@ -15,10 +16,17 @@ public class TurnController implements Serializable {
     private final List<Player> players;
     private Player activePlayer;
     private boolean firstTurn;
+    private Game gameInstance;
+    private int count;
+    private ControllerGame controllerGame;
 
-    public TurnController(List<Player> players) {
+
+    public TurnController(List<Player> players, ControllerGame controllerGame) {
+        this.gameInstance = Game.getInstance();
         this.players = new ArrayList<>(players);
         this.firstTurn = true;
+        this.count = 0;
+        this.controllerGame = controllerGame;
     }
 
     public Player getActivePlayer() {

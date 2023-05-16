@@ -17,6 +17,7 @@ public class GameSerialized implements Serializable {
     private Shelf shelf;
     private PersonalGoalCard personalGoalCard;
     private Map<Coordinate, ObjectCard> limbo;
+    private Player currentPlayer;
 
     public GameSerialized(String userName) {
         Game instance = Game.getInstance();
@@ -29,6 +30,7 @@ public class GameSerialized implements Serializable {
 
         this.board = new Board(instance.getBoard());
         this.limbo = new HashMap<>(instance.getLimbo());
+        this.currentPlayer = instance.getCurrentPlayer();
 
         Player player = Game.getInstance().getPlayerByName(userName);
         this.shelf = player.getShelf();
@@ -42,6 +44,10 @@ public class GameSerialized implements Serializable {
 
     public int getPoints() {
         return this.points;
+    }
+
+    public Player getCurrentPlayer() {
+        return currentPlayer;
     }
 
     public List<Player> getAllPlayers() {

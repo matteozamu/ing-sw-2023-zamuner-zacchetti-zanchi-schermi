@@ -56,11 +56,12 @@ public abstract class CommonGoal implements Serializable {
      * @return The updated number of points for the current CommonGoalCard.
      */
     public int updateCurrentPoints(int numberOfPlayers) {
+        int points = currentPoints;
         if (numberOfPlayers == 4 || numberOfPlayers == 3) {
             this.currentPoints -= 2;
         } else if (numberOfPlayers == 2) {
             this.currentPoints -= 4;
         }
-        return currentPoints;
+        return points;
     }
 }

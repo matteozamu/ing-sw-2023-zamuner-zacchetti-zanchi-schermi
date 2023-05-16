@@ -14,7 +14,9 @@ import it.polimi.ingsw.utility.MessageBuilder;
 import it.polimi.ingsw.utility.ServerAddressValidator;
 
 import java.io.PrintStream;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Scanner;
 
 public class Cli extends ClientGameManager implements DisconnectionListener {
     private Scanner in;
@@ -65,8 +67,9 @@ public class Cli extends ClientGameManager implements DisconnectionListener {
 
     /**
      * show an error message and close the program
+     *
      * @param errorMessage the error message to show
-     * @param close if true, the program will close
+     * @param close        if true, the program will close
      */
     private void promptError(String errorMessage, boolean close) {
         out.println("ERROR: " + errorMessage);
@@ -80,6 +83,7 @@ public class Cli extends ClientGameManager implements DisconnectionListener {
 
     /**
      * ask the user to insert the name
+     *
      * @return the username inserted
      */
     private String askUsername() {
@@ -118,7 +122,8 @@ public class Cli extends ClientGameManager implements DisconnectionListener {
         String username = askUsername();
 
         out.printf("Hi %s!%n", username);
-        int connection = askConnection();
+//        int connection = askConnection();
+        int connection = 0;
 
         if (connection == 0) {
             out.println("You chose Socket connection\n");
@@ -127,9 +132,11 @@ public class Cli extends ClientGameManager implements DisconnectionListener {
         }
 
         String address = askAddress();
+//        String address = "localhost";
         out.println("Server Address: " + address);
 
-        int port = askPort(connection);
+//        int port = askPort(connection);
+        int port = 2727;
         out.println("Server Port: " + port);
 
         try {
@@ -288,6 +295,7 @@ public class Cli extends ClientGameManager implements DisconnectionListener {
 
     /**
      * if the user connects to the server, he join the lobby
+     *
      * @param response the response from the server
      */
     @Override
@@ -309,6 +317,7 @@ public class Cli extends ClientGameManager implements DisconnectionListener {
 
     /**
      * if the user joins the lobby, he waits for the game to start
+     *
      * @param response the response from the server
      */
     @Override
@@ -323,8 +332,9 @@ public class Cli extends ClientGameManager implements DisconnectionListener {
 
     /**
      * send a game state request to the server
+     *
      * @param username of the player
-     * @param token of the player
+     * @param token    of the player
      */
     @Override
     public void gameStateRequest(String username, String token) {
@@ -335,11 +345,13 @@ public class Cli extends ClientGameManager implements DisconnectionListener {
 
     /**
      * send a message to the server with the number of players
+     *
      * @param response
      */
     @Override
     public void numberOfPlayersRequest(Response response) {
-        int numberOfPlayers = askNumberOfPlayers();
+//        int numberOfPlayers = askNumberOfPlayers();
+        int numberOfPlayers = 2;
         if (!sendRequest(MessageBuilder.buildNumberOfPlayerMessage(getClientToken(), getUsername(), numberOfPlayers))) {
             promptError(SEND_ERROR, true);
         }
@@ -347,6 +359,7 @@ public class Cli extends ClientGameManager implements DisconnectionListener {
 
     /**
      * shows the players in the lobby
+     *
      * @param users list of users in the lobby
      */
     @Override
@@ -377,10 +390,12 @@ public class Cli extends ClientGameManager implements DisconnectionListener {
         out.println();
         CliVisual.printShelf(out, getGameSerialized());
         out.println();
+        CliVisual.printScore(out, getGameSerialized());
     }
 
     /**
      * tells the other players who is playing
+     *
      * @param turnOwner the player who is playing
      */
     @Override
@@ -390,6 +405,7 @@ public class Cli extends ClientGameManager implements DisconnectionListener {
 
     /**
      * handle an error message
+     *
      * @param error the error message
      */
     @Override
@@ -399,8 +415,9 @@ public class Cli extends ClientGameManager implements DisconnectionListener {
 
     /**
      * method used fot the first turn
+     *
      * @param username first player username
-     * @param cg list of common goals
+     * @param cg       list of common goals
      */
     @Override
     public void firstPlayerCommunication(String username, List<CommonGoal> cg) {
@@ -415,6 +432,7 @@ public class Cli extends ClientGameManager implements DisconnectionListener {
 
     /**
      * method used to show the possible actions
+     *
      * @param possibleActions list of possible actions
      */
     @Override
@@ -490,6 +508,7 @@ public class Cli extends ClientGameManager implements DisconnectionListener {
 
     /**
      * method to parse a Coordinate from the input
+     *
      * @return the Coordinate read
      */
     private Coordinate readCoordinate() {
@@ -520,7 +539,7 @@ public class Cli extends ClientGameManager implements DisconnectionListener {
      * method used to reorder the cards in the limbo
      */
     @Override
-    public void reorderLimbo(){
+    public void reorderLimbo() {
         List<ObjectCard> limbo = getGameSerialized().getAllLimboCards();
         List<ObjectCard> newLimbo = new ArrayList<>();
         int choose;
@@ -556,10 +575,15 @@ public class Cli extends ClientGameManager implements DisconnectionListener {
     }
 
     @Override
-    public void deleteLimbo(){
+    public void printScore() {
+        CliVisual.printScore(out, getGameSerialized());
+    }
+
+    @Override
+    public void deleteLimbo() {
         // Map<Coordinate, ObjectCard> limbo = getGameSerialized().getLimbo();
 
-        if(!sendRequest(MessageBuilder.buildDeleteLimboRequest(getUsername(), getClientToken()))){
+        if (!sendRequest(MessageBuilder.buildDeleteLimboRequest(getUsername(), getClientToken()))) {
             promptError(SEND_ERROR, true);
         }
     }
@@ -570,6 +594,7 @@ public class Cli extends ClientGameManager implements DisconnectionListener {
     // TODO se non ci sono colonne disponibili svuotiamo il limbo e rifacciamo scegliere le carte
     @Override
     public void chooseColumn() {
+        out.println("Choose the column you want to load");
         int column = readInt(0, 4);
         if (!sendRequest(MessageBuilder.buildLoadShelfRequest(getClientToken(), getUsername(), column))) {
             promptError(SEND_ERROR, true);

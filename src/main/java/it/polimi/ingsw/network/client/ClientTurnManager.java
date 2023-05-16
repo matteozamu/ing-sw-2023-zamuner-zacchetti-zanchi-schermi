@@ -21,35 +21,18 @@ class ClientTurnManager {
 //        if (!turnStarted)
 //            throw new ClientRoundManagerException("Error, round not started yet (before call nextState() you must call startTurn())");
 
+        System.out.println("STATO: " + getUserPlayerState());
         switch (playerState) {
             case PICK_CARD_BOARD:
                 playerState = UserPlayerState.AFTER_FIRST_PICK;
                 break;
 
-//                case SPAWN:
-//                    handleBegin();
-//                    break;
-
-            case GET_CARD_BOARD:
-//                playerState = UserPlayerState.SECOND_ACTION;
-                break;
-
-            case FIRST_SCOPE_USAGE:
-                handleFirstScope();
-                break;
-
-            case BOT_ACTION:
+            case LOADING_SHELF:
                 playerState = UserPlayerState.ENDING_PHASE;
                 break;
 
-            case ENDING_PHASE:
-            case BOT_RESPAWN:
-                playerState = UserPlayerState.END;
-                break;
-
-            case DEAD:
-            case GRENADE_USAGE:
-                playerState = UserPlayerState.FIRST_ACTION;
+            case DELETE_LIMBO:
+                playerState = UserPlayerState.PICK_CARD_BOARD;
                 break;
 
             case END:
@@ -61,42 +44,18 @@ class ClientTurnManager {
     }
 
     /**
-     * Handles the next state in the begin phase of the game
+     * Set the state to the delete limbo state
      */
-    private void handleBegin() {
-        playerState = UserPlayerState.GET_CARD_BOARD;
+    void deleteLimbo() {
+        playerState = UserPlayerState.DELETE_LIMBO;
     }
 
-    /**
-     * Handles the next state after the second move of the player
-     */
-    private void handleSecondMove() {
+    void loadingShelf() {
+        playerState = UserPlayerState.LOADING_SHELF;
+    }
+
+    void endingPhase() {
         playerState = UserPlayerState.ENDING_PHASE;
-    }
-
-    /**
-     * Handles the next state after the first frenzy move
-     */
-    private void handleFirstFrenzy() {
-        if (true) {
-            playerState = UserPlayerState.BOT_ACTION;
-        } else {
-            playerState = UserPlayerState.ENDING_PHASE;
-        }
-    }
-
-    /**
-     * Handles the next state in case of scope usage
-     */
-    private void handleFirstScope() {
-        playerState = UserPlayerState.SECOND_ACTION;
-    }
-
-    /**
-     * Set the state to the dead state
-     */
-    void death() {
-        playerState = UserPlayerState.DEAD;
     }
 
     /**
@@ -112,18 +71,20 @@ class ClientTurnManager {
         }
     }
 
+    // TODO Reconnection handler
     /**
      * Set the state after a reconnection
      */
-    void reconnection() {
-        handleBegin();
-    }
+//    void reconnection() {
+//        handleBegin();
+//    }
 
     /**
      * Begins the round
      */
     void startTurn() {
         turnStarted = true;
+        playerState = UserPlayerState.PICK_CARD_BOARD;
     }
 
     /**
