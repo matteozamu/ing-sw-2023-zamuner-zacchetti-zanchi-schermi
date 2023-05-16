@@ -84,6 +84,7 @@ class ClientTurnManager {
      */
     void startTurn() {
         turnStarted = true;
+        playerState = UserPlayerState.PICK_CARD_BOARD;
     }
 
     /**

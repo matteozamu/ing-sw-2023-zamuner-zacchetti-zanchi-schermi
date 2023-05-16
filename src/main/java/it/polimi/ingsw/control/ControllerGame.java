@@ -89,6 +89,7 @@ public class ControllerGame implements TimerRunListener, Serializable {
             this.pointsCalculator();
 
 //           turnController.nextTurn();
+            game.getLimbo().clear();
             game.nextPlayer();
 
             sendPrivateUpdates();

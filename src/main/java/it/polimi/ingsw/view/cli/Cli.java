@@ -2,7 +2,6 @@ package it.polimi.ingsw.view.cli;
 
 import it.polimi.ingsw.enumeration.MessageStatus;
 import it.polimi.ingsw.enumeration.PossibleAction;
-import it.polimi.ingsw.enumeration.UserPlayerState;
 import it.polimi.ingsw.model.Board;
 import it.polimi.ingsw.model.CommonGoal;
 import it.polimi.ingsw.model.Coordinate;
@@ -391,11 +390,7 @@ public class Cli extends ClientGameManager implements DisconnectionListener {
         out.println();
         CliVisual.printShelf(out, getGameSerialized());
         out.println();
-
-        if (getUserPlayerState() == UserPlayerState.ENDING_PHASE) {
-            System.out.println("STAMPA PUNTIIIIIII");
-            CliVisual.printScore(out, getGameSerialized());
-        }
+        CliVisual.printScore(out, getGameSerialized());
     }
 
     /**

@@ -238,7 +238,6 @@ public abstract class ClientGameManager implements ClientGameManagerListener, Cl
         if (turnManager.getUserPlayerState() != UserPlayerState.ENDING_PHASE) {
             makeMove();
         } else {
-            queue.add(() -> printScore());
             turnManager.endTurn();
         }
 
