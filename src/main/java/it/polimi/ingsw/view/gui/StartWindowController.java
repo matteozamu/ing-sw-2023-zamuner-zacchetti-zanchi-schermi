@@ -18,7 +18,7 @@ public class StartWindowController {
     @FXML
     public void initialize() {
         // Creazione di un nuovo oggetto Image
-        Image image = new Image(Objects.requireNonNull(getClass().getClassLoader().getResource("img/misc/parquet_background.jpg")).toExternalForm());
+        Image image = new Image(Objects.requireNonNull(getClass().getClassLoader().getResource("img/logos/Display_5.jpg")).toExternalForm());
 
         // Creazione di un nuovo BackgroundImage
         BackgroundSize backgroundSize = new BackgroundSize(100, 100, true, true, true, false);

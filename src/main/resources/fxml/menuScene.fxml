@@ -5,17 +5,19 @@
 <?import javafx.scene.image.*?>
 <?import javafx.scene.layout.*?>
 
-<VBox fx:id="mainPane" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.ingsw.view.gui.MenuSceneController">
-
+<VBox fx:id="mainPane" styleClass="mainPane" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.ingsw.view.gui.MenuSceneController">
     <stylesheets>
         <URL value="@../css/menu.css" />
     </stylesheets>
 
     <ImageView id="logoImage" />
 
+    <!--
     <Region VBox.vgrow="ALWAYS" />
+    -->
 
-    <Button fx:id="startButton" text="Start 1" />
+    <Button fx:id="startButton" text="Start" />
 
-    <Button fx:id="exitButton" prefHeight="0.0" prefWidth="54.0" text="Start 2" />
+    <Button fx:id="exitButton" text="Exit" />
+
 </VBox>

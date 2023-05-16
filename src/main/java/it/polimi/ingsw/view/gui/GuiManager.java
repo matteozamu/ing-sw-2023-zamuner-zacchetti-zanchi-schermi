@@ -29,6 +29,8 @@ public class GuiManager extends ClientGameManager implements DisconnectionListen
 
     private LobbySceneController lobbySceneController;
 
+    private NumberPlayersController numberPlayersController;
+
     private GuiManager() {
         // Inizializzare qui i controller di scena...
     }
@@ -86,6 +88,10 @@ public class GuiManager extends ClientGameManager implements DisconnectionListen
         this.lobbySceneController = lobbySceneController;
     }
 
+    void setNumberPlayersController(NumberPlayersController numberPlayersController) {
+        this.numberPlayersController = numberPlayersController;
+    }
+
     @Override
     public void connectionResponse(ConnectionResponse response) {
         Platform.runLater(() ->
@@ -104,7 +110,11 @@ public class GuiManager extends ClientGameManager implements DisconnectionListen
 
     @Override
     public void numberOfPlayersRequest(Response response){
+        /*
+        Platform.runLater(() ->
+                numberPlayersController.onNumberResponse(response));
 
+         */
     }
 
     @Override

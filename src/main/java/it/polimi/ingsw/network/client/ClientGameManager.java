@@ -24,6 +24,7 @@ import java.util.logging.SimpleFormatter;
 public abstract class ClientGameManager implements ClientGameManagerListener, ClientUpdateListener, Runnable {
     public static final Logger LOGGER = Logger.getLogger("my_shelfie_client");
 
+    public static final String ERROR_DIALOG_TITLE = "Error";
     public static final String SEND_ERROR = "Error while sending the request";
     protected static final String INVALID_STRING = "Invalid String!";
     private final BlockingQueue<Runnable> queue = new LinkedBlockingQueue<>();

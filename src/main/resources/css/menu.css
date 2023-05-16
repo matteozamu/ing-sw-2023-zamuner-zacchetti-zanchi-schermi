@@ -9,7 +9,8 @@
 /* Main menu */
 
 .mainPane {
-    -fx-background-image: url("../img/misc/parquet_background.jpg");
+    -fx-background-image: url("../img/logos/Display_5.jpg");
+    -fx-background-size: cover;
     -fx-alignment: CENTER;
 }
 
@@ -41,13 +42,13 @@
 .menuTitle {
     -fx-font-family: "Berkshire Swash Regular";
     -fx-font-size: 50px;
-    -fx-text-fill: #f3997b;
+    -fx-text-fill: #ffffff;
 }
 
 .menuLabel {
     -fx-font-family: "Merriweather Regular";
     -fx-font-size: 25px;
-    -fx-text-fill: orange;
+    -fx-text-fill: #ffffff;
 }
 
 .menuTextField {
@@ -58,7 +59,7 @@
 
     -fx-font-family: "Merriweather Regular";
     -fx-font-size: 20px;
-    -fx-text-fill: orange;
+    -fx-text-fill: #ffffff;
     -fx-alignment: center;
 }
 
@@ -76,5 +77,14 @@
 /* Images */
 
 #logoImage {
-    -fx-image: url("/img/Publisher material/Title 2000x618px.png");
+    -fx-image: url("/img/logos/nanoTitle.png");
+}
+
+/* Number of players */
+
+.numberPlayersButton {
+    -fx-max-width: 1500px;
+    -fx-hgap: 10;
+    -fx-vgap: 20;
+    -fx-alignment: CENTER;
 }
