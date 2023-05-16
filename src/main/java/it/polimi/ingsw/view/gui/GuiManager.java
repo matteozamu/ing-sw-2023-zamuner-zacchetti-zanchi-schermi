@@ -157,12 +157,6 @@ public class GuiManager extends ClientGameManager implements DisconnectionListen
 
     }
 
-
-    /**
-     * Notifies an update of players in the lobby
-     *
-     * @param users list of users in the lobby
-     */
     @Override
     public void playersWaitingUpdate(List<String> users) {
 
