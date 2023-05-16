@@ -59,6 +59,10 @@ public class CliVisual {
         return String.format("%s%s%s", colorCode, " ", resetCode);
     }
 
+    public static void printScore(PrintStream out, GameSerialized gameSerialized) {
+        out.println("You have " + gameSerialized.getPoints() + " points");
+    }
+
     /**
      * Prints the board in the console
      *
@@ -166,15 +170,11 @@ public class CliVisual {
     }
 
 
-
-
-
-
     public static void printLimbo(PrintStream out, GameSerialized gameSerialized) {
         List<ObjectCard> limboCards = gameSerialized.getAllLimboCards();
         StringBuilder limbo = new StringBuilder();
 
-        if(limboCards.size() == 1) {
+        if (limboCards.size() == 1) {
             limbo.append("You have selected this card:\n");
         } else {
             limbo.append("You have selected these cards:\n");

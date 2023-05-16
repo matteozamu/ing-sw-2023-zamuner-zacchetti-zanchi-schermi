@@ -84,7 +84,12 @@ public class ControllerGame implements TimerRunListener, Serializable {
 
         if (LoadShelfRequest.getContent() == MessageContent.LOAD_SHELF_REQUEST && game.getCurrentPlayer().getShelf().getFreeCellsPerColumn(col) >= game.getLimbo().size()) {
             Server.LOGGER.log(Level.INFO, "Moving cards to shelf for player: {0}", LoadShelfRequest.getSenderUsername());
-            loadShelf(game.getLimboOrder(), col);
+            loadShelf(new ArrayList<>(game.getLimbo().values()), col);
+
+            this.pointsCalculator();
+
+//           turnController.nextTurn();
+            game.nextPlayer();
 
             sendPrivateUpdates();
             return new Response("Cards moved", MessageStatus.OK);
@@ -97,7 +102,7 @@ public class ControllerGame implements TimerRunListener, Serializable {
     private Response deleteLimboHandler(DeleteLimboRequest deleteLimboRequest) {
         if (deleteLimboRequest.getContent() == MessageContent.DELETE_LIMBO) {
             Server.LOGGER.log(Level.INFO, "Deleting limbo for player: {0}", deleteLimboRequest.getSenderUsername());
-            for(Coordinate coordinate : game.getLimbo().keySet()) {
+            for (Coordinate coordinate : game.getLimbo().keySet()) {
                 game.getBoard().getGrid().put(coordinate, game.getLimbo().get(coordinate));
             }
             game.getLimbo().clear();
@@ -105,7 +110,7 @@ public class ControllerGame implements TimerRunListener, Serializable {
             sendPrivateUpdates();
             return new Response("Limbo deleted", MessageStatus.OK);
         } else {
-            System.out.println("Limbo order is not valid");
+            System.out.println("Limbo is not valid");
             return buildInvalidResponse();
         }
     }
@@ -232,9 +237,13 @@ public class ControllerGame implements TimerRunListener, Serializable {
         }
     }
 
+    void changeState(PossibleGameState changeState) {
+        gameState = changeState;
+    }
+
     private void startingStateHandler() {
-        this.turnController = new TurnController(this.game.getPlayers());
-        gameState = PossibleGameState.GAME_STARTED;
+        this.turnController = new TurnController(this.game.getPlayers(), this);
+        changeState(PossibleGameState.GAME_STARTED);
 
         //non ci serve, abbiamp gia il current player
 //        UserPlayer firstPlayer = roundController.getTurnManager().getTurnOwner();
@@ -428,11 +437,14 @@ public class ControllerGame implements TimerRunListener, Serializable {
         int points = 0;
 
         points += this.game.getCurrentPlayer().getPersonalGoalCard().calculatePoints();
+
         for (CommonGoal c : this.game.getCommonGoals()) {
             if (c.checkGoal(this.game.getCurrentPlayer().getShelf()))
                 points += c.updateCurrentPoints(this.game.getPlayers().size());
         }
+
         points += this.game.getCurrentPlayer().getShelf().closeObjectCardsPoints();
+
         if (this.game.getCurrentPlayer().getShelf().isFull()) points++;
 
         this.game.getCurrentPlayer().setCurrentPoints(points);

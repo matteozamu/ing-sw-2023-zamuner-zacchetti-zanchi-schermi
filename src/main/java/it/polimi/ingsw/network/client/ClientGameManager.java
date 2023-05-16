@@ -35,6 +35,7 @@ public abstract class ClientGameManager implements ClientGameManagerListener, Cl
     private String turnOwner;
     private boolean firstTurn;
     private boolean yourTurn;
+    private boolean turnOwnerChanged;
     private ClientTurnManager turnManager; // manage the rounds of this client
     private ClientUpdater clientUpdater;
     private boolean gameEnded = false;
@@ -43,6 +44,7 @@ public abstract class ClientGameManager implements ClientGameManagerListener, Cl
     public ClientGameManager() {
         firstTurn = true;
         joinedLobby = false;
+        turnOwnerChanged = false;
 
         Date date = GregorianCalendar.getInstance().getTime();
         DateFormat dateFormat = new SimpleDateFormat("dd-mm_HH.mm.ss");
@@ -159,8 +161,33 @@ public abstract class ClientGameManager implements ClientGameManagerListener, Cl
 
         queue.add(this::gameStateUpdate);
 
-        // TODO verificare se e come farlo
-//        checkTurnChange(gameStateMessage);
+        checkTurnChange(gameStateMessage);
+    }
+
+    /**
+     * Checks if the turn owner is changed
+     *
+     * @param stateMessage game state message received
+     */
+    private void checkTurnChange(GameStateResponse stateMessage) {
+        if (!firstTurn) {
+            System.out.println(getGameSerialized().getCurrentPlayer() + " " + turnOwner);
+            if (!getGameSerialized().getCurrentPlayer().getName().equals(turnOwner)) {
+                turnOwner = stateMessage.getTurnOwner();
+                turnOwnerChanged = true;
+            }
+
+            if (!yourTurn) { // If you are not the turn owner you don't need to wait a response
+                turnOwnerChanged = false;
+
+                if (turnOwner.equals(getUsername())) {
+                    yourTurn = true;
+                }
+
+                System.out.println("CHECK TURN CHANGE");
+                newTurn();
+            }
+        }
     }
 
     /**
@@ -200,22 +227,29 @@ public abstract class ClientGameManager implements ClientGameManagerListener, Cl
         if (firstPlayer != null) checkNextAction();
     }
 
+    public UserPlayerState getUserPlayerState() {
+        return turnManager.getUserPlayerState();
+    }
+
     /**
      * Check what is the next action for the client
      */
     private void checkNextAction() {
-        if (turnManager.getUserPlayerState() != UserPlayerState.END) {
+        if (turnManager.getUserPlayerState() != UserPlayerState.ENDING_PHASE) {
             makeMove();
         } else {
+            queue.add(() -> printScore());
             turnManager.endTurn();
         }
 
-//        if (yourTurn && turnOwnerChanged) {
-//            turnOwnerChanged = false;
-//            yourTurn = false;
-//
-//            newTurn();
-//        }
+        System.out.println(yourTurn + "  -  " + turnOwnerChanged);
+        if (yourTurn && turnOwnerChanged) {
+            turnOwnerChanged = false;
+            yourTurn = false;
+
+            System.out.println("CHECK NEXT ACTION");
+            newTurn();
+        }
     }
 
     private void onPositiveResponse(Response response) {
@@ -325,7 +359,7 @@ public abstract class ClientGameManager implements ClientGameManagerListener, Cl
                 return List.of(PossibleAction.BOARD_PICK_CARD);
 
             case AFTER_FIRST_PICK: {
-                if(gameSerialized.getLimbo().size() == 3){
+                if (gameSerialized.getLimbo().size() == 3) {
                     return List.of(PossibleAction.LOAD_SHELF, PossibleAction.REORDER_LIMBO, PossibleAction.DELETE_LIMBO);
                 } else if (gameSerialized.getLimbo().size() > 1) {
                     return List.of(PossibleAction.BOARD_PICK_CARD, PossibleAction.LOAD_SHELF, PossibleAction.REORDER_LIMBO, PossibleAction.DELETE_LIMBO);
@@ -334,8 +368,8 @@ public abstract class ClientGameManager implements ClientGameManagerListener, Cl
                 }
             }
 
-            case ENDING_PHASE:
-//                return getEndingActions();
+            case DELETE_LIMBO:
+
 
 //            case DEAD:
 //                return List.of(PossibleAction.CHOOSE_RESPAWN);
@@ -360,7 +394,8 @@ public abstract class ClientGameManager implements ClientGameManagerListener, Cl
                 action = this::pickBoardCard;
                 break;
             case LOAD_SHELF:
-                System.out.println("SCEGLI COLONNA");
+                System.out.println("CARICA SHELF");
+                turnManager.loadingShelf();
                 action = this::chooseColumn;
                 break;
             case REORDER_LIMBO:
@@ -368,7 +403,8 @@ public abstract class ClientGameManager implements ClientGameManagerListener, Cl
                 action = this::reorderLimbo;
                 break;
             case DELETE_LIMBO:
-                System.out.println("SCEGLI CARTA DA ELIMINARE");
+                System.out.println("ELIMINO LIMBO");
+                turnManager.deleteLimbo();
                 action = this::deleteLimbo;
                 break;
 

@@ -74,5 +74,7 @@ interface ClientGameManagerListener {
 
     void chooseColumn();
 
+    void printScore();
+
     void gameStateRequest(String username, String token);
 }

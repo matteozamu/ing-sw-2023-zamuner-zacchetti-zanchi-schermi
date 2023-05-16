@@ -19,7 +19,7 @@ public class LoadShelfRequest extends Message {
     public String toString() {
         return "LoadShelfRequest{" +
                 "username=" + getSenderUsername() +
-                "columns=" + column +
+                ", columns=" + column +
                 '}';
     }
 

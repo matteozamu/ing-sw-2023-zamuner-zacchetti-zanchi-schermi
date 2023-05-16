@@ -3,18 +3,14 @@ package it.polimi.ingsw.view.gui;
 import it.polimi.ingsw.enumeration.PossibleAction;
 import it.polimi.ingsw.model.CommonGoal;
 import it.polimi.ingsw.network.client.ClientGameManager;
-import it.polimi.ingsw.network.message.ConnectionResponse;
 import it.polimi.ingsw.network.client.DisconnectionListener;
+import it.polimi.ingsw.network.message.ConnectionResponse;
 import it.polimi.ingsw.network.message.Response;
 import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
-import javafx.scene.control.Label;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
-import javafx.stage.Modality;
 import javafx.stage.Stage;
-import javafx.stage.StageStyle;
 
 import java.io.IOException;
 import java.util.List;
@@ -103,57 +99,61 @@ public class GuiManager extends ClientGameManager implements DisconnectionListen
     }
 
     @Override
-    public void numberOfPlayersRequest(Response response){
+    public void numberOfPlayersRequest(Response response) {
 
     }
 
     @Override
-    public void notYourTurn(String turnOwner){
+    public void notYourTurn(String turnOwner) {
+    }
+
+    @Override
+    public void firstPlayerCommunication(String username, List<CommonGoal> cg) {
 
     }
 
     @Override
-    public void firstPlayerCommunication(String username, List<CommonGoal> cg){
+    public void gameStateUpdate() {
 
     }
 
     @Override
-    public void gameStateUpdate(){
+    public void displayActions(List<PossibleAction> possibleActions) {
 
     }
 
     @Override
-    public void displayActions(List<PossibleAction> possibleActions){
+    public void pickBoardCard() {
 
     }
 
     @Override
-    public void pickBoardCard(){
+    public void printLimbo() {
 
     }
 
     @Override
-    public void printLimbo(){
+    public void reorderLimbo() {
 
     }
 
     @Override
-    public void reorderLimbo(){
+    public void deleteLimbo() {
 
     }
 
     @Override
-    public void deleteLimbo(){
+    public void chooseColumn() {
 
     }
 
     @Override
-    public void chooseColumn(){
+    public void printScore() {
 
     }
 
     @Override
-    public void gameStateRequest(String username, String token){
+    public void gameStateRequest(String username, String token) {
 
     }
 
@@ -164,7 +164,7 @@ public class GuiManager extends ClientGameManager implements DisconnectionListen
      * @param users list of users in the lobby
      */
     @Override
-    public void playersWaitingUpdate(List<String> users){
+    public void playersWaitingUpdate(List<String> users) {
 
     }
 
