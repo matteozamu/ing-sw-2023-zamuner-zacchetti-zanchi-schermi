@@ -86,7 +86,14 @@ public class CliVisual {
                 }
                 objectCard = board.getGrid().get(new Coordinate(x, y));
                 if (objectCard != null) {
-                    boardView.append("| ").append(objectCard).append(" (").append(x).append(",").append(y).append(") ");
+                    String cardText = objectCard.toString();
+                    String visibleCardText = cardText.replaceAll("\u001B\\[[;\\d]*m", "");
+                    int spaceToAdd = (9 - visibleCardText.length())/2;
+                    if(spaceToAdd == 1){
+                        boardView.append("|").append(" ".repeat(spaceToAdd)).append(objectCard).append(" ".repeat(spaceToAdd + 1));
+                    } else {
+                        boardView.append("|").append(" ".repeat(spaceToAdd)).append(objectCard).append(" ".repeat(spaceToAdd));
+                    }
                 } else {
                     boardView.append("| ").append(" ".repeat(17));
                 }
@@ -109,7 +116,14 @@ public class CliVisual {
                 }
                 objectCard = board.getGrid().get(new Coordinate(x, y));
                 if (objectCard != null) {
-                    boardView.append("| ").append(objectCard).append(" (").append(x).append(",").append(y).append(") ");
+                    String cardText = objectCard.toString();
+                    String visibleCardText = cardText.replaceAll("\u001B\\[[;\\d]*m", "");
+                    int spaceToAdd = (9 - visibleCardText.length())/2;
+                    if(spaceToAdd == 1){
+                        boardView.append("|").append(" ".repeat(spaceToAdd)).append(objectCard).append(" ".repeat(spaceToAdd + 1));
+                    } else {
+                        boardView.append("|").append(" ".repeat(spaceToAdd)).append(objectCard).append(" ".repeat(spaceToAdd));
+                    }
                 } else {
                     boardView.append("| ").append(" ".repeat(17));
                 }

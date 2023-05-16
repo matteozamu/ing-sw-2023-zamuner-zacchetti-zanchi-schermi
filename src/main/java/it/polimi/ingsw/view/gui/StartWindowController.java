@@ -18,7 +18,7 @@ public class StartWindowController {
     @FXML
     public void initialize() {
         // Creazione di un nuovo oggetto Image
-        Image image = new Image(Objects.requireNonNull(getClass().getClassLoader().getResource("img/misc/sfondo parquet.jpg")).toExternalForm());
+        Image image = new Image(Objects.requireNonNull(getClass().getClassLoader().getResource("img/misc/parquet_background.jpg")).toExternalForm());
 
         // Creazione di un nuovo BackgroundImage
         BackgroundSize backgroundSize = new BackgroundSize(100, 100, true, true, true, false);
@@ -35,7 +35,7 @@ public class StartWindowController {
         Scene currentScene = startButton.getScene();
 
         // Cambiamo la scena corrente alla seconda finestra
-        GuiManager.setLayout(currentScene, "fxml/backgroundScene.fxml");
+        GuiManager.setLayout(currentScene, "fxml/connectionScene.fxml");
 
         // Se si vuole chiudere la finestra corrente dopo aver aperto la nuova, si può decommentare la linea seguente
         // Stage currentStage = (Stage) startButton.getScene().getWindow();
