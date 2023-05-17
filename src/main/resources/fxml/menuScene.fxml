@@ -1,9 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.net.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.image.*?>
 <?import javafx.scene.layout.*?>
+<?import java.net.URL?>
+<?import javafx.scene.image.ImageView?>
 
 <VBox fx:id="mainPane" styleClass="mainPane" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.ingsw.view.gui.MenuSceneController">
     <stylesheets>
@@ -12,12 +11,8 @@
 
     <ImageView id="logoImage" />
 
-    <!--
-    <Region VBox.vgrow="ALWAYS" />
-    -->
+    <ImageView fx:id="startButton" id="startButton" styleClass="button"/>
 
-    <Button fx:id="startButton" text="Start" />
-
-    <Button fx:id="exitButton" text="Exit" />
+    <ImageView fx:id="exitButton" id="exitButton" styleClass="button"/>
 
 </VBox>

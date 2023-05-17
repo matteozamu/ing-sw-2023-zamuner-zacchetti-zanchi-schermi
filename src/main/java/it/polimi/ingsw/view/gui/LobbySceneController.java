@@ -1,8 +1,11 @@
 package it.polimi.ingsw.view.gui;
 
 import javafx.fxml.FXML;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
+import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
+import javafx.scene.control.Button;
 
 public class LobbySceneController {
 
@@ -10,6 +13,10 @@ public class LobbySceneController {
 
     @FXML
     private Pane mainPane;
+    @FXML
+    private Button backButton;
+    @FXML
+    private VBox lobbyLabelsBox;
 
     @FXML
     public void initialize() {

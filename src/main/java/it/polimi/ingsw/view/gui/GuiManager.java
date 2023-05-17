@@ -33,7 +33,7 @@ public class GuiManager extends ClientGameManager implements DisconnectionListen
     private NumberPlayersController numberPlayersController;
 
     private GuiManager() {
-        // Inizializzare qui i controller di scena...
+        super();
     }
 
     public static GuiManager getInstance() {
@@ -73,10 +73,31 @@ public class GuiManager extends ClientGameManager implements DisconnectionListen
      * @param text   text of the dialog
      */
     static void showDialog(Stage window, String title, String text) {
+        FXMLLoader loader = new FXMLLoader(GuiManager.class.getClassLoader().getResource("fxml/dialogScene.fxml"));
 
+        Scene dialogScene;
+        try {
+            dialogScene = new Scene(loader.load(), 600, 300);
+        } catch (IOException e) {
+            Logger.getLogger("myshelfie_client").severe(e.getMessage());
+            return;
+        }
+
+        Stage dialog = new Stage();
+        dialog.setScene(dialogScene);
+        dialog.initOwner(window);
+        dialog.initStyle(StageStyle.UNDECORATED);
+        dialog.initModality(Modality.APPLICATION_MODAL);
+        dialog.setAlwaysOnTop(true);
+
+        dialogScene.lookup("#okButton").addEventHandler(MouseEvent.MOUSE_CLICKED, event -> dialog.close());
+
+        ((Label) dialogScene.lookup("#dialogTitle")).setText(title);
+        ((Label) dialogScene.lookup("#dialogText")).setText(text);
+
+        dialog.showAndWait();
     }
 
-    // Implementare qui i  metodi per gestire le varie scene...
     void setConnectionSceneController(ConnectionSceneController connectionSceneController) {
         this.connectionSceneController = connectionSceneController;
     }
@@ -110,7 +131,7 @@ public class GuiManager extends ClientGameManager implements DisconnectionListen
     }
 
     @Override
-    public void numberOfPlayersRequest(Response response){
+    public void numberOfPlayersRequest(Response response) {
         /*
         Platform.runLater(() ->
                 numberPlayersController.onNumberResponse(response));

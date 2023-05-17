@@ -10,10 +10,10 @@ public class MenuSceneController {
     @FXML
     private Pane mainPane;
     @FXML
-    private Button startButton;
+    private ImageView startButton;
 
     @FXML
-    private Button exitButton;
+    private ImageView exitButton;
 
     @FXML
     public void initialize() {

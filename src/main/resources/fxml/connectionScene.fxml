@@ -33,20 +33,11 @@
     <bottom>
         <VBox styleClass="botBox">
             <HBox styleClass="connectBox">
-                <!--
                 <ImageView fx:id="connectSocketButton" id="connectSocketButton" styleClass="button"/>
                 <ImageView fx:id="connectRmiButton" id="connectRmiButton" styleClass="button"/>
-                -->
-                <Button fx:id="socketButton" text="Connection socket" />
-
-                <Button fx:id="RMIButton" text="Connection RMI" />
             </HBox>
 
-            <Button fx:id="backButton" text="Back" />
-
-            <!--
             <ImageView fx:id="backButton" id="backButton" styleClass="button"/>
-            -->
         </VBox>
     </bottom>
 </BorderPane>

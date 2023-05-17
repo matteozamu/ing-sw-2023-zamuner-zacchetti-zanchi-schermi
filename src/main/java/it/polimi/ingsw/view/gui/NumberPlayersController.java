@@ -71,7 +71,6 @@ public class NumberPlayersController {
     }
 
     /*
-
     void onNumberResponse(Response response) {
         if (availableColors.isEmpty()) {
             GuiManager.showDialog((Stage) mainPane.getScene().getWindow(), GuiManager.ERROR_DIALOG_TITLE,
@@ -81,7 +80,8 @@ public class NumberPlayersController {
 
         }
     }
-    */
+
+     */
 
     /**
      * Handles back button click
@@ -90,6 +90,4 @@ public class NumberPlayersController {
         guiManager.closeConnection();
         GuiManager.setLayout(mainPane.getScene(), "fxml/connectionScene.fxml");
     }
-
-
 }

@@ -26,23 +26,12 @@ public class ConnectionSceneController {
     private TextField addressField;
     @FXML
     private TextField portField;
-
-    @FXML
-    private Button RMIButton;
-    @FXML
-    private Button socketButton;
-    @FXML
-    private Button backButton;
-
-    /*
     @FXML
     private ImageView connectSocketButton;
     @FXML
     private ImageView connectRmiButton;
     @FXML
     private ImageView backButton;
-
-     */
 
     @FXML
     public void initialize() {
@@ -57,8 +46,8 @@ public class ConnectionSceneController {
      * Binds click events
      */
     private void bindEvents() {
-        socketButton.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> onConnectionButtonClick(0));
-        RMIButton.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> onConnectionButtonClick(1));
+        connectSocketButton.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> onConnectionButtonClick(0));
+        connectRmiButton.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> onConnectionButtonClick(1));
         backButton.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> onBackButtonClick());
     }
 
@@ -117,8 +106,8 @@ public class ConnectionSceneController {
 
         if (isUsernameValid && isAddressValid && isPortValid) {
             backButton.setDisable(true);
-            socketButton.setDisable(true);
-            RMIButton.setDisable(true);
+            connectSocketButton.setDisable(true);
+            connectRmiButton.setDisable(true);
 
             try {
                 GuiManager.getInstance().createConnection(connection, username, address, Integer.parseInt(port), GuiManager.getInstance());
@@ -147,7 +136,7 @@ public class ConnectionSceneController {
         }
     }
 
-/*
+    /*
     void onReconnectionResponse() {
         GameSceneController gameSceneController =
                 GuiManager.setLayout(mainPane.getScene(), "fxml/gameScene.fxml");
@@ -158,7 +147,7 @@ public class ConnectionSceneController {
         }
     }
 
- */
+     */
 
     /**
      * Handles an error occurrence
