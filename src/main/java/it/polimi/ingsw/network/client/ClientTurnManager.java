@@ -58,18 +58,18 @@ class ClientTurnManager {
         playerState = UserPlayerState.ENDING_PHASE;
     }
 
-    /**
-     * Set the state to the targeting scope state
-     */
-    void targetingScope() {
-        if (playerState == UserPlayerState.FIRST_ACTION || playerState == UserPlayerState.FIRST_FRENZY_ACTION) {
-            playerState = UserPlayerState.FIRST_SCOPE_USAGE;
-        } else if (playerState == UserPlayerState.SECOND_ACTION || playerState == UserPlayerState.SECOND_FRENZY_ACTION) {
-            playerState = UserPlayerState.SECOND_SCOPE_USAGE;
-        } else {
-//            throw new InvalidGameStateException();
-        }
-    }
+//    /**
+//     * Set the state to the targeting scope state
+//     */
+//    void targetingScope() {
+//        if (playerState == UserPlayerState.FIRST_ACTION || playerState == UserPlayerState.FIRST_FRENZY_ACTION) {
+//            playerState = UserPlayerState.FIRST_SCOPE_USAGE;
+//        } else if (playerState == UserPlayerState.SECOND_ACTION || playerState == UserPlayerState.SECOND_FRENZY_ACTION) {
+//            playerState = UserPlayerState.SECOND_SCOPE_USAGE;
+//        } else {
+////            throw new InvalidGameStateException();
+//        }
+//    }
 
     // TODO Reconnection handler
     /**

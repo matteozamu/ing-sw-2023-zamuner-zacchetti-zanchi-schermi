@@ -368,7 +368,10 @@ public abstract class ClientGameManager implements ClientGameManagerListener, Cl
                 }
             }
 
-            case DELETE_LIMBO:
+            case LOADING_SHELF:
+                return List.of(PossibleAction.LOAD_SHELF);
+
+            case DELETE_LIMBO: // non ci dovrebbe mai entrare perche viene risettato lo stato a pick_card_board
 
 
 //            case DEAD:

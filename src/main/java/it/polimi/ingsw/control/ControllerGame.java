@@ -296,6 +296,7 @@ public class ControllerGame implements TimerRunListener, Serializable {
     // TODO: parametrizzare sul numero di giocatori
     // TODO: non sarebbe meglio spostarlo nel model?
     public void fillBoard() {
+        int playerNumber = game.getNumberOfPlayers();
         Coordinate c;
         Board b = game.getBoard();
         try {
