@@ -171,6 +171,18 @@
     -fx-image: url("/img/button/okbutton.png");
 }
 
+#twoPlayersButton {
+    -fx-image: url("/img/button/twoPlayersButton.png");
+}
+
+#threePlayersButton {
+    -fx-image: url("/img/button/threePlayersButton.png");
+}
+
+#fourPlayersButton {
+    -fx-image: url("/img/button/fourPlayersButton.png");
+}
+
 /* Number of players */
 
 .numberPlayersButton {

@@ -19,13 +19,13 @@ public class NumberPlayersController {
     private Pane mainPane;
 
     @FXML
-    private Button twoPlayersButton;
+    private ImageView twoPlayersButton;
     @FXML
-    private Button threePlayersButton;
+    private ImageView threePlayersButton;
     @FXML
-    private Button fourPlayersButton;
+    private ImageView fourPlayersButton;
     @FXML
-    private Button backButton;
+    private ImageView backButton;
 
     @FXML
     public void initialize() {

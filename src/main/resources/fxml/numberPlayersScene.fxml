@@ -19,15 +19,15 @@
 
     <center>
         <FlowPane styleClass="numberPlayersButton">
-            <Button fx:id="twoPlayersButton" text="2" />
-            <Button fx:id="threePlayersButton" text="3" />
-            <Button fx:id="fourPlayersButton" text="4" />
+            <ImageView fx:id="twoPlayersButton" id="twoPlayersButton" styleClass="button"/>
+            <ImageView fx:id="threePlayersButton" id="threePlayersButton" styleClass="button"/>
+            <ImageView fx:id="fourPlayersButton" id="fourPlayersButton" styleClass="button"/>
         </FlowPane>
     </center>
 
     <bottom>
         <VBox styleClass="botBox">
-            <Button fx:id="backButton" text="Back" />
+            <ImageView fx:id="backButton" id="backButton" styleClass="button"/>
         </VBox>
     </bottom>
 </BorderPane>
