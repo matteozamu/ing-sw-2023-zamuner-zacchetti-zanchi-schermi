@@ -42,24 +42,24 @@
 .menuTitle {
     -fx-font-family: "Berkshire Swash Regular";
     -fx-font-size: 50px;
-    -fx-text-fill: #ffffff;
+    -fx-text-fill: #F1E1B2;
 }
 
 .menuLabel {
     -fx-font-family: "Merriweather Regular";
     -fx-font-size: 25px;
-    -fx-text-fill: #ffffff;
+    -fx-text-fill: #F1E1B2;
 }
 
 .menuTextField {
     -fx-background-color: rgba(136, 188, 231, .5);
-    -fx-border-color: #19110f;
+    -fx-border-color: #582400;
     -fx-border-width: 2px;
     -fx-border-radius: 1px;
 
     -fx-font-family: "Merriweather Regular";
     -fx-font-size: 20px;
-    -fx-text-fill: #ffffff;
+    -fx-text-fill: #F1E1B2;
     -fx-alignment: center;
 }
 
@@ -134,9 +134,9 @@
 
     -fx-font-family: "Merriweather Regular";
     -fx-font-size: 25px;
-    -fx-text-fill: #ffffff;
+    -fx-text-fill: #F1E1B2;
 
-    -fx-border-color: #19110f;
+    -fx-border-color: #582400;
     -fx-border-width: 2px;
     -fx-border-radius: 1px;
 }
