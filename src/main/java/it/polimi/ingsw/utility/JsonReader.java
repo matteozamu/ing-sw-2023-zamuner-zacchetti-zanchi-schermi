@@ -9,8 +9,9 @@ import java.io.FileInputStream;
 import java.io.InputStream;
 
 public class JsonReader {
-    int max_players;
-    int min_players;
+    private static int maxPlayers;
+    private static int minPlayers;
+    private static int board2Matrix[][];
 
     public static void readJsonConstant(String filename) {
         try {
@@ -23,20 +24,35 @@ public class JsonReader {
             JSONTokener tokener = new JSONTokener(inputStream);
             JSONObject jsonObject = new JSONObject(tokener);
 
-            // Access JSON properties
-            String name = jsonObject.getString("name");
-            int age = jsonObject.getInt("age");
-            JSONArray hobbies = jsonObject.getJSONArray("hobbies");
+            maxPlayers = jsonObject.getInt("maxPlayers");
+            minPlayers = jsonObject.getInt("minPlayers");
+            JSONArray board2 = jsonObject.getJSONArray("board2");
 
-            // Print the values
-            System.out.println("Name: " + name);
-            System.out.println("Age: " + age);
-            System.out.println("Hobbies: " + hobbies);
+            board2Matrix = new int[board2.getJSONArray(0).length()][board2.length()];
+            for (int i = 0; i < board2.length(); i++) {
+                JSONArray rowArray = board2.getJSONArray(i);
+                for (int j = 0; j < rowArray.length(); j++) {
+                    board2Matrix[i][j] = rowArray.getInt(j);
+                }
+            }
 
             // Close the input stream
             inputStream.close();
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    public static int getMaxPlayers() {
+        return maxPlayers;
+    }
+
+    public static int getMinPlayers() {
+        return minPlayers;
+    }
+
+    public static int[][] getBoard(int numberOfPlayers) {
+        if (numberOfPlayers == 2) return board2Matrix;
+        else return null;
     }
 }

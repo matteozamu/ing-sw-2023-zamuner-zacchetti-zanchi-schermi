@@ -2,6 +2,7 @@ package it.polimi.ingsw.model;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
+import it.polimi.ingsw.utility.JsonReader;
 
 import java.io.FileReader;
 import java.io.Serializable;
@@ -11,8 +12,6 @@ import java.util.*;
  * Represents the main game logic, including object card and common goal management.
  */
 public class Game implements Serializable {
-    public static final int MAX_PLAYERS = 4;
-    public static final int MIN_PLAYERS = 2;
     private static Game instance;
     private List<ObjectCard> objectCardContainer;
     private List<CommonGoal> commonGoalContainer;
@@ -114,7 +113,7 @@ public class Game implements Serializable {
 
     public boolean addPlayer(Player p) {
         if (p == null) return false;
-        if (this.players.size() < MAX_PLAYERS) {
+        if (this.players.size() < JsonReader.getMaxPlayers()) {
             this.players.add(p);
             return true;
         } else return false;

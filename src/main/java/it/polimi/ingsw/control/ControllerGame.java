@@ -6,11 +6,13 @@ import it.polimi.ingsw.enumeration.PossibleGameState;
 import it.polimi.ingsw.model.*;
 import it.polimi.ingsw.network.message.*;
 import it.polimi.ingsw.network.server.Server;
+import it.polimi.ingsw.utility.JsonReader;
 import it.polimi.ingsw.utility.TimerRunListener;
 
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.UUID;
 import java.util.logging.Level;
 import java.util.stream.Collectors;
@@ -35,12 +37,11 @@ public class ControllerGame implements TimerRunListener, Serializable {
      * Constructor for the ControllerGame class, initializing the game state.
      */
     public ControllerGame(Server server) {
+        JsonReader.readJsonConstant("GameConstant.json");
         this.server = server;
         this.id = UUID.randomUUID();
         this.game = Game.getInstance();
         this.selectedCoordinates = new ArrayList<>();
-        fillBoard();
-
     }
 
     public Message onMessage(Message receivedMessage) {
@@ -164,8 +165,9 @@ public class ControllerGame implements TimerRunListener, Serializable {
     private Response numberOfPlayersMessageHandler(NumberOfPlayersMessage numberOfPlayersMessage) {
         int numberOfPlayers = numberOfPlayersMessage.getNumberOfPlayers();
 
-        if (numberOfPlayersMessage.getContent() == MessageContent.NUMBER_OF_PLAYERS && numberOfPlayers >= Game.MIN_PLAYERS && numberOfPlayers <= game.MAX_PLAYERS) {
+        if (numberOfPlayersMessage.getContent() == MessageContent.NUMBER_OF_PLAYERS && numberOfPlayers >= JsonReader.getMinPlayers() && numberOfPlayers <= JsonReader.getMaxPlayers()) {
             this.game.setNumberOfPlayers(numberOfPlayersMessage.getNumberOfPlayers());
+            fillBoard();
 
             Server.LOGGER.log(Level.INFO, "Number of players for the game: {0}", numberOfPlayersMessage.getNumberOfPlayers());
         } else {
@@ -179,7 +181,7 @@ public class ControllerGame implements TimerRunListener, Serializable {
         List<Player> inLobbyPlayers = game.getPlayers();
 
         if (lobbyMessage.getContent() == MessageContent.ADD_PLAYER && isUsernameAvailable(lobbyMessage.getSenderUsername()) && !lobbyMessage.isDisconnection()) {
-            if (inLobbyPlayers.size() < this.game.MAX_PLAYERS) {
+            if (inLobbyPlayers.size() < JsonReader.getMaxPlayers()) {
                 game.addPlayer(new Player(lobbyMessage.getSenderUsername(), new Shelf(), game.getRandomAvailablePersonalGoalCard()));
 
                 server.sendMessageToAll(new LobbyPlayersResponse(new ArrayList<>(inLobbyPlayers.stream().map(player -> player.getName()).collect(Collectors.toList()))));
@@ -298,43 +300,15 @@ public class ControllerGame implements TimerRunListener, Serializable {
     public void fillBoard() {
         int playerNumber = game.getNumberOfPlayers();
         Coordinate c;
-        Board b = game.getBoard();
-        try {
-            int[] iterCountsUp = new int[]{7, 6, 3, 2};
-            for (int row = 3; row >= 0; row--) {
-                for (int col = 0; col < iterCountsUp[row]; col++) {
-                    int x, y;
-                    if (row == 1) {
-                        x = row;
-                        y = col - (iterCountsUp[row] / 2) + 1;
-                    } else {
-                        x = row;
-                        y = col - (iterCountsUp[row] / 2);
-                    }
-                    c = new Coordinate(x, y);
-                    b.createCell(c, game.getRandomAvailableObjectCard());
-                }
+
+        Map<Coordinate, ObjectCard> b = game.getBoard().getGrid();
+
+        int boardMatrix[][] = JsonReader.getBoard(playerNumber);
+
+        for (int i = 0; i < boardMatrix.length; i++) {
+            for (int j = 0; j < boardMatrix[i].length; j++) {
+                if (boardMatrix[i][j] == 1) b.put(new Coordinate(i, j), game.getRandomAvailableObjectCard());
             }
-            int[] iterCountsDown = new int[]{6, 3, 2};
-            int index = 0;
-            for (int row = -1; row >= -3; row--) {
-                for (int col = 0; col < iterCountsDown[index]; col++) {
-                    int x, y;
-                    if (index == 2) {
-                        x = row;
-                        y = col;
-                    } else {
-                        x = row;
-                        y = col - (iterCountsDown[index] / 2);
-                    }
-                    c = new Coordinate(x, y);
-                    b.createCell(c, game.getRandomAvailableObjectCard());
-                }
-            }
-        } catch (NullPointerException e) {
-            e.printStackTrace();
-        } catch (IllegalStateException e) {
-            e.printStackTrace();
         }
     }
 
