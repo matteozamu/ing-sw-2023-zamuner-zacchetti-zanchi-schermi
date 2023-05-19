@@ -273,12 +273,6 @@ public class Game implements Serializable {
         try (FileReader reader = new FileReader("personalGoalCards.json")) {
             this.personalGoalCardsContainer = gson.fromJson(reader, new TypeToken<List<PersonalGoalCard>>() {
             }.getType());
-
-//            for (PersonalGoalCard personalGoal : this.personalGoalCardsContainer) {
-//                List<PersonalGoal> goals = personalGoal.getGoals();
-//                System.out.println("--------------------");
-//                for (PersonalGoal goal : goals) System.out.println(goal);
-//            }
         } catch (Exception e) {
             e.printStackTrace();
         }

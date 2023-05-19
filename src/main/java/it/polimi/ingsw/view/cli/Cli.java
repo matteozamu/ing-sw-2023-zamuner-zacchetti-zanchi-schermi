@@ -581,8 +581,6 @@ public class Cli extends ClientGameManager implements DisconnectionListener {
 
     @Override
     public void deleteLimbo() {
-        // Map<Coordinate, ObjectCard> limbo = getGameSerialized().getLimbo();
-
         if (!sendRequest(MessageBuilder.buildDeleteLimboRequest(getUsername(), getClientToken()))) {
             promptError(SEND_ERROR, true);
         }
