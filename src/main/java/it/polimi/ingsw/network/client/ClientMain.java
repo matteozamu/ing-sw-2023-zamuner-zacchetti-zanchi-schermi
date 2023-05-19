@@ -1,6 +1,5 @@
 package it.polimi.ingsw.network.client;
 
-import it.polimi.ingsw.utility.JsonReader;
 import it.polimi.ingsw.view.cli.Cli;
 import it.polimi.ingsw.view.gui.Gui;
 import javafx.application.Application;
@@ -9,8 +8,6 @@ import java.util.Scanner;
 
 public class ClientMain {
     public static void main(String[] args) {
-        JsonReader.readJsonConstant("GameConstant.json");
-
         Integer value = readInt(0, 1);
         if (value.equals(0)) {
             new Cli().start();

@@ -350,8 +350,7 @@ public class Cli extends ClientGameManager implements DisconnectionListener {
      */
     @Override
     public void numberOfPlayersRequest(Response response) {
-//        int numberOfPlayers = askNumberOfPlayers();
-        int numberOfPlayers = 2;
+        int numberOfPlayers = askNumberOfPlayers();
         if (!sendRequest(MessageBuilder.buildNumberOfPlayerMessage(getClientToken(), getUsername(), numberOfPlayers))) {
             promptError(SEND_ERROR, true);
         }
