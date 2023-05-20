@@ -142,6 +142,9 @@ public class ConnectionSceneController {
         }
     }
 
+    /**
+     * Requests to add a player to the game, or shows an error dialog if the request fails.
+     */
     private void addPlayerToGameRequest(){
         if (!guiManager.sendRequest(MessageBuilder.buildAddPlayerToGameMessage(guiManager.getClientToken(),
                 guiManager.getUsername(), false))) {
@@ -153,7 +156,9 @@ public class ConnectionSceneController {
     }
 
     /**
-     * Handles the lobby join response
+     * Handles the response of a lobby join request. Depending on the response status, the GUI is
+     * either moved to a different scene or an error dialog is shown.
+     *
      * @param response response of the join request
      */
     void onLobbyJoinResponse(Response response) {
@@ -177,6 +182,9 @@ public class ConnectionSceneController {
         }
     }
 
+    /**
+     * Handles a reconnection response, setting up the game scene on successful reconnection.
+     */
     void onReconnectionResponse() {
         GameSceneController gameSceneController =
                 GuiManager.setLayout(mainPane.getScene(), "fxml/gameScene.fxml");

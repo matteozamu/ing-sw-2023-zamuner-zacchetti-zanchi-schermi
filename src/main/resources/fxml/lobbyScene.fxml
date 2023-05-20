@@ -27,6 +27,7 @@
     <bottom>
         <VBox styleClass="botBox">
             <ImageView fx:id="backButton" id="backButton" styleClass="button"/>
+            <ImageView fx:id="exitButton" id="exitButton" styleClass="button"/>
         </VBox>
     </bottom>
 </BorderPane>

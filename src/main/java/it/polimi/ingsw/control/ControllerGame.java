@@ -307,13 +307,17 @@ public class ControllerGame implements TimerRunListener, Serializable {
 
         for (int i = 0; i < boardMatrix.length / 2; i++) {
             for (int j = 0; j < boardMatrix[i].length; j++) {
-                if (boardMatrix[i][j] == 1) b.put(new Coordinate(4 - i, j - 4), game.getRandomAvailableObjectCard());
+                if (boardMatrix[i][j] == 1) {
+                    b.put(new Coordinate(4 - i, j - 4), game.getRandomAvailableObjectCard());
+                }
             }
         }
 
         for (int i = boardMatrix.length / 2; i < boardMatrix.length; i++) {
             for (int j = 0; j < boardMatrix[i].length; j++) {
-                if (boardMatrix[i][j] == 1) b.put(new Coordinate(4 - i, j - 4), game.getRandomAvailableObjectCard());
+                if (boardMatrix[i][j] == 1) {
+                    b.put(new Coordinate(4 - i, j - 4), game.getRandomAvailableObjectCard());
+                }
             }
         }
     }

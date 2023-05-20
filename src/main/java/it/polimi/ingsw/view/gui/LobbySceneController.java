@@ -19,6 +19,8 @@ public class LobbySceneController {
     @FXML
     private Pane mainPane;
     @FXML
+    private ImageView exitButton;
+    @FXML
     private ImageView backButton;
     @FXML
     private VBox lobbyLabelsBox;
@@ -35,6 +37,7 @@ public class LobbySceneController {
      */
     private void bindEvents() {
         backButton.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> onBackButtonClick());
+        exitButton.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> System.exit(0));
     }
 
     /**
