@@ -3,26 +3,16 @@ package it.polimi.ingsw.view.gui;
 import it.polimi.ingsw.model.GameSerialized;
 import javafx.fxml.FXML;
 import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
-import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.Pane;
-import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * Class for the graphical interface of the game
- */
 public class GameSceneController {
 
     @FXML
     Pane mainPane;
-    @FXML
-    StackPane boardArea;
-    @FXML
-    ImageView map;
 
     private GuiManager guiManager;
 
@@ -30,7 +20,6 @@ public class GameSceneController {
     private void initialize() {
         guiManager = GuiManager.getInstance();
         guiManager.setGameSceneController(this);
-
     }
 
     /**
@@ -43,18 +32,25 @@ public class GameSceneController {
     }
 
     /**
+     * Updates the elements of the board
+     */
+    void onStateUpdate() {
+
+    }
+
+    /**
      * Called when an error occurs. Displays an alert with the error message
      *
      * @param error message of the error
      */
     void onError(String error) {
-
+        GuiManager.showDialog((Stage) mainPane.getScene().getWindow(), GuiManager.ERROR_DIALOG_TITLE, error);
     }
 
     /**
-     * Handles the server disconnection
+     * Handles the disconnection
      */
     void onDisconnection() {
-
+        GuiManager.showDialog((Stage) mainPane.getScene().getWindow(), "Disconnection", "You were disconnected from the server");
     }
 }

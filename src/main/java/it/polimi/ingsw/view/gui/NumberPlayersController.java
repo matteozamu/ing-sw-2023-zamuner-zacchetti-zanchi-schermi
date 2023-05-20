@@ -1,15 +1,13 @@
 package it.polimi.ingsw.view.gui;
 
+import it.polimi.ingsw.enumeration.MessageStatus;
 import it.polimi.ingsw.network.message.Response;
 import javafx.fxml.FXML;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
-import javafx.scene.control.Button;
 import javafx.stage.Stage;
 import it.polimi.ingsw.utility.MessageBuilder;
-
-import java.util.List;
 
 public class NumberPlayersController {
 
@@ -67,6 +65,27 @@ public class NumberPlayersController {
                     GuiManager.SEND_ERROR);
 
             onBackButtonClick();
+        }
+    }
+
+    /**
+     * Handles the lobby join response
+     * @param response response of the join request
+     */
+    void onLobbyJoinResponse(Response response) {
+        if (response.getStatus() == MessageStatus.ERROR) {
+
+            GuiManager.showDialog((Stage) mainPane.getScene().getWindow(), GuiManager.ERROR_DIALOG_TITLE,
+                    response.getMessage());
+
+            onBackButtonClick();
+
+        } else {
+            LobbySceneController lobbySceneController = GuiManager.setLayout(mainPane.getScene(), "fxml/lobbyScene.fxml");
+
+            if (lobbySceneController != null) {
+                lobbySceneController.updateLobbyList();
+            }
         }
     }
 

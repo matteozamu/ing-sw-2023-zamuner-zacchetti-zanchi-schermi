@@ -2,6 +2,8 @@ package it.polimi.ingsw.view.gui;
 
 import it.polimi.ingsw.enumeration.MessageStatus;
 import it.polimi.ingsw.network.message.ConnectionResponse;
+import it.polimi.ingsw.network.message.Response;
+import it.polimi.ingsw.utility.MessageBuilder;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
@@ -12,6 +14,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 import it.polimi.ingsw.utility.ServerAddressValidator;
+import it.polimi.ingsw.network.client.ClientGameManager;
 
 public class ConnectionSceneController {
 
@@ -136,7 +139,6 @@ public class ConnectionSceneController {
         }
     }
 
-    /*
     void onReconnectionResponse() {
         GameSceneController gameSceneController =
                 GuiManager.setLayout(mainPane.getScene(), "fxml/gameScene.fxml");
@@ -146,8 +148,6 @@ public class ConnectionSceneController {
             gameSceneController.onStateUpdate();
         }
     }
-
-     */
 
     /**
      * Handles an error occurrence
