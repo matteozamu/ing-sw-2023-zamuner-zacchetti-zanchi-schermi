@@ -1,7 +1,5 @@
 package it.polimi.ingsw.view.gui;
 
-import it.polimi.ingsw.enumeration.MessageStatus;
-import it.polimi.ingsw.network.message.Response;
 import javafx.fxml.FXML;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
@@ -59,48 +57,12 @@ public class NumberPlayersController {
             onBackButtonClick();
         }
 
-        if (!guiManager.sendRequest(MessageBuilder.buildAddPlayerToGameMessage(guiManager.getClientToken(),
-                guiManager.getUsername(), false))) {
-            GuiManager.showDialog((Stage) mainPane.getScene().getWindow(), GuiManager.ERROR_DIALOG_TITLE,
-                    GuiManager.SEND_ERROR);
+        LobbySceneController lobbySceneController = GuiManager.setLayout(mainPane.getScene(), "fxml/lobbyScene.fxml");
 
-            onBackButtonClick();
+        if (lobbySceneController != null) {
+            lobbySceneController.updateLobbyList();
         }
     }
-
-    /**
-     * Handles the lobby join response
-     * @param response response of the join request
-     */
-    void onLobbyJoinResponse(Response response) {
-        if (response.getStatus() == MessageStatus.ERROR) {
-
-            GuiManager.showDialog((Stage) mainPane.getScene().getWindow(), GuiManager.ERROR_DIALOG_TITLE,
-                    response.getMessage());
-
-            onBackButtonClick();
-
-        } else {
-            LobbySceneController lobbySceneController = GuiManager.setLayout(mainPane.getScene(), "fxml/lobbyScene.fxml");
-
-            if (lobbySceneController != null) {
-                lobbySceneController.updateLobbyList();
-            }
-        }
-    }
-
-    /*
-    void onNumberResponse(Response response) {
-        if (availableColors.isEmpty()) {
-            GuiManager.showDialog((Stage) mainPane.getScene().getWindow(), GuiManager.ERROR_DIALOG_TITLE,
-                    "The game is full!");
-
-            onBackButtonClick();
-
-        }
-    }
-
-     */
 
     /**
      * Handles back button click

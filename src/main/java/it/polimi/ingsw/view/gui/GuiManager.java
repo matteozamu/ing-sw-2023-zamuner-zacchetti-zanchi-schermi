@@ -131,16 +131,12 @@ public class GuiManager extends ClientGameManager implements DisconnectionListen
     @Override
     public void lobbyJoinResponse(Response response) {
         Platform.runLater(() ->
-                numberPlayersController.onLobbyJoinResponse(response));
+                connectionSceneController.onLobbyJoinResponse(response));
     }
 
     @Override
     public void numberOfPlayersRequest(Response response) {
-        /*
-        Platform.runLater(() ->
-                numberPlayersController.onNumberResponse(response));
-
-         */
+        // Nothing to do
     }
 
     @Override
@@ -200,7 +196,10 @@ public class GuiManager extends ClientGameManager implements DisconnectionListen
 
     @Override
     public void playersWaitingUpdate(List<String> users){
-
+        if (lobbySceneController != null) {
+            Platform.runLater(() ->
+                    lobbySceneController.updateLobbyList());
+        }
     }
 
     @Override

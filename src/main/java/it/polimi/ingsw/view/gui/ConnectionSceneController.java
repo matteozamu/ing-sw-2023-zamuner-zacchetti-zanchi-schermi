@@ -97,7 +97,10 @@ public class ConnectionSceneController {
         final String address = addressField.getText();
         final String port = portField.getText();
 
-        boolean isUsernameValid = !username.equals("") && !username.equals("Server") && !username.equals("User");
+        boolean isUsernameValid =
+                !username.equals("") &&
+                !username.equals("Server") &&
+                !username.equals("User");
 
         boolean isAddressValid = ServerAddressValidator.isAddressValid(address);
 
@@ -130,12 +133,47 @@ public class ConnectionSceneController {
      */
     void onConnectionResponse(ConnectionResponse response) {
         if (response.getStatus() == MessageStatus.OK) {
-            GuiManager.setLayout(mainPane.getScene(), "fxml/numberPlayersScene.fxml");
+            addPlayerToGameRequest();
         } else {
             GuiManager.showDialog((Stage) mainPane.getScene().getWindow(), GuiManager.ERROR_DIALOG_TITLE, response.getMessage());
 
             guiManager.closeConnection();
             onBackButtonClick();
+        }
+    }
+
+    private void addPlayerToGameRequest(){
+        if (!guiManager.sendRequest(MessageBuilder.buildAddPlayerToGameMessage(guiManager.getClientToken(),
+                guiManager.getUsername(), false))) {
+            GuiManager.showDialog((Stage) mainPane.getScene().getWindow(), GuiManager.ERROR_DIALOG_TITLE,
+                    GuiManager.SEND_ERROR);
+
+            onBackButtonClick();
+        }
+    }
+
+    /**
+     * Handles the lobby join response
+     * @param response response of the join request
+     */
+    void onLobbyJoinResponse(Response response) {
+        if (response.getStatus() == MessageStatus.ERROR) {
+
+            GuiManager.showDialog((Stage) mainPane.getScene().getWindow(), GuiManager.ERROR_DIALOG_TITLE,
+                    response.getMessage());
+
+            onBackButtonClick();
+
+        } else {
+            if (guiManager.getLobbyPlayers().size() == 1){
+                GuiManager.setLayout(mainPane.getScene(), "fxml/numberPlayersScene.fxml");
+            } else {
+                LobbySceneController lobbySceneController = GuiManager.setLayout(mainPane.getScene(), "fxml/lobbyScene.fxml");
+
+                if (lobbySceneController != null) {
+                    lobbySceneController.updateLobbyList();
+                }
+            }
         }
     }
 
