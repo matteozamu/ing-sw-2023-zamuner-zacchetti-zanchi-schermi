@@ -92,14 +92,16 @@ public class CliVisual {
                 if (objectCard != null) {
                     String cardText = objectCard.toString();
                     String visibleCardText = cardText.replaceAll("\u001B\\[[;\\d]*m", "");
-                    int spaceToAdd = (9 - visibleCardText.length())/2;
-                    if(spaceToAdd == 1){
-                        boardView.append("|").append(" ".repeat(spaceToAdd)).append(objectCard).append(" ".repeat(spaceToAdd + 1));
-                    } else {
-                        boardView.append("|").append(" ".repeat(spaceToAdd)).append(objectCard).append(" ".repeat(spaceToAdd));
+                    int visibleCardTextLength = visibleCardText.length();
+                    if(visibleCardTextLength == 7){
+                        boardView.append("|").append(" ").append(objectCard).append(" ");
+                    } else if (visibleCardTextLength == 6) {
+                        boardView.append("|").append(" ".repeat(2)).append(objectCard).append(" ".repeat(1));
+                    } else if (visibleCardTextLength == 5) {
+                        boardView.append("|").append(" ".repeat(2)).append(objectCard).append(" ".repeat(2));
                     }
                 } else {
-                    boardView.append("| ").append(" ".repeat(17));
+                    boardView.append("| ").append(" ".repeat(9));
                 }
             }
             boardView.append("|\n");
@@ -122,14 +124,16 @@ public class CliVisual {
                 if (objectCard != null) {
                     String cardText = objectCard.toString();
                     String visibleCardText = cardText.replaceAll("\u001B\\[[;\\d]*m", "");
-                    int spaceToAdd = (9 - visibleCardText.length())/2;
-                    if(spaceToAdd == 1){
-                        boardView.append("|").append(" ".repeat(spaceToAdd)).append(objectCard).append(" ".repeat(spaceToAdd + 1));
-                    } else {
-                        boardView.append("|").append(" ".repeat(spaceToAdd)).append(objectCard).append(" ".repeat(spaceToAdd));
+                    int visibleCardTextLength = visibleCardText.length();
+                    if(visibleCardTextLength == 7){
+                        boardView.append("|").append(" ").append(objectCard).append(" ");
+                    } else if (visibleCardTextLength == 6) {
+                        boardView.append("|").append(" ".repeat(2)).append(objectCard).append(" ".repeat(1));
+                    } else if (visibleCardTextLength == 5) {
+                        boardView.append("|").append(" ".repeat(2)).append(objectCard).append(" ".repeat(2));
                     }
                 } else {
-                    boardView.append("| ").append(" ".repeat(17));
+                    boardView.append("| ").append(" ".repeat(9));
                 }
             }
             index++;
@@ -151,7 +155,7 @@ public class CliVisual {
         int maxLengthType = 10;
         StringBuilder shelfView = new StringBuilder();
 
-        String horizontalBorder = "═".repeat(43);
+        String horizontalBorder = "═".repeat(48);
         String topBorder = "╔" + horizontalBorder + "═╗\n";
         String bottomBorder = "╚" + horizontalBorder + "═╝\n";
         String middleBorder = "╠" + horizontalBorder + "═╣\n";
@@ -164,12 +168,19 @@ public class CliVisual {
                 Coordinate coord = new Coordinate(row, col);
                 ObjectCard card = s.getGrid().get(coord);
                 if (card == null) {
-                    shelfView.append("-".repeat(maxLengthType - 2)); // Subtract 2 to account for cell borders
+                    shelfView.append("-".repeat(maxLengthType - 1)); // Subtract 2 to account for cell borders
                 } else {
                     String cardText = card.toString();
                     String visibleCardText = cardText.replaceAll("\u001B\\[[;\\d]*m", "");
-                    int padding = maxLengthType - visibleCardText.length() - 2; // Subtract 2 to account for cell borders
-                    shelfView.append(" ").append(cardText).append(" ".repeat(padding));
+                    int visibleCardLength = visibleCardText.length();
+                    if(visibleCardLength == 7){
+                        shelfView.append(" ").append(cardText).append(" ");
+                    } else if (visibleCardLength == 6) {
+                        shelfView.append(" ".repeat(2)).append(cardText).append(" ".repeat(1));
+                    } else if (visibleCardLength == 5) {
+                        shelfView.append(" ".repeat(2)).append(cardText).append(" ".repeat(2));
+                    }
+
                 }
                 shelfView.append("║");
             }
