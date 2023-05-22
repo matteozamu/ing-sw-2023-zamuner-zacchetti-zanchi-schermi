@@ -92,9 +92,10 @@ public class ControllerGame implements TimerRunListener, Serializable {
 //           turnController.nextTurn();
             game.getLimbo().clear();
             if (game.getCurrentPlayer().getShelf().isFull()) {
-                // TODO valutare se gestire tutto con una response o se creare un nuovo messaggio WinMessage
-                sendEndGame();
-                return new Response("Game is ended", MessageStatus.GAME_ENDED);
+                // manda un messaggio privato a tutti i giocatori contenente il vincitore
+                sendEndGame(calculateWinner());
+                changeState(PossibleGameState.GAME_ENDED);
+                return new Response("Game is ended.", MessageStatus.GAME_ENDED);
             }
             game.nextPlayer();
 
@@ -200,6 +201,10 @@ public class ControllerGame implements TimerRunListener, Serializable {
         return checkLobby();
     }
 
+    /**
+     * build an invalid response
+     * @return a Response message to the client
+     */
     private Response buildInvalidResponse() {
         return new Response("Invalid message", MessageStatus.ERROR);
     }
@@ -218,14 +223,25 @@ public class ControllerGame implements TimerRunListener, Serializable {
         this.isLobbyFull = lobbyFull;
     }
 
+    /**
+     * @return the gameState
+     */
     public PossibleGameState getGameState() {
         return gameState;
     }
 
+    /**
+     * @return the game
+     */
+    // TODO potrebbe essere un getInstance?
     public Game getGame() {
         return game;
     }
 
+    /**
+     * check if the lobby if full, if it is, it the game starts, otherwise it adds the player to the lobby
+     * @return a Response message to the client
+     */
     private Response checkLobby() {
         List<Player> inLobbyPlayers = game.getPlayers();
 
@@ -244,6 +260,10 @@ public class ControllerGame implements TimerRunListener, Serializable {
         }
     }
 
+    /**
+     * changes the state of the game
+     * @param changeState the new state of the game
+     */
     void changeState(PossibleGameState changeState) {
         gameState = changeState;
     }
@@ -279,6 +299,10 @@ public class ControllerGame implements TimerRunListener, Serializable {
         }
     }
 
+    /**
+     * this method sends to all clients the winner
+     * @param winner is the name of the winner
+     */
     public void sendEndGame(String winner) {
         List<Player> players = game.getPlayers();
 
@@ -446,6 +470,22 @@ public class ControllerGame implements TimerRunListener, Serializable {
         this.game.getCurrentPlayer().setCurrentPoints(points);
 
         return points;
+    }
+
+    /**
+     * this method is used to calculate the winner of the game at the end of it
+     * @return the name of the winner
+     */
+    private String calculateWinner(){
+        int maxPoints = 0;
+        String winner = "";
+        for (Player p : this.game.getPlayers()) {
+            if (p.getCurrentPoints() > maxPoints) {
+                maxPoints = p.getCurrentPoints();
+                winner = p.getName();
+            }
+        }
+        return winner;
     }
 
     @Override

@@ -599,6 +599,21 @@ public class Cli extends ClientGameManager implements DisconnectionListener {
         }
     }
 
+    /**
+     * Method used to print the winner
+     *
+     * @param winner the winner
+     */
+    @Override
+    public void printWinner(String winner){
+        out.println("The winner is: " + winner);
+    }
+
+    @Override
+    public void printEndGame(String message){
+        out.println(message);
+    }
+
     @Override
     public void onDisconnection() {
         promptError("Disconnected from the server, connection expired", true);

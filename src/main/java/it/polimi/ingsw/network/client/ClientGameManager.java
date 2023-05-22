@@ -111,6 +111,10 @@ public abstract class ClientGameManager implements ClientGameManagerListener, Cl
                 handleGameStartMessage((GameStartMessage) message);
                 break;
 
+            case GAME_ENDED:
+                handleGameEnded((EndGameMessage) message);
+                break;
+
             case DISCONNECTION:
 //                handleDisconnection((DisconnectionMessage) message);
                 break;
@@ -228,6 +232,11 @@ public abstract class ClientGameManager implements ClientGameManagerListener, Cl
         if (firstPlayer != null) checkNextAction();
     }
 
+    private void handleGameEnded(EndGameMessage message) {
+        gameEnded = true;
+        queue.add(() -> printWinner(message.getWinner()));
+    }
+
     public UserPlayerState getUserPlayerState() {
         return turnManager.getUserPlayerState();
     }
@@ -258,7 +267,7 @@ public abstract class ClientGameManager implements ClientGameManagerListener, Cl
         }
         if (response.getStatus() == MessageStatus.GAME_ENDED) {
             gameEnded = true;
-            queue.add(this::printEndGame);
+            queue.add(() -> printEndGame(response.getMessage()));
         }
         if (turnManager != null) {
             turnManager.nextState();

@@ -1,7 +1,7 @@
 package it.polimi.ingsw.enumeration;
 
 /**
- * Enumeration containing all the possible states that the {@link controller.GameManager GameManager} can have
+ * Enumeration containing all the possible states that the ControllerGame can have
  * while "controlling" the evolving of the game.
  */
 public enum PossibleGameState {
