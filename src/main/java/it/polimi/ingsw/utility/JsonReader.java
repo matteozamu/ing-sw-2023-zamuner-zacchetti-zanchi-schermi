@@ -11,9 +11,9 @@ import java.io.InputStream;
 public class JsonReader {
     private static int maxPlayers;
     private static int minPlayers;
-    private static int board2Matrix[][];
-    private static int board3Matrix[][];
-    private static int board4Matrix[][];
+    private static int[][] board2Matrix;
+    private static int[][] board3Matrix;
+    private static int[][] board4Matrix;
 
     public static void readJsonConstant(String filename) {
         try {

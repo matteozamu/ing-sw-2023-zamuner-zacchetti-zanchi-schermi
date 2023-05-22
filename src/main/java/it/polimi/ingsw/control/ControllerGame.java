@@ -91,6 +91,11 @@ public class ControllerGame implements TimerRunListener, Serializable {
 
 //           turnController.nextTurn();
             game.getLimbo().clear();
+            if (game.getCurrentPlayer().getShelf().isFull()) {
+                // TODO valutare se gestire tutto con una response o se creare un nuovo messaggio WinMessage
+                sendEndGame();
+                return new Response("Game is ended", MessageStatus.GAME_ENDED);
+            }
             game.nextPlayer();
 
             sendPrivateUpdates();
@@ -132,7 +137,6 @@ public class ControllerGame implements TimerRunListener, Serializable {
     }
 
     //TODO qui non ritorniamo una ObjectCardResponse ma una generica Response, eliminaiamo ObjectCardResponse?
-    // TODO gestire caso carta non valida
     private Response pickObjectCardHandler(ObjectCardRequest objectCardRequest) {
         Coordinate c = objectCardRequest.getCoordinate();
 
@@ -272,6 +276,14 @@ public class ControllerGame implements TimerRunListener, Serializable {
 
         for (Player player : players) {
             server.sendMessage(player.getName(), new GameStateResponse(player.getName(), game.getCurrentPlayer().getName()));
+        }
+    }
+
+    public void sendEndGame(String winner) {
+        List<Player> players = game.getPlayers();
+
+        for (Player player : players) {
+            server.sendMessage(player.getName(), new EndGameMessage(winner));
         }
     }
 
