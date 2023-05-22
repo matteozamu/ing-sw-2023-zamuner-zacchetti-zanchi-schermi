@@ -19,6 +19,8 @@ public class GameSerialized implements Serializable {
     private Map<Coordinate, ObjectCard> limbo;
     private Player currentPlayer;
 
+
+
     public GameSerialized(String userName) {
         Game instance = Game.getInstance();
 
