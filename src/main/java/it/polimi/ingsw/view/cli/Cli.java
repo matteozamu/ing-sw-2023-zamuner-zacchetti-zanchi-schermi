@@ -66,7 +66,7 @@ public class Cli extends ClientGameManager implements DisconnectionListener {
     }
 
     /**
-     * show an error message and close the program
+     * Show an error message and close the program
      *
      * @param errorMessage the error message to show
      * @param close        if true, the program will close
@@ -82,7 +82,7 @@ public class Cli extends ClientGameManager implements DisconnectionListener {
     }
 
     /**
-     * ask the user to insert the name
+     * Ask the user to insert the name
      *
      * @return the username inserted
      */
@@ -113,7 +113,7 @@ public class Cli extends ClientGameManager implements DisconnectionListener {
     }
 
     /**
-     * try to connect to the server
+     * Try to connect to the server
      */
     private void doConnection() {
         boolean validConnection = false;
@@ -147,7 +147,7 @@ public class Cli extends ClientGameManager implements DisconnectionListener {
     }
 
     /**
-     * ask the user to insert the connection type
+     * Ask the user to insert the connection type
      */
     private int askConnection() {
         boolean firstError = true;
@@ -259,7 +259,7 @@ public class Cli extends ClientGameManager implements DisconnectionListener {
     }
 
     /**
-     * ask the user how many players he wants to play with
+     * Ask the user how many players he wants to play with
      *
      * @return the number of players
      */
@@ -294,7 +294,7 @@ public class Cli extends ClientGameManager implements DisconnectionListener {
     }
 
     /**
-     * if the user connects to the server, he join the lobby
+     * If the user connects to the server, he join the lobby
      *
      * @param response the response from the server
      */
@@ -316,7 +316,7 @@ public class Cli extends ClientGameManager implements DisconnectionListener {
     }
 
     /**
-     * if the user joins the lobby, he waits for the game to start
+     * If the user joins the lobby, he waits for the game to start
      *
      * @param response the response from the server
      */
@@ -331,7 +331,7 @@ public class Cli extends ClientGameManager implements DisconnectionListener {
     }
 
     /**
-     * send a game state request to the server
+     * Send a game state request to the server
      *
      * @param username of the player
      * @param token    of the player
@@ -344,7 +344,7 @@ public class Cli extends ClientGameManager implements DisconnectionListener {
     }
 
     /**
-     * send a message to the server with the number of players
+     * Send a message to the server with the number of players
      *
      * @param response
      */
@@ -357,7 +357,7 @@ public class Cli extends ClientGameManager implements DisconnectionListener {
     }
 
     /**
-     * shows the players in the lobby
+     * Shows the players in the lobby
      *
      * @param users list of users in the lobby
      */
@@ -379,7 +379,7 @@ public class Cli extends ClientGameManager implements DisconnectionListener {
     }
 
     /**
-     * shows the game state
+     * Shows the game state
      */
     @Override
     public void gameStateUpdate() {
@@ -393,7 +393,7 @@ public class Cli extends ClientGameManager implements DisconnectionListener {
     }
 
     /**
-     * tells the other players who is playing
+     * Tells the other players who is playing
      *
      * @param turnOwner the player who is playing
      */
@@ -403,7 +403,7 @@ public class Cli extends ClientGameManager implements DisconnectionListener {
     }
 
     /**
-     * handle an error message
+     * Handle an error message
      *
      * @param error the error message
      */
@@ -413,7 +413,7 @@ public class Cli extends ClientGameManager implements DisconnectionListener {
     }
 
     /**
-     * method used fot the first turn
+     * Method used fot the first turn
      *
      * @param username first player username
      * @param cg       list of common goals
@@ -430,7 +430,7 @@ public class Cli extends ClientGameManager implements DisconnectionListener {
     }
 
     /**
-     * method used to show the possible actions
+     * Method used to show the possible actions
      *
      * @param possibleActions list of possible actions
      */
@@ -482,7 +482,7 @@ public class Cli extends ClientGameManager implements DisconnectionListener {
     }
 
     /**
-     * pick an object card from the board
+     * Pick an object card from the board
      */
     @Override
     public void pickBoardCard() {
@@ -506,7 +506,7 @@ public class Cli extends ClientGameManager implements DisconnectionListener {
     }
 
     /**
-     * method to parse a Coordinate from the input
+     * Method to parse a Coordinate from the input
      *
      * @return the Coordinate read
      */
@@ -535,7 +535,7 @@ public class Cli extends ClientGameManager implements DisconnectionListener {
     }
 
     /**
-     * method used to reorder the cards in the limbo
+     * Method used to reorder the cards in the limbo
      */
     @Override
     public void reorderLimbo() {
@@ -586,12 +586,13 @@ public class Cli extends ClientGameManager implements DisconnectionListener {
     }
 
     /**
-     * send a message to the server asking the available columns
+     * Send a message to the server asking the available columns
      */
     // TODO se non ci sono colonne disponibili svuotiamo il limbo e rifacciamo scegliere le carte
+    // TODO: c'è un metodo nella classe shelf (getFreeCellsPerColumnMap()) per evitare di farlo
     @Override
     public void chooseColumn() {
-        out.println("Choose the column you want to load");
+        out.println("Choose the column you want to load:");
         int column = readInt(0, 4);
         if (!sendRequest(MessageBuilder.buildLoadShelfRequest(getClientToken(), getUsername(), column))) {
             promptError(SEND_ERROR, true);

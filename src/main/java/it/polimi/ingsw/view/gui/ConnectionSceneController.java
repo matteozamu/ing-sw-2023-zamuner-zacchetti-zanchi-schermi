@@ -2,6 +2,8 @@ package it.polimi.ingsw.view.gui;
 
 import it.polimi.ingsw.enumeration.MessageStatus;
 import it.polimi.ingsw.network.message.ConnectionResponse;
+import it.polimi.ingsw.network.message.Response;
+import it.polimi.ingsw.utility.MessageBuilder;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
@@ -12,6 +14,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 import it.polimi.ingsw.utility.ServerAddressValidator;
+import it.polimi.ingsw.network.client.ClientGameManager;
 
 public class ConnectionSceneController {
 
@@ -94,7 +97,10 @@ public class ConnectionSceneController {
         final String address = addressField.getText();
         final String port = portField.getText();
 
-        boolean isUsernameValid = !username.equals("") && !username.equals("Server") && !username.equals("User");
+        boolean isUsernameValid =
+                !username.equals("") &&
+                !username.equals("Server") &&
+                !username.equals("User");
 
         boolean isAddressValid = ServerAddressValidator.isAddressValid(address);
 
@@ -127,7 +133,7 @@ public class ConnectionSceneController {
      */
     void onConnectionResponse(ConnectionResponse response) {
         if (response.getStatus() == MessageStatus.OK) {
-            GuiManager.setLayout(mainPane.getScene(), "fxml/numberPlayersScene.fxml");
+            addPlayerToGameRequest();
         } else {
             GuiManager.showDialog((Stage) mainPane.getScene().getWindow(), GuiManager.ERROR_DIALOG_TITLE, response.getMessage());
 
@@ -136,7 +142,49 @@ public class ConnectionSceneController {
         }
     }
 
-    /*
+    /**
+     * Requests to add a player to the game, or shows an error dialog if the request fails.
+     */
+    private void addPlayerToGameRequest(){
+        if (!guiManager.sendRequest(MessageBuilder.buildAddPlayerToGameMessage(guiManager.getClientToken(),
+                guiManager.getUsername(), false))) {
+            GuiManager.showDialog((Stage) mainPane.getScene().getWindow(), GuiManager.ERROR_DIALOG_TITLE,
+                    GuiManager.SEND_ERROR);
+
+            onBackButtonClick();
+        }
+    }
+
+    /**
+     * Handles the response of a lobby join request. Depending on the response status, the GUI is
+     * either moved to a different scene or an error dialog is shown.
+     *
+     * @param response response of the join request
+     */
+    void onLobbyJoinResponse(Response response) {
+        if (response.getStatus() == MessageStatus.ERROR) {
+
+            GuiManager.showDialog((Stage) mainPane.getScene().getWindow(), GuiManager.ERROR_DIALOG_TITLE,
+                    response.getMessage());
+
+            onBackButtonClick();
+
+        } else {
+            if (guiManager.getLobbyPlayers().size() == 1){
+                GuiManager.setLayout(mainPane.getScene(), "fxml/numberPlayersScene.fxml");
+            } else {
+                LobbySceneController lobbySceneController = GuiManager.setLayout(mainPane.getScene(), "fxml/lobbyScene.fxml");
+
+                if (lobbySceneController != null) {
+                    lobbySceneController.updateLobbyList();
+                }
+            }
+        }
+    }
+
+    /**
+     * Handles a reconnection response, setting up the game scene on successful reconnection.
+     */
     void onReconnectionResponse() {
         GameSceneController gameSceneController =
                 GuiManager.setLayout(mainPane.getScene(), "fxml/gameScene.fxml");
@@ -146,8 +194,6 @@ public class ConnectionSceneController {
             gameSceneController.onStateUpdate();
         }
     }
-
-     */
 
     /**
      * Handles an error occurrence

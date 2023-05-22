@@ -307,25 +307,27 @@ public class ControllerGame implements TimerRunListener, Serializable {
      * Fills the game board with object cards based on the number of players.
      * This method should be called at the beginning of the game to set up the board.
      */
-    // TODO: parametrizzare sul numero di giocatori
     // TODO: non sarebbe meglio spostarlo nel model?
     public void fillBoard() {
         int playerNumber = game.getNumberOfPlayers();
-        Coordinate c;
 
         Map<Coordinate, ObjectCard> b = game.getBoard().getGrid();
 
-        int boardMatrix[][] = JsonReader.getBoard(playerNumber);
+        int[][] boardMatrix = JsonReader.getBoard(playerNumber);
 
         for (int i = 0; i < boardMatrix.length / 2; i++) {
             for (int j = 0; j < boardMatrix[i].length; j++) {
-                if (boardMatrix[i][j] == 1) b.put(new Coordinate(4 - i, j - 4), game.getRandomAvailableObjectCard());
+                if (boardMatrix[i][j] == 1) {
+                    b.put(new Coordinate(4 - i, j - 4), game.getRandomAvailableObjectCard());
+                }
             }
         }
 
         for (int i = boardMatrix.length / 2; i < boardMatrix.length; i++) {
             for (int j = 0; j < boardMatrix[i].length; j++) {
-                if (boardMatrix[i][j] == 1) b.put(new Coordinate(4 - i, j - 4), game.getRandomAvailableObjectCard());
+                if (boardMatrix[i][j] == 1) {
+                    b.put(new Coordinate(4 - i, j - 4), game.getRandomAvailableObjectCard());
+                }
             }
         }
     }

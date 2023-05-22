@@ -423,4 +423,11 @@ public abstract class ClientGameManager implements ClientGameManagerListener, Cl
 
         queue.add(action);
     }
+
+    /**
+     * @return the players in lobby
+     */
+    public List<String> getLobbyPlayers() {
+        return lobbyPlayers;
+    }
 }

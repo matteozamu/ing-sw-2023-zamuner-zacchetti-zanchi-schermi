@@ -1,6 +1,7 @@
 package it.polimi.ingsw.view.cli;
 
 import it.polimi.ingsw.model.*;
+import it.polimi.ingsw.utility.JsonReader;
 
 import java.io.PrintStream;
 import java.util.List;
@@ -73,71 +74,84 @@ public class CliVisual {
         ObjectCard objectCard;
         StringBuilder boardView = new StringBuilder();
         Board board = gameSerialized.getBoard();
+        List<Player> players = gameSerialized.getAllPlayers();
 
-        int[] iterCountsUp = new int[]{7, 6, 3, 2};
-        int maxRowLength = 7;
-        for (int row = 3; row >= 0; row--) {
-            int spaces = (maxRowLength - iterCountsUp[row]) / 2;
-            boardView.append(" ".repeat(spaces * 17)); // 17 is an estimate of the length of a cell
-            for (int col = 0; col < iterCountsUp[row]; col++) {
-                int x, y;
-                if (row == 1) {
-                    x = row;
-                    y = col - (iterCountsUp[row] / 2) + 1;
-                } else {
-                    x = row;
-                    y = col - (iterCountsUp[row] / 2);
-                }
-                objectCard = board.getGrid().get(new Coordinate(x, y));
-                if (objectCard != null) {
-                    String cardText = objectCard.toString();
-                    String visibleCardText = cardText.replaceAll("\u001B\\[[;\\d]*m", "");
-                    int spaceToAdd = (9 - visibleCardText.length())/2;
-                    if(spaceToAdd == 1){
-                        boardView.append("|").append(" ".repeat(spaceToAdd)).append(objectCard).append(" ".repeat(spaceToAdd + 1));
-                    } else {
-                        boardView.append("|").append(" ".repeat(spaceToAdd)).append(objectCard).append(" ".repeat(spaceToAdd));
-                    }
-                } else {
-                    boardView.append("| ").append(" ".repeat(17));
-                }
-            }
-            boardView.append("|\n");
+        JsonReader.readJsonConstant("GameConstant.json");
+
+        int playerNumber = players.size();
+        int[][] boardMatrix = JsonReader.getBoard(playerNumber);
+
+        if(playerNumber == 2) {
+            boardView.append(" ".repeat(17));
+            boardView.append("-3        -2        -1         0         1         2         3\n");
+        } else if (playerNumber == 3 || playerNumber == 4) {
+            boardView.append(" ".repeat(7));
+            boardView.append("-4        -3        -2        -1         0         1         2         3         4\n\n");
         }
-        int[] iterCountsDown = new int[]{6, 3, 2};
-        int index = 0;
-        for (int row = -1; row >= -3; row--) {
-            int spaces = (maxRowLength - iterCountsDown[index]) / 2;
-            boardView.append(" ".repeat(spaces * 17)); // 17 is an estimate of the length of a cell
-            for (int col = 0; col < iterCountsDown[index]; col++) {
-                int x, y;
-                if (index == 2) {
-                    x = row;
-                    y = col;
-                } else {
-                    x = row;
-                    y = col - (iterCountsDown[index] / 2);
-                }
-                objectCard = board.getGrid().get(new Coordinate(x, y));
-                if (objectCard != null) {
-                    String cardText = objectCard.toString();
-                    String visibleCardText = cardText.replaceAll("\u001B\\[[;\\d]*m", "");
-                    int spaceToAdd = (9 - visibleCardText.length())/2;
-                    if(spaceToAdd == 1){
-                        boardView.append("|").append(" ".repeat(spaceToAdd)).append(objectCard).append(" ".repeat(spaceToAdd + 1));
+
+        for (int i = 0; i < boardMatrix.length / 2; i++) {
+            if(!(playerNumber == 2 && 4 - i == 4)) {
+                boardView.append(String.format("%2s ", 4 - i));
+            }
+            for (int j = 0; j < boardMatrix[i].length; j++) {
+                if (boardMatrix[i][j] == 1) {
+                    objectCard = board.getGrid().get(new Coordinate(4 - i, j - 4));
+                    if (objectCard != null) {
+                        String cardText = objectCard.toString();
+                        String visibleCardText = cardText.replaceAll("\u001B\\[[;\\d]*m", "");
+                        int visibleCardTextLength = visibleCardText.length();
+                        if(visibleCardTextLength == 7){
+                            boardView.append("║").append(" ").append(objectCard).append(" ");
+                        } else if (visibleCardTextLength == 6) {
+                            boardView.append("║").append(" ".repeat(1)).append(objectCard).append(" ".repeat(2));
+                        } else if (visibleCardTextLength == 5) {
+                            boardView.append("║").append(" ".repeat(2)).append(objectCard).append(" ".repeat(2));
+                        }
                     } else {
-                        boardView.append("|").append(" ".repeat(spaceToAdd)).append(objectCard).append(" ".repeat(spaceToAdd));
+                        boardView.append("║ ").append(" ".repeat(8));
+                    }
+                    if(j == boardMatrix[i].length - 1) {
+                        boardView.append("║");
                     }
                 } else {
-                    boardView.append("| ").append(" ".repeat(17));
+                    boardView.append(" ".repeat(10));
                 }
             }
-            index++;
-            boardView.append("|\n");
+            boardView.append("\n");
+        }
+
+        for (int i = boardMatrix.length / 2; i < boardMatrix.length; i++) {
+            if(!(playerNumber == 2 && 4 - i == -4)) {
+                boardView.append(String.format("%2s ", 4 - i));
+            }
+            for (int j = 0; j < boardMatrix[i].length; j++) {
+                if (boardMatrix[i][j] == 1) {
+                    objectCard = board.getGrid().get(new Coordinate(4 - i, j - 4));
+                    if (objectCard != null) {
+                        String cardText = objectCard.toString();
+                        String visibleCardText = cardText.replaceAll("\u001B\\[[;\\d]*m", "");
+                        int visibleCardTextLength = visibleCardText.length();
+                        if(visibleCardTextLength == 7){
+                            boardView.append("║").append(" ").append(objectCard).append(" ");
+                        } else if (visibleCardTextLength == 6) {
+                            boardView.append("║").append(" ".repeat(1)).append(objectCard).append(" ".repeat(2));
+                        } else if (visibleCardTextLength == 5) {
+                            boardView.append("║").append(" ".repeat(2)).append(objectCard).append(" ".repeat(2));
+                        }
+                    } else {
+                        boardView.append("║ ").append(" ".repeat(8));
+                    }
+                    if(j == boardMatrix[i].length - 1) {
+                        boardView.append("║");
+                    }
+                } else {
+                    boardView.append(" ".repeat(10));
+                }
+            }
+            boardView.append("\n");
         }
         out.println(boardView);
     }
-
 
     /**
      * Prints the layout of object cards on the Shelf, including both the type and ID of each card.
@@ -148,10 +162,10 @@ public class CliVisual {
     public static void printShelf(PrintStream out, GameSerialized gameSerialized) {
         Shelf s = gameSerialized.getShelf();
 
-        int maxLengthType = 10;
+        int maxLengthType = 9;
         StringBuilder shelfView = new StringBuilder();
 
-        String horizontalBorder = "═".repeat(43);
+        String horizontalBorder = "═".repeat(48);
         String topBorder = "╔" + horizontalBorder + "═╗\n";
         String bottomBorder = "╚" + horizontalBorder + "═╝\n";
         String middleBorder = "╠" + horizontalBorder + "═╣\n";
@@ -162,14 +176,20 @@ public class CliVisual {
             shelfView.append("║");
             for (int col = 0; col < Shelf.COLUMNS; col++) {
                 Coordinate coord = new Coordinate(row, col);
-                ObjectCard card = s.getGrid().get(coord);
+                ObjectCard card = s.getObjectCard(coord);
                 if (card == null) {
-                    shelfView.append("-".repeat(maxLengthType - 2)); // Subtract 2 to account for cell borders
+                    shelfView.append("-".repeat(maxLengthType)); // Subtract 2 to account for cell borders
                 } else {
                     String cardText = card.toString();
                     String visibleCardText = cardText.replaceAll("\u001B\\[[;\\d]*m", "");
-                    int padding = maxLengthType - visibleCardText.length() - 2; // Subtract 2 to account for cell borders
-                    shelfView.append(" ").append(cardText).append(" ".repeat(padding));
+                    int visibleCardLength = visibleCardText.length();
+                    if(visibleCardLength == 7){
+                        shelfView.append(" ").append(cardText).append(" ");
+                    } else if (visibleCardLength == 6) {
+                        shelfView.append(" ".repeat(2)).append(cardText).append(" ".repeat(1));
+                    } else if (visibleCardLength == 5) {
+                        shelfView.append(" ".repeat(2)).append(cardText).append(" ".repeat(2));
+                    }
                 }
                 shelfView.append("║");
             }
@@ -218,6 +238,4 @@ public class CliVisual {
         limbo.append("\n");
         out.print(limbo);
     }
-
-
 }
