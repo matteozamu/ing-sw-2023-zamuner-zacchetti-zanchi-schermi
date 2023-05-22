@@ -81,13 +81,12 @@ public class CliVisual {
         int playerNumber = players.size();
         int[][] boardMatrix = JsonReader.getBoard(playerNumber);
 
-        boardView.append(" ".repeat(17));
         if(playerNumber == 2) {
+            boardView.append(" ".repeat(17));
             boardView.append("-3        -2        -1         0         1         2         3\n");
-        } else if (playerNumber == 3) {
-            boardView.append("-4        -3        -2        -1         0         1         2         3         4\n");
-        } else if (playerNumber == 4) {
-            boardView.append("-4        -3        -2        -1         0         1         2         3         4\n");
+        } else if (playerNumber == 3 || playerNumber == 4) {
+            boardView.append(" ".repeat(7));
+            boardView.append("-4        -3        -2        -1         0         1         2         3         4\n\n");
         }
 
         for (int i = 0; i < boardMatrix.length / 2; i++) {

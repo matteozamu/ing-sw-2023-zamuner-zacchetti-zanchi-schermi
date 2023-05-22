@@ -592,7 +592,7 @@ public class Cli extends ClientGameManager implements DisconnectionListener {
     // TODO: c'è un metodo nella classe shelf (getFreeCellsPerColumnMap()) per evitare di farlo
     @Override
     public void chooseColumn() {
-        out.println("Choose the column you want to load");
+        out.println("Choose the column you want to load:");
         int column = readInt(0, 4);
         if (!sendRequest(MessageBuilder.buildLoadShelfRequest(getClientToken(), getUsername(), column))) {
             promptError(SEND_ERROR, true);
