@@ -299,11 +299,10 @@ public class ControllerGame implements TimerRunListener, Serializable {
     // TODO: non sarebbe meglio spostarlo nel model?
     public void fillBoard() {
         int playerNumber = game.getNumberOfPlayers();
-        Coordinate c;
 
         Map<Coordinate, ObjectCard> b = game.getBoard().getGrid();
 
-        int boardMatrix[][] = JsonReader.getBoard(playerNumber);
+        int[][] boardMatrix = JsonReader.getBoard(playerNumber);
 
         for (int i = 0; i < boardMatrix.length / 2; i++) {
             for (int j = 0; j < boardMatrix[i].length; j++) {
