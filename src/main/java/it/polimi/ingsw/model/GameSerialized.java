@@ -6,6 +6,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * this class represents the game state, it is used to send the game state to the clients
+ */
 public class GameSerialized implements Serializable {
     private static final long serialVersionUID = 526685006552543525L;
 
@@ -20,8 +23,11 @@ public class GameSerialized implements Serializable {
     private Player currentPlayer;
 
 
-
-    public GameSerialized(String userName) {
+    /**
+     * constructor of the class, it initializes the attributes of the class
+     * @param username is the username of the player that is asking for the game state
+     */
+    public GameSerialized(String username) {
         Game instance = Game.getInstance();
 
         if (instance.getPlayers() != null) {
@@ -34,46 +40,81 @@ public class GameSerialized implements Serializable {
         this.limbo = new HashMap<>(instance.getLimbo());
         this.currentPlayer = instance.getCurrentPlayer();
 
-        Player player = Game.getInstance().getPlayerByName(userName);
+        Player player = Game.getInstance().getPlayerByName(username);
         this.shelf = player.getShelf();
         this.personalGoalCard = player.getPersonalGoalCard();
         this.points = player.getCurrentPoints();
     }
 
+    /**
+     * this method returns the list of the players
+     * @return the list of the players
+     */
     public List<Player> getPlayers() {
         return players;
     }
 
+    /**
+     * this method returns the points of the player
+     * @return the points of the player
+     */
     public int getPoints() {
         return this.points;
     }
 
+    /**
+     * @return
+     */
     public Player getCurrentPlayer() {
         return currentPlayer;
     }
 
+    /**
+     *
+     * @return the list of all the players in the game
+     */
     public List<Player> getAllPlayers() {
         List<Player> allPlayers = new ArrayList<>(players);
 
         return allPlayers;
     }
 
+    /**
+     * this method returns the board
+     * @return the board
+     */
     public Board getBoard() {
         return board;
     }
 
+    /**
+     * this method returns the shelf of the player
+     * @return the shelf of the player
+     */
     public Shelf getShelf() {
         return shelf;
     }
 
+    /**
+     * this method returns the personal goal card of the player
+     * @return the personal goal card of the player
+     */
     public PersonalGoalCard getPersonalGoalCard() {
         return personalGoalCard;
     }
 
+    /**
+     * this method returns the limbo
+     * @return the limbo
+     */
     public Map<Coordinate, ObjectCard> getLimbo() {
         return limbo;
     }
 
+    /**
+     * this method returns the list of all the limbo cards
+     * @return the list of all the limbo cards
+     */
     public List<ObjectCard> getAllLimboCards() {
         List<ObjectCard> allLimboCards = new ArrayList<>(limbo.values());
 

@@ -66,18 +66,41 @@ interface ClientGameManagerListener {
      */
     void displayActions(List<PossibleAction> possibleActions);
 
+    /**
+     * allows the client to choose an object card from the board
+     */
     void pickBoardCard();
 
+    /**
+     * print the object card selected by the client
+     */
     void printLimbo();
 
+    /**
+     * allows the user to reorder the selected object cards
+     */
     void reorderLimbo();
 
+    /**
+     * allows the user to put back the selected object cards on the board
+     */
     void deleteLimbo();
 
+    /**
+     * allows the user to choose the column where to put the selected object cards
+     */
     void chooseColumn();
 
+    /**
+     * print the user the winner of the game
+     * @param gameSerialized is the game serialized
+     */
     void printWinner(GameSerialized gameSerialized);
 
+    /**
+     * print the user the end of the game
+     * @param message is the message to print
+     */
     void printEndGame(String message);
 
     void printScore();

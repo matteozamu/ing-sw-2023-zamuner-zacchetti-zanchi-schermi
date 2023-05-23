@@ -54,6 +54,7 @@ public class Cli extends ClientGameManager implements DisconnectionListener {
                 """);
     }
 
+
     private boolean promptInputError(boolean firstError, String errorMessage) {
 //        out.print(AnsiCode.CLEAR_LINE);
 //        if (!firstError) {
@@ -615,6 +616,11 @@ public class Cli extends ClientGameManager implements DisconnectionListener {
 
     }
 
+    /**
+     * Method used to print the end game
+     *
+     * @param message message to print
+     */
     @Override
     public void printEndGame(String message){
         out.println(message);

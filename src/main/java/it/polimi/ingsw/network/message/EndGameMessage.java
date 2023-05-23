@@ -3,6 +3,9 @@ package it.polimi.ingsw.network.message;
 import it.polimi.ingsw.enumeration.MessageContent;
 import it.polimi.ingsw.model.GameSerialized;
 
+/**
+ * Message class to inform the clients that the game is ended
+ */
 public class EndGameMessage extends Message {
     private static final long serialVersionUID = 2725986185374583892L;
 

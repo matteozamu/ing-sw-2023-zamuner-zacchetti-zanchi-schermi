@@ -44,6 +44,11 @@ public class ControllerGame implements TimerRunListener, Serializable {
         this.selectedCoordinates = new ArrayList<>();
     }
 
+    /**
+     * method called when a message is received from a client
+     * @param receivedMessage is the message received
+     * @return the response to the message
+     */
     public Message onMessage(Message receivedMessage) {
         Server.LOGGER.log(Level.SEVERE, "ONMESSAGE: {0}", receivedMessage);
 
@@ -80,6 +85,11 @@ public class ControllerGame implements TimerRunListener, Serializable {
         return new Response("GAME STATE ERROR FOR THIS MESSAGE", MessageStatus.ERROR);
     }
 
+    /**
+     * method called when a LoadShelfRequest is received from a client
+     * @param LoadShelfRequest is the message received
+     * @return the response to the message
+     */
     private Response loadShelfHandler(LoadShelfRequest LoadShelfRequest) {
         int col = LoadShelfRequest.getColumn();
 
@@ -108,6 +118,11 @@ public class ControllerGame implements TimerRunListener, Serializable {
         }
     }
 
+    /**
+     * method called when a DeleteLimboRequest is received from a client
+     * @param deleteLimboRequest is the message received
+     * @return the response to the message
+     */
     private Response deleteLimboHandler(DeleteLimboRequest deleteLimboRequest) {
         if (deleteLimboRequest.getContent() == MessageContent.DELETE_LIMBO) {
             Server.LOGGER.log(Level.INFO, "Deleting limbo for player: {0}", deleteLimboRequest.getSenderUsername());
@@ -124,6 +139,11 @@ public class ControllerGame implements TimerRunListener, Serializable {
         }
     }
 
+    /**
+     * method called when a ReorderLimboRequest is received from a client
+     * @param reorderLimboRequest is the message received
+     * @return the response to the message
+     */
     private Response reorderLimboHandler(ReorderLimboRequest reorderLimboRequest) {
         List<ObjectCard> limboOrder = reorderLimboRequest.getLimboOrder();
 
@@ -156,6 +176,12 @@ public class ControllerGame implements TimerRunListener, Serializable {
         }
     }
 
+    /**
+     * method called when a message is received from a client before the game starts
+     * the message can be a request to add a player to the lobby or a request to set the number of players
+     * @param receivedMessage is the message received
+     * @return the response to the message
+     */
     private Message firstStateHandler(Message receivedMessage) {
         Server.LOGGER.log(Level.SEVERE, "FIRST STATE HANDLER: {0}", receivedMessage);
         switch (receivedMessage.getContent()) {
@@ -168,6 +194,11 @@ public class ControllerGame implements TimerRunListener, Serializable {
         }
     }
 
+    /**
+     * method called when a NumberOfPlayersMessage is received from a client
+     * @param numberOfPlayersMessage is the number of players entered by the client
+     * @return the response to the message
+     */
     private Response numberOfPlayersMessageHandler(NumberOfPlayersMessage numberOfPlayersMessage) {
         int numberOfPlayers = numberOfPlayersMessage.getNumberOfPlayers();
 
@@ -183,6 +214,11 @@ public class ControllerGame implements TimerRunListener, Serializable {
         return new Response("Number of players set", MessageStatus.OK);
     }
 
+    /**
+     * method called when a LobbyMessage is received from a client
+     * @param lobbyMessage is the message received
+     * @return the response to the message
+     */
     private Response lobbyMessageHandler(LobbyMessage lobbyMessage) {
         List<Player> inLobbyPlayers = game.getPlayers();
 
