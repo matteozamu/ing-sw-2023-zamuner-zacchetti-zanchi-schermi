@@ -1,0 +1,7 @@
+.turnOwner {
+    -fx-effect: dropshadow(gaussian, #F44336, 15, 0.2, 0, 0);
+}
+
+.notTurnOwner {
+    -fx-opacity: 0.5;
+}
