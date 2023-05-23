@@ -110,8 +110,10 @@ public class CliVisual {
                     } else {
                         boardView.append("║ ").append(" ".repeat(8));
                     }
-                    if(j == boardMatrix[i].length - 1) {
-                        boardView.append("║");
+                    if(playerNumber == 2) {
+                        if((4 - i == 3 && j - 4 == 0) || (4 - i == 2 && j - 4 == 1) ||  (4 - i == 1 && j - 4 == 3)){
+                            boardView.append("║");
+                        }
                     }
                 } else {
                     boardView.append(" ".repeat(10));
@@ -141,8 +143,10 @@ public class CliVisual {
                     } else {
                         boardView.append("║ ").append(" ".repeat(8));
                     }
-                    if(j == boardMatrix[i].length - 1) {
-                        boardView.append("║");
+                    if(playerNumber == 2) {
+                        if((4 - i == -1 && j - 4 == 2) || (4 - i == -2 && j - 4 == 1) ||  (4 - i == -3 && j - 4 == 1) || (4 - i == 0 && j - 4 == 3)){
+                            boardView.append("║");
+                        }
                     }
                 } else {
                     boardView.append(" ".repeat(10));
