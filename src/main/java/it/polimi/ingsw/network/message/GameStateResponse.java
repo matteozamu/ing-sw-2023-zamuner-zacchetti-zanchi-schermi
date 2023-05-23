@@ -25,4 +25,12 @@ public class GameStateResponse extends Message {
     public String getTurnOwner() {
         return turnOwner;
     }
+
+    @Override
+    public String toString() {
+        return "GameStateResponse{" +
+                "gameSerialized=" + gameSerialized +
+                ", turnOwner='" + turnOwner + '\'' +
+                '}';
+    }
 }

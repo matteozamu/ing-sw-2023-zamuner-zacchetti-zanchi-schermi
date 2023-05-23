@@ -2,7 +2,9 @@ package it.polimi.ingsw.network.client;
 
 import it.polimi.ingsw.enumeration.PossibleAction;
 import it.polimi.ingsw.model.CommonGoal;
+import it.polimi.ingsw.model.GameSerialized;
 import it.polimi.ingsw.network.message.ConnectionResponse;
+import it.polimi.ingsw.network.message.EndGameMessage;
 import it.polimi.ingsw.network.message.Response;
 
 import java.util.List;
@@ -74,7 +76,7 @@ interface ClientGameManagerListener {
 
     void chooseColumn();
 
-    void printWinner(String winner);
+    void printWinner(GameSerialized gameSerialized);
 
     void printEndGame(String message);
 

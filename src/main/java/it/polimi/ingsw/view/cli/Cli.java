@@ -2,13 +2,12 @@ package it.polimi.ingsw.view.cli;
 
 import it.polimi.ingsw.enumeration.MessageStatus;
 import it.polimi.ingsw.enumeration.PossibleAction;
-import it.polimi.ingsw.model.Board;
-import it.polimi.ingsw.model.CommonGoal;
-import it.polimi.ingsw.model.Coordinate;
-import it.polimi.ingsw.model.ObjectCard;
+import it.polimi.ingsw.model.*;
 import it.polimi.ingsw.network.client.ClientGameManager;
 import it.polimi.ingsw.network.client.DisconnectionListener;
 import it.polimi.ingsw.network.message.ConnectionResponse;
+import it.polimi.ingsw.network.message.EndGameMessage;
+import it.polimi.ingsw.network.message.Message;
 import it.polimi.ingsw.network.message.Response;
 import it.polimi.ingsw.utility.MessageBuilder;
 import it.polimi.ingsw.utility.ServerAddressValidator;
@@ -602,11 +601,18 @@ public class Cli extends ClientGameManager implements DisconnectionListener {
     /**
      * Method used to print the winner
      *
-     * @param winner the winner
      */
     @Override
-    public void printWinner(String winner){
-        out.println("The winner is: " + winner);
+    public void printWinner(GameSerialized gameSerialized){
+        for (Player p : gameSerialized.getPlayers()) {
+            if (getUsername().equals(p.getName()) && p.isWinner()) {
+                out.println("You are the winner!");
+            } else if (p.isWinner()) {
+                out.println("You are not the winner, " + (p.isWinner() ? p.getName() + " is the winner" : ("")));
+            }
+        }
+
+
     }
 
     @Override

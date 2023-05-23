@@ -234,7 +234,10 @@ public abstract class ClientGameManager implements ClientGameManagerListener, Cl
 
     private void handleGameEnded(EndGameMessage message) {
         gameEnded = true;
-        queue.add(() -> printWinner(message.getWinner()));
+        synchronized (gameSerializedLock) {
+            gameSerialized = message.getGameSerialized();
+        }
+        queue.add(() -> printWinner(gameSerialized));
     }
 
     public UserPlayerState getUserPlayerState() {
