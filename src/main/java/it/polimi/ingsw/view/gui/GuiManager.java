@@ -2,11 +2,11 @@ package it.polimi.ingsw.view.gui;
 
 import it.polimi.ingsw.enumeration.PossibleAction;
 import it.polimi.ingsw.model.CommonGoal;
+import it.polimi.ingsw.model.GameSerialized;
 import it.polimi.ingsw.network.client.ClientGameManager;
-import it.polimi.ingsw.network.message.ConnectionResponse;
+import it.polimi.ingsw.network.message.*;
 import it.polimi.ingsw.network.client.DisconnectionListener;
 import it.polimi.ingsw.network.message.ConnectionResponse;
-import it.polimi.ingsw.network.message.Response;
 import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -185,6 +185,16 @@ public class GuiManager extends ClientGameManager implements DisconnectionListen
     }
 
     @Override
+    public void printWinner(GameSerialized gameSerialized) {
+
+    }
+
+    @Override
+    public void printEndGame(String message) {
+
+    }
+
+    @Override
     public void printScore() {
 
     }
@@ -227,21 +237,6 @@ public class GuiManager extends ClientGameManager implements DisconnectionListen
 
             System.exit(0);
         });
-    }
-
-    @Override
-    public void printEndGame(String message){
-
-    }
-
-    /**
-     * Method used to print the winner
-     *
-     * @param winner the winner
-     */
-    @Override
-    public void printWinner(String winner){
-
     }
 
     public void closeConnection() {

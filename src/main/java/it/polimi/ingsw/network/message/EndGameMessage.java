@@ -1,24 +1,27 @@
 package it.polimi.ingsw.network.message;
 
 import it.polimi.ingsw.enumeration.MessageContent;
+import it.polimi.ingsw.model.GameSerialized;
 
 public class EndGameMessage extends Message {
+    private static final long serialVersionUID = 2725986185374583892L;
 
-    private final String winner;
 
-    public EndGameMessage(String winner) {
+    private final GameSerialized gameSerialized;
+
+    public EndGameMessage(String username) {
         super("serverUser", null, MessageContent.GAME_ENDED);
-        this.winner = winner;
+        this.gameSerialized = new GameSerialized(username);
     }
 
-    public String getWinner() {
-        return winner;
+    public GameSerialized getGameSerialized() {
+        return gameSerialized;
     }
 
     @Override
     public String toString() {
         return "EndGameMessage{" +
-                "winner='" + winner + '\'' +
+                "gameSerialized=" + gameSerialized +
                 '}';
     }
 }

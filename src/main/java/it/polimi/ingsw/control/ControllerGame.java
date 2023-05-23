@@ -93,7 +93,8 @@ public class ControllerGame implements TimerRunListener, Serializable {
             game.getLimbo().clear();
             if (game.getCurrentPlayer().getShelf().isFull()) {
                 // manda un messaggio privato a tutti i giocatori contenente il vincitore
-                sendEndGame(calculateWinner());
+                calculateWinner();
+                sendEndGame();
                 changeState(PossibleGameState.GAME_ENDED);
                 return new Response("Game is ended.", MessageStatus.GAME_ENDED);
             }
@@ -299,15 +300,16 @@ public class ControllerGame implements TimerRunListener, Serializable {
         }
     }
 
+    // TODO finire di implementare la response lato cli
+
     /**
-     * this method sends to all clients the winner
-     * @param winner is the name of the winner
+     * this method sends to all clients an EndGameMessage, containing the Game Serialized
      */
-    public void sendEndGame(String winner) {
+    public void sendEndGame() {
         List<Player> players = game.getPlayers();
 
         for (Player player : players) {
-            server.sendMessage(player.getName(), new EndGameMessage(winner));
+            server.sendMessage(player.getName(), new EndGameMessage(player.getName()));
         }
     }
 
@@ -476,16 +478,21 @@ public class ControllerGame implements TimerRunListener, Serializable {
      * this method is used to calculate the winner of the game at the end of it
      * @return the name of the winner
      */
-    private String calculateWinner(){
+    private void calculateWinner(){
         int maxPoints = 0;
-        String winner = "";
+//        String winner = "";
         for (Player p : this.game.getPlayers()) {
             if (p.getCurrentPoints() > maxPoints) {
                 maxPoints = p.getCurrentPoints();
-                winner = p.getName();
+//                winner = p.getName();
             }
         }
-        return winner;
+
+        for (Player p : this.game.getPlayers()) {
+            if (p.getCurrentPoints() == maxPoints) {
+                p.setWinner(true);
+            }
+        }
     }
 
     @Override

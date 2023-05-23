@@ -10,9 +10,7 @@ public class Player implements Serializable {
     private final PersonalGoalCard personalGoalCard;
     private int currentPoints;
     private Shelf shelf;
-
-    //TODO: sistemare winner
-    private boolean winner;
+    private boolean winner = false;
 
     /**
      * Constructs a Player with the given name, shelf, and personal goal card.
@@ -55,6 +53,14 @@ public class Player implements Serializable {
         return currentPoints;
     }
 
+    public void setWinner(boolean winner) {
+        this.winner = winner;
+    }
+
+    public boolean isWinner() {
+        return winner;
+    }
+
     public void setCurrentPoints(int currentPoints) {
         this.currentPoints = currentPoints;
     }
@@ -78,7 +84,5 @@ public class Player implements Serializable {
         return name + ", points=" + currentPoints + ", personalGoalCard=" + personalGoalCard;
     }
 
-    public boolean isWinner() {
-        return winner;
-    }
+
 }
