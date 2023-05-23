@@ -229,6 +229,21 @@ public class GuiManager extends ClientGameManager implements DisconnectionListen
         });
     }
 
+    @Override
+    public void printEndGame(String message){
+
+    }
+
+    /**
+     * Method used to print the winner
+     *
+     * @param winner the winner
+     */
+    @Override
+    public void printWinner(String winner){
+
+    }
+
     public void closeConnection() {
         // Implementare qui la logica per chiudere la connessione...
     }
