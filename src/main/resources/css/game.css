@@ -1,7 +1,44 @@
+@font-face {
+    src: url("../fonts/BerkshireSwash-Regular.ttf");
+}
+
+@font-face {
+    src: url("../fonts/Merriweather-Regular.ttf");
+}
+
+.mainPane {
+    -fx-background-image: url("../img/misc/parquet_backgroundV2.jpg");
+    -fx-background-size: cover;
+    -fx-alignment: CENTER;
+}
+
+.boardArea {
+    -fx-max-height: 750px;
+    -fx-min-height: 750px;
+
+    -fx-max-width: 1300px;
+    -fx-min-width: 1300px;
+}
+
 .turnOwner {
     -fx-effect: dropshadow(gaussian, #F44336, 15, 0.2, 0, 0);
 }
 
 .notTurnOwner {
     -fx-opacity: 0.5;
+}
+
+.board {
+    -fx-image: url("../img/boards/livingroom.png");
+    -fx-effect: dropshadow(gaussian, rgba(255, 255, 255, 0.3), 20, 0.5, 0, 0);
+}
+
+.shelf {
+    -fx-image: url("../img/boards/bookshelf_orth.png");
+    -fx-effect: dropshadow(gaussian, rgba(255, 255, 255, 0.3), 20, 0.5, 0, 0);
+}
+
+.boardShelf {
+    -fx-min-width: 656px;
+    -fx-max-width: 660px;
 }

@@ -44,7 +44,19 @@ public class GameSceneController {
     @FXML
     StackPane boardArea;
     @FXML
-    ImageView Board; //board
+    HBox boardShelf;
+    @FXML
+    ImageView board;
+    @FXML
+    ImageView personalGoalCard;
+    @FXML
+    ImageView winnerTile;
+    @FXML
+    ImageView pointsTile;
+    @FXML
+    ImageView chair;
+    @FXML
+    ImageView shelf;
     @FXML
     Label pointLabel;
     @FXML
@@ -60,12 +72,6 @@ public class GameSceneController {
 
     private List<ImageView> objectCards;
     private List<ImageView> commonGoalCards;
-    private ImageView personalGoalCard;
-    private ImageView winnerTile;
-    private ImageView pointsTile;
-    private ImageView chair;
-    private ImageView shelf;
-    private ImageView board;
 
     private String infoPanelUsername = null;
 
