@@ -95,6 +95,10 @@ public abstract class ClientGameManager implements ClientGameManagerListener, Cl
                 handleConnectionResponse((ConnectionResponse) message);
                 break;
 
+            case LIST_GAME:
+                handleGameListResponse((ListGameResponse) message);
+                break;
+
             case PLAYERS_IN_LOBBY:
                 handlePlayersInLobby((LobbyPlayersResponse) message);
                 break;
@@ -195,6 +199,13 @@ public abstract class ClientGameManager implements ClientGameManagerListener, Cl
         }
     }
 
+    private void handleGameListResponse(ListGameResponse message) {
+        if (message.getGames().isEmpty()) {
+            queue.add(() -> noGameAvailable());
+            queue.add(() -> displayActions(getLobbyActions()));
+        } else queue.add(() -> chooseGameToJoin(message.getGames()));
+    }
+
     /**
      * Handles the response to the server connection
      *
@@ -209,6 +220,7 @@ public abstract class ClientGameManager implements ClientGameManagerListener, Cl
         }
 
         queue.add(() -> connectionResponse(connectionResponse));
+        queue.add(() -> displayActions(getLobbyActions()));
     }
 
     private void handlePlayersInLobby(LobbyPlayersResponse message) {
@@ -217,19 +229,23 @@ public abstract class ClientGameManager implements ClientGameManagerListener, Cl
     }
 
     private void handleResponse(Response response) {
-        if (!joinedLobby) {
-            joinedLobby = response.getStatus() == MessageStatus.OK;
-
-            if (lobbyPlayers.size() == 1) queue.add(() -> numberOfPlayersRequest(response));
-            queue.add(() -> lobbyJoinResponse(response));
+        if (response.getStatus() == MessageStatus.GAME_CREATED || response.getStatus() == MessageStatus.GAME_JOINED) {
+            queue.add(() -> addPlayerToGameRequest());
         } else {
-            if (response.getStatus() == MessageStatus.ERROR) {
-                queue.add(() -> responseError(response.getMessage()));
+            if (!joinedLobby) {
+                joinedLobby = response.getStatus() == MessageStatus.OK;
+
+                if (lobbyPlayers.size() == 1) queue.add(() -> numberOfPlayersRequest(response));
+                queue.add(() -> lobbyJoinResponse(response));
             } else {
-                onPositiveResponse(response);
+                if (response.getStatus() == MessageStatus.ERROR) {
+                    queue.add(() -> responseError(response.getMessage()));
+                } else {
+                    onPositiveResponse(response);
+                }
             }
+            if (firstPlayer != null) checkNextAction();
         }
-        if (firstPlayer != null) checkNextAction();
     }
 
     private void handleGameEnded(EndGameMessage message) {
@@ -383,6 +399,15 @@ public abstract class ClientGameManager implements ClientGameManagerListener, Cl
     /**
      * @return a list of possible actions based on the current state of the player
      */
+    private List<PossibleAction> getLobbyActions() {
+        return List.of(PossibleAction.JOIN_GAME, PossibleAction.CREATE_GAME);
+
+    }
+
+
+    /**
+     * @return a list of possible actions based on the current state of the player
+     */
     private List<PossibleAction> getPossibleActions() {
         switch (turnManager.getUserPlayerState()) {
             case PICK_CARD_BOARD:
@@ -422,6 +447,14 @@ public abstract class ClientGameManager implements ClientGameManagerListener, Cl
         Runnable action = null;
 
         switch (chosenAction) {
+            case JOIN_GAME:
+                System.out.println("JOIN GAME");
+                action = this::joinGame;
+                break;
+            case CREATE_GAME:
+                System.out.println("CREATE GAME");
+                action = this::createGame;
+                break;
             case BOARD_PICK_CARD:
                 System.out.println("SCEGLI CARTA");
                 action = this::pickBoardCard;

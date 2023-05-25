@@ -1,12 +1,13 @@
 package it.polimi.ingsw.view.gui;
 
+import it.polimi.ingsw.control.ControllerGame;
 import it.polimi.ingsw.enumeration.PossibleAction;
 import it.polimi.ingsw.model.CommonGoal;
 import it.polimi.ingsw.model.GameSerialized;
 import it.polimi.ingsw.network.client.ClientGameManager;
-import it.polimi.ingsw.network.message.*;
 import it.polimi.ingsw.network.client.DisconnectionListener;
 import it.polimi.ingsw.network.message.ConnectionResponse;
+import it.polimi.ingsw.network.message.Response;
 import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -124,6 +125,11 @@ public class GuiManager extends ClientGameManager implements DisconnectionListen
     }
 
     @Override
+    public void addPlayerToGameRequest() {
+        
+    }
+
+    @Override
     public void loadResponse() {
         // Wait others to reconnect
     }
@@ -146,7 +152,7 @@ public class GuiManager extends ClientGameManager implements DisconnectionListen
     }
 
     @Override
-    public void firstPlayerCommunication(String username, List<CommonGoal> cg){
+    public void firstPlayerCommunication(String username, List<CommonGoal> cg) {
 
     }
 
@@ -164,32 +170,42 @@ public class GuiManager extends ClientGameManager implements DisconnectionListen
     }
 
     @Override
-    public void displayActions(List<PossibleAction> possibleActions){
+    public void displayActions(List<PossibleAction> possibleActions) {
 
     }
 
     @Override
-    public void pickBoardCard(){
+    public void pickBoardCard() {
 
     }
 
     @Override
-    public void printLimbo(){
+    public void joinGame() {
 
     }
 
     @Override
-    public void reorderLimbo(){
+    public void createGame() {
 
     }
 
     @Override
-    public void deleteLimbo(){
+    public void printLimbo() {
 
     }
 
     @Override
-    public void chooseColumn(){
+    public void reorderLimbo() {
+
+    }
+
+    @Override
+    public void deleteLimbo() {
+
+    }
+
+    @Override
+    public void chooseColumn() {
 
     }
 
@@ -209,16 +225,26 @@ public class GuiManager extends ClientGameManager implements DisconnectionListen
     }
 
     @Override
-    public void gameStateRequest(String username, String token){
+    public void gameStateRequest(String username, String token) {
 
     }
 
     @Override
-    public void playersWaitingUpdate(List<String> users){
+    public void playersWaitingUpdate(List<String> users) {
         if (lobbySceneController != null) {
             Platform.runLater(() ->
                     lobbySceneController.updateLobbyList());
         }
+    }
+
+    @Override
+    public void chooseGameToJoin(List<ControllerGame> games) {
+
+    }
+
+    @Override
+    public void noGameAvailable() {
+
     }
 
     @Override

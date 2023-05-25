@@ -1,13 +1,12 @@
 package it.polimi.ingsw.view.cli;
 
+import it.polimi.ingsw.control.ControllerGame;
 import it.polimi.ingsw.enumeration.MessageStatus;
 import it.polimi.ingsw.enumeration.PossibleAction;
 import it.polimi.ingsw.model.*;
 import it.polimi.ingsw.network.client.ClientGameManager;
 import it.polimi.ingsw.network.client.DisconnectionListener;
 import it.polimi.ingsw.network.message.ConnectionResponse;
-import it.polimi.ingsw.network.message.EndGameMessage;
-import it.polimi.ingsw.network.message.Message;
 import it.polimi.ingsw.network.message.Response;
 import it.polimi.ingsw.utility.MessageBuilder;
 import it.polimi.ingsw.utility.ServerAddressValidator;
@@ -29,29 +28,12 @@ public class Cli extends ClientGameManager implements DisconnectionListener {
     }
 
     public void start() {
-        printLogo();
+        CliVisual.printLogo(out);
         doConnection();
     }
 
-    private void printLogo() {
-        out.println("""
-                                                                                :!?YJ~                                                                              \s
-                                                                               ~P&&BG#@&~                                                                            \s
-                            7GBBBB~      JBBB#B:                              7B@&^:J5B@@^       .                      .^::     ^YGGPP!                             \s
-                            .GB@@&~      ?@@@@Y.                             :5&@7 !#@@@@7   J##&#Y                     .#@G.  ~B&5^..^B#^                           \s
-                             .5&@#.      ^&&@G                               ^5&@7  !5BG7     ?#&G:                      G@Y  7&&~ ^GB!:@#                           \s
-                              5&&@5      #@&@5                                5#@&~           ~B&G.                      P&Y :G@Y  B@&##@5                           \s
-                              5#&&@7    5@&&@5      .^!J5GG^   .5##G7         .P&@@B~         ~B&G                       P&Y !G@7  .7YYJ~                            \s
-                              Y#&7#&:  7@GY#@5      :YG&@@5    !&@#~            J&@@@#J.      ~B&B^~7?7~:                P&Y ^5&Y       ^JJ.                         \s
-                              YB&^^#B :&#:J#@5         :P&@?  7&@B:              .?B&@@&5:    ~B&&&&&&&&BJ       .:.     5&J  !B&:     .P@@Y      ...                \s
-                              YB&! !&PB&~ YB&5          .Y#@G5&@P.                  ^P&&&&?   ~G&&&Y^:!#&&~   ^YP5YYP5:  5&J .~B@B7J57  .!!.   .?P5YYPG!             \s
-                              JB&?  ?&&?  5B&Y           .?G&&&J.              ..     :#&&&~  ~G&&!    J&&^  ?#B^   .P&: Y&J :Y?P&&7~~ !GB#?  !G#!.   ?&?            \s
-                              JG&Y  Y&&?  PB&J    .^!!:   !5&#7             :5GBG5!    J&&B5  ~P&B.    Y#G. ~B&GP555Y5G~ Y#?    .B&7   .P##: :5#B5555YYGJ            \s
-                              ?G&5 .7??7 .PB&J  :JB#&&&? .Y##~              B####BPJ   Y##G5  ~P#G.    5#?  ?B#^   .!7^  J#?     Y#B   .5#B: ~P#?    ~7~             \s
-                              ?P#G       ^PB&J  ?5#BPGG?!P#G:               G###55P?.:Y##GY~  ^5#P    :P#7  !B#?   7###! ?B7     Y#B.   YBB: :P#P   :B#&5            \s
-                            .75###5.    ^5B##B! :JG#GPGB##5.                .YGBBBBGB##BP?^  .YGBB!  .5BBB~  7BBP??PBB5:.Y#J    ~G#B^  :PBB^  ^PBGJ?5B#B!            \s
-                            .~~!!!!:    ^!!!!!!. .~J5P5Y?~.                   .:~7?JJ?!~^.   .!!!!~  .!!!!~   .^7??7!:  .!!!.   ~!~!^  .~~~:    :!???!^.             \s
-                """);
+    public void noGameAvailable() {
+        out.println("No game available");
     }
 
 
@@ -252,7 +234,7 @@ public class Cli extends ClientGameManager implements DisconnectionListener {
     /**
      * Send a lobby join request to the server
      */
-    private void addPlayerToGameRequest() {
+    public void addPlayerToGameRequest() {
         if (!sendRequest(MessageBuilder.buildAddPlayerToGameMessage(getClientToken(), getUsername(), false))) {
             promptError(SEND_ERROR, true);
         }
@@ -306,7 +288,6 @@ public class Cli extends ClientGameManager implements DisconnectionListener {
             doConnection();
         } else {
             out.println("Connected to server with username " + getUsername());
-            addPlayerToGameRequest();
         }
     }
 
@@ -429,6 +410,29 @@ public class Cli extends ClientGameManager implements DisconnectionListener {
 
     }
 
+    @Override
+    public void chooseGameToJoin(List<ControllerGame> games) {
+        int choose = -1;
+        out.println();
+
+        if (games.isEmpty()) {
+            out.println("There are no games to join!");
+            return;
+        }
+
+        out.println("Choose the game to join:");
+
+        for (int i = 0; i < games.size(); i++) {
+            out.println("\t" + (i) + " - " + games.get(i).getId());
+        }
+
+        choose = readInt(0, games.size() - 1);
+
+        if (!sendRequest(MessageBuilder.buildJoinGameRequest(getClientToken(), getUsername(), games.get(choose).getId()))) {
+            promptError(SEND_ERROR, true);
+        }
+    }
+
     /**
      * Method used to show the possible actions
      *
@@ -479,6 +483,22 @@ public class Cli extends ClientGameManager implements DisconnectionListener {
         } while (!accepted);
 
         return choose;
+    }
+
+    @Override
+    public void joinGame() {
+        System.out.println("Join game!\n");
+        if (!sendRequest(MessageBuilder.buildListGameRequest(getUsername(), getClientToken()))) {
+            promptError(SEND_ERROR, true);
+        }
+    }
+
+    @Override
+    public void createGame() {
+        System.out.println("Create game!\n");
+        if (!sendRequest(MessageBuilder.buildCreateGameRequest(getUsername(), getClientToken()))) {
+            promptError(SEND_ERROR, true);
+        }
     }
 
     /**
@@ -601,10 +621,9 @@ public class Cli extends ClientGameManager implements DisconnectionListener {
 
     /**
      * Method used to print the winner
-     *
      */
     @Override
-    public void printWinner(GameSerialized gameSerialized){
+    public void printWinner(GameSerialized gameSerialized) {
         for (Player p : gameSerialized.getPlayers()) {
             if (getUsername().equals(p.getName()) && p.isWinner()) {
                 out.println("You are the winner!");
@@ -622,7 +641,7 @@ public class Cli extends ClientGameManager implements DisconnectionListener {
      * @param message message to print
      */
     @Override
-    public void printEndGame(String message){
+    public void printEndGame(String message) {
         out.println(message);
     }
 

@@ -1,10 +1,10 @@
 package it.polimi.ingsw.network.client;
 
+import it.polimi.ingsw.control.ControllerGame;
 import it.polimi.ingsw.enumeration.PossibleAction;
 import it.polimi.ingsw.model.CommonGoal;
 import it.polimi.ingsw.model.GameSerialized;
 import it.polimi.ingsw.network.message.ConnectionResponse;
-import it.polimi.ingsw.network.message.EndGameMessage;
 import it.polimi.ingsw.network.message.Response;
 
 import java.util.List;
@@ -18,6 +18,8 @@ interface ClientGameManagerListener {
      * Handles the response to a connection
      */
     void connectionResponse(ConnectionResponse response);
+
+    void addPlayerToGameRequest();
 
     /**
      * Handles the response to a connection for a loaded game
@@ -41,6 +43,10 @@ interface ClientGameManagerListener {
      * @param users list of users in the lobby
      */
     void playersWaitingUpdate(List<String> users);
+
+    void chooseGameToJoin(List<ControllerGame> games);
+
+    void noGameAvailable();
 
     /**
      * Tells the client that is not his turn
@@ -71,6 +77,10 @@ interface ClientGameManagerListener {
      */
     void pickBoardCard();
 
+    void joinGame();
+
+    void createGame();
+
     /**
      * print the object card selected by the client
      */
@@ -93,12 +103,14 @@ interface ClientGameManagerListener {
 
     /**
      * print the user the winner of the game
+     *
      * @param gameSerialized is the game serialized
      */
     void printWinner(GameSerialized gameSerialized);
 
     /**
      * print the user the end of the game
+     *
      * @param message is the message to print
      */
     void printEndGame(String message);

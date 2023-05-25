@@ -6,7 +6,9 @@ public enum PossibleAction {
     LOAD_SHELF("Choose a column in which you want to put the selected object cards:"),
     DELETE_LIMBO("Put back the object card you selected in the board:"),
     PASS_TURN("Pass the turn"),
-    REORDER_LIMBO("Reorder the object cards in the limbo:");
+    REORDER_LIMBO("Reorder the object cards in the limbo:"),
+    JOIN_GAME("Join an existing game"),
+    CREATE_GAME("Create a new game");
 
     private String description;
 
