@@ -42,3 +42,154 @@
     -fx-min-width: 656px;
     -fx-max-width: 660px;
 }
+
+.cornice-1 {
+    -fx-image: url("../img/item tiles/Cornici1.1.png");
+    -fx-effect: dropshadow(gaussian, rgba(255, 255, 255, 0.3), 20, 0.5, 0, 0);
+}
+
+.cornice-2 {
+    -fx-image: url("../img/item tiles/Cornici1.2.png");
+    -fx-effect: dropshadow(gaussian, rgba(255, 255, 255, 0.3), 20, 0.5, 0, 0);
+}
+
+.cornice-3 {
+    -fx-image: url("../img/item tiles/Cornici1.2.png");
+    -fx-effect: dropshadow(gaussian, rgba(255, 255, 255, 0.3), 20, 0.5, 0, 0);
+}
+
+.gatto-1 {
+    -fx-image: url("../img/item tiles/Gatti1.1.png");
+    -fx-effect: dropshadow(gaussian, rgba(255, 255, 255, 0.3), 20, 0.5, 0, 0);
+}
+
+.gatto-2 {
+    -fx-image: url("../img/item tiles/Gatti1.2.png");
+    -fx-effect: dropshadow(gaussian, rgba(255, 255, 255, 0.3), 20, 0.5, 0, 0);
+}
+
+.gatto-3 {
+    -fx-image: url("../img/item tiles/Gatti1.3.png");
+    -fx-effect: dropshadow(gaussian, rgba(255, 255, 255, 0.3), 20, 0.5, 0, 0);
+}
+
+.gioco-1 {
+    -fx-image: url("../img/item tiles/Giochi1.1.png");
+    -fx-effect: dropshadow(gaussian, rgba(255, 255, 255, 0.3), 20, 0.5, 0, 0);
+}
+
+.gioco-2 {
+    -fx-image: url("../img/item tiles/Giochi1.2.png");
+    -fx-effect: dropshadow(gaussian, rgba(255, 255, 255, 0.3), 20, 0.5, 0, 0);
+}
+
+.gioco-3 {
+    -fx-image: url("../img/item tiles/Giochi1.3.png");
+    -fx-effect: dropshadow(gaussian, rgba(255, 255, 255, 0.3), 20, 0.5, 0, 0);
+}
+
+.libro-1 {
+    -fx-image: url("../img/item tiles/Giochi1.3.png");
+    -fx-effect: dropshadow(gaussian, rgba(255, 255, 255, 0.3), 20, 0.5, 0, 0);
+}
+
+.libro-2 {
+    -fx-image: url("../img/item tiles/Giochi1.3.png");
+    -fx-effect: dropshadow(gaussian, rgba(255, 255, 255, 0.3), 20, 0.5, 0, 0);
+}
+
+.libro-3 {
+    -fx-image: url("../img/item tiles/Giochi1.3.png");
+    -fx-effect: dropshadow(gaussian, rgba(255, 255, 255, 0.3), 20, 0.5, 0, 0);
+}
+
+.pianta-1 {
+    -fx-image: url("../img/item tiles/Giochi1.3.png");
+    -fx-effect: dropshadow(gaussian, rgba(255, 255, 255, 0.3), 20, 0.5, 0, 0);
+}
+
+.pianta-2 {
+    -fx-image: url("../img/item tiles/Giochi1.3.png");
+    -fx-effect: dropshadow(gaussian, rgba(255, 255, 255, 0.3), 20, 0.5, 0, 0);
+}
+
+.pianta-3 {
+    -fx-image: url("../img/item tiles/Giochi1.3.png");
+    -fx-effect: dropshadow(gaussian, rgba(255, 255, 255, 0.3), 20, 0.5, 0, 0);
+}
+
+.trofeo-1 {
+    -fx-image: url("../img/item tiles/Giochi1.3.png");
+    -fx-effect: dropshadow(gaussian, rgba(255, 255, 255, 0.3), 20, 0.5, 0, 0);
+}
+
+.trofeo-2 {
+    -fx-image: url("../img/item tiles/Giochi1.3.png");
+    -fx-effect: dropshadow(gaussian, rgba(255, 255, 255, 0.3), 20, 0.5, 0, 0);
+}
+
+.trofeo-3 {
+    -fx-image: url("../img/item tiles/Giochi1.3.png");
+    -fx-effect: dropshadow(gaussian, rgba(255, 255, 255, 0.3), 20, 0.5, 0, 0);
+}
+
+.commonGoalCard-1 {
+    -fx-image: url("../img/common goal cards/1.jpg");
+    -fx-effect: dropshadow(gaussian, rgba(255, 255, 255, 0.3), 20, 0.5, 0, 0);
+}
+
+.commonGoalCard-2 {
+    -fx-image: url("../img/common goal cards/2.jpg");
+    -fx-effect: dropshadow(gaussian, rgba(255, 255, 255, 0.3), 20, 0.5, 0, 0);
+}
+
+.commonGoalCard-3 {
+    -fx-image: url("../img/common goal cards/3.jpg");
+    -fx-effect: dropshadow(gaussian, rgba(255, 255, 255, 0.3), 20, 0.5, 0, 0);
+}
+
+.commonGoalCard-4 {
+    -fx-image: url("../img/common goal cards/4.jpg");
+    -fx-effect: dropshadow(gaussian, rgba(255, 255, 255, 0.3), 20, 0.5, 0, 0);
+}
+
+.commonGoalCard-5 {
+    -fx-image: url("../img/common goal cards/5.jpg");
+    -fx-effect: dropshadow(gaussian, rgba(255, 255, 255, 0.3), 20, 0.5, 0, 0);
+}
+
+.commonGoalCard-6 {
+    -fx-image: url("../img/common goal cards/6.jpg");
+    -fx-effect: dropshadow(gaussian, rgba(255, 255, 255, 0.3), 20, 0.5, 0, 0);
+}
+
+.commonGoalCard-7 {
+    -fx-image: url("../img/common goal cards/7.jpg");
+    -fx-effect: dropshadow(gaussian, rgba(255, 255, 255, 0.3), 20, 0.5, 0, 0);
+}
+
+.commonGoalCard-8 {
+    -fx-image: url("../img/common goal cards/8.jpg");
+    -fx-effect: dropshadow(gaussian, rgba(255, 255, 255, 0.3), 20, 0.5, 0, 0);
+}
+
+.commonGoalCard-9 {
+    -fx-image: url("../img/common goal cards/9.jpg");
+    -fx-effect: dropshadow(gaussian, rgba(255, 255, 255, 0.3), 20, 0.5, 0, 0);
+}
+
+.commonGoalCard-10 {
+    -fx-image: url("../img/common goal cards/10.jpg");
+    -fx-effect: dropshadow(gaussian, rgba(255, 255, 255, 0.3), 20, 0.5, 0, 0);
+}
+
+.commonGoalCard-11 {
+    -fx-image: url("../img/common goal cards/11.jpg");
+    -fx-effect: dropshadow(gaussian, rgba(255, 255, 255, 0.3), 20, 0.5, 0, 0);
+}
+
+.commonGoalCard-12 {
+    -fx-image: url("../img/common goal cards/12.jpg");
+    -fx-effect: dropshadow(gaussian, rgba(255, 255, 255, 0.3), 20, 0.5, 0, 0);
+}
+

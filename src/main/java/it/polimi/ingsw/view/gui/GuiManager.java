@@ -151,8 +151,16 @@ public class GuiManager extends ClientGameManager implements DisconnectionListen
     }
 
     @Override
-    public void gameStateUpdate(){
-
+    public void gameStateUpdate() {
+        if (gameSceneController == null) {
+            if (lobbySceneController == null) { // Game reconnection
+                Platform.runLater(connectionSceneController::onReconnectionResponse);
+            } else { // Game Start
+                Platform.runLater(lobbySceneController::onGameStart);
+            }
+        } else {
+            Platform.runLater(gameSceneController::onStateUpdate);
+        }
     }
 
     @Override

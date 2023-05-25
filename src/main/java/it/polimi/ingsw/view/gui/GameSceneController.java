@@ -1,8 +1,7 @@
 package it.polimi.ingsw.view.gui;
 
 import it.polimi.ingsw.enumeration.*;
-import it.polimi.ingsw.model.Board;
-import it.polimi.ingsw.model.Player;
+import it.polimi.ingsw.model.*;
 import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.geometry.Insets;
@@ -18,7 +17,6 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
 import javafx.stage.Stage;
 
-import it.polimi.ingsw.model.GameSerialized;
 import it.polimi.ingsw.model.Player.*;
 import it.polimi.ingsw.network.client.ClientGameManager;
 import it.polimi.ingsw.utility.MessageBuilder;
@@ -44,9 +42,13 @@ public class GameSceneController {
     @FXML
     StackPane boardArea;
     @FXML
-    HBox boardShelf;
+    StackPane boardStack;
+    @FXML
+    AnchorPane imagesPane;
     @FXML
     ImageView board;
+    @FXML
+    HBox boardShelf;
     @FXML
     ImageView personalGoalCard;
     @FXML
@@ -83,6 +85,9 @@ public class GameSceneController {
 
         objectCards = new ArrayList<>();
         commonGoalCards = new ArrayList<>();
+
+        loadObjectCards();
+        loadCommonGoalCards();
     }
 
     /**
@@ -91,16 +96,18 @@ public class GameSceneController {
      * @param gameSerialized state of the game at the time of the join
      */
     void setupGame(GameSerialized gameSerialized) {
-        Board board = gameSerialized.getBoard();
+        addObjectCards();
 
-        pointLabel.setText("Points: " + gameSerialized.getPoints());
-
-        setPlayerIcons(gameSerialized);
-
-        bindCommonGoalCardZoom();
-        bindPanels();
-
-        updateBoard(gameSerialized);
+//        Board board = gameSerialized.getBoard();
+//
+//        pointLabel.setText("Points: " + gameSerialized.getPoints());
+//
+//        setPlayerIcons(gameSerialized);
+//
+//        bindCommonGoalCardZoom();
+//        bindPanels();
+//
+//        updateBoard(gameSerialized);
     }
 
     /**
@@ -119,6 +126,103 @@ public class GameSceneController {
 //            weaponSlot.addEventHandler(MouseEvent.MOUSE_CLICKED, this::showCommonGoalCardZoom);
 //        }
     }
+
+    private void loadObjectCards() {
+        List<String> types =
+                Arrays.stream(ObjectCardType.values())
+                        .map(Enum::name)
+                        .collect(Collectors.toList());
+
+        for (int i = 0; i < ObjectCardType.SIZE; i++) {
+            for (int j = 0; j < 7; j++) {
+                ImageView imageView = new ImageView();
+                imageView.getStyleClass().add(types.get(i) + "-" + "1");
+                objectCards.add(imageView);
+            }
+            for (int j = 0; j < 7; j++) {
+                ImageView imageView = new ImageView();
+                imageView.getStyleClass().add(types.get(i) + "-" + "2");
+                objectCards.add(imageView);
+            }
+            for (int j = 0; j < 8; j++) {
+                ImageView imageView = new ImageView();
+                imageView.getStyleClass().add(types.get(i) + "-" + "3");
+                objectCards.add(imageView);
+            }
+        }
+    }
+
+    private void loadCommonGoalCards() {
+        ImageView imageView = new ImageView();
+        imageView.getStyleClass().add("commonGoalCard-1");
+        commonGoalCards.add(imageView);
+
+        imageView = new ImageView();
+        imageView.getStyleClass().add("commonGoalCard-2");
+        commonGoalCards.add(imageView);
+
+        imageView = new ImageView();
+        imageView.getStyleClass().add("commonGoalCard-3");
+        commonGoalCards.add(imageView);
+
+        imageView = new ImageView();
+        imageView.getStyleClass().add("commonGoalCard-4");
+        commonGoalCards.add(imageView);
+
+        imageView = new ImageView();
+        imageView.getStyleClass().add("commonGoalCard-5");
+        commonGoalCards.add(imageView);
+
+        imageView = new ImageView();
+        imageView.getStyleClass().add("commonGoalCard-6");
+        commonGoalCards.add(imageView);
+
+        imageView = new ImageView();
+        imageView.getStyleClass().add("commonGoalCard-7");
+        commonGoalCards.add(imageView);
+
+        imageView = new ImageView();
+        imageView.getStyleClass().add("commonGoalCard-8");
+        commonGoalCards.add(imageView);
+
+        imageView = new ImageView();
+        imageView.getStyleClass().add("commonGoalCard-9");
+        commonGoalCards.add(imageView);
+
+        imageView = new ImageView();
+        imageView.getStyleClass().add("commonGoalCard-10");
+        commonGoalCards.add(imageView);
+
+        imageView = new ImageView();
+        imageView.getStyleClass().add("commonGoalCard-11");
+        commonGoalCards.add(imageView);
+
+        imageView = new ImageView();
+        imageView.getStyleClass().add("commonGoalCard-12");
+        commonGoalCards.add(imageView);
+    }
+
+    private void addObjectCards() {
+        Map<Coordinate, ObjectCard> grid = guiManager.getGameSerialized().getBoard().getGrid();
+
+        for (Map.Entry<Coordinate, ObjectCard> entry : grid.entrySet()) {
+            Coordinate coordinate = entry.getKey();
+            ObjectCard objectCard = entry.getValue();
+
+            if (objectCard != null) {
+                ImageView imageView = objectCards.get(objectCard.getId());
+                imageView.setFitWidth(50);
+                imageView.setFitHeight(50);
+                imageView.setPreserveRatio(true);
+                imageView.setPickOnBounds(true);
+                //imageView.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> showObjectCardZoom(coordinate));
+                imagesPane.getChildren().add(imageView); // Qui abbiamo cambiato da boardArea a imagesPane
+                imageView.setLayoutX(50);
+                imageView.setLayoutY(50);
+            }
+        }
+    }
+
 
     /**
      * Set the username of the players on the left of the board

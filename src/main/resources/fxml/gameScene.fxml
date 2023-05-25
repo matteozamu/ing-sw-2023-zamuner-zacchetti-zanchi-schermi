@@ -15,8 +15,13 @@
     <StackPane fx:id="boardArea" styleClass="boardArea">
 
         <HBox fx:id="boardShelf" StackPane.alignment="CENTER">
-            <ImageView fx:id="board" fitHeight="656.0" fitWidth="656.0" styleClass="board" StackPane.alignment="TOP_LEFT" />
-            <ImageView fx:id="shelf" fitHeight="400.0" fitWidth="400.0" styleClass="shelf" StackPane.alignment="TOP_RIGHT" />
+            <StackPane fx:id="boardStack">
+                <ImageView fx:id="board" fitHeight="656.0" fitWidth="656.0" styleClass="board"/>
+                <AnchorPane fx:id="imagesPane">
+                    <!-- Le immagini delle objectcard verranno aggiunte dinamicamente nel controller -->
+                </AnchorPane>
+            </StackPane>
+            <ImageView fx:id="shelf" fitHeight="400.0" fitWidth="400.0" styleClass="shelf" HBox.hgrow="NEVER"/>
         </HBox>
 
 
