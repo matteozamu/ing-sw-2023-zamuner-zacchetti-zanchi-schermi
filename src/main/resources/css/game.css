@@ -43,93 +43,93 @@
     -fx-max-width: 660px;
 }
 
-.cornice-1 {
-    -fx-image: url("../img/item tiles/Cornici1.1.png");
+.frame-1 {
+    -fx-image: url("../img/item tiles/frame-1.png");
     -fx-effect: dropshadow(gaussian, rgba(255, 255, 255, 0.3), 20, 0.5, 0, 0);
 }
 
-.cornice-2 {
-    -fx-image: url("../img/item tiles/Cornici1.2.png");
+.frame-2 {
+    -fx-image: url("../img/item tiles/frame-2.png");
     -fx-effect: dropshadow(gaussian, rgba(255, 255, 255, 0.3), 20, 0.5, 0, 0);
 }
 
-.cornice-3 {
-    -fx-image: url("../img/item tiles/Cornici1.2.png");
+.frame-3 {
+    -fx-image: url("../img/item tiles/frame-3.png");
     -fx-effect: dropshadow(gaussian, rgba(255, 255, 255, 0.3), 20, 0.5, 0, 0);
 }
 
-.gatto-1 {
-    -fx-image: url("../img/item tiles/Gatti1.1.png");
+.cat-1 {
+    -fx-image: url("../img/item tiles/cat-1.png");
     -fx-effect: dropshadow(gaussian, rgba(255, 255, 255, 0.3), 20, 0.5, 0, 0);
 }
 
-.gatto-2 {
-    -fx-image: url("../img/item tiles/Gatti1.2.png");
+.cat-2 {
+    -fx-image: url("../img/item tiles/cat-2.png");
     -fx-effect: dropshadow(gaussian, rgba(255, 255, 255, 0.3), 20, 0.5, 0, 0);
 }
 
-.gatto-3 {
-    -fx-image: url("../img/item tiles/Gatti1.3.png");
+.cat-3 {
+    -fx-image: url("../img/item tiles/cat-3.png");
     -fx-effect: dropshadow(gaussian, rgba(255, 255, 255, 0.3), 20, 0.5, 0, 0);
 }
 
-.gioco-1 {
-    -fx-image: url("../img/item tiles/Giochi1.1.png");
+.game-1 {
+    -fx-image: url("../img/item tiles/game-1.png");
     -fx-effect: dropshadow(gaussian, rgba(255, 255, 255, 0.3), 20, 0.5, 0, 0);
 }
 
-.gioco-2 {
-    -fx-image: url("../img/item tiles/Giochi1.2.png");
+.game-2 {
+    -fx-image: url("../img/item tiles/game-2.png");
     -fx-effect: dropshadow(gaussian, rgba(255, 255, 255, 0.3), 20, 0.5, 0, 0);
 }
 
-.gioco-3 {
-    -fx-image: url("../img/item tiles/Giochi1.3.png");
+.game-3 {
+    -fx-image: url("../img/item tiles/game-3.png");
     -fx-effect: dropshadow(gaussian, rgba(255, 255, 255, 0.3), 20, 0.5, 0, 0);
 }
 
-.libro-1 {
-    -fx-image: url("../img/item tiles/Giochi1.3.png");
+.book-1 {
+    -fx-image: url("../img/item tiles/book-1.png");
     -fx-effect: dropshadow(gaussian, rgba(255, 255, 255, 0.3), 20, 0.5, 0, 0);
 }
 
-.libro-2 {
-    -fx-image: url("../img/item tiles/Giochi1.3.png");
+.book-2 {
+    -fx-image: url("../img/item tiles/book-2.png");
     -fx-effect: dropshadow(gaussian, rgba(255, 255, 255, 0.3), 20, 0.5, 0, 0);
 }
 
-.libro-3 {
-    -fx-image: url("../img/item tiles/Giochi1.3.png");
+.book-3 {
+    -fx-image: url("../img/item tiles/book-3.png");
     -fx-effect: dropshadow(gaussian, rgba(255, 255, 255, 0.3), 20, 0.5, 0, 0);
 }
 
-.pianta-1 {
-    -fx-image: url("../img/item tiles/Giochi1.3.png");
+.plant-1 {
+    -fx-image: url("../img/item tiles/plant-1.png");
     -fx-effect: dropshadow(gaussian, rgba(255, 255, 255, 0.3), 20, 0.5, 0, 0);
 }
 
-.pianta-2 {
-    -fx-image: url("../img/item tiles/Giochi1.3.png");
+.plant-2 {
+    -fx-image: url("../img/item tiles/plant-2.png");
     -fx-effect: dropshadow(gaussian, rgba(255, 255, 255, 0.3), 20, 0.5, 0, 0);
 }
 
-.pianta-3 {
-    -fx-image: url("../img/item tiles/Giochi1.3.png");
+.plant-3 {
+    -fx-image: url("../img/item tiles/plant-3.png");
     -fx-effect: dropshadow(gaussian, rgba(255, 255, 255, 0.3), 20, 0.5, 0, 0);
 }
 
-.trofeo-1 {
-    -fx-image: url("../img/item tiles/Giochi1.3.png");
+.trophy-1 {
+    -fx-image: url("../img/item tiles/trophy-1.png");
     -fx-effect: dropshadow(gaussian, rgba(255, 255, 255, 0.3), 20, 0.5, 0, 0);
 }
 
-.trofeo-2 {
-    -fx-image: url("../img/item tiles/Giochi1.3.png");
+.trophy-2 {
+    -fx-image: url("../img/item tiles/trophy-2.png");
     -fx-effect: dropshadow(gaussian, rgba(255, 255, 255, 0.3), 20, 0.5, 0, 0);
 }
 
-.trofeo-3 {
-    -fx-image: url("../img/item tiles/Giochi1.3.png");
+.trophy-3 {
+    -fx-image: url("../img/item tiles/trophy-3.png");
     -fx-effect: dropshadow(gaussian, rgba(255, 255, 255, 0.3), 20, 0.5, 0, 0);
 }
 

@@ -2,6 +2,7 @@ package it.polimi.ingsw.view.gui;
 
 import it.polimi.ingsw.enumeration.*;
 import it.polimi.ingsw.model.*;
+import it.polimi.ingsw.utility.JsonReader;
 import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.geometry.Insets;
@@ -72,7 +73,7 @@ public class GameSceneController {
 
     private GuiManager guiManager;
 
-    private List<ImageView> objectCards;
+    private  Map<String, ImageView> objectCards;
     private List<ImageView> commonGoalCards;
 
     private String infoPanelUsername = null;
@@ -83,7 +84,7 @@ public class GameSceneController {
         guiManager.setGameSceneController(this);
 
 
-        objectCards = new ArrayList<>();
+        objectCards = new HashMap<>();
         commonGoalCards = new ArrayList<>();
 
         loadObjectCards();
@@ -96,7 +97,7 @@ public class GameSceneController {
      * @param gameSerialized state of the game at the time of the join
      */
     void setupGame(GameSerialized gameSerialized) {
-        addObjectCards();
+        //addObjectCards();
 
 //        Board board = gameSerialized.getBoard();
 //
@@ -128,29 +129,27 @@ public class GameSceneController {
     }
 
     private void loadObjectCards() {
-        List<String> types =
-                Arrays.stream(ObjectCardType.values())
-                        .map(Enum::name)
-                        .collect(Collectors.toList());
+        List<String> types = Arrays.stream(ObjectCardType.values())
+                .map(Enum::name)
+                .collect(Collectors.toList());
 
         for (int i = 0; i < ObjectCardType.SIZE; i++) {
-            for (int j = 0; j < 7; j++) {
-                ImageView imageView = new ImageView();
-                imageView.getStyleClass().add(types.get(i) + "-" + "1");
-                objectCards.add(imageView);
-            }
-            for (int j = 0; j < 7; j++) {
-                ImageView imageView = new ImageView();
-                imageView.getStyleClass().add(types.get(i) + "-" + "2");
-                objectCards.add(imageView);
-            }
-            for (int j = 0; j < 8; j++) {
-                ImageView imageView = new ImageView();
-                imageView.getStyleClass().add(types.get(i) + "-" + "3");
-                objectCards.add(imageView);
-            }
+            addObjectCardImagesToMap(types.get(i), "1", 7);
+            addObjectCardImagesToMap(types.get(i), "2", 7);
+            addObjectCardImagesToMap(types.get(i), "3", 8);
         }
     }
+
+    private void addObjectCardImagesToMap(String type, String level, int count) {
+        for (int i = 0; i < count; i++) {
+            ImageView imageView = new ImageView();
+            String id = type + "-" + level;
+            imageView.getStyleClass().add(id);
+            imageView.setId(id);
+            objectCards.put(imageView.getId(), imageView);
+        }
+    }
+
 
     private void loadCommonGoalCards() {
         ImageView imageView = new ImageView();
@@ -203,26 +202,37 @@ public class GameSceneController {
     }
 
     private void addObjectCards() {
-        Map<Coordinate, ObjectCard> grid = guiManager.getGameSerialized().getBoard().getGrid();
+        Board board = guiManager.getGameSerialized().getBoard();
+        GameSerialized gameSerialized = guiManager.getGameSerialized();
 
-        for (Map.Entry<Coordinate, ObjectCard> entry : grid.entrySet()) {
-            Coordinate coordinate = entry.getKey();
-            ObjectCard objectCard = entry.getValue();
+        ObjectCard objectCard;
+        JsonReader.readJsonConstant("GameConstant.json");
+        List<Player> players = gameSerialized.getAllPlayers();
+        int playerNumber = players.size();
+        int[][] boardMatrix = JsonReader.getBoard(playerNumber);
 
-            if (objectCard != null) {
-                ImageView imageView = objectCards.get(objectCard.getId());
-                imageView.setFitWidth(50);
-                imageView.setFitHeight(50);
-                imageView.setPreserveRatio(true);
-                imageView.setPickOnBounds(true);
-                //imageView.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> showObjectCardZoom(coordinate));
-                imagesPane.getChildren().add(imageView); // Qui abbiamo cambiato da boardArea a imagesPane
-                imageView.setLayoutX(50);
-                imageView.setLayoutY(50);
+        for (int i = 0; i < boardMatrix.length / 2; i++) {
+            for (int j = 0; j < boardMatrix[i].length; j++) {
+                if (boardMatrix[i][j] == 1) {
+                    objectCard = board.getGrid().get(new Coordinate(4 - i, j - 4));
+                    if (objectCard != null) {
+                        String cardNameType = objectCard.toString() + "-" + objectCard.getId();
+
+                        // Use the map to get the ImageView
+                        ImageView imageView = objectCards.get(cardNameType);
+                        if (imageView != null) {
+                            imageView.setFitWidth(60);
+                            imageView.setFitHeight(60);
+                            imageView.setPreserveRatio(true);
+                            imageView.setPickOnBounds(true);
+
+                            //imagesPane.add(imageView, 4 - i, j - 4);  // aggiunge l'immagine alla cella (j, i) del GridPane
+                        }
+                    }
+                }
             }
         }
     }
-
 
     /**
      * Set the username of the players on the left of the board
@@ -266,10 +276,11 @@ public class GameSceneController {
      * Updates the elements of the board
      */
     void onStateUpdate() {
-        setTurnOwnerIcon(GuiManager.getInstance().getTurnOwner());
-        updateBoard(guiManager.getGameSerialized());
+        updateBoard();
+//        setTurnOwnerIcon(GuiManager.getInstance().getTurnOwner());
 
-        pointLabel.setText("Points: " + guiManager.getGameSerialized().getPoints());
+
+//        pointLabel.setText("Points: " + guiManager.getGameSerialized().getPoints());
 
 //        if (infoPanelUsername != null) {
 //            showPlayerInfo(infoPanelUsername);
@@ -279,44 +290,9 @@ public class GameSceneController {
     /**
      * Updates element on the board
      *
-     * @param gameSerialized game update
      */
-    private void updateBoard(GameSerialized gameSerialized) {
-        setObjectCards(gameSerialized.getBoard());
-    }
-
-    /**
-     * Sets Object Cards on the board
-     *
-     * @param board board of the game
-     */
-    // per distribuire le object cards sulla board
-    private void setObjectCards(Board board) {
-//        for (ImageView ammoTile : ammoTiles) {
-//            boardArea.getChildren().remove(ammoTile);
-//        }
-//        ammoTiles.clear();
-//
-//        for (int y = 0; y < GameMap.MAX_COLUMNS; ++y) {
-//            for (int x = 0; x < GameMap.MAX_ROWS; ++x) {
-//                Square square = gameMap.getSquare(x, y);
-//                if (square != null && square.getSquareType() == SquareType.TILE) {
-//                    CardSquare cardSquare = (CardSquare) square;
-//
-//                    ImageView ammoTile = (cardSquare.isAmmoTilePresent() && cardSquare.getAmmoTile() != null) ?
-//                            new ImageView(cardSquare.getAmmoTile().getImagePath()) : new ImageView();
-//
-//                    ammoTile.setFitHeight(32);
-//                    ammoTile.setFitWidth(32);
-//
-//                    StackPane.setAlignment(ammoTile, Pos.TOP_LEFT);
-//                    StackPane.setMargin(ammoTile, MapInsetsHelper.getAmmoTileInsets(gameMap.getMapID(), x, y));
-//
-//                    boardArea.getChildren().add(ammoTile);
-//                    ammoTiles.add(ammoTile);
-//                }
-//            }
-//        }
+    private void updateBoard() {
+        addObjectCards();
     }
 
     /**
@@ -403,8 +379,7 @@ public class GameSceneController {
 
     // per impedire che un giocatore non di turno possa compiere azioni
     void notYourTurn(String turnOwner) {
-//        actionList.getChildren().clear();
-        setTurnOwnerIcon(turnOwner);
+        mainPane.setMouseTransparent(true);
     }
 
     /**
