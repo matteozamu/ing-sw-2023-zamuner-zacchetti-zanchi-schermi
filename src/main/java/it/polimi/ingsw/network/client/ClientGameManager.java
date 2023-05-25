@@ -187,7 +187,7 @@ public abstract class ClientGameManager implements ClientGameManagerListener, Cl
      *
      * @param gameStateMessage game state update received
      */
-    // il game state lo mandiamo all'inizio di ogni turno? o anche durante le fasi di gioco in un turno?
+    // il game state lo mandiamo all'inizio di ogni turno? o anche durante le fasi di game in un turno?
     private void handleGameStateResponse(GameStateResponse gameStateMessage) {
         synchronized (gameSerializedLock) {
             gameSerialized = gameStateMessage.getGameSerialized();
@@ -400,7 +400,7 @@ public abstract class ClientGameManager implements ClientGameManagerListener, Cl
 
             queue.add(() -> firstPlayerCommunication(firstPlayer, cg));
             queue.add(this::gameStateUpdate);
-            // TODO cosi stampa prima inizio gioco poi chiede lo stato ma problema di sincro con la ricezione messaggi
+            // TODO cosi stampa prima inizio game poi chiede lo stato ma problema di sincro con la ricezione messaggi
 //            queue.add(() -> gameStateRequest(getUsername(), getClientToken()));
 
             firstTurn = false;

@@ -25,7 +25,7 @@ public class ShelfTest extends TestCase {
     public void testAvailableRows() {
         int cards = 4;
         for (int row = 0; row < cards; row++) {
-            this.oc = new ObjectCard(ObjectCardType.gatto, 0);
+            this.oc = new ObjectCard(ObjectCardType.cat, 0);
             s.getGrid().put(new Coordinate(row, 0), this.oc);
         }
         assertEquals(6 - cards, this.s.getFreeCellsPerColumn(0));
@@ -36,11 +36,11 @@ public class ShelfTest extends TestCase {
         // 0 close object cards
         assertEquals(0, s.closeObjectCardsPoints());
 
-        s.getGrid().put(new Coordinate(1, 1), new ObjectCard(ObjectCardType.gatto, 2));
-        s.getGrid().put(new Coordinate(1, 2), new ObjectCard(ObjectCardType.libro, 1));
-        s.getGrid().put(new Coordinate(1, 3), new ObjectCard(ObjectCardType.gatto, 0));
-        s.getGrid().put(new Coordinate(2, 3), new ObjectCard(ObjectCardType.gatto, 0));
-        s.getGrid().put(new Coordinate(2, 2), new ObjectCard(ObjectCardType.gatto, 0));
+        s.getGrid().put(new Coordinate(1, 1), new ObjectCard(ObjectCardType.cat, 2));
+        s.getGrid().put(new Coordinate(1, 2), new ObjectCard(ObjectCardType.book, 1));
+        s.getGrid().put(new Coordinate(1, 3), new ObjectCard(ObjectCardType.cat, 0));
+        s.getGrid().put(new Coordinate(2, 3), new ObjectCard(ObjectCardType.cat, 0));
+        s.getGrid().put(new Coordinate(2, 2), new ObjectCard(ObjectCardType.cat, 0));
 
         assertEquals(0, s.closeObjectCardsPoints());
     }
@@ -48,7 +48,7 @@ public class ShelfTest extends TestCase {
     @Test
     public void testCloseObjectCardsPoints() {
         // 3 close object cards
-        ObjectCardType type = ObjectCardType.gatto;
+        ObjectCardType type = ObjectCardType.cat;
         s.getGrid().put(new Coordinate(1, 1), new ObjectCard(type, 2));
         s.getGrid().put(new Coordinate(1, 2), new ObjectCard(type, 1));
         s.getGrid().put(new Coordinate(1, 3), new ObjectCard(type, 0));

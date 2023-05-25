@@ -6,7 +6,7 @@ package it.polimi.ingsw.enumeration;
  * used to reload a game in persistency
  */
 public enum UserPlayerState {
-    // TODO cambiare con gli stati delle azioni di gioco
+    // TODO cambiare con gli stati delle azioni di game
     PICK_CARD_BOARD,
     AFTER_FIRST_PICK, // dopo aver pescato la prima carta
     FIRST_ACTION,

@@ -9,7 +9,7 @@ class CommonGoalType3Test {
     @Test
     public void testCheckGoalEligibleShelfAndSameCornerType() {
         CommonGoalType3 goal = new CommonGoalType3();
-        ObjectCardType type = ObjectCardType.gatto;
+        ObjectCardType type = ObjectCardType.cat;
         Shelf shelf = new Shelf();
         shelf.getGrid().put(new Coordinate(0, 0), new ObjectCard(type, 0));
         shelf.getGrid().put(new Coordinate(0, 4), new ObjectCard(type, 1));
@@ -22,10 +22,10 @@ class CommonGoalType3Test {
     public void testCheckGoalEligibleShelfAndDifferentCornerTypes() {
         CommonGoalType3 goal = new CommonGoalType3();
         Shelf shelf = new Shelf();
-        shelf.getGrid().put(new Coordinate(0, 0), new ObjectCard(ObjectCardType.gatto, 0));
-        shelf.getGrid().put(new Coordinate(0, 4), new ObjectCard(ObjectCardType.libro, 1));
-        shelf.getGrid().put(new Coordinate(5, 0), new ObjectCard(ObjectCardType.cornice, 0));
-        shelf.getGrid().put(new Coordinate(5, 4), new ObjectCard(ObjectCardType.pianta, 0));
+        shelf.getGrid().put(new Coordinate(0, 0), new ObjectCard(ObjectCardType.cat, 0));
+        shelf.getGrid().put(new Coordinate(0, 4), new ObjectCard(ObjectCardType.book, 1));
+        shelf.getGrid().put(new Coordinate(5, 0), new ObjectCard(ObjectCardType.frame, 0));
+        shelf.getGrid().put(new Coordinate(5, 4), new ObjectCard(ObjectCardType.plant, 0));
         assertFalse(goal.checkGoal(shelf));
     }
 
@@ -33,7 +33,7 @@ class CommonGoalType3Test {
     public void testCheckGoalNotEligibleShelf() {
         CommonGoalType3 goal = new CommonGoalType3();
         Shelf shelf = new Shelf();
-        ObjectCardType type = ObjectCardType.gioco;
+        ObjectCardType type = ObjectCardType.game;
         shelf.getGrid().put(new Coordinate(0, 0), new ObjectCard(type, 0));
         shelf.getGrid().put(new Coordinate(0, 4), new ObjectCard(type, 1));
         shelf.getGrid().put(new Coordinate(5, 0), new ObjectCard(type, 0));

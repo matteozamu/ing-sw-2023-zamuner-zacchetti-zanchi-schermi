@@ -4,32 +4,32 @@
       {
         "row": 5,
         "column": 0,
-        "type": "Pianta"
+        "type": "Plant"
       },
       {
         "row": 5,
         "column": 2,
-        "type": "Cornice"
+        "type": "Frame"
       },
       {
         "row": 4,
         "column": 4,
-        "type": "Gatto"
+        "type": "Cat"
       },
       {
         "row": 3,
         "column": 3,
-        "type": "Libro"
+        "type": "Book"
       },
       {
         "row": 2,
         "column": 1,
-        "type": "Gioco"
+        "type": "Game"
       },
       {
         "row": 0,
         "column": 2,
-        "type": "Trofeo"
+        "type": "Trophy"
       }
     ]
   },
@@ -38,32 +38,32 @@
       {
         "row": 3,
         "column": 0,
-        "type": "Gatto"
+        "type": "Cat"
       },
       {
         "row": 4,
         "column": 1,
-        "type": "Pianta"
+        "type": "Plant"
       },
       {
         "row": 3,
         "column": 2,
-        "type": "Gioco"
+        "type": "Game"
       },
       {
         "row": 1,
         "column": 3,
-        "type": "Trofeo"
+        "type": "Trophy"
       },
       {
         "row": 0,
         "column": 4,
-        "type": "Cornice"
+        "type": "Frame"
       },
       {
         "row": 2,
         "column": 4,
-        "type": "Libro"
+        "type": "Book"
       }
     ]
   },
@@ -72,32 +72,32 @@
       {
         "row": 0,
         "column": 0,
-        "type": "Libro"
+        "type": "Book"
       },
       {
         "row": 2,
         "column": 1,
-        "type": "Gatto"
+        "type": "Cat"
       },
       {
         "row": 3,
         "column": 2,
-        "type": "Pianta"
+        "type": "Plant"
       },
       {
         "row": 4,
         "column": 3,
-        "type": "Gioco"
+        "type": "Game"
       },
       {
         "row": 3,
         "column": 2,
-        "type": "Pianta"
+        "type": "Plant"
       },
       {
         "row": 4,
         "column": 0,
-        "type": "Cornice"
+        "type": "Frame"
       }
     ]
   },
@@ -106,32 +106,32 @@
       {
         "row": 3,
         "column": 0,
-        "type": "Trofeo"
+        "type": "Trophy"
       },
       {
         "row": 1,
         "column": 1,
-        "type": "Libro"
+        "type": "Book"
       },
       {
         "row": 1,
         "column": 2,
-        "type": "Gatto"
+        "type": "Cat"
       },
       {
         "row": 3,
         "column": 2,
-        "type": "Cornice"
+        "type": "Frame"
       },
       {
         "row": 2,
         "column": 3,
-        "type": "Pianta"
+        "type": "Plant"
       },
       {
         "row": 5,
         "column": 4,
-        "type": "Gioco"
+        "type": "Game"
       }
     ]
   },
@@ -140,32 +140,32 @@
       {
         "row": 0,
         "column": 0,
-        "type": "Gioco"
+        "type": "Game"
       },
       {
         "row": 2,
         "column": 1,
-        "type": "Cornice"
+        "type": "Frame"
       },
       {
         "row": 4,
         "column": 1,
-        "type": "Trofeo"
+        "type": "Trophy"
       },
       {
         "row": 2,
         "column": 2,
-        "type": "Libro"
+        "type": "Book"
       },
       {
         "row": 0,
         "column": 3,
-        "type": "Gatto"
+        "type": "Cat"
       },
       {
         "row": 1,
         "column": 4,
-        "type": "Pianta"
+        "type": "Plant"
       }
     ]
   },
@@ -174,32 +174,32 @@
       {
         "row": 0,
         "column": 0,
-        "type": "Pianta"
+        "type": "Plant"
       },
       {
         "row": 1,
         "column": 1,
-        "type": "Gioco"
+        "type": "Game"
       },
       {
         "row": 5,
         "column": 2,
-        "type": "Trofeo"
+        "type": "Trophy"
       },
       {
         "row": 1,
         "column": 3,
-        "type": "Cornice"
+        "type": "Frame"
       },
       {
         "row": 3,
         "column": 3,
-        "type": "Libro"
+        "type": "Book"
       },
       {
         "row": 5,
         "column": 4,
-        "type": "Gatto"
+        "type": "Cat"
       }
     ]
   },
@@ -208,32 +208,32 @@
       {
         "row": 5,
         "column": 0,
-        "type": "Gatto"
+        "type": "Cat"
       },
       {
         "row": 2,
         "column": 0,
-        "type": "Trofeo"
+        "type": "Trophy"
       },
       {
         "row": 3,
         "column": 1,
-        "type": "Pianta"
+        "type": "Plant"
       },
       {
         "row": 0,
         "column": 2,
-        "type": "Libro"
+        "type": "Book"
       },
       {
         "row": 4,
         "column": 3,
-        "type": "Cornice"
+        "type": "Frame"
       },
       {
         "row": 1,
         "column": 4,
-        "type": "Gioco"
+        "type": "Game"
       }
     ]
   },
@@ -242,32 +242,32 @@
       {
         "row": 2,
         "column": 0,
-        "type": "Pianta"
+        "type": "Plant"
       },
       {
         "row": 4,
         "column": 1,
-        "type": "Gatto"
+        "type": "Cat"
       },
       {
         "row": 3,
         "column": 2,
-        "type": "Trofeo"
+        "type": "Trophy"
       },
       {
         "row": 0,
         "column": 3,
-        "type": "Gioco"
+        "type": "Game"
       },
       {
         "row": 1,
         "column": 3,
-        "type": "Libro"
+        "type": "Book"
       },
       {
         "row": 5,
         "column": 4,
-        "type": "Cornice"
+        "type": "Frame"
       }
     ]
   },
@@ -276,32 +276,32 @@
       {
         "row": 0,
         "column": 0,
-        "type": "Cornice"
+        "type": "Frame"
       },
       {
         "row": 1,
         "column": 1,
-        "type": "Trofeo"
+        "type": "Trophy"
       },
       {
         "row": 3,
         "column": 2,
-        "type": "Gatto"
+        "type": "Cat"
       },
       {
         "row": 5,
         "column": 2,
-        "type": "Gioco"
+        "type": "Game"
       },
       {
         "row": 1,
         "column": 4,
-        "type": "Pianta"
+        "type": "Plant"
       },
       {
         "row": 2,
         "column": 4,
-        "type": "Libro"
+        "type": "Book"
       }
     ]
   },
@@ -310,32 +310,32 @@
       {
         "row": 3,
         "column": 0,
-        "type": "Libro"
+        "type": "Book"
       },
       {
         "row": 1,
         "column": 1,
-        "type": "Cornice"
+        "type": "Frame"
       },
       {
         "row": 4,
         "column": 1,
-        "type": "Gioco"
+        "type": "Game"
       },
       {
         "row": 0,
         "column": 3,
-        "type": "Pianta"
+        "type": "Plant"
       },
       {
         "row": 2,
         "column": 3,
-        "type": "Gatto"
+        "type": "Cat"
       },
       {
         "row": 5,
         "column": 4,
-        "type": "Trofeo"
+        "type": "Trophy"
       }
     ]
   },
@@ -344,32 +344,32 @@
       {
         "row": 3,
         "column": 0,
-        "type": "Gioco"
+        "type": "Game"
       },
       {
         "row": 4,
         "column": 1,
-        "type": "Libro"
+        "type": "Book"
       },
       {
         "row": 2,
         "column": 2,
-        "type": "Cornice"
+        "type": "Frame"
       },
       {
         "row": 5,
         "column": 2,
-        "type": "Pianta"
+        "type": "Plant"
       },
       {
         "row": 0,
         "column": 3,
-        "type": "Trofeo"
+        "type": "Trophy"
       },
       {
         "row": 1,
         "column": 4,
-        "type": "Gatto"
+        "type": "Cat"
       }
     ]
   },
@@ -378,32 +378,32 @@
       {
         "row": 0,
         "column": 0,
-        "type": "Gatto"
+        "type": "Cat"
       },
       {
         "row": 4,
         "column": 1,
-        "type": "Pianta"
+        "type": "Plant"
       },
       {
         "row": 3,
         "column": 2,
-        "type": "Cornice"
+        "type": "Frame"
       },
       {
         "row": 5,
         "column": 2,
-        "type": "Libro"
+        "type": "Book"
       },
       {
         "row": 2,
         "column": 3,
-        "type": "Trofeo"
+        "type": "Trophy"
       },
       {
         "row": 1,
         "column": 4,
-        "type": "Gioco"
+        "type": "Game"
       }
     ]
   }

@@ -12,7 +12,7 @@ class CommonGoalType5Test {
     @Test
     public void testValidGroupOfFourSquare() {
         Shelf shelf = new Shelf();
-        ObjectCardType type = ObjectCardType.libro;
+        ObjectCardType type = ObjectCardType.book;
         shelf.getGrid().put(new Coordinate(1, 1), new ObjectCard(type, 0));
         shelf.getGrid().put(new Coordinate(1, 2), new ObjectCard(type, 1));
         shelf.getGrid().put(new Coordinate(2, 1), new ObjectCard(type, 2));
@@ -25,7 +25,7 @@ class CommonGoalType5Test {
     @Test
     public void testValidGroupOfFourRow() {
         Shelf shelf = new Shelf();
-        ObjectCardType type = ObjectCardType.pianta;
+        ObjectCardType type = ObjectCardType.plant;
         shelf.getGrid().put(new Coordinate(1, 1), new ObjectCard(type, 0));
         shelf.getGrid().put(new Coordinate(1, 2), new ObjectCard(type, 1));
         shelf.getGrid().put(new Coordinate(1, 3), new ObjectCard(type, 2));
@@ -39,7 +39,7 @@ class CommonGoalType5Test {
     @Test
     public void testValidGroupOfFourColumn() {
         Shelf shelf = new Shelf();
-        ObjectCardType type = ObjectCardType.gioco;
+        ObjectCardType type = ObjectCardType.game;
         shelf.getGrid().put(new Coordinate(1, 1), new ObjectCard(type, 0));
         shelf.getGrid().put(new Coordinate(2, 1), new ObjectCard(type, 1));
         shelf.getGrid().put(new Coordinate(3, 1), new ObjectCard(type, 2));
@@ -52,7 +52,7 @@ class CommonGoalType5Test {
     @Test
     public void testInvalidGroupOfFour() {
         Shelf shelf = new Shelf();
-        ObjectCardType type = ObjectCardType.pianta;
+        ObjectCardType type = ObjectCardType.plant;
         shelf.getGrid().put(new Coordinate(1, 1), new ObjectCard(type, 0));
         shelf.getGrid().put(new Coordinate(1, 2), new ObjectCard(type, 1));
         shelf.getGrid().put(new Coordinate(2, 1), new ObjectCard(type, 2));
@@ -65,8 +65,8 @@ class CommonGoalType5Test {
     @Test
     public void testGroupOfFourWithDifferentTypes() {
         Shelf shelf = new Shelf();
-        ObjectCardType type1 = ObjectCardType.trofeo;
-        ObjectCardType type2 = ObjectCardType.gioco;
+        ObjectCardType type1 = ObjectCardType.trophy;
+        ObjectCardType type2 = ObjectCardType.game;
         shelf.getGrid().put(new Coordinate(1, 1), new ObjectCard(type1, 0));
         shelf.getGrid().put(new Coordinate(1, 2), new ObjectCard(type2, 0));
         shelf.getGrid().put(new Coordinate(2, 1), new ObjectCard(type1, 1));
@@ -79,7 +79,7 @@ class CommonGoalType5Test {
     @Test
     public void testGroupOfFourOnEdge() {
         Shelf shelf = new Shelf();
-        ObjectCardType type = ObjectCardType.gatto;
+        ObjectCardType type = ObjectCardType.cat;
         shelf.getGrid().put(new Coordinate(1, 1), new ObjectCard(type, 0));
         shelf.getGrid().put(new Coordinate(1, 2), new ObjectCard(type, 1));
         shelf.getGrid().put(new Coordinate(2, 1), new ObjectCard(type, 2));
@@ -98,22 +98,22 @@ class CommonGoalType5Test {
     public void testCheckGoalNoValidGroupsReturnsFalse() {
         Shelf shelf = new Shelf();
 
-        shelf.getGrid().put(new Coordinate(0, 0), new ObjectCard(ObjectCardType.gatto, 0));
-        shelf.getGrid().put(new Coordinate(1, 0), new ObjectCard(ObjectCardType.pianta, 0));
-        shelf.getGrid().put(new Coordinate(2, 0), new ObjectCard(ObjectCardType.libro, 0));
-        shelf.getGrid().put(new Coordinate(3, 0), new ObjectCard(ObjectCardType.gioco, 0));
-        shelf.getGrid().put(new Coordinate(4, 0), new ObjectCard(ObjectCardType.trofeo, 0));
-        shelf.getGrid().put(new Coordinate(0, 1), new ObjectCard(ObjectCardType.cornice, 0));
-        shelf.getGrid().put(new Coordinate(1, 1), new ObjectCard(ObjectCardType.trofeo, 0));
-        shelf.getGrid().put(new Coordinate(2, 1), new ObjectCard(ObjectCardType.gatto, 0));
-        shelf.getGrid().put(new Coordinate(3, 1), new ObjectCard(ObjectCardType.pianta, 0));
-        shelf.getGrid().put(new Coordinate(4, 1), new ObjectCard(ObjectCardType.gioco, 0));
-        shelf.getGrid().put(new Coordinate(0, 2), new ObjectCard(ObjectCardType.trofeo, 0));
-        shelf.getGrid().put(new Coordinate(1, 2), new ObjectCard(ObjectCardType.gatto, 0));
-        shelf.getGrid().put(new Coordinate(2, 2), new ObjectCard(ObjectCardType.libro, 0));
-        shelf.getGrid().put(new Coordinate(3, 2), new ObjectCard(ObjectCardType.cornice, 0));
-        shelf.getGrid().put(new Coordinate(4, 2), new ObjectCard(ObjectCardType.gioco, 0));
-        shelf.getGrid().put(new Coordinate(0, 3), new ObjectCard(ObjectCardType.cornice, 0));
+        shelf.getGrid().put(new Coordinate(0, 0), new ObjectCard(ObjectCardType.cat, 0));
+        shelf.getGrid().put(new Coordinate(1, 0), new ObjectCard(ObjectCardType.plant, 0));
+        shelf.getGrid().put(new Coordinate(2, 0), new ObjectCard(ObjectCardType.book, 0));
+        shelf.getGrid().put(new Coordinate(3, 0), new ObjectCard(ObjectCardType.game, 0));
+        shelf.getGrid().put(new Coordinate(4, 0), new ObjectCard(ObjectCardType.trophy, 0));
+        shelf.getGrid().put(new Coordinate(0, 1), new ObjectCard(ObjectCardType.frame, 0));
+        shelf.getGrid().put(new Coordinate(1, 1), new ObjectCard(ObjectCardType.trophy, 0));
+        shelf.getGrid().put(new Coordinate(2, 1), new ObjectCard(ObjectCardType.cat, 0));
+        shelf.getGrid().put(new Coordinate(3, 1), new ObjectCard(ObjectCardType.plant, 0));
+        shelf.getGrid().put(new Coordinate(4, 1), new ObjectCard(ObjectCardType.game, 0));
+        shelf.getGrid().put(new Coordinate(0, 2), new ObjectCard(ObjectCardType.trophy, 0));
+        shelf.getGrid().put(new Coordinate(1, 2), new ObjectCard(ObjectCardType.cat, 0));
+        shelf.getGrid().put(new Coordinate(2, 2), new ObjectCard(ObjectCardType.book, 0));
+        shelf.getGrid().put(new Coordinate(3, 2), new ObjectCard(ObjectCardType.frame, 0));
+        shelf.getGrid().put(new Coordinate(4, 2), new ObjectCard(ObjectCardType.game, 0));
+        shelf.getGrid().put(new Coordinate(0, 3), new ObjectCard(ObjectCardType.frame, 0));
 
         assertFalse(new CommonGoalType5().checkGoal(shelf));
     }
@@ -122,25 +122,25 @@ class CommonGoalType5Test {
     public void testCheckGoalReturnsTrue() {
         Shelf shelf = new Shelf();
 
-        shelf.getGrid().put(new Coordinate(0, 0), new ObjectCard(ObjectCardType.libro, 0));
-        shelf.getGrid().put(new Coordinate(0, 1), new ObjectCard(ObjectCardType.libro, 0));
-        shelf.getGrid().put(new Coordinate(0, 2), new ObjectCard(ObjectCardType.libro, 0));
-        shelf.getGrid().put(new Coordinate(0, 3), new ObjectCard(ObjectCardType.libro, 0));
+        shelf.getGrid().put(new Coordinate(0, 0), new ObjectCard(ObjectCardType.book, 0));
+        shelf.getGrid().put(new Coordinate(0, 1), new ObjectCard(ObjectCardType.book, 0));
+        shelf.getGrid().put(new Coordinate(0, 2), new ObjectCard(ObjectCardType.book, 0));
+        shelf.getGrid().put(new Coordinate(0, 3), new ObjectCard(ObjectCardType.book, 0));
 
-        shelf.getGrid().put(new Coordinate(0, 4), new ObjectCard(ObjectCardType.pianta, 0));
-        shelf.getGrid().put(new Coordinate(1, 4), new ObjectCard(ObjectCardType.pianta, 0));
-        shelf.getGrid().put(new Coordinate(2, 4), new ObjectCard(ObjectCardType.pianta, 0));
-        shelf.getGrid().put(new Coordinate(3, 4), new ObjectCard(ObjectCardType.pianta, 0));
+        shelf.getGrid().put(new Coordinate(0, 4), new ObjectCard(ObjectCardType.plant, 0));
+        shelf.getGrid().put(new Coordinate(1, 4), new ObjectCard(ObjectCardType.plant, 0));
+        shelf.getGrid().put(new Coordinate(2, 4), new ObjectCard(ObjectCardType.plant, 0));
+        shelf.getGrid().put(new Coordinate(3, 4), new ObjectCard(ObjectCardType.plant, 0));
 
-        shelf.getGrid().put(new Coordinate(1, 1), new ObjectCard(ObjectCardType.gatto, 0));
-        shelf.getGrid().put(new Coordinate(2, 1), new ObjectCard(ObjectCardType.gatto, 0));
-        shelf.getGrid().put(new Coordinate(1, 2), new ObjectCard(ObjectCardType.gatto, 0));
-        shelf.getGrid().put(new Coordinate(2, 2), new ObjectCard(ObjectCardType.gatto, 0));
+        shelf.getGrid().put(new Coordinate(1, 1), new ObjectCard(ObjectCardType.cat, 0));
+        shelf.getGrid().put(new Coordinate(2, 1), new ObjectCard(ObjectCardType.cat, 0));
+        shelf.getGrid().put(new Coordinate(1, 2), new ObjectCard(ObjectCardType.cat, 0));
+        shelf.getGrid().put(new Coordinate(2, 2), new ObjectCard(ObjectCardType.cat, 0));
 
-        shelf.getGrid().put(new Coordinate(3, 1), new ObjectCard(ObjectCardType.cornice, 0));
-        shelf.getGrid().put(new Coordinate(4, 1), new ObjectCard(ObjectCardType.cornice, 0));
-        shelf.getGrid().put(new Coordinate(3, 2), new ObjectCard(ObjectCardType.cornice, 0));
-        shelf.getGrid().put(new Coordinate(4, 2), new ObjectCard(ObjectCardType.cornice, 0));
+        shelf.getGrid().put(new Coordinate(3, 1), new ObjectCard(ObjectCardType.frame, 0));
+        shelf.getGrid().put(new Coordinate(4, 1), new ObjectCard(ObjectCardType.frame, 0));
+        shelf.getGrid().put(new Coordinate(3, 2), new ObjectCard(ObjectCardType.frame, 0));
+        shelf.getGrid().put(new Coordinate(4, 2), new ObjectCard(ObjectCardType.frame, 0));
 
         assertTrue(new CommonGoalType5().checkGoal(shelf));
     }

@@ -10,12 +10,12 @@ import java.util.Random;
  * Represents the type of an object card in the game.
  */
 public enum ObjectCardType {
-    gatto("Gatto", 138, 165, 78),
-    libro("Libro", 231, 219, 183),
-    gioco("Gioco", 218, 165, 69),
-    cornice("Cornice", 24, 106, 144),
-    trofeo("Trofeo", 95, 182, 183),
-    pianta("Pianta", 197, 83, 128);
+    cat("Cat", 138, 165, 78),
+    book("Book", 231, 219, 183),
+    game("Game", 218, 165, 69),
+    frame("Frame", 24, 106, 144),
+    trophy("Trophy", 95, 182, 183),
+    plant("Plant", 197, 83, 128);
 
     private final String text;
     private final int r;

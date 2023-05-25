@@ -312,7 +312,7 @@ public class ControllerGame implements TimerRunListener, Serializable {
         //non ci serve, abbiamp gia il current player
 //        UserPlayer firstPlayer = roundController.getTurnManager().getTurnOwner();
 
-        // TODO cosi riceve prima lo stato del gioco poi stampa inizio partita
+        // TODO cosi riceve prima lo stato del game poi stampa inizio partita
 //        sendPrivateUpdates();
 
         List<Player> players = game.getPlayers();
