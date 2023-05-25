@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import java.net.URL?>
+<?import javafx.scene.image.ImageView?>
+
+<BorderPane xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml"
+            fx:controller="it.polimi.ingsw.view.gui.NumberPlayersController" fx:id="mainPane" styleClass="mainPane">
+    <stylesheets>
+        <URL value="@../css/menu.css"/>
+    </stylesheets>
+
+    <top>
+        <VBox styleClass="topBox">
+            <Label text="Select the number of players" styleClass="menuTitle"/>
+        </VBox>
+    </top>
+
+    <center>
+        <FlowPane styleClass="numberPlayersButton">
+            <ImageView fx:id="twoPlayersButton" id="twoPlayersButton" styleClass="button"/>
+            <ImageView fx:id="threePlayersButton" id="threePlayersButton" styleClass="button"/>
+            <ImageView fx:id="fourPlayersButton" id="fourPlayersButton" styleClass="button"/>
+        </FlowPane>
+    </center>
+
+    <bottom>
+        <VBox styleClass="botBox">
+            <ImageView fx:id="backButton" id="backButton" styleClass="button"/>
+        </VBox>
+    </bottom>
+</BorderPane>

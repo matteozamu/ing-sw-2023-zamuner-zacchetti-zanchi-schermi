@@ -1,6 +1,5 @@
 package it.polimi.ingsw.model;
 
-import java.util.HashMap;
 import java.util.Map;
 
 // OK for TESTING
@@ -12,41 +11,107 @@ import java.util.Map;
 
 public class CommonGoalType5 extends CommonGoal {
 
+    public int type = 5;
+
+    public String description = """
+            Four groups each containing at least
+            4 tiles of the same type (not necessarily
+            in the depicted shape).
+            The tiles of one group can be different
+            from those of another group.""";
+
+    public String cardView = """
+            ╔═══════════╗
+            ║     ■     ║
+            ║     ■     ║
+            ║     ■     ║
+            ║     ■     ║
+            ║     x4    ║
+            ╚═══════════╝
+            """;
+
+    @Override
+    public int getType() {
+        return type;
+    }
+
+    @Override
+    public String getDescription() {
+        return description;
+    }
+    @Override
+    public String getCardView() {
+        return cardView;
+    }
+
+    @Override
+    public String toString() {
+        return "CommonGoalType5{" +
+                "type=" + type +
+                ", description='" + description + '\'' +
+                ", cardView='" + cardView + '\'' +
+                '}';
+    }
+
+    /**
+     * Checks if the Shelf is eligible for the goal check.
+     * For CommonGoalType5, the Shelf must have at least 16 object cards.
+     *
+     * @param shelf The Shelf to check.
+     * @return true if the Shelf is eligible, false otherwise.
+     */
+    @Override
+    protected boolean isShelfEligible(Shelf shelf) {
+        return shelf.getGrid().size() >= 16;
+    }
+
     @Override
     public boolean checkGoal(Shelf shelf) {
-        Map<ObjectCardType, Integer> groupsCount = new HashMap<>();
+        if (!isShelfEligible(shelf)) {
+            return false;
+        }
+
+        int groupsCount = 0;
 
         for (Map.Entry<Coordinate, ObjectCard> entry : shelf.getGrid().entrySet()) {
             Coordinate coordinate = entry.getKey();
             ObjectCard objectCard = entry.getValue();
 
             if (isValidGroupOfFour(shelf, coordinate, objectCard.getType())) {
-                groupsCount.put(objectCard.getType(), groupsCount.getOrDefault(objectCard.getType(), 0) + 1);
+                groupsCount++;
             }
         }
 
-        return groupsCount.values().stream().filter(count -> count == 4).count() == 4;
+        return groupsCount == 4;
     }
 
-
-    private boolean isValidGroupOfFour(Shelf shelf, Coordinate coord, ObjectCardType type) {
-        Coordinate[] adjacentCoordinates = new Coordinate[]{
-                coord.getAdjacent(Coordinate.Direction.UP),
-                coord.getAdjacent(Coordinate.Direction.DOWN),
-                coord.getAdjacent(Coordinate.Direction.LEFT),
-                coord.getAdjacent(Coordinate.Direction.RIGHT)
+    public boolean isValidGroupOfFour(Shelf shelf, Coordinate coord, ObjectCardType type) {
+        Coordinate[][] possibleGroups = new Coordinate[][]{
+                // Quadrato
+                {coord.getAdjacent(Coordinate.Direction.UP), coord.getAdjacent(Coordinate.Direction.RIGHT),
+                        coord.getAdjacent(Coordinate.Direction.UP).getAdjacent(Coordinate.Direction.RIGHT)},
+                // Fila di quattro tessere
+                {coord.getAdjacent(Coordinate.Direction.RIGHT), coord.getAdjacent(Coordinate.Direction.RIGHT).getAdjacent(Coordinate.Direction.RIGHT),
+                        coord.getAdjacent(Coordinate.Direction.RIGHT).getAdjacent(Coordinate.Direction.RIGHT).getAdjacent(Coordinate.Direction.RIGHT)},
+                // Colonna di quattro tessere
+                {coord.getAdjacent(Coordinate.Direction.UP), coord.getAdjacent(Coordinate.Direction.UP).getAdjacent(Coordinate.Direction.UP),
+                        coord.getAdjacent(Coordinate.Direction.UP).getAdjacent(Coordinate.Direction.UP).getAdjacent(Coordinate.Direction.UP)}
         };
 
-        int adjacentSameTypeCount = 0;
-
-        for (Coordinate adjacentCoord : adjacentCoordinates) {
-            ObjectCard adjacentCard = shelf.getGrid().get(adjacentCoord);
-            if (adjacentCard != null && adjacentCard.getType() == type) {
-                adjacentSameTypeCount++;
+        for (Coordinate[] group : possibleGroups) {
+            boolean isGroupValid = true;
+            for (Coordinate groupCoord : group) {
+                ObjectCard adjacentCard = shelf.getObjectCard(groupCoord);
+                if (adjacentCard == null || adjacentCard.getType() != type) {
+                    isGroupValid = false;
+                    break;
+                }
+            }
+            if (isGroupValid) {
+                return true;
             }
         }
 
-        return adjacentSameTypeCount == 3;
+        return false;
     }
-
 }

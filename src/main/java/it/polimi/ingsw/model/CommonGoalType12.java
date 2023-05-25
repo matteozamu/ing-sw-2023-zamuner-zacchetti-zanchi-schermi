@@ -1,9 +1,5 @@
 package it.polimi.ingsw.model;
 
-import java.util.Map;
-
-// OK for TESTING
-
 /**
  * Cinque colonne di altezza crescente o decrescente:
  * a partire dalla prima colonna a sinistra o a destra, ogni colonna successiva
@@ -13,43 +9,115 @@ import java.util.Map;
 
 public final class CommonGoalType12 extends CommonGoal {
 
+    public int type = 12;
+
+    public String description = """
+            Five columns of increasing or decreasing
+            height. Starting from the first column on
+            the left or on the right, each next column
+            must be made of exactly one more tile.
+            Tiles can be of any type.""";
+
+    public String cardView = """
+                ╔══════════╗
+                ║■ - - - - ║
+                ║■ ■ - - - ║
+                ║■ ■ ■ - - ║
+                ║■ ■ ■ ■ - ║
+                ║■ ■ ■ ■ ■ ║
+                ╚══════════╝
+                """;
+
+    @Override
+    public int getType() {
+        return type;
+    }
+
+    @Override
+    public String getDescription() {
+        return description;
+    }
+
+    @Override
+    public String getCardView() {
+        return cardView;
+    }
+
+    @Override
+    public String toString() {
+        return "CommonGoalType12{" +
+                "type=" + type +
+                ", description='" + description + '\'' +
+                ", cardView='" + cardView + '\'' +
+                '}';
+    }
+
+    /**
+     * Checks if the Shelf is eligible for the goal check.
+     * For CommonGoalType12, the Shelf must have at least 15 object cards.
+     *
+     * @param shelf The Shelf to check.
+     * @return true if the Shelf is eligible, false otherwise.
+     */
+    @Override
+    protected boolean isShelfEligible(Shelf shelf) {
+        return shelf.getGrid().size() >= 15;
+    }
+
     @Override
     public boolean checkGoal(Shelf shelf) {
+        if (!isShelfEligible(shelf)) {
+            return false;
+        }
+
         return checkDescendingStair(shelf) || checkAscendingStair(shelf);
     }
 
-    private boolean checkDescendingStair(Shelf shelf) {
-        Map<Coordinate, ObjectCard> grid = shelf.getGrid();
-        for (int col = 0; col < shelf.COLUMNS; col++) {
-            int maxHeight = 5 - col;
+    public boolean checkDescendingStair(Shelf shelf) {
+        boolean patternOne = true;
+        boolean patternThree = true;
+
+        for (int col = 0; col < Shelf.COLUMNS; col++) {
+            int maxHeightPatternOne = 5 - col;
+            int maxHeightPatternThree = 6 - col;
             int countD = 0;
-            for (int row = 0; row < shelf.ROWS; row++) {
-                if (grid.get(new Coordinate(col, row)) != null) {
+            for (int row = 0; row < Shelf.ROWS; row++) {
+                if (shelf.getObjectCard(new Coordinate(row, col)) != null) {
                     countD++;
                 }
             }
-            if (countD != maxHeight) {
-                return false;
+
+            patternOne = patternOne && (countD == maxHeightPatternOne);
+            patternThree = patternThree && (countD == maxHeightPatternThree);
+
+            if (!patternOne && !patternThree) {
+                break;
             }
         }
-        return true;
+        return patternOne || patternThree;
     }
 
-    private boolean checkAscendingStair(Shelf shelf) {
-        Map<Coordinate, ObjectCard> grid = shelf.getGrid();
-        for (int col = shelf.COLUMNS - 1; col >= 0; col--) {
-            int maxHeight = col + 1;
+    public boolean checkAscendingStair(Shelf shelf) {
+        boolean patternTwo = true;
+        boolean patternFour = true;
+
+        for (int col = Shelf.COLUMNS - 1; col >= 0; col--) {
+            int maxHeightPatternTwo = col + 1;
+            int maxHeightPatternFour = col + 2;
             int countA = 0;
-            for (int row = 0; row < 6; row++) {
-                if (grid.get(new Coordinate(col, row)) != null) {
+            for (int row = 0; row < Shelf.ROWS; row++) {
+                if (shelf.getObjectCard(new Coordinate(row, col)) != null) {
                     countA++;
                 }
             }
-            if (countA != maxHeight) {
-                return false;
+
+            patternTwo = patternTwo && (countA == maxHeightPatternTwo);
+            patternFour = patternFour && (countA == maxHeightPatternFour);
+
+            if (!patternTwo && !patternFour) {
+                break;
             }
         }
-        return true;
+        return patternTwo || patternFour;
     }
-
 }

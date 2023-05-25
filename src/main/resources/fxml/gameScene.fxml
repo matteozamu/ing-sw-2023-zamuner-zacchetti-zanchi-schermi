@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.net.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+
+<FlowPane fx:id="mainPane" styleClass="mainPane" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.ingsw.view.gui.GameSceneController">
+
+    <stylesheets>
+        <URL value="@../css/game.css" />
+    </stylesheets>
+
+    <StackPane fx:id="boardArea" styleClass="boardArea">
+
+        <HBox fx:id="boardShelf" StackPane.alignment="CENTER">
+            <StackPane fx:id="boardStack">
+                <ImageView fx:id="board" fitHeight="656.0" fitWidth="656.0" styleClass="board"/>
+                <AnchorPane fx:id="imagesPane">
+                    <!-- Le immagini delle objectcard verranno aggiunte dinamicamente nel controller -->
+                </AnchorPane>
+            </StackPane>
+            <ImageView fx:id="shelf" fitHeight="400.0" fitWidth="400.0" styleClass="shelf" HBox.hgrow="NEVER"/>
+        </HBox>
+
+
+    </StackPane>
+</FlowPane>

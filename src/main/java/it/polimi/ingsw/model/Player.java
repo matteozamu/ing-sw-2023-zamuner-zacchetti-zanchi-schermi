@@ -1,19 +1,22 @@
 package it.polimi.ingsw.model;
 
+import java.io.Serializable;
+
 /**
  * Represents a player in the game, including their name, current points, shelf, and personal goal card.
  */
-public class Player {
+public class Player implements Serializable {
     private final String name;
+    private final PersonalGoalCard personalGoalCard;
     private int currentPoints;
     private Shelf shelf;
-    private final PersonalGoalCard personalGoalCard;
+    private boolean winner = false;
 
     /**
      * Constructs a Player with the given name, shelf, and personal goal card.
      *
-     * @param name The name of the player.
-     * @param shelf The Shelf object representing the player's shelf.
+     * @param name             The name of the player.
+     * @param shelf            The Shelf object representing the player's shelf.
      * @param personalGoalCard The PersonalGoalCard object representing the player's personal goal card.
      */
     public Player(String name, Shelf shelf, PersonalGoalCard personalGoalCard) {
@@ -28,7 +31,7 @@ public class Player {
      *
      * @return The name of the player.
      */
-    public String getName(){
+    public String getName() {
         return this.name;
     }
 
@@ -50,6 +53,18 @@ public class Player {
         return currentPoints;
     }
 
+    public void setWinner(boolean winner) {
+        this.winner = winner;
+    }
+
+    public boolean isWinner() {
+        return winner;
+    }
+
+    public void setCurrentPoints(int currentPoints) {
+        this.currentPoints = currentPoints;
+    }
+
     /**
      * Returns the player's personal goal card.
      *
@@ -57,10 +72,6 @@ public class Player {
      */
     public PersonalGoalCard getPersonalGoalCard() {
         return personalGoalCard;
-    }
-
-    public void setCurrentPoints(int currentPoints) {
-        this.currentPoints = currentPoints;
     }
 
     /**
@@ -72,5 +83,6 @@ public class Player {
     public String toString() {
         return name + ", points=" + currentPoints + ", personalGoalCard=" + personalGoalCard;
     }
+
 
 }

@@ -2,34 +2,68 @@
   {
     "goals": [
       {
-        "row": 44,
-        "column": 1,
-        "type": "Gatto"
+        "row": 5,
+        "column": 0,
+        "type": "Plant"
       },
       {
-        "row": 2,
+        "row": 5,
         "column": 2,
-        "type": "Gatto"
-      },
-      {
-        "row": 0,
-        "column": 1,
-        "type": "Gatto"
+        "type": "Frame"
       },
       {
         "row": 4,
         "column": 4,
-        "type": "Gatto"
+        "type": "Cat"
+      },
+      {
+        "row": 3,
+        "column": 3,
+        "type": "Book"
+      },
+      {
+        "row": 2,
+        "column": 1,
+        "type": "Game"
       },
       {
         "row": 0,
+        "column": 2,
+        "type": "Trophy"
+      }
+    ]
+  },
+  {
+    "goals": [
+      {
+        "row": 3,
+        "column": 0,
+        "type": "Cat"
+      },
+      {
+        "row": 4,
         "column": 1,
-        "type": "Gatto"
+        "type": "Plant"
+      },
+      {
+        "row": 3,
+        "column": 2,
+        "type": "Game"
+      },
+      {
+        "row": 1,
+        "column": 3,
+        "type": "Trophy"
       },
       {
         "row": 0,
-        "column": 1,
-        "type": "Gatto"
+        "column": 4,
+        "type": "Frame"
+      },
+      {
+        "row": 2,
+        "column": 4,
+        "type": "Book"
       }
     ]
   },
@@ -37,33 +71,67 @@
     "goals": [
       {
         "row": 0,
-        "column": 1,
-        "type": "Pianta"
+        "column": 0,
+        "type": "Book"
       },
       {
         "row": 2,
-        "column": 2,
-        "type": "Pianta"
+        "column": 1,
+        "type": "Cat"
       },
       {
-        "row": 0,
-        "column": 1,
-        "type": "Gatto"
+        "row": 3,
+        "column": 2,
+        "type": "Plant"
       },
       {
         "row": 4,
+        "column": 3,
+        "type": "Game"
+      },
+      {
+        "row": 3,
+        "column": 2,
+        "type": "Plant"
+      },
+      {
+        "row": 4,
+        "column": 0,
+        "type": "Frame"
+      }
+    ]
+  },
+  {
+    "goals": [
+      {
+        "row": 3,
+        "column": 0,
+        "type": "Trophy"
+      },
+      {
+        "row": 1,
+        "column": 1,
+        "type": "Book"
+      },
+      {
+        "row": 1,
+        "column": 2,
+        "type": "Cat"
+      },
+      {
+        "row": 3,
+        "column": 2,
+        "type": "Frame"
+      },
+      {
+        "row": 2,
+        "column": 3,
+        "type": "Plant"
+      },
+      {
+        "row": 5,
         "column": 4,
-        "type": "Pianta"
-      },
-      {
-        "row": 0,
-        "column": 1,
-        "type": "Pianta"
-      },
-      {
-        "row": 0,
-        "column": 1,
-        "type": "Pianta"
+        "type": "Game"
       }
     ]
   },
@@ -71,33 +139,33 @@
     "goals": [
       {
         "row": 0,
+        "column": 0,
+        "type": "Game"
+      },
+      {
+        "row": 2,
         "column": 1,
-        "type": "Pianta"
+        "type": "Frame"
+      },
+      {
+        "row": 4,
+        "column": 1,
+        "type": "Trophy"
       },
       {
         "row": 2,
         "column": 2,
-        "type": "Pianta"
+        "type": "Book"
       },
       {
         "row": 0,
-        "column": 1,
-        "type": "Gatto"
+        "column": 3,
+        "type": "Cat"
       },
       {
-        "row": 4,
+        "row": 1,
         "column": 4,
-        "type": "Pianta"
-      },
-      {
-        "row": 0,
-        "column": 1,
-        "type": "Pianta"
-      },
-      {
-        "row": 0,
-        "column": 1,
-        "type": "Pianta"
+        "type": "Plant"
       }
     ]
   },
@@ -105,33 +173,101 @@
     "goals": [
       {
         "row": 0,
+        "column": 0,
+        "type": "Plant"
+      },
+      {
+        "row": 1,
         "column": 1,
-        "type": "Pianta"
+        "type": "Game"
+      },
+      {
+        "row": 5,
+        "column": 2,
+        "type": "Trophy"
+      },
+      {
+        "row": 1,
+        "column": 3,
+        "type": "Frame"
+      },
+      {
+        "row": 3,
+        "column": 3,
+        "type": "Book"
+      },
+      {
+        "row": 5,
+        "column": 4,
+        "type": "Cat"
+      }
+    ]
+  },
+  {
+    "goals": [
+      {
+        "row": 5,
+        "column": 0,
+        "type": "Cat"
       },
       {
         "row": 2,
-        "column": 2,
-        "type": "Pianta"
+        "column": 0,
+        "type": "Trophy"
+      },
+      {
+        "row": 3,
+        "column": 1,
+        "type": "Plant"
       },
       {
         "row": 0,
-        "column": 1,
-        "type": "Gatto"
+        "column": 2,
+        "type": "Book"
       },
       {
         "row": 4,
+        "column": 3,
+        "type": "Frame"
+      },
+      {
+        "row": 1,
         "column": 4,
-        "type": "Pianta"
+        "type": "Game"
+      }
+    ]
+  },
+  {
+    "goals": [
+      {
+        "row": 2,
+        "column": 0,
+        "type": "Plant"
+      },
+      {
+        "row": 4,
+        "column": 1,
+        "type": "Cat"
+      },
+      {
+        "row": 3,
+        "column": 2,
+        "type": "Trophy"
       },
       {
         "row": 0,
-        "column": 1,
-        "type": "Pianta"
+        "column": 3,
+        "type": "Game"
       },
       {
-        "row": 0,
-        "column": 1,
-        "type": "Pianta"
+        "row": 1,
+        "column": 3,
+        "type": "Book"
+      },
+      {
+        "row": 5,
+        "column": 4,
+        "type": "Frame"
       }
     ]
   },
@@ -139,33 +275,101 @@
     "goals": [
       {
         "row": 0,
+        "column": 0,
+        "type": "Frame"
+      },
+      {
+        "row": 1,
         "column": 1,
-        "type": "Pianta"
+        "type": "Trophy"
+      },
+      {
+        "row": 3,
+        "column": 2,
+        "type": "Cat"
+      },
+      {
+        "row": 5,
+        "column": 2,
+        "type": "Game"
+      },
+      {
+        "row": 1,
+        "column": 4,
+        "type": "Plant"
+      },
+      {
+        "row": 2,
+        "column": 4,
+        "type": "Book"
+      }
+    ]
+  },
+  {
+    "goals": [
+      {
+        "row": 3,
+        "column": 0,
+        "type": "Book"
+      },
+      {
+        "row": 1,
+        "column": 1,
+        "type": "Frame"
+      },
+      {
+        "row": 4,
+        "column": 1,
+        "type": "Game"
+      },
+      {
+        "row": 0,
+        "column": 3,
+        "type": "Plant"
+      },
+      {
+        "row": 2,
+        "column": 3,
+        "type": "Cat"
+      },
+      {
+        "row": 5,
+        "column": 4,
+        "type": "Trophy"
+      }
+    ]
+  },
+  {
+    "goals": [
+      {
+        "row": 3,
+        "column": 0,
+        "type": "Game"
+      },
+      {
+        "row": 4,
+        "column": 1,
+        "type": "Book"
       },
       {
         "row": 2,
         "column": 2,
-        "type": "Pianta"
+        "type": "Frame"
+      },
+      {
+        "row": 5,
+        "column": 2,
+        "type": "Plant"
       },
       {
         "row": 0,
-        "column": 1,
-        "type": "Gatto"
+        "column": 3,
+        "type": "Trophy"
       },
       {
-        "row": 4,
+        "row": 1,
         "column": 4,
-        "type": "Pianta"
-      },
-      {
-        "row": 0,
-        "column": 1,
-        "type": "Pianta"
-      },
-      {
-        "row": 0,
-        "column": 1,
-        "type": "Pianta"
+        "type": "Cat"
       }
     ]
   },
@@ -173,33 +377,33 @@
     "goals": [
       {
         "row": 0,
-        "column": 1,
-        "type": "Pianta"
-      },
-      {
-        "row": 2,
-        "column": 2,
-        "type": "Pianta"
-      },
-      {
-        "row": 0,
-        "column": 1,
-        "type": "Gatto"
+        "column": 0,
+        "type": "Cat"
       },
       {
         "row": 4,
+        "column": 1,
+        "type": "Plant"
+      },
+      {
+        "row": 3,
+        "column": 2,
+        "type": "Frame"
+      },
+      {
+        "row": 5,
+        "column": 2,
+        "type": "Book"
+      },
+      {
+        "row": 2,
+        "column": 3,
+        "type": "Trophy"
+      },
+      {
+        "row": 1,
         "column": 4,
-        "type": "Pianta"
-      },
-      {
-        "row": 0,
-        "column": 1,
-        "type": "Pianta"
-      },
-      {
-        "row": 0,
-        "column": 1,
-        "type": "Pianta"
+        "type": "Game"
       }
     ]
   }
