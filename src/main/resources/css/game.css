@@ -38,6 +38,35 @@
     -fx-effect: dropshadow(gaussian, rgba(255, 255, 255, 0.3), 20, 0.5, 0, 0);
 }
 
+.shelfScroll {
+    -fx-background-color: transparent;
+}
+
+.shelfScroll .viewport {
+    -fx-background-color: transparent;
+}
+
+.shelfScroll .scroll-bar:vertical .track,
+.shelfScroll .scroll-bar:horizontal .track {
+    -fx-background-color: transparent;
+}
+
+.shelfScroll .scroll-bar:vertical .thumb,
+.shelfScroll .scroll-bar:horizontal .thumb {
+    -fx-background-color: transparent;
+}
+
+.shelfLabel {
+    -fx-background-color: white;
+    -fx-text-fill: black;
+    -fx-padding: 5px;
+    -fx-border-radius: 5px;
+    -fx-background-radius: 5px;
+    -fx-translate-y: -10;
+    -fx-border-color: #682110;
+    -fx-border-width: 2px;
+}
+
 .boardShelf {
     -fx-min-width: 656px;
     -fx-max-width: 660px;
