@@ -1,13 +1,11 @@
 package it.polimi.ingsw.network.server;
 
 import it.polimi.ingsw.control.ControllerGame;
+import it.polimi.ingsw.enumeration.MessageContent;
 import it.polimi.ingsw.enumeration.MessageStatus;
 import it.polimi.ingsw.enumeration.PossibleGameState;
 import it.polimi.ingsw.enumeration.UserPlayerState;
-import it.polimi.ingsw.network.message.ConnectionResponse;
-import it.polimi.ingsw.network.message.DisconnectionMessage;
-import it.polimi.ingsw.network.message.GameLoadResponse;
-import it.polimi.ingsw.network.message.Message;
+import it.polimi.ingsw.network.message.*;
 
 import java.io.IOException;
 import java.text.DateFormat;
@@ -29,7 +27,8 @@ public class Server implements Runnable {
     private int socketPort = 2727;
     private int rmiPort = 7272;
     private Map<String, Connection> clients;
-    private ControllerGame controllerGame;
+    private Map<String, ControllerGame> playersGame;
+    private List<ControllerGame> controllerGames;
     private boolean waitForLoad;
 
     private Timer moveTimer;
@@ -46,14 +45,14 @@ public class Server implements Runnable {
 
         startServers();
 
-        controllerGame = new ControllerGame(this);
+        controllerGames = new ArrayList<>();
+        this.playersGame = new HashMap<>();
 
         Thread pingThread = new Thread(this);
         pingThread.start();
 
         moveTimer = new Timer();
     }
-
 
 
 //    /**
@@ -154,9 +153,9 @@ public class Server implements Runnable {
             connection.setToken(token);
 
 //            if (waitForLoad) {// Game in lobby state for load a game
-                connection.sendMessage(
-                        new GameLoadResponse("Successfully reconnected", token, UserPlayerState.FIRST_ACTION)
-                );
+            connection.sendMessage(
+                    new GameLoadResponse("Successfully reconnected", token, UserPlayerState.FIRST_ACTION)
+            );
 //                checkLoadReady();
 //            } else {
 //                if (controllerGame.getGameState() == PossibleGameState.GAME_ROOM) { // Game in lobby state
@@ -182,24 +181,24 @@ public class Server implements Runnable {
     }
 
     private void newPlayerLogin(String username, Connection connection) throws IOException {
-        if (controllerGame.getGame().isHasStarted()) {  // Game Started
-            connection.sendMessage(new ConnectionResponse("Game is already started!", null, MessageStatus.ERROR));
-            connection.disconnect();
-            LOGGER.log(Level.INFO, "{0} attempted to connect!", username);
-        } else if (controllerGame.getIsLobbyFull()) { // Lobby Full
-            connection.sendMessage(
-                    new ConnectionResponse("Max number of player reached", null, MessageStatus.ERROR)
-            );
-
-            connection.disconnect();
-            LOGGER.log(Level.INFO, "{0} tried to connect but game is full!", username);
-        } else { // New player
-            clients.put(username, connection);
-            String token = UUID.randomUUID().toString();
-            connection.setToken(token);
-            connection.sendMessage(new ConnectionResponse("Successfully connected", token, MessageStatus.OK));
-            LOGGER.log(Level.INFO, "{0} connected to server!", username);
-        }
+//        if (controllerGame.getGame().isHasStarted()) {  // Game Started
+//            connection.sendMessage(new ConnectionResponse("Game is already started!", null, MessageStatus.ERROR));
+//            connection.disconnect();
+//            LOGGER.log(Level.INFO, "{0} attempted to connect!", username);
+//        } else if (controllerGame.getIsLobbyFull()) { // Lobby Full
+//            connection.sendMessage(
+//                    new ConnectionResponse("Max number of player reached", null, MessageStatus.ERROR)
+//            );
+//
+//            connection.disconnect();
+//            LOGGER.log(Level.INFO, "{0} tried to connect but game is full!", username);
+//        } else { // New player
+        clients.put(username, connection);
+        String token = UUID.randomUUID().toString();
+        connection.setToken(token);
+        connection.sendMessage(new ConnectionResponse("Successfully connected", token, MessageStatus.OK));
+        LOGGER.log(Level.INFO, "{0} connected to server!", username);
+//        }
     }
 
     /**
@@ -219,11 +218,44 @@ public class Server implements Runnable {
             if (conn == null) {
                 LOGGER.log(Level.INFO, "Message Request {0} - Unknown username {1}", new Object[]{message.getContent().name(), message.getSenderUsername()});
             } else if (msgToken.equals(conn.getToken())) {
-                Message response = controllerGame.onMessage(message);
-                sendMessage(message.getSenderUsername(), response);
+                if (message.getContent() == MessageContent.LIST_GAME) {
+                    sendMessage(message.getSenderUsername(), new ListGameResponse(this.controllerGames));
+                } else if (message.getContent() == MessageContent.JOIN_GAME) {
+                    System.out.println("JOIN GAME");
 
-                if (controllerGame.getGameState() == PossibleGameState.GAME_ROOM && controllerGame.getIsLobbyFull())
-                    controllerGame.gameSetupHandler();
+                    UUID gameUUID = ((JoinGameRequest) message).getGameUUID();
+                    ControllerGame controllerGame = null;
+                    for (ControllerGame cg : controllerGames) {
+                        if (cg.getId().equals(gameUUID)) {
+                            controllerGame = cg;
+                            break;
+                        }
+                    }
+
+                    if (controllerGame == null) {
+                        sendMessage(message.getSenderUsername(), new Response("Game not found", MessageStatus.ERROR));
+                        return;
+                    }
+
+                    this.playersGame.put(message.getSenderUsername(), controllerGame);
+                    sendMessage(message.getSenderUsername(), new Response("Game joined", MessageStatus.GAME_JOINED));
+
+                } else if (message.getContent() == MessageContent.CREATE_GAME) {
+                    System.out.println("CREATE GAME");
+                    ControllerGame controllerGame = new ControllerGame(this);
+                    this.controllerGames.add(controllerGame);
+                    this.playersGame.put(message.getSenderUsername(), controllerGame);
+                    sendMessage(message.getSenderUsername(), new Response("Game created", MessageStatus.GAME_CREATED));
+                    System.out.println(controllerGames);
+                    System.out.println(playersGame);
+                } else {
+                    ControllerGame controllerGame = this.playersGame.get(message.getSenderUsername());
+                    Message response = controllerGame.onMessage(message);
+                    sendMessage(message.getSenderUsername(), response);
+
+                    if (controllerGame.getGameState() == PossibleGameState.GAME_ROOM && controllerGame.getIsLobbyFull())
+                        controllerGame.gameSetupHandler();
+                }
             }
         }
     }

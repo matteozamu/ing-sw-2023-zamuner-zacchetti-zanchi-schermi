@@ -7,6 +7,7 @@ import it.polimi.ingsw.model.Player;
 import it.polimi.ingsw.network.message.*;
 
 import java.util.List;
+import java.util.UUID;
 
 public class MessageBuilder {
 
@@ -46,6 +47,18 @@ public class MessageBuilder {
             throw new NullPointerException("Player or Coordinate cannot be null");
 
         return new ObjectCardRequest(p.getName(), token, coordinate);
+    }
+
+    public static ListGameRequest buildListGameRequest(String username, String token) {
+        return new ListGameRequest(username, token);
+    }
+
+    public static CreateGameRequest buildCreateGameRequest(String username, String token) {
+        return new CreateGameRequest(username, token);
+    }
+
+    public static JoinGameRequest buildJoinGameRequest(String clientToken, String username, UUID gameUUID) {
+        return new JoinGameRequest(username, clientToken, gameUUID);
     }
 
     public static GameStateRequest buildGameStateRequest(String username, String token) {

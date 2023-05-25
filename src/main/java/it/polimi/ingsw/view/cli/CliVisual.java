@@ -81,7 +81,7 @@ public class CliVisual {
         int playerNumber = players.size();
         int[][] boardMatrix = JsonReader.getBoard(playerNumber);
 
-        if(playerNumber == 2) {
+        if (playerNumber == 2) {
             boardView.append(" ".repeat(17));
             boardView.append("-3        -2        -1         0         1         2         3\n");
         } else if (playerNumber == 3 || playerNumber == 4) {
@@ -90,7 +90,7 @@ public class CliVisual {
         }
 
         for (int i = 0; i < boardMatrix.length / 2; i++) {
-            if(!(playerNumber == 2 && 4 - i == 4)) {
+            if (!(playerNumber == 2 && 4 - i == 4)) {
                 boardView.append(String.format("%2s ", 4 - i));
             }
             for (int j = 0; j < boardMatrix[i].length; j++) {
@@ -99,13 +99,15 @@ public class CliVisual {
                     if (objectCard != null) {
                         String cardText = objectCard.toString();
                         String visibleCardText = cardText.replaceAll("\u001B\\[[;\\d]*m", "");
-                        if(visibleCardText.length() % 2 == 0) boardView.append("║").append(" ".repeat(8 - visibleCardText.length())).append(objectCard).append(" ".repeat(8 - visibleCardText.length()));
-                        else boardView.append("║").append(" ".repeat(7 - visibleCardText.length())).append(objectCard).append(" ".repeat(8 - visibleCardText.length()));
+                        if (visibleCardText.length() % 2 == 0)
+                            boardView.append("║").append(" ".repeat(8 - visibleCardText.length())).append(objectCard).append(" ".repeat(8 - visibleCardText.length()));
+                        else
+                            boardView.append("║").append(" ".repeat(7 - visibleCardText.length())).append(objectCard).append(" ".repeat(8 - visibleCardText.length()));
                     } else {
                         boardView.append("║ ").append(" ".repeat(7));
                     }
-                    if(playerNumber == 2) {
-                        if((4 - i == 3 && j - 4 == 0) || (4 - i == 2 && j - 4 == 1) ||  (4 - i == 1 && j - 4 == 3)){
+                    if (playerNumber == 2) {
+                        if ((4 - i == 3 && j - 4 == 0) || (4 - i == 2 && j - 4 == 1) || (4 - i == 1 && j - 4 == 3)) {
                             boardView.append("║");
                         }
                     }
@@ -117,7 +119,7 @@ public class CliVisual {
         }
 
         for (int i = boardMatrix.length / 2; i < boardMatrix.length; i++) {
-            if(!(playerNumber == 2 && 4 - i == -4)) {
+            if (!(playerNumber == 2 && 4 - i == -4)) {
                 boardView.append(String.format("%2s ", 4 - i));
             }
             for (int j = 0; j < boardMatrix[i].length; j++) {
@@ -126,13 +128,15 @@ public class CliVisual {
                     if (objectCard != null) {
                         String cardText = objectCard.toString();
                         String visibleCardText = cardText.replaceAll("\u001B\\[[;\\d]*m", "");
-                        if(visibleCardText.length() % 2 == 0) boardView.append("║").append(" ".repeat(8 - visibleCardText.length())).append(objectCard).append(" ".repeat(8 - visibleCardText.length()));
-                        else boardView.append("║").append(" ".repeat(7 - visibleCardText.length())).append(objectCard).append(" ".repeat(8 - visibleCardText.length()));
+                        if (visibleCardText.length() % 2 == 0)
+                            boardView.append("║").append(" ".repeat(8 - visibleCardText.length())).append(objectCard).append(" ".repeat(8 - visibleCardText.length()));
+                        else
+                            boardView.append("║").append(" ".repeat(7 - visibleCardText.length())).append(objectCard).append(" ".repeat(8 - visibleCardText.length()));
                     } else {
                         boardView.append("║ ").append(" ".repeat(7));
                     }
-                    if(playerNumber == 2) {
-                        if((4 - i == -1 && j - 4 == 2) || (4 - i == -2 && j - 4 == 1) ||  (4 - i == -3 && j - 4 == 1) || (4 - i == 0 && j - 4 == 3)){
+                    if (playerNumber == 2) {
+                        if ((4 - i == -1 && j - 4 == 2) || (4 - i == -2 && j - 4 == 1) || (4 - i == -3 && j - 4 == 1) || (4 - i == 0 && j - 4 == 3)) {
                             boardView.append("║");
                         }
                     }
@@ -175,7 +179,7 @@ public class CliVisual {
                     String cardText = card.toString();
                     String visibleCardText = cardText.replaceAll("\u001B\\[[;\\d]*m", "");
                     int visibleCardLength = visibleCardText.length();
-                    if(visibleCardLength == 7){
+                    if (visibleCardLength == 7) {
                         shelfView.append(" ").append(cardText).append(" ");
                     } else if (visibleCardLength == 6) {
                         shelfView.append(" ".repeat(2)).append(cardText).append(" ".repeat(1));
@@ -229,5 +233,26 @@ public class CliVisual {
 
         limbo.append("\n");
         out.print(limbo);
+    }
+
+    public static void printLogo(PrintStream out) {
+        out.println("""
+                                                                                :!?YJ~                                                                              \s
+                                                                               ~P&&BG#@&~                                                                            \s
+                            7GBBBB~      JBBB#B:                              7B@&^:J5B@@^       .                      .^::     ^YGGPP!                             \s
+                            .GB@@&~      ?@@@@Y.                             :5&@7 !#@@@@7   J##&#Y                     .#@G.  ~B&5^..^B#^                           \s
+                             .5&@#.      ^&&@G                               ^5&@7  !5BG7     ?#&G:                      G@Y  7&&~ ^GB!:@#                           \s
+                              5&&@5      #@&@5                                5#@&~           ~B&G.                      P&Y :G@Y  B@&##@5                           \s
+                              5#&&@7    5@&&@5      .^!J5GG^   .5##G7         .P&@@B~         ~B&G                       P&Y !G@7  .7YYJ~                            \s
+                              Y#&7#&:  7@GY#@5      :YG&@@5    !&@#~            J&@@@#J.      ~B&B^~7?7~:                P&Y ^5&Y       ^JJ.                         \s
+                              YB&^^#B :&#:J#@5         :P&@?  7&@B:              .?B&@@&5:    ~B&&&&&&&&BJ       .:.     5&J  !B&:     .P@@Y      ...                \s
+                              YB&! !&PB&~ YB&5          .Y#@G5&@P.                  ^P&&&&?   ~G&&&Y^:!#&&~   ^YP5YYP5:  5&J .~B@B7J57  .!!.   .?P5YYPG!             \s
+                              JB&?  ?&&?  5B&Y           .?G&&&J.              ..     :#&&&~  ~G&&!    J&&^  ?#B^   .P&: Y&J :Y?P&&7~~ !GB#?  !G#!.   ?&?            \s
+                              JG&Y  Y&&?  PB&J    .^!!:   !5&#7             :5GBG5!    J&&B5  ~P&B.    Y#G. ~B&GP555Y5G~ Y#?    .B&7   .P##: :5#B5555YYGJ            \s
+                              ?G&5 .7??7 .PB&J  :JB#&&&? .Y##~              B####BPJ   Y##G5  ~P#G.    5#?  ?B#^   .!7^  J#?     Y#B   .5#B: ~P#?    ~7~             \s
+                              ?P#G       ^PB&J  ?5#BPGG?!P#G:               G###55P?.:Y##GY~  ^5#P    :P#7  !B#?   7###! ?B7     Y#B.   YBB: :P#P   :B#&5            \s
+                            .75###5.    ^5B##B! :JG#GPGB##5.                .YGBBBBGB##BP?^  .YGBB!  .5BBB~  7BBP??PBB5:.Y#J    ~G#B^  :PBB^  ^PBGJ?5B#B!            \s
+                            .~~!!!!:    ^!!!!!!. .~J5P5Y?~.                   .:~7?JJ?!~^.   .!!!!~  .!!!!~   .^7??7!:  .!!!.   ~!~!^  .~~~:    :!???!^.             \s
+                """);
     }
 }

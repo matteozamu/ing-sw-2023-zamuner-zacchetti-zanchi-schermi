@@ -44,13 +44,20 @@ public class ControllerGame implements TimerRunListener, Serializable {
         this.selectedCoordinates = new ArrayList<>();
     }
 
+    public UUID getId() {
+        return id;
+    }
+
     /**
      * method called when a message is received from a client
+     *
      * @param receivedMessage is the message received
      * @return the response to the message
      */
     public Message onMessage(Message receivedMessage) {
         Server.LOGGER.log(Level.SEVERE, "ONMESSAGE: {0}", receivedMessage);
+
+        System.out.println(gameState);
 
         if (gameState == PossibleGameState.GAME_ROOM) {
             return firstStateHandler(receivedMessage);
@@ -87,6 +94,7 @@ public class ControllerGame implements TimerRunListener, Serializable {
 
     /**
      * method called when a LoadShelfRequest is received from a client
+     *
      * @param LoadShelfRequest is the message received
      * @return the response to the message
      */
@@ -120,6 +128,7 @@ public class ControllerGame implements TimerRunListener, Serializable {
 
     /**
      * method called when a DeleteLimboRequest is received from a client
+     *
      * @param deleteLimboRequest is the message received
      * @return the response to the message
      */
@@ -141,6 +150,7 @@ public class ControllerGame implements TimerRunListener, Serializable {
 
     /**
      * method called when a ReorderLimboRequest is received from a client
+     *
      * @param reorderLimboRequest is the message received
      * @return the response to the message
      */
@@ -179,6 +189,7 @@ public class ControllerGame implements TimerRunListener, Serializable {
     /**
      * method called when a message is received from a client before the game starts
      * the message can be a request to add a player to the lobby or a request to set the number of players
+     *
      * @param receivedMessage is the message received
      * @return the response to the message
      */
@@ -196,6 +207,7 @@ public class ControllerGame implements TimerRunListener, Serializable {
 
     /**
      * method called when a NumberOfPlayersMessage is received from a client
+     *
      * @param numberOfPlayersMessage is the number of players entered by the client
      * @return the response to the message
      */
@@ -216,6 +228,7 @@ public class ControllerGame implements TimerRunListener, Serializable {
 
     /**
      * method called when a LobbyMessage is received from a client
+     *
      * @param lobbyMessage is the message received
      * @return the response to the message
      */
@@ -240,6 +253,7 @@ public class ControllerGame implements TimerRunListener, Serializable {
 
     /**
      * build an invalid response
+     *
      * @return a Response message to the client
      */
     private Response buildInvalidResponse() {
@@ -277,6 +291,7 @@ public class ControllerGame implements TimerRunListener, Serializable {
 
     /**
      * check if the lobby if full, if it is, it the game starts, otherwise it adds the player to the lobby
+     *
      * @return a Response message to the client
      */
     private Response checkLobby() {
@@ -299,6 +314,7 @@ public class ControllerGame implements TimerRunListener, Serializable {
 
     /**
      * changes the state of the game
+     *
      * @param changeState the new state of the game
      */
     void changeState(PossibleGameState changeState) {
@@ -512,9 +528,10 @@ public class ControllerGame implements TimerRunListener, Serializable {
 
     /**
      * this method is used to calculate the winner of the game at the end of it
+     *
      * @return the name of the winner
      */
-    private void calculateWinner(){
+    private void calculateWinner() {
         int maxPoints = 0;
 //        String winner = "";
         for (Player p : this.game.getPlayers()) {
@@ -534,6 +551,13 @@ public class ControllerGame implements TimerRunListener, Serializable {
     @Override
     public void onTimerRun() {
         // TODO
+    }
+
+    @Override
+    public String toString() {
+        return "ControllerGame{" +
+                "id=" + id +
+                '}';
     }
 }
 
