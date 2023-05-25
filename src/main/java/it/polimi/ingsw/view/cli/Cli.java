@@ -306,7 +306,8 @@ public class Cli extends ClientGameManager implements DisconnectionListener {
             doConnection();
         } else {
             out.println("Connected to server with username " + getUsername());
-            addPlayerToGameRequest();
+//            addPlayerToGameRequest();
+
         }
     }
 

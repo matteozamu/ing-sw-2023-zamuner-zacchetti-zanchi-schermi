@@ -30,14 +30,19 @@ public class Server implements Runnable {
     private int rmiPort = 7272;
     private Map<String, Connection> clients;
     private ControllerGame controllerGame;
+    private boolean waitForLoad;
 
     private Timer moveTimer;
 
+    /**
+     * costructor of a new game
+     */
     public Server() {
         initLogger();
         synchronized (clientsLock) {
             clients = new HashMap<>();
         }
+        this.waitForLoad = false;
 
         startServers();
 
@@ -48,6 +53,35 @@ public class Server implements Runnable {
 
         moveTimer = new Timer();
     }
+
+
+
+//    /**
+//     * Starts the server loading a game
+//     *
+//     * @param confFilePath path of the config file
+//     */
+//    private Server(String confFilePath) {
+//        initLogger();
+//        synchronized (clientsLock) {
+//            this.clients = new HashMap<>();
+//        }
+//        this.waitForLoad = true;
+//
+//        loadConfigFile(confFilePath);
+//
+//        startServers();
+//
+//        this.gameManager = SaveGame.loadGame(this, startTime);
+//        reserveSlots(gameManager.getGameInstance().getPlayers());
+//
+//        LOGGER.log(Level.INFO, "Game loaded successfully.");
+//
+//        Thread pingThread = new Thread(this);
+//        pingThread.start();
+//
+//        moveTimer = new Timer();
+//    }
 
     public static void main(String[] args) {
         new Server();
@@ -120,10 +154,9 @@ public class Server implements Runnable {
             connection.setToken(token);
 
 //            if (waitForLoad) {// Game in lobby state for load a game
-            connection.sendMessage(
-                    new GameLoadResponse("Successfully reconnected", token,
-                            UserPlayerState.FIRST_ACTION)
-            );
+                connection.sendMessage(
+                        new GameLoadResponse("Successfully reconnected", token, UserPlayerState.FIRST_ACTION)
+                );
 //                checkLoadReady();
 //            } else {
 //                if (controllerGame.getGameState() == PossibleGameState.GAME_ROOM) { // Game in lobby state

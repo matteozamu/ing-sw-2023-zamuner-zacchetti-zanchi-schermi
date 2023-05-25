@@ -209,6 +209,7 @@ public abstract class ClientGameManager implements ClientGameManagerListener, Cl
         }
 
         queue.add(() -> connectionResponse(connectionResponse));
+        queue.add(() -> displayActions(getLobbyActions()));
     }
 
     private void handlePlayersInLobby(LobbyPlayersResponse message) {
@@ -379,6 +380,15 @@ public abstract class ClientGameManager implements ClientGameManagerListener, Cl
             queue.add(() -> displayActions(getPossibleActions()));
         }
     }
+
+    /**
+     * @return a list of possible actions based on the current state of the player
+     */
+    private List<PossibleAction> getLobbyActions() {
+        return List.of(PossibleAction.JOIN_GAME, PossibleAction.CREATE_GAME);
+
+    }
+
 
     /**
      * @return a list of possible actions based on the current state of the player
