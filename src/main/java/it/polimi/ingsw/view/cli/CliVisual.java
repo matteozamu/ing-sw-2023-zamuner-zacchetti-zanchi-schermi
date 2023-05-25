@@ -99,16 +99,10 @@ public class CliVisual {
                     if (objectCard != null) {
                         String cardText = objectCard.toString();
                         String visibleCardText = cardText.replaceAll("\u001B\\[[;\\d]*m", "");
-                        int visibleCardTextLength = visibleCardText.length();
-                        if(visibleCardTextLength == 7){
-                            boardView.append("║").append(" ").append(objectCard).append(" ");
-                        } else if (visibleCardTextLength == 6) {
-                            boardView.append("║").append(" ".repeat(1)).append(objectCard).append(" ".repeat(2));
-                        } else if (visibleCardTextLength == 5) {
-                            boardView.append("║").append(" ".repeat(2)).append(objectCard).append(" ".repeat(2));
-                        }
+                        if(visibleCardText.length() % 2 == 0) boardView.append("║").append(" ".repeat(8 - visibleCardText.length())).append(objectCard).append(" ".repeat(8 - visibleCardText.length()));
+                        else boardView.append("║").append(" ".repeat(7 - visibleCardText.length())).append(objectCard).append(" ".repeat(8 - visibleCardText.length()));
                     } else {
-                        boardView.append("║ ").append(" ".repeat(8));
+                        boardView.append("║ ").append(" ".repeat(7));
                     }
                     if(playerNumber == 2) {
                         if((4 - i == 3 && j - 4 == 0) || (4 - i == 2 && j - 4 == 1) ||  (4 - i == 1 && j - 4 == 3)){
@@ -116,7 +110,7 @@ public class CliVisual {
                         }
                     }
                 } else {
-                    boardView.append(" ".repeat(10));
+                    boardView.append(" ".repeat(9));
                 }
             }
             boardView.append("\n");
@@ -132,16 +126,10 @@ public class CliVisual {
                     if (objectCard != null) {
                         String cardText = objectCard.toString();
                         String visibleCardText = cardText.replaceAll("\u001B\\[[;\\d]*m", "");
-                        int visibleCardTextLength = visibleCardText.length();
-                        if(visibleCardTextLength == 7){
-                            boardView.append("║").append(" ").append(objectCard).append(" ");
-                        } else if (visibleCardTextLength == 6) {
-                            boardView.append("║").append(" ".repeat(1)).append(objectCard).append(" ".repeat(2));
-                        } else if (visibleCardTextLength == 5) {
-                            boardView.append("║").append(" ".repeat(2)).append(objectCard).append(" ".repeat(2));
-                        }
+                        if(visibleCardText.length() % 2 == 0) boardView.append("║").append(" ".repeat(8 - visibleCardText.length())).append(objectCard).append(" ".repeat(8 - visibleCardText.length()));
+                        else boardView.append("║").append(" ".repeat(7 - visibleCardText.length())).append(objectCard).append(" ".repeat(8 - visibleCardText.length()));
                     } else {
-                        boardView.append("║ ").append(" ".repeat(8));
+                        boardView.append("║ ").append(" ".repeat(7));
                     }
                     if(playerNumber == 2) {
                         if((4 - i == -1 && j - 4 == 2) || (4 - i == -2 && j - 4 == 1) ||  (4 - i == -3 && j - 4 == 1) || (4 - i == 0 && j - 4 == 3)){
@@ -149,7 +137,7 @@ public class CliVisual {
                         }
                     }
                 } else {
-                    boardView.append(" ".repeat(10));
+                    boardView.append(" ".repeat(9));
                 }
             }
             boardView.append("\n");

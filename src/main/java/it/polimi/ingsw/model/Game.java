@@ -194,6 +194,7 @@ public class Game implements Serializable {
     public void loadObjectCards() {
         List<ObjectCardType> types = List.of(ObjectCardType.values());
 
+
         for (int i = 0; i < ObjectCardType.SIZE; i++) {
             for (int j = 0; j < 7; j++) this.objectCardContainer.add(new ObjectCard(types.get(i), 0));
             for (int j = 0; j < 7; j++) this.objectCardContainer.add(new ObjectCard(types.get(i), 1));
