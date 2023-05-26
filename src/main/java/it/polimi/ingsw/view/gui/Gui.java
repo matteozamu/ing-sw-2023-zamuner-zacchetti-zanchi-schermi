@@ -16,14 +16,14 @@ public class Gui extends Application {
         stage.setMaximized(true);
         stage.setFullScreen(true);
         stage.setFullScreenExitHint("");
-        stage.setFullScreenExitKeyCombination(KeyCombination.NO_MATCH); //Evita che l'utente possa uscire dalla modalità fullscreen
+        stage.setFullScreenExitKeyCombination(KeyCombination.NO_MATCH);
 
         InputStream is = Gui.class.getClassLoader().getResourceAsStream("img/logos/gigaTitle.png");
         if (is != null) {
             stage.getIcons().add(new Image(is));
         }
 
-        stage.setScene(new Scene(new Pane())); // 800 è la larghezza, 600 è l'altezza
+        stage.setScene(new Scene(new Pane()));
 
         GuiManager.setLayout(stage.getScene(), "fxml/menuScene.fxml");
         stage.show();

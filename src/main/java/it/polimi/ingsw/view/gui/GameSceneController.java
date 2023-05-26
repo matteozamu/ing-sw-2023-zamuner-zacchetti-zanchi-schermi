@@ -45,11 +45,13 @@ public class GameSceneController {
     @FXML
     StackPane boardStack;
     @FXML
-    AnchorPane imagesPane;
+    GridPane imagesPane;
     @FXML
     ImageView board;
     @FXML
     HBox boardShelf;
+    @FXML
+    VBox shelfArea;
     @FXML
     ImageView personalGoalCard;
     @FXML
@@ -59,7 +61,23 @@ public class GameSceneController {
     @FXML
     ImageView chair;
     @FXML
-    ImageView shelf;
+    ImageView shelf1;
+    @FXML
+    ImageView shelf2;
+    @FXML
+    ImageView shelf3;
+    @FXML
+    ImageView shelf4;
+    @FXML
+    HBox imageList;
+    @FXML
+    Label nameShelf1;
+    @FXML
+    Label nameShelf2;
+    @FXML
+    Label nameShelf3;
+    @FXML
+    Label nameShelf4;
     @FXML
     Label pointLabel;
     @FXML
@@ -82,6 +100,11 @@ public class GameSceneController {
     private void initialize() {
         guiManager = GuiManager.getInstance();
         guiManager.setGameSceneController(this);
+
+        nameShelf1.setText("Federico");
+        nameShelf2.setText("Matteo");
+        nameShelf3.setText("Federica");
+        nameShelf4.setText("Simone");
 
 
         objectCards = new HashMap<>();
@@ -216,7 +239,9 @@ public class GameSceneController {
                 if (boardMatrix[i][j] == 1) {
                     objectCard = board.getGrid().get(new Coordinate(4 - i, j - 4));
                     if (objectCard != null) {
-                        String cardNameType = objectCard.toString() + "-" + objectCard.getId();
+                        String cardTypeText = objectCard.toString();
+                        String visibleCardTypeText = cardTypeText.replaceAll("\u001B\\[[;\\d]*m", "");
+                        String cardNameType = visibleCardTypeText + "-" + objectCard.getId();
 
                         // Use the map to get the ImageView
                         ImageView imageView = objectCards.get(cardNameType);
@@ -226,7 +251,7 @@ public class GameSceneController {
                             imageView.setPreserveRatio(true);
                             imageView.setPickOnBounds(true);
 
-                            //imagesPane.add(imageView, 4 - i, j - 4);  // aggiunge l'immagine alla cella (j, i) del GridPane
+                            imagesPane.add(imageView, 4 - i, j - 4);  // aggiunge l'immagine alla cella (j, i) del GridPane
                         }
                     }
                 }

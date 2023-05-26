@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import java.net.*?>
-<?import javafx.geometry.*?>
-<?import javafx.scene.control.*?>
 <?import javafx.scene.image.*?>
 <?import javafx.scene.layout.*?>
 
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.Label?>
 <FlowPane fx:id="mainPane" styleClass="mainPane" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.ingsw.view.gui.GameSceneController">
 
     <stylesheets>
@@ -15,15 +15,38 @@
     <StackPane fx:id="boardArea" styleClass="boardArea">
 
         <HBox fx:id="boardShelf" StackPane.alignment="CENTER">
-            <StackPane fx:id="boardStack">
-                <ImageView fx:id="board" fitHeight="656.0" fitWidth="656.0" styleClass="board"/>
-                <AnchorPane fx:id="imagesPane">
-                    <!-- Le immagini delle objectcard verranno aggiunte dinamicamente nel controller -->
-                </AnchorPane>
-            </StackPane>
-            <ImageView fx:id="shelf" fitHeight="400.0" fitWidth="400.0" styleClass="shelf" HBox.hgrow="NEVER"/>
-        </HBox>
+            <VBox>
+                <StackPane fx:id="boardStack">
+                    <ImageView fx:id="board" fitHeight="656.0" fitWidth="656.0" styleClass="board"/>
+                    <GridPane fx:id="imagesPane" />
+                </StackPane>
+                <Region VBox.vgrow="ALWAYS"/>
+            </VBox>
+            <VBox fx:id="shelfArea" HBox.hgrow="NEVER">
 
+                <ScrollPane styleClass="shelfScroll" prefWidth="400.0" prefHeight="420.0">
+                    <HBox fx:id="imageList">
+                        <StackPane>
+                            <ImageView fx:id="shelf1" fitHeight="400.0" fitWidth="400.0" styleClass="shelf"/>
+                            <Label fx:id="nameShelf1" StackPane.alignment="BOTTOM_CENTER" styleClass="shelfLabel" />
+                        </StackPane>
+                        <StackPane>
+                            <ImageView fx:id="shelf2" fitHeight="400.0" fitWidth="400.0" styleClass="shelf"/>
+                            <Label fx:id="nameShelf2" StackPane.alignment="BOTTOM_CENTER" styleClass="shelfLabel" />
+                        </StackPane>
+                        <StackPane>
+                            <ImageView fx:id="shelf3" fitHeight="400.0" fitWidth="400.0" styleClass="shelf"/>
+                            <Label fx:id="nameShelf3" StackPane.alignment="BOTTOM_CENTER" styleClass="shelfLabel" />
+                        </StackPane>
+                        <StackPane>
+                            <ImageView fx:id="shelf4" fitHeight="400.0" fitWidth="400.0" styleClass="shelf"/>
+                            <Label fx:id="nameShelf4" StackPane.alignment="BOTTOM_CENTER" styleClass="shelfLabel" />
+                        </StackPane>
+                    </HBox>
+                </ScrollPane>
+
+            </VBox>
+        </HBox>
 
     </StackPane>
 </FlowPane>
