@@ -118,4 +118,6 @@ interface ClientGameManagerListener {
     void printScore();
 
     void gameStateRequest(String username, String token);
+
+    void onPlayerDisconnection(String username);
 }

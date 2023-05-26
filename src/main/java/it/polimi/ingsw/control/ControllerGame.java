@@ -57,7 +57,7 @@ public class ControllerGame implements TimerRunListener, Serializable {
     public Message onMessage(Message receivedMessage) {
         Server.LOGGER.log(Level.SEVERE, "ONMESSAGE: {0}", receivedMessage);
 
-        System.out.println(gameState);
+//        System.out.println(gameState);
 
         if (gameState == PossibleGameState.GAME_ROOM) {
             return firstStateHandler(receivedMessage);
