@@ -126,7 +126,7 @@ public class GuiManager extends ClientGameManager implements DisconnectionListen
 
     @Override
     public void addPlayerToGameRequest() {
-        
+
     }
 
     @Override
@@ -226,6 +226,11 @@ public class GuiManager extends ClientGameManager implements DisconnectionListen
 
     @Override
     public void gameStateRequest(String username, String token) {
+
+    }
+
+    @Override
+    public void onPlayerDisconnection(String username) {
 
     }
 

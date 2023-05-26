@@ -206,17 +206,13 @@ public class Server implements Runnable {
                 LOGGER.log(Level.INFO, "Message Request {0} - Unknown username {1}", new Object[]{message.getContent().name(), message.getSenderUsername()});
             } else if (msgToken.equals(conn.getToken())) {
                 if (message.getContent() == MessageContent.LIST_GAME) {
-
                     List<ControllerGame> gameAvailable = new ArrayList<>();
                     for (ControllerGame cg : controllerGames) {
-                        if (cg.getGameState() == PossibleGameState.GAME_ROOM && !cg.getIsLobbyFull()) {
+                        if (cg.getGameState() == PossibleGameState.GAME_ROOM && !cg.getIsLobbyFull() && cg.getGame().getNumberOfPlayers() != -1) {
                             gameAvailable.add(cg);
                         }
                     }
-
-                    sendMessage(message.getSenderUsername(), new ListGameResponse(this.controllerGames));
-
-
+                    sendMessage(message.getSenderUsername(), new ListGameResponse(gameAvailable));
                 } else if (message.getContent() == MessageContent.JOIN_GAME) {
                     UUID gameUUID = ((JoinGameRequest) message).getGameUUID();
                     ControllerGame controllerGame = null;

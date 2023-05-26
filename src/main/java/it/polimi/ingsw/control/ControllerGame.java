@@ -557,7 +557,13 @@ public class ControllerGame implements TimerRunListener, Serializable {
     @Override
     public String toString() {
         return "ControllerGame{" +
-                "id=" + id +
+                "server=" + server +
+                ", id=" + id +
+                ", game=" + game +
+                ", selectedCoordinates=" + selectedCoordinates +
+                ", gameState=" + gameState +
+                ", isLobbyFull=" + isLobbyFull +
+                ", turnController=" + turnController +
                 '}';
     }
 }
