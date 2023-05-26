@@ -281,13 +281,9 @@ public class Game implements Serializable {
     @Override
     public String toString() {
         return "Game{" +
-                "objectCardContainer=" + objectCardContainer +
-                ", commonGoalContainer=" + commonGoalContainer +
-                ", personalGoalCardsContainer=" + personalGoalCardsContainer +
                 ", players=" + players +
                 ", currentPlayer=" + currentPlayer +
                 ", board=" + board +
-                ", commonGoals=" + commonGoals +
                 ", hasStarted=" + hasStarted +
                 ", numberOfPlayers=" + numberOfPlayers +
                 '}';

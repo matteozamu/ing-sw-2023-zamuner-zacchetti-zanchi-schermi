@@ -5,6 +5,7 @@ import it.polimi.ingsw.enumeration.MessageContent;
 import it.polimi.ingsw.enumeration.MessageStatus;
 import it.polimi.ingsw.enumeration.PossibleGameState;
 import it.polimi.ingsw.enumeration.UserPlayerState;
+import it.polimi.ingsw.model.Player;
 import it.polimi.ingsw.network.message.*;
 
 import java.io.IOException;
@@ -156,6 +157,10 @@ public class Server implements Runnable {
             connection.sendMessage(
                     new GameLoadResponse("Successfully reconnected", token, UserPlayerState.FIRST_ACTION)
             );
+            ControllerGame controllerGame = playersGame.get(username);
+
+            System.out.println("controllerGame: " + controllerGame);
+
 //                checkLoadReady();
 //            } else {
 //                if (controllerGame.getGameState() == PossibleGameState.GAME_ROOM) { // Game in lobby state
@@ -163,9 +168,9 @@ public class Server implements Runnable {
 //                            new ConnectionResponse("Successfully reconnected", token, MessageStatus.OK)
 //                    );
 //                } else { // Game started
-//                    connection.sendMessage(
-//                            controllerGame.onConnectionMessage(new LobbyMessage(username, token, null, false))
-//                    );
+//            connection.sendMessage(
+//                    controllerGame.onConnectionMessage(new LobbyMessage(username, token, null, false))
+//            );
 //                }
 //            }
 
@@ -215,13 +220,8 @@ public class Server implements Runnable {
                     sendMessage(message.getSenderUsername(), new ListGameResponse(gameAvailable));
                 } else if (message.getContent() == MessageContent.JOIN_GAME) {
                     UUID gameUUID = ((JoinGameRequest) message).getGameUUID();
-                    ControllerGame controllerGame = null;
-                    for (ControllerGame cg : controllerGames) {
-                        if (cg.getId().equals(gameUUID)) {
-                            controllerGame = cg;
-                            break;
-                        }
-                    }
+                    ControllerGame controllerGame = findGameByUUID(gameUUID);
+
                     if (controllerGame == null) {
                         sendMessage(message.getSenderUsername(), new Response("Game not found", MessageStatus.ERROR));
                         return;
@@ -253,6 +253,17 @@ public class Server implements Runnable {
 
         if (username != null) {
             LOGGER.log(Level.INFO, "{0} disconnected from server!", username);
+
+
+            ControllerGame controllerGame = findGameByPlayerUsername(username);
+            Player p = controllerGame.getGame().getPlayerByName(username);
+            controllerGame.getGame().getPlayers().remove(p);
+
+//            synchronized (clientsLock) {
+//                clients.remove(username);
+//            }
+
+            LOGGER.log(Level.INFO, "{0} removed from client list!", username);
 
 //            if (controllerGame.getGameState() == PossibleGameState.GAME_ROOM) {
 //                synchronized (clientsLock) {
@@ -332,5 +343,18 @@ public class Server implements Runnable {
                 Thread.currentThread().interrupt();
             }
         }
+    }
+
+    private ControllerGame findGameByUUID(UUID gameUUID) {
+        for (ControllerGame cg : controllerGames) {
+            if (cg.getId().equals(gameUUID)) {
+                return cg;
+            }
+        }
+        return null;
+    }
+
+    private ControllerGame findGameByPlayerUsername(String username) {
+        return playersGame.get(username);
     }
 }
