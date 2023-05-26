@@ -72,6 +72,51 @@
     -fx-max-width: 660px;
 }
 
+.topEndBox {
+    -fx-padding: 50 0 0 0;
+    -fx-alignment: CENTER;
+}
+
+.centerEndBox {
+    -fx-max-width: 1200px;
+    -fx-alignment: CENTER;
+}
+
+.botEndBox {
+    -fx-padding: 0 0 50 0;
+    -fx-alignment: CENTER;
+}
+
+.endTitle {
+    -fx-font-family: "Ethnocentric Rg";
+    -fx-font-style: italic;
+    -fx-font-size: 50px;
+    -fx-text-fill: #f3997b;
+}
+
+.endTable {
+    -fx-min-width: 1305px;
+    -fx-max-width: 1305px;
+
+    -fx-min-height: 500px;
+    -fx-max-height: 500px;
+
+    -fx-background-color: transparent;
+    -fx-border-color: transparent;
+}
+
+.endRankColumn {
+    -fx-pref-width: 100px;
+}
+
+.endPlayerColumn {
+    -fx-pref-width: 860px;
+}
+
+.endPointsColumn {
+    -fx-pref-width: 220px;
+}
+
 .frame-1 {
     -fx-image: url("../img/item tiles/frame-1.png");
     -fx-effect: dropshadow(gaussian, rgba(255, 255, 255, 0.3), 20, 0.5, 0, 0);
