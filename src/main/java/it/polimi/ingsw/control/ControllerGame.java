@@ -307,6 +307,7 @@ public class ControllerGame implements TimerRunListener, Serializable {
 
     public void gameSetupHandler() {
         if (game.getPlayers().size() == game.getNumberOfPlayers()) {
+            setIsLobbyFull(true);
             game.setCurrentPlayer(game.getPlayers().get(0));
             startingStateHandler();
         }

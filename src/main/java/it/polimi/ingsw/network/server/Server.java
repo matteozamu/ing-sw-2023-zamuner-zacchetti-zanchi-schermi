@@ -181,24 +181,11 @@ public class Server implements Runnable {
     }
 
     private void newPlayerLogin(String username, Connection connection) throws IOException {
-//        if (controllerGame.getGame().isHasStarted()) {  // Game Started
-//            connection.sendMessage(new ConnectionResponse("Game is already started!", null, MessageStatus.ERROR));
-//            connection.disconnect();
-//            LOGGER.log(Level.INFO, "{0} attempted to connect!", username);
-//        } else if (controllerGame.getIsLobbyFull()) { // Lobby Full
-//            connection.sendMessage(
-//                    new ConnectionResponse("Max number of player reached", null, MessageStatus.ERROR)
-//            );
-//
-//            connection.disconnect();
-//            LOGGER.log(Level.INFO, "{0} tried to connect but game is full!", username);
-//        } else { // New player
         clients.put(username, connection);
         String token = UUID.randomUUID().toString();
         connection.setToken(token);
         connection.sendMessage(new ConnectionResponse("Successfully connected", token, MessageStatus.OK));
         LOGGER.log(Level.INFO, "{0} connected to server!", username);
-//        }
     }
 
     /**
@@ -219,10 +206,18 @@ public class Server implements Runnable {
                 LOGGER.log(Level.INFO, "Message Request {0} - Unknown username {1}", new Object[]{message.getContent().name(), message.getSenderUsername()});
             } else if (msgToken.equals(conn.getToken())) {
                 if (message.getContent() == MessageContent.LIST_GAME) {
-                    sendMessage(message.getSenderUsername(), new ListGameResponse(this.controllerGames));
-                } else if (message.getContent() == MessageContent.JOIN_GAME) {
-                    System.out.println("JOIN GAME");
 
+                    List<ControllerGame> gameAvailable = new ArrayList<>();
+                    for (ControllerGame cg : controllerGames) {
+                        if (cg.getGameState() == PossibleGameState.GAME_ROOM && !cg.getIsLobbyFull()) {
+                            gameAvailable.add(cg);
+                        }
+                    }
+
+                    sendMessage(message.getSenderUsername(), new ListGameResponse(this.controllerGames));
+
+
+                } else if (message.getContent() == MessageContent.JOIN_GAME) {
                     UUID gameUUID = ((JoinGameRequest) message).getGameUUID();
                     ControllerGame controllerGame = null;
                     for (ControllerGame cg : controllerGames) {
@@ -231,15 +226,12 @@ public class Server implements Runnable {
                             break;
                         }
                     }
-
                     if (controllerGame == null) {
                         sendMessage(message.getSenderUsername(), new Response("Game not found", MessageStatus.ERROR));
                         return;
                     }
-
                     this.playersGame.put(message.getSenderUsername(), controllerGame);
                     sendMessage(message.getSenderUsername(), new Response("Game joined", MessageStatus.GAME_JOINED));
-
                 } else if (message.getContent() == MessageContent.CREATE_GAME) {
                     System.out.println("CREATE GAME");
                     ControllerGame controllerGame = new ControllerGame(this);
