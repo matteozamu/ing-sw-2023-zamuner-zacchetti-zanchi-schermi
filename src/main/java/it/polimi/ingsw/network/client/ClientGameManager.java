@@ -120,7 +120,7 @@ public abstract class ClientGameManager implements ClientGameManagerListener, Cl
                 break;
 
             case DISCONNECTION:
-//                handleDisconnection((DisconnectionMessage) message);
+                handleDisconnection((DisconnectionMessage) message);
                 break;
 
             default:
@@ -261,6 +261,14 @@ public abstract class ClientGameManager implements ClientGameManagerListener, Cl
     }
 
     /**
+     * Handles a disconnection message received from the server when a clìient disconnects
+     * @param disconnectionMessage disconnection message received
+     */
+    private void handleDisconnection(DisconnectionMessage disconnectionMessage) {
+        queue.add(() -> onPlayerDisconnection(disconnectionMessage.getUsername()));
+    }
+
+    /**
      * Check what is the next action for the client
      */
     private void checkNextAction() {
@@ -270,7 +278,7 @@ public abstract class ClientGameManager implements ClientGameManagerListener, Cl
             turnManager.endTurn();
         }
 
-        System.out.println(yourTurn + "  -  " + turnOwnerChanged);
+//        System.out.println(yourTurn + "  -  " + turnOwnerChanged);
         if (yourTurn && turnOwnerChanged) {
             turnOwnerChanged = false;
             yourTurn = false;
