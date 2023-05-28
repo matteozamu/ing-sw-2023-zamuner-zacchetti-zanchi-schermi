@@ -1,7 +1,5 @@
 package it.polimi.ingsw.view.gui;
 
-import javafx.scene.image.ImageView;
-
 /**
  * This class represents a row of the table of EndGameSceneController
  */

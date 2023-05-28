@@ -22,12 +22,12 @@
         <VBox styleClass="centerEndBox">
             <TableView fx:id="table" styleClass="endTable">
                 <columns>
-                    <TableColumn fx:id="rankColumn" text="#" styleClass="endRankColumn">
-                    </TableColumn>
-                    <TableColumn fx:id="playerColumn" text="Player" styleClass="endPlayerColumn">
-                    </TableColumn>
-                    <TableColumn fx:id="pointsColumn" text="Points" styleClass="endPointsColumn">
-                    </TableColumn>
+                    <TableColumn fx:id="rankColumn" text="#" styleClass="endRankColumn"/>
+
+                    <TableColumn fx:id="playerColumn" text="Player" styleClass="endPlayerColumn"/>
+
+                    <TableColumn fx:id="pointsColumn" text="Points" styleClass="endPointsColumn"/>
+
                 </columns>
             </TableView>
         </VBox>

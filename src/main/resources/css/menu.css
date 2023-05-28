@@ -9,7 +9,7 @@
 /* Main menu */
 
 .mainPane {
-    -fx-background-image: url("../img/logos/Display_5.jpg");
+    -fx-background-image: url("../img/misc/parquet_backgroundV2.jpg");
     -fx-background-size: cover;
     -fx-alignment: CENTER;
 }
