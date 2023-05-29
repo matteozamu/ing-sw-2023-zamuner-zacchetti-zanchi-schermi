@@ -7,7 +7,7 @@
 }
 
 .mainPane {
-    -fx-background-image: url("../img/misc/parquet_backgroundV2.jpg");
+    -fx-background-image: url("../img/misc/parquet_backgroundV3.png");
     -fx-background-size: cover;
     -fx-alignment: CENTER;
 }
@@ -164,148 +164,177 @@
     -fx-pref-width: 220px;
 }
 
-.gridPane {
-    -fx-hgap: 1;
-    -fx-vgap: 1;
+.limbo {
+    -fx-background-color: rgba(255, 255, 255, 0.5);
+    -fx-border-radius: 15px;
+    -fx-background-radius: 15px;
+    -fx-spacing: 25;
 }
 
-.tileBoard {
+.shelfArea {
+    -fx-spacing: 25;
+}
+
+.boardShelf {
+    -fx-spacing: 10;
+}
+
+.arrowShelf {
+    -fx-image: url("/img/misc/arrow_shelf.png");
+}
+
+
+.transparent {
+    -fx-image: url("/img/item_tiles/transparent.png");
+}
+
+.frame-1 {
+    -fx-image: url("/img/item_tiles/frame-1.png");
     -fx-effect: dropshadow(gaussian, rgba(255, 255, 255, 0.3), 20, 0.5, 0, 0);
 }
 
-#transparent {
-    -fx-image: url("/img/item tiles/transparent.png");
+.frame-2 {
+    -fx-image: url("/img/item_tiles/frame-2.png");
+    -fx-effect: dropshadow(gaussian, rgba(255, 255, 255, 0.3), 20, 0.5, 0, 0);
 }
 
-#frame-1 {
-    -fx-image: url("/img/item tiles/frame-1.png");
+.frame-3 {
+    -fx-image: url("/img/item_tiles/frame-3.png");
+    -fx-effect: dropshadow(gaussian, rgba(255, 255, 255, 0.3), 20, 0.5, 0, 0);
 }
 
-#frame-2 {
-    -fx-image: url("/img/item tiles/frame-2.png");
+.cat-1 {
+    -fx-image: url("/img/item_tiles/cat-1.png");
+    -fx-effect: dropshadow(gaussian, rgba(255, 255, 255, 0.3), 20, 0.5, 0, 0);
 }
 
-#frame-3 {
-    -fx-image: url("/img/item tiles/frame-3.png");
+.cat-2 {
+    -fx-image: url("/img/item_tiles/cat-2.png");
+    -fx-effect: dropshadow(gaussian, rgba(255, 255, 255, 0.3), 20, 0.5, 0, 0);
 }
 
-#cat-1 {
-    -fx-image: url("/img/item tiles/cat-1.png");
+.cat-3 {
+    -fx-image: url("/img/item_tiles/cat-3.png");
+    -fx-effect: dropshadow(gaussian, rgba(255, 255, 255, 0.3), 20, 0.5, 0, 0);
 }
 
-#cat-2 {
-    -fx-image: url("/img/item tiles/cat-2.png");
+.game-1 {
+    -fx-image: url("/img/item_tiles/game-1.png");
+    -fx-effect: dropshadow(gaussian, rgba(255, 255, 255, 0.3), 20, 0.5, 0, 0);
 }
 
-#cat-3 {
-    -fx-image: url("/img/item tiles/cat-3.png");
+.game-2 {
+    -fx-image: url("/img/item_tiles/game-2.png");
+    -fx-effect: dropshadow(gaussian, rgba(255, 255, 255, 0.3), 20, 0.5, 0, 0);
 }
 
-#game-1 {
-    -fx-image: url("/img/item tiles/game-1.png");
+.game-3 {
+    -fx-image: url("/img/item_tiles/game-3.png");
+    -fx-effect: dropshadow(gaussian, rgba(255, 255, 255, 0.3), 20, 0.5, 0, 0);
 }
 
-#game-2 {
-    -fx-image: url("/img/item tiles/game-2.png");
+.book-1 {
+    -fx-image: url("/img/item_tiles/book-1.png");
+    -fx-effect: dropshadow(gaussian, rgba(255, 255, 255, 0.3), 20, 0.5, 0, 0);
 }
 
-#game-3 {
-    -fx-image: url("/img/item tiles/game-3.png");
+.book-2 {
+    -fx-image: url("/img/item_tiles/book-2.png");
+    -fx-effect: dropshadow(gaussian, rgba(255, 255, 255, 0.3), 20, 0.5, 0, 0);
 }
 
-#book-1 {
-    -fx-image: url("/img/item tiles/book-1.png");
+.book-3 {
+    -fx-image: url("/img/item_tiles/book-3.png");
+    -fx-effect: dropshadow(gaussian, rgba(255, 255, 255, 0.3), 20, 0.5, 0, 0);
 }
 
-#book-2 {
-    -fx-image: url("/img/item tiles/book-2.png");
+.plant-1 {
+    -fx-image: url("/img/item_tiles/plant-1.png");
+    -fx-effect: dropshadow(gaussian, rgba(255, 255, 255, 0.3), 20, 0.5, 0, 0);
 }
 
-#book-3 {
-    -fx-image: url("/img/item tiles/book-3.png");
+.plant-2 {
+    -fx-image: url("/img/item_tiles/plant-2.png");
+    -fx-effect: dropshadow(gaussian, rgba(255, 255, 255, 0.3), 20, 0.5, 0, 0);
 }
 
-#plant-1 {
-    -fx-image: url("/img/item tiles/plant-1.png");
+.plant-3 {
+    -fx-image: url("/img/item_tiles/plant-3.png");
+    -fx-effect: dropshadow(gaussian, rgba(255, 255, 255, 0.3), 20, 0.5, 0, 0);
 }
 
-#plant-2 {
-    -fx-image: url("/img/item tiles/plant-2.png");
+.trophy-1 {
+    -fx-image: url("/img/item_tiles/trophy-1.png");
+    -fx-effect: dropshadow(gaussian, rgba(255, 255, 255, 0.3), 20, 0.5, 0, 0);
 }
 
-#plant-3 {
-    -fx-image: url("/img/item tiles/plant-3.png");
+.trophy-2 {
+    -fx-image: url("/img/item_tiles/trophy-2.png");
+    -fx-effect: dropshadow(gaussian, rgba(255, 255, 255, 0.3), 20, 0.5, 0, 0);
 }
 
-#trophy-1 {
-    -fx-image: url("/img/item tiles/trophy-1.png");
-}
-
-#trophy-2 {
-    -fx-image: url("/img/item tiles/trophy-2.png");
-}
-
-#trophy-3 {
-    -fx-image: url("/img/item tiles/trophy-3.png");
+.trophy-3 {
+    -fx-image: url("/img/item_tiles/trophy-3.png");
+    -fx-effect: dropshadow(gaussian, rgba(255, 255, 255, 0.3), 20, 0.5, 0, 0);
 }
 
 #commonGoalCard-1 {
-    -fx-image: url("/img/common goal cards/1.jpg");
+    -fx-image: url("/img/common_goal_cards/1.jpg");
     -fx-effect: dropshadow(gaussian, rgba(255, 255, 255, 0.3), 20, 0.5, 0, 0);
 }
 
 #commonGoalCard-2 {
-    -fx-image: url("/img/common goal cards/2.jpg");
+    -fx-image: url("/img/common_goal_cards/2.jpg");
     -fx-effect: dropshadow(gaussian, rgba(255, 255, 255, 0.3), 20, 0.5, 0, 0);
 }
 
 #commonGoalCard-3 {
-    -fx-image: url("/img/common goal cards/3.jpg");
+    -fx-image: url("/img/common_goal_cards/3.jpg");
     -fx-effect: dropshadow(gaussian, rgba(255, 255, 255, 0.3), 20, 0.5, 0, 0);
 }
 
 #commonGoalCard-4 {
-    -fx-image: url("/img/common goal cards/4.jpg");
+    -fx-image: url("/img/common_goal_cards/4.jpg");
     -fx-effect: dropshadow(gaussian, rgba(255, 255, 255, 0.3), 20, 0.5, 0, 0);
 }
 
 #commonGoalCard-5 {
-    -fx-image: url("/img/common goal cards/5.jpg");
+    -fx-image: url("/img/common_goal_cards/5.jpg");
     -fx-effect: dropshadow(gaussian, rgba(255, 255, 255, 0.3), 20, 0.5, 0, 0);
 }
 
 #commonGoalCard-6 {
-    -fx-image: url("/img/common goal cards/6.jpg");
+    -fx-image: url("/img/common_goal_cards/6.jpg");
     -fx-effect: dropshadow(gaussian, rgba(255, 255, 255, 0.3), 20, 0.5, 0, 0);
 }
 
 #commonGoalCard-7 {
-    -fx-image: url("/img/common goal cards/7.jpg");
+    -fx-image: url("/img/common_goal_cards/7.jpg");
     -fx-effect: dropshadow(gaussian, rgba(255, 255, 255, 0.3), 20, 0.5, 0, 0);
 }
 
 #commonGoalCard-8 {
-    -fx-image: url("/img/common goal cards/8.jpg");
+    -fx-image: url("/img/common_goal_cards/8.jpg");
     -fx-effect: dropshadow(gaussian, rgba(255, 255, 255, 0.3), 20, 0.5, 0, 0);
 }
 
 #commonGoalCard-9 {
-    -fx-image: url("/img/common goal cards/9.jpg");
+    -fx-image: url("/img/common_goal_cards/9.jpg");
     -fx-effect: dropshadow(gaussian, rgba(255, 255, 255, 0.3), 20, 0.5, 0, 0);
 }
 
 #commonGoalCard-10 {
-    -fx-image: url("/img/common goal cards/10.jpg");
+    -fx-image: url("/img/common_goal_cards/10.jpg");
     -fx-effect: dropshadow(gaussian, rgba(255, 255, 255, 0.3), 20, 0.5, 0, 0);
 }
 
 #commonGoalCard-11 {
-    -fx-image: url("/img/common goal cards/11.jpg");
+    -fx-image: url("/img/common_goal_cards/11.jpg");
     -fx-effect: dropshadow(gaussian, rgba(255, 255, 255, 0.3), 20, 0.5, 0, 0);
 }
 
 #commonGoalCard-12 {
-    -fx-image: url("/img/common goal cards/12.jpg");
+    -fx-image: url("/img/common_goal_cards/12.jpg");
     -fx-effect: dropshadow(gaussian, rgba(255, 255, 255, 0.3), 20, 0.5, 0, 0);
 }
 
@@ -313,3 +342,34 @@
     -fx-image: url("/img/button/exitbutton.png");
 }
 
+#personalGoalCard-1 {
+    -fx-image: url("/img/personal_goal_cards/Personal_Goals1.png");
+    -fx-effect: dropshadow(gaussian, rgba(255, 255, 255, 0.3), 20, 0.5, 0, 0);
+}
+
+.commonGoalCardsBox {
+    -fx-spacing: 10;
+}
+
+.boardCommonGoalCardBox {
+    -fx-spacing: 25;
+}
+
+.scoring-8 {
+    -fx-image: url("/img/scoring_tokens/scoring_8.jpg");
+}
+
+.endGame {
+    -fx-image: url("/img/scoring_tokens/end_game.jpg");
+}
+
+.playerName {
+    -fx-alignment: center;
+    -fx-font-family: "Merriweather Regular";
+    -fx-font-size: 15px;
+    -fx-text-fill: #6C2310;
+}
+
+.labelSeparator {
+    -fx-border-color: #F1E1B2;
+}

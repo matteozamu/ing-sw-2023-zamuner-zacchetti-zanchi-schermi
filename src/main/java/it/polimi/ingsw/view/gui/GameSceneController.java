@@ -45,7 +45,7 @@ public class GameSceneController {
     @FXML
     StackPane boardStack;
     @FXML
-    GridPane imagesPane;
+    GridPane gridPaneBoard;
     @FXML
     ImageView board;
     @FXML
@@ -80,15 +80,39 @@ public class GameSceneController {
     @FXML
     Label nameShelf4;
     @FXML
+    GridPane gridPaneShelf1;
+    @FXML
+    GridPane gridPaneShelf2;
+    @FXML
+    GridPane gridPaneShelf3;
+    @FXML
+    GridPane gridPaneShelf4;
+    @FXML
+    HBox limbo;
+    @FXML
     Label pointLabel;
     @FXML
     VBox usernameList;
     @FXML
-    FlowPane zoomPanel; //forse non serve
+    FlowPane zoomPanel;
     @FXML
     BorderPane infoPanel;
     @FXML
     BorderPane actionPanel;
+    @FXML
+    HBox commonGoalCardsBox;
+    @FXML
+    AnchorPane arrowShelfArea;
+    @FXML
+    ImageView arrowShelf1;
+    @FXML
+    ImageView arrowShelf2;
+    @FXML
+    ImageView arrowShelf3;
+    @FXML
+    ImageView arrowShelf4;
+    @FXML
+    ImageView arrowShelf5;
     @FXML
     ImageView transparentImage1;
     @FXML
@@ -105,13 +129,152 @@ public class GameSceneController {
     ImageView book4;
     @FXML
     ImageView book5;
+    @FXML
+    ImageView book6;
+    @FXML
+    ImageView book7;
+    @FXML
+    ImageView book8;
+    @FXML
+    ImageView book9;
+    @FXML
+    ImageView book10;
+    @FXML
+    ImageView book11;
+    @FXML
+    ImageView book12;
+    @FXML
+    ImageView book13;
+    @FXML
+    ImageView book14;
+    @FXML
+    ImageView book15;
+    @FXML
+    ImageView book16;
+    @FXML
+    ImageView book17;
+    @FXML
+    ImageView book18;
+    @FXML
+    ImageView book19;
+    @FXML
+    ImageView book20;
+    @FXML
+    ImageView book21;
+    @FXML
+    ImageView book22;
+    @FXML
+    ImageView book23;
+    @FXML
+    ImageView book24;
+    @FXML
+    ImageView book25;
+    @FXML
+    ImageView book26;
+    @FXML
+    ImageView book27;
+    @FXML
+    ImageView book28;
+    @FXML
+    ImageView book29;
+    @FXML
+    ImageView book30;
+    @FXML
+    ImageView book31;
+    @FXML
+    ImageView book32;
+    @FXML
+    ImageView book33;
+    @FXML
+    ImageView book34;
+    @FXML
+    ImageView game1;
+    @FXML
+    ImageView game2;
+    @FXML
+    ImageView game3;
+    @FXML
+    ImageView game4;
+    @FXML
+    ImageView game5;
+    @FXML
+    ImageView game6;
+    @FXML
+    ImageView plant1;
+    @FXML
+    ImageView plant2;
+    @FXML
+    ImageView plant3;
+    @FXML
+    ImageView plant4;
+    @FXML
+    ImageView plant5;
+    @FXML
+    ImageView trophy1;
+    @FXML
+    ImageView trophy2;
+    @FXML
+    ImageView trophy3;
+    @FXML
+    ImageView trophy4;
+    @FXML
+    ImageView trophy5;
+    @FXML
+    ImageView trophy6;
+    @FXML
+    ImageView cat1;
+    @FXML
+    ImageView cat2;
+    @FXML
+    ImageView cat3;
+    @FXML
+    ImageView cat4;
+    @FXML
+    ImageView cat5;
+    @FXML
+    ImageView cat6;
+    @FXML
+    ImageView frame1;
+    @FXML
+    ImageView frame2;
+    @FXML
+    ImageView frame3;
+    @FXML
+    ImageView frame4;
+    @FXML
+    ImageView frame5;
+    @FXML
+    ImageView commonGoal1;
+    @FXML
+    ImageView commonGoal2;
+    @FXML
+    ImageView scoring81;
+    @FXML
+    ImageView scoring82;
+    @FXML
+    ImageView endGame;
+    @FXML
+    Label namePlayer1;
+    @FXML
+    Label namePlayer2;
+    @FXML
+    Label namePlayer3;
+    @FXML
+    Label namePlayer4;
+    @FXML
+    Label pointsPlayer1;
+    @FXML
+    Label pointsPlayer2;
+    @FXML
+    Label pointsPlayer3;
+    @FXML
+    Label pointsPlayer4;
+
 
     private GuiManager guiManager;
 
     private  Map<String, ImageView> objectCards;
     private List<ImageView> commonGoalCards;
-
-    private String infoPanelUsername = null;
 
     @FXML
     private void initialize() {
@@ -122,7 +285,6 @@ public class GameSceneController {
         nameShelf2.setText("Matteo");
         nameShelf3.setText("Federica");
         nameShelf4.setText("Simone");
-
 
         objectCards = new HashMap<>();
         commonGoalCards = new ArrayList<>();
@@ -138,34 +300,6 @@ public class GameSceneController {
      */
     void setupGame(GameSerialized gameSerialized) {
         //addObjectCards();
-
-//        Board board = gameSerialized.getBoard();
-//
-//        pointLabel.setText("Points: " + gameSerialized.getPoints());
-//
-//        setPlayerIcons(gameSerialized);
-//
-//        bindCommonGoalCardZoom();
-//        bindPanels();
-//
-//        updateBoard(gameSerialized);
-    }
-
-    /**
-     * Binds click events on the panels
-     */
-    private void bindPanels() {
-        infoPanel.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> hideInfoPanel());
-        zoomPanel.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> hideZoomPanel());
-    }
-
-    /**
-     * Binds weapon zoom on card click
-     */
-    private void bindCommonGoalCardZoom() {
-//        for (ImageView weaponSlot : weaponSlotList) {
-//            weaponSlot.addEventHandler(MouseEvent.MOUSE_CLICKED, this::showCommonGoalCardZoom);
-//        }
     }
 
     private void loadObjectCards() {
@@ -189,7 +323,6 @@ public class GameSceneController {
             objectCards.put(imageView.getId(), imageView);
         }
     }
-
 
     private void loadCommonGoalCards() {
         ImageView imageView = new ImageView();
@@ -260,7 +393,6 @@ public class GameSceneController {
                         String visibleCardTypeText = cardTypeText.replaceAll("\u001B\\[[;\\d]*m", "");
                         String cardNameType = visibleCardTypeText + "-" + objectCard.getId();
 
-                        // Use the map to get the ImageView
                         ImageView imageView = objectCards.get(cardNameType);
                         if (imageView != null) {
                             imageView.setFitWidth(60);
@@ -268,47 +400,10 @@ public class GameSceneController {
                             imageView.setPreserveRatio(true);
                             imageView.setPickOnBounds(true);
 
-                            imagesPane.add(imageView, 4 - i, j - 4);  // aggiunge l'immagine alla cella (j, i) del GridPane
+                            gridPaneBoard.add(imageView, 4 - i, j - 4);  // aggiunge l'immagine alla cella (j, i) del GridPane
                         }
                     }
                 }
-            }
-        }
-    }
-
-    /**
-     * Set the username of the players on the left of the board
-     *
-     * @param gameSerialized status of the game at the time of the join
-     */
-    private void setPlayerIcons(GameSerialized gameSerialized) {
-        Label label;
-
-        for (Player player : gameSerialized.getPlayers()) {
-            label = new Label();
-            label.setText(player.getName());
-
-            usernameList.getChildren().add(label);
-            //label.addEventHandler(MouseEvent.MOUSE_CLICKED, this::showPlayerInfo);
-        }
-    }
-
-
-    /**
-     * Highlights the username of the player who owns the turn and sets opacity to the others
-     *
-     * @param turnOwner username of the player who owns the turn
-     */
-    void setTurnOwnerIcon(String turnOwner) {
-        for (Node children : usernameList.getChildren()) {
-            children.getStyleClass().clear();
-
-            String labelOwner = ((Label) children).getText();
-
-            if (labelOwner.equals(turnOwner)) {
-                children.getStyleClass().add("turnOwner");
-            } else {
-                children.getStyleClass().add("notTurnOwner");
             }
         }
     }
@@ -318,15 +413,7 @@ public class GameSceneController {
      * Updates the elements of the board
      */
     void onStateUpdate() {
-        updateBoard();
-//        setTurnOwnerIcon(GuiManager.getInstance().getTurnOwner());
-
-
-//        pointLabel.setText("Points: " + guiManager.getGameSerialized().getPoints());
-
-//        if (infoPanelUsername != null) {
-//            showPlayerInfo(infoPanelUsername);
-//        }
+        //updateBoard();
     }
 
     /**
@@ -335,79 +422,6 @@ public class GameSceneController {
      */
     private void updateBoard() {
         //addObjectCards();
-    }
-
-    /**
-     * Shows the zoom on a weapon in the zoom panel
-     *
-     * @param event of the click on a weapon
-     */
-    // metodo per mostrare il testo delle commongoal cards
-    private void showCommonGoalCardZoom(Event event) {
-
-    }
-
-    /**
-     * Hides the zoom panel
-     */
-    private void hideZoomPanel() {
-        zoomPanel.getChildren().clear();
-        zoomPanel.setVisible(false);
-
-        setBoardOpaque(NOT_OPAQUE);
-        setTurnOwnerIcon(guiManager.getTurnOwner());
-    }
-
-    /**
-     * Hides the action panel
-     */
-    private void hideActionPanel() {
-        actionPanel.getChildren().clear();
-        actionPanel.setVisible(false);
-
-        setBoardOpaque(NOT_OPAQUE);
-        setTurnOwnerIcon(guiManager.getTurnOwner());
-    }
-
-    /**
-     * Sets a opacity value for every element on the board
-     *
-     * @param value opacity value
-     */
-    // Per il prelevamento dell object cards
-    private void setBoardOpaque(double value) {
-//        board.opacityProperty().setValue(value);
-//        powerupDeck.opacityProperty().setValue(value);
-//        weaponDeck.opacityProperty().setValue(value);
-//        blueWeapon0.opacityProperty().setValue(value);
-//        blueWeapon1.opacityProperty().setValue(value);
-//        blueWeapon2.opacityProperty().setValue(value);
-//        redWeapon0.opacityProperty().setValue(value);
-//        redWeapon1.opacityProperty().setValue(value);
-//        redWeapon2.opacityProperty().setValue(value);
-//        yellowWeapon0.opacityProperty().setValue(value);
-//        yellowWeapon1.opacityProperty().setValue(value);
-//        yellowWeapon2.opacityProperty().setValue(value);
-//
-//        for (ImageView ammotile : ammoTiles) {
-//            ammotile.opacityProperty().setValue(value);
-//        }
-//
-//        for (ImageView playerFigure : playerFigures) {
-//            playerFigure.opacityProperty().setValue(value);
-//        }
-//
-//        for (ImageView killshots : killshotsImages) {
-//            killshots.opacityProperty().setValue(value);
-//        }
-//
-//        for (Node node : actionList.getChildren()) {
-//            node.opacityProperty().setValue(value);
-//        }
-//
-//        for (Node node : iconList.getChildren()) {
-//            node.opacityProperty().setValue(value);
-//        }
     }
 
     /**
@@ -431,187 +445,10 @@ public class GameSceneController {
      * @return the CSS ID
      */
     private String getActionIDFromPossibleAction(PossibleAction possibleAction) {
-        switch (possibleAction) {
-//            case SPAWN_BOT:
-//            case RESPAWN_BOT:
-//                return "spawnBotAction";
-//            case CHOOSE_SPAWN:
-//            case CHOOSE_RESPAWN:
-//                return "playerSpawnAction";
-//            case POWER_UP:
-//                return "powerupAction";
-//            case GRENADE_USAGE:
-//                return "grenadeAction";
-//            case SCOPE_USAGE:
-//                return "scopeAction";
-//            case MOVE:
-//                return "moveAction";
-//            case MOVE_AND_PICK:
-//                return "movePickAction";
-//            case SHOOT:
-//                return "shootAction";
-//            case RELOAD:
-//                return "reloadAction";
-//            case ADRENALINE_PICK:
-//                return "adrenalinePickAction";
-//            case ADRENALINE_SHOOT:
-//                return "adrenalineShootAction";
-//            case FRENZY_MOVE:
-//                return "frenzyMoveAction";
-//            case FRENZY_PICK:
-//                return "frenzyPickAction";
-//            case FRENZY_SHOOT:
-//                return "frenzyShootAction";
-//            case LIGHT_FRENZY_PICK:
-//                return "lightFrenzyPickAction";
-//            case LIGHT_FRENZY_SHOOT:
-//                return "lightFrenzyShootAction";
-//            case BOT_ACTION:
-//                return "botAction";
-//            case PASS_TURN:
-//                return "passTurnAction";
-//            default:
-//                return null;
-        }
-        return null;
-    }
-
-//    /**
-//     * Shows the info of a player in the info panel
-//     *
-//     * @param username username of the player who you want to displays informations
-//     */
-//    private void showPlayerInfo(String username) {
-//        infoPanelUsername = username;
+//        switch (possibleAction) {
 //
-//        if (guiManager.getUsername().equals(username)) {
-//            showMyPlayerInfo(guiManager.getPlayer());
-//        } else {
-//            showOthersPlayerInfo(guiManager.getPlayer());
 //        }
-//
-//        setBoardOpaque(OPAQUE);
-//        infoPanel.setVisible(true);
-//        infoPanel.toFront();
-//    }
-
-//    /**
-//     * Shows the player info in the info panel
-//     *
-//     * @param event event of the click on a label
-//     */
-//    private void showPlayerInfo(Event event) {
-//        Label playerLabel = (Label) event.getTarget();
-//        String username = playerLabel.getText();
-//
-//        showPlayerInfo(username);
-//    }
-
-
-//    /**
-//     * Shows the player info of the client owner
-//     *
-//     * @param me UserPlayer of the client owner
-//     */
-//    private void showMyPlayerInfo(Player me) {
-//        setUsernamePlayerInfo(me.getName());
-//
-//        addPlayerBoardToPlayerInfo(me);
-//    }
-
-//    /**
-//     * Shows the player info of another player
-//     *
-//     * @param other UserPlayer who you wants to displays informations
-//     */
-//    private void showOthersPlayerInfo(Player other) {
-//        setUsernamePlayerInfo(other.getName());
-//
-//        addPlayerBoardToPlayerInfo(other);
-//
-//    }
-
-//    /**
-//     * Sets the username in the info panel
-//     *
-//     * @param username username of the player
-//     */
-//    private void setUsernamePlayerInfo(String username) {
-//        Label label = new Label(username);
-//        label.getStyleClass().add("infoTitle");
-//
-//        VBox vBox = new VBox();
-//        vBox.getStyleClass().add("topInfoPanel");
-//        vBox.getChildren().add(label);
-//
-//        infoPanel.setTop(vBox);
-//    }
-
-//    /**
-//     * Adds the playerboard to the info panel
-//     *
-//     * @param player player who you want to display the information
-//     */
-//    private void addPlayerBoardToPlayerInfo(Player player) {
-//        PlayerColor playerColor = player.getColor();
-//        PlayerBoard playerBoard = player.getPlayerBoard();
-//
-//        AnchorPane anchorPane = new AnchorPane();
-//
-//        ImageView playerBoardImageView = new ImageView(getPlayerBoardPath(playerColor, playerBoard));
-//        playerBoardImageView.setFitWidth(PLAYER_BOARD_WIDTH);
-//        playerBoardImageView.setFitHeight(PLAYER_BOARD_HEIGHT);
-//
-//        AnchorPane.setLeftAnchor(playerBoardImageView, MapInsetsHelper.playerBoardInsets.getLeft());
-//
-//        anchorPane.getChildren().add(playerBoardImageView);
-//        infoPanel.setCenter(anchorPane);
-//    }
-
-    /**
-     * Hides the info panel
-     */
-    private void hideInfoPanel() {
-        infoPanel.getChildren().clear();
-        infoPanel.setVisible(false);
-
-        setBoardOpaque(NOT_OPAQUE);
-
-        infoPanelUsername = null;
-
-        setTurnOwnerIcon(guiManager.getTurnOwner());
-    }
-
-    /**
-     * Sets the title of the action panel
-     *
-     * @param title title of the panel
-     */
-    private void setActionPanelTitle(String title) {
-        Label label = new Label(title);
-        label.getStyleClass().add("infoTitle");
-
-        VBox vBox = new VBox();
-        vBox.getStyleClass().add("topActionPanel");
-        vBox.getChildren().add(label);
-
-        actionPanel.setTop(vBox);
-    }
-
-    /**
-     * Sets the bottom layout of the action panel
-     */
-    private void setActionPanelBottom() {
-        HBox botHBox = new HBox();
-        botHBox.setAlignment(Pos.BASELINE_CENTER);
-        botHBox.setSpacing(20);
-
-        ImageView backButton = new ImageView("/img/scenes/backbutton.png");
-        backButton.getStyleClass().add(CSS_BUTTON);
-        backButton.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> hideActionPanel());
-        botHBox.getChildren().add(backButton);
-
-        actionPanel.setBottom(botHBox);
+        return null;
     }
 
     /**
@@ -625,14 +462,6 @@ public class GameSceneController {
     }
 
     //TODO: Può servire per selezionare le objectcards dalla board
-//    /**
-//     * Sends the pick request
-//     *
-//     * @param pickPosition     position of pick
-//     * @param weaponCard       card picked
-//     * @param paymentPowerups  list of powerups used for payment
-//     * @param discardingWeapon weapon choosed for discard
-//     */
 //    private void sendPickRequest(final PlayerPosition pickPosition, final WeaponCard weaponCard, final ArrayList<Integer> paymentPowerups, final WeaponCard discardingWeapon) {
 //        hideActionPanel();
 //
