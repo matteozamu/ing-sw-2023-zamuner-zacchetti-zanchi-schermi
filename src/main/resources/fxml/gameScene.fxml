@@ -1,11 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import java.net.*?>
+<?import javafx.scene.control.*?>
 <?import javafx.scene.image.*?>
 <?import javafx.scene.layout.*?>
 
-<?import javafx.scene.control.ScrollPane?>
-<?import javafx.scene.control.Label?>
 <FlowPane fx:id="mainPane" styleClass="mainPane" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.ingsw.view.gui.GameSceneController">
 
     <stylesheets>
@@ -17,30 +16,39 @@
         <HBox fx:id="boardShelf" StackPane.alignment="CENTER">
             <VBox>
                 <StackPane fx:id="boardStack">
-                    <ImageView fx:id="board" fitHeight="656.0" fitWidth="656.0" styleClass="board"/>
-                    <GridPane fx:id="imagesPane" />
+                    <ImageView fx:id="board" fitHeight="656.0" fitWidth="656.0" styleClass="board" />
+                    <GridPane fx:id="imagesPane" maxHeight="592.0" maxWidth="592.0" styleClass="gridPane" translateX="-2.0" StackPane.alignment="CENTER">
+                        <ImageView id="transparent" fx:id="transparentImage1" fitHeight="60.0" fitWidth="60.0" GridPane.columnIndex="0" GridPane.rowIndex="0" />
+                        <ImageView id="transparent" fx:id="transparentImage2" fitHeight="60.0" fitWidth="60.0" GridPane.columnIndex="1" GridPane.rowIndex="0" />
+                        <ImageView id="transparent" fx:id="transparentImage3" fitHeight="60.0" fitWidth="60.0" GridPane.columnIndex="2" GridPane.rowIndex="0" />
+                        <ImageView id="book1" fx:id="book1" fitHeight="60.0" fitWidth="60.0" styleClass="tileBoard" GridPane.columnIndex="0" GridPane.rowIndex="1" />
+                        <ImageView id="book1" fx:id="book2" fitHeight="60.0" fitWidth="60.0" styleClass="tileBoard" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                        <ImageView id="book1" fx:id="book3" fitHeight="60.0" fitWidth="60.0" styleClass="tileBoard" GridPane.columnIndex="3" GridPane.rowIndex="1" />
+                        <ImageView id="book1" fx:id="book4" fitHeight="60.0" fitWidth="60.0" styleClass="tileBoard" GridPane.columnIndex="4" GridPane.rowIndex="1" />
+                        <ImageView id="book1" fx:id="book5" fitHeight="60.0" fitWidth="60.0" styleClass="tileBoard" GridPane.columnIndex="5" GridPane.rowIndex="1" />
+                    </GridPane>
                 </StackPane>
-                <Region VBox.vgrow="ALWAYS"/>
+                <Region VBox.vgrow="ALWAYS" />
             </VBox>
             <VBox fx:id="shelfArea" HBox.hgrow="NEVER">
 
-                <ScrollPane styleClass="shelfScroll" prefWidth="400.0" prefHeight="420.0">
+                <ScrollPane prefHeight="420.0" prefWidth="400.0" styleClass="shelfScroll">
                     <HBox fx:id="imageList">
                         <StackPane>
-                            <ImageView fx:id="shelf1" fitHeight="400.0" fitWidth="400.0" styleClass="shelf"/>
-                            <Label fx:id="nameShelf1" StackPane.alignment="BOTTOM_CENTER" styleClass="shelfLabel" />
+                            <ImageView fx:id="shelf1" fitHeight="400.0" fitWidth="400.0" styleClass="shelf" />
+                            <Label fx:id="nameShelf1" styleClass="shelfLabel" StackPane.alignment="BOTTOM_CENTER" />
                         </StackPane>
                         <StackPane>
-                            <ImageView fx:id="shelf2" fitHeight="400.0" fitWidth="400.0" styleClass="shelf"/>
-                            <Label fx:id="nameShelf2" StackPane.alignment="BOTTOM_CENTER" styleClass="shelfLabel" />
+                            <ImageView fx:id="shelf2" fitHeight="400.0" fitWidth="400.0" styleClass="shelf" />
+                            <Label fx:id="nameShelf2" styleClass="shelfLabel" StackPane.alignment="BOTTOM_CENTER" />
                         </StackPane>
                         <StackPane>
-                            <ImageView fx:id="shelf3" fitHeight="400.0" fitWidth="400.0" styleClass="shelf"/>
-                            <Label fx:id="nameShelf3" StackPane.alignment="BOTTOM_CENTER" styleClass="shelfLabel" />
+                            <ImageView fx:id="shelf3" fitHeight="400.0" fitWidth="400.0" styleClass="shelf" />
+                            <Label fx:id="nameShelf3" styleClass="shelfLabel" StackPane.alignment="BOTTOM_CENTER" />
                         </StackPane>
                         <StackPane>
-                            <ImageView fx:id="shelf4" fitHeight="400.0" fitWidth="400.0" styleClass="shelf"/>
-                            <Label fx:id="nameShelf4" StackPane.alignment="BOTTOM_CENTER" styleClass="shelfLabel" />
+                            <ImageView fx:id="shelf4" fitHeight="400.0" fitWidth="400.0" styleClass="shelf" />
+                            <Label fx:id="nameShelf4" styleClass="shelfLabel" StackPane.alignment="BOTTOM_CENTER" />
                         </StackPane>
                     </HBox>
                 </ScrollPane>

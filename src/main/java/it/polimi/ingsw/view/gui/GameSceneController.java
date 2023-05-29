@@ -60,6 +60,7 @@ public class GameSceneController {
     ImageView pointsTile;
     @FXML
     ImageView chair;
+    //TODO: Mappa per associare nome shelf e immagine shelf?
     @FXML
     ImageView shelf1;
     @FXML
@@ -88,6 +89,22 @@ public class GameSceneController {
     BorderPane infoPanel;
     @FXML
     BorderPane actionPanel;
+    @FXML
+    ImageView transparentImage1;
+    @FXML
+    ImageView transparentImage2;
+    @FXML
+    ImageView transparentImage3;
+    @FXML
+    ImageView book1;
+    @FXML
+    ImageView book2;
+    @FXML
+    ImageView book3;
+    @FXML
+    ImageView book4;
+    @FXML
+    ImageView book5;
 
     private GuiManager guiManager;
 
@@ -110,8 +127,8 @@ public class GameSceneController {
         objectCards = new HashMap<>();
         commonGoalCards = new ArrayList<>();
 
-        loadObjectCards();
-        loadCommonGoalCards();
+        //loadObjectCards();
+        //loadCommonGoalCards();
     }
 
     /**
@@ -317,7 +334,7 @@ public class GameSceneController {
      *
      */
     private void updateBoard() {
-        addObjectCards();
+        //addObjectCards();
     }
 
     /**
