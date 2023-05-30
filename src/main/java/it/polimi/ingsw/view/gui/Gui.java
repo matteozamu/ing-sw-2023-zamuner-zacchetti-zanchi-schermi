@@ -18,6 +18,14 @@ public class Gui extends Application {
         stage.setFullScreenExitHint("");
         stage.setFullScreenExitKeyCombination(KeyCombination.NO_MATCH);
 
+        // Aggiungi un listener sulla proprietà 'fullScreen'.
+        stage.fullScreenProperty().addListener((observable, oldValue, newValue) -> {
+            // Quando la finestra non è più a schermo intero, disabilita il ridimensionamento.
+            if (!newValue) {
+                stage.setResizable(false);
+            }
+        });
+
         InputStream is = Gui.class.getClassLoader().getResourceAsStream("img/logos/gigaTitle.png");
         if (is != null) {
             stage.getIcons().add(new Image(is));
