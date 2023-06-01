@@ -235,6 +235,11 @@ public class GuiManager extends ClientGameManager implements DisconnectionListen
     }
 
     @Override
+    public void onPlayerReconnection(String username) {
+
+    }
+
+    @Override
     public void playersWaitingUpdate(List<String> users) {
         if (lobbySceneController != null) {
             Platform.runLater(() ->

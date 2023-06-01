@@ -120,4 +120,6 @@ interface ClientGameManagerListener {
     void gameStateRequest(String username, String token);
 
     void onPlayerDisconnection(String username);
+
+    void onPlayerReconnection(String message);
 }

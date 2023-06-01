@@ -147,32 +147,33 @@ public class Server implements Runnable {
      * @throws IOException when send message fails
      */
     private void knownPlayerLogin(String username, Connection connection) throws IOException {
+        ControllerGame controllerGame = playersGame.get(username);
         if (clients.get(username) == null || !clients.get(username).isConnected()) { // Player Reconnection
             clients.replace(username, connection);
 
             String token = UUID.randomUUID().toString();
             connection.setToken(token);
 
-//            if (waitForLoad) {// Game in lobby state for load a game
-            connection.sendMessage(
-                    new GameLoadResponse("Successfully reconnected", token, UserPlayerState.FIRST_ACTION)
-            );
-            ControllerGame controllerGame = playersGame.get(username);
+            if (waitForLoad) {// Game in lobby state for load a game
+                connection.sendMessage(
+                        new GameLoadResponse("Successfully reconnected", token, UserPlayerState.FIRST_ACTION)
+                );
+//            ControllerGame controllerGame = playersGame.get(username);
 
-            System.out.println("controllerGame: " + controllerGame);
+                System.out.println("controllerGame: " + controllerGame);
 
-//                checkLoadReady();
-//            } else {
-//                if (controllerGame.getGameState() == PossibleGameState.GAME_ROOM) { // Game in lobby state
-//                    connection.sendMessage(
-//                            new ConnectionResponse("Successfully reconnected", token, MessageStatus.OK)
-//                    );
-//                } else { // Game started
-//            connection.sendMessage(
-//                    controllerGame.onConnectionMessage(new LobbyMessage(username, token, null, false))
-//            );
-//                }
-//            }
+                //checkLoadReady();
+            } else {
+                if (controllerGame.getGameState() == PossibleGameState.GAME_ROOM) { // Game in lobby state
+                    connection.sendMessage(
+                            new ConnectionResponse("Successfully reconnected", token, MessageStatus.OK)
+                    );
+                } else { // Game started
+                    connection.sendMessage(
+                            controllerGame.onConnectionMessage(new LobbyMessage(username, token, false))
+                    );
+                }
+            }
 
             LOGGER.log(Level.INFO, "{0} reconnected to server!", username);
         } else { // Player already connected
@@ -257,7 +258,7 @@ public class Server implements Runnable {
 
             ControllerGame controllerGame = findGameByPlayerUsername(username);
             Player p = controllerGame.getGame().getPlayerByName(username);
-            controllerGame.getGame().getPlayers().remove(p);
+            p.setConnected(false);
 
 //            synchronized (clientsLock) {
 //                clients.remove(username);
