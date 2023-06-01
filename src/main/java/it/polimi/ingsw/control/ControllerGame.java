@@ -117,6 +117,7 @@ public class ControllerGame implements TimerRunListener, Serializable {
                 return new Response("Game is ended.", MessageStatus.GAME_ENDED);
             }
             game.nextPlayer();
+            turnController.setActivePlayer(game.getCurrentPlayer());
 
             sendPrivateUpdates();
             return new Response("Cards moved", MessageStatus.OK);
@@ -330,6 +331,7 @@ public class ControllerGame implements TimerRunListener, Serializable {
 
     private void startingStateHandler() {
         this.turnController = new TurnController(this.game.getPlayers(), this);
+        turnController.setActivePlayer(game.getCurrentPlayer());
         changeState(PossibleGameState.GAME_STARTED);
 
         //non ci serve, abbiamp gia il current player
@@ -609,7 +611,6 @@ public class ControllerGame implements TimerRunListener, Serializable {
 //    }
 //
     private Message reconnectionHandler(LobbyMessage receivedConnectionMessage) {
-        System.out.println("mi sto riconnettendo");
         String reconnectingPlayerName = receivedConnectionMessage.getSenderUsername();
         List<String> playersNames = game.getPlayers().stream().map(Player::getName).collect(Collectors.toList());
 //        ArrayList<LobbyMessage> inLobbyPlayers = lobby.getInLobbyPlayers();
@@ -618,14 +619,15 @@ public class ControllerGame implements TimerRunListener, Serializable {
             // if I receive a reconnection message the player state change into connected == true
             game.getPlayerByName(reconnectingPlayerName).setConnected(true);
 
-            server.sendMessageToAll(new ReconnectionMessage("Player " + reconnectingPlayerName + " reconnected to the game."));
+            server.sendMessageToAll(this.id, new ReconnectionMessage("Player " + reconnectingPlayerName + " reconnected to the game."));
 //            return new ReconnectionMessage(receivedConnectionMessage.getToken(),
 //                    new GameStateResponse(receivedConnectionMessage.getSenderUsername(),
 //                            turnController.getActivePlayer().getName()));
         } else {
             return new Response("Reconnection message from already in lobby Player", MessageStatus.ERROR);
         }
-        return null;
+//        return new GameStateResponse(reconnectingPlayerName, turnController.getActivePlayer().getName());
+        return new GameStateResponse(reconnectingPlayerName, game.getCurrentPlayer().getName());
     }
 
 

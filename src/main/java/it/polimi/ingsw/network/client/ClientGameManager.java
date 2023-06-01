@@ -274,6 +274,8 @@ public abstract class ClientGameManager implements ClientGameManagerListener, Cl
     }
 
     private void handleReconnection(ReconnectionMessage reconnectionMessage) {
+        this.firstTurn = false;
+        turnManager = new ClientTurnManager();
         queue.add(() -> onPlayerReconnection(reconnectionMessage.getMessage()));
     }
 

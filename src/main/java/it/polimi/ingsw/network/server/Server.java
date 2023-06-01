@@ -198,6 +198,7 @@ public class Server implements Runnable {
      * @param message is the message received to the client
      */
     void onMessage(Message message) {
+        System.out.println("onMessage: " + message);
         if (message != null && message.getSenderUsername() != null && (message.getToken() != null || message.getSenderUsername().equals("serverUser"))) {
             LOGGER.log(Level.INFO, "Received: {0}", message);
 
