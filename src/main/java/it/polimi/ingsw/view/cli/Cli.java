@@ -649,6 +649,11 @@ public class Cli extends ClientGameManager implements DisconnectionListener {
     public void onPlayerDisconnection(String player) {
         out.println(player + " disconnected from the game.");
     }
+
+    @Override
+    public void onPlayerReconnection(String message) {
+        out.println(message);
+    }
     @Override
     public void onDisconnection() {
         promptError("Disconnected from the server, connection expired", true);

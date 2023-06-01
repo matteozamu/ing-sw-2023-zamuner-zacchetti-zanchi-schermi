@@ -96,18 +96,11 @@ class ClientTurnManager {
     }
 
     /**
-     * Sets frenzy first action
-     */
-    void setFrenzyFirstAction() {
-        playerState = UserPlayerState.FIRST_FRENZY_ACTION;
-    }
-
-    /**
      * Sets the player state
      *
      * @param playerState player state that have to be setted
      */
-    void setPlayerState(UserPlayerState playerState) {
+    void setUserPlayerState(UserPlayerState playerState) {
         this.playerState = playerState;
     }
 
@@ -117,4 +110,5 @@ class ClientTurnManager {
     UserPlayerState getUserPlayerState() {
         return playerState;
     }
+
 }

@@ -555,33 +555,38 @@ public class ControllerGame implements TimerRunListener, Serializable {
         }
     }
 
-//    /**
-//     * Sub method of the class only used while during the game the {@link Server server} receives disconnection messages from
-//     * the {@link Player userPLayers} in the game
-//     *
-//     * @param receivedConnectionMessage Message received by the server from a connecting or disconnecting {@link Player UserPlayer}
-//     * @return a {@link Message Message} which contains the result of the received message
-//     */
-//    public Message onConnectionMessage(Message receivedConnectionMessage) {
-//        if (gameState == PossibleGameState.GAME_ENDED) {
-//            return new Response("GAME ENDED", MessageStatus.ERROR);
+    /**
+     * Sub method of the class only used while during the game the {@link Server server} receives disconnection messages from
+     * the {@link Player userPLayers} in the game
+     *
+     * @param receivedConnectionMessage Message received by the server from a connecting or disconnecting {@link Player UserPlayer}
+     * @return a {@link Message Message} which contains the result of the received message
+     */
+    public Message onConnectionMessage(Message receivedConnectionMessage) {
+        if (gameState == PossibleGameState.GAME_ENDED) {
+            return new Response("GAME ENDED", MessageStatus.ERROR);
+        }
+
+//        if (!InputValidator.validatePlayerUsername(game.getPlayers(), receivedConnectionMessage)) {
+//            return new Response("Invalid connection Message", MessageStatus.ERROR);
 //        }
-//
-////        if (!InputValidator.validatePlayerUsername(game.getPlayers(), receivedConnectionMessage)) {
-////            return new Response("Invalid connection Message", MessageStatus.ERROR);
-////        }
-//
-//        if (gameState != PossibleGameState.GAME_ROOM && receivedConnectionMessage.getContent() == MessageContent.GET_IN_LOBBY) {
-//            if (((LobbyMessage) receivedConnectionMessage).isDisconnection()) {
+
+        if (gameState != PossibleGameState.GAME_ROOM && receivedConnectionMessage.getContent() == MessageContent.ADD_PLAYER) {
+            // if the player wants to disconnect from the game
+            if (((LobbyMessage) receivedConnectionMessage).isDisconnection()) {
 //                return disconnectionHandler((LobbyMessage) receivedConnectionMessage);
-//            } else {
-//                return reconnectionHandler((LobbyMessage) receivedConnectionMessage);
-//            }
-//        } else {
-//            System.out.println("Invalid game state");
-//        }
-//    }
-//
+            // if the player wants to reconnect to the game
+            } else {
+                return reconnectionHandler((LobbyMessage) receivedConnectionMessage);
+            }
+        } else {
+            System.out.println("Invalid game state");
+            return buildInvalidResponse();
+        }
+
+        return null;
+    }
+
 //    public Message onConnectionMessage(Message receivedConnectionMessage) {
 //        if (gameState == PossibleGameState.GAME_ENDED) {
 //            return new Response("GAME ENDED", MessageStatus.ERROR);
@@ -603,23 +608,27 @@ public class ControllerGame implements TimerRunListener, Serializable {
 //        }
 //    }
 //
-//    private Message reconnectionHandler(LobbyMessage receivedConnectionMessage) {
+    private Message reconnectionHandler(LobbyMessage receivedConnectionMessage) {
+        System.out.println("mi sto riconnettendo");
+        String reconnectingPlayerName = receivedConnectionMessage.getSenderUsername();
+        List<String> playersNames = game.getPlayers().stream().map(Player::getName).collect(Collectors.toList());
 //        ArrayList<LobbyMessage> inLobbyPlayers = lobby.getInLobbyPlayers();
-//
-//        if (!inLobbyPlayers.contains(receivedConnectionMessage)) {
-//            // if I receive a reconnection message I add it to the lobby and set the corresponding player state to PLAYING
-//            game.addPlayer(receivedConnectionMessage);
-////            ((Player) game.getPlayerByName(receivedConnectionMessage.getSenderUsername())).setPlayerState(PossiblePlayerState.PLAYING);
-//
+
+        if (playersNames.contains(reconnectingPlayerName)){
+            // if I receive a reconnection message the player state change into connected == true
+            game.getPlayerByName(reconnectingPlayerName).setConnected(true);
+
+            server.sendMessageToAll(new ReconnectionMessage("Player " + reconnectingPlayerName + " reconnected to the game."));
 //            return new ReconnectionMessage(receivedConnectionMessage.getToken(),
 //                    new GameStateResponse(receivedConnectionMessage.getSenderUsername(),
 //                            turnController.getActivePlayer().getName()));
-//        } else {
-//            return new Response("Reconnection message from already in lobby Player", MessageStatus.ERROR);
-//        }
-//    }
-//
-//
+        } else {
+            return new Response("Reconnection message from already in lobby Player", MessageStatus.ERROR);
+        }
+        return null;
+    }
+
+
 //    private Message disconnectionHandler(LobbyMessage receivedConnectionMessage) {
 //        ArrayList<LobbyMessage> inLobbyPlayers = lobby.getInLobbyPlayers();
 //        boolean gameEnded;

@@ -123,6 +123,9 @@ public abstract class ClientGameManager implements ClientGameManagerListener, Cl
                 handleDisconnection((DisconnectionMessage) message);
                 break;
 
+            case RECONNECTION:
+                handleReconnection((ReconnectionMessage) message);
+
             default:
         }
     }
@@ -270,23 +273,33 @@ public abstract class ClientGameManager implements ClientGameManagerListener, Cl
         queue.add(() -> onPlayerDisconnection(disconnectionMessage.getUsername()));
     }
 
+    private void handleReconnection(ReconnectionMessage reconnectionMessage) {
+        queue.add(() -> onPlayerReconnection(reconnectionMessage.getMessage()));
+    }
+
     /**
      * Check what is the next action for the client
      */
     private void checkNextAction() {
-        if (turnManager.getUserPlayerState() != UserPlayerState.ENDING_PHASE) {
-            makeMove();
+        // se il giocatore è disconnesso creo un nuovo turno
+        // TODO gestire il caso di un singolo giocatore
+        if (!gameSerialized.getCurrentPlayer().isConnected()) {
+            newTurn();
         } else {
-            turnManager.endTurn();
-        }
+            if (turnManager.getUserPlayerState() != UserPlayerState.ENDING_PHASE) {
+                makeMove();
+            } else {
+                turnManager.endTurn();
+            }
 
 //        System.out.println(yourTurn + "  -  " + turnOwnerChanged);
-        if (yourTurn && turnOwnerChanged) {
-            turnOwnerChanged = false;
-            yourTurn = false;
+            if (yourTurn && turnOwnerChanged) {
+                turnOwnerChanged = false;
+                yourTurn = false;
 
-            System.out.println("CHECK NEXT ACTION");
-            newTurn();
+                System.out.println("CHECK NEXT ACTION");
+                newTurn();
+            }
         }
     }
 
