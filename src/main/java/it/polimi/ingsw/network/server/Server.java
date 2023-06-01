@@ -229,14 +229,17 @@ public class Server implements Runnable {
                     this.playersGame.put(message.getSenderUsername(), controllerGame);
                     sendMessage(message.getSenderUsername(), new Response("Game joined", MessageStatus.GAME_JOINED));
                 } else if (message.getContent() == MessageContent.CREATE_GAME) {
-                    System.out.println("CREATE GAME");
+                    LOGGER.log(Level.INFO, "PLAYER " + message.getSenderUsername(), "");
+                    LOGGER.log(Level.INFO, "CREATE GAME", "");
                     ControllerGame controllerGame = new ControllerGame(this);
                     this.controllerGames.add(controllerGame);
                     this.playersGame.put(message.getSenderUsername(), controllerGame);
                     sendMessage(message.getSenderUsername(), new Response("Game created", MessageStatus.GAME_CREATED));
-                    System.out.println(controllerGames);
-                    System.out.println(playersGame);
+                    LOGGER.log(Level.INFO, "PLAYER " + message.getSenderUsername(), "");
+                    LOGGER.log(Level.INFO, "CONTROLLER GAME: " + controllerGame.getId(), "");
                 } else {
+                    LOGGER.log(Level.INFO, "PLAYER " + message.getSenderUsername(), "");
+                    LOGGER.log(Level.INFO, "CONTROLLER GAME " + this.playersGame.get(message.getSenderUsername()).getId(), "");
                     ControllerGame controllerGame = this.playersGame.get(message.getSenderUsername());
                     Message response = controllerGame.onMessage(message);
                     sendMessage(message.getSenderUsername(), response);
@@ -274,16 +277,20 @@ public class Server implements Runnable {
 //            }
 //        else {
 //                controllerGame.onConnectionMessage(new LobbyMessage(username, null, true));
-            sendMessageToAll(new DisconnectionMessage(username));
+            sendMessageToAll(controllerGame.getId(), new DisconnectionMessage(username));
 //            }
         }
     }
 
-    public void sendMessageToAll(Message message) {
-        for (Map.Entry<String, Connection> client : clients.entrySet()) {
-            if (client.getValue() != null && client.getValue().isConnected()) {
+    public void sendMessageToAll(UUID gameId, Message message) {
+        System.out.println("ALL SENDING MESSAGE");
+        for (Map.Entry<String, ControllerGame> client : playersGame.entrySet()) {
+            System.out.println(client.getKey() + " " + client.getValue().getId() + " " + gameId + " " + clients.get(client.getKey()).isConnected());
+            if (client.getValue() != null && client.getValue().getId().equals(gameId) && clients.get(client.getKey()).isConnected()) {
                 try {
-                    client.getValue().sendMessage(message);
+                    System.out.println("ALL SENDING MESSAGE TO " + client.getKey());
+                    System.out.println("ALL MESSAGE: " + message);
+                    clients.get(client.getKey()).sendMessage(message);
                 } catch (IOException e) {
                     LOGGER.severe(e.getMessage());
                 }
@@ -292,11 +299,26 @@ public class Server implements Runnable {
         LOGGER.log(Level.INFO, "Send to all: {0}", message);
     }
 
+//    public void sendMessageToAll(Message message) {
+//        for (Map.Entry<String, Connection> client : clients.entrySet()) {
+//            if (client.getValue() != null && client.getValue().isConnected()) {
+//                try {
+//                    client.getValue().sendMessage(message);
+//                } catch (IOException e) {
+//                    LOGGER.severe(e.getMessage());
+//                }
+//            }
+//        }
+//        LOGGER.log(Level.INFO, "Send to all: {0}", message);
+//    }
+
     public void sendMessage(String username, Message message) {
         synchronized (clientsLock) {
             for (Map.Entry<String, Connection> client : clients.entrySet()) {
                 if (client.getKey().equals(username) && client.getValue() != null && client.getValue().isConnected()) {
                     try {
+                        System.out.println("SENDING MESSAGE TO " + username);
+                        System.out.println("MESSAGE: " + message);
                         client.getValue().sendMessage(message);
                     } catch (IOException e) {
                         LOGGER.severe(e.getMessage());
@@ -356,5 +378,9 @@ public class Server implements Runnable {
 
     private ControllerGame findGameByPlayerUsername(String username) {
         return playersGame.get(username);
+    }
+
+    public Map<String, ControllerGame> getPlayersGame() {
+        return playersGame;
     }
 }

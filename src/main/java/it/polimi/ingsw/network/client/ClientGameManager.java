@@ -224,6 +224,7 @@ public abstract class ClientGameManager implements ClientGameManagerListener, Cl
     }
 
     private void handlePlayersInLobby(LobbyPlayersResponse message) {
+        System.out.println("PLAYERS IN LOBBY " + message.getUsers());
         lobbyPlayers = message.getUsers();
         queue.add(() -> playersWaitingUpdate(message.getUsers()));
     }
@@ -232,7 +233,7 @@ public abstract class ClientGameManager implements ClientGameManagerListener, Cl
         if (response.getStatus() == MessageStatus.GAME_CREATED || response.getStatus() == MessageStatus.GAME_JOINED) {
             queue.add(() -> addPlayerToGameRequest());
         } else {
-            if (!joinedLobby) {
+            if (joinedLobby == false) {
                 joinedLobby = response.getStatus() == MessageStatus.OK;
 
                 if (lobbyPlayers.size() == 1) queue.add(() -> numberOfPlayersRequest(response));
@@ -262,6 +263,7 @@ public abstract class ClientGameManager implements ClientGameManagerListener, Cl
 
     /**
      * Handles a disconnection message received from the server when a clìient disconnects
+     *
      * @param disconnectionMessage disconnection message received
      */
     private void handleDisconnection(DisconnectionMessage disconnectionMessage) {

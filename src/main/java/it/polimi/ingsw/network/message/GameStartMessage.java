@@ -40,7 +40,6 @@ public class GameStartMessage extends Message {
         return "GameStartMessage{" +
                 "senderUsername=" + getSenderUsername() + ", " +
                 "firstPlayer='" + firstPlayer + '\'' +
-                "cg=" + cg + '\'' +
                 ", content=" + getContent() +
                 '}';
     }

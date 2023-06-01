@@ -22,7 +22,7 @@ public class TurnController implements Serializable {
 
 
     public TurnController(List<Player> players, ControllerGame controllerGame) {
-        this.gameInstance = Game.getInstance();
+        this.gameInstance = Game.getInstance(players.get(0).getName());
         this.players = new ArrayList<>(players);
         this.firstTurn = true;
         this.count = 0;

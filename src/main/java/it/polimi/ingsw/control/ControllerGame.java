@@ -3,7 +3,6 @@ package it.polimi.ingsw.control;
 import it.polimi.ingsw.enumeration.MessageContent;
 import it.polimi.ingsw.enumeration.MessageStatus;
 import it.polimi.ingsw.enumeration.PossibleGameState;
-import it.polimi.ingsw.enumeration.PossiblePlayerState;
 import it.polimi.ingsw.model.*;
 import it.polimi.ingsw.network.message.*;
 import it.polimi.ingsw.network.server.Server;
@@ -41,8 +40,8 @@ public class ControllerGame implements TimerRunListener, Serializable {
         JsonReader.readJsonConstant("GameConstant.json");
         this.server = server;
         this.id = UUID.randomUUID();
-        this.game = Game.getInstance();
         this.selectedCoordinates = new ArrayList<>();
+        this.game = null;
     }
 
     public UUID getId() {
@@ -234,14 +233,20 @@ public class ControllerGame implements TimerRunListener, Serializable {
      * @return the response to the message
      */
     private Response lobbyMessageHandler(LobbyMessage lobbyMessage) {
+        if (game == null) this.game = Game.getInstance(lobbyMessage.getSenderUsername());
         List<Player> inLobbyPlayers = game.getPlayers();
 
         if (lobbyMessage.getContent() == MessageContent.ADD_PLAYER && isUsernameAvailable(lobbyMessage.getSenderUsername()) && !lobbyMessage.isDisconnection()) {
             if (inLobbyPlayers.size() < JsonReader.getMaxPlayers()) {
                 game.addPlayer(new Player(lobbyMessage.getSenderUsername(), new Shelf(), game.getRandomAvailablePersonalGoalCard()));
+                server.getPlayersGame().put(lobbyMessage.getSenderUsername(), this);
+                Game.getInstanceMap().put(lobbyMessage.getSenderUsername(), game);
 
-                server.sendMessageToAll(new LobbyPlayersResponse(new ArrayList<>(inLobbyPlayers.stream().map(player -> player.getName()).collect(Collectors.toList()))));
+
                 Server.LOGGER.log(Level.INFO, "{0} joined the lobby", lobbyMessage.getSenderUsername());
+                System.out.println("Players in lobby: " + game.getPlayers());
+
+                server.sendMessageToAll(this.id, new LobbyPlayersResponse(new ArrayList<>(inLobbyPlayers.stream().map(player -> player.getName()).collect(Collectors.toList()))));
             } else {
                 return buildInvalidResponse();
             }
