@@ -123,6 +123,9 @@ public abstract class ClientGameManager implements ClientGameManagerListener, Cl
                 handleDisconnection((DisconnectionMessage) message);
                 break;
 
+            case RECONNECTION:
+                handleReconnection((ReconnectionMessage) message);
+
             default:
         }
     }
@@ -224,6 +227,7 @@ public abstract class ClientGameManager implements ClientGameManagerListener, Cl
     }
 
     private void handlePlayersInLobby(LobbyPlayersResponse message) {
+        System.out.println("PLAYERS IN LOBBY " + message.getUsers());
         lobbyPlayers = message.getUsers();
         queue.add(() -> playersWaitingUpdate(message.getUsers()));
     }
@@ -232,7 +236,7 @@ public abstract class ClientGameManager implements ClientGameManagerListener, Cl
         if (response.getStatus() == MessageStatus.GAME_CREATED || response.getStatus() == MessageStatus.GAME_JOINED) {
             queue.add(() -> addPlayerToGameRequest());
         } else {
-            if (!joinedLobby) {
+            if (joinedLobby == false) {
                 joinedLobby = response.getStatus() == MessageStatus.OK;
 
                 if (lobbyPlayers.size() == 1) queue.add(() -> numberOfPlayersRequest(response));
@@ -262,29 +266,42 @@ public abstract class ClientGameManager implements ClientGameManagerListener, Cl
 
     /**
      * Handles a disconnection message received from the server when a clìient disconnects
+     *
      * @param disconnectionMessage disconnection message received
      */
     private void handleDisconnection(DisconnectionMessage disconnectionMessage) {
         queue.add(() -> onPlayerDisconnection(disconnectionMessage.getUsername()));
     }
 
+    private void handleReconnection(ReconnectionMessage reconnectionMessage) {
+        this.firstTurn = false;
+        turnManager = new ClientTurnManager();
+        queue.add(() -> onPlayerReconnection(reconnectionMessage.getMessage()));
+    }
+
     /**
      * Check what is the next action for the client
      */
     private void checkNextAction() {
-        if (turnManager.getUserPlayerState() != UserPlayerState.ENDING_PHASE) {
-            makeMove();
+        // se il giocatore è disconnesso creo un nuovo turno
+        // TODO gestire il caso di un singolo giocatore
+        if (!gameSerialized.getCurrentPlayer().isConnected()) {
+            newTurn();
         } else {
-            turnManager.endTurn();
-        }
+            if (turnManager.getUserPlayerState() != UserPlayerState.ENDING_PHASE) {
+                makeMove();
+            } else {
+                turnManager.endTurn();
+            }
 
 //        System.out.println(yourTurn + "  -  " + turnOwnerChanged);
-        if (yourTurn && turnOwnerChanged) {
-            turnOwnerChanged = false;
-            yourTurn = false;
+            if (yourTurn && turnOwnerChanged) {
+                turnOwnerChanged = false;
+                yourTurn = false;
 
-            System.out.println("CHECK NEXT ACTION");
-            newTurn();
+                System.out.println("CHECK NEXT ACTION");
+                newTurn();
+            }
         }
     }
 

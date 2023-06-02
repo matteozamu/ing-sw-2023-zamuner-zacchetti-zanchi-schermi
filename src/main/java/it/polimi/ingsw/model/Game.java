@@ -12,6 +12,7 @@ import java.util.*;
  * Represents the main game logic, including object card and common goal management.
  */
 public class Game implements Serializable {
+    private static Map<String, Game> instanceMap = new HashMap<>();
     private static Game instance;
     private List<ObjectCard> objectCardContainer;
     private List<CommonGoal> commonGoalContainer;
@@ -46,10 +47,22 @@ public class Game implements Serializable {
         commonGoals.add(getRandomAvailableCommonGoal());
     }
 
-    public static Game getInstance() {
-        if (instance == null)
-            instance = new Game();
-        return instance;
+//    public static Game getInstance() {
+//        if (instance == null)
+//            instance = new Game();
+//        return instance;
+//    }
+
+    public static Map<String, Game> getInstanceMap() {
+        return instanceMap;
+    }
+
+    public static Game getInstance(String username) {
+        if (!instanceMap.containsKey(username)) {
+            Game instance = new Game();
+            instanceMap.put(username, instance);
+        }
+        return instanceMap.get(username);
     }
 
     public int getNumberOfPlayers() {
@@ -104,7 +117,7 @@ public class Game implements Serializable {
         return players;
     }
 
-    public boolean doesPlayerExists(String username) {
+    public boolean doesPlayerExist(String username) {
         for (Player p : players) {
             if (p.getName().equals(username)) return true;
         }

@@ -38,8 +38,6 @@ public class InputValidator {
         try {
             switch (checkingMessage.getContent()) {
                 case PASS_TURN:
-                case LOBBY_VOTE:
-                    return true;
                 case ADD_PLAYER:
                     return true;
                 case NUMBER_OF_PLAYERS:

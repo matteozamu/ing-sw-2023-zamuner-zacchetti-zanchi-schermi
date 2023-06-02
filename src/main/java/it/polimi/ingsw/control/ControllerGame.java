@@ -3,7 +3,6 @@ package it.polimi.ingsw.control;
 import it.polimi.ingsw.enumeration.MessageContent;
 import it.polimi.ingsw.enumeration.MessageStatus;
 import it.polimi.ingsw.enumeration.PossibleGameState;
-import it.polimi.ingsw.enumeration.PossiblePlayerState;
 import it.polimi.ingsw.model.*;
 import it.polimi.ingsw.network.message.*;
 import it.polimi.ingsw.network.server.Server;
@@ -41,12 +40,16 @@ public class ControllerGame implements TimerRunListener, Serializable {
         JsonReader.readJsonConstant("GameConstant.json");
         this.server = server;
         this.id = UUID.randomUUID();
-        this.game = Game.getInstance();
         this.selectedCoordinates = new ArrayList<>();
+        this.game = null;
     }
 
     public UUID getId() {
         return id;
+    }
+
+    public void setGame(Game game) {
+        this.game = game;
     }
 
     /**
@@ -118,6 +121,7 @@ public class ControllerGame implements TimerRunListener, Serializable {
                 return new Response("Game is ended.", MessageStatus.GAME_ENDED);
             }
             game.nextPlayer();
+            turnController.setActivePlayer(game.getCurrentPlayer());
 
             sendPrivateUpdates();
             return new Response("Cards moved", MessageStatus.OK);
@@ -234,14 +238,20 @@ public class ControllerGame implements TimerRunListener, Serializable {
      * @return the response to the message
      */
     private Response lobbyMessageHandler(LobbyMessage lobbyMessage) {
+        if (game == null) this.game = Game.getInstance(lobbyMessage.getSenderUsername());
         List<Player> inLobbyPlayers = game.getPlayers();
 
         if (lobbyMessage.getContent() == MessageContent.ADD_PLAYER && isUsernameAvailable(lobbyMessage.getSenderUsername()) && !lobbyMessage.isDisconnection()) {
             if (inLobbyPlayers.size() < JsonReader.getMaxPlayers()) {
                 game.addPlayer(new Player(lobbyMessage.getSenderUsername(), new Shelf(), game.getRandomAvailablePersonalGoalCard()));
+                server.getPlayersGame().put(lobbyMessage.getSenderUsername(), this);
+                Game.getInstanceMap().put(lobbyMessage.getSenderUsername(), game);
 
-                server.sendMessageToAll(new LobbyPlayersResponse(new ArrayList<>(inLobbyPlayers.stream().map(player -> player.getName()).collect(Collectors.toList()))));
+
                 Server.LOGGER.log(Level.INFO, "{0} joined the lobby", lobbyMessage.getSenderUsername());
+                System.out.println("Players in lobby: " + game.getPlayers());
+
+                server.sendMessageToAll(this.id, new LobbyPlayersResponse(new ArrayList<>(inLobbyPlayers.stream().map(player -> player.getName()).collect(Collectors.toList()))));
             } else {
                 return buildInvalidResponse();
             }
@@ -325,6 +335,7 @@ public class ControllerGame implements TimerRunListener, Serializable {
 
     private void startingStateHandler() {
         this.turnController = new TurnController(this.game.getPlayers(), this);
+        turnController.setActivePlayer(game.getCurrentPlayer());
         changeState(PossibleGameState.GAME_STARTED);
 
         //non ci serve, abbiamp gia il current player
@@ -550,33 +561,38 @@ public class ControllerGame implements TimerRunListener, Serializable {
         }
     }
 
-//    /**
-//     * Sub method of the class only used while during the game the {@link Server server} receives disconnection messages from
-//     * the {@link Player userPLayers} in the game
-//     *
-//     * @param receivedConnectionMessage Message received by the server from a connecting or disconnecting {@link Player UserPlayer}
-//     * @return a {@link Message Message} which contains the result of the received message
-//     */
-//    public Message onConnectionMessage(Message receivedConnectionMessage) {
-//        if (gameState == PossibleGameState.GAME_ENDED) {
-//            return new Response("GAME ENDED", MessageStatus.ERROR);
+    /**
+     * Sub method of the class only used while during the game the {@link Server server} receives disconnection messages from
+     * the {@link Player userPLayers} in the game
+     *
+     * @param receivedConnectionMessage Message received by the server from a connecting or disconnecting {@link Player UserPlayer}
+     * @return a {@link Message Message} which contains the result of the received message
+     */
+    public Message onConnectionMessage(Message receivedConnectionMessage) {
+        if (gameState == PossibleGameState.GAME_ENDED) {
+            return new Response("GAME ENDED", MessageStatus.ERROR);
+        }
+
+//        if (!InputValidator.validatePlayerUsername(game.getPlayers(), receivedConnectionMessage)) {
+//            return new Response("Invalid connection Message", MessageStatus.ERROR);
 //        }
-//
-////        if (!InputValidator.validatePlayerUsername(game.getPlayers(), receivedConnectionMessage)) {
-////            return new Response("Invalid connection Message", MessageStatus.ERROR);
-////        }
-//
-//        if (gameState != PossibleGameState.GAME_ROOM && receivedConnectionMessage.getContent() == MessageContent.GET_IN_LOBBY) {
-//            if (((LobbyMessage) receivedConnectionMessage).isDisconnection()) {
+
+        if (gameState != PossibleGameState.GAME_ROOM && receivedConnectionMessage.getContent() == MessageContent.ADD_PLAYER) {
+            // if the player wants to disconnect from the game
+            if (((LobbyMessage) receivedConnectionMessage).isDisconnection()) {
 //                return disconnectionHandler((LobbyMessage) receivedConnectionMessage);
-//            } else {
-//                return reconnectionHandler((LobbyMessage) receivedConnectionMessage);
-//            }
-//        } else {
-//            System.out.println("Invalid game state");
-//        }
-//    }
-//
+            // if the player wants to reconnect to the game
+            } else {
+                return reconnectionHandler((LobbyMessage) receivedConnectionMessage);
+            }
+        } else {
+            System.out.println("Invalid game state");
+            return buildInvalidResponse();
+        }
+
+        return null;
+    }
+
 //    public Message onConnectionMessage(Message receivedConnectionMessage) {
 //        if (gameState == PossibleGameState.GAME_ENDED) {
 //            return new Response("GAME ENDED", MessageStatus.ERROR);
@@ -598,23 +614,27 @@ public class ControllerGame implements TimerRunListener, Serializable {
 //        }
 //    }
 //
-//    private Message reconnectionHandler(LobbyMessage receivedConnectionMessage) {
+    private Message reconnectionHandler(LobbyMessage receivedConnectionMessage) {
+        String reconnectingPlayerName = receivedConnectionMessage.getSenderUsername();
+        List<String> playersNames = game.getPlayers().stream().map(Player::getName).collect(Collectors.toList());
 //        ArrayList<LobbyMessage> inLobbyPlayers = lobby.getInLobbyPlayers();
-//
-//        if (!inLobbyPlayers.contains(receivedConnectionMessage)) {
-//            // if I receive a reconnection message I add it to the lobby and set the corresponding player state to PLAYING
-//            game.addPlayer(receivedConnectionMessage);
-////            ((Player) game.getPlayerByName(receivedConnectionMessage.getSenderUsername())).setPlayerState(PossiblePlayerState.PLAYING);
-//
+
+        if (playersNames.contains(reconnectingPlayerName)){
+            // if I receive a reconnection message the player state change into connected == true
+            game.getPlayerByName(reconnectingPlayerName).setConnected(true);
+
+            server.sendMessageToAll(this.id, new ReconnectionMessage("Player " + reconnectingPlayerName + " reconnected to the game."));
 //            return new ReconnectionMessage(receivedConnectionMessage.getToken(),
 //                    new GameStateResponse(receivedConnectionMessage.getSenderUsername(),
 //                            turnController.getActivePlayer().getName()));
-//        } else {
-//            return new Response("Reconnection message from already in lobby Player", MessageStatus.ERROR);
-//        }
-//    }
-//
-//
+        } else {
+            return new Response("Reconnection message from already in lobby Player", MessageStatus.ERROR);
+        }
+//        return new GameStateResponse(reconnectingPlayerName, turnController.getActivePlayer().getName());
+        return new GameStateResponse(reconnectingPlayerName, game.getCurrentPlayer().getName());
+    }
+
+
 //    private Message disconnectionHandler(LobbyMessage receivedConnectionMessage) {
 //        ArrayList<LobbyMessage> inLobbyPlayers = lobby.getInLobbyPlayers();
 //        boolean gameEnded;

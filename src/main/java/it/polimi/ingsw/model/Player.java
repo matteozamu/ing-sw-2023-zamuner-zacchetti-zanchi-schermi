@@ -11,6 +11,15 @@ public class Player implements Serializable {
     private int currentPoints;
     private Shelf shelf;
     private boolean winner = false;
+    private boolean connected;
+
+    public boolean isConnected() {
+        return connected;
+    }
+
+    public void setConnected(boolean connected) {
+        this.connected = connected;
+    }
 
     /**
      * Constructs a Player with the given name, shelf, and personal goal card.
@@ -24,6 +33,7 @@ public class Player implements Serializable {
         this.currentPoints = 0;
         this.shelf = shelf;
         this.personalGoalCard = personalGoalCard;
+        this.connected = true;
     }
 
     /**
