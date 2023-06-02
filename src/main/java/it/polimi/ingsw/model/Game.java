@@ -117,7 +117,7 @@ public class Game implements Serializable {
         return players;
     }
 
-    public boolean doesPlayerExists(String username) {
+    public boolean doesPlayerExist(String username) {
         for (Player p : players) {
             if (p.getName().equals(username)) return true;
         }
