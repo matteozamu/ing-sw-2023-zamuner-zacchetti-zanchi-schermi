@@ -5,7 +5,7 @@
 <?import java.net.URL?>
 <?import javafx.scene.image.ImageView?>
 
-<BorderPane fx:controller="it.polimi.ingsw.view.gui.NumberPlayersController"
+<BorderPane fx:controller="it.polimi.ingsw.view.gui.StartGameSceneController"
             fx:id="mainPane"
             styleClass="mainPane"
             xmlns="http://javafx.com/javafx"
@@ -17,15 +17,14 @@
 
     <top>
         <VBox styleClass="topBox">
-            <Label text="Select the number of players" styleClass="menuTitle"/>
+            <Label text="Game selection" styleClass="menuTitle"/>
         </VBox>
     </top>
 
     <center>
         <FlowPane styleClass="selectionButton">
-            <ImageView fx:id="twoPlayersButton" id="twoPlayersButton" styleClass="button"/>
-            <ImageView fx:id="threePlayersButton" id="threePlayersButton" styleClass="button"/>
-            <ImageView fx:id="fourPlayersButton" id="fourPlayersButton" styleClass="button"/>
+            <ImageView fx:id="createGameButton" id="newGameButton" styleClass="button"/>
+            <ImageView fx:id="joinGameButton" id="joinGameButton" styleClass="button"/>
         </FlowPane>
     </center>
 

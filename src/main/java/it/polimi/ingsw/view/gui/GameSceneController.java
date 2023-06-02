@@ -22,10 +22,14 @@ import it.polimi.ingsw.model.Player.*;
 import it.polimi.ingsw.network.client.ClientGameManager;
 import it.polimi.ingsw.utility.MessageBuilder;
 
+import java.awt.*;
 import java.util.*;
+import java.util.List;
 import java.util.stream.Collectors;
 
 import static java.awt.Transparency.OPAQUE;
+
+//TODO : Vedere differenza tra ID e classe in CSS
 
 /**
  * Class for the graphical interface of the game
@@ -41,17 +45,19 @@ public class GameSceneController {
     @FXML
     Pane mainPane;
     @FXML
-    StackPane boardArea;
+    StackPane gameStackPaneArea;
     @FXML
-    StackPane boardStack;
+    StackPane boardStackPaneArea;
     @FXML
-    GridPane gridPaneBoard;
+    GridPane boardGridPane;
     @FXML
-    ImageView board;
+    ImageView boardImage;
     @FXML
-    HBox boardShelf;
+    HBox boardShelfHBoxArea;
     @FXML
-    VBox shelfArea;
+    VBox boardCommonGoalCardsVBoxArea;
+    @FXML
+    VBox shelfLimboVBoxArea;
     @FXML
     ImageView personalGoalCard;
     @FXML
@@ -70,25 +76,28 @@ public class GameSceneController {
     @FXML
     ImageView shelf4;
     @FXML
-    HBox imageList;
+    HBox shelfHBoxImages;
     @FXML
-    Label nameShelf1;
+    Label shelfLabel1;
     @FXML
-    Label nameShelf2;
+    Label shelfLabel2;
     @FXML
-    Label nameShelf3;
+    Label shelfLabel3;
     @FXML
-    Label nameShelf4;
+    Label shelfLabel4;
     @FXML
-    GridPane gridPaneShelf1;
+    GridPane shelf1GridPane;
     @FXML
-    GridPane gridPaneShelf2;
+    GridPane shelf2GridPane;
     @FXML
-    GridPane gridPaneShelf3;
+    GridPane shelf3GridPane;
     @FXML
-    GridPane gridPaneShelf4;
+    GridPane shelf4GridPane;
     @FXML
-    HBox limbo;
+    HBox limboHBoxArea;
+    @FXML
+    StackPane personalGoalCardPane;
+    //TODO : Perché le definizioni di tipo di pane posso differire tra controller e FXML?
     @FXML
     Label pointLabel;
     @FXML
@@ -98,11 +107,13 @@ public class GameSceneController {
     @FXML
     BorderPane infoPanel;
     @FXML
+    Pane playersNamePaneArea;
+    @FXML
     BorderPane actionPanel;
     @FXML
-    HBox commonGoalCardsBox;
+    HBox commonGoalCardsHBoxArea;
     @FXML
-    AnchorPane arrowShelfArea;
+    AnchorPane columnArrowAnchorPane;
     @FXML
     ImageView arrowShelf1;
     @FXML
@@ -252,7 +263,7 @@ public class GameSceneController {
     @FXML
     ImageView scoring82;
     @FXML
-    ImageView endGame;
+    ImageView endGameTokenImage;
     @FXML
     Label namePlayer1;
     @FXML
@@ -281,10 +292,10 @@ public class GameSceneController {
         guiManager = GuiManager.getInstance();
         guiManager.setGameSceneController(this);
 
-        nameShelf1.setText("Federico");
-        nameShelf2.setText("Matteo");
-        nameShelf3.setText("Federica");
-        nameShelf4.setText("Simone");
+        shelfLabel1.setText("Federico");
+        shelfLabel2.setText("Matteo");
+        shelfLabel3.setText("Federica");
+        shelfLabel4.setText("Simone");
 
         objectCards = new HashMap<>();
         commonGoalCards = new ArrayList<>();
@@ -400,7 +411,7 @@ public class GameSceneController {
                             imageView.setPreserveRatio(true);
                             imageView.setPickOnBounds(true);
 
-                            gridPaneBoard.add(imageView, 4 - i, j - 4);  // aggiunge l'immagine alla cella (j, i) del GridPane
+                            boardGridPane.add(imageView, 4 - i, j - 4);  // aggiunge l'immagine alla cella (j, i) del GridPane
                         }
                     }
                 }
