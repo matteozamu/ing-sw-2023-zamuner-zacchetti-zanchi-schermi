@@ -30,6 +30,8 @@
     -fx-alignment: CENTER;
 }
 
+/* Button */
+
 .button:hover {
     -fx-effect: dropshadow(gaussian, #F44336, 15, 0.2, 0, 0);
 }
@@ -38,6 +40,15 @@
     -fx-scale-y: 0.95;
     -fx-scale-x: 0.95;
 }
+
+.selectionButton {
+    -fx-max-width: 1500px;
+    -fx-hgap: 10;
+    -fx-vgap: 20;
+    -fx-alignment: CENTER;
+}
+
+/* Text */
 
 .menuTitle {
     -fx-font-family: "Berkshire Swash Regular";
@@ -147,46 +158,46 @@
 }
 
 #startButton {
-    -fx-image: url("/img/button/startbutton.png");
+    -fx-image: url("/img/buttons/startbutton.png");
 }
 
 #exitButton {
-    -fx-image: url("/img/button/exitbutton.png");
+    -fx-image: url("/img/buttons/exitbutton.png");
 }
 
 #connectSocketButton {
-    -fx-image: url("/img/button/connectsocketbutton.png");
+    -fx-image: url("/img/buttons/connectsocketbutton.png");
 }
 
 #connectRmiButton {
-    -fx-image: url("/img/button/connectrmibutton.png");
+    -fx-image: url("/img/buttons/connectrmibutton.png");
 }
 
 #backButton {
-    -fx-image: url("/img/button/backbutton.png");
+    -fx-image: url("/img/buttons/backbutton.png");
 }
 
 #okButton {
-    -fx-image: url("/img/button/okbutton.png");
+    -fx-image: url("/img/buttons/okbutton.png");
 }
 
 #twoPlayersButton {
-    -fx-image: url("/img/button/twoPlayersButton.png");
+    -fx-image: url("/img/buttons/twoPlayersButton.png");
 }
 
 #threePlayersButton {
-    -fx-image: url("/img/button/threePlayersButton.png");
+    -fx-image: url("/img/buttons/threePlayersButton.png");
 }
 
 #fourPlayersButton {
-    -fx-image: url("/img/button/fourPlayersButton.png");
+    -fx-image: url("/img/buttons/fourPlayersButton.png");
 }
 
-/* Number of players */
-
-.numberPlayersButton {
-    -fx-max-width: 1500px;
-    -fx-hgap: 10;
-    -fx-vgap: 20;
-    -fx-alignment: CENTER;
+#createGameButton {
+    -fx-image: url("/img/buttons/createGameButton.png");
 }
+
+#joinGameButton {
+    -fx-image: url("/img/buttons/joinGameButton.png");
+}
+

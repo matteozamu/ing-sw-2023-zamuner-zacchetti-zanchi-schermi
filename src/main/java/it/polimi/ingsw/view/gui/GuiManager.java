@@ -34,6 +34,8 @@ public class GuiManager extends ClientGameManager implements DisconnectionListen
 
     private NumberPlayersController numberPlayersController;
 
+    private StartGameSceneController startGameSceneController;
+
     private GuiManager() {
         super();
     }
@@ -116,6 +118,10 @@ public class GuiManager extends ClientGameManager implements DisconnectionListen
 
     void setNumberPlayersController(NumberPlayersController numberPlayersController) {
         this.numberPlayersController = numberPlayersController;
+    }
+
+    void setStartGameSceneController(StartGameSceneController startGameSceneController) {
+        this.startGameSceneController = startGameSceneController;
     }
 
     @Override

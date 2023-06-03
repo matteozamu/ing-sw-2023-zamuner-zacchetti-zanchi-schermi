@@ -12,14 +12,7 @@
     -fx-alignment: CENTER;
 }
 
-.boardArea {
-    -fx-max-height: 750px;
-    -fx-min-height: 750px;
-
-    -fx-max-width: 1300px;
-    -fx-min-width: 1300px;
-}
-
+/*
 .turnOwner {
     -fx-effect: dropshadow(gaussian, #F44336, 15, 0.2, 0, 0);
 }
@@ -27,33 +20,94 @@
 .notTurnOwner {
     -fx-opacity: 0.5;
 }
+ */
 
-.board {
-    -fx-image: url("../img/boards/livingroom.png");
+.commonGoalCardsHBoxArea {
+    -fx-spacing: 10;
+    -fx-alignment: CENTER;
+}
+
+/* Areas */
+
+.gameStackPaneArea {
+    -fx-max-height: 750px;
+    -fx-min-height: 750px;
+
+    -fx-max-width: 1300px;
+    -fx-min-width: 1300px;
+}
+
+.boardShelfHBoxArea {
+    -fx-spacing: 10;
+    -fx-alignment: CENTER;
+}
+
+.boardCommonGoalCardsVBoxArea {
+    -fx-spacing: 25;
+}
+
+.boardStackPaneArea {
+    /* Fissare una dimensione in modo tale da non fissare la dimensione dell'immagine, ma sarà l'immagine a riempire tutto lo spazio dello stack pane */
+    -fx-alignment: CENTER;
+}
+
+/* Board */
+
+.boardImage {
+    -fx-image: url("/img/board_shelf/livingroom.png");
     -fx-effect: dropshadow(gaussian, rgba(255, 255, 255, 0.3), 20, 0.5, 0, 0);
 }
+
+.boardGridPane {
+    /*
+    -fx-alignment: CENTER;
+    -fx-translate-x: -2.0;
+    -fx-vgap: 6.0;
+    -fx-hgap: 6.0;
+    Da capire perché non funzionano
+     */
+}
+
+/* Shelf */
 
 .shelf {
-    -fx-image: url("../img/boards/bookshelf_orth.png");
+    -fx-image: url("/img/board_shelf/shelf_orth.png");
     -fx-effect: dropshadow(gaussian, rgba(255, 255, 255, 0.3), 20, 0.5, 0, 0);
 }
 
-.shelfScroll {
+.shelfGridPane {
+
+}
+
+.shelfLimboVBoxArea {
+    -fx-spacing: 25;
+}
+
+.arrowShelf {
+    -fx-image: url("/img/misc/arrow_shelf.png");
+}
+
+.shelfScrollPane {
+    -fx-background-color: transparent;
+    -fx-alignment: CENTER;
+}
+
+.shelfScrollPane .viewport {
     -fx-background-color: transparent;
 }
 
-.shelfScroll .viewport {
+.shelfScrollPane .scroll-bar:vertical .track,
+.shelfScrollPane .scroll-bar:horizontal .track {
     -fx-background-color: transparent;
 }
 
-.shelfScroll .scroll-bar:vertical .track,
-.shelfScroll .scroll-bar:horizontal .track {
+.shelfScrollPane .scroll-bar:vertical .thumb,
+.shelfScrollPane .scroll-bar:horizontal .thumb {
     -fx-background-color: transparent;
 }
 
-.shelfScroll .scroll-bar:vertical .thumb,
-.shelfScroll .scroll-bar:horizontal .thumb {
-    -fx-background-color: transparent;
+.shelfHBoxImages {
+
 }
 
 .shelfLabel {
@@ -66,6 +120,39 @@
     -fx-border-color: #682110;
     -fx-border-width: 2px;
 }
+
+.columnArrowAnchorPane {
+    -fx-alignment: CENTER;
+}
+
+/* Player name */
+
+.playersNamePaneArea {
+
+}
+
+.playerName {
+    -fx-alignment: center;
+    -fx-font-family: "Merriweather Regular";
+    -fx-font-size: 15px;
+    -fx-text-fill: #6C2310;
+}
+
+.labelSeparator {
+    -fx-border-color: #F1E1B2;
+}
+
+/* Limbo */
+
+.limboHBoxArea {
+    -fx-background-color: rgba(255, 255, 255, 0.5);
+    -fx-border-radius: 15px;
+    -fx-background-radius: 15px;
+    -fx-spacing: 25;
+    -fx-alignment: CENTER;
+}
+
+/* End scene */
 
 .topEndBox {
     -fx-padding: 50 0 0 0;
@@ -164,119 +251,103 @@
     -fx-pref-width: 220px;
 }
 
-.limbo {
-    -fx-background-color: rgba(255, 255, 255, 0.5);
-    -fx-border-radius: 15px;
-    -fx-background-radius: 15px;
-    -fx-spacing: 25;
-}
-
-.shelfArea {
-    -fx-spacing: 25;
-}
-
-.boardShelf {
-    -fx-spacing: 10;
-}
-
-.arrowShelf {
-    -fx-image: url("/img/misc/arrow_shelf.png");
-}
-
+/* Object cards */
 
 .transparent {
-    -fx-image: url("/img/item_tiles/transparent.png");
+    -fx-image: url("/img/object_cards/transparent.png");
 }
 
 .frame-1 {
-    -fx-image: url("/img/item_tiles/frame-1.png");
+    -fx-image: url("/img/object_cards/frame-1.png");
     -fx-effect: dropshadow(gaussian, rgba(255, 255, 255, 0.3), 20, 0.5, 0, 0);
 }
 
 .frame-2 {
-    -fx-image: url("/img/item_tiles/frame-2.png");
+    -fx-image: url("/img/object_cards/frame-2.png");
     -fx-effect: dropshadow(gaussian, rgba(255, 255, 255, 0.3), 20, 0.5, 0, 0);
 }
 
 .frame-3 {
-    -fx-image: url("/img/item_tiles/frame-3.png");
+    -fx-image: url("/img/object_cards/frame-3.png");
     -fx-effect: dropshadow(gaussian, rgba(255, 255, 255, 0.3), 20, 0.5, 0, 0);
 }
 
 .cat-1 {
-    -fx-image: url("/img/item_tiles/cat-1.png");
+    -fx-image: url("/img/object_cards/cat-1.png");
     -fx-effect: dropshadow(gaussian, rgba(255, 255, 255, 0.3), 20, 0.5, 0, 0);
 }
 
 .cat-2 {
-    -fx-image: url("/img/item_tiles/cat-2.png");
+    -fx-image: url("/img/object_cards/cat-2.png");
     -fx-effect: dropshadow(gaussian, rgba(255, 255, 255, 0.3), 20, 0.5, 0, 0);
 }
 
 .cat-3 {
-    -fx-image: url("/img/item_tiles/cat-3.png");
+    -fx-image: url("/img/object_cards/cat-3.png");
     -fx-effect: dropshadow(gaussian, rgba(255, 255, 255, 0.3), 20, 0.5, 0, 0);
 }
 
 .game-1 {
-    -fx-image: url("/img/item_tiles/game-1.png");
+    -fx-image: url("/img/object_cards/game-1.png");
     -fx-effect: dropshadow(gaussian, rgba(255, 255, 255, 0.3), 20, 0.5, 0, 0);
 }
 
 .game-2 {
-    -fx-image: url("/img/item_tiles/game-2.png");
+    -fx-image: url("/img/object_cards/game-2.png");
     -fx-effect: dropshadow(gaussian, rgba(255, 255, 255, 0.3), 20, 0.5, 0, 0);
 }
 
 .game-3 {
-    -fx-image: url("/img/item_tiles/game-3.png");
+    -fx-image: url("/img/object_cards/game-3.png");
     -fx-effect: dropshadow(gaussian, rgba(255, 255, 255, 0.3), 20, 0.5, 0, 0);
 }
 
 .book-1 {
-    -fx-image: url("/img/item_tiles/book-1.png");
+    -fx-image: url("/img/object_cards/book-1.png");
     -fx-effect: dropshadow(gaussian, rgba(255, 255, 255, 0.3), 20, 0.5, 0, 0);
 }
 
 .book-2 {
-    -fx-image: url("/img/item_tiles/book-2.png");
+    -fx-image: url("/img/object_cards/book-2.png");
     -fx-effect: dropshadow(gaussian, rgba(255, 255, 255, 0.3), 20, 0.5, 0, 0);
 }
 
 .book-3 {
-    -fx-image: url("/img/item_tiles/book-3.png");
+    -fx-image: url("/img/object_cards/book-3.png");
     -fx-effect: dropshadow(gaussian, rgba(255, 255, 255, 0.3), 20, 0.5, 0, 0);
 }
 
 .plant-1 {
-    -fx-image: url("/img/item_tiles/plant-1.png");
+    -fx-image: url("/img/object_cards/plant-1.png");
     -fx-effect: dropshadow(gaussian, rgba(255, 255, 255, 0.3), 20, 0.5, 0, 0);
 }
 
 .plant-2 {
-    -fx-image: url("/img/item_tiles/plant-2.png");
+    -fx-image: url("/img/object_cards/plant-2.png");
     -fx-effect: dropshadow(gaussian, rgba(255, 255, 255, 0.3), 20, 0.5, 0, 0);
 }
 
 .plant-3 {
-    -fx-image: url("/img/item_tiles/plant-3.png");
+    -fx-image: url("/img/object_cards/plant-3.png");
     -fx-effect: dropshadow(gaussian, rgba(255, 255, 255, 0.3), 20, 0.5, 0, 0);
 }
 
 .trophy-1 {
-    -fx-image: url("/img/item_tiles/trophy-1.png");
+    -fx-image: url("/img/object_cards/trophy-1.png");
     -fx-effect: dropshadow(gaussian, rgba(255, 255, 255, 0.3), 20, 0.5, 0, 0);
 }
 
 .trophy-2 {
-    -fx-image: url("/img/item_tiles/trophy-2.png");
+    -fx-image: url("/img/object_cards/trophy-2.png");
     -fx-effect: dropshadow(gaussian, rgba(255, 255, 255, 0.3), 20, 0.5, 0, 0);
 }
 
 .trophy-3 {
-    -fx-image: url("/img/item_tiles/trophy-3.png");
+    -fx-image: url("/img/object_cards/trophy-3.png");
     -fx-effect: dropshadow(gaussian, rgba(255, 255, 255, 0.3), 20, 0.5, 0, 0);
 }
+
+/* Common goal cards */
 
 #commonGoalCard-1 {
     -fx-image: url("/img/common_goal_cards/1.jpg");
@@ -338,8 +409,10 @@
     -fx-effect: dropshadow(gaussian, rgba(255, 255, 255, 0.3), 20, 0.5, 0, 0);
 }
 
-#exitButton {
-    -fx-image: url("/img/button/exitbutton.png");
+/* Personal goal cards */
+
+.personalGoalCardPane {
+
 }
 
 #personalGoalCard-1 {
@@ -347,29 +420,87 @@
     -fx-effect: dropshadow(gaussian, rgba(255, 255, 255, 0.3), 20, 0.5, 0, 0);
 }
 
-.commonGoalCardsBox {
-    -fx-spacing: 10;
+#personalGoalCard-2 {
+    -fx-image: url("/img/personal_goal_cards/Personal_Goals2.png");
+    -fx-effect: dropshadow(gaussian, rgba(255, 255, 255, 0.3), 20, 0.5, 0, 0);
 }
 
-.boardCommonGoalCardBox {
-    -fx-spacing: 25;
+#personalGoalCard-3 {
+    -fx-image: url("/img/personal_goal_cards/Personal_Goals3.png");
+    -fx-effect: dropshadow(gaussian, rgba(255, 255, 255, 0.3), 20, 0.5, 0, 0);
+}
+
+#personalGoalCard-4 {
+    -fx-image: url("/img/personal_goal_cards/Personal_Goals4.png");
+    -fx-effect: dropshadow(gaussian, rgba(255, 255, 255, 0.3), 20, 0.5, 0, 0);
+}
+
+#personalGoalCard-5 {
+    -fx-image: url("/img/personal_goal_cards/Personal_Goals5.png");
+    -fx-effect: dropshadow(gaussian, rgba(255, 255, 255, 0.3), 20, 0.5, 0, 0);
+}
+
+#personalGoalCard-6 {
+    -fx-image: url("/img/personal_goal_cards/Personal_Goals6.png");
+    -fx-effect: dropshadow(gaussian, rgba(255, 255, 255, 0.3), 20, 0.5, 0, 0);
+}
+
+#personalGoalCard-7 {
+    -fx-image: url("/img/personal_goal_cards/Personal_Goals7.png");
+    -fx-effect: dropshadow(gaussian, rgba(255, 255, 255, 0.3), 20, 0.5, 0, 0);
+}
+
+#personalGoalCard-8 {
+    -fx-image: url("/img/personal_goal_cards/Personal_Goals8.png");
+    -fx-effect: dropshadow(gaussian, rgba(255, 255, 255, 0.3), 20, 0.5, 0, 0);
+}
+
+#personalGoalCard-9 {
+    -fx-image: url("/img/personal_goal_cards/Personal_Goals9.png");
+    -fx-effect: dropshadow(gaussian, rgba(255, 255, 255, 0.3), 20, 0.5, 0, 0);
+}
+
+#personalGoalCard-10 {
+    -fx-image: url("/img/personal_goal_cards/Personal_Goals10.png");
+    -fx-effect: dropshadow(gaussian, rgba(255, 255, 255, 0.3), 20, 0.5, 0, 0);
+}
+
+#personalGoalCard-11 {
+    -fx-image: url("/img/personal_goal_cards/Personal_Goals11.png");
+    -fx-effect: dropshadow(gaussian, rgba(255, 255, 255, 0.3), 20, 0.5, 0, 0);
+}
+
+#personalGoalCard-12 {
+    -fx-image: url("/img/personal_goal_cards/Personal_Goals12.png");
+    -fx-effect: dropshadow(gaussian, rgba(255, 255, 255, 0.3), 20, 0.5, 0, 0);
+}
+
+/* Scoring */
+
+.scoring-2 {
+    -fx-image: url("/img/scoring_tokens/scoring_2.jpg");
+}
+
+.scoring-4 {
+    -fx-image: url("/img/scoring_tokens/scoring_4.jpg");
+}
+
+.scoring-6 {
+    -fx-image: url("/img/scoring_tokens/scoring_6.jpg");
 }
 
 .scoring-8 {
     -fx-image: url("/img/scoring_tokens/scoring_8.jpg");
 }
 
-.endGame {
+/* End game */
+
+.endGameTokenImage {
     -fx-image: url("/img/scoring_tokens/end_game.jpg");
 }
 
-.playerName {
-    -fx-alignment: center;
-    -fx-font-family: "Merriweather Regular";
-    -fx-font-size: 15px;
-    -fx-text-fill: #6C2310;
-}
+/* Buttons */
 
-.labelSeparator {
-    -fx-border-color: #F1E1B2;
+#exitButton {
+    -fx-image: url("/img/buttons/exitbutton.png");
 }

@@ -4,7 +4,12 @@
 <?import java.net.URL?>
 <?import javafx.scene.image.ImageView?>
 
-<VBox fx:id="mainPane" styleClass="mainPane" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.ingsw.view.gui.MenuSceneController">
+<VBox fx:id="mainPane"
+      fx:controller="it.polimi.ingsw.view.gui.MenuSceneController"
+      styleClass="mainPane"
+      xmlns="http://javafx.com/javafx/17.0.2-ea"
+      xmlns:fx="http://javafx.com/fxml/1">
+
     <stylesheets>
         <URL value="@../css/menu.css" />
     </stylesheets>

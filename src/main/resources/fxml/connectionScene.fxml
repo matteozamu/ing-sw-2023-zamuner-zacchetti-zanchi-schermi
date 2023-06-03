@@ -5,8 +5,12 @@
 <?import java.net.URL?>
 <?import javafx.scene.image.ImageView?>
 
-<BorderPane xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml"
-            fx:controller="it.polimi.ingsw.view.gui.ConnectionSceneController" fx:id="mainPane" styleClass="mainPane">
+<BorderPane fx:controller="it.polimi.ingsw.view.gui.ConnectionSceneController"
+            fx:id="mainPane"
+            styleClass="mainPane"
+            xmlns="http://javafx.com/javafx"
+            xmlns:fx="http://javafx.com/fxml">
+
     <stylesheets>
         <URL value="@../css/menu.css"/>
     </stylesheets>

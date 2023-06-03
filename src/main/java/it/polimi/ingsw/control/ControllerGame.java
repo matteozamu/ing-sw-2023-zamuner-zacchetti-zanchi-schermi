@@ -52,6 +52,10 @@ public class ControllerGame implements TimerRunListener, Serializable {
         return id;
     }
 
+    public void setGame(Game game) {
+        this.game = game;
+    }
+
     /**
      * method called when a message is received from a client
      *
