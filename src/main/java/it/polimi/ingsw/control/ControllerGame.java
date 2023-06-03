@@ -268,6 +268,17 @@ public class ControllerGame implements TimerRunListener, Serializable {
     }
 
     /**
+     * check if the lobby is full, in that case the game starts
+     */
+    public void gameSetupHandler() {
+        if (game.getPlayers().size() == game.getNumberOfPlayers()) {
+            setIsLobbyFull(true);
+            game.setCurrentPlayer(game.getPlayers().get(0));
+            startingStateHandler();
+        }
+    }
+
+    /**
      * build an invalid response
      *
      * @return a Response message to the client
@@ -321,14 +332,6 @@ public class ControllerGame implements TimerRunListener, Serializable {
         }
     }
 
-    public void gameSetupHandler() {
-        if (game.getPlayers().size() == game.getNumberOfPlayers()) {
-            setIsLobbyFull(true);
-            game.setCurrentPlayer(game.getPlayers().get(0));
-            startingStateHandler();
-        }
-    }
-
     /**
      * changes the state of the game
      *
@@ -374,8 +377,6 @@ public class ControllerGame implements TimerRunListener, Serializable {
         }
     }
 
-    // TODO finire di implementare la response lato cli
-
     /**
      * this method sends to all clients an EndGameMessage, containing the Game Serialized
      */
@@ -386,7 +387,6 @@ public class ControllerGame implements TimerRunListener, Serializable {
             server.sendMessage(player.getName(), new EndGameMessage(player.getName()));
         }
     }
-
 
     /**
      * Check if the username is available
@@ -407,7 +407,6 @@ public class ControllerGame implements TimerRunListener, Serializable {
      * Fills the game board with object cards based on the number of players.
      * This method should be called at the beginning of the game to set up the board.
      */
-    // TODO: non sarebbe meglio spostarlo nel model?
     public void fillBoard() {
         int playerNumber = game.getNumberOfPlayers();
 

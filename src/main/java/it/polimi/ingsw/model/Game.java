@@ -224,12 +224,23 @@ public class Game implements Serializable {
     public Player nextPlayer() {
         if (this.players.size() == 0) return null;
 
-        if (this.players.indexOf(this.currentPlayer) == this.players.size() - 1)
-            this.currentPlayer = this.players.get(0);
-        else this.currentPlayer = this.players.get(this.players.indexOf(currentPlayer) + 1);
+        int currentPlayerIndex = this.players.indexOf(this.currentPlayer);
+        int nextPlayerIndex = currentPlayerIndex;
 
+        do {
+            nextPlayerIndex = (nextPlayerIndex + 1) % this.players.size();
+            Player nextPlayer = this.players.get(nextPlayerIndex);
+            if (nextPlayer.isConnected()) {
+                this.currentPlayer = nextPlayer;
+                return this.currentPlayer;
+            }
+        } while (nextPlayerIndex != currentPlayerIndex);
+
+        // no other players connected, return the current player
         return this.currentPlayer;
     }
+
+
 
     // TODO da eliminare
     public List<String> getPlayersNames() {
