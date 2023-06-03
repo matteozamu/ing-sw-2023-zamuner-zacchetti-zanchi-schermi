@@ -20,6 +20,9 @@ public class Cli extends ClientGameManager implements DisconnectionListener {
     private Scanner in;
     private PrintStream out;
 
+    /**
+     * constructor of a cli
+     */
     public Cli() {
         super();
 
@@ -27,24 +30,33 @@ public class Cli extends ClientGameManager implements DisconnectionListener {
         this.out = new PrintStream(System.out, true);
     }
 
+    /**
+     * start a cli client
+     */
     public void start() {
         CliVisual.printLogo(out);
         doConnection();
     }
 
+    /**
+     * print that there are no games available
+     */
     public void noGameAvailable() {
         out.println("No game available");
     }
 
 
-    private boolean promptInputError(boolean firstError, String errorMessage) {
+    /**
+     * show an error message
+     * @param errorMessage the error to show
+     */
+    private void promptInputError(String errorMessage) {
 //        out.print(AnsiCode.CLEAR_LINE);
 //        if (!firstError) {
 //            out.print(AnsiCode.CLEAR_LINE);
 //        }
 
         out.println(errorMessage);
-        return false;
     }
 
     /**
@@ -69,7 +81,6 @@ public class Cli extends ClientGameManager implements DisconnectionListener {
      * @return the username inserted
      */
     private String askUsername() {
-        boolean firstError = true;
         String username = null;
 
         out.println("Enter your username:");
@@ -81,13 +92,13 @@ public class Cli extends ClientGameManager implements DisconnectionListener {
                 final String currentUsername = in.nextLine();
 
                 if (currentUsername.equals("")) {
-                    firstError = promptInputError(firstError, "Invalid username!");
+                    promptInputError("Invalid username!");
                 } else {
                     username = currentUsername;
                 }
             } else {
                 in.nextLine();
-                firstError = promptInputError(firstError, INVALID_STRING);
+                promptInputError(INVALID_STRING);
             }
         } while (username == null);
 
@@ -99,7 +110,6 @@ public class Cli extends ClientGameManager implements DisconnectionListener {
      */
     private void doConnection() {
         boolean validConnection = false;
-        boolean firstError = true;
 
         String username = askUsername();
 
@@ -132,7 +142,6 @@ public class Cli extends ClientGameManager implements DisconnectionListener {
      * Ask the user to insert the connection type
      */
     private int askConnection() {
-        boolean firstError = true;
         int connection = -1;
 
         out.println("\nEnter the connection type (0 = Sockets or 1 = RMI) (default is \"Sockets\"):");
@@ -152,15 +161,15 @@ public class Cli extends ClientGameManager implements DisconnectionListener {
                         if (connection == 0 || connection == 1) {
                             return connection;
                         } else {
-                            firstError = promptInputError(firstError, "Invalid connection!");
+                            promptInputError("Invalid connection!");
                         }
                     } catch (Exception e) {
-                        firstError = promptInputError(firstError, "Invalid number!");
+                        promptInputError("Invalid number!");
                     }
                 }
             } else {
                 in.nextLine();
-                firstError = promptInputError(firstError, INVALID_STRING);
+                promptInputError(INVALID_STRING);
             }
         } while (true);
     }
@@ -172,7 +181,6 @@ public class Cli extends ClientGameManager implements DisconnectionListener {
      */
     private String askAddress() {
         String address;
-        boolean firstError = true;
 
         out.println("Enter the server address (default is \"localhost\"):");
 
@@ -187,11 +195,11 @@ public class Cli extends ClientGameManager implements DisconnectionListener {
                 } else if (ServerAddressValidator.isAddressValid(address)) {
                     return address;
                 } else {
-                    firstError = promptInputError(firstError, "Invalid address!");
+                    promptInputError("Invalid address!");
                 }
             } else {
                 in.nextLine();
-                firstError = promptInputError(firstError, INVALID_STRING);
+                promptInputError(INVALID_STRING);
             }
         } while (true);
     }
@@ -203,7 +211,6 @@ public class Cli extends ClientGameManager implements DisconnectionListener {
      * @return the server port
      */
     private int askPort(int connection) {
-        boolean firstError = true;
 
         int defaultPort = (connection == 0 ? 2727 : 7272);
         out.println("\nEnter the server port (default " + defaultPort + "):");
@@ -221,12 +228,12 @@ public class Cli extends ClientGameManager implements DisconnectionListener {
                     if (ServerAddressValidator.isPortValid(line)) {
                         return Integer.parseInt(line);
                     } else {
-                        firstError = promptInputError(firstError, "Invalid Port!");
+                        promptInputError("Invalid Port!");
                     }
                 }
             } else {
                 in.nextLine();
-                firstError = promptInputError(firstError, INVALID_STRING);
+                promptInputError(INVALID_STRING);
             }
         } while (true);
     }
@@ -247,7 +254,6 @@ public class Cli extends ClientGameManager implements DisconnectionListener {
      */
     private int askNumberOfPlayers() {
         int gamePlayers = 2;
-        boolean firstError = true;
 
         out.println("How many players in the game [2] (2 - 4)?");
         in.reset();
@@ -265,12 +271,12 @@ public class Cli extends ClientGameManager implements DisconnectionListener {
                     if (gamePlayers >= 2 && gamePlayers <= 4) {
                         return gamePlayers;
                     } else {
-                        firstError = promptInputError(firstError, "Invalid number!");
+                        promptInputError("Invalid number!");
                     }
                 }
             } else {
                 in.nextLine();
-                firstError = promptInputError(firstError, INVALID_STRING);
+                promptInputError(INVALID_STRING);
             }
         } while (true);
     }
@@ -410,6 +416,10 @@ public class Cli extends ClientGameManager implements DisconnectionListener {
 
     }
 
+    /**
+     * print a list of game in which the user can log in
+     * @param games the list of games
+     */
     @Override
     public void chooseGameToJoin(List<ControllerGame> games) {
         int choose = -1;
@@ -461,7 +471,6 @@ public class Cli extends ClientGameManager implements DisconnectionListener {
      * @return the integer read
      */
     private Integer readInt(int minVal, int maxVal) {
-        boolean firstError = true;
         boolean accepted = false;
         Integer choose = Integer.MIN_VALUE;
 
@@ -475,16 +484,19 @@ public class Cli extends ClientGameManager implements DisconnectionListener {
                 if (choose >= minVal && choose <= maxVal) {
                     accepted = true;
                 } else {
-                    firstError = promptInputError(firstError, "Not valid input!");
+                    promptInputError("Not valid input!");
                 }
             } catch (NumberFormatException e) {
-                promptInputError(firstError, "Not valid number!");
+                promptInputError("Not valid number!");
             }
         } while (!accepted);
 
         return choose;
     }
 
+    /**
+     * print a joining game message
+     */
     @Override
     public void joinGame() {
         System.out.println("Join game!\n");
@@ -493,6 +505,9 @@ public class Cli extends ClientGameManager implements DisconnectionListener {
         }
     }
 
+    /**
+     * print a creation game message
+     */
     @Override
     public void createGame() {
         System.out.println("Create game!\n");
@@ -531,7 +546,6 @@ public class Cli extends ClientGameManager implements DisconnectionListener {
      * @return the Coordinate read
      */
     private Coordinate readCoordinate() {
-        boolean firstError = true;
         boolean accepted = false;
         String stringCoordinate;
         Coordinate coordinate = null;
@@ -547,7 +561,7 @@ public class Cli extends ClientGameManager implements DisconnectionListener {
                 coordinate = new Coordinate(row, col);
                 accepted = true;
             } catch (Exception e) {
-                firstError = promptInputError(firstError, "Invalid Coordinate");
+                promptInputError("Invalid Coordinate");
             }
         } while (!accepted);
 
@@ -562,7 +576,6 @@ public class Cli extends ClientGameManager implements DisconnectionListener {
         List<ObjectCard> limbo = getGameSerialized().getAllLimboCards();
         List<ObjectCard> newLimbo = new ArrayList<>();
         int choose;
-        // boolean firstError = true;
         boolean accepted = false;
 
         out.println("Choose the order of the cards in the limbo:");
@@ -645,15 +658,26 @@ public class Cli extends ClientGameManager implements DisconnectionListener {
         out.println(message);
     }
 
+    /**
+     * @param player is the username that disconnected
+     */
     @Override
     public void onPlayerDisconnection(String player) {
         out.println(player + " disconnected from the game.");
     }
 
+    /**
+     *
+     * @param message is the message to show
+     */
     @Override
     public void onPlayerReconnection(String message) {
         out.println(message);
     }
+
+    /**
+     * show a disconnection message
+     */
     @Override
     public void onDisconnection() {
         promptError("Disconnected from the server, connection expired", true);

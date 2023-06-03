@@ -44,6 +44,10 @@ public class ControllerGame implements TimerRunListener, Serializable {
         this.game = null;
     }
 
+    /**
+     *
+     * @return the id of the game
+     */
     public UUID getId() {
         return id;
     }
@@ -169,6 +173,11 @@ public class ControllerGame implements TimerRunListener, Serializable {
         }
     }
 
+    /**
+     * method called when a ObjectCardRequest is received from a client, asking to pick an object card
+     * @param objectCardRequest is the message received
+     * @return the response to the message
+     */
     //TODO qui non ritorniamo una ObjectCardResponse ma una generica Response, eliminaiamo ObjectCardResponse?
     private Response pickObjectCardHandler(ObjectCardRequest objectCardRequest) {
         Coordinate c = objectCardRequest.getCoordinate();
@@ -329,6 +338,10 @@ public class ControllerGame implements TimerRunListener, Serializable {
         gameState = changeState;
     }
 
+    /**
+     * method called when the game starts, it creates a new {@link TurnController TurnController} and
+     * sends to all clients the new state of the game
+     */
     private void startingStateHandler() {
         this.turnController = new TurnController(this.game.getPlayers(), this);
         turnController.setActivePlayer(game.getCurrentPlayer());
@@ -610,6 +623,12 @@ public class ControllerGame implements TimerRunListener, Serializable {
 //        }
 //    }
 //
+
+    /**
+     * Method used to handle the reconnection of a player from the game
+     * @param receivedConnectionMessage message received by the server from the player asking to reconnect to the game
+     * @return a {@link Message Message} which contains the result of the received message
+     */
     private Message reconnectionHandler(LobbyMessage receivedConnectionMessage) {
         String reconnectingPlayerName = receivedConnectionMessage.getSenderUsername();
         List<String> playersNames = game.getPlayers().stream().map(Player::getName).collect(Collectors.toList());

@@ -1,5 +1,8 @@
 package it.polimi.ingsw.enumeration;
 
+/**
+ * enumeration for the message content
+ */
 public enum MessageContent {
     CONNECTION, CONNECTION_RESPONSE, ADD_PLAYER,
     PASS_TURN, RESPONSE, GAME_STATE, WINNER, DISCONNECTION, PING, READY, RECONNECTION, GAME_LOAD,

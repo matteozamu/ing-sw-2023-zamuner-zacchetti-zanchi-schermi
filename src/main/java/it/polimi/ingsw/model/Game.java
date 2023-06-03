@@ -21,7 +21,7 @@ public class Game implements Serializable {
     private Player currentPlayer;
     private Board board;
     private List<CommonGoal> commonGoals;
-    private boolean hasStarted;
+    private boolean started;
     private int numberOfPlayers;
     private Map<Coordinate, ObjectCard> limbo;
     private List<ObjectCard> limboOrder;
@@ -36,7 +36,7 @@ public class Game implements Serializable {
         this.players = new ArrayList<>();
         this.board = new Board();
         this.commonGoals = new ArrayList<>();
-        this.hasStarted = false;
+        this.started = false;
         this.numberOfPlayers = -1;
         this.limbo = new HashMap<>();
 
@@ -53,10 +53,17 @@ public class Game implements Serializable {
 //        return instance;
 //    }
 
+    /**
+     * @return an instance of the map
+     */
     public static Map<String, Game> getInstanceMap() {
         return instanceMap;
     }
 
+    /**
+     * @param username is the username of a user
+     * @return the instance of the game in which the user is playing
+     */
     public static Game getInstance(String username) {
         if (!instanceMap.containsKey(username)) {
             Game instance = new Game();
@@ -65,58 +72,100 @@ public class Game implements Serializable {
         return instanceMap.get(username);
     }
 
+    /**
+     * @return the number of player
+     */
     public int getNumberOfPlayers() {
         return numberOfPlayers;
     }
 
+    /**
+     * set the number of players
+     * @param numberOfPlayers is the number of player to set
+     */
     public void setNumberOfPlayers(int numberOfPlayers) {
         this.numberOfPlayers = numberOfPlayers;
     }
 
+    /**
+     * @return a map with the selected object cards with their coordinates
+     */
     public Map<Coordinate, ObjectCard> getLimbo() {
         return limbo;
     }
 
+    /**
+     * set the limbo
+     * @param limbo the limbo to set
+     */
     public void setLimbo(Map<Coordinate, ObjectCard> limbo) {
         this.limbo = limbo;
     }
 
+    /**
+     * @return the nwe order of the selected object cards
+     */
     public List<ObjectCard> getLimboOrder() {
         return limboOrder;
     }
 
+    /**
+     * set the nwe order of the selected object cards
+     * @param limboOrder is the order to set
+     */
     public void setLimboOrder(List<ObjectCard> limboOrder) {
         this.limboOrder = limboOrder;
     }
 
-    public boolean isHasStarted() {
-        return hasStarted;
+    /**
+     * @return true if the game is started
+     */
+    public boolean isStarted() {
+        return started;
     }
 
-    public void setHasStarted(boolean hasStarted) {
-        this.hasStarted = hasStarted;
+    /**
+     * method used to set that the game is started or ended
+     * @param started is true if the game is started, false otherwise
+     */
+    public void setStarted(boolean started) {
+        this.started = started;
     }
 
+    /**
+     * @return a list of the Common Goal Cards present in the game
+     */
     public List<CommonGoal> getCommonGoalContainer() {
         return commonGoalContainer;
     }
 
+    /**
+     * @return a list of the Personal Goal Cards present in the game
+     */
     public List<PersonalGoalCard> getPersonalGoalCardsContainer() {
         return personalGoalCardsContainer;
     }
 
+    // TODO da eliminare, non viene usato
     public void setPersonalGoalCardsContainer(List<PersonalGoalCard> personalGoalCardsContainer) {
         this.personalGoalCardsContainer = personalGoalCardsContainer;
     }
 
+    /**
+     * @return a list of the Object Cards present in the game
+     */
     public List<ObjectCard> getObjectCardContainer() {
         return objectCardContainer;
     }
 
+    /**
+     * @return a list of the players present in the game
+     */
     public List<Player> getPlayers() {
         return players;
     }
 
+    // TODO togliere
     public boolean doesPlayerExists(String username) {
         for (Player p : players) {
             if (p.getName().equals(username)) return true;
@@ -124,6 +173,11 @@ public class Game implements Serializable {
         return false;
     }
 
+    /**
+     * method used to add a player in the game
+     * @param p is the player to add
+     * @return true if the player has been successfully added
+     */
     public boolean addPlayer(Player p) {
         if (p == null) return false;
         if (this.players.size() < JsonReader.getMaxPlayers()) {
@@ -132,18 +186,31 @@ public class Game implements Serializable {
         } else return false;
     }
 
+    /**
+     * @return the current player of the game
+     */
     public Player getCurrentPlayer() {
         return currentPlayer;
     }
 
+    /**
+     * set the current player of the game
+     * @param currentPlayer is the current player
+     */
     public void setCurrentPlayer(Player currentPlayer) {
         this.currentPlayer = currentPlayer;
     }
 
+    /**
+     * @return the board of the game
+     */
     public Board getBoard() {
         return board;
     }
 
+    /**
+     * @return the Common Goal Cards of the game
+     */
     public List<CommonGoal> getCommonGoals() {
         return commonGoals;
     }
@@ -164,6 +231,7 @@ public class Game implements Serializable {
         return this.currentPlayer;
     }
 
+    // TODO da eliminare
     public List<String> getPlayersNames() {
         List<String> names = new ArrayList<>();
         for (Player p : players) {
@@ -172,6 +240,11 @@ public class Game implements Serializable {
         return names;
     }
 
+    /**
+     * return a Player given is username
+     * @param name the name of the player
+     * @return the player with that username
+     */
     public Player getPlayerByName(String name) {
         for (Player p : players) {
             if (p.getName().equals(name)) return p;
@@ -297,7 +370,7 @@ public class Game implements Serializable {
                 ", players=" + players +
                 ", currentPlayer=" + currentPlayer +
                 ", board=" + board +
-                ", hasStarted=" + hasStarted +
+                ", started=" + started +
                 ", numberOfPlayers=" + numberOfPlayers +
                 '}';
     }

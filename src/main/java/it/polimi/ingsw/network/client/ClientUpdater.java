@@ -14,6 +14,7 @@ public class ClientUpdater implements Runnable {
     private ClientUpdateListener updateListener;
     private Thread thread;
 
+
     ClientUpdater(Client client, ClientUpdateListener updateListener) {
         this.client = client;
         this.updateListener = updateListener;

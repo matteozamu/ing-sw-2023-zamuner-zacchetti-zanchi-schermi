@@ -11,8 +11,8 @@ public class CliVisual {
     /**
      * Prints the personal goal card in the console
      *
-     * @param out            is the output PrintStream
-     * @param gameSerialized is the object containing the board to be printed
+     * @param out is the output PrintStream
+     * @param gameSerialized is the object containing the personal goal to be printed
      */
     public static void printPersonalGoalCards(PrintStream out, GameSerialized gameSerialized) {
         List<PersonalGoal> goals = gameSerialized.getPersonalGoalCard().getGoals();
@@ -51,15 +51,23 @@ public class CliVisual {
         out.print(sb);
     }
 
+    /**
+     * @param r red
+     * @param g green
+     * @param b blue
+     * @return a coloured string
+     */
     public static String getColoredText(int r, int g, int b) {
-        // Creazione del codice ANSI per impostare il colore di sfondo
         String colorCode = String.format("\033[48;2;%d;%d;%dm", r, g, b);
-        // Creazione del codice ANSI per reimpostare il colore di sfondo a quello di default
         String resetCode = "\033[0m";
-        // Combinazione del codice di sfondo, del testo vuoto e del codice di reset per creare la stringa formattata
         return String.format("%s%s%s", colorCode, " ", resetCode);
     }
 
+    /**
+     * print the score of the user
+     * @param out is the output PrintStream
+     * @param gameSerialized is the object containing the points to be printed
+     */
     public static void printScore(PrintStream out, GameSerialized gameSerialized) {
         out.println("You have " + gameSerialized.getPoints() + " points");
     }
@@ -67,7 +75,7 @@ public class CliVisual {
     /**
      * Prints the board in the console
      *
-     * @param out            is the output PrintStream
+     * @param out is the output PrintStream
      * @param gameSerialized is the object containing the board to be printed
      */
     public static void printBoard(PrintStream out, GameSerialized gameSerialized) {
@@ -86,7 +94,7 @@ public class CliVisual {
             boardView.append("-3       -2        -1       0        1        2        3\n");
         } else if (playerNumber == 3 || playerNumber == 4) {
             boardView.append(" ".repeat(7));
-            boardView.append("-4        -3        -2        -1         0         1         2         3         4\n\n");
+            boardView.append("-4       -3       -2       -1       0        1        2        3        4\n\n");
         }
 
         for (int i = 0; i < boardMatrix.length / 2; i++) {
@@ -154,10 +162,9 @@ public class CliVisual {
     }
 
     /**
-     * Prints the layout of object cards on the Shelf, including both the type and ID of each card.
+     * Prints the layout of object cards on the Shelf.
      * Cards are printed in reverse row order, starting from the last row and proceeding towards the first.
-     * Each card is represented as "type-id", where "type" is the card type and "id" is its ID.
-     * In case a cell is empty, a placeholder with dashes ("-") will be printed.
+     * Each card is represented as "type", where "type" is the card type.
      */
     public static void printShelf(PrintStream out, GameSerialized gameSerialized) {
         Shelf s = gameSerialized.getShelf();
@@ -237,6 +244,10 @@ public class CliVisual {
         out.print(limbo);
     }
 
+    /**
+     * print the logo
+     * @param out is the output PrintStream
+     */
     public static void printLogo(PrintStream out) {
         out.println("""
                                                                                 :!?YJ~                                                                              \s

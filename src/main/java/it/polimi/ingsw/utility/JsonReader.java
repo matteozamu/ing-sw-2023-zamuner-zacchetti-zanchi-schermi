@@ -15,6 +15,10 @@ public class JsonReader {
     private static int[][] board3Matrix;
     private static int[][] board4Matrix;
 
+    /**
+     * read the program's constant from a json file
+     * @param filename the file to read
+     */
     public static void readJsonConstant(String filename) {
         try {
             // Read JSON from a file
@@ -63,14 +67,25 @@ public class JsonReader {
         }
     }
 
+    /**
+     * @return the maximum number of player
+     */
     public static int getMaxPlayers() {
         return maxPlayers;
     }
 
+    /**
+     * @return the minimum number of player
+     */
     public static int getMinPlayers() {
         return minPlayers;
     }
 
+    /**
+     * return the board based on the number of players in the game
+     * @param numberOfPlayers number of players in the game
+     * @return the specific board
+     */
     public static int[][] getBoard(int numberOfPlayers) {
         if (numberOfPlayers == 2) return board2Matrix;
         if (numberOfPlayers == 3) return board3Matrix;

@@ -21,10 +21,16 @@ public class Coordinate implements Serializable {
         this.row = row;
     }
 
+    /**
+     * @return the index of the column
+     */
     public int getColumn() {
         return column;
     }
 
+    /**
+     * @return the index of the row
+     */
     public int getRow() {
         return row;
     }

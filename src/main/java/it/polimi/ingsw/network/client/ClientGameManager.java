@@ -42,6 +42,9 @@ public abstract class ClientGameManager implements ClientGameManagerListener, Cl
     private boolean gameEnded = false;
     private GameSerialized gameSerialized;
 
+    /**
+     * constructor of the client game manager
+     */
     public ClientGameManager() {
         firstTurn = true;
         joinedLobby = false;
@@ -62,6 +65,9 @@ public abstract class ClientGameManager implements ClientGameManagerListener, Cl
         new Thread(this).start();
     }
 
+    /**
+     * method to run a client thread
+     */
     @Override
     public void run() {
         while (!Thread.currentThread().isInterrupted()) {
@@ -74,14 +80,24 @@ public abstract class ClientGameManager implements ClientGameManagerListener, Cl
         }
     }
 
+    /**
+     * @return the client's username
+     */
     public String getUsername() {
         return client.getUsername();
     }
 
+    /**
+     * @return the client's token
+     */
     public String getClientToken() {
         return client.getToken();
     }
 
+    /**
+     * method called when a message is received from the server
+     * @param message the received message from the server
+     */
     @Override
     public void onUpdate(Message message) {
         LOGGER.log(Level.INFO, "Received: {0}", message);
@@ -130,12 +146,19 @@ public abstract class ClientGameManager implements ClientGameManagerListener, Cl
         }
     }
 
+    /**
+     * @return the game serialized
+     */
     public GameSerialized getGameSerialized() {
         synchronized (gameSerializedLock) {
             return gameSerialized;
         }
     }
 
+    /**
+     * method used to handle the initial phase of the game
+     * @param gameStartMessage is the message received from the server
+     */
     private void handleGameStartMessage(GameStartMessage gameStartMessage) {
         synchronized (gameSerializedLock) {
             firstPlayer = gameStartMessage.getFirstPlayer();
@@ -202,6 +225,10 @@ public abstract class ClientGameManager implements ClientGameManagerListener, Cl
         }
     }
 
+    /**
+     *
+     * @param message
+     */
     private void handleGameListResponse(ListGameResponse message) {
         if (message.getGames().isEmpty()) {
             queue.add(() -> noGameAvailable());
@@ -226,12 +253,20 @@ public abstract class ClientGameManager implements ClientGameManagerListener, Cl
         queue.add(() -> displayActions(getLobbyActions()));
     }
 
+    /**
+     * handle adding a player to the game
+     * @param message is the message received from the server
+     */
     private void handlePlayersInLobby(LobbyPlayersResponse message) {
         System.out.println("PLAYERS IN LOBBY " + message.getUsers());
         lobbyPlayers = message.getUsers();
         queue.add(() -> playersWaitingUpdate(message.getUsers()));
     }
 
+    /**
+     * handle a response message
+     * @param response is the message received from the server
+     */
     private void handleResponse(Response response) {
         if (response.getStatus() == MessageStatus.GAME_CREATED || response.getStatus() == MessageStatus.GAME_JOINED) {
             queue.add(() -> addPlayerToGameRequest());
@@ -252,6 +287,10 @@ public abstract class ClientGameManager implements ClientGameManagerListener, Cl
         }
     }
 
+    /**
+     * handle the end of the game
+     * @param message is the message received from the server
+     */
     private void handleGameEnded(EndGameMessage message) {
         gameEnded = true;
         synchronized (gameSerializedLock) {
@@ -305,6 +344,10 @@ public abstract class ClientGameManager implements ClientGameManagerListener, Cl
         }
     }
 
+    /**
+     * method used to handle a positive response
+     * @param response is the positive response received from the server
+     */
     private void onPositiveResponse(Response response) {
         if (response.getStatus() == MessageStatus.PRINT_LIMBO) {
             queue.add(this::printLimbo);
@@ -318,6 +361,15 @@ public abstract class ClientGameManager implements ClientGameManagerListener, Cl
         }
     }
 
+    /**
+     * method used to create a connection with the server
+     * @param connection can be 0 if the user choose a socket connection or 1 if the user choose a RMI connection
+     * @param username is the chosen username
+     * @param address is the server address
+     * @param port is the server port
+     * @param disconnectionListener is the listener of client disconnection
+     * @throws Exception can throw an exception if the connection can't be created
+     */
     public void createConnection(int connection, String username, String address, int port, DisconnectionListener disconnectionListener) throws Exception {
         if (connection == 0) {
             client = new ClientSocket(username, address, port, disconnectionListener);
@@ -329,6 +381,9 @@ public abstract class ClientGameManager implements ClientGameManagerListener, Cl
         startUpdater();
     }
 
+    /**
+     * method used to close a connection
+     */
     public void closeConnection() {
         if (clientUpdater != null) {
             clientUpdater.stop();
@@ -343,6 +398,9 @@ public abstract class ClientGameManager implements ClientGameManagerListener, Cl
         client = null;
     }
 
+    /**
+     * method that start a client updater
+     */
     private void startUpdater() {
         clientUpdater = new ClientUpdater(client, this);
     }
@@ -381,6 +439,10 @@ public abstract class ClientGameManager implements ClientGameManagerListener, Cl
         return turnOwner;
     }
 
+    /**
+     * method used to start the game
+     * @param cg the list of the common goal of the game
+     */
     private void startGame(List<CommonGoal> cg) {
         turnManager = new ClientTurnManager();
 

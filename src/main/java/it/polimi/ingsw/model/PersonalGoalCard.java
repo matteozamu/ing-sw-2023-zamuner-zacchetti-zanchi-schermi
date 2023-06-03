@@ -20,10 +20,16 @@ public class PersonalGoalCard implements Serializable {
         this.goals = goals;
     }
 
+    /**
+     * @return a list of the goals of the Personal Goal Card
+     */
     public ArrayList<PersonalGoal> getGoals() {
         return goals;
     }
 
+    /**
+     * @param targetsReached is true if the target is reached
+     */
     public void setTargetsReached(int targetsReached) {
         this.targetsReached = targetsReached;
     }
