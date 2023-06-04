@@ -47,9 +47,7 @@
 }
 
 .selectionButton {
-    -fx-max-width: 1500px;
-    -fx-hgap: 10;
-    -fx-vgap: 20;
+    -fx-spacing: 50;
     -fx-alignment: CENTER;
 }
 
@@ -114,13 +112,6 @@
     -fx-font-family: "Merriweather Regular";
     -fx-font-size: 25px;
     -fx-wrap-text: true;
-}
-
-/* Connection */
-
-.connectBox {
-    -fx-spacing: 50;
-    -fx-alignment: CENTER;
 }
 
 /* Lobby */
@@ -213,15 +204,15 @@
 }
 
 #connectSocketButton {
-    -fx-image: url("/img/buttons/connectsocketbutton.png");
+    -fx-image: url("/img/buttons/connectSocketButton.png");
 }
 
 #connectRmiButton {
-    -fx-image: url("/img/buttons/connectrmibutton.png");
+    -fx-image: url("/img/buttons/connectRmiButton.png");
 }
 
 #backButton {
-    -fx-image: url("/img/buttons/backbutton.png");
+    -fx-image: url("/img/buttons/backButton.png");
 }
 
 #okButton {

@@ -1,32 +1,31 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import java.net.*?>
 <?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
 <?import javafx.scene.layout.*?>
-<?import javafx.scene.image.ImageView?>
-<?import java.net.URL?>
 
-<BorderPane xmlns="http://javafx.com/javafx"
-            styleClass="dialogPane">
+<BorderPane styleClass="dialogPane" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1">
 
     <stylesheets>
-        <URL value="@../css/menu.css"/>
+        <URL value="@../css/menu.css" />
     </stylesheets>
 
     <top>
-        <VBox styleClass="topDialog" alignment="CENTER">
-            <Label id="dialogTitle" styleClass="dialogTitle"/>
+        <VBox alignment="CENTER" styleClass="topDialog">
+            <Label id="dialogTitle" styleClass="dialogTitle" />
         </VBox>
     </top>
 
     <center>
-        <VBox styleClass="centerDialog" alignment="CENTER">
-            <Label id="dialogText" styleClass="dialogLabel"/>
+        <VBox alignment="CENTER" styleClass="centerDialog">
+            <Label id="dialogText" styleClass="dialogLabel" />
         </VBox>
     </center>
 
     <bottom>
-        <VBox styleClass="botDialog" alignment="CENTER">
-            <ImageView id="okButton" styleClass="button"/>
+        <VBox alignment="CENTER" styleClass="botDialog">
+            <ImageView id="okButton" translateY="-20.0" fitHeight="150" fitWidth="290" pickOnBounds="true" preserveRatio="true" styleClass="button" />
         </VBox>
     </bottom>
 

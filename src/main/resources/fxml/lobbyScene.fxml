@@ -29,9 +29,10 @@
     </center>
 
     <bottom>
-        <VBox styleClass="botBox">
-            <ImageView fx:id="backButton" id="backButton" styleClass="button"/>
+        <HBox styleClass="botBox">
+            <ImageView fx:id="backButton" id="backButton" fitWidth="400" fitHeight="400" preserveRatio="true" pickOnBounds="true" styleClass="button"/>
+            <Region prefWidth="20" />
             <ImageView fx:id="exitButton" id="exitButton" fitWidth="400" fitHeight="400" preserveRatio="true" pickOnBounds="true" styleClass="button"/>
-        </VBox>
+        </HBox>
     </bottom>
 </BorderPane>

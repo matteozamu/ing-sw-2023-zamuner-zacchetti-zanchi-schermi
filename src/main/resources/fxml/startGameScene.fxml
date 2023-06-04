@@ -22,15 +22,15 @@
     </top>
 
     <center>
-        <FlowPane styleClass="selectionButton">
+        <HBox styleClass="selectionButton">
             <ImageView fx:id="createGameButton" id="createGameButton" fitWidth="400" fitHeight="400" preserveRatio="true" pickOnBounds="true" styleClass="button"/>
             <ImageView fx:id="joinGameButton" id="joinGameButton" fitWidth="400" fitHeight="400" preserveRatio="true" pickOnBounds="true" styleClass="button"/>
-        </FlowPane>
+        </HBox>
     </center>
 
     <bottom>
         <VBox styleClass="botBox">
-            <ImageView fx:id="backButton" id="backButton" styleClass="button"/>
+            <ImageView fx:id="backButton" id="backButton" fitWidth="400" fitHeight="400" preserveRatio="true" pickOnBounds="true" styleClass="button"/>
         </VBox>
     </bottom>
 </BorderPane>
