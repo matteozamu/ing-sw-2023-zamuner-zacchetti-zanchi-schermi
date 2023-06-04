@@ -25,7 +25,6 @@ import java.util.logging.Logger;
 public class GuiManager extends ClientGameManager implements DisconnectionListener {
     private static GuiManager instance = null;
 
-    // Aggiungere qui i controller di scena...
     private ConnectionSceneController connectionSceneController;
 
     private GameSceneController gameSceneController;

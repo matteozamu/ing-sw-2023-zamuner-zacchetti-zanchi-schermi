@@ -63,7 +63,7 @@ public class LobbySceneController {
                     gameSceneController.setupGame(guiManager.getGameSerialized());
                 }
             }
-        }, 5000);
+        }, 2500);
     }
 
     /**

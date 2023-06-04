@@ -74,15 +74,10 @@ public class StartGameSceneController {
     }
 
     void onJoinGameResponse(List<ControllerGame> games) {
-        if (games.isEmpty()) {
-            GuiManager.showDialog((Stage) mainPane.getScene().getWindow(), GuiManager.ERROR_DIALOG_TITLE,
-                    "No games available");
-        } else {
-            JoinGameSceneController joinGameSceneController = GuiManager.setLayout(mainPane.getScene(), "fxml/joinGameScene.fxml");
+        JoinGameSceneController joinGameSceneController = GuiManager.setLayout(mainPane.getScene(), "fxml/joinGameScene.fxml");
 
-            if (joinGameSceneController != null) {
-                joinGameSceneController.updateIdList(games);
-            }
+        if (joinGameSceneController != null) {
+            joinGameSceneController.updateIdList(games);
         }
     }
 

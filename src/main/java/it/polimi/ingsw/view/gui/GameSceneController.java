@@ -3,6 +3,7 @@ package it.polimi.ingsw.view.gui;
 import it.polimi.ingsw.enumeration.*;
 import it.polimi.ingsw.model.*;
 import it.polimi.ingsw.utility.JsonReader;
+import javafx.collections.ObservableList;
 import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.geometry.Insets;
@@ -283,7 +284,6 @@ public class GameSceneController {
 
 
     private GuiManager guiManager;
-
     private  Map<String, ImageView> objectCards;
     private List<ImageView> commonGoalCards;
 
@@ -300,8 +300,8 @@ public class GameSceneController {
         objectCards = new HashMap<>();
         commonGoalCards = new ArrayList<>();
 
-        //loadObjectCards();
-        //loadCommonGoalCards();
+        loadObjectCards();
+        loadCommonGoalCards();
     }
 
     /**
@@ -310,7 +310,7 @@ public class GameSceneController {
      * @param gameSerialized state of the game at the time of the join
      */
     void setupGame(GameSerialized gameSerialized) {
-        //addObjectCards();
+        addObjectCards(gameSerialized);
     }
 
     private void loadObjectCards() {
@@ -385,9 +385,8 @@ public class GameSceneController {
         commonGoalCards.add(imageView);
     }
 
-    private void addObjectCards() {
+    private void addObjectCards(GameSerialized gameSerialized) {
         Board board = guiManager.getGameSerialized().getBoard();
-        GameSerialized gameSerialized = guiManager.getGameSerialized();
 
         ObjectCard objectCard;
         JsonReader.readJsonConstant("GameConstant.json");
@@ -424,7 +423,7 @@ public class GameSceneController {
      * Updates the elements of the board
      */
     void onStateUpdate() {
-        //updateBoard();
+        updateBoard();
     }
 
     /**
@@ -432,7 +431,9 @@ public class GameSceneController {
      *
      */
     private void updateBoard() {
-        //addObjectCards();
+        ObservableList<Node> childrens = boardGridPane.getChildren();
+        childrens.clear();
+        addObjectCards(guiManager.getGameSerialized());
     }
 
     /**
