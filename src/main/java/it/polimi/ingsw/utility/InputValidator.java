@@ -7,6 +7,7 @@ import it.polimi.ingsw.network.server.Server;
 import java.util.List;
 import java.util.stream.Collectors;
 
+//TODO da togliere
 public class InputValidator {
     private static final int MAX_POWERUPS = 3;
 

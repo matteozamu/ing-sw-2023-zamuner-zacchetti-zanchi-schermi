@@ -186,6 +186,12 @@ public class Server implements Runnable {
         }
     }
 
+    /**
+     * method called when a new player logged in the game
+     * @param username the name chosen by the user
+     * @param connection the client connection
+     * @throws IOException if the client can't log in successfully
+     */
     private void newPlayerLogin(String username, Connection connection) throws IOException {
         clients.put(username, connection);
         String token = UUID.randomUUID().toString();
@@ -253,6 +259,11 @@ public class Server implements Runnable {
         }
     }
 
+
+    /**
+     * method used to disconnect a client from the server
+     * @param playerConnection the connection of the player to delete
+     */
     void onDisconnect(Connection playerConnection) {
         String username = getUsernameByConnection(playerConnection);
 
@@ -284,6 +295,11 @@ public class Server implements Runnable {
         }
     }
 
+    /**
+     * method that send a message to all the players present in one game
+     * @param gameId is the unique id of a single game
+     * @param message is the message to send
+     */
     public void sendMessageToAll(UUID gameId, Message message) {
         System.out.println("ALL SENDING MESSAGE");
         for (Map.Entry<String, ControllerGame> client : playersGame.entrySet()) {
@@ -314,6 +330,11 @@ public class Server implements Runnable {
 //        LOGGER.log(Level.INFO, "Send to all: {0}", message);
 //    }
 
+    /**
+     * send a message to a single client
+     * @param username is the name of the player to send the message to
+     * @param message is the message to send
+     */
     public void sendMessage(String username, Message message) {
         synchronized (clientsLock) {
             for (Map.Entry<String, Connection> client : clients.entrySet()) {
@@ -333,6 +354,11 @@ public class Server implements Runnable {
         LOGGER.log(Level.INFO, "Send: {0}, {1}", new Object[]{message.getSenderUsername(), message});
     }
 
+    /**
+     * method that return the username given a connection
+     * @param connection is the client connection
+     * @return the username
+     */
     private String getUsernameByConnection(Connection connection) {
         Set<String> usernameList;
         synchronized (clientsLock) {
@@ -369,6 +395,11 @@ public class Server implements Runnable {
         }
     }
 
+    /**
+     * method that return a controller game given the game UUID
+     * @param gameUUID is the game UUID
+     * @return the controller game of the game
+     */
     private ControllerGame findGameByUUID(UUID gameUUID) {
         for (ControllerGame cg : controllerGames) {
             if (cg.getId().equals(gameUUID)) {
@@ -378,10 +409,18 @@ public class Server implements Runnable {
         return null;
     }
 
+    /**
+     * method that return a controller game given a username
+     * @param username is the name of the user
+     * @return the controller game of the game in which the user is present
+     */
     private ControllerGame findGameByPlayerUsername(String username) {
         return playersGame.get(username);
     }
 
+    /**
+     * @return a map with all the player connected to the server and the controller game of the game in which they are
+     */
     public Map<String, ControllerGame> getPlayersGame() {
         return playersGame;
     }

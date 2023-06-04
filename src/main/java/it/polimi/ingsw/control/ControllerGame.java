@@ -44,6 +44,10 @@ public class ControllerGame implements TimerRunListener, Serializable {
         this.game = null;
     }
 
+    /**
+     *
+     * @return the id of the game
+     */
     public UUID getId() {
         return id;
     }
@@ -173,6 +177,11 @@ public class ControllerGame implements TimerRunListener, Serializable {
         }
     }
 
+    /**
+     * method called when a ObjectCardRequest is received from a client, asking to pick an object card
+     * @param objectCardRequest is the message received
+     * @return the response to the message
+     */
     //TODO qui non ritorniamo una ObjectCardResponse ma una generica Response, eliminaiamo ObjectCardResponse?
     private Response pickObjectCardHandler(ObjectCardRequest objectCardRequest) {
         Coordinate c = objectCardRequest.getCoordinate();
@@ -263,6 +272,17 @@ public class ControllerGame implements TimerRunListener, Serializable {
     }
 
     /**
+     * check if the lobby is full, in that case the game starts
+     */
+    public void gameSetupHandler() {
+        if (game.getPlayers().size() == game.getNumberOfPlayers()) {
+            setIsLobbyFull(true);
+            game.setCurrentPlayer(game.getPlayers().get(0));
+            startingStateHandler();
+        }
+    }
+
+    /**
      * build an invalid response
      *
      * @return a Response message to the client
@@ -316,14 +336,6 @@ public class ControllerGame implements TimerRunListener, Serializable {
         }
     }
 
-    public void gameSetupHandler() {
-        if (game.getPlayers().size() == game.getNumberOfPlayers()) {
-            setIsLobbyFull(true);
-            game.setCurrentPlayer(game.getPlayers().get(0));
-            startingStateHandler();
-        }
-    }
-
     /**
      * changes the state of the game
      *
@@ -333,6 +345,10 @@ public class ControllerGame implements TimerRunListener, Serializable {
         gameState = changeState;
     }
 
+    /**
+     * method called when the game starts, it creates a new {@link TurnController TurnController} and
+     * sends to all clients the new state of the game
+     */
     private void startingStateHandler() {
         this.turnController = new TurnController(this.game.getPlayers(), this);
         turnController.setActivePlayer(game.getCurrentPlayer());
@@ -365,8 +381,6 @@ public class ControllerGame implements TimerRunListener, Serializable {
         }
     }
 
-    // TODO finire di implementare la response lato cli
-
     /**
      * this method sends to all clients an EndGameMessage, containing the Game Serialized
      */
@@ -377,7 +391,6 @@ public class ControllerGame implements TimerRunListener, Serializable {
             server.sendMessage(player.getName(), new EndGameMessage(player.getName()));
         }
     }
-
 
     /**
      * Check if the username is available
@@ -398,7 +411,6 @@ public class ControllerGame implements TimerRunListener, Serializable {
      * Fills the game board with object cards based on the number of players.
      * This method should be called at the beginning of the game to set up the board.
      */
-    // TODO: non sarebbe meglio spostarlo nel model?
     public void fillBoard() {
         int playerNumber = game.getNumberOfPlayers();
 
@@ -614,6 +626,12 @@ public class ControllerGame implements TimerRunListener, Serializable {
 //        }
 //    }
 //
+
+    /**
+     * Method used to handle the reconnection of a player from the game
+     * @param receivedConnectionMessage message received by the server from the player asking to reconnect to the game
+     * @return a {@link Message Message} which contains the result of the received message
+     */
     private Message reconnectionHandler(LobbyMessage receivedConnectionMessage) {
         String reconnectingPlayerName = receivedConnectionMessage.getSenderUsername();
         List<String> playersNames = game.getPlayers().stream().map(Player::getName).collect(Collectors.toList());

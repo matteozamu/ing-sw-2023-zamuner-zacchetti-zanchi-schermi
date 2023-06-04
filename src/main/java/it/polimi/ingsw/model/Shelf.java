@@ -33,6 +33,9 @@ public class Shelf implements Serializable {
         return isFull;
     }
 
+    /**
+     * @param full true if a shelf is full
+     */
     public void setFull(boolean full) {
         isFull = full;
     }

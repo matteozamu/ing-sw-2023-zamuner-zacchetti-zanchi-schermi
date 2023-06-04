@@ -34,18 +34,30 @@ public enum ObjectCardType {
         this.b = b;
     }
 
+    /**
+     * @return the level of red
+     */
     public int getR() {
         return r;
     }
 
+    /**
+     * @return the level of green
+     */
     public int getG() {
         return g;
     }
 
+    /**
+     * @return the level of blue
+     */
     public int getB() {
         return b;
     }
 
+    /**
+     * @return a coloured string
+     */
     public String getColoredText() {
         return Ansi.ansi().fgRgb(r, g, b).a(text).reset().toString();
     }

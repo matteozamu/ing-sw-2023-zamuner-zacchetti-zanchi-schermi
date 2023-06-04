@@ -1,7 +1,9 @@
 package it.polimi.ingsw.enumeration;
 
+/**
+ * enumeration for the possible action
+ */
 public enum PossibleAction {
-    // TODO da cambiare
     BOARD_PICK_CARD("Choose a card from the board:"),
     LOAD_SHELF("Choose a column in which you want to put the selected object cards:"),
     DELETE_LIMBO("Put back the object card you selected in the board:"),
