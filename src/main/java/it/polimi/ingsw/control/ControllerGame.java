@@ -10,10 +10,7 @@ import it.polimi.ingsw.utility.JsonReader;
 import it.polimi.ingsw.utility.TimerRunListener;
 
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-import java.util.UUID;
+import java.util.*;
 import java.util.logging.Level;
 import java.util.stream.Collectors;
 
@@ -124,7 +121,12 @@ public class ControllerGame implements TimerRunListener, Serializable {
                 changeState(PossibleGameState.GAME_ENDED);
                 return new Response("Game is ended.", MessageStatus.GAME_ENDED);
             }
-            game.nextPlayer();
+
+            Player currentPlayer = game.getCurrentPlayer();
+            Player nextPlayer = game.nextPlayer();
+            if (nextPlayer == currentPlayer) {
+                setTimer();
+            }
             turnController.setActivePlayer(game.getCurrentPlayer());
 
             sendPrivateUpdates();
@@ -679,6 +681,21 @@ public class ControllerGame implements TimerRunListener, Serializable {
 //            return new Response("Disconnection Message from not in lobby Player", MessageStatus.ERROR);
 //        }
 //    }
+
+    public void setTimer() {
+        Timer timer = new Timer();
+        TimerTask task = new TimerTask() {
+            @Override
+            public void run() {
+                game.setStarted(false);
+                game.getCurrentPlayer().setWinner(true);
+                sendEndGame();
+            }
+        };
+
+        // start a timer of 3 minutes (180.000 milliseconds)
+        timer.schedule(task, 5000);
+    }
 
     @Override
     public void onTimerRun() {
