@@ -36,6 +36,8 @@ public class GuiManager extends ClientGameManager implements DisconnectionListen
 
     private StartGameSceneController startGameSceneController;
 
+    private JoinGameSceneController joinGameSceneController;
+
     private GuiManager() {
         super();
     }
@@ -124,6 +126,10 @@ public class GuiManager extends ClientGameManager implements DisconnectionListen
         this.startGameSceneController = startGameSceneController;
     }
 
+    void setJoinGameSceneController(JoinGameSceneController joinGameSceneController) {
+        this.joinGameSceneController = joinGameSceneController;
+    }
+
     @Override
     public void connectionResponse(ConnectionResponse response) {
         Platform.runLater(() ->
@@ -132,7 +138,8 @@ public class GuiManager extends ClientGameManager implements DisconnectionListen
 
     @Override
     public void addPlayerToGameRequest() {
-
+        Platform.runLater(() ->
+                connectionSceneController.addPlayerToGameRequest());
     }
 
     @Override
@@ -143,7 +150,7 @@ public class GuiManager extends ClientGameManager implements DisconnectionListen
     @Override
     public void lobbyJoinResponse(Response response) {
         Platform.runLater(() ->
-                connectionSceneController.onLobbyJoinResponse(response));
+                startGameSceneController.onLobbyJoinResponse(response));
     }
 
     @Override
@@ -255,12 +262,14 @@ public class GuiManager extends ClientGameManager implements DisconnectionListen
 
     @Override
     public void chooseGameToJoin(List<ControllerGame> games) {
-
+        Platform.runLater(() ->
+                startGameSceneController.onJoinGameResponse(games));
     }
 
     @Override
     public void noGameAvailable() {
-
+        Platform.runLater(() ->
+                startGameSceneController.noGameAvailable());
     }
 
     @Override

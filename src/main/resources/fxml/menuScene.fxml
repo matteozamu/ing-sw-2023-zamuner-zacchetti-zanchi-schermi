@@ -1,14 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import java.net.*?>
+<?import javafx.scene.image.*?>
 <?import javafx.scene.layout.*?>
-<?import java.net.URL?>
-<?import javafx.scene.image.ImageView?>
 
-<VBox fx:id="mainPane"
-      fx:controller="it.polimi.ingsw.view.gui.MenuSceneController"
-      styleClass="mainPane"
-      xmlns="http://javafx.com/javafx/17.0.2-ea"
-      xmlns:fx="http://javafx.com/fxml/1">
+<VBox fx:id="mainPane" styleClass="mainPane" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.ingsw.view.gui.MenuSceneController">
 
     <stylesheets>
         <URL value="@../css/menu.css" />
@@ -16,8 +12,14 @@
 
     <ImageView id="logoImage" />
 
-    <ImageView fx:id="startButton" id="startButton" styleClass="button"/>
+    <Region prefHeight="200" />
 
-    <ImageView fx:id="exitButton" id="exitButton" styleClass="button"/>
+    <FlowPane styleClass="selectionButton">
+        <ImageView id="startButton" fx:id="startButton" fitWidth="400" fitHeight="400" preserveRatio="true" pickOnBounds="true" styleClass="button" />
+
+        <ImageView id="exitButton" fx:id="exitButton" fitWidth="400" fitHeight="400" preserveRatio="true" pickOnBounds="true" styleClass="button" />
+    </FlowPane>
+
+
 
 </VBox>

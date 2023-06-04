@@ -31,7 +31,7 @@
     <bottom>
         <VBox styleClass="botBox">
             <ImageView fx:id="backButton" id="backButton" styleClass="button"/>
-            <ImageView fx:id="exitButton" id="exitButton" styleClass="button"/>
+            <ImageView fx:id="exitButton" id="exitButton" fitWidth="400" fitHeight="400" preserveRatio="true" pickOnBounds="true" styleClass="button"/>
         </VBox>
     </bottom>
 </BorderPane>

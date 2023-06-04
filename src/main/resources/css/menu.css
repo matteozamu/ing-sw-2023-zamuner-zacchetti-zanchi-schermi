@@ -30,6 +30,11 @@
     -fx-alignment: CENTER;
 }
 
+.menuSceneButton {
+    -fx-alignment: CENTER;
+    -fx-spacing: 20;
+}
+
 /* Button */
 
 .button:hover {
@@ -151,6 +156,48 @@
     -fx-border-radius: 1px;
 }
 
+/* Join game */
+
+.idBox {
+    -fx-min-width: 1300px;
+    -fx-max-width: 1300px;
+    -fx-padding: 10 10 10 10;
+    -fx-spacing: 20;
+    -fx-alignment: CENTER;
+}
+
+.idInnerBox {
+    -fx-min-height: 370px;
+    -fx-max-height: 370px;
+    -fx-min-width: 500px;
+    -fx-max-width: 500px;
+    -fx-spacing: 20;
+}
+
+.idRow {
+    -fx-min-width: 500px;
+    -fx-max-width: 500px;
+    -fx-padding: 10 10 10 10;
+    -fx-background-color: rgba(136, 188, 231, .5);
+
+    -fx-font-family: "Merriweather Regular";
+    -fx-font-size: 25px;
+    -fx-text-fill: #F1E1B2;
+
+    -fx-border-color: #582400;
+    -fx-border-width: 2px;
+    -fx-border-radius: 1px;
+}
+
+.idRow:hover {
+    -fx-effect: dropshadow(gaussian, #F44336, 15, 0.2, 0, 0);
+}
+
+.idRow:pressed {
+    -fx-scale-y: 0.95;
+    -fx-scale-x: 0.95;
+}
+
 /* Images */
 
 #logoImage {
@@ -158,11 +205,11 @@
 }
 
 #startButton {
-    -fx-image: url("/img/buttons/startbutton.png");
+    -fx-image: url("/img/buttons/startButton.png");
 }
 
 #exitButton {
-    -fx-image: url("/img/buttons/exitbutton.png");
+    -fx-image: url("/img/buttons/exitButton.png");
 }
 
 #connectSocketButton {

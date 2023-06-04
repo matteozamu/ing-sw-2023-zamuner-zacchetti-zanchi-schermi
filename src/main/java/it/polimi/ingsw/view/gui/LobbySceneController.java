@@ -1,5 +1,8 @@
 package it.polimi.ingsw.view.gui;
 
+import java.util.Timer;
+import java.util.TimerTask;
+
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
@@ -49,12 +52,18 @@ public class LobbySceneController {
     }
 
     void onGameStart() {
-        GameSceneController gameSceneController =
-                GuiManager.setLayout(mainPane.getScene(), "fxml/gameScene.fxml");
+        Timer timer = new Timer();
+        timer.schedule(new TimerTask() {
+            @Override
+            public void run() {
+                GameSceneController gameSceneController =
+                        GuiManager.setLayout(mainPane.getScene(), "fxml/gameScene.fxml");
 
-        if (gameSceneController != null) {
-            gameSceneController.setupGame(guiManager.getGameSerialized());
-        }
+                if (gameSceneController != null) {
+                    gameSceneController.setupGame(guiManager.getGameSerialized());
+                }
+            }
+        }, 5000);
     }
 
     /**

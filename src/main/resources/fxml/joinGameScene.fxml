@@ -5,7 +5,7 @@
 <?import java.net.URL?>
 <?import javafx.scene.image.ImageView?>
 
-<BorderPane fx:controller="it.polimi.ingsw.view.gui.StartGameSceneController"
+<BorderPane fx:controller="it.polimi.ingsw.view.gui.JoinGameSceneController"
             fx:id="mainPane"
             styleClass="mainPane"
             xmlns="http://javafx.com/javafx"
@@ -17,20 +17,21 @@
 
     <top>
         <VBox styleClass="topBox">
-            <Label text="Game selection" styleClass="menuTitle"/>
+            <Label text="Select game" styleClass="menuTitle"/>
         </VBox>
     </top>
 
     <center>
-        <FlowPane styleClass="selectionButton">
-            <ImageView fx:id="createGameButton" id="createGameButton" fitWidth="400" fitHeight="400" preserveRatio="true" pickOnBounds="true" styleClass="button"/>
-            <ImageView fx:id="joinGameButton" id="joinGameButton" fitWidth="400" fitHeight="400" preserveRatio="true" pickOnBounds="true" styleClass="button"/>
-        </FlowPane>
+        <VBox styleClass="idBox">
+            <VBox fx:id="idLabelsBox" styleClass="idInnerBox">
+            </VBox>
+        </VBox>
     </center>
 
     <bottom>
         <VBox styleClass="botBox">
             <ImageView fx:id="backButton" id="backButton" styleClass="button"/>
+            <ImageView fx:id="exitButton" id="exitButton" fitWidth="400" fitHeight="400" preserveRatio="true" pickOnBounds="true" styleClass="button"/>
         </VBox>
     </bottom>
 </BorderPane>
