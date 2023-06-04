@@ -639,6 +639,9 @@ public class ControllerGame implements TimerRunListener, Serializable {
         List<String> playersNames = game.getPlayers().stream().map(Player::getName).collect(Collectors.toList());
 //        ArrayList<LobbyMessage> inLobbyPlayers = lobby.getInLobbyPlayers();
 
+        if (!game.isStarted()) {
+            return new Response("Game is ended.", MessageStatus.ERROR);
+        }
         if (playersNames.contains(reconnectingPlayerName)){
             // if I receive a reconnection message the player state change into connected == true
             game.getPlayerByName(reconnectingPlayerName).setConnected(true);

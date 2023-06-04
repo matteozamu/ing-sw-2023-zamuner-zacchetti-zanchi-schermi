@@ -269,9 +269,13 @@ public abstract class ClientGameManager implements ClientGameManagerListener, Cl
      */
     private void handleResponse(Response response) {
         if (response.getStatus() == MessageStatus.GAME_CREATED || response.getStatus() == MessageStatus.GAME_JOINED) {
-            queue.add(() -> addPlayerToGameRequest());
+            queue.add(this::addPlayerToGameRequest);
         } else {
-            if (joinedLobby == false) {
+            if (!joinedLobby) {
+                if(response.getStatus() == MessageStatus.ERROR) {
+                    queue.add(() -> responseError(response.getMessage()));
+                    return;
+                }
                 joinedLobby = response.getStatus() == MessageStatus.OK;
 
                 if (lobbyPlayers.size() == 1) queue.add(() -> numberOfPlayersRequest(response));
