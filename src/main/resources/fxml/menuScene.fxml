@@ -12,7 +12,7 @@
 
     <center>
         <VBox styleClass="topBox">
-            <ImageView id="logoImage" />
+            <ImageView id="logoImage" fitWidth="700" preserveRatio="true" />
         </VBox>
     </center>
 
