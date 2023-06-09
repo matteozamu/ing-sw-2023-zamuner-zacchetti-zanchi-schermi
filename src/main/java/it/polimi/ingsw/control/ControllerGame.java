@@ -126,7 +126,7 @@ public class ControllerGame implements TimerRunListener, Serializable {
 
             sendPrivateUpdates();
 
-            if (checkIfRefill()) refillBoard();
+//            if (checkIfRefill()) refillBoard();
             return new Response("Cards moved", MessageStatus.OK);
         } else {
             System.out.println("Column does not have enough space");
@@ -538,35 +538,83 @@ public class ControllerGame implements TimerRunListener, Serializable {
      */
     //TODO: da testare
     // non funziona il controllo per verificare che le tessere abbiano un lato in comune
+//    public boolean isObjectCardAvailable(Coordinate coordinate) {
+//        if (selectedCoordinates.size() == 3) {
+//            selectedCoordinates.clear();
+//        }
+//        if (selectedCoordinates.isEmpty()) {
+//            this.selectedCoordinates.add(coordinate);
+//            return this.game.getBoard().isEmptyAtDirection(coordinate, UP) ||
+//                    this.game.getBoard().isEmptyAtDirection(coordinate, DOWN) ||
+//                    this.game.getBoard().isEmptyAtDirection(coordinate, RIGHT) ||
+//                    this.game.getBoard().isEmptyAtDirection(coordinate, LEFT);
+//        } else {
+//            boolean hasFreeSide = this.game.getBoard().isEmptyAtDirection(coordinate, UP) ||
+//                    this.game.getBoard().isEmptyAtDirection(coordinate, DOWN) ||
+//                    this.game.getBoard().isEmptyAtDirection(coordinate, RIGHT) ||
+//                    this.game.getBoard().isEmptyAtDirection(coordinate, LEFT);
+//            boolean hasCommonSide = false;
+//            for (Coordinate selectedCoordinate : selectedCoordinates) {
+//                if (coordinate.getAdjacent(Coordinate.Direction.UP).equals(selectedCoordinate) ||
+//                        coordinate.getAdjacent(Coordinate.Direction.DOWN).equals(selectedCoordinate) ||
+//                        coordinate.getAdjacent(Coordinate.Direction.LEFT).equals(selectedCoordinate) ||
+//                        coordinate.getAdjacent(Coordinate.Direction.RIGHT).equals(selectedCoordinate)) {
+//                    hasCommonSide = true;
+//                    break;
+//                }
+//            }
+//            this.selectedCoordinates.add(coordinate);
+//            return hasFreeSide && hasCommonSide;
+//        }
+//    }
     public boolean isObjectCardAvailable(Coordinate coordinate) {
-        if (selectedCoordinates.size() == 3) {
-            selectedCoordinates.clear();
+        Map<Coordinate, ObjectCard> limbo = game.getLimbo();
+        Map<Coordinate, ObjectCard> board = game.getBoard().getGrid();
+        Iterator<Coordinate> iterator = limbo.keySet().iterator();
+        boolean available = false;
+
+        if (!board.containsKey(coordinate))
+            return false;
+
+        if (!this.game.getBoard().isEmptyAtDirection(coordinate, UP) &&
+                !this.game.getBoard().isEmptyAtDirection(coordinate, DOWN) &&
+                !this.game.getBoard().isEmptyAtDirection(coordinate, RIGHT) &&
+                !this.game.getBoard().isEmptyAtDirection(coordinate, LEFT)) return false;
+
+        if (limbo.size() == 0) available = true;
+
+        if (limbo.size() == 1) {
+            Coordinate c = iterator.next();
+            int dx = Math.abs(c.getColumn() - coordinate.getColumn());
+            int dy = Math.abs(c.getRow() - coordinate.getRow());
+
+            if ((dx == 0 && dy == 1) || (dy == 0 && dx == 1))
+                available = true;
+            else return false;
         }
-        if (selectedCoordinates.isEmpty()) {
-            this.selectedCoordinates.add(coordinate);
-            return this.game.getBoard().isEmptyAtDirection(coordinate, UP) ||
-                    this.game.getBoard().isEmptyAtDirection(coordinate, DOWN) ||
-                    this.game.getBoard().isEmptyAtDirection(coordinate, RIGHT) ||
-                    this.game.getBoard().isEmptyAtDirection(coordinate, LEFT);
-        } else {
-            boolean hasFreeSide = this.game.getBoard().isEmptyAtDirection(coordinate, UP) ||
-                    this.game.getBoard().isEmptyAtDirection(coordinate, DOWN) ||
-                    this.game.getBoard().isEmptyAtDirection(coordinate, RIGHT) ||
-                    this.game.getBoard().isEmptyAtDirection(coordinate, LEFT);
-            boolean hasCommonSide = false;
-            for (Coordinate selectedCoordinate : selectedCoordinates) {
-                if (coordinate.getAdjacent(Coordinate.Direction.UP).equals(selectedCoordinate) ||
-                        coordinate.getAdjacent(Coordinate.Direction.DOWN).equals(selectedCoordinate) ||
-                        coordinate.getAdjacent(Coordinate.Direction.LEFT).equals(selectedCoordinate) ||
-                        coordinate.getAdjacent(Coordinate.Direction.RIGHT).equals(selectedCoordinate)) {
-                    hasCommonSide = true;
-                    break;
-                }
-            }
-            this.selectedCoordinates.add(coordinate);
-            return hasFreeSide && hasCommonSide;
+
+        if (limbo.size() == 2) {
+            Coordinate c1 = iterator.next();
+            Coordinate c2 = iterator.next();
+            int dx = Math.abs(c1.getColumn() - c2.getColumn());
+            int dy = Math.abs(c1.getRow() - c2.getRow());
+
+            if ((dx == 0 && dy == 1) || (dy == 0 && dx == 1))
+                available = true;
+            else return false;
+
+            dx = Math.abs(c2.getColumn() - coordinate.getColumn());
+            dy = Math.abs(c2.getRow() - coordinate.getRow());
+
+            if ((dx == 0 && dy == 1) || (dy == 0 && dx == 1))
+                available = true;
+            else return false;
         }
+
+        return available;
     }
+
+
     /*
     Questo è il metodo originale, quello sopra è il metodo aggiornato
     public boolean isObjectCardAvailable(Coordinate coordinate) {
