@@ -8,8 +8,7 @@ import java.util.Scanner;
 
 public class ClientMain {
     public static void main(String[] args) {
-        Integer value = readInt(0, 1);
-        if (value.equals(0)) {
+        if (args.length > 0 && args[0].equalsIgnoreCase("CLI")) {
             new Cli().start();
         } else {
             Application.launch(Gui.class);

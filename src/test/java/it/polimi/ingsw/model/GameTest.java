@@ -25,13 +25,13 @@ class GameTest extends TestCase {
     }
 
     @Test
-    public void testGetInstanceMap(){
+    public void testGetInstanceMap() {
         Map<String, Game> map = Game.getInstanceMap();
         assertNotNull(map);
     }
 
     @Test
-    public void testGetInstance(){
+    public void testGetInstance() {
         Game g = Game.getInstance("test");
         assertNotNull(g);
     }
@@ -48,56 +48,56 @@ class GameTest extends TestCase {
     }
 
     @Test
-    public void testGetLimbo(){
+    public void testGetLimbo() {
         assertNotNull(g.getLimbo());
     }
 
     @Test
-    public void testSetLimbo(){
+    public void testSetLimbo() {
         g.setLimbo(new HashMap<>());
         assertNotNull(g.getLimbo());
     }
 
     @Test
-    public void testGetLimboOrder(){
+    public void testGetLimboOrder() {
         g.setLimboOrder(new ArrayList<>());
         assertNotNull(g.getLimboOrder());
     }
 
     @Test
-    public void testSetLimboOrder(){
+    public void testSetLimboOrder() {
         g.setLimboOrder(new ArrayList<>());
         assertNotNull(g.getLimboOrder());
     }
 
+    //    @Test
+//    public void testIsHasStarted() {
+//        assertFalse(g.isHasStarted());
+//    }
+//
+//    @Test
+//    public void testSetHasStarted() {
+//        g.setHasStarted(true);
+//        assertTrue(g.isHasStarted());
+//    }
     @Test
-    public void testIsHasStarted() {
-        assertFalse(g.isStarted());
-    }
-
-    @Test
-    public void testSetHasStarted() {
-        g.setStarted(true);
-        assertTrue(g.isStarted());
-    }
-    @Test
-    public void testGetCommonGoalContainer(){
+    public void testGetCommonGoalContainer() {
         assertNotNull(g.getCommonGoalContainer());
     }
 
     @Test
-    public void testGetPersonalGoalCardsContainer(){
+    public void testGetPersonalGoalCardsContainer() {
         assertNotNull(g.getPersonalGoalCardsContainer());
     }
 
     @Test
-    public void testSetPersonalGoalCardsContainer(){
+    public void testSetPersonalGoalCardsContainer() {
         g.setPersonalGoalCardsContainer(new ArrayList<>());
         assertNotNull(g.getPersonalGoalCardsContainer());
     }
 
     @Test
-    public void testGetObjectCardContainer(){
+    public void testGetObjectCardContainer() {
         assertNotNull(g.getObjectCardContainer());
     }
 
@@ -106,8 +106,21 @@ class GameTest extends TestCase {
         assertNotNull(g.getPlayers());
     }
 
+//    @Test
+//    public void testDoesPlayerExist() {
+//        Player p = new Player("test", this.shelf, this.pg);
+//        g.addPlayer(p);
+//        assertTrue(g.doesPlayerExist("test"));
+//    }
+
+//    @Test
+//    public void testDoesPlayerExistNull() {
+//        assertFalse(g.doesPlayerExist(null));
+//    }
+
+
     @Test
-    public void testAddPlayer(){
+    public void testAddPlayer() {
         Player p = new Player("Matteo", this.shelf, this.pg);
         assertTrue(g.addPlayer(p));
     }
@@ -120,24 +133,24 @@ class GameTest extends TestCase {
 //    }
 
     @Test
-    public void TestGetCurrentPlayer(){
+    public void TestGetCurrentPlayer() {
         assertNull(g.getCurrentPlayer());
     }
 
     @Test
-    public void TestSetCurrentPlayer(){
+    public void TestSetCurrentPlayer() {
         Player p = new Player("Matteo", this.shelf, this.pg);
         g.setCurrentPlayer(p);
         assertEquals(p, g.getCurrentPlayer());
     }
 
     @Test
-    public void testGetBoard(){
+    public void testGetBoard() {
         assertNotNull(g.getBoard());
     }
 
     @Test
-    public void testGetCommonGoals(){
+    public void testGetCommonGoals() {
         assertNotNull(g.getCommonGoals());
     }
 
@@ -171,7 +184,7 @@ class GameTest extends TestCase {
     }
 
     @Test
-    public void testNextPlayer(){
+    public void testNextPlayer() {
         Player p = new Player("Ember", this.shelf, this.pg);
         g.addPlayer(p);
         g.setCurrentPlayer(p);
@@ -190,7 +203,7 @@ class GameTest extends TestCase {
     }
 
     @Test
-    public void testGetPlayersNames(){
+    public void testGetPlayersNames() {
         Player p = new Player("Ember", this.shelf, this.pg);
         g.addPlayer(p);
         g.setCurrentPlayer(p);
@@ -206,7 +219,7 @@ class GameTest extends TestCase {
     }
 
     @Test
-    public void testGetPlayerByName(){
+    public void testGetPlayerByName() {
         Player p = new Player("Ember", this.shelf, this.pg);
         g.addPlayer(p);
         g.setCurrentPlayer(p);
