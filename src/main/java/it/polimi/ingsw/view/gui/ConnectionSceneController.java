@@ -15,6 +15,11 @@ import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 import it.polimi.ingsw.utility.ServerAddressValidator;
 import it.polimi.ingsw.network.client.ClientGameManager;
+/**
+ * Class ConnectionSceneController represents the controller of the connection scene, the scene where the player can
+ * choose the connection type and insert their username and the server address
+ *
+ */
 
 public class ConnectionSceneController {
 
@@ -36,6 +41,9 @@ public class ConnectionSceneController {
     @FXML
     private ImageView backButton;
 
+    /**
+     * Initializes the scene
+     */
     @FXML
     public void initialize() {
         guiManager = GuiManager.getInstance();
