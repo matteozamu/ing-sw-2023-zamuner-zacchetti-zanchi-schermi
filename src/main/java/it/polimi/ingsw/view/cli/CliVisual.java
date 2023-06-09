@@ -59,10 +59,18 @@ public class CliVisual {
      */
     public static String getColoredText(int r, int g, int b) {
         // TODO se serve cambiare questa stringa per i colori
-        String colorCode = String.format("\u001B[48;2;%d;%d;%dm", r, g, b);
+        String colorCode =  String.format("\u001B[38;5;%dm", rgbToAnsi(r, g, b));
         String resetCode = "\u001B[0m";
         return String.format("%s%s%s", colorCode, " ", resetCode);
     }
+
+    private static int rgbToAnsi(int red, int green, int blue) {
+        int r = red / 51;
+        int g = green / 51;
+        int b = blue / 51;
+        return 16 + (36 * r) + (6 * g) + b;
+    }
+
 
     /**
      * print the score of the user
