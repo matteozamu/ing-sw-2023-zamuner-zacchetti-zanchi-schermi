@@ -7,6 +7,7 @@ import it.polimi.ingsw.network.server.Server;
 import java.util.List;
 import java.util.stream.Collectors;
 
+//TODO da togliere
 public class InputValidator {
     private static final int MAX_POWERUPS = 3;
 
@@ -38,8 +39,6 @@ public class InputValidator {
         try {
             switch (checkingMessage.getContent()) {
                 case PASS_TURN:
-                case LOBBY_VOTE:
-                    return true;
                 case ADD_PLAYER:
                     return true;
                 case NUMBER_OF_PLAYERS:

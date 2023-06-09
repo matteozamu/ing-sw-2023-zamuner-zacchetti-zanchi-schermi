@@ -9,12 +9,19 @@ import java.io.FileInputStream;
 import java.io.InputStream;
 
 public class JsonReader {
+    private static int socketPort;
+    private static int RMIPort;
     private static int maxPlayers;
     private static int minPlayers;
     private static int[][] board2Matrix;
     private static int[][] board3Matrix;
     private static int[][] board4Matrix;
 
+    /**
+     * read the program's constant from a json file
+     *
+     * @param filename the file to read
+     */
     public static void readJsonConstant(String filename) {
         try {
             // Read JSON from a file
@@ -26,6 +33,8 @@ public class JsonReader {
             JSONTokener tokener = new JSONTokener(inputStream);
             JSONObject jsonObject = new JSONObject(tokener);
 
+            socketPort = jsonObject.getInt("socketPort");
+            RMIPort = jsonObject.getInt("RMIPort");
             maxPlayers = jsonObject.getInt("maxPlayers");
             minPlayers = jsonObject.getInt("minPlayers");
             JSONArray board2 = jsonObject.getJSONArray("board2");
@@ -63,18 +72,38 @@ public class JsonReader {
         }
     }
 
+    /**
+     * @return the maximum number of player
+     */
     public static int getMaxPlayers() {
         return maxPlayers;
     }
 
+    /**
+     * @return the minimum number of player
+     */
     public static int getMinPlayers() {
         return minPlayers;
     }
 
+    /**
+     * return the board based on the number of players in the game
+     *
+     * @param numberOfPlayers number of players in the game
+     * @return the specific board
+     */
     public static int[][] getBoard(int numberOfPlayers) {
         if (numberOfPlayers == 2) return board2Matrix;
         if (numberOfPlayers == 3) return board3Matrix;
         if (numberOfPlayers == 4) return board4Matrix;
         else return null;
+    }
+
+    public static int getSocketPort() {
+        return socketPort;
+    }
+
+    public static int getRMIPort() {
+        return RMIPort;
     }
 }

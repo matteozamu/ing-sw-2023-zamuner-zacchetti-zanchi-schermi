@@ -5,8 +5,12 @@
 <?import java.net.URL?>
 <?import javafx.scene.image.ImageView?>
 
-<BorderPane xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml"
-            fx:controller="it.polimi.ingsw.view.gui.ConnectionSceneController" fx:id="mainPane" styleClass="mainPane">
+<BorderPane fx:controller="it.polimi.ingsw.view.gui.ConnectionSceneController"
+            fx:id="mainPane"
+            styleClass="mainPane"
+            xmlns="http://javafx.com/javafx"
+            xmlns:fx="http://javafx.com/fxml">
+
     <stylesheets>
         <URL value="@../css/menu.css"/>
     </stylesheets>
@@ -32,12 +36,14 @@
 
     <bottom>
         <VBox styleClass="botBox">
-            <HBox styleClass="connectBox">
-                <ImageView fx:id="connectSocketButton" id="connectSocketButton" styleClass="button"/>
-                <ImageView fx:id="connectRmiButton" id="connectRmiButton" styleClass="button"/>
+            <HBox styleClass="selectionButton">
+                <ImageView fx:id="connectSocketButton" fitWidth="400" fitHeight="400" preserveRatio="true" pickOnBounds="true" id="connectSocketButton" styleClass="button"/>
+                <ImageView fx:id="connectRmiButton" fitWidth="400" fitHeight="400" preserveRatio="true" pickOnBounds="true" id="connectRmiButton" styleClass="button"/>
             </HBox>
 
-            <ImageView fx:id="backButton" id="backButton" styleClass="button"/>
+            <Region prefHeight="20" />
+
+            <ImageView fx:id="backButton" id="backButton" fitWidth="400" fitHeight="400" preserveRatio="true" pickOnBounds="true" styleClass="button"/>
         </VBox>
     </bottom>
 </BorderPane>

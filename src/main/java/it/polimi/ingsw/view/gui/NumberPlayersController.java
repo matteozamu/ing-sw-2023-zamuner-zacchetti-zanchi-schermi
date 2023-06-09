@@ -7,6 +7,11 @@ import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 import it.polimi.ingsw.utility.MessageBuilder;
 
+/**
+ * Class NumberPlayersController represents the controller of the scene where the player can choose
+ * the number of players of the game
+ *
+ */
 public class NumberPlayersController {
 
     private GuiManager guiManager;
@@ -23,6 +28,9 @@ public class NumberPlayersController {
     @FXML
     private ImageView backButton;
 
+    /**
+     * Initializes the scene
+     */
     @FXML
     public void initialize() {
         guiManager = GuiManager.getInstance();
@@ -69,6 +77,6 @@ public class NumberPlayersController {
      */
     private void onBackButtonClick() {
         guiManager.closeConnection();
-        GuiManager.setLayout(mainPane.getScene(), "fxml/connectionScene.fxml");
+        GuiManager.setLayout(mainPane.getScene(), "fxml/startGameScene.fxml");
     }
 }

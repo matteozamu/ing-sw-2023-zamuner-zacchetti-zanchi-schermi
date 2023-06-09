@@ -29,7 +29,6 @@ public class GameStateResponse extends Message {
     @Override
     public String toString() {
         return "GameStateResponse{" +
-                "gameSerialized=" + gameSerialized +
                 ", turnOwner='" + turnOwner + '\'' +
                 '}';
     }

@@ -7,19 +7,12 @@
 }
 
 .mainPane {
-    -fx-background-image: url("../img/misc/parquet_backgroundV2.jpg");
+    -fx-background-image: url("../img/misc/parquet_backgroundV3.png");
     -fx-background-size: cover;
     -fx-alignment: CENTER;
 }
 
-.boardArea {
-    -fx-max-height: 750px;
-    -fx-min-height: 750px;
-
-    -fx-max-width: 1300px;
-    -fx-min-width: 1300px;
-}
-
+/*
 .turnOwner {
     -fx-effect: dropshadow(gaussian, #F44336, 15, 0.2, 0, 0);
 }
@@ -27,169 +20,501 @@
 .notTurnOwner {
     -fx-opacity: 0.5;
 }
+ */
 
-.board {
-    -fx-image: url("../img/boards/livingroom.png");
+.commonGoalCardsHBoxArea {
+    -fx-spacing: 10;
+    -fx-alignment: CENTER;
+}
+
+/* Areas */
+
+.gameStackPaneArea {
+    -fx-max-height: 750px;
+    -fx-min-height: 750px;
+
+    -fx-max-width: 1300px;
+    -fx-min-width: 1300px;
+}
+
+.boardShelfHBoxArea {
+    -fx-spacing: 10;
+    -fx-alignment: CENTER;
+}
+
+.boardCommonGoalCardsVBoxArea {
+    -fx-spacing: 25;
+}
+
+.boardStackPaneArea {
+    /* Fissare una dimensione in modo tale da non fissare la dimensione dell'immagine, ma sarà l'immagine a riempire tutto lo spazio dello stack pane */
+    -fx-alignment: CENTER;
+}
+
+/* Board */
+
+.boardImage {
+    -fx-image: url("/img/board_shelf/livingroom.png");
     -fx-effect: dropshadow(gaussian, rgba(255, 255, 255, 0.3), 20, 0.5, 0, 0);
 }
+
+.boardGridPane {
+    /*
+    -fx-alignment: CENTER;
+    -fx-translate-x: -2.0;
+    -fx-vgap: 6.0;
+    -fx-hgap: 6.0;
+    Da capire perché non funzionano
+     */
+}
+
+/* Shelf */
 
 .shelf {
-    -fx-image: url("../img/boards/bookshelf_orth.png");
+    -fx-image: url("/img/board_shelf/shelf_orth.png");
     -fx-effect: dropshadow(gaussian, rgba(255, 255, 255, 0.3), 20, 0.5, 0, 0);
 }
 
-.boardShelf {
-    -fx-min-width: 656px;
-    -fx-max-width: 660px;
+.shelfGridPane {
+
 }
 
-.cornice-1 {
-    -fx-image: url("../img/item tiles/Cornici1.1.png");
+.shelfLimboVBoxArea {
+    -fx-spacing: 25;
+}
+
+#arrowShelf {
+    -fx-image: url("/img/misc/arrow_shelf.png");
+}
+
+.shelfScrollPane {
+    -fx-background-color: transparent;
+    -fx-alignment: CENTER;
+}
+
+.shelfScrollPane .viewport {
+    -fx-background-color: transparent;
+}
+
+.shelfScrollPane .scroll-bar:vertical .track,
+.shelfScrollPane .scroll-bar:horizontal .track {
+    -fx-background-color: transparent;
+}
+
+.shelfScrollPane .scroll-bar:vertical .thumb,
+.shelfScrollPane .scroll-bar:horizontal .thumb {
+    -fx-background-color: transparent;
+}
+
+.shelfHBoxImages {
+
+}
+
+.shelfLabel {
+    -fx-background-color: white;
+    -fx-text-fill: black;
+    -fx-padding: 5px;
+    -fx-border-radius: 5px;
+    -fx-background-radius: 5px;
+    -fx-translate-y: -10;
+    -fx-border-color: #682110;
+    -fx-border-width: 2px;
+}
+
+.columnArrowAnchorPane {
+    -fx-alignment: CENTER;
+}
+
+/* Player name */
+
+.playersNamePaneArea {
+
+}
+
+.playerName {
+    -fx-alignment: center;
+    -fx-font-family: "Merriweather Regular";
+    -fx-font-size: 15px;
+    -fx-text-fill: #6C2310;
+}
+
+.labelSeparator {
+    -fx-border-color: #F1E1B2;
+}
+
+/* Limbo */
+
+.limboHBoxArea {
+    -fx-background-color: rgba(255, 255, 255, 0.5);
+    -fx-border-radius: 15px;
+    -fx-background-radius: 15px;
+    -fx-spacing: 25;
+    -fx-alignment: CENTER;
+}
+
+/* End scene */
+
+.topEndBox {
+    -fx-padding: 50 0 0 0;
+    -fx-alignment: CENTER;
+}
+
+.centerEndBox {
+    -fx-max-width: 1200px;
+    -fx-alignment: CENTER;
+}
+
+.botEndBox {
+    -fx-padding: 0 0 50 0;
+    -fx-alignment: CENTER;
+}
+
+.endTitle {
+    -fx-font-family: "Berkshire Swash Regular";
+    -fx-font-size: 50px;
+    -fx-text-fill: #F1E1B2;
+}
+
+.endTable {
+    -fx-min-width: 1305px;
+    -fx-max-width: 1305px;
+
+    -fx-min-height: 500px;
+    -fx-max-height: 500px;
+
+    -fx-background-color: transparent;
+    -fx-border-color: transparent;
+}
+
+.endTable:focused{
+    -fx-background-color: transparent;
+}
+
+.endTable .scroll-bar * {
+    -fx-min-width: 0;
+    -fx-pref-width: 0;
+    -fx-max-width: 0;
+
+    -fx-min-height: 0;
+    -fx-pref-height: 0;
+    -fx-max-height: 0;
+}
+
+.endTable .column-header {
+    -fx-background-color: transparent;
+}
+
+.endTable .column-header-background {
+    -fx-background-color: transparent;
+}
+
+.endTable .column-header-background .filler {
+    -fx-background-color: transparent;
+}
+
+.endTable .column-header-background .label{
+    -fx-background-color: transparent;
+
+    -fx-font-family: "Berkshire Swash Regular";
+    -fx-font-size: 25px;
+    -fx-text-fill: #F44336;
+
+    -fx-padding: 20 0 20 0;
+}
+
+.endTable .placeholder {
+    -fx-background-color: transparent;
+}
+
+.endTable .table-column {
+    -fx-alignment:  center;
+    -fx-font-family: "Merriweather Regular";
+    -fx-font-size: 20px;
+    -fx-text-fill: #F44336;
+}
+
+.table-row-cell {
+    -fx-background-color: transparent;
+    -fx-border-color: transparent;
+    -fx-table-cell-border-color: transparent;
+}
+
+.endRankColumn {
+    -fx-pref-width: 100px;
+}
+
+.endPlayerColumn {
+    -fx-pref-width: 860px;
+}
+
+.endPointsColumn {
+    -fx-pref-width: 220px;
+}
+
+/* Object cards */
+
+.transparent {
+    -fx-image: url("/img/object_cards/transparent.png");
+}
+
+.Frame-0 {
+    -fx-image: url("/img/object_cards/Frame-0.png");
     -fx-effect: dropshadow(gaussian, rgba(255, 255, 255, 0.3), 20, 0.5, 0, 0);
 }
 
-.cornice-2 {
-    -fx-image: url("../img/item tiles/Cornici1.2.png");
+.Frame-1 {
+    -fx-image: url("/img/object_cards/Frame-1.png");
     -fx-effect: dropshadow(gaussian, rgba(255, 255, 255, 0.3), 20, 0.5, 0, 0);
 }
 
-.cornice-3 {
-    -fx-image: url("../img/item tiles/Cornici1.2.png");
+.Frame-2 {
+    -fx-image: url("/img/object_cards/Frame-2.png");
     -fx-effect: dropshadow(gaussian, rgba(255, 255, 255, 0.3), 20, 0.5, 0, 0);
 }
 
-.gatto-1 {
-    -fx-image: url("../img/item tiles/Gatti1.1.png");
+.Cat-0 {
+    -fx-image: url("/img/object_cards/Cat-0.png");
     -fx-effect: dropshadow(gaussian, rgba(255, 255, 255, 0.3), 20, 0.5, 0, 0);
 }
 
-.gatto-2 {
-    -fx-image: url("../img/item tiles/Gatti1.2.png");
+.Cat-1 {
+    -fx-image: url("/img/object_cards/Cat-1.png");
     -fx-effect: dropshadow(gaussian, rgba(255, 255, 255, 0.3), 20, 0.5, 0, 0);
 }
 
-.gatto-3 {
-    -fx-image: url("../img/item tiles/Gatti1.3.png");
+.Cat-2 {
+    -fx-image: url("/img/object_cards/Cat-2.png");
     -fx-effect: dropshadow(gaussian, rgba(255, 255, 255, 0.3), 20, 0.5, 0, 0);
 }
 
-.gioco-1 {
-    -fx-image: url("../img/item tiles/Giochi1.1.png");
+.Game-0 {
+    -fx-image: url("/img/object_cards/Game-0.png");
     -fx-effect: dropshadow(gaussian, rgba(255, 255, 255, 0.3), 20, 0.5, 0, 0);
 }
 
-.gioco-2 {
-    -fx-image: url("../img/item tiles/Giochi1.2.png");
+.Game-1 {
+    -fx-image: url("/img/object_cards/Game-1.png");
     -fx-effect: dropshadow(gaussian, rgba(255, 255, 255, 0.3), 20, 0.5, 0, 0);
 }
 
-.gioco-3 {
-    -fx-image: url("../img/item tiles/Giochi1.3.png");
+.Game-2 {
+    -fx-image: url("/img/object_cards/Game-2.png");
     -fx-effect: dropshadow(gaussian, rgba(255, 255, 255, 0.3), 20, 0.5, 0, 0);
 }
 
-.libro-1 {
-    -fx-image: url("../img/item tiles/Giochi1.3.png");
+.Book-0 {
+    -fx-image: url("/img/object_cards/Book-0.png");
     -fx-effect: dropshadow(gaussian, rgba(255, 255, 255, 0.3), 20, 0.5, 0, 0);
 }
 
-.libro-2 {
-    -fx-image: url("../img/item tiles/Giochi1.3.png");
+.Book-1 {
+    -fx-image: url("/img/object_cards/Book-1.png");
     -fx-effect: dropshadow(gaussian, rgba(255, 255, 255, 0.3), 20, 0.5, 0, 0);
 }
 
-.libro-3 {
-    -fx-image: url("../img/item tiles/Giochi1.3.png");
+.Book-2 {
+    -fx-image: url("/img/object_cards/Book-2.png");
     -fx-effect: dropshadow(gaussian, rgba(255, 255, 255, 0.3), 20, 0.5, 0, 0);
 }
 
-.pianta-1 {
-    -fx-image: url("../img/item tiles/Giochi1.3.png");
+.Plant-0 {
+    -fx-image: url("/img/object_cards/Plant-0.png");
     -fx-effect: dropshadow(gaussian, rgba(255, 255, 255, 0.3), 20, 0.5, 0, 0);
 }
 
-.pianta-2 {
-    -fx-image: url("../img/item tiles/Giochi1.3.png");
+.Plant-1 {
+    -fx-image: url("/img/object_cards/Plant-1.png");
     -fx-effect: dropshadow(gaussian, rgba(255, 255, 255, 0.3), 20, 0.5, 0, 0);
 }
 
-.pianta-3 {
-    -fx-image: url("../img/item tiles/Giochi1.3.png");
+.Plant-2 {
+    -fx-image: url("/img/object_cards/Plant-2.png");
     -fx-effect: dropshadow(gaussian, rgba(255, 255, 255, 0.3), 20, 0.5, 0, 0);
 }
 
-.trofeo-1 {
-    -fx-image: url("../img/item tiles/Giochi1.3.png");
+.Trophy-0 {
+    -fx-image: url("/img/object_cards/Trophy-0.png");
     -fx-effect: dropshadow(gaussian, rgba(255, 255, 255, 0.3), 20, 0.5, 0, 0);
 }
 
-.trofeo-2 {
-    -fx-image: url("../img/item tiles/Giochi1.3.png");
+.Trophy-1 {
+    -fx-image: url("/img/object_cards/Trophy-1.png");
     -fx-effect: dropshadow(gaussian, rgba(255, 255, 255, 0.3), 20, 0.5, 0, 0);
 }
 
-.trofeo-3 {
-    -fx-image: url("../img/item tiles/Giochi1.3.png");
+.Trophy-2 {
+    -fx-image: url("/img/object_cards/Trophy-2.png");
     -fx-effect: dropshadow(gaussian, rgba(255, 255, 255, 0.3), 20, 0.5, 0, 0);
 }
 
-.commonGoalCard-1 {
-    -fx-image: url("../img/common goal cards/1.jpg");
+/* Common goal cards */
+
+#commonGoalCard-1 {
+    -fx-image: url("/img/common_goal_cards/1.jpg");
     -fx-effect: dropshadow(gaussian, rgba(255, 255, 255, 0.3), 20, 0.5, 0, 0);
 }
 
-.commonGoalCard-2 {
-    -fx-image: url("../img/common goal cards/2.jpg");
+#commonGoalCard-2 {
+    -fx-image: url("/img/common_goal_cards/2.jpg");
     -fx-effect: dropshadow(gaussian, rgba(255, 255, 255, 0.3), 20, 0.5, 0, 0);
 }
 
-.commonGoalCard-3 {
-    -fx-image: url("../img/common goal cards/3.jpg");
+#commonGoalCard-3 {
+    -fx-image: url("/img/common_goal_cards/3.jpg");
     -fx-effect: dropshadow(gaussian, rgba(255, 255, 255, 0.3), 20, 0.5, 0, 0);
 }
 
-.commonGoalCard-4 {
-    -fx-image: url("../img/common goal cards/4.jpg");
+#commonGoalCard-4 {
+    -fx-image: url("/img/common_goal_cards/4.jpg");
     -fx-effect: dropshadow(gaussian, rgba(255, 255, 255, 0.3), 20, 0.5, 0, 0);
 }
 
-.commonGoalCard-5 {
-    -fx-image: url("../img/common goal cards/5.jpg");
+#commonGoalCard-5 {
+    -fx-image: url("/img/common_goal_cards/5.jpg");
     -fx-effect: dropshadow(gaussian, rgba(255, 255, 255, 0.3), 20, 0.5, 0, 0);
 }
 
-.commonGoalCard-6 {
-    -fx-image: url("../img/common goal cards/6.jpg");
+#commonGoalCard-6 {
+    -fx-image: url("/img/common_goal_cards/6.jpg");
     -fx-effect: dropshadow(gaussian, rgba(255, 255, 255, 0.3), 20, 0.5, 0, 0);
 }
 
-.commonGoalCard-7 {
-    -fx-image: url("../img/common goal cards/7.jpg");
+#commonGoalCard-7 {
+    -fx-image: url("/img/common_goal_cards/7.jpg");
     -fx-effect: dropshadow(gaussian, rgba(255, 255, 255, 0.3), 20, 0.5, 0, 0);
 }
 
-.commonGoalCard-8 {
-    -fx-image: url("../img/common goal cards/8.jpg");
+#commonGoalCard-8 {
+    -fx-image: url("/img/common_goal_cards/8.jpg");
     -fx-effect: dropshadow(gaussian, rgba(255, 255, 255, 0.3), 20, 0.5, 0, 0);
 }
 
-.commonGoalCard-9 {
-    -fx-image: url("../img/common goal cards/9.jpg");
+#commonGoalCard-9 {
+    -fx-image: url("/img/common_goal_cards/9.jpg");
     -fx-effect: dropshadow(gaussian, rgba(255, 255, 255, 0.3), 20, 0.5, 0, 0);
 }
 
-.commonGoalCard-10 {
-    -fx-image: url("../img/common goal cards/10.jpg");
+#commonGoalCard-10 {
+    -fx-image: url("/img/common_goal_cards/10.jpg");
     -fx-effect: dropshadow(gaussian, rgba(255, 255, 255, 0.3), 20, 0.5, 0, 0);
 }
 
-.commonGoalCard-11 {
-    -fx-image: url("../img/common goal cards/11.jpg");
+#commonGoalCard-11 {
+    -fx-image: url("/img/common_goal_cards/11.jpg");
     -fx-effect: dropshadow(gaussian, rgba(255, 255, 255, 0.3), 20, 0.5, 0, 0);
 }
 
-.commonGoalCard-12 {
-    -fx-image: url("../img/common goal cards/12.jpg");
+#commonGoalCard-12 {
+    -fx-image: url("/img/common_goal_cards/12.jpg");
     -fx-effect: dropshadow(gaussian, rgba(255, 255, 255, 0.3), 20, 0.5, 0, 0);
 }
 
+/* Personal goal cards */
+
+.personalGoalCardPane {
+
+}
+
+#personalGoalCard-1 {
+    -fx-image: url("/img/personal_goal_cards/Personal_Goals1.png");
+    -fx-effect: dropshadow(gaussian, rgba(255, 255, 255, 0.3), 20, 0.5, 0, 0);
+}
+
+#personalGoalCard-2 {
+    -fx-image: url("/img/personal_goal_cards/Personal_Goals2.png");
+    -fx-effect: dropshadow(gaussian, rgba(255, 255, 255, 0.3), 20, 0.5, 0, 0);
+}
+
+#personalGoalCard-3 {
+    -fx-image: url("/img/personal_goal_cards/Personal_Goals3.png");
+    -fx-effect: dropshadow(gaussian, rgba(255, 255, 255, 0.3), 20, 0.5, 0, 0);
+}
+
+#personalGoalCard-4 {
+    -fx-image: url("/img/personal_goal_cards/Personal_Goals4.png");
+    -fx-effect: dropshadow(gaussian, rgba(255, 255, 255, 0.3), 20, 0.5, 0, 0);
+}
+
+#personalGoalCard-5 {
+    -fx-image: url("/img/personal_goal_cards/Personal_Goals5.png");
+    -fx-effect: dropshadow(gaussian, rgba(255, 255, 255, 0.3), 20, 0.5, 0, 0);
+}
+
+#personalGoalCard-6 {
+    -fx-image: url("/img/personal_goal_cards/Personal_Goals6.png");
+    -fx-effect: dropshadow(gaussian, rgba(255, 255, 255, 0.3), 20, 0.5, 0, 0);
+}
+
+#personalGoalCard-7 {
+    -fx-image: url("/img/personal_goal_cards/Personal_Goals7.png");
+    -fx-effect: dropshadow(gaussian, rgba(255, 255, 255, 0.3), 20, 0.5, 0, 0);
+}
+
+#personalGoalCard-8 {
+    -fx-image: url("/img/personal_goal_cards/Personal_Goals8.png");
+    -fx-effect: dropshadow(gaussian, rgba(255, 255, 255, 0.3), 20, 0.5, 0, 0);
+}
+
+#personalGoalCard-9 {
+    -fx-image: url("/img/personal_goal_cards/Personal_Goals9.png");
+    -fx-effect: dropshadow(gaussian, rgba(255, 255, 255, 0.3), 20, 0.5, 0, 0);
+}
+
+#personalGoalCard-10 {
+    -fx-image: url("/img/personal_goal_cards/Personal_Goals10.png");
+    -fx-effect: dropshadow(gaussian, rgba(255, 255, 255, 0.3), 20, 0.5, 0, 0);
+}
+
+#personalGoalCard-11 {
+    -fx-image: url("/img/personal_goal_cards/Personal_Goals11.png");
+    -fx-effect: dropshadow(gaussian, rgba(255, 255, 255, 0.3), 20, 0.5, 0, 0);
+}
+
+#personalGoalCard-12 {
+    -fx-image: url("/img/personal_goal_cards/Personal_Goals12.png");
+    -fx-effect: dropshadow(gaussian, rgba(255, 255, 255, 0.3), 20, 0.5, 0, 0);
+}
+
+/* Scoring */
+
+.scoring-2 {
+    -fx-image: url("/img/scoring_tokens/scoring_2.jpg");
+}
+
+.scoring-4 {
+    -fx-image: url("/img/scoring_tokens/scoring_4.jpg");
+}
+
+.scoring-6 {
+    -fx-image: url("/img/scoring_tokens/scoring_6.jpg");
+}
+
+.scoring-8 {
+    -fx-image: url("/img/scoring_tokens/scoring_8.jpg");
+}
+
+/* End game */
+
+.endGameTokenImage {
+    -fx-image: url("/img/scoring_tokens/end_game.jpg");
+}
+
+/* Buttons */
+
+.button:hover {
+    -fx-effect: dropshadow(gaussian, #F44336, 15, 0.2, 0, 0);
+}
+
+.button:pressed {
+    -fx-scale-y: 0.95;
+    -fx-scale-x: 0.95;
+}
+
+.selectionButton {
+    -fx-spacing: 50;
+    -fx-alignment: CENTER;
+}
+
+#exitButton {
+    -fx-image: url("/img/buttons/exitButton.png");
+}

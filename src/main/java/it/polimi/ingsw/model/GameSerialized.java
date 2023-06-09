@@ -25,10 +25,11 @@ public class GameSerialized implements Serializable {
 
     /**
      * constructor of the class, it initializes the attributes of the class
+     *
      * @param username is the username of the player that is asking for the game state
      */
     public GameSerialized(String username) {
-        Game instance = Game.getInstance();
+        Game instance = Game.getInstance(username);
 
         if (instance.getPlayers() != null) {
             this.players = new ArrayList<>(instance.getPlayers());
@@ -40,7 +41,7 @@ public class GameSerialized implements Serializable {
         this.limbo = new HashMap<>(instance.getLimbo());
         this.currentPlayer = instance.getCurrentPlayer();
 
-        Player player = Game.getInstance().getPlayerByName(username);
+        Player player = instance.getPlayerByName(username);
         this.shelf = player.getShelf();
         this.personalGoalCard = player.getPersonalGoalCard();
         this.points = player.getCurrentPoints();
@@ -48,6 +49,7 @@ public class GameSerialized implements Serializable {
 
     /**
      * this method returns the list of the players
+     *
      * @return the list of the players
      */
     public List<Player> getPlayers() {
@@ -56,6 +58,7 @@ public class GameSerialized implements Serializable {
 
     /**
      * this method returns the points of the player
+     *
      * @return the points of the player
      */
     public int getPoints() {
@@ -70,7 +73,6 @@ public class GameSerialized implements Serializable {
     }
 
     /**
-     *
      * @return the list of all the players in the game
      */
     public List<Player> getAllPlayers() {
@@ -81,6 +83,7 @@ public class GameSerialized implements Serializable {
 
     /**
      * this method returns the board
+     *
      * @return the board
      */
     public Board getBoard() {
@@ -89,6 +92,7 @@ public class GameSerialized implements Serializable {
 
     /**
      * this method returns the shelf of the player
+     *
      * @return the shelf of the player
      */
     public Shelf getShelf() {
@@ -97,6 +101,7 @@ public class GameSerialized implements Serializable {
 
     /**
      * this method returns the personal goal card of the player
+     *
      * @return the personal goal card of the player
      */
     public PersonalGoalCard getPersonalGoalCard() {
@@ -105,6 +110,7 @@ public class GameSerialized implements Serializable {
 
     /**
      * this method returns the limbo
+     *
      * @return the limbo
      */
     public Map<Coordinate, ObjectCard> getLimbo() {
@@ -113,11 +119,25 @@ public class GameSerialized implements Serializable {
 
     /**
      * this method returns the list of all the limbo cards
+     *
      * @return the list of all the limbo cards
      */
     public List<ObjectCard> getAllLimboCards() {
         List<ObjectCard> allLimboCards = new ArrayList<>(limbo.values());
 
         return allLimboCards;
+    }
+
+    @Override
+    public String toString() {
+        return "GameSerialized{" +
+                "players=" + players +
+                ", board=" + board +
+                ", points=" + points +
+                ", shelf=" + shelf +
+                ", personalGoalCard=" + personalGoalCard +
+                ", limbo=" + limbo +
+                ", currentPlayer=" + currentPlayer +
+                '}';
     }
 }

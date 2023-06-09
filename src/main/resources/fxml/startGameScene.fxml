@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import java.net.URL?>
+<?import javafx.scene.image.ImageView?>
+
+<BorderPane fx:controller="it.polimi.ingsw.view.gui.StartGameSceneController"
+            fx:id="mainPane"
+            styleClass="mainPane"
+            xmlns="http://javafx.com/javafx"
+            xmlns:fx="http://javafx.com/fxml">
+
+    <stylesheets>
+        <URL value="@../css/menu.css"/>
+    </stylesheets>
+
+    <top>
+        <VBox styleClass="topBox">
+            <Label text="Game selection" styleClass="menuTitle"/>
+        </VBox>
+    </top>
+
+    <center>
+        <HBox styleClass="selectionButton">
+            <ImageView fx:id="createGameButton" id="createGameButton" fitWidth="400" fitHeight="400" preserveRatio="true" pickOnBounds="true" styleClass="button"/>
+            <ImageView fx:id="joinGameButton" id="joinGameButton" fitWidth="400" fitHeight="400" preserveRatio="true" pickOnBounds="true" styleClass="button"/>
+        </HBox>
+    </center>
+
+    <bottom>
+        <VBox styleClass="botBox">
+            <ImageView fx:id="backButton" id="backButton" fitWidth="400" fitHeight="400" preserveRatio="true" pickOnBounds="true" styleClass="button"/>
+        </VBox>
+    </bottom>
+</BorderPane>

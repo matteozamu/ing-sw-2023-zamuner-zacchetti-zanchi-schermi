@@ -13,7 +13,6 @@ public class ObjectCardRequest extends Message {
 
     public ObjectCardRequest(String username, String token, Coordinate coordinate) {
         super(username, token, MessageContent.PICK_OBJECT_CARD);
-
         this.coordinate = coordinate;
     }
 
@@ -24,6 +23,7 @@ public class ObjectCardRequest extends Message {
     @Override
     public String toString() {
         return "ObjectCardRequest{" +
+                "token='" + super.getToken() + '\'' +
                 "coordinate=" + coordinate +
                 '}';
     }

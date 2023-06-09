@@ -15,20 +15,23 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 /**
- * Controller of the end game scene
+ * Controller of the end game scene that shows the final ranking
  */
 public class EndGameSceneController {
     @FXML
     ImageView exitButton;
     @FXML
-    TableView<TableRow> table;
+    TableView<TableRowEndScene> table;
     @FXML
-    TableColumn<TableRow, String> rankColumn;
+    TableColumn<TableRowEndScene, String> rankColumn;
     @FXML
-    TableColumn<TableRow, String> playerColumn;
+    TableColumn<TableRowEndScene, String> playerColumn;
     @FXML
-    TableColumn<TableRow, String> pointsColumn;
+    TableColumn<TableRowEndScene, String> pointsColumn;
 
+    /**
+     * Initializes the scene
+     */
     @FXML
     public void initialize() {
         bindEvents();
@@ -72,13 +75,13 @@ public class EndGameSceneController {
     void setData(List<Player> players) {
         List<Player> winners = players.stream().filter(Player::isWinner).collect(Collectors.toList());
 
-        ArrayList<TableRow> tableRows = new ArrayList<>();
+        ArrayList<TableRowEndScene> tableRowEndScenes = new ArrayList<>();
 
-        tableRows.add(new TableRow("1", winners.get(0).getName(), Integer.toString(winners.get(0).getCurrentPoints())));
+        tableRowEndScenes.add(new TableRowEndScene("1", winners.get(0).getName(), Integer.toString(winners.get(0).getCurrentPoints())));
 
         if (winners.size() > 1) {
             for (Player player : winners.subList(1, winners.size())) {
-                tableRows.add(new TableRow("", player.getName(), Integer.toString(player.getCurrentPoints())));
+                tableRowEndScenes.add(new TableRowEndScene("", player.getName(), Integer.toString(player.getCurrentPoints())));
             }
         }
 
@@ -91,10 +94,10 @@ public class EndGameSceneController {
         int count = 2;
 
         for (Player player : players) {
-            tableRows.add(new TableRow(Integer.toString(count), player.getName(), Integer.toString(player.getCurrentPoints())));
+            tableRowEndScenes.add(new TableRowEndScene(Integer.toString(count), player.getName(), Integer.toString(player.getCurrentPoints())));
             count++;
         }
 
-        table.getItems().addAll(tableRows);
+        table.getItems().addAll(tableRowEndScenes);
     }
 }

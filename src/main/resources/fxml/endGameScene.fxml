@@ -5,8 +5,10 @@
 <?import java.net.URL?>
 <?import javafx.scene.image.ImageView?>
 
-<BorderPane xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml"
-            fx:controller="it.polimi.ingsw.view.gui.EndGameSceneController" styleClass="mainPane">
+<BorderPane fx:controller="it.polimi.ingsw.view.gui.EndGameSceneController"
+            styleClass="mainPane"
+            xmlns="http://javafx.com/javafx"
+            xmlns:fx="http://javafx.com/fxml">
 
     <stylesheets>
         <URL value="@../css/game.css"/>
@@ -22,12 +24,12 @@
         <VBox styleClass="centerEndBox">
             <TableView fx:id="table" styleClass="endTable">
                 <columns>
-                    <TableColumn fx:id="rankColumn" text="#" styleClass="endRankColumn">
-                    </TableColumn>
-                    <TableColumn fx:id="playerColumn" text="Player" styleClass="endPlayerColumn">
-                    </TableColumn>
-                    <TableColumn fx:id="pointsColumn" text="Points" styleClass="endPointsColumn">
-                    </TableColumn>
+                    <TableColumn fx:id="rankColumn" text="#" styleClass="endRankColumn"/>
+
+                    <TableColumn fx:id="playerColumn" text="Player" styleClass="endPlayerColumn"/>
+
+                    <TableColumn fx:id="pointsColumn" text="Points" styleClass="endPointsColumn"/>
+
                 </columns>
             </TableView>
         </VBox>
@@ -35,7 +37,7 @@
 
     <bottom>
         <VBox styleClass="botEndBox">
-            <ImageView fx:id="exitButton" id="exitButton" styleClass="button"/>
+            <ImageView fx:id="exitButton" id="exitButton" fitWidth="400" fitHeight="400" preserveRatio="true" pickOnBounds="true" styleClass="button"/>
         </VBox>
     </bottom>
 

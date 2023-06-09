@@ -15,6 +15,11 @@ import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 import it.polimi.ingsw.utility.ServerAddressValidator;
 import it.polimi.ingsw.network.client.ClientGameManager;
+/**
+ * Class ConnectionSceneController represents the controller of the connection scene, the scene where the player can
+ * choose the connection type and insert their username and the server address
+ *
+ */
 
 public class ConnectionSceneController {
 
@@ -36,6 +41,9 @@ public class ConnectionSceneController {
     @FXML
     private ImageView backButton;
 
+    /**
+     * Initializes the scene
+     */
     @FXML
     public void initialize() {
         guiManager = GuiManager.getInstance();
@@ -132,53 +140,25 @@ public class ConnectionSceneController {
      * @param response connection response
      */
     void onConnectionResponse(ConnectionResponse response) {
-        if (response.getStatus() == MessageStatus.OK) {
-            addPlayerToGameRequest();
-        } else {
+        if (response.getStatus() != MessageStatus.OK) {
             GuiManager.showDialog((Stage) mainPane.getScene().getWindow(), GuiManager.ERROR_DIALOG_TITLE, response.getMessage());
 
             guiManager.closeConnection();
             onBackButtonClick();
         }
+        GuiManager.setLayout(mainPane.getScene(), "fxml/startGameScene.fxml");
     }
 
     /**
      * Requests to add a player to the game, or shows an error dialog if the request fails.
      */
-    private void addPlayerToGameRequest(){
+    void addPlayerToGameRequest(){
         if (!guiManager.sendRequest(MessageBuilder.buildAddPlayerToGameMessage(guiManager.getClientToken(),
                 guiManager.getUsername(), false))) {
             GuiManager.showDialog((Stage) mainPane.getScene().getWindow(), GuiManager.ERROR_DIALOG_TITLE,
                     GuiManager.SEND_ERROR);
 
             onBackButtonClick();
-        }
-    }
-
-    /**
-     * Handles the response of a lobby join request. Depending on the response status, the GUI is
-     * either moved to a different scene or an error dialog is shown.
-     *
-     * @param response response of the join request
-     */
-    void onLobbyJoinResponse(Response response) {
-        if (response.getStatus() == MessageStatus.ERROR) {
-
-            GuiManager.showDialog((Stage) mainPane.getScene().getWindow(), GuiManager.ERROR_DIALOG_TITLE,
-                    response.getMessage());
-
-            onBackButtonClick();
-
-        } else {
-            if (guiManager.getLobbyPlayers().size() == 1){
-                GuiManager.setLayout(mainPane.getScene(), "fxml/numberPlayersScene.fxml");
-            } else {
-                LobbySceneController lobbySceneController = GuiManager.setLayout(mainPane.getScene(), "fxml/lobbyScene.fxml");
-
-                if (lobbySceneController != null) {
-                    lobbySceneController.updateLobbyList();
-                }
-            }
         }
     }
 

@@ -1,18 +1,28 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import java.net.*?>
+<?import javafx.scene.image.*?>
 <?import javafx.scene.layout.*?>
-<?import java.net.URL?>
-<?import javafx.scene.image.ImageView?>
 
-<VBox fx:id="mainPane" styleClass="mainPane" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.ingsw.view.gui.MenuSceneController">
+<BorderPane fx:id="mainPane" styleClass="mainPane" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.ingsw.view.gui.MenuSceneController">
+
     <stylesheets>
         <URL value="@../css/menu.css" />
     </stylesheets>
 
-    <ImageView id="logoImage" />
+    <center>
+        <VBox styleClass="topBox">
+            <ImageView id="logoImage" fitWidth="700" preserveRatio="true" />
+        </VBox>
+    </center>
 
-    <ImageView fx:id="startButton" id="startButton" styleClass="button"/>
+   <bottom>
+       <VBox styleClass="botBox">
+           <ImageView id="startButton" fx:id="startButton" fitWidth="400" fitHeight="400" preserveRatio="true" pickOnBounds="true" styleClass="button" />
+           <Region prefHeight="20" />
+           <ImageView id="exitButton" fx:id="exitButton" fitWidth="400" fitHeight="400" preserveRatio="true" pickOnBounds="true" styleClass="button" />
+       </VBox>
+   </bottom>
 
-    <ImageView fx:id="exitButton" id="exitButton" styleClass="button"/>
 
-</VBox>
+</BorderPane>

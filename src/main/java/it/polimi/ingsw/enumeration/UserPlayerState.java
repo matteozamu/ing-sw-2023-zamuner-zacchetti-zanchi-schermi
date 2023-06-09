@@ -6,20 +6,13 @@ package it.polimi.ingsw.enumeration;
  * used to reload a game in persistency
  */
 public enum UserPlayerState {
-    // TODO cambiare con gli stati delle azioni di game
+    DISCONNECTED,
     PICK_CARD_BOARD,
-    AFTER_FIRST_PICK, // dopo aver pescato la prima carta
+    AFTER_FIRST_PICK, //after picking the first object card
     FIRST_ACTION,
-    SECOND_ACTION,
-    FIRST_FRENZY_ACTION,
-    SECOND_FRENZY_ACTION,
     ENDING_PHASE,
     END,
-    DEAD,
-    BOT_RESPAWN,
-    BOT_ACTION,
-    GRENADE_USAGE,
-    FIRST_SCOPE_USAGE,
-    SECOND_SCOPE_USAGE,
-    GET_CARD_BOARD, DELETE_LIMBO, LOADING_SHELF, GAME_ENDED
+    DELETE_LIMBO,
+    LOADING_SHELF,
+    GAME_ENDED
 }

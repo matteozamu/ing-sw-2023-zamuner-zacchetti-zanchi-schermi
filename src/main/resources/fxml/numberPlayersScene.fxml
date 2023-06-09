@@ -5,8 +5,12 @@
 <?import java.net.URL?>
 <?import javafx.scene.image.ImageView?>
 
-<BorderPane xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml"
-            fx:controller="it.polimi.ingsw.view.gui.NumberPlayersController" fx:id="mainPane" styleClass="mainPane">
+<BorderPane fx:controller="it.polimi.ingsw.view.gui.NumberPlayersController"
+            fx:id="mainPane"
+            styleClass="mainPane"
+            xmlns="http://javafx.com/javafx"
+            xmlns:fx="http://javafx.com/fxml">
+
     <stylesheets>
         <URL value="@../css/menu.css"/>
     </stylesheets>
@@ -18,16 +22,18 @@
     </top>
 
     <center>
-        <FlowPane styleClass="numberPlayersButton">
-            <ImageView fx:id="twoPlayersButton" id="twoPlayersButton" styleClass="button"/>
-            <ImageView fx:id="threePlayersButton" id="threePlayersButton" styleClass="button"/>
-            <ImageView fx:id="fourPlayersButton" id="fourPlayersButton" styleClass="button"/>
-        </FlowPane>
+        <HBox styleClass="selectionButton">
+            <ImageView fx:id="twoPlayersButton" id="twoPlayersButton" fitWidth="400" fitHeight="400" preserveRatio="true" pickOnBounds="true" styleClass="button"/>
+            <ImageView fx:id="threePlayersButton" id="threePlayersButton" fitWidth="400" fitHeight="400" preserveRatio="true" pickOnBounds="true" styleClass="button"/>
+            <ImageView fx:id="fourPlayersButton" id="fourPlayersButton" fitWidth="400" fitHeight="400" preserveRatio="true" pickOnBounds="true" styleClass="button"/>
+        </HBox>
     </center>
+
+    <Region prefHeight="20" />
 
     <bottom>
         <VBox styleClass="botBox">
-            <ImageView fx:id="backButton" id="backButton" styleClass="button"/>
+            <ImageView fx:id="backButton" id="backButton" fitWidth="400" fitHeight="400" preserveRatio="true" pickOnBounds="true" styleClass="button"/>
         </VBox>
     </bottom>
 </BorderPane>
