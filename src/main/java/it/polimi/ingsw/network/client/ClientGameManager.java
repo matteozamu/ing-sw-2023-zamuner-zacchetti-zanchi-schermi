@@ -97,6 +97,7 @@ public abstract class ClientGameManager implements ClientGameManagerListener, Cl
 
     /**
      * method called when a message is received from the server
+     *
      * @param message the received message from the server
      */
     @Override
@@ -163,6 +164,7 @@ public abstract class ClientGameManager implements ClientGameManagerListener, Cl
 
     /**
      * method used to handle the initial phase of the game
+     *
      * @param gameStartMessage is the message received from the server
      */
     private void handleGameStartMessage(GameStartMessage gameStartMessage) {
@@ -233,6 +235,7 @@ public abstract class ClientGameManager implements ClientGameManagerListener, Cl
 
     /**
      * method that handles the message received with the list of available games
+     *
      * @param message is the message received from the server
      */
     private void handleGameListResponse(ListGameResponse message) {
@@ -275,6 +278,7 @@ public abstract class ClientGameManager implements ClientGameManagerListener, Cl
 
     /**
      * handle adding a player to the game
+     *
      * @param message is the message received from the server
      */
     private void handlePlayersInLobby(LobbyPlayersResponse message) {
@@ -285,6 +289,7 @@ public abstract class ClientGameManager implements ClientGameManagerListener, Cl
 
     /**
      * handle a response message
+     *
      * @param response is the message received from the server
      */
     private void handleResponse(Response response) {
@@ -292,7 +297,7 @@ public abstract class ClientGameManager implements ClientGameManagerListener, Cl
             queue.add(this::addPlayerToGameRequest);
         } else {
             if (!joinedLobby) {
-                if(response.getStatus() == MessageStatus.ERROR) {
+                if (response.getStatus() == MessageStatus.ERROR) {
                     queue.add(() -> responseError(response.getMessage()));
                     return;
                 }
@@ -314,6 +319,7 @@ public abstract class ClientGameManager implements ClientGameManagerListener, Cl
 
     /**
      * handle the end of the game
+     *
      * @param message is the message received from the server
      */
     private void handleGameEnded(EndGameMessage message) {
@@ -372,6 +378,7 @@ public abstract class ClientGameManager implements ClientGameManagerListener, Cl
 
     /**
      * method used to handle a positive response
+     *
      * @param response is the positive response received from the server
      */
     private void onPositiveResponse(Response response) {
@@ -389,10 +396,11 @@ public abstract class ClientGameManager implements ClientGameManagerListener, Cl
 
     /**
      * method used to create a connection with the server
-     * @param connection can be 0 if the user choose a socket connection or 1 if the user choose a RMI connection
-     * @param username is the chosen username
-     * @param address is the server address
-     * @param port is the server port
+     *
+     * @param connection            can be 0 if the user choose a socket connection or 1 if the user choose a RMI connection
+     * @param username              is the chosen username
+     * @param address               is the server address
+     * @param port                  is the server port
      * @param disconnectionListener is the listener of client disconnection
      * @throws Exception can throw an exception if the connection can't be created
      */
@@ -467,6 +475,7 @@ public abstract class ClientGameManager implements ClientGameManagerListener, Cl
 
     /**
      * method used to start the game
+     *
      * @param cg the list of the common goal of the game
      */
     private void startGame(List<CommonGoal> cg) {

@@ -43,15 +43,10 @@ public class ControllerGame implements TimerRunListener, Serializable {
     }
 
     /**
-     *
      * @return the id of the game
      */
     public UUID getId() {
         return id;
-    }
-
-    public void setGame(Game game) {
-        this.game = game;
     }
 
     /**
@@ -132,6 +127,8 @@ public class ControllerGame implements TimerRunListener, Serializable {
             turnController.setActivePlayer(game.getCurrentPlayer());
 
             sendPrivateUpdates();
+
+//            if (checkIfRefill()) refillBoard();
             return new Response("Cards moved", MessageStatus.OK);
         } else {
             System.out.println("Column does not have enough space");
@@ -183,6 +180,7 @@ public class ControllerGame implements TimerRunListener, Serializable {
 
     /**
      * method called when a ObjectCardRequest is received from a client, asking to pick an object card
+     *
      * @param objectCardRequest is the message received
      * @return the response to the message
      */
@@ -325,6 +323,14 @@ public class ControllerGame implements TimerRunListener, Serializable {
     }
 
     /**
+     * set the game
+     * @param game the game to set
+     */
+    public void setGame(Game game) {
+        this.game = game;
+    }
+
+    /**
      * check if the lobby if full, if it is, it the game starts, otherwise it adds the player to the lobby
      *
      * @return a Response message to the client
@@ -440,6 +446,80 @@ public class ControllerGame implements TimerRunListener, Serializable {
         }
     }
 
+    public boolean checkIfRefill() {
+        int playerNumber = game.getNumberOfPlayers();
+        Map<Coordinate, ObjectCard> b = game.getBoard().getGrid();
+        int[][] boardMatrix = JsonReader.getBoard(playerNumber);
+
+        for (int i = 0; i < boardMatrix.length / 2; i++) {
+            for (int j = 0; j < boardMatrix[i].length; j++) {
+                if (b.get(new Coordinate(4 - i, j - 4)) != null) {
+                    if (boardMatrix[i + 1][j] == 1 && b.get(new Coordinate(4 - i + 1, j - 4)) != null) {
+                        return false;
+                    }
+                    if (boardMatrix[i - 1][j] == 1 && b.get(new Coordinate(4 - i - 1, j - 4)) != null) {
+                        return false;
+                    }
+                    if (boardMatrix[i][j + 1] == 1 && b.get(new Coordinate(4 - i, j - 4 + 1)) != null) {
+                        return false;
+                    }
+                    if (boardMatrix[i][j - 1] == 1 && b.get(new Coordinate(4 - i, j - 4 + 1)) != null) {
+                        return false;
+                    }
+                }
+            }
+        }
+
+        for (int i = boardMatrix.length / 2; i < boardMatrix.length; i++) {
+            for (int j = 0; j < boardMatrix[i].length; j++) {
+                if (b.get(new Coordinate(4 - i, j - 4)) != null) {
+                    if (boardMatrix[i + 1][j] == 1 && b.get(new Coordinate(4 - i + 1, j - 4)) != null) {
+                        return false;
+                    }
+                    if (boardMatrix[i - 1][j] == 1 && b.get(new Coordinate(4 - i - 1, j - 4)) != null) {
+                        return false;
+                    }
+                    if (boardMatrix[i][j + 1] == 1 && b.get(new Coordinate(4 - i, j - 4 + 1)) != null) {
+                        return false;
+                    }
+                    if (boardMatrix[i][j - 1] == 1 && b.get(new Coordinate(4 - i, j - 4 + 1)) != null) {
+                        return false;
+                    }
+                }
+            }
+        }
+
+        return true;
+    }
+
+    /**
+     * Fills the game board again with object cards based on the number of players.
+     * This method should be called at the beginning of the game to set up the board.
+     */
+    public void refillBoard() {
+        int playerNumber = game.getNumberOfPlayers();
+
+        Map<Coordinate, ObjectCard> b = game.getBoard().getGrid();
+
+        int[][] boardMatrix = JsonReader.getBoard(playerNumber);
+
+        for (int i = 0; i < boardMatrix.length / 2; i++) {
+            for (int j = 0; j < boardMatrix[i].length; j++) {
+                if (boardMatrix[i][j] == 1 && b.get(new Coordinate(4 - i, j - 4)) == null) {
+                    b.put(new Coordinate(4 - i, j - 4), game.getRandomAvailableObjectCard());
+                }
+            }
+        }
+
+        for (int i = boardMatrix.length / 2; i < boardMatrix.length; i++) {
+            for (int j = 0; j < boardMatrix[i].length; j++) {
+                if (boardMatrix[i][j] == 1 && b.get(new Coordinate(4 - i, j - 4)) == null) {
+                    b.put(new Coordinate(4 - i, j - 4), game.getRandomAvailableObjectCard());
+                }
+            }
+        }
+    }
+
     /**
      * Load the shelf with the ObjectCard, the order has already been established
      *
@@ -465,35 +545,83 @@ public class ControllerGame implements TimerRunListener, Serializable {
      */
     //TODO: da testare
     // non funziona il controllo per verificare che le tessere abbiano un lato in comune
+//    public boolean isObjectCardAvailable(Coordinate coordinate) {
+//        if (selectedCoordinates.size() == 3) {
+//            selectedCoordinates.clear();
+//        }
+//        if (selectedCoordinates.isEmpty()) {
+//            this.selectedCoordinates.add(coordinate);
+//            return this.game.getBoard().isEmptyAtDirection(coordinate, UP) ||
+//                    this.game.getBoard().isEmptyAtDirection(coordinate, DOWN) ||
+//                    this.game.getBoard().isEmptyAtDirection(coordinate, RIGHT) ||
+//                    this.game.getBoard().isEmptyAtDirection(coordinate, LEFT);
+//        } else {
+//            boolean hasFreeSide = this.game.getBoard().isEmptyAtDirection(coordinate, UP) ||
+//                    this.game.getBoard().isEmptyAtDirection(coordinate, DOWN) ||
+//                    this.game.getBoard().isEmptyAtDirection(coordinate, RIGHT) ||
+//                    this.game.getBoard().isEmptyAtDirection(coordinate, LEFT);
+//            boolean hasCommonSide = false;
+//            for (Coordinate selectedCoordinate : selectedCoordinates) {
+//                if (coordinate.getAdjacent(Coordinate.Direction.UP).equals(selectedCoordinate) ||
+//                        coordinate.getAdjacent(Coordinate.Direction.DOWN).equals(selectedCoordinate) ||
+//                        coordinate.getAdjacent(Coordinate.Direction.LEFT).equals(selectedCoordinate) ||
+//                        coordinate.getAdjacent(Coordinate.Direction.RIGHT).equals(selectedCoordinate)) {
+//                    hasCommonSide = true;
+//                    break;
+//                }
+//            }
+//            this.selectedCoordinates.add(coordinate);
+//            return hasFreeSide && hasCommonSide;
+//        }
+//    }
     public boolean isObjectCardAvailable(Coordinate coordinate) {
-        if (selectedCoordinates.size() == 3) {
-            selectedCoordinates.clear();
+        Map<Coordinate, ObjectCard> limbo = game.getLimbo();
+        Map<Coordinate, ObjectCard> board = game.getBoard().getGrid();
+        Iterator<Coordinate> iterator = limbo.keySet().iterator();
+        boolean available = false;
+
+        if (!board.containsKey(coordinate))
+            return false;
+
+        if (!this.game.getBoard().isEmptyAtDirection(coordinate, UP) &&
+                !this.game.getBoard().isEmptyAtDirection(coordinate, DOWN) &&
+                !this.game.getBoard().isEmptyAtDirection(coordinate, RIGHT) &&
+                !this.game.getBoard().isEmptyAtDirection(coordinate, LEFT)) return false;
+
+        if (limbo.size() == 0) available = true;
+
+        if (limbo.size() == 1) {
+            Coordinate c = iterator.next();
+            int dx = Math.abs(c.getColumn() - coordinate.getColumn());
+            int dy = Math.abs(c.getRow() - coordinate.getRow());
+
+            if ((dx == 0 && dy == 1) || (dy == 0 && dx == 1))
+                available = true;
+            else return false;
         }
-        if (selectedCoordinates.isEmpty()) {
-            this.selectedCoordinates.add(coordinate);
-            return this.game.getBoard().isEmptyAtDirection(coordinate, UP) ||
-                    this.game.getBoard().isEmptyAtDirection(coordinate, DOWN) ||
-                    this.game.getBoard().isEmptyAtDirection(coordinate, RIGHT) ||
-                    this.game.getBoard().isEmptyAtDirection(coordinate, LEFT);
-        } else {
-            boolean hasFreeSide = this.game.getBoard().isEmptyAtDirection(coordinate, UP) ||
-                    this.game.getBoard().isEmptyAtDirection(coordinate, DOWN) ||
-                    this.game.getBoard().isEmptyAtDirection(coordinate, RIGHT) ||
-                    this.game.getBoard().isEmptyAtDirection(coordinate, LEFT);
-            boolean hasCommonSide = false;
-            for (Coordinate selectedCoordinate : selectedCoordinates) {
-                if (coordinate.getAdjacent(Coordinate.Direction.UP).equals(selectedCoordinate) ||
-                        coordinate.getAdjacent(Coordinate.Direction.DOWN).equals(selectedCoordinate) ||
-                        coordinate.getAdjacent(Coordinate.Direction.LEFT).equals(selectedCoordinate) ||
-                        coordinate.getAdjacent(Coordinate.Direction.RIGHT).equals(selectedCoordinate)) {
-                    hasCommonSide = true;
-                    break;
-                }
-            }
-            this.selectedCoordinates.add(coordinate);
-            return hasFreeSide && hasCommonSide;
+
+        if (limbo.size() == 2) {
+            Coordinate c1 = iterator.next();
+            Coordinate c2 = iterator.next();
+            int dx = Math.abs(c1.getColumn() - c2.getColumn());
+            int dy = Math.abs(c1.getRow() - c2.getRow());
+
+            if ((dx == 0 && dy == 1) || (dy == 0 && dx == 1))
+                available = true;
+            else return false;
+
+            dx = Math.abs(c2.getColumn() - coordinate.getColumn());
+            dy = Math.abs(c2.getRow() - coordinate.getRow());
+
+            if ((dx == 0 && dy == 1) || (dy == 0 && dx == 1))
+                available = true;
+            else return false;
         }
+
+        return available;
     }
+
+
     /*
     Questo è il metodo originale, quello sopra è il metodo aggiornato
     public boolean isObjectCardAvailable(Coordinate coordinate) {
@@ -597,7 +725,7 @@ public class ControllerGame implements TimerRunListener, Serializable {
             // if the player wants to disconnect from the game
             if (((LobbyMessage) receivedConnectionMessage).isDisconnection()) {
 //                return disconnectionHandler((LobbyMessage) receivedConnectionMessage);
-            // if the player wants to reconnect to the game
+                // if the player wants to reconnect to the game
             } else {
                 return reconnectionHandler((LobbyMessage) receivedConnectionMessage);
             }
@@ -633,6 +761,7 @@ public class ControllerGame implements TimerRunListener, Serializable {
 
     /**
      * Method used to handle the reconnection of a player from the game
+     *
      * @param receivedConnectionMessage message received by the server from the player asking to reconnect to the game
      * @return a {@link Message Message} which contains the result of the received message
      */
