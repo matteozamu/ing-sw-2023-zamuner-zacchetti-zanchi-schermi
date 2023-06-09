@@ -226,12 +226,12 @@ public abstract class ClientGameManager implements ClientGameManagerListener, Cl
     }
 
     /**
-     *
-     * @param message
+     * method that handles the message received with the list of available games
+     * @param message is the message received from the server
      */
     private void handleGameListResponse(ListGameResponse message) {
         if (message.getGames().isEmpty()) {
-            queue.add(() -> noGameAvailable());
+            queue.add(this::noGameAvailable);
             queue.add(() -> displayActions(getLobbyActions()));
         } else queue.add(() -> chooseGameToJoin(message.getGames()));
     }
@@ -501,10 +501,10 @@ public abstract class ClientGameManager implements ClientGameManagerListener, Cl
      */
     private List<PossibleAction> getPossibleActions() {
         switch (turnManager.getUserPlayerState()) {
-            case PICK_CARD_BOARD:
+            case PICK_CARD_BOARD -> {
                 return List.of(PossibleAction.BOARD_PICK_CARD);
-
-            case AFTER_FIRST_PICK: {
+            }
+            case AFTER_FIRST_PICK -> {
                 if (gameSerialized.getLimbo().size() == 3) {
                     return List.of(PossibleAction.LOAD_SHELF, PossibleAction.REORDER_LIMBO, PossibleAction.DELETE_LIMBO);
                 } else if (gameSerialized.getLimbo().size() > 1) {
@@ -513,18 +513,17 @@ public abstract class ClientGameManager implements ClientGameManagerListener, Cl
                     return List.of(PossibleAction.BOARD_PICK_CARD, PossibleAction.LOAD_SHELF, PossibleAction.DELETE_LIMBO);
                 }
             }
-
-            case LOADING_SHELF:
+            case LOADING_SHELF -> {
                 return List.of(PossibleAction.LOAD_SHELF);
-
-            case DELETE_LIMBO: // non ci dovrebbe mai entrare perche viene risettato lo stato a pick_card_board
+            } // non ci dovrebbe mai entrare perche viene risettato lo stato a pick_card_board
 
 
 //            case DEAD:
 //                return List.of(PossibleAction.CHOOSE_RESPAWN);
 
-            default:
+            default -> {
                 return null;
+            }
 //                throw new ClientRoundManagerException("Cannot be here: " + roundManager.getUserPlayerState().name());
         }
     }
@@ -538,37 +537,38 @@ public abstract class ClientGameManager implements ClientGameManagerListener, Cl
         Runnable action = null;
 
         switch (chosenAction) {
-            case JOIN_GAME:
+            case JOIN_GAME -> {
                 System.out.println("JOIN GAME");
                 action = this::joinGame;
-                break;
-            case CREATE_GAME:
+            }
+            case CREATE_GAME -> {
                 System.out.println("CREATE GAME");
                 action = this::createGame;
-                break;
-            case BOARD_PICK_CARD:
+            }
+            case BOARD_PICK_CARD -> {
                 System.out.println("SCEGLI CARTA");
                 action = this::pickBoardCard;
-                break;
-            case LOAD_SHELF:
+            }
+            case LOAD_SHELF -> {
                 System.out.println("CARICA SHELF");
                 turnManager.loadingShelf();
                 action = this::chooseColumn;
-                break;
-            case REORDER_LIMBO:
+            }
+            case REORDER_LIMBO -> {
                 System.out.println("SCEGLI ORDINE");
                 action = this::reorderLimbo;
-                break;
-            case DELETE_LIMBO:
+            }
+            case DELETE_LIMBO -> {
                 System.out.println("ELIMINO LIMBO");
                 turnManager.deleteLimbo();
                 action = this::deleteLimbo;
-                break;
-
-            default:
+            }
+            default -> {
+            }
 //                throw new ClientRoundManagerException("Invalid Action");
         }
 
+        assert action != null;
         queue.add(action);
     }
 }

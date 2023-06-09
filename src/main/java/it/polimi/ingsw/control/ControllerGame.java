@@ -262,7 +262,7 @@ public class ControllerGame implements TimerRunListener, Serializable {
                 Server.LOGGER.log(Level.INFO, "{0} joined the lobby", lobbyMessage.getSenderUsername());
                 System.out.println("Players in lobby: " + game.getPlayers());
 
-                server.sendMessageToAll(this.id, new LobbyPlayersResponse(new ArrayList<>(inLobbyPlayers.stream().map(player -> player.getName()).collect(Collectors.toList()))));
+                server.sendMessageToAll(this.id, new LobbyPlayersResponse(new ArrayList<>(inLobbyPlayers.stream().map(Player::getName).collect(Collectors.toList()))));
             } else {
                 return buildInvalidResponse();
             }
@@ -554,9 +554,8 @@ public class ControllerGame implements TimerRunListener, Serializable {
     }
 
     /**
-     * this method is used to calculate the winner of the game at the end of it
-     *
-     * @return the name of the winner
+     * this method is used to calculate the winner of the game at the end of it, setting the winner attribute of the
+     * {@link Player player} who has the highest score to true
      */
     private void calculateWinner() {
         int maxPoints = 0;
@@ -639,9 +638,9 @@ public class ControllerGame implements TimerRunListener, Serializable {
         List<String> playersNames = game.getPlayers().stream().map(Player::getName).collect(Collectors.toList());
 //        ArrayList<LobbyMessage> inLobbyPlayers = lobby.getInLobbyPlayers();
 
-        if (!game.isStarted()) {
-            return new Response("Game is ended.", MessageStatus.ERROR);
-        }
+//        if (!game.isStarted()) {
+//            return new Response("Game is ended.", MessageStatus.ERROR);
+//        }
         if (playersNames.contains(reconnectingPlayerName)){
             // if I receive a reconnection message the player state change into connected == true
             game.getPlayerByName(reconnectingPlayerName).setConnected(true);
@@ -685,6 +684,9 @@ public class ControllerGame implements TimerRunListener, Serializable {
 //        }
 //    }
 
+    /**
+     * method that start a timer whenever a single player is in the game
+     */
     public void setTimer() {
         Timer timer = new Timer();
         TimerTask task = new TimerTask() {
