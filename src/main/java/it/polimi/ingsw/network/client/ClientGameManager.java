@@ -59,7 +59,7 @@ public abstract class ClientGameManager implements ClientGameManagerListener, Cl
             LOGGER.setUseParentHandlers(false);
             LOGGER.addHandler(fh);
         } catch (IOException e) {
-            LOGGER.severe(e.getMessage());
+            //LOGGER.severe(e.getMessage());
         }
 
         new Thread(this).start();

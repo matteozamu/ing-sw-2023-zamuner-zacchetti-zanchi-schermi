@@ -11,7 +11,7 @@ public class CliVisual {
     /**
      * Prints the personal goal card in the console
      *
-     * @param out is the output PrintStream
+     * @param out            is the output PrintStream
      * @param gameSerialized is the object containing the personal goal to be printed
      */
     public static void printPersonalGoalCards(PrintStream out, GameSerialized gameSerialized) {
@@ -65,7 +65,8 @@ public class CliVisual {
 
     /**
      * print the score of the user
-     * @param out is the output PrintStream
+     *
+     * @param out            is the output PrintStream
      * @param gameSerialized is the object containing the points to be printed
      */
     public static void printScore(PrintStream out, GameSerialized gameSerialized) {
@@ -75,7 +76,7 @@ public class CliVisual {
     /**
      * Prints the board in the console
      *
-     * @param out is the output PrintStream
+     * @param out            is the output PrintStream
      * @param gameSerialized is the object containing the board to be printed
      */
     public static void printBoard(PrintStream out, GameSerialized gameSerialized) {
@@ -109,9 +110,9 @@ public class CliVisual {
                         String visibleCardText = cardText.replaceAll("\u001B\\[[;\\d]*m", "");
                         int visibleCardLength = visibleCardText.length();
                         if (visibleCardLength % 2 == 0) {
-                            boardView.append("║").append(" ".repeat((8 - visibleCardText.length())/2)).append(objectCard).append(" ".repeat((8 - visibleCardText.length())/2));
+                            boardView.append("║").append(" ".repeat((8 - visibleCardText.length()) / 2)).append(objectCard).append(" ".repeat((8 - visibleCardText.length()) / 2));
                         } else {
-                            boardView.append("║").append(" ".repeat((8 - visibleCardText.length())/2)).append(objectCard).append(" ".repeat((int) Math.ceil((double)(8 - visibleCardText.length()) / 2)));
+                            boardView.append("║").append(" ".repeat((8 - visibleCardText.length()) / 2)).append(objectCard).append(" ".repeat((int) Math.ceil((double) (8 - visibleCardText.length()) / 2)));
                         }
                     } else {
                         boardView.append("║").append(" ".repeat(8));
@@ -142,7 +143,7 @@ public class CliVisual {
                         if (visibleCardLength % 2 == 0) {
                             boardView.append("║").append(" ".repeat((8 - visibleCardText.length()) / 2)).append(objectCard).append(" ".repeat((8 - visibleCardText.length()) / 2));
                         } else {
-                            boardView.append("║").append(" ".repeat((8 - visibleCardText.length())/2)).append(objectCard).append(" ".repeat((int) Math.ceil((double)(8 - visibleCardText.length()) / 2)));
+                            boardView.append("║").append(" ".repeat((8 - visibleCardText.length()) / 2)).append(objectCard).append(" ".repeat((int) Math.ceil((double) (8 - visibleCardText.length()) / 2)));
                         }
                     } else {
                         boardView.append("║").append(" ".repeat(8));
@@ -191,9 +192,9 @@ public class CliVisual {
                     String visibleCardText = cardText.replaceAll("\u001B\\[[;\\d]*m", "");
                     int visibleCardLength = visibleCardText.length();
                     if (visibleCardLength % 2 == 0) {
-                        shelfView.append(" ".repeat((8 - visibleCardText.length())/2)).append(cardText).append(" ".repeat((8 - visibleCardText.length())/2));
+                        shelfView.append(" ".repeat((8 - visibleCardText.length()) / 2)).append(cardText).append(" ".repeat((8 - visibleCardText.length()) / 2));
                     } else {
-                        shelfView.append(" ".repeat((8 - visibleCardText.length())/2)).append(cardText).append(" ".repeat((int) Math.ceil((double)(8 - visibleCardText.length()) / 2)));
+                        shelfView.append(" ".repeat((8 - visibleCardText.length()) / 2)).append(cardText).append(" ".repeat((int) Math.ceil((double) (8 - visibleCardText.length()) / 2)));
                     }
                 }
                 shelfView.append("║");
@@ -246,26 +247,23 @@ public class CliVisual {
 
     /**
      * print the logo
+     *
      * @param out is the output PrintStream
      */
     public static void printLogo(PrintStream out) {
         out.println("""
-                                                                                :!?YJ~                                                                              \s
-                                                                               ~P&&BG#@&~                                                                            \s
-                            7GBBBB~      JBBB#B:                              7B@&^:J5B@@^       .                      .^::     ^YGGPP!                             \s
-                            .GB@@&~      ?@@@@Y.                             :5&@7 !#@@@@7   J##&#Y                     .#@G.  ~B&5^..^B#^                           \s
-                             .5&@#.      ^&&@G                               ^5&@7  !5BG7     ?#&G:                      G@Y  7&&~ ^GB!:@#                           \s
-                              5&&@5      #@&@5                                5#@&~           ~B&G.                      P&Y :G@Y  B@&##@5                           \s
-                              5#&&@7    5@&&@5      .^!J5GG^   .5##G7         .P&@@B~         ~B&G                       P&Y !G@7  .7YYJ~                            \s
-                              Y#&7#&:  7@GY#@5      :YG&@@5    !&@#~            J&@@@#J.      ~B&B^~7?7~:                P&Y ^5&Y       ^JJ.                         \s
-                              YB&^^#B :&#:J#@5         :P&@?  7&@B:              .?B&@@&5:    ~B&&&&&&&&BJ       .:.     5&J  !B&:     .P@@Y      ...                \s
-                              YB&! !&PB&~ YB&5          .Y#@G5&@P.                  ^P&&&&?   ~G&&&Y^:!#&&~   ^YP5YYP5:  5&J .~B@B7J57  .!!.   .?P5YYPG!             \s
-                              JB&?  ?&&?  5B&Y           .?G&&&J.              ..     :#&&&~  ~G&&!    J&&^  ?#B^   .P&: Y&J :Y?P&&7~~ !GB#?  !G#!.   ?&?            \s
-                              JG&Y  Y&&?  PB&J    .^!!:   !5&#7             :5GBG5!    J&&B5  ~P&B.    Y#G. ~B&GP555Y5G~ Y#?    .B&7   .P##: :5#B5555YYGJ            \s
-                              ?G&5 .7??7 .PB&J  :JB#&&&? .Y##~              B####BPJ   Y##G5  ~P#G.    5#?  ?B#^   .!7^  J#?     Y#B   .5#B: ~P#?    ~7~             \s
-                              ?P#G       ^PB&J  ?5#BPGG?!P#G:               G###55P?.:Y##GY~  ^5#P    :P#7  !B#?   7###! ?B7     Y#B.   YBB: :P#P   :B#&5            \s
-                            .75###5.    ^5B##B! :JG#GPGB##5.                .YGBBBBGB##BP?^  .YGBB!  .5BBB~  7BBP??PBB5:.Y#J    ~G#B^  :PBB^  ^PBGJ?5B#B!            \s
-                            .~~!!!!:    ^!!!!!!. .~J5P5Y?~.                   .:~7?JJ?!~^.   .!!!!~  .!!!!~   .^7??7!:  .!!!.   ~!~!^  .~~~:    :!???!^.             \s
-                """);
+                █████╗█████╗█████╗█████╗█████╗█████╗█████╗█████╗█████╗█████╗█████╗█████╗█████╗
+                ╚════╝╚════╝╚════╝╚════╝╚════╝╚════╝╚════╝╚════╝╚════╝╚════╝╚════╝╚════╝╚════╝\s
+                                                                                                    \s
+                ███╗   ███╗██╗   ██╗    ███████╗██╗  ██╗███████╗██╗     ███████╗██╗███████╗    \s
+                ████╗ ████║╚██╗ ██╔╝    ██╔════╝██║  ██║██╔════╝██║     ██╔════╝██║██╔════╝    \s
+                ██╔████╔██║ ╚████╔╝     ███████╗███████║█████╗  ██║     █████╗  ██║█████╗      \s
+                ██║╚██╔╝██║  ╚██╔╝      ╚════██║██╔══██║██╔══╝  ██║     ██╔══╝  ██║██╔══╝      \s
+                ██║ ╚═╝ ██║   ██║       ███████║██║  ██║███████╗███████╗██║     ██║███████╗    \s
+                ╚═╝     ╚═╝   ╚═╝       ╚══════╝╚═╝  ╚═╝╚══════╝╚══════╝╚═╝     ╚═╝╚══════╝    \s
+                                                                                               \s
+                █████╗█████╗█████╗█████╗█████╗█████╗█████╗█████╗█████╗█████╗█████╗█████╗█████╗
+                ╚════╝╚════╝╚════╝╚════╝╚════╝╚════╝╚════╝╚════╝╚════╝╚════╝╚════╝╚════╝╚════╝             
+                                          """);
     }
 }
