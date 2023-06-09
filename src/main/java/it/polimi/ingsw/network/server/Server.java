@@ -168,7 +168,8 @@ public class Server implements Runnable {
                     connection.sendMessage(
                             new ConnectionResponse("Successfully reconnected", token, MessageStatus.OK)
                     );
-                } else { // Game started
+                } else { // Game has already been started
+                    System.out.println("ciao mando il messagio lobby");
                     connection.sendMessage(
                             controllerGame.onConnectionMessage(new LobbyMessage(username, token, false))
                     );
@@ -205,6 +206,8 @@ public class Server implements Runnable {
      */
     void onMessage(Message message) {
         System.out.println("onMessage: " + message);
+        System.out.println(message.getToken());
+        System.out.println(message.getToken() != null);
         if (message != null && message.getSenderUsername() != null && (message.getToken() != null || message.getSenderUsername().equals("serverUser"))) {
             LOGGER.log(Level.INFO, "Received: {0}", message);
 

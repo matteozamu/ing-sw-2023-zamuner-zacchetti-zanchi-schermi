@@ -41,6 +41,7 @@ public abstract class ClientGameManager implements ClientGameManagerListener, Cl
     private ClientUpdater clientUpdater;
     private boolean gameEnded = false;
     private GameSerialized gameSerialized;
+    private boolean reconnection = false;
 
     /**
      * constructor of the client game manager
@@ -142,6 +143,11 @@ public abstract class ClientGameManager implements ClientGameManagerListener, Cl
 
             case RECONNECTION:
                 handleReconnection((ReconnectionMessage) message);
+                break;
+
+            case RECONNECTION_REQUEST:
+                handleReconnectionRequest((ReconnectionRequest) message);
+                break;
 
             default:
         }
@@ -239,6 +245,20 @@ public abstract class ClientGameManager implements ClientGameManagerListener, Cl
         } else queue.add(() -> chooseGameToJoin(message.getGames()));
     }
 
+    private void handleReconnectionRequest(ReconnectionRequest reconnectionRequest) {
+        reconnection = true;
+//        if (reconnectionRequest.getStatus().equals(MessageStatus.OK)) {
+            client.setToken(reconnectionRequest.getToken());
+//        } else {
+//            client.pingTimer.cancel();
+//            closeConnection();
+//        }
+
+//        queue.add(() -> connectionResponse(connectionResponse));
+        turnManager.startTurn();
+//        queue.add(() -> displayActions(getPossibleActions()));
+    }
+
     /**
      * Handles the response to the server connection
      *
@@ -262,7 +282,7 @@ public abstract class ClientGameManager implements ClientGameManagerListener, Cl
      * @param message is the message received from the server
      */
     private void handlePlayersInLobby(LobbyPlayersResponse message) {
-        System.out.println("PLAYERS IN LOBBY " + message.getUsers());
+//        System.out.println("PLAYERS IN LOBBY " + message.getUsers());
         lobbyPlayers = message.getUsers();
         queue.add(() -> playersWaitingUpdate(message.getUsers()));
     }
@@ -292,7 +312,8 @@ public abstract class ClientGameManager implements ClientGameManagerListener, Cl
                     onPositiveResponse(response);
                 }
             }
-            if (firstPlayer != null) checkNextAction();
+            System.out.println(firstPlayer + " check");
+            if (firstPlayer != null || reconnection) checkNextAction();
         }
     }
 
@@ -324,6 +345,7 @@ public abstract class ClientGameManager implements ClientGameManagerListener, Cl
 
     private void handleReconnection(ReconnectionMessage reconnectionMessage) {
         this.firstTurn = false;
+        this.joinedLobby = true;
         turnManager = new ClientTurnManager();
         queue.add(() -> onPlayerReconnection(reconnectionMessage.getMessage()));
     }

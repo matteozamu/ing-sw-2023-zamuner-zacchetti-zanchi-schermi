@@ -16,6 +16,10 @@ import javafx.stage.Stage;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
+/**
+ * Class JoinGameSceneController represents the controller of the join game scene, the scene where the player
+ * can see the list of existing games they can join
+ */
 
 public class JoinGameSceneController {
 
@@ -30,6 +34,9 @@ public class JoinGameSceneController {
     @FXML
     private VBox idLabelsBox;
 
+    /**
+     * Initializes the scene
+     */
     @FXML
     public void initialize() {
         guiManager = GuiManager.getInstance();
@@ -73,6 +80,10 @@ public class JoinGameSceneController {
         }
 
     }
+    /** Handles the label click
+     * @param index the index of the label
+     * @param games the list of games
+     */
 
     private void onLabelClicked(int index, List<ControllerGame> games) {
         int choose = index;

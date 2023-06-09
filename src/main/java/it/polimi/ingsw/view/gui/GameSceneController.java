@@ -325,6 +325,13 @@ public class GameSceneController {
         }
     }
 
+    /**
+     * Adds the images of the object cards to the map of the board
+     *
+     * @param type type of the object card
+     * @param level level of the object card
+     * @param count number of object cards to add
+     */
     private void addObjectCardImagesToMap(String type, String level, int count) {
         for (int i = 0; i < count; i++) {
             ImageView imageView = new ImageView();
@@ -335,6 +342,9 @@ public class GameSceneController {
         }
     }
 
+    /**
+     * Loads the common goal cards images
+     */
     private void loadCommonGoalCards() {
         ImageView imageView = new ImageView();
         imageView.getStyleClass().add("commonGoalCard-1");
@@ -385,6 +395,11 @@ public class GameSceneController {
         commonGoalCards.add(imageView);
     }
 
+    /**
+     * Adds the object cards to the board
+     *
+     * @param gameSerialized state of the game at the time of the join
+     */
     private void addObjectCards(GameSerialized gameSerialized) {
         Board board = guiManager.getGameSerialized().getBoard();
 
