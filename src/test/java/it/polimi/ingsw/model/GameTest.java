@@ -72,13 +72,13 @@ class GameTest extends TestCase {
 
     @Test
     public void testIsHasStarted() {
-        assertFalse(g.isHasStarted());
+        assertFalse(g.isStarted());
     }
 
     @Test
     public void testSetHasStarted() {
-        g.setHasStarted(true);
-        assertTrue(g.isHasStarted());
+        g.setStarted(true);
+        assertTrue(g.isStarted());
     }
     @Test
     public void testGetCommonGoalContainer(){
@@ -105,19 +105,6 @@ class GameTest extends TestCase {
     public void testGetPlayers() {
         assertNotNull(g.getPlayers());
     }
-
-    @Test
-    public void testDoesPlayerExist(){
-        Player p = new Player("test", this.shelf, this.pg);
-        g.addPlayer(p);
-        assertTrue(g.doesPlayerExist("test"));
-    }
-
-    @Test
-    public void testDoesPlayerExistNull(){
-        assertFalse(g.doesPlayerExist(null));
-    }
-
 
     @Test
     public void testAddPlayer(){

@@ -534,6 +534,7 @@ public class Cli extends ClientGameManager implements DisconnectionListener {
         } while (!validCard);
 
         System.out.println("Checking card: " + objectCard);
+        System.out.println("Checking token: " + getClientToken());
 
         if (!sendRequest(MessageBuilder.buildPickObjectCardRequest(getPlayer(), getClientToken(), coordinate))) {
             promptError(SEND_ERROR, true);
