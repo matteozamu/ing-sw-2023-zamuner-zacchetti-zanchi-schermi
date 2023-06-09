@@ -42,15 +42,10 @@ public class ControllerGame implements TimerRunListener, Serializable {
     }
 
     /**
-     *
      * @return the id of the game
      */
     public UUID getId() {
         return id;
-    }
-
-    public void setGame(Game game) {
-        this.game = game;
     }
 
     /**
@@ -130,6 +125,8 @@ public class ControllerGame implements TimerRunListener, Serializable {
             turnController.setActivePlayer(game.getCurrentPlayer());
 
             sendPrivateUpdates();
+
+            if (checkIfRefill()) refillBoard();
             return new Response("Cards moved", MessageStatus.OK);
         } else {
             System.out.println("Column does not have enough space");
@@ -181,6 +178,7 @@ public class ControllerGame implements TimerRunListener, Serializable {
 
     /**
      * method called when a ObjectCardRequest is received from a client, asking to pick an object card
+     *
      * @param objectCardRequest is the message received
      * @return the response to the message
      */
@@ -322,6 +320,10 @@ public class ControllerGame implements TimerRunListener, Serializable {
         return game;
     }
 
+    public void setGame(Game game) {
+        this.game = game;
+    }
+
     /**
      * check if the lobby if full, if it is, it the game starts, otherwise it adds the player to the lobby
      *
@@ -431,6 +433,80 @@ public class ControllerGame implements TimerRunListener, Serializable {
         for (int i = boardMatrix.length / 2; i < boardMatrix.length; i++) {
             for (int j = 0; j < boardMatrix[i].length; j++) {
                 if (boardMatrix[i][j] == 1) {
+                    b.put(new Coordinate(4 - i, j - 4), game.getRandomAvailableObjectCard());
+                }
+            }
+        }
+    }
+
+    public boolean checkIfRefill() {
+        int playerNumber = game.getNumberOfPlayers();
+        Map<Coordinate, ObjectCard> b = game.getBoard().getGrid();
+        int[][] boardMatrix = JsonReader.getBoard(playerNumber);
+
+        for (int i = 0; i < boardMatrix.length / 2; i++) {
+            for (int j = 0; j < boardMatrix[i].length; j++) {
+                if (b.get(new Coordinate(4 - i, j - 4)) != null) {
+                    if (boardMatrix[i + 1][j] == 1 && b.get(new Coordinate(4 - i + 1, j - 4)) != null) {
+                        return false;
+                    }
+                    if (boardMatrix[i - 1][j] == 1 && b.get(new Coordinate(4 - i - 1, j - 4)) != null) {
+                        return false;
+                    }
+                    if (boardMatrix[i][j + 1] == 1 && b.get(new Coordinate(4 - i, j - 4 + 1)) != null) {
+                        return false;
+                    }
+                    if (boardMatrix[i][j - 1] == 1 && b.get(new Coordinate(4 - i, j - 4 + 1)) != null) {
+                        return false;
+                    }
+                }
+            }
+        }
+
+        for (int i = boardMatrix.length / 2; i < boardMatrix.length; i++) {
+            for (int j = 0; j < boardMatrix[i].length; j++) {
+                if (b.get(new Coordinate(4 - i, j - 4)) != null) {
+                    if (boardMatrix[i + 1][j] == 1 && b.get(new Coordinate(4 - i + 1, j - 4)) != null) {
+                        return false;
+                    }
+                    if (boardMatrix[i - 1][j] == 1 && b.get(new Coordinate(4 - i - 1, j - 4)) != null) {
+                        return false;
+                    }
+                    if (boardMatrix[i][j + 1] == 1 && b.get(new Coordinate(4 - i, j - 4 + 1)) != null) {
+                        return false;
+                    }
+                    if (boardMatrix[i][j - 1] == 1 && b.get(new Coordinate(4 - i, j - 4 + 1)) != null) {
+                        return false;
+                    }
+                }
+            }
+        }
+
+        return true;
+    }
+
+    /**
+     * Fills the game board again with object cards based on the number of players.
+     * This method should be called at the beginning of the game to set up the board.
+     */
+    public void refillBoard() {
+        int playerNumber = game.getNumberOfPlayers();
+
+        Map<Coordinate, ObjectCard> b = game.getBoard().getGrid();
+
+        int[][] boardMatrix = JsonReader.getBoard(playerNumber);
+
+        for (int i = 0; i < boardMatrix.length / 2; i++) {
+            for (int j = 0; j < boardMatrix[i].length; j++) {
+                if (boardMatrix[i][j] == 1 && b.get(new Coordinate(4 - i, j - 4)) == null) {
+                    b.put(new Coordinate(4 - i, j - 4), game.getRandomAvailableObjectCard());
+                }
+            }
+        }
+
+        for (int i = boardMatrix.length / 2; i < boardMatrix.length; i++) {
+            for (int j = 0; j < boardMatrix[i].length; j++) {
+                if (boardMatrix[i][j] == 1 && b.get(new Coordinate(4 - i, j - 4)) == null) {
                     b.put(new Coordinate(4 - i, j - 4), game.getRandomAvailableObjectCard());
                 }
             }
@@ -594,7 +670,7 @@ public class ControllerGame implements TimerRunListener, Serializable {
             // if the player wants to disconnect from the game
             if (((LobbyMessage) receivedConnectionMessage).isDisconnection()) {
 //                return disconnectionHandler((LobbyMessage) receivedConnectionMessage);
-            // if the player wants to reconnect to the game
+                // if the player wants to reconnect to the game
             } else {
                 return reconnectionHandler((LobbyMessage) receivedConnectionMessage);
             }
@@ -630,6 +706,7 @@ public class ControllerGame implements TimerRunListener, Serializable {
 
     /**
      * Method used to handle the reconnection of a player from the game
+     *
      * @param receivedConnectionMessage message received by the server from the player asking to reconnect to the game
      * @return a {@link Message Message} which contains the result of the received message
      */
@@ -641,7 +718,7 @@ public class ControllerGame implements TimerRunListener, Serializable {
 //        if (!game.isStarted()) {
 //            return new Response("Game is ended.", MessageStatus.ERROR);
 //        }
-        if (playersNames.contains(reconnectingPlayerName)){
+        if (playersNames.contains(reconnectingPlayerName)) {
             // if I receive a reconnection message the player state change into connected == true
             game.getPlayerByName(reconnectingPlayerName).setConnected(true);
 
