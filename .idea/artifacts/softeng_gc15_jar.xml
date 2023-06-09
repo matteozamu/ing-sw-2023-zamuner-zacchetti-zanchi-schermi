@@ -1,0 +1,12 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="softeng-gc15:jar">
+    <output-path>$PROJECT_DIR$/out/artifacts/softeng_gc15_jar</output-path>
+    <root id="archive" name="softeng-gc15.jar">
+      <element id="module-output" name="softeng-gc15" />
+      <element id="extracted-dir" path="$MAVEN_REPOSITORY$/org/json/json/20230227/json-20230227.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$MAVEN_REPOSITORY$/com/google/code/gson/gson/2.10.1/gson-2.10.1.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$MAVEN_REPOSITORY$/org/jetbrains/annotations/24.0.1/annotations-24.0.1.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$MAVEN_REPOSITORY$/org/fusesource/jansi/jansi/2.3.4/jansi-2.3.4.jar" path-in-jar="/" />
+    </root>
+  </artifact>
+</component>

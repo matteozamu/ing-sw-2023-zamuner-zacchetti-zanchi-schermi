@@ -8,9 +8,18 @@ import javafx.scene.input.KeyCombination;
 import javafx.stage.Stage;
 
 import java.io.InputStream;
+/**
+ * Class Gui represents the Graphical User Interface
+ *
+ */
 
 public class Gui extends Application {
 
+    /**
+     * Starts the Graphical User Interface
+     *
+     * @param stage the initial stage
+     */
     @Override
     public void start(Stage stage) {
         stage.setMaximized(true);
@@ -34,7 +43,9 @@ public class Gui extends Application {
         GuiManager.setLayout(stage.getScene(), "fxml/gameScene.fxml");
         stage.show();
     }
-
+     /**
+     * Stops the Graphical User Interface
+     */
     @Override
     public void stop() {
         GuiManager.getInstance().closeConnection();

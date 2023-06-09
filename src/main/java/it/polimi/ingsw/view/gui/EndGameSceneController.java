@@ -15,7 +15,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 /**
- * Controller of the end game scene
+ * Controller of the end game scene that shows the final ranking
  */
 public class EndGameSceneController {
     @FXML
@@ -29,6 +29,9 @@ public class EndGameSceneController {
     @FXML
     TableColumn<TableRowEndScene, String> pointsColumn;
 
+    /**
+     * Initializes the scene
+     */
     @FXML
     public void initialize() {
         bindEvents();

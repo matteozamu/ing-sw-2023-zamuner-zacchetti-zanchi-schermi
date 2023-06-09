@@ -11,6 +11,11 @@ import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 
 import java.util.List;
+/**
+ * Class StartGameSceneController represents the controller of the scene where the player can choose to create
+ * a new game or to join an existing one
+ *
+ */
 
 public class StartGameSceneController {
     private GuiManager guiManager;
@@ -24,6 +29,9 @@ public class StartGameSceneController {
     @FXML
     private ImageView backButton;
 
+    /**
+     * Initializes the scene
+     */
     @FXML
     public void initialize() {
         guiManager = GuiManager.getInstance();
@@ -73,6 +81,10 @@ public class StartGameSceneController {
         }
     }
 
+    /**
+     * Handles the situation where the player chooses to join an existing game
+     *
+     */
     void onJoinGameResponse(List<ControllerGame> games) {
         JoinGameSceneController joinGameSceneController = GuiManager.setLayout(mainPane.getScene(), "fxml/joinGameScene.fxml");
 
@@ -108,6 +120,10 @@ public class StartGameSceneController {
         }
     }
 
+    /**
+     * Handles the situation where the player chooses to join an existing game but there are no available games
+     *
+     */
     void noGameAvailable() {
         GuiManager.showDialog((Stage) mainPane.getScene().getWindow(), GuiManager.ERROR_DIALOG_TITLE,
                 "No games available");
