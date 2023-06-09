@@ -29,6 +29,7 @@ public class ControllerGame implements TimerRunListener, Serializable {
     private PossibleGameState gameState = PossibleGameState.GAME_ROOM;
     private boolean isLobbyFull;
     private transient TurnController turnController;
+    private Timer reconnectionTimer;
 
     /**
      * Constructor for the ControllerGame class, initializing the game state.
@@ -115,8 +116,9 @@ public class ControllerGame implements TimerRunListener, Serializable {
 //           turnController.nextTurn();
             game.getLimbo().clear();
             if (game.getCurrentPlayer().getShelf().isFull()) {
-                // manda un messaggio privato a tutti i giocatori contenente il vincitore
+                // send a private message to all the player containing the winner
                 calculateWinner();
+                game.setStarted(false);
                 sendEndGame();
                 changeState(PossibleGameState.GAME_ENDED);
                 return new Response("Game is ended.", MessageStatus.GAME_ENDED);
@@ -355,6 +357,7 @@ public class ControllerGame implements TimerRunListener, Serializable {
         this.turnController = new TurnController(this.game.getPlayers(), this);
         turnController.setActivePlayer(game.getCurrentPlayer());
         changeState(PossibleGameState.GAME_STARTED);
+        game.setStarted(true);
 
         //non ci serve, abbiamp gia il current player
 //        UserPlayer firstPlayer = roundController.getTurnManager().getTurnOwner();
@@ -638,10 +641,15 @@ public class ControllerGame implements TimerRunListener, Serializable {
         List<String> playersNames = game.getPlayers().stream().map(Player::getName).collect(Collectors.toList());
 //        ArrayList<LobbyMessage> inLobbyPlayers = lobby.getInLobbyPlayers();
 
-//        if (!game.isStarted()) {
-//            return new Response("Game is ended.", MessageStatus.ERROR);
-//        }
+        if (!game.isStarted()) {
+            return new Response("Game is ended.", MessageStatus.ERROR);
+        }
         if (playersNames.contains(reconnectingPlayerName)){
+            if (reconnectionTimer != null) {
+                reconnectionTimer.cancel();
+                reconnectionTimer = null;
+                game.setCurrentPlayer(game.getPlayerByName(reconnectingPlayerName));
+            }
             // if I receive a reconnection message the player state change into connected == true
             game.getPlayerByName(reconnectingPlayerName).setConnected(true);
 
@@ -653,7 +661,9 @@ public class ControllerGame implements TimerRunListener, Serializable {
             return new Response("Reconnection message from already in lobby Player", MessageStatus.ERROR);
         }
 //        return new GameStateResponse(reconnectingPlayerName, turnController.getActivePlayer().getName());
-        return new GameStateResponse(reconnectingPlayerName, game.getCurrentPlayer().getName());
+//        return new GameStateResponse(reconnectingPlayerName, game.getCurrentPlayer().getName());
+        server.sendMessage(reconnectingPlayerName, new GameStateResponse(reconnectingPlayerName, game.getCurrentPlayer().getName()));
+        return new ReconnectionRequest("Reconnection request", receivedConnectionMessage.getToken());
     }
 
 
@@ -685,10 +695,12 @@ public class ControllerGame implements TimerRunListener, Serializable {
 //    }
 
     /**
-     * method that start a timer whenever a single player is in the game
+     * method that start a timer whenever only one player is in the game
      */
     public void setTimer() {
-        Timer timer = new Timer();
+        reconnectionTimer = new Timer();
+
+        // code to run when the timer ends
         TimerTask task = new TimerTask() {
             @Override
             public void run() {
@@ -699,7 +711,7 @@ public class ControllerGame implements TimerRunListener, Serializable {
         };
 
         // start a timer of 3 minutes (180.000 milliseconds)
-        timer.schedule(task, 5000);
+        reconnectionTimer.schedule(task, 5000);
     }
 
     @Override
