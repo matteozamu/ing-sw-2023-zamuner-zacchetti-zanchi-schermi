@@ -28,6 +28,7 @@ import java.util.*;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import static it.polimi.ingsw.model.ObjectCardType.cat;
 import static java.awt.Transparency.OPAQUE;
 
 //TODO : Vedere differenza tra ID e classe in CSS
@@ -52,6 +53,10 @@ public class GameSceneController {
     @FXML
     GridPane boardGridPane;
     @FXML
+    StackPane commonGoalCard1StackPane;
+    @FXML
+    StackPane commonGoalCard2StackPane;
+    @FXML
     ImageView boardImage;
     @FXML
     HBox boardShelfHBoxArea;
@@ -61,6 +66,8 @@ public class GameSceneController {
     VBox shelfLimboVBoxArea;
     @FXML
     ImageView personalGoalCard;
+    @FXML
+    FlowPane commonGoalCardInfoPanel;
     @FXML
     ImageView winnerTile;
     @FXML
@@ -285,7 +292,7 @@ public class GameSceneController {
 
     private GuiManager guiManager;
     private  Map<String, ImageView> objectCards;
-    private List<ImageView> commonGoalCards;
+    private Map<String, ImageView> commonGoalCards;
 
     @FXML
     private void initialize() {
@@ -298,7 +305,7 @@ public class GameSceneController {
         shelfLabel4.setText("Simone");
 
         objectCards = new HashMap<>();
-        commonGoalCards = new ArrayList<>();
+        commonGoalCards = new HashMap<>();
 
         loadObjectCards();
         loadCommonGoalCards();
@@ -310,7 +317,25 @@ public class GameSceneController {
      * @param gameSerialized state of the game at the time of the join
      */
     void setupGame(GameSerialized gameSerialized) {
-        addObjectCards(gameSerialized);
+//        addObjectCards(gameSerialized);
+        bindCommonGoalCardInfoPanelZoom();
+        bindPanels();
+    }
+
+    /**
+     * Binds click events on the panels
+     */
+    private void bindPanels() {
+        zoomPanel.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> hideZoomPanel());
+    }
+
+    /**
+     * Binds common goal info zoom on card click
+     */
+    private void bindCommonGoalCardInfoPanelZoom() {
+        for (ImageView commonGoalCard : commonGoalCards.values()) {
+            commonGoalCard.addEventHandler(MouseEvent.MOUSE_CLICKED, this::showCommonGoalCardInfoPanelZoom);
+        }
     }
 
     private void loadObjectCards() {
@@ -319,80 +344,94 @@ public class GameSceneController {
                 .collect(Collectors.toList());
 
         for (int i = 0; i < ObjectCardType.SIZE; i++) {
+            addObjectCardImagesToMap(types.get(i), "0", 7);
             addObjectCardImagesToMap(types.get(i), "1", 7);
-            addObjectCardImagesToMap(types.get(i), "2", 7);
-            addObjectCardImagesToMap(types.get(i), "3", 8);
+            addObjectCardImagesToMap(types.get(i), "2", 8);
         }
     }
 
-    /**
-     * Adds the images of the object cards to the map of the board
-     *
-     * @param type type of the object card
-     * @param level level of the object card
-     * @param count number of object cards to add
-     */
     private void addObjectCardImagesToMap(String type, String level, int count) {
         for (int i = 0; i < count; i++) {
             ImageView imageView = new ImageView();
-            String id = type + "-" + level;
-            imageView.getStyleClass().add(id);
+            String id = Character.toUpperCase(type.charAt(0)) + type.substring(1) + "-" + level;
+            imageView.getStyleClass().add("button");
             imageView.setId(id);
             objectCards.put(imageView.getId(), imageView);
         }
     }
 
-    /**
-     * Loads the common goal cards images
-     */
     private void loadCommonGoalCards() {
         ImageView imageView = new ImageView();
-        imageView.getStyleClass().add("commonGoalCard-1");
-        commonGoalCards.add(imageView);
+        String id1 = "commonGoalCard-1";
+        imageView.getStyleClass().add("button");
+        imageView.setId(id1);
+        commonGoalCards.put(imageView.getId(), imageView);
 
         imageView = new ImageView();
-        imageView.getStyleClass().add("commonGoalCard-2");
-        commonGoalCards.add(imageView);
+        String id2 = "commonGoalCard-2";
+        imageView.getStyleClass().add("button");
+        imageView.setId(id2);
+        commonGoalCards.put(imageView.getId(), imageView);
 
         imageView = new ImageView();
-        imageView.getStyleClass().add("commonGoalCard-3");
-        commonGoalCards.add(imageView);
+        String id3 = "commonGoalCard-3";
+        imageView.getStyleClass().add("button");
+        imageView.setId(id3);
+        commonGoalCards.put(imageView.getId(), imageView);
 
         imageView = new ImageView();
-        imageView.getStyleClass().add("commonGoalCard-4");
-        commonGoalCards.add(imageView);
+        String id4 = "commonGoalCard-4";
+        imageView.getStyleClass().add("button");
+        imageView.setId(id4);
+        commonGoalCards.put(imageView.getId(), imageView);
 
         imageView = new ImageView();
-        imageView.getStyleClass().add("commonGoalCard-5");
-        commonGoalCards.add(imageView);
+        String id5 = "commonGoalCard-5";
+        imageView.getStyleClass().add("button");
+        imageView.setId(id5);
+        commonGoalCards.put(imageView.getId(), imageView);
 
         imageView = new ImageView();
-        imageView.getStyleClass().add("commonGoalCard-6");
-        commonGoalCards.add(imageView);
+        String id6 = "commonGoalCard-6";
+        imageView.getStyleClass().add("button");
+        imageView.setId(id6);
+        commonGoalCards.put(imageView.getId(), imageView);
 
         imageView = new ImageView();
-        imageView.getStyleClass().add("commonGoalCard-7");
-        commonGoalCards.add(imageView);
+        String id7 = "commonGoalCard-7";
+        imageView.getStyleClass().add("button");
+        imageView.setId(id7);
+        commonGoalCards.put(imageView.getId(), imageView);
 
         imageView = new ImageView();
-        imageView.getStyleClass().add("commonGoalCard-8");
-        commonGoalCards.add(imageView);
+        String id8 = "commonGoalCard-8";
+        imageView.getStyleClass().add("button");
+        imageView.setId(id8);
+        commonGoalCards.put(imageView.getId(), imageView);
 
         imageView = new ImageView();
-        imageView.getStyleClass().add("commonGoalCard-9");
-        commonGoalCards.add(imageView);
+        String id9 = "commonGoalCard-9";
+        imageView.getStyleClass().add("button");
+        imageView.setId(id9);
+        commonGoalCards.put(imageView.getId(), imageView);
 
         imageView = new ImageView();
-        imageView.getStyleClass().add("commonGoalCard-10");
-        commonGoalCards.add(imageView);
+        String id10 = "commonGoalCard-10";
+        imageView.getStyleClass().add("button");
+        imageView.setId(id10);
+        commonGoalCards.put(imageView.getId(), imageView);
 
         imageView = new ImageView();
-        imageView.getStyleClass().add("commonGoalCard-11");
-        commonGoalCards.add(imageView);
+        String id11 = "commonGoalCard-11";
+        imageView.getStyleClass().add("button");
+        imageView.setId(id11);
+        commonGoalCards.put(imageView.getId(), imageView);
 
         imageView = new ImageView();
-        imageView.getStyleClass().add("commonGoalCard-12");
-        commonGoalCards.add(imageView);
+        String id12 = "commonGoalCard-12";
+        imageView.getStyleClass().add("button");
+        imageView.setId(id12);
+        commonGoalCards.put(imageView.getId(), imageView);
     }
 
     /**
@@ -425,7 +464,7 @@ public class GameSceneController {
                             imageView.setPreserveRatio(true);
                             imageView.setPickOnBounds(true);
 
-                            boardGridPane.add(imageView, 4 - i, j - 4);  // aggiunge l'immagine alla cella (j, i) del GridPane
+                            boardGridPane.add(imageView, i, j);  // aggiunge l'immagine alla cella (j, i) del GridPane
                         }
                     }
                 }
@@ -433,6 +472,109 @@ public class GameSceneController {
         }
     }
 
+    void addCommonGoalCards(List<CommonGoal> commonGoals) {
+        String cardTypeText0 = commonGoals.get(0).toString();
+
+        ImageView imageView0 = commonGoalCards.get(cardTypeText0);
+        if (imageView0 != null) {
+            imageView0.setFitWidth(138.5);
+            imageView0.setFitHeight(91.3);
+            imageView0.setPreserveRatio(true);
+            imageView0.setPickOnBounds(true);
+
+            commonGoalCard1StackPane.getChildren().add(imageView0);
+        }
+
+        String cardTypeText1 = commonGoals.get(1).toString();
+
+        ImageView imageView1 = commonGoalCards.get(cardTypeText1);
+        if (imageView1 != null) {
+            imageView1.setFitWidth(138.5);
+            imageView1.setFitHeight(91.3);
+            imageView1.setPreserveRatio(true);
+            imageView1.setPickOnBounds(true);
+
+            commonGoalCard2StackPane.getChildren().add(imageView1);
+        }
+    }
+
+    /**
+     * Hides the zoom panel
+     */
+    private void hideZoomPanel() {
+        zoomPanel.getChildren().clear();
+        zoomPanel.setVisible(false);
+
+        setBoardOpaque(NOT_OPAQUE);
+    }
+
+    /**
+     * Sets a opacity value for every element on the board
+     *
+     * @param value opacity value
+     */
+    private void setBoardOpaque(double value) {
+        boardStackPaneArea.opacityProperty().setValue(value);
+
+//        for (ImageView ammotile : ammoTiles) {
+//            ammotile.opacityProperty().setValue(value);
+//        }
+//
+//        for (ImageView playerFigure : playerFigures) {
+//            playerFigure.opacityProperty().setValue(value);
+//        }
+//
+//        for (ImageView killshots : killshotsImages) {
+//            killshots.opacityProperty().setValue(value);
+//        }
+//
+//        for (Node node : actionList.getChildren()) {
+//            node.opacityProperty().setValue(value);
+//        }
+//
+//        for (Node node : iconList.getChildren()) {
+//            node.opacityProperty().setValue(value);
+//        }
+    }
+
+    /**
+     * Shows the zoom on a weapon in the zoom panel
+     *
+     * @param event of the click on a weapon
+     */
+    private void showCommonGoalCardInfoPanelZoom(Event event) {
+//        ImageView commonGoalCardTarget = (ImageView) event.getTarget();
+//
+//        if (commonGoalCardTarget != null) {
+//            setBoardOpaque(OPAQUE);
+//
+//            zoomPanel.toFront();
+//            ImageView commonGoalCard = new ImageView(commonGoalCardTarget.getImage());
+//
+//            String commonGoalCardType = commonGoalCards.getKey(commonGoalCard.getId());
+//            if (color != null) {
+//                String className = null;
+//
+//                switch (color) {
+//                    case BLUE:
+//                        className = "weaponZoomImageBlue";
+//                        break;
+//                    case RED:
+//                        className = "weaponZoomImageRed";
+//                        break;
+//                    case YELLOW:
+//                        className = "weaponZoomImageYellow";
+//                        break;
+//                }
+//
+//                commonGoalCard.getStyleClass().add(className);
+//
+//                zoomPanel.getChildren().add(commonGoalCard);
+//                zoomPanel.setVisible(true);
+//                zoomPanel.toFront();
+//            }
+//        }
+    }
 
     /**
      * Updates the elements of the board
@@ -446,9 +588,9 @@ public class GameSceneController {
      *
      */
     private void updateBoard() {
-        ObservableList<Node> childrens = boardGridPane.getChildren();
-        childrens.clear();
-        addObjectCards(guiManager.getGameSerialized());
+//        ObservableList<Node> childrens = boardGridPane.getChildren();
+//        childrens.clear();
+//        addObjectCards(guiManager.getGameSerialized());
     }
 
     /**
