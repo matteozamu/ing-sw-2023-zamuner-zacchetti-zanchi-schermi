@@ -58,8 +58,9 @@ public class CliVisual {
      * @return a coloured string
      */
     public static String getColoredText(int r, int g, int b) {
-        String colorCode = String.format("\033[48;2;%d;%d;%dm", r, g, b);
-        String resetCode = "\033[0m";
+        // TODO se serve cambiare questa stringa per i colori
+        String colorCode = String.format("\u001B[48;2;%d;%d;%dm", r, g, b);
+        String resetCode = "\u001B[0m";
         return String.format("%s%s%s", colorCode, " ", resetCode);
     }
 
