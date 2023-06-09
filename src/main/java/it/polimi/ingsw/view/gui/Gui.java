@@ -31,7 +31,7 @@ public class Gui extends Application {
 
         stage.setScene(new Scene(new Pane()));
 
-        GuiManager.setLayout(stage.getScene(), "fxml/menuScene.fxml");
+        GuiManager.setLayout(stage.getScene(), "fxml/gameScene.fxml");
         stage.show();
     }
 
