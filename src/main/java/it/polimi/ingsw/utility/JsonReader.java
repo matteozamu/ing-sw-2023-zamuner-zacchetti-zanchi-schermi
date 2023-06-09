@@ -9,6 +9,8 @@ import java.io.FileInputStream;
 import java.io.InputStream;
 
 public class JsonReader {
+    private static int socketPort;
+    private static int RMIPort;
     private static int maxPlayers;
     private static int minPlayers;
     private static int[][] board2Matrix;
@@ -17,6 +19,7 @@ public class JsonReader {
 
     /**
      * read the program's constant from a json file
+     *
      * @param filename the file to read
      */
     public static void readJsonConstant(String filename) {
@@ -30,6 +33,8 @@ public class JsonReader {
             JSONTokener tokener = new JSONTokener(inputStream);
             JSONObject jsonObject = new JSONObject(tokener);
 
+            socketPort = jsonObject.getInt("socketPort");
+            RMIPort = jsonObject.getInt("RMIPort");
             maxPlayers = jsonObject.getInt("maxPlayers");
             minPlayers = jsonObject.getInt("minPlayers");
             JSONArray board2 = jsonObject.getJSONArray("board2");
@@ -83,6 +88,7 @@ public class JsonReader {
 
     /**
      * return the board based on the number of players in the game
+     *
      * @param numberOfPlayers number of players in the game
      * @return the specific board
      */
@@ -91,5 +97,13 @@ public class JsonReader {
         if (numberOfPlayers == 3) return board3Matrix;
         if (numberOfPlayers == 4) return board4Matrix;
         else return null;
+    }
+
+    public static int getSocketPort() {
+        return socketPort;
+    }
+
+    public static int getRMIPort() {
+        return RMIPort;
     }
 }
