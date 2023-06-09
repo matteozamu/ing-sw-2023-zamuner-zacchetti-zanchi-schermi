@@ -1,6 +1,8 @@
 {
-  "maxPlayers": "4",
-  "minPlayers": "2",
+  "socketPort": 2727,
+  "RMIPort": 7272,
+  "maxPlayers": 4,
+  "minPlayers": 2,
   "board2": [
     [
       0,

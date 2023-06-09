@@ -127,4 +127,17 @@ public class GameSerialized implements Serializable {
 
         return allLimboCards;
     }
+
+    @Override
+    public String toString() {
+        return "GameSerialized{" +
+                "players=" + players +
+                ", board=" + board +
+                ", points=" + points +
+                ", shelf=" + shelf +
+                ", personalGoalCard=" + personalGoalCard +
+                ", limbo=" + limbo +
+                ", currentPlayer=" + currentPlayer +
+                '}';
+    }
 }

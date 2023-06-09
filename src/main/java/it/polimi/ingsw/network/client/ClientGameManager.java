@@ -213,6 +213,10 @@ public abstract class ClientGameManager implements ClientGameManagerListener, Cl
      * @param stateMessage game state message received
      */
     private void checkTurnChange(GameStateResponse stateMessage) {
+        System.out.println("CHECK TURN CHANGE: " + stateMessage.getGameSerialized());
+        System.out.println("CHECK TURN CHANGE: " + stateMessage.getTurnOwner());
+        System.out.println("CHECK TURN CHANGE: " + firstTurn);
+        System.out.println("CHECK TURN CHANGE: " + yourTurn);
         if (!firstTurn) {
             System.out.println(getGameSerialized().getCurrentPlayer() + " " + turnOwner);
             if (!getGameSerialized().getCurrentPlayer().getName().equals(turnOwner)) {
@@ -248,7 +252,7 @@ public abstract class ClientGameManager implements ClientGameManagerListener, Cl
     private void handleReconnectionRequest(ReconnectionRequest reconnectionRequest) {
         reconnection = true;
 //        if (reconnectionRequest.getStatus().equals(MessageStatus.OK)) {
-            client.setToken(reconnectionRequest.getToken());
+        client.setToken(reconnectionRequest.getToken());
 //        } else {
 //            client.pingTimer.cancel();
 //            closeConnection();
@@ -346,6 +350,11 @@ public abstract class ClientGameManager implements ClientGameManagerListener, Cl
     private void handleReconnection(ReconnectionMessage reconnectionMessage) {
         this.firstTurn = false;
         this.joinedLobby = true;
+
+        if (!reconnectionMessage.getCurrentPlayer().equals(getUsername())) {
+            yourTurn = false;
+        }
+
         turnManager = new ClientTurnManager();
         queue.add(() -> onPlayerReconnection(reconnectionMessage.getMessage()));
     }
@@ -354,6 +363,7 @@ public abstract class ClientGameManager implements ClientGameManagerListener, Cl
      * Check what is the next action for the client
      */
     private void checkNextAction() {
+        System.out.println("CHECK NEXT ACTION: " + gameSerialized.getCurrentPlayer().isConnected());
         // se il giocatore è disconnesso creo un nuovo turno
         // TODO gestire il caso di un singolo giocatore
         if (!gameSerialized.getCurrentPlayer().isConnected()) {
@@ -501,6 +511,7 @@ public abstract class ClientGameManager implements ClientGameManagerListener, Cl
      * Called when a change of turn owner happen
      */
     private void newTurn() {
+        System.out.println("NEW TURN: " + yourTurn);
         if (yourTurn) {
             turnManager.startTurn();
             makeMove();
