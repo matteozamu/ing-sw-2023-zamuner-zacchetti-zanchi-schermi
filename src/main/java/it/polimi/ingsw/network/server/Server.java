@@ -173,7 +173,6 @@ public class Server implements Runnable {
                             new ConnectionResponse("Successfully reconnected", token, MessageStatus.OK)
                     );
                 } else { // Game has already been started
-                    System.out.println("ciao mando il messagio lobby");
                     connection.sendMessage(
                             controllerGame.onConnectionMessage(new LobbyMessage(username, token, false))
                     );
