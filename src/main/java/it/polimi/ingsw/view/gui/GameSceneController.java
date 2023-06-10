@@ -105,7 +105,6 @@ public class GameSceneController {
     HBox limboHBoxArea;
     @FXML
     StackPane personalGoalCardPane;
-    //TODO : Perché le definizioni di tipo di pane posso differire tra controller e FXML?
     @FXML
     Label pointLabel;
     @FXML
@@ -291,7 +290,7 @@ public class GameSceneController {
 
 
     private GuiManager guiManager;
-    private  Map<String, ImageView> objectCards;
+    private Map<String, ImageView> objectCards;
     private Map<String, ImageView> commonGoalCards;
 
     @FXML
@@ -309,6 +308,7 @@ public class GameSceneController {
 
         loadObjectCards();
         loadCommonGoalCards();
+        addObjectCards(guiManager.getGameSerialized());
     }
 
     /**
@@ -361,77 +361,13 @@ public class GameSceneController {
     }
 
     private void loadCommonGoalCards() {
-        ImageView imageView = new ImageView();
-        String id1 = "commonGoalCard-1";
-        imageView.getStyleClass().add("button");
-        imageView.setId(id1);
-        commonGoalCards.put(imageView.getId(), imageView);
-
-        imageView = new ImageView();
-        String id2 = "commonGoalCard-2";
-        imageView.getStyleClass().add("button");
-        imageView.setId(id2);
-        commonGoalCards.put(imageView.getId(), imageView);
-
-        imageView = new ImageView();
-        String id3 = "commonGoalCard-3";
-        imageView.getStyleClass().add("button");
-        imageView.setId(id3);
-        commonGoalCards.put(imageView.getId(), imageView);
-
-        imageView = new ImageView();
-        String id4 = "commonGoalCard-4";
-        imageView.getStyleClass().add("button");
-        imageView.setId(id4);
-        commonGoalCards.put(imageView.getId(), imageView);
-
-        imageView = new ImageView();
-        String id5 = "commonGoalCard-5";
-        imageView.getStyleClass().add("button");
-        imageView.setId(id5);
-        commonGoalCards.put(imageView.getId(), imageView);
-
-        imageView = new ImageView();
-        String id6 = "commonGoalCard-6";
-        imageView.getStyleClass().add("button");
-        imageView.setId(id6);
-        commonGoalCards.put(imageView.getId(), imageView);
-
-        imageView = new ImageView();
-        String id7 = "commonGoalCard-7";
-        imageView.getStyleClass().add("button");
-        imageView.setId(id7);
-        commonGoalCards.put(imageView.getId(), imageView);
-
-        imageView = new ImageView();
-        String id8 = "commonGoalCard-8";
-        imageView.getStyleClass().add("button");
-        imageView.setId(id8);
-        commonGoalCards.put(imageView.getId(), imageView);
-
-        imageView = new ImageView();
-        String id9 = "commonGoalCard-9";
-        imageView.getStyleClass().add("button");
-        imageView.setId(id9);
-        commonGoalCards.put(imageView.getId(), imageView);
-
-        imageView = new ImageView();
-        String id10 = "commonGoalCard-10";
-        imageView.getStyleClass().add("button");
-        imageView.setId(id10);
-        commonGoalCards.put(imageView.getId(), imageView);
-
-        imageView = new ImageView();
-        String id11 = "commonGoalCard-11";
-        imageView.getStyleClass().add("button");
-        imageView.setId(id11);
-        commonGoalCards.put(imageView.getId(), imageView);
-
-        imageView = new ImageView();
-        String id12 = "commonGoalCard-12";
-        imageView.getStyleClass().add("button");
-        imageView.setId(id12);
-        commonGoalCards.put(imageView.getId(), imageView);
+        for (int i = 1; i <= 12; i++) {
+            ImageView imageView = new ImageView();
+            String id = "commonGoalCard-" + i;
+            imageView.getStyleClass().add("button");
+            imageView.setId(id);
+            commonGoalCards.put(imageView.getId(), imageView);
+        }
     }
 
     /**
@@ -473,28 +409,22 @@ public class GameSceneController {
     }
 
     void addCommonGoalCards(List<CommonGoal> commonGoals) {
-        String cardTypeText0 = commonGoals.get(0).toString();
+        for (int i = 0; i < commonGoals.size(); i++) {
+            String cardTypeText = commonGoals.get(i).toString();
+            ImageView imageView = commonGoalCards.get(cardTypeText);
 
-        ImageView imageView0 = commonGoalCards.get(cardTypeText0);
-        if (imageView0 != null) {
-            imageView0.setFitWidth(138.5);
-            imageView0.setFitHeight(91.3);
-            imageView0.setPreserveRatio(true);
-            imageView0.setPickOnBounds(true);
+            if (imageView != null) {
+                imageView.setFitWidth(138.5);
+                imageView.setFitHeight(91.3);
+                imageView.setPreserveRatio(true);
+                imageView.setPickOnBounds(true);
 
-            commonGoalCard1StackPane.getChildren().add(imageView0);
-        }
-
-        String cardTypeText1 = commonGoals.get(1).toString();
-
-        ImageView imageView1 = commonGoalCards.get(cardTypeText1);
-        if (imageView1 != null) {
-            imageView1.setFitWidth(138.5);
-            imageView1.setFitHeight(91.3);
-            imageView1.setPreserveRatio(true);
-            imageView1.setPickOnBounds(true);
-
-            commonGoalCard2StackPane.getChildren().add(imageView1);
+                if (i == 0) {
+                    commonGoalCard1StackPane.getChildren().add(imageView);
+                } else if (i == 1) {
+                    commonGoalCard2StackPane.getChildren().add(imageView);
+                }
+            }
         }
     }
 
@@ -588,9 +518,9 @@ public class GameSceneController {
      *
      */
     private void updateBoard() {
-//        ObservableList<Node> childrens = boardGridPane.getChildren();
-//        childrens.clear();
-//        addObjectCards(guiManager.getGameSerialized());
+        ObservableList<Node> children = boardGridPane.getChildren();
+        children.clear();
+        addObjectCards(guiManager.getGameSerialized());
     }
 
     /**
