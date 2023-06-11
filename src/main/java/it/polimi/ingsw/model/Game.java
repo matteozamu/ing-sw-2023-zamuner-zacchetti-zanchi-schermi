@@ -374,9 +374,9 @@ public class Game implements Serializable {
 
         Random RANDOM = new Random();
         int index = RANDOM.nextInt(this.personalGoalCardsContainer.size());
-        PersonalGoalCard pg = this.personalGoalCardsContainer.get(index);
+        PersonalGoalCard personalGoalCard = this.personalGoalCardsContainer.get(index);
         this.personalGoalCardsContainer.remove(index);
-        return pg;
+        return personalGoalCard;
     }
 
     /**

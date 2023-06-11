@@ -31,18 +31,20 @@ import java.util.stream.Collectors;
 import static it.polimi.ingsw.model.ObjectCardType.cat;
 import static java.awt.Transparency.OPAQUE;
 
-//TODO : Vedere differenza tra ID e classe in CSS
-
 /**
  * Class for the graphical interface of the game
  */
 public class GameSceneController {
     private static final String USERNAME_PROPERTY = "username";
+    private static final String CSS_BUTTON = "button";
     private static final double OPAQUE = 0.2;
     private static final double NOT_OPAQUE = 1;
-    private static final String CSS_BUTTON = "button";
-    private static final String CSS_SQUARE_CLICK_BUTTON = "squareClickButton";
-    private static final String CSS_SQUARE_OWNER_CLICK_BUTTON = "squareOwnerClickButton";
+    private static final double COMMONGOAL_CARD_WIDTH = 138.5;
+    private static final double COMMONGOAL_CARD_HEIGHT = 91.3;
+    private static final double BOARD_OBJECT_CARD_WIDTH = 60;
+    private static final double BOARD_OBJECT_CARD_HEIGHT = 60;
+    private static final double PERSONALGOAL_CARD_WIDTH = 137.0;
+    private static final double PERSONALGOAL_CARD_HEIGHT = 207.9;
 
     @FXML
     Pane mainPane;
@@ -292,6 +294,7 @@ public class GameSceneController {
     private GuiManager guiManager;
     private Map<String, ImageView> objectCards;
     private Map<String, ImageView> commonGoalCards;
+    private Map<String, ImageView> personalGoalCards;
 
     @FXML
     private void initialize() {
@@ -305,10 +308,7 @@ public class GameSceneController {
 
         objectCards = new HashMap<>();
         commonGoalCards = new HashMap<>();
-
-        loadObjectCards();
-        loadCommonGoalCards();
-        addObjectCards(guiManager.getGameSerialized());
+        personalGoalCards = new HashMap<>();
     }
 
     /**
@@ -317,9 +317,15 @@ public class GameSceneController {
      * @param gameSerialized state of the game at the time of the join
      */
     void setupGame(GameSerialized gameSerialized) {
-//        addObjectCards(gameSerialized);
         bindCommonGoalCardInfoPanelZoom();
         bindPanels();
+
+        //aggiungere aggiornamento punteggi
+        updateGameArea(gameSerialized);
+        setPersonalGoalCard(gameSerialized.getPersonalGoalCard());
+        loadObjectCards();
+        loadCommonGoalCards();
+        loadPersonalGoalCards();
     }
 
     /**
@@ -350,11 +356,11 @@ public class GameSceneController {
         }
     }
 
-    private void addObjectCardImagesToMap(String type, String level, int count) {
+    private void addObjectCardImagesToMap(String type, String ID, int count) {
         for (int i = 0; i < count; i++) {
             ImageView imageView = new ImageView();
-            String id = Character.toUpperCase(type.charAt(0)) + type.substring(1) + "-" + level;
-            imageView.getStyleClass().add("button");
+            String id = Character.toUpperCase(type.charAt(0)) + type.substring(1) + "-" + ID;
+            imageView.getStyleClass().add(CSS_BUTTON);
             imageView.setId(id);
             objectCards.put(imageView.getId(), imageView);
         }
@@ -364,9 +370,19 @@ public class GameSceneController {
         for (int i = 1; i <= 12; i++) {
             ImageView imageView = new ImageView();
             String id = "commonGoalCard-" + i;
-            imageView.getStyleClass().add("button");
+            imageView.getStyleClass().add(CSS_BUTTON);
             imageView.setId(id);
             commonGoalCards.put(imageView.getId(), imageView);
+        }
+    }
+
+    private void loadPersonalGoalCards() {
+        for (int i = 1; i <= 12; i++) {
+            ImageView imageView = new ImageView();
+            String id = "personalGoalCard-" + i;
+            imageView.getStyleClass().add(CSS_BUTTON);
+            imageView.setId(id);
+            personalGoalCards.put(imageView.getId(), imageView);
         }
     }
 
@@ -375,8 +391,8 @@ public class GameSceneController {
      *
      * @param gameSerialized state of the game at the time of the join
      */
-    private void addObjectCards(GameSerialized gameSerialized) {
-        Board board = guiManager.getGameSerialized().getBoard();
+    private void setObjectCardsOnBoard(GameSerialized gameSerialized) {
+        Board board = gameSerialized.getBoard();
 
         ObjectCard objectCard;
         JsonReader.readJsonConstant("GameConstant.json");
@@ -389,18 +405,17 @@ public class GameSceneController {
                 if (boardMatrix[i][j] == 1) {
                     objectCard = board.getGrid().get(new Coordinate(4 - i, j - 4));
                     if (objectCard != null) {
-                        String cardTypeText = objectCard.toString();
-                        String visibleCardTypeText = cardTypeText.replaceAll("\u001B\\[[;\\d]*m", "");
-                        String cardNameType = visibleCardTypeText + "-" + objectCard.getId();
+                        String cardTypeText = objectCard.getType().getText();
+                        String cardNameType = cardTypeText + "-" + objectCard.getId();
 
                         ImageView imageView = objectCards.get(cardNameType);
                         if (imageView != null) {
-                            imageView.setFitWidth(60);
-                            imageView.setFitHeight(60);
+                            imageView.setFitWidth(BOARD_OBJECT_CARD_WIDTH);
+                            imageView.setFitHeight(BOARD_OBJECT_CARD_HEIGHT);
                             imageView.setPreserveRatio(true);
                             imageView.setPickOnBounds(true);
 
-                            boardGridPane.add(imageView, i, j);  // aggiunge l'immagine alla cella (j, i) del GridPane
+                            boardGridPane.add(imageView, i, j);
                         }
                     }
                 }
@@ -408,14 +423,14 @@ public class GameSceneController {
         }
     }
 
-    void addCommonGoalCards(List<CommonGoal> commonGoals) {
+    void setCommonGoalCards(List<CommonGoal> commonGoals) {
         for (int i = 0; i < commonGoals.size(); i++) {
             String cardTypeText = commonGoals.get(i).toString();
             ImageView imageView = commonGoalCards.get(cardTypeText);
 
             if (imageView != null) {
-                imageView.setFitWidth(138.5);
-                imageView.setFitHeight(91.3);
+                imageView.setFitWidth(COMMONGOAL_CARD_WIDTH);
+                imageView.setFitHeight(COMMONGOAL_CARD_HEIGHT);
                 imageView.setPreserveRatio(true);
                 imageView.setPickOnBounds(true);
 
@@ -428,11 +443,36 @@ public class GameSceneController {
         }
     }
 
-    void addShelf() {
+    private void setPersonalGoalCard(PersonalGoalCard personalGoalCard) {
+        int id = personalGoalCard.getID();
+        String cardTypeText = "personalGoalCard-" + id;
+        ImageView imageView = commonGoalCards.get(cardTypeText);
+
+        if (imageView != null) {
+            imageView.setFitWidth(PERSONALGOAL_CARD_WIDTH);
+            imageView.setFitHeight(PERSONALGOAL_CARD_HEIGHT);
+            imageView.setPreserveRatio(true);
+            imageView.setPickOnBounds(true);
+
+            personalGoalCardPane.getChildren().add(imageView);
+        }
+    }
+
+    void setShelves() {
+        int i = 0;
         List<Player> players = guiManager.getGameSerialized().getAllPlayers();
         int playerNumber = players.size();
 
+        for(Player player : players) {
+            StackPane stackPane = new StackPane();
+            stackPane.setId("stackPane" + i);
+            shelfHBoxImages.getChildren().add(stackPane);
+            Label playerNameLabel = new Label(player.getName());
+            playerNameLabel.setId("playerNameLabel" + i);
+            playerNameLabel.getStyleClass().add("shelfLabel");
 
+            i++;
+        }
     }
 
     /**
@@ -517,17 +557,29 @@ public class GameSceneController {
      * Updates the elements of the board
      */
     void onStateUpdate() {
-        updateBoard();
+        updateGameArea(guiManager.getGameSerialized());
+        //aggiungere aggiornamento punteggi
+    }
+
+    /**
+     * Updates element on the game area
+     *
+     * @param gameSerialized game update
+     */
+    private void updateGameArea(GameSerialized gameSerialized) {
+        updateBoard(gameSerialized);
+        // Aggiungere altri elementi da aggiornare
+
     }
 
     /**
      * Updates element on the board
      *
      */
-    private void updateBoard() {
+    private void updateBoard(GameSerialized gameSerialized) {
         ObservableList<Node> children = boardGridPane.getChildren();
         children.clear();
-        addObjectCards(guiManager.getGameSerialized());
+        setObjectCardsOnBoard(gameSerialized);
     }
 
     /**

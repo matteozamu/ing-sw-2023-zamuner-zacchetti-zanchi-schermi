@@ -9,6 +9,7 @@ import java.util.ArrayList;
 public class PersonalGoalCard implements Serializable {
     private ArrayList<PersonalGoal> goals;
     private int targetsReached;
+    private int ID;
 
     /**
      * Constructs a PersonalGoalCard with the given list of personal goals.
@@ -25,6 +26,13 @@ public class PersonalGoalCard implements Serializable {
      */
     public ArrayList<PersonalGoal> getGoals() {
         return goals;
+    }
+
+    /**
+     * @return the ID of the Personal Goal Card
+     */
+    public int getID() {
+        return ID;
     }
 
     /**
