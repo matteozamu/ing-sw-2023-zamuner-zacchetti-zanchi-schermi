@@ -2,6 +2,8 @@ package it.polimi.ingsw.model;
 
 import java.io.Serializable;
 
+import static it.polimi.ingsw.enumeration.Color.ANSI_RESET;
+
 /**
  * Represents an object card in the game.
  */
@@ -52,6 +54,6 @@ public class ObjectCard implements Serializable {
      */
     @Override
     public String toString() {
-        return type.getColoredText() /*+ "-" + id*/;
+        return type.getColor() + type.getText() + ANSI_RESET /*+ "-" + id*/;
     }
 }
