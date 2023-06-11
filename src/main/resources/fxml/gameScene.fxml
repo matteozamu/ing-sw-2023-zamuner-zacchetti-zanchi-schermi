@@ -65,35 +65,6 @@
                             <Label fx:id="shelfLabel1" styleClass="shelfLabel" StackPane.alignment="BOTTOM_CENTER"/>
                             <GridPane fx:id="shelf1GridPane" hgap="17.0" maxHeight="324.0" maxWidth="304.0" translateY="-11.0" vgap="9.0" styleClass="shelfGridPane">
                                 <ImageView fx:id="game1" fitHeight="47.0" fitWidth="47.0" styleClass="Game-1" GridPane.columnIndex="0" GridPane.rowIndex="0" />
-                                <ImageView fx:id="game2" fitHeight="47.0" fitWidth="47.0" styleClass="Game-2" GridPane.columnIndex="1" GridPane.rowIndex="0" />
-                                <ImageView fx:id="game3" fitHeight="47.0" fitWidth="47.0" styleClass="Game-0" GridPane.columnIndex="2" GridPane.rowIndex="0" />
-                                <ImageView fx:id="plant1" fitHeight="47.0" fitWidth="47.0" styleClass="Plant-1" GridPane.columnIndex="3" GridPane.rowIndex="0" />
-                                <ImageView fx:id="plant2" fitHeight="47.0" fitWidth="47.0" styleClass="Plant-2" GridPane.columnIndex="4" GridPane.rowIndex="0" />
-                                <ImageView fx:id="plant3" fitHeight="47.0" fitWidth="47.0" styleClass="Plant-0" GridPane.columnIndex="0" GridPane.rowIndex="1" />
-                                <ImageView fx:id="trophy1" fitHeight="47.0" fitWidth="47.0" styleClass="Trophy-1" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-                                <ImageView fx:id="cat3" fitHeight="47.0" fitWidth="47.0" styleClass="Cat-0" GridPane.columnIndex="2" GridPane.rowIndex="1" />
-                                <ImageView fx:id="game4" fitHeight="47.0" fitWidth="47.0" styleClass="Game-1" GridPane.columnIndex="3" GridPane.rowIndex="1" />
-                                <ImageView fx:id="trophy4" fitHeight="47.0" fitWidth="47.0" styleClass="Trophy-1" GridPane.columnIndex="4" GridPane.rowIndex="1" />
-                                <ImageView fx:id="trophy2" fitHeight="47.0" fitWidth="47.0" styleClass="Trophy-2" GridPane.columnIndex="0" GridPane.rowIndex="2" />
-                                <ImageView fx:id="trophy3" fitHeight="47.0" fitWidth="47.0" styleClass="Trophy-0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-                                <ImageView fx:id="book30" fitHeight="47.0" fitWidth="47.0" styleClass="Book-1" GridPane.columnIndex="2" GridPane.rowIndex="2" />
-                                <ImageView fx:id="book31" fitHeight="47.0" fitWidth="47.0" styleClass="Book-2" GridPane.columnIndex="3" GridPane.rowIndex="2" />
-                                <ImageView fx:id="book32" fitHeight="47.0" fitWidth="47.0" styleClass="Book-0" GridPane.columnIndex="4" GridPane.rowIndex="2" />
-                                <ImageView fx:id="frame1" fitHeight="47.0" fitWidth="47.0" styleClass="Frame-1" GridPane.columnIndex="0" GridPane.rowIndex="3" />
-                                <ImageView fx:id="frame2" fitHeight="47.0" fitWidth="47.0" styleClass="Frame-2" GridPane.columnIndex="1" GridPane.rowIndex="3" />
-                                <ImageView fx:id="frame3" fitHeight="47.0" fitWidth="47.0" styleClass="Frame-0" GridPane.columnIndex="2" GridPane.rowIndex="3" />
-                                <ImageView fx:id="cat1" fitHeight="47.0" fitWidth="47.0" styleClass="Cat-1" GridPane.columnIndex="3" GridPane.rowIndex="3" />
-                                <ImageView fx:id="cat2" fitHeight="47.0" fitWidth="47.0" styleClass="Cat-2" GridPane.columnIndex="4" GridPane.rowIndex="3" />
-                                <ImageView fx:id="book33" fitHeight="47.0" fitWidth="47.0" styleClass="Book-2" GridPane.columnIndex="0" GridPane.rowIndex="4" />
-                                <ImageView fx:id="book34" fitHeight="47.0" fitWidth="47.0" styleClass="Book-0" GridPane.columnIndex="1" GridPane.rowIndex="4" />
-                                <ImageView fx:id="frame4" fitHeight="47.0" fitWidth="47.0" styleClass="Frame-0" GridPane.columnIndex="2" GridPane.rowIndex="4" />
-                                <ImageView fx:id="cat4" fitHeight="47.0" fitWidth="47.0" styleClass="Cat-1" GridPane.columnIndex="3" GridPane.rowIndex="4" />
-                                <ImageView fx:id="cat5" fitHeight="47.0" fitWidth="47.0" styleClass="Cat-0" GridPane.columnIndex="4" GridPane.rowIndex="4" />
-                                <ImageView fx:id="game5" fitHeight="47.0" fitWidth="47.0" styleClass="Game-1" GridPane.columnIndex="0" GridPane.rowIndex="5" />
-                                <ImageView fx:id="trophy5" fitHeight="47.0" fitWidth="47.0" styleClass="Trophy-1" GridPane.columnIndex="1" GridPane.rowIndex="5" />
-                                <ImageView fx:id="plant4" fitHeight="47.0" fitWidth="47.0" styleClass="Plant-2" GridPane.columnIndex="2" GridPane.rowIndex="5" />
-                                <ImageView fx:id="plant5" fitHeight="47.0" fitWidth="47.0" styleClass="Plant-0" GridPane.columnIndex="3" GridPane.rowIndex="5" />
-                                <ImageView fx:id="trophy6" fitHeight="47.0" fitWidth="47.0" styleClass="Trophy-1" GridPane.columnIndex="4" GridPane.rowIndex="5" />
                             </GridPane>
                         </StackPane>
 

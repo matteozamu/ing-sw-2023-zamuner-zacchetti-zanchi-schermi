@@ -428,6 +428,13 @@ public class GameSceneController {
         }
     }
 
+    void addShelf() {
+        List<Player> players = guiManager.getGameSerialized().getAllPlayers();
+        int playerNumber = players.size();
+
+
+    }
+
     /**
      * Hides the zoom panel
      */
