@@ -6,14 +6,20 @@ public class NumberOfPlayersMessage extends Message {
     private static final long serialVersionUID = -8420070827032848314L;
 
     private final int numberOfPlayers;
+    private final String gameName;
 
-    public NumberOfPlayersMessage(String username, String token, int numberOfPlayers) {
+    public NumberOfPlayersMessage(String username, String token, int numberOfPlayers, String gameName) {
         super(username, token, MessageContent.NUMBER_OF_PLAYERS);
         this.numberOfPlayers = numberOfPlayers;
+        this.gameName = gameName;
     }
 
     public int getNumberOfPlayers() {
         return numberOfPlayers;
+    }
+
+    public String getGameName() {
+        return gameName;
     }
 
     @Override
@@ -29,6 +35,7 @@ public class NumberOfPlayersMessage extends Message {
         return "NumberOfPplayersMessage{" +
                 "senderUsername=" + getSenderUsername() +
                 ", content=" + getContent() +
+                ", gameName=" + gameName +
                 ", numberOfPlayers=" + numberOfPlayers +
                 '}';
     }

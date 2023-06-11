@@ -1,16 +1,15 @@
 package it.polimi.ingsw.view.gui;
 
+import it.polimi.ingsw.utility.MessageBuilder;
 import javafx.fxml.FXML;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
-import it.polimi.ingsw.utility.MessageBuilder;
 
 /**
  * Class NumberPlayersController represents the controller of the scene where the player can choose
  * the number of players of the game
- *
  */
 public class NumberPlayersController {
 
@@ -55,7 +54,7 @@ public class NumberPlayersController {
      * @param numberOfPlayers number of players
      */
     private void onNumberClick(int numberOfPlayers) {
-        if (!guiManager.sendRequest(MessageBuilder.buildNumberOfPlayerMessage(guiManager.getClientToken(), guiManager.getUsername(), numberOfPlayers))) {
+        if (!guiManager.sendRequest(MessageBuilder.buildNumberOfPlayerMessage(guiManager.getClientToken(), guiManager.getUsername(), numberOfPlayers, null))) {
 
             GuiManager.showDialog((Stage) mainPane.getScene().getWindow(), GuiManager.ERROR_DIALOG_TITLE,
                     GuiManager.SEND_ERROR);
