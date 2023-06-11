@@ -6,6 +6,8 @@ import it.polimi.ingsw.utility.JsonReader;
 import java.io.PrintStream;
 import java.util.List;
 
+import static it.polimi.ingsw.enumeration.Color.ANSI_RESET;
+
 public class CliVisual {
 
     /**
@@ -26,7 +28,7 @@ public class CliVisual {
                 boolean found = false;
                 for (PersonalGoal goal : goals) {
                     if (goal.getRow() == i && goal.getColumn() == j) {
-                        line.append(getColoredText(goal.getType().getR(), goal.getType().getG(), goal.getType().getB())).append(" ");
+                        line.append(goal.getType().getColorBG()).append(" ").append(ANSI_RESET).append(" ");
                         found = true;
                         break;
                     }
@@ -51,18 +53,17 @@ public class CliVisual {
         out.print(sb);
     }
 
-    /**
-     * @param r red
-     * @param g green
-     * @param b blue
-     * @return a coloured string
-     */
-    public static String getColoredText(int r, int g, int b) {
-        // TODO se serve cambiare questa stringa per i colori
-        String colorCode = String.format("\u001B[48;2;%d;%d;%dm", r, g, b);
-        String resetCode = "\u001B[0m";
-        return String.format("%s%s%s", colorCode, " ", resetCode);
-    }
+//    /**
+//     * @param r red
+//     * @param g green
+//     * @param b blue
+//     * @return a coloured string
+//     */
+//    public static String getColoredText(String color) {
+//        // TODO se serve cambiare questa stringa per i colori
+//
+//    }
+
 
     /**
      * print the score of the user
@@ -107,13 +108,12 @@ public class CliVisual {
                 if (boardMatrix[i][j] == 1) {
                     objectCard = board.getGrid().get(new Coordinate(4 - i, j - 4));
                     if (objectCard != null) {
-                        String cardText = objectCard.toString();
-                        String visibleCardText = cardText.replaceAll("\u001B\\[[;\\d]*m", "");
-                        int visibleCardLength = visibleCardText.length();
+                        String cardText = objectCard.getType().getText();
+                        int visibleCardLength = cardText.length();
                         if (visibleCardLength % 2 == 0) {
-                            boardView.append("║").append(" ".repeat((8 - visibleCardText.length()) / 2)).append(objectCard).append(" ".repeat((8 - visibleCardText.length()) / 2));
+                            boardView.append("║").append(" ".repeat((8 - visibleCardLength) / 2)).append(objectCard).append(" ".repeat((8 - visibleCardLength) / 2));
                         } else {
-                            boardView.append("║").append(" ".repeat((8 - visibleCardText.length()) / 2)).append(objectCard).append(" ".repeat((int) Math.ceil((double) (8 - visibleCardText.length()) / 2)));
+                            boardView.append("║").append(" ".repeat((8 - visibleCardLength) / 2)).append(objectCard).append(" ".repeat((int) Math.ceil((double) (8 - visibleCardLength) / 2)));
                         }
                     } else {
                         boardView.append("║").append(" ".repeat(8));
@@ -138,13 +138,12 @@ public class CliVisual {
                 if (boardMatrix[i][j] == 1) {
                     objectCard = board.getGrid().get(new Coordinate(4 - i, j - 4));
                     if (objectCard != null) {
-                        String cardText = objectCard.toString();
-                        String visibleCardText = cardText.replaceAll("\u001B\\[[;\\d]*m", "");
-                        int visibleCardLength = visibleCardText.length();
+                        String cardText = objectCard.getType().getText();
+                        int visibleCardLength = cardText.length();
                         if (visibleCardLength % 2 == 0) {
-                            boardView.append("║").append(" ".repeat((8 - visibleCardText.length()) / 2)).append(objectCard).append(" ".repeat((8 - visibleCardText.length()) / 2));
+                            boardView.append("║").append(" ".repeat((8 - visibleCardLength) / 2)).append(objectCard).append(" ".repeat((8 - visibleCardLength) / 2));
                         } else {
-                            boardView.append("║").append(" ".repeat((8 - visibleCardText.length()) / 2)).append(objectCard).append(" ".repeat((int) Math.ceil((double) (8 - visibleCardText.length()) / 2)));
+                            boardView.append("║").append(" ".repeat((8 - visibleCardLength) / 2)).append(objectCard).append(" ".repeat((int) Math.ceil((double) (8 - visibleCardLength) / 2)));
                         }
                     } else {
                         boardView.append("║").append(" ".repeat(8));
