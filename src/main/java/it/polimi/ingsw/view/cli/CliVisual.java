@@ -184,17 +184,16 @@ public class CliVisual {
             shelfView.append("║");
             for (int col = 0; col < Shelf.COLUMNS; col++) {
                 Coordinate coord = new Coordinate(row, col);
-                ObjectCard card = s.getObjectCard(coord);
-                if (card == null) {
+                ObjectCard objectCard = s.getObjectCard(coord);
+                if (objectCard == null) {
                     shelfView.append("-".repeat(maxLengthType));
                 } else {
-                    String cardText = card.toString();
-                    String visibleCardText = cardText.replaceAll("\u001B\\[[;\\d]*m", "");
-                    int visibleCardLength = visibleCardText.length();
+                    String cardText = objectCard.getType().getText();
+                    int visibleCardLength = cardText.length();
                     if (visibleCardLength % 2 == 0) {
-                        shelfView.append(" ".repeat((8 - visibleCardText.length()) / 2)).append(cardText).append(" ".repeat((8 - visibleCardText.length()) / 2));
+                        shelfView.append(" ".repeat((8 - visibleCardLength) / 2)).append(objectCard).append(" ".repeat((8 - visibleCardLength) / 2));
                     } else {
-                        shelfView.append(" ".repeat((8 - visibleCardText.length()) / 2)).append(cardText).append(" ".repeat((int) Math.ceil((double) (8 - visibleCardText.length()) / 2)));
+                        shelfView.append(" ".repeat((8 - visibleCardLength) / 2)).append(objectCard).append(" ".repeat((int) Math.ceil((double) (8 - visibleCardLength) / 2)));
                     }
                 }
                 shelfView.append("║");
@@ -223,8 +222,8 @@ public class CliVisual {
         if (!limboCards.isEmpty()) {
             int totalLength = 0;
             for (int i = 0; i < limboCards.size(); i++) {
-                String visibleCardText = limboCards.get(i).toString().replaceAll("\u001B\\[[;\\d]*m", "");
-                totalLength += visibleCardText.length() + 2;
+                String cardText = limboCards.get(i).getType().getText();
+                totalLength += cardText.length() + 2;
                 if (i != 0) {
                     totalLength += 1;
                 }
