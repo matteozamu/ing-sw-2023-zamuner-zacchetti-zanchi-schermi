@@ -32,12 +32,10 @@
                 </StackPane>
 
                 <HBox fx:id="commonGoalCardsHBoxArea" styleClass="commonGoalCardsHBoxArea">
-                    <StackPane>
-                        <ImageView fx:id="commonGoal1" id="commonGoalCard-1" fitHeight="91.3" fitWidth="138.5" />
+                    <StackPane fx:id="commonGoalCard1StackPane">
                         <ImageView fx:id="scoring81" fitHeight="39.5" fitWidth="39.5" rotate="-8.0" styleClass="scoring-8" translateX="32.2" translateY="-3.5" />
                     </StackPane>
-                    <StackPane>
-                        <ImageView fx:id="commonGoal2" id="commonGoalCard-2" fitHeight="91.3" fitWidth="138.5" />
+                    <StackPane fx:id="commonGoalCard2StackPane">
                         <ImageView fx:id="scoring82" fitHeight="39.5" fitWidth="39.5" rotate="-8.0" styleClass="scoring-8" translateX="32.2" translateY="-3.5" />
                     </StackPane>
                 </HBox>
@@ -154,6 +152,8 @@
                 <Label fx:id="pointsPlayer4" styleClass="playerName" text="Points: 35" />
             </VBox>
         </Pane>
+
+        <FlowPane fx:id="commonGoalCardInfoPanel" styleClass="commonGoalCardInfoPanel"/>
 
     </StackPane>
 </FlowPane>

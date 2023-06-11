@@ -28,6 +28,7 @@ import java.util.*;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import static it.polimi.ingsw.model.ObjectCardType.cat;
 import static java.awt.Transparency.OPAQUE;
 
 //TODO : Vedere differenza tra ID e classe in CSS
@@ -52,6 +53,10 @@ public class GameSceneController {
     @FXML
     GridPane boardGridPane;
     @FXML
+    StackPane commonGoalCard1StackPane;
+    @FXML
+    StackPane commonGoalCard2StackPane;
+    @FXML
     ImageView boardImage;
     @FXML
     HBox boardShelfHBoxArea;
@@ -61,6 +66,8 @@ public class GameSceneController {
     VBox shelfLimboVBoxArea;
     @FXML
     ImageView personalGoalCard;
+    @FXML
+    FlowPane commonGoalCardInfoPanel;
     @FXML
     ImageView winnerTile;
     @FXML
@@ -98,7 +105,6 @@ public class GameSceneController {
     HBox limboHBoxArea;
     @FXML
     StackPane personalGoalCardPane;
-    //TODO : Perché le definizioni di tipo di pane posso differire tra controller e FXML?
     @FXML
     Label pointLabel;
     @FXML
@@ -284,8 +290,8 @@ public class GameSceneController {
 
 
     private GuiManager guiManager;
-    private  Map<String, ImageView> objectCards;
-    private List<ImageView> commonGoalCards;
+    private Map<String, ImageView> objectCards;
+    private Map<String, ImageView> commonGoalCards;
 
     @FXML
     private void initialize() {
@@ -298,10 +304,11 @@ public class GameSceneController {
         shelfLabel4.setText("Simone");
 
         objectCards = new HashMap<>();
-        commonGoalCards = new ArrayList<>();
+        commonGoalCards = new HashMap<>();
 
         loadObjectCards();
         loadCommonGoalCards();
+        addObjectCards(guiManager.getGameSerialized());
     }
 
     /**
@@ -310,7 +317,25 @@ public class GameSceneController {
      * @param gameSerialized state of the game at the time of the join
      */
     void setupGame(GameSerialized gameSerialized) {
-        addObjectCards(gameSerialized);
+//        addObjectCards(gameSerialized);
+        bindCommonGoalCardInfoPanelZoom();
+        bindPanels();
+    }
+
+    /**
+     * Binds click events on the panels
+     */
+    private void bindPanels() {
+        zoomPanel.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> hideZoomPanel());
+    }
+
+    /**
+     * Binds common goal info zoom on card click
+     */
+    private void bindCommonGoalCardInfoPanelZoom() {
+        for (ImageView commonGoalCard : commonGoalCards.values()) {
+            commonGoalCard.addEventHandler(MouseEvent.MOUSE_CLICKED, this::showCommonGoalCardInfoPanelZoom);
+        }
     }
 
     private void loadObjectCards() {
@@ -319,80 +344,30 @@ public class GameSceneController {
                 .collect(Collectors.toList());
 
         for (int i = 0; i < ObjectCardType.SIZE; i++) {
+            addObjectCardImagesToMap(types.get(i), "0", 7);
             addObjectCardImagesToMap(types.get(i), "1", 7);
-            addObjectCardImagesToMap(types.get(i), "2", 7);
-            addObjectCardImagesToMap(types.get(i), "3", 8);
+            addObjectCardImagesToMap(types.get(i), "2", 8);
         }
     }
 
-    /**
-     * Adds the images of the object cards to the map of the board
-     *
-     * @param type type of the object card
-     * @param level level of the object card
-     * @param count number of object cards to add
-     */
     private void addObjectCardImagesToMap(String type, String level, int count) {
         for (int i = 0; i < count; i++) {
             ImageView imageView = new ImageView();
-            String id = type + "-" + level;
-            imageView.getStyleClass().add(id);
+            String id = Character.toUpperCase(type.charAt(0)) + type.substring(1) + "-" + level;
+            imageView.getStyleClass().add("button");
             imageView.setId(id);
             objectCards.put(imageView.getId(), imageView);
         }
     }
 
-    /**
-     * Loads the common goal cards images
-     */
     private void loadCommonGoalCards() {
-        ImageView imageView = new ImageView();
-        imageView.getStyleClass().add("commonGoalCard-1");
-        commonGoalCards.add(imageView);
-
-        imageView = new ImageView();
-        imageView.getStyleClass().add("commonGoalCard-2");
-        commonGoalCards.add(imageView);
-
-        imageView = new ImageView();
-        imageView.getStyleClass().add("commonGoalCard-3");
-        commonGoalCards.add(imageView);
-
-        imageView = new ImageView();
-        imageView.getStyleClass().add("commonGoalCard-4");
-        commonGoalCards.add(imageView);
-
-        imageView = new ImageView();
-        imageView.getStyleClass().add("commonGoalCard-5");
-        commonGoalCards.add(imageView);
-
-        imageView = new ImageView();
-        imageView.getStyleClass().add("commonGoalCard-6");
-        commonGoalCards.add(imageView);
-
-        imageView = new ImageView();
-        imageView.getStyleClass().add("commonGoalCard-7");
-        commonGoalCards.add(imageView);
-
-        imageView = new ImageView();
-        imageView.getStyleClass().add("commonGoalCard-8");
-        commonGoalCards.add(imageView);
-
-        imageView = new ImageView();
-        imageView.getStyleClass().add("commonGoalCard-9");
-        commonGoalCards.add(imageView);
-
-        imageView = new ImageView();
-        imageView.getStyleClass().add("commonGoalCard-10");
-        commonGoalCards.add(imageView);
-
-        imageView = new ImageView();
-        imageView.getStyleClass().add("commonGoalCard-11");
-        commonGoalCards.add(imageView);
-
-        imageView = new ImageView();
-        imageView.getStyleClass().add("commonGoalCard-12");
-        commonGoalCards.add(imageView);
+        for (int i = 1; i <= 12; i++) {
+            ImageView imageView = new ImageView();
+            String id = "commonGoalCard-" + i;
+            imageView.getStyleClass().add("button");
+            imageView.setId(id);
+            commonGoalCards.put(imageView.getId(), imageView);
+        }
     }
 
     /**
@@ -425,7 +400,7 @@ public class GameSceneController {
                             imageView.setPreserveRatio(true);
                             imageView.setPickOnBounds(true);
 
-                            boardGridPane.add(imageView, 4 - i, j - 4);  // aggiunge l'immagine alla cella (j, i) del GridPane
+                            boardGridPane.add(imageView, i, j);  // aggiunge l'immagine alla cella (j, i) del GridPane
                         }
                     }
                 }
@@ -433,6 +408,103 @@ public class GameSceneController {
         }
     }
 
+    void addCommonGoalCards(List<CommonGoal> commonGoals) {
+        for (int i = 0; i < commonGoals.size(); i++) {
+            String cardTypeText = commonGoals.get(i).toString();
+            ImageView imageView = commonGoalCards.get(cardTypeText);
+
+            if (imageView != null) {
+                imageView.setFitWidth(138.5);
+                imageView.setFitHeight(91.3);
+                imageView.setPreserveRatio(true);
+                imageView.setPickOnBounds(true);
+
+                if (i == 0) {
+                    commonGoalCard1StackPane.getChildren().add(imageView);
+                } else if (i == 1) {
+                    commonGoalCard2StackPane.getChildren().add(imageView);
+                }
+            }
+        }
+    }
+
+    /**
+     * Hides the zoom panel
+     */
+    private void hideZoomPanel() {
+        zoomPanel.getChildren().clear();
+        zoomPanel.setVisible(false);
+
+        setBoardOpaque(NOT_OPAQUE);
+    }
+
+    /**
+     * Sets a opacity value for every element on the board
+     *
+     * @param value opacity value
+     */
+    private void setBoardOpaque(double value) {
+        boardStackPaneArea.opacityProperty().setValue(value);
+
+//        for (ImageView ammotile : ammoTiles) {
+//            ammotile.opacityProperty().setValue(value);
+//        }
+//
+//        for (ImageView playerFigure : playerFigures) {
+//            playerFigure.opacityProperty().setValue(value);
+//        }
+//
+//        for (ImageView killshots : killshotsImages) {
+//            killshots.opacityProperty().setValue(value);
+//        }
+//
+//        for (Node node : actionList.getChildren()) {
+//            node.opacityProperty().setValue(value);
+//        }
+//
+//        for (Node node : iconList.getChildren()) {
+//            node.opacityProperty().setValue(value);
+//        }
+    }
+
+    /**
+     * Shows the zoom on a weapon in the zoom panel
+     *
+     * @param event of the click on a weapon
+     */
+    private void showCommonGoalCardInfoPanelZoom(Event event) {
+//        ImageView commonGoalCardTarget = (ImageView) event.getTarget();
+//
+//        if (commonGoalCardTarget != null) {
+//            setBoardOpaque(OPAQUE);
+//
+//            zoomPanel.toFront();
+//            ImageView commonGoalCard = new ImageView(commonGoalCardTarget.getImage());
+//
+//            String commonGoalCardType = commonGoalCards.getKey(commonGoalCard.getId());
+//            if (color != null) {
+//                String className = null;
+//
+//                switch (color) {
+//                    case BLUE:
+//                        className = "weaponZoomImageBlue";
+//                        break;
+//                    case RED:
+//                        className = "weaponZoomImageRed";
+//                        break;
+//                    case YELLOW:
+//                        className = "weaponZoomImageYellow";
+//                        break;
+//                }
+//
+//                commonGoalCard.getStyleClass().add(className);
+//
+//                zoomPanel.getChildren().add(commonGoalCard);
+//                zoomPanel.setVisible(true);
+//                zoomPanel.toFront();
+//            }
+//        }
+    }
 
     /**
      * Updates the elements of the board
@@ -446,8 +518,8 @@ public class GameSceneController {
      *
      */
     private void updateBoard() {
-        ObservableList<Node> childrens = boardGridPane.getChildren();
-        childrens.clear();
+        ObservableList<Node> children = boardGridPane.getChildren();
+        children.clear();
         addObjectCards(guiManager.getGameSerialized());
     }
 
