@@ -462,7 +462,7 @@ public class Cli extends ClientGameManager implements DisconnectionListener {
         out.println("Choose the game to join:");
 
         for (int i = 0; i < games.size(); i++) {
-            out.print("\t" + (i) + " - " + games.get(i).getGame().getGameName() + ", Players: ");
+            out.print("\t" + (i) + " - " + games.get(i).getGame().getGameName() + " - Players: ");
             String playerNames = games.get(i).getGame().getPlayers()
                     .stream()
                     .map(Player::getName)
