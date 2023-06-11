@@ -15,6 +15,7 @@ import java.io.PrintStream;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
+import java.util.stream.Collectors;
 
 public class Cli extends ClientGameManager implements DisconnectionListener {
     private Scanner in;
@@ -48,6 +49,7 @@ public class Cli extends ClientGameManager implements DisconnectionListener {
 
     /**
      * show an error message
+     *
      * @param errorMessage the error to show
      */
     private void promptInputError(String errorMessage) {
@@ -255,7 +257,7 @@ public class Cli extends ClientGameManager implements DisconnectionListener {
     private int askNumberOfPlayers() {
         int gamePlayers = 2;
 
-        out.println("How many players in the game [2] (2 - 4)?");
+        out.println("How many players in the game? (2 to 4) (default is 2)");
         in.reset();
 
         do {
@@ -338,9 +340,35 @@ public class Cli extends ClientGameManager implements DisconnectionListener {
     @Override
     public void numberOfPlayersRequest(Response response) {
         int numberOfPlayers = askNumberOfPlayers();
-        if (!sendRequest(MessageBuilder.buildNumberOfPlayerMessage(getClientToken(), getUsername(), numberOfPlayers))) {
+        String gameName = askGameName();
+        if (!sendRequest(MessageBuilder.buildNumberOfPlayerMessage(getClientToken(), getUsername(), numberOfPlayers, gameName))) {
             promptError(SEND_ERROR, true);
         }
+    }
+
+    private String askGameName() {
+        String gameName = null;
+
+        out.println("Enter a name for the game:");
+
+        do {
+            out.print(">>> ");
+
+            if (in.hasNextLine()) {
+                final String name = in.nextLine();
+
+                if (name.equals("")) {
+                    promptInputError("Invalid name!");
+                } else {
+                    gameName = name;
+                }
+            } else {
+                in.nextLine();
+                promptInputError(INVALID_STRING);
+            }
+        } while (gameName == null);
+
+        return gameName;
     }
 
     /**
@@ -418,6 +446,7 @@ public class Cli extends ClientGameManager implements DisconnectionListener {
 
     /**
      * print a list of game in which the user can log in
+     *
      * @param games the list of games
      */
     @Override
@@ -433,7 +462,12 @@ public class Cli extends ClientGameManager implements DisconnectionListener {
         out.println("Choose the game to join:");
 
         for (int i = 0; i < games.size(); i++) {
-            out.println("\t" + (i) + " - " + games.get(i).getId());
+            out.print("\t" + (i) + " - " + games.get(i).getGame().getGameName() + ", Players: ");
+            String playerNames = games.get(i).getGame().getPlayers()
+                    .stream()
+                    .map(Player::getName)
+                    .collect(Collectors.joining(", "));
+            out.println(playerNames);
         }
 
         choose = readInt(0, games.size() - 1);
@@ -668,7 +702,6 @@ public class Cli extends ClientGameManager implements DisconnectionListener {
     }
 
     /**
-     *
      * @param message is the message to show
      */
     @Override
