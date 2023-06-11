@@ -34,7 +34,6 @@ public class NumberPlayersController {
     @FXML
     public void initialize() {
         guiManager = GuiManager.getInstance();
-        guiManager.setNumberPlayersController(this);
 
         bindEvents();
     }

@@ -40,7 +40,6 @@ public class JoinGameSceneController {
     @FXML
     public void initialize() {
         guiManager = GuiManager.getInstance();
-        guiManager.setJoinGameSceneController(this);
         bindEvents();
     }
 

@@ -5,6 +5,7 @@ import it.polimi.ingsw.enumeration.MessageStatus;
 import it.polimi.ingsw.network.message.Response;
 import it.polimi.ingsw.utility.MessageBuilder;
 import javafx.fxml.FXML;
+import javafx.scene.Scene;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;

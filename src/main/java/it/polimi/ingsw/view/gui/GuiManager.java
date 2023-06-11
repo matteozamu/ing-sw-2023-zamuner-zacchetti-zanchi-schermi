@@ -36,11 +36,11 @@ public class GuiManager extends ClientGameManager implements DisconnectionListen
 
     private LobbySceneController lobbySceneController;
 
-    private NumberPlayersController numberPlayersController;
+    //private NumberPlayersController numberPlayersController;
 
     private StartGameSceneController startGameSceneController;
 
-    private JoinGameSceneController joinGameSceneController;
+    //private JoinGameSceneController joinGameSceneController;
 
     private GuiManager() {
         super();
@@ -132,13 +132,14 @@ public class GuiManager extends ClientGameManager implements DisconnectionListen
     void setLobbySceneController(LobbySceneController lobbySceneController) {
         this.lobbySceneController = lobbySceneController;
     }
-    /** Sets the number players controller
-     *
-     * @param numberPlayersController number players controller
-     */
-    void setNumberPlayersController(NumberPlayersController numberPlayersController) {
-        this.numberPlayersController = numberPlayersController;
-    }
+
+//    /** Sets the number players controller
+//     *
+//     * @param numberPlayersController number players controller
+//     */
+//    void setNumberPlayersController(NumberPlayersController numberPlayersController) {
+//        this.numberPlayersController = numberPlayersController;
+//    }
 
     /** Sets the start game scene controller
      *
@@ -148,13 +149,13 @@ public class GuiManager extends ClientGameManager implements DisconnectionListen
         this.startGameSceneController = startGameSceneController;
     }
 
-    /** Sets the join game scene controller
-     *
-     * @param joinGameSceneController join game scene controller
-     */
-    void setJoinGameSceneController(JoinGameSceneController joinGameSceneController) {
-        this.joinGameSceneController = joinGameSceneController;
-    }
+//    /** Sets the join game scene controller
+//     *
+//     * @param joinGameSceneController join game scene controller
+//     */
+//    void setJoinGameSceneController(JoinGameSceneController joinGameSceneController) {
+//        this.joinGameSceneController = joinGameSceneController;
+//    }
 
     /**
      * The server sends the response to the connection request to the client
