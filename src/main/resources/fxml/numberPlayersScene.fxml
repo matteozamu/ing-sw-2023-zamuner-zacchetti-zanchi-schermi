@@ -17,19 +17,28 @@
 
     <top>
         <VBox styleClass="topBox">
-            <Label text="Select the number of players" styleClass="menuTitle"/>
+            <Label text="Name the game and select the number of players" styleClass="menuTitle"/>
         </VBox>
     </top>
 
     <center>
-        <HBox styleClass="selectionButton">
-            <ImageView fx:id="twoPlayersButton" id="twoPlayersButton" fitWidth="400" fitHeight="400" preserveRatio="true" pickOnBounds="true" styleClass="button"/>
-            <ImageView fx:id="threePlayersButton" id="threePlayersButton" fitWidth="400" fitHeight="400" preserveRatio="true" pickOnBounds="true" styleClass="button"/>
-            <ImageView fx:id="fourPlayersButton" id="fourPlayersButton" fitWidth="400" fitHeight="400" preserveRatio="true" pickOnBounds="true" styleClass="button"/>
-        </HBox>
+        <VBox styleClass="centerBox">
+            <Label text="Enter a name for the game:" styleClass="menuLabel"/>
+            <TextField fx:id="gameNameField" styleClass="menuTextField"/>
+
+            <Region prefHeight="20" />
+
+            <HBox styleClass="selectionButton">
+                <ImageView fx:id="twoPlayersButton" id="twoPlayersButton" fitWidth="400" fitHeight="400" preserveRatio="true" pickOnBounds="true" styleClass="button"/>
+                <ImageView fx:id="threePlayersButton" id="threePlayersButton" fitWidth="400" fitHeight="400" preserveRatio="true" pickOnBounds="true" styleClass="button"/>
+                <ImageView fx:id="fourPlayersButton" id="fourPlayersButton" fitWidth="400" fitHeight="400" preserveRatio="true" pickOnBounds="true" styleClass="button"/>
+            </HBox>
+        </VBox>
     </center>
 
+    <!--
     <Region prefHeight="20" />
+    -->
 
     <bottom>
         <VBox styleClass="botBox">

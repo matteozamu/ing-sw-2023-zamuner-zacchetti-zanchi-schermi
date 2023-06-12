@@ -40,7 +40,7 @@ public class Gui extends Application {
 
         stage.setScene(new Scene(new Pane()));
 
-        GuiManager.setLayout(stage.getScene(), "fxml/menuScene.fxml");
+        GuiManager.setLayout(stage.getScene(), "fxml/numberPlayersScene.fxml");
         stage.show();
     }
      /**

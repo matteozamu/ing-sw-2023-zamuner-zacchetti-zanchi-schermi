@@ -216,7 +216,7 @@ public class GuiManager extends ClientGameManager implements DisconnectionListen
     /**
      * The server sends the response to request of the number of players to the client
      * @param username username of the player who has to play
-     * @param cg list of common goals
+     * @param commonGoals list of common goals
      */
     @Override
     public void firstPlayerCommunication(String username, List<CommonGoal> commonGoals) {
