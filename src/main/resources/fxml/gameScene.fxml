@@ -43,11 +43,7 @@
             </VBox>
 
             <VBox fx:id="shelfLimboVBoxArea" maxHeight="656.0" maxWidth="400.0" styleClass="shelfLimboVBoxArea">
-
                 <HBox fx:id="limboHBoxArea" prefHeight="100.0" prefWidth="300.0" styleClass="limboHBoxArea">
-                    <ImageView fx:id="frame5" fitHeight="75.0" fitWidth="75.0" layoutX="62.0" layoutY="12.5" styleClass="Frame-1" />
-                    <ImageView fx:id="game6" fitHeight="75.0" fitWidth="75.0" layoutX="159.5" layoutY="12.5" styleClass="Game-1" />
-                    <ImageView fx:id="cat6" fitHeight="75.0" fitWidth="75.0" layoutX="257" layoutY="12.5" styleClass="Cat-1" />
                 </HBox>
 
                 <AnchorPane fx:id="columnArrowAnchorPane" maxWidth="310" prefHeight="50" styleClass="columnArrowAnchorPane">
@@ -97,7 +93,6 @@
             </VBox>
 
             <StackPane fx:id="personalGoalCardPane" styleClass="personalGoalCardPane">
-                <ImageView id="personalGoalCard-1" fx:id="personalGoalCard" fitHeight="207.9" fitWidth="137.0" translateY="51.5" StackPane.alignment="CENTER"/>
             </StackPane>
 
         </HBox>
