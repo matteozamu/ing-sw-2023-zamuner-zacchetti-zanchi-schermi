@@ -200,7 +200,6 @@ public class GuiManager extends ClientGameManager implements DisconnectionListen
      */
     @Override
     public void numberOfPlayersRequest(Response response) {
-        // Nothing to do
         Platform.runLater(() ->
                 startGameSceneController.numberOfPlayerRequest(response));
     }
@@ -248,15 +247,9 @@ public class GuiManager extends ClientGameManager implements DisconnectionListen
      */
     @Override
     public void displayActions(List<PossibleAction> possibleActions) {
-
-    }
-
-    /**
-     * Picks an object card from the board
-     */
-    @Override
-    public void pickBoardCard() {
-
+        Platform.runLater(() ->
+                gameSceneController.displayAction(possibleActions)
+        );
     }
 
     @Override
@@ -269,6 +262,14 @@ public class GuiManager extends ClientGameManager implements DisconnectionListen
      */
     @Override
     public void createGame() {
+
+    }
+
+    /**
+     * Picks an object card from the board
+     */
+    @Override
+    public void pickBoardCard() {
 
     }
 
@@ -340,16 +341,19 @@ public class GuiManager extends ClientGameManager implements DisconnectionListen
      */
     @Override
     public void onPlayerDisconnection(String username) {
-
+        if (gameSceneController != null) {
+            Platform.runLater(() -> gameSceneController.onPlayerDisconnection(username));
+        }
     }
 
     /**
      * Handles the reconnection of a player
-     * @param username username of the player who reconnected
      */
     @Override
-    public void onPlayerReconnection(String username) {
-
+    public void onPlayerReconnection(String message) {
+        if (gameSceneController != null) {
+            Platform.runLater(() -> gameSceneController.onPlayerReconnection(message));
+        }
     }
 
     /**
@@ -415,10 +419,5 @@ public class GuiManager extends ClientGameManager implements DisconnectionListen
 
             System.exit(0);
         });
-    }
-
-
-    public void closeConnection() {
-        // Implementare qui la logica per chiudere la connessione...
     }
 }

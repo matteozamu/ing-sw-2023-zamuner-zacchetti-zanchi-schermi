@@ -719,6 +719,15 @@ public class GameSceneController {
     }
 
     /**
+     * Displays action buttons
+     *
+     * @param possibleActions possible actions
+     */
+    void displayAction(List<PossibleAction> possibleActions) {
+
+    }
+
+    /**
      * Returns the CSS ID of the action based on the PossibleAction
      *
      * @param possibleAction possible action passed
@@ -760,8 +769,17 @@ public class GameSceneController {
      *
      * @param player username of a player who disconnected
      */
-    void onPlayerDisconnect(String player) {
+    void onPlayerDisconnection(String player) {
         GuiManager.showDialog((Stage) mainPane.getScene().getWindow(), "Disconnection", player + " disconnected from the server");
+    }
+
+    /**
+     * Communicates the reconnection of a player
+     *
+     * @param message
+     */
+    void onPlayerReconnection(String message) {
+        GuiManager.showDialog((Stage) mainPane.getScene().getWindow(), "Reconnection", message);
     }
 
     /**
