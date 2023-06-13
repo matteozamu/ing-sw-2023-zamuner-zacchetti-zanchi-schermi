@@ -77,8 +77,6 @@ public class GameSceneController {
     @FXML
     VBox shelfLimboVBoxArea;
     @FXML
-    ImageView personalGoalCard;
-    @FXML
     FlowPane commonGoalCardInfoPanel;
     @FXML
     ImageView winnerTile;
@@ -149,134 +147,6 @@ public class GameSceneController {
     ImageView transparentImage2;
     @FXML
     ImageView transparentImage3;
-    @FXML
-    ImageView book1;
-    @FXML
-    ImageView book2;
-    @FXML
-    ImageView book3;
-    @FXML
-    ImageView book4;
-    @FXML
-    ImageView book5;
-    @FXML
-    ImageView book6;
-    @FXML
-    ImageView book7;
-    @FXML
-    ImageView book8;
-    @FXML
-    ImageView book9;
-    @FXML
-    ImageView book10;
-    @FXML
-    ImageView book11;
-    @FXML
-    ImageView book12;
-    @FXML
-    ImageView book13;
-    @FXML
-    ImageView book14;
-    @FXML
-    ImageView book15;
-    @FXML
-    ImageView book16;
-    @FXML
-    ImageView book17;
-    @FXML
-    ImageView book18;
-    @FXML
-    ImageView book19;
-    @FXML
-    ImageView book20;
-    @FXML
-    ImageView book21;
-    @FXML
-    ImageView book22;
-    @FXML
-    ImageView book23;
-    @FXML
-    ImageView book24;
-    @FXML
-    ImageView book25;
-    @FXML
-    ImageView book26;
-    @FXML
-    ImageView book27;
-    @FXML
-    ImageView book28;
-    @FXML
-    ImageView book29;
-    @FXML
-    ImageView book30;
-    @FXML
-    ImageView book31;
-    @FXML
-    ImageView book32;
-    @FXML
-    ImageView book33;
-    @FXML
-    ImageView book34;
-    @FXML
-    ImageView game1;
-    @FXML
-    ImageView game2;
-    @FXML
-    ImageView game3;
-    @FXML
-    ImageView game4;
-    @FXML
-    ImageView game5;
-    @FXML
-    ImageView game6;
-    @FXML
-    ImageView plant1;
-    @FXML
-    ImageView plant2;
-    @FXML
-    ImageView plant3;
-    @FXML
-    ImageView plant4;
-    @FXML
-    ImageView plant5;
-    @FXML
-    ImageView trophy1;
-    @FXML
-    ImageView trophy2;
-    @FXML
-    ImageView trophy3;
-    @FXML
-    ImageView trophy4;
-    @FXML
-    ImageView trophy5;
-    @FXML
-    ImageView trophy6;
-    @FXML
-    ImageView cat1;
-    @FXML
-    ImageView cat2;
-    @FXML
-    ImageView cat3;
-    @FXML
-    ImageView cat4;
-    @FXML
-    ImageView cat5;
-    @FXML
-    ImageView cat6;
-    @FXML
-    ImageView frame1;
-    @FXML
-    ImageView frame2;
-    @FXML
-    ImageView frame3;
-    @FXML
-    ImageView frame4;
-    @FXML
-    ImageView frame5;
-    @FXML
-    ImageView commonGoal1;
-    @FXML
-    ImageView commonGoal2;
     @FXML
     ImageView scoring81;
     @FXML
@@ -460,7 +330,7 @@ public class GameSceneController {
     private void setPersonalGoalCard(PersonalGoalCard personalGoalCard) {
         int id = personalGoalCard.getID();
         String cardTypeText = "personalGoalCard-" + id;
-        ImageView imageView = commonGoalCards.get(cardTypeText);
+        ImageView imageView = personalGoalCards.get(cardTypeText);
 
         if (imageView != null) {
             imageView.setFitWidth(PERSONALGOAL_CARD_WIDTH);
@@ -581,6 +451,22 @@ public class GameSceneController {
             }
         }
 
+    }
+
+    // Da completare
+    void setPlayerInfo(GameSerialized gameSerialized) {
+        List<Player> players = gameSerialized.getAllPlayers();
+        String myName = guiManager.getUsername();
+
+        Label myNameLabel = new Label(myName);
+        Label myPointsLabel = new Label();
+
+        for(Player player : players) {
+            if(!player.getName().equals(myName)) {
+                Label playerNameLabel = new Label(player.getName());
+                Label playerPointsLabel = new Label();
+            }
+        }
     }
 
 
