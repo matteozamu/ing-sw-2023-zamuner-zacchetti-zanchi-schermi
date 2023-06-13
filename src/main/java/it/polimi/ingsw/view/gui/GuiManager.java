@@ -201,6 +201,8 @@ public class GuiManager extends ClientGameManager implements DisconnectionListen
     @Override
     public void numberOfPlayersRequest(Response response) {
         // Nothing to do
+        Platform.runLater(() ->
+                startGameSceneController.numberOfPlayerRequest(response));
     }
 
     /**
