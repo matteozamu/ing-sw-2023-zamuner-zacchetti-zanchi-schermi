@@ -480,7 +480,7 @@ public class GameSceneController {
     }
 
     /**
-     * Sets a opacity value for every element on the board
+     * Sets an opacity value for every element on the board
      *
      * @param value opacity value
      */
@@ -661,7 +661,6 @@ public class GameSceneController {
     /**
      * Communicates the reconnection of a player
      *
-     * @param message
      */
     void onPlayerReconnection(String message) {
         GuiManager.showDialog((Stage) mainPane.getScene().getWindow(), "Reconnection", message);
