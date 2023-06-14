@@ -91,7 +91,7 @@ public class GameSerialized implements Serializable {
     }
 
     /**
-     * this method returns the shelf of the player
+     * This method returns the shelf of the player
      *
      * @return the shelf of the player
      */
@@ -100,7 +100,7 @@ public class GameSerialized implements Serializable {
     }
 
     /**
-     * this method returns the personal goal card of the player
+     * This method returns the personal goal card of the player
      *
      * @return the personal goal card of the player
      */
@@ -109,7 +109,7 @@ public class GameSerialized implements Serializable {
     }
 
     /**
-     * this method returns the limbo
+     * This method returns the limbo
      *
      * @return the limbo
      */
@@ -118,7 +118,7 @@ public class GameSerialized implements Serializable {
     }
 
     /**
-     * this method returns the list of all the limbo cards
+     * This method returns the list of all the limbo cards
      *
      * @return the list of all the limbo cards
      */
@@ -126,5 +126,18 @@ public class GameSerialized implements Serializable {
         List<ObjectCard> allLimboCards = new ArrayList<>(limbo.values());
 
         return allLimboCards;
+    }
+
+    @Override
+    public String toString() {
+        return "GameSerialized{" +
+                "players=" + players +
+                ", board=" + board +
+                ", points=" + points +
+                ", shelf=" + shelf +
+                ", personalGoalCard=" + personalGoalCard +
+                ", limbo=" + limbo +
+                ", currentPlayer=" + currentPlayer +
+                '}';
     }
 }

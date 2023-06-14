@@ -1,16 +1,16 @@
 package it.polimi.ingsw.view.gui;
 
+import it.polimi.ingsw.utility.MessageBuilder;
 import javafx.fxml.FXML;
+import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
-import it.polimi.ingsw.utility.MessageBuilder;
 
 /**
  * Class NumberPlayersController represents the controller of the scene where the player can choose
  * the number of players of the game
- *
  */
 public class NumberPlayersController {
 
@@ -19,6 +19,8 @@ public class NumberPlayersController {
     @FXML
     private Pane mainPane;
 
+    @FXML
+    private TextField gameNameField;
     @FXML
     private ImageView twoPlayersButton;
     @FXML
@@ -34,7 +36,6 @@ public class NumberPlayersController {
     @FXML
     public void initialize() {
         guiManager = GuiManager.getInstance();
-        guiManager.setNumberPlayersController(this);
 
         bindEvents();
     }
@@ -56,7 +57,9 @@ public class NumberPlayersController {
      * @param numberOfPlayers number of players
      */
     private void onNumberClick(int numberOfPlayers) {
-        if (!guiManager.sendRequest(MessageBuilder.buildNumberOfPlayerMessage(guiManager.getClientToken(), guiManager.getUsername(), numberOfPlayers))) {
+        final String gameName = gameNameField.getText();
+
+        if (!guiManager.sendRequest(MessageBuilder.buildNumberOfPlayerMessage(guiManager.getClientToken(), guiManager.getUsername(), numberOfPlayers, gameName))) {
 
             GuiManager.showDialog((Stage) mainPane.getScene().getWindow(), GuiManager.ERROR_DIALOG_TITLE,
                     GuiManager.SEND_ERROR);
@@ -77,6 +80,6 @@ public class NumberPlayersController {
      */
     private void onBackButtonClick() {
         guiManager.closeConnection();
-        GuiManager.setLayout(mainPane.getScene(), "fxml/startGameScene.fxml");
+        GuiManager.setLayout(mainPane.getScene(), "fxml/connectionScene.fxml");
     }
 }

@@ -7,6 +7,7 @@ import it.polimi.ingsw.enumeration.PossibleGameState;
 import it.polimi.ingsw.enumeration.UserPlayerState;
 import it.polimi.ingsw.model.Player;
 import it.polimi.ingsw.network.message.*;
+import it.polimi.ingsw.utility.JsonReader;
 
 import java.io.IOException;
 import java.text.DateFormat;
@@ -25,8 +26,8 @@ import java.util.stream.Collectors;
 public class Server implements Runnable {
     public static final Logger LOGGER = Logger.getLogger("Server");
     private final Object clientsLock = new Object();
-    private int socketPort = 2727;
-    private int rmiPort = 7272;
+    private int socketPort;
+    private int RMIPort;
     private Map<String, Connection> clients;
     private Map<String, ControllerGame> playersGame;
     private List<ControllerGame> controllerGames;
@@ -37,12 +38,15 @@ public class Server implements Runnable {
     /**
      * costructor of a new game
      */
-    public Server() {
+    public Server(String confFilePath) {
         initLogger();
         synchronized (clientsLock) {
             clients = new HashMap<>();
         }
         this.waitForLoad = false;
+        JsonReader.readJsonConstant(confFilePath);
+        this.socketPort = JsonReader.getSocketPort();
+        this.RMIPort = JsonReader.getRMIPort();
 
         startServers();
 
@@ -84,7 +88,7 @@ public class Server implements Runnable {
 //    }
 
     public static void main(String[] args) {
-        new Server();
+        new Server(args[0]);
     }
 
     /**
@@ -113,7 +117,7 @@ public class Server implements Runnable {
 
         LOGGER.info("Socket Server Started");
 
-        RMIServer rmiServer = new RMIServer(this, rmiPort);
+        RMIServer rmiServer = new RMIServer(this, RMIPort);
         rmiServer.startServer();
 
         LOGGER.info("RMI Server Started");
@@ -169,7 +173,6 @@ public class Server implements Runnable {
                             new ConnectionResponse("Successfully reconnected", token, MessageStatus.OK)
                     );
                 } else { // Game has already been started
-                    System.out.println("ciao mando il messagio lobby");
                     connection.sendMessage(
                             controllerGame.onConnectionMessage(new LobbyMessage(username, token, false))
                     );
@@ -189,7 +192,8 @@ public class Server implements Runnable {
 
     /**
      * method called when a new player logged in the game
-     * @param username the name chosen by the user
+     *
+     * @param username   the name chosen by the user
      * @param connection the client connection
      * @throws IOException if the client can't log in successfully
      */
@@ -265,6 +269,7 @@ public class Server implements Runnable {
 
     /**
      * method used to disconnect a client from the server
+     *
      * @param playerConnection the connection of the player to delete
      */
     void onDisconnect(Connection playerConnection) {
@@ -300,7 +305,8 @@ public class Server implements Runnable {
 
     /**
      * method that send a message to all the players present in one game
-     * @param gameId is the unique id of a single game
+     *
+     * @param gameId  is the unique id of a single game
      * @param message is the message to send
      */
     public void sendMessageToAll(UUID gameId, Message message) {
@@ -335,8 +341,9 @@ public class Server implements Runnable {
 
     /**
      * send a message to a single client
+     *
      * @param username is the name of the player to send the message to
-     * @param message is the message to send
+     * @param message  is the message to send
      */
     public void sendMessage(String username, Message message) {
         synchronized (clientsLock) {
@@ -359,6 +366,7 @@ public class Server implements Runnable {
 
     /**
      * method that return the username given a connection
+     *
      * @param connection is the client connection
      * @return the username
      */
@@ -400,6 +408,7 @@ public class Server implements Runnable {
 
     /**
      * method that return a controller game given the game UUID
+     *
      * @param gameUUID is the game UUID
      * @return the controller game of the game
      */
@@ -414,6 +423,7 @@ public class Server implements Runnable {
 
     /**
      * method that return a controller game given a username
+     *
      * @param username is the name of the user
      * @return the controller game of the game in which the user is present
      */

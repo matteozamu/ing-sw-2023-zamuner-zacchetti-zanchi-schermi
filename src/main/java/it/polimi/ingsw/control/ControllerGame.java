@@ -121,6 +121,7 @@ public class ControllerGame implements TimerRunListener, Serializable {
 
             Player currentPlayer = game.getCurrentPlayer();
             Player nextPlayer = game.nextPlayer();
+
             if (nextPlayer == currentPlayer) {
                 setTimer();
             }
@@ -232,6 +233,7 @@ public class ControllerGame implements TimerRunListener, Serializable {
 
         if (numberOfPlayersMessage.getContent() == MessageContent.NUMBER_OF_PLAYERS && numberOfPlayers >= JsonReader.getMinPlayers() && numberOfPlayers <= JsonReader.getMaxPlayers()) {
             this.game.setNumberOfPlayers(numberOfPlayersMessage.getNumberOfPlayers());
+            this.game.setGameName(numberOfPlayersMessage.getGameName());
             fillBoard();
 
             Server.LOGGER.log(Level.INFO, "Number of players for the game: {0}", numberOfPlayersMessage.getNumberOfPlayers());
@@ -324,6 +326,7 @@ public class ControllerGame implements TimerRunListener, Serializable {
 
     /**
      * set the game
+     *
      * @param game the game to set
      */
     public void setGame(Game game) {
@@ -729,12 +732,10 @@ public class ControllerGame implements TimerRunListener, Serializable {
             } else {
                 return reconnectionHandler((LobbyMessage) receivedConnectionMessage);
             }
-        } else {
-            System.out.println("Invalid game state");
-            return buildInvalidResponse();
         }
 
-        return null;
+        System.out.println("Invalid game state");
+        return buildInvalidResponse();
     }
 
 //    public Message onConnectionMessage(Message receivedConnectionMessage) {
@@ -773,7 +774,7 @@ public class ControllerGame implements TimerRunListener, Serializable {
         if (!game.isStarted()) {
             return new Response("Game is ended.", MessageStatus.ERROR);
         }
-        if (playersNames.contains(reconnectingPlayerName)){
+        if (playersNames.contains(reconnectingPlayerName)) {
             if (reconnectionTimer != null) {
                 reconnectionTimer.cancel();
                 reconnectionTimer = null;
@@ -782,7 +783,7 @@ public class ControllerGame implements TimerRunListener, Serializable {
             // if I receive a reconnection message the player state change into connected == true
             game.getPlayerByName(reconnectingPlayerName).setConnected(true);
 
-            server.sendMessageToAll(this.id, new ReconnectionMessage("Player " + reconnectingPlayerName + " reconnected to the game."));
+            server.sendMessageToAll(this.id, new ReconnectionMessage("Player " + reconnectingPlayerName + " reconnected to the game.", game.getCurrentPlayer().getName()));
 //            return new ReconnectionMessage(receivedConnectionMessage.getToken(),
 //                    new GameStateResponse(receivedConnectionMessage.getSenderUsername(),
 //                            turnController.getActivePlayer().getName()));
@@ -839,8 +840,8 @@ public class ControllerGame implements TimerRunListener, Serializable {
             }
         };
 
-        // start a timer of 3 minutes (180.000 milliseconds)
-        reconnectionTimer.schedule(task, 5000);
+        // start a timer of 30 seconds (30000 milliseconds)
+        reconnectionTimer.schedule(task, 30000);
     }
 
     @Override

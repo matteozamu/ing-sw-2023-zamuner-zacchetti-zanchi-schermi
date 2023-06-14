@@ -45,11 +45,7 @@ public final class CommonGoalType9 extends CommonGoal {
 
     @Override
     public String toString() {
-        return "CommonGoalType9{" +
-                "type=" + type +
-                ", description='" + description + '\'' +
-                ", cardView='" + cardView + '\'' +
-                '}';
+        return "commonGoalCard-9";
     }
 
     /**

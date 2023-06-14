@@ -1,39 +1,40 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import java.net.*?>
 <?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
 <?import javafx.scene.layout.*?>
-<?import java.net.URL?>
-<?import javafx.scene.image.ImageView?>
 
-<BorderPane fx:controller="it.polimi.ingsw.view.gui.NumberPlayersController"
-            fx:id="mainPane"
-            styleClass="mainPane"
-            xmlns="http://javafx.com/javafx"
-            xmlns:fx="http://javafx.com/fxml">
+<BorderPane fx:id="mainPane" styleClass="mainPane" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.ingsw.view.gui.NumberPlayersController">
 
     <stylesheets>
-        <URL value="@../css/menu.css"/>
+        <URL value="@../css/menu.css" />
     </stylesheets>
 
     <top>
         <VBox styleClass="topBox">
-            <Label text="Select the number of players" styleClass="menuTitle"/>
+            <Label styleClass="menuTitle" text="Name the game and select the number of players" />
         </VBox>
     </top>
 
     <center>
-        <HBox styleClass="selectionButton">
-            <ImageView fx:id="twoPlayersButton" id="twoPlayersButton" fitWidth="400" fitHeight="400" preserveRatio="true" pickOnBounds="true" styleClass="button"/>
-            <ImageView fx:id="threePlayersButton" id="threePlayersButton" fitWidth="400" fitHeight="400" preserveRatio="true" pickOnBounds="true" styleClass="button"/>
-            <ImageView fx:id="fourPlayersButton" id="fourPlayersButton" fitWidth="400" fitHeight="400" preserveRatio="true" pickOnBounds="true" styleClass="button"/>
-        </HBox>
-    </center>
+        <VBox fillWidth="false" styleClass="centerBox">
+            <Label styleClass="menuLabel" text="Enter a name for the game:" />
+            <TextField fx:id="gameNameField" maxWidth="500.0" minWidth="500.0" styleClass="menuTextField" />
 
-    <Region prefHeight="20" />
+            <Region prefHeight="100" />
+
+            <HBox styleClass="selectionButton">
+                <ImageView id="twoPlayersButton" fx:id="twoPlayersButton" fitHeight="400" fitWidth="400" pickOnBounds="true" preserveRatio="true" styleClass="button" />
+                <ImageView id="threePlayersButton" fx:id="threePlayersButton" fitHeight="400" fitWidth="400" pickOnBounds="true" preserveRatio="true" styleClass="button" />
+                <ImageView id="fourPlayersButton" fx:id="fourPlayersButton" fitHeight="400" fitWidth="400" pickOnBounds="true" preserveRatio="true" styleClass="button" />
+            </HBox>
+        </VBox>
+    </center>
 
     <bottom>
         <VBox styleClass="botBox">
-            <ImageView fx:id="backButton" id="backButton" fitWidth="400" fitHeight="400" preserveRatio="true" pickOnBounds="true" styleClass="button"/>
+            <ImageView id="backButton" fx:id="backButton" fitHeight="400" fitWidth="400" pickOnBounds="true" preserveRatio="true" styleClass="button" />
         </VBox>
     </bottom>
 </BorderPane>

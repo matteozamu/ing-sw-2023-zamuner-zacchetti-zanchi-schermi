@@ -12,7 +12,7 @@ public enum PossibleAction {
     JOIN_GAME("Join an existing game"),
     CREATE_GAME("Create a new game");
 
-    private String description;
+    private final String description;
 
     PossibleAction(String description) {
         this.description = description;

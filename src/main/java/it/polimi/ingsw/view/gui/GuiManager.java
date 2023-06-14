@@ -36,11 +36,11 @@ public class GuiManager extends ClientGameManager implements DisconnectionListen
 
     private LobbySceneController lobbySceneController;
 
-    private NumberPlayersController numberPlayersController;
+    //private NumberPlayersController numberPlayersController;
 
     private StartGameSceneController startGameSceneController;
 
-    private JoinGameSceneController joinGameSceneController;
+    //private JoinGameSceneController joinGameSceneController;
 
     private GuiManager() {
         super();
@@ -132,13 +132,14 @@ public class GuiManager extends ClientGameManager implements DisconnectionListen
     void setLobbySceneController(LobbySceneController lobbySceneController) {
         this.lobbySceneController = lobbySceneController;
     }
-    /** Sets the number players controller
-     *
-     * @param numberPlayersController number players controller
-     */
-    void setNumberPlayersController(NumberPlayersController numberPlayersController) {
-        this.numberPlayersController = numberPlayersController;
-    }
+
+//    /** Sets the number players controller
+//     *
+//     * @param numberPlayersController number players controller
+//     */
+//    void setNumberPlayersController(NumberPlayersController numberPlayersController) {
+//        this.numberPlayersController = numberPlayersController;
+//    }
 
     /** Sets the start game scene controller
      *
@@ -148,13 +149,13 @@ public class GuiManager extends ClientGameManager implements DisconnectionListen
         this.startGameSceneController = startGameSceneController;
     }
 
-    /** Sets the join game scene controller
-     *
-     * @param joinGameSceneController join game scene controller
-     */
-    void setJoinGameSceneController(JoinGameSceneController joinGameSceneController) {
-        this.joinGameSceneController = joinGameSceneController;
-    }
+//    /** Sets the join game scene controller
+//     *
+//     * @param joinGameSceneController join game scene controller
+//     */
+//    void setJoinGameSceneController(JoinGameSceneController joinGameSceneController) {
+//        this.joinGameSceneController = joinGameSceneController;
+//    }
 
     /**
      * The server sends the response to the connection request to the client
@@ -199,7 +200,8 @@ public class GuiManager extends ClientGameManager implements DisconnectionListen
      */
     @Override
     public void numberOfPlayersRequest(Response response) {
-        // Nothing to do
+        Platform.runLater(() ->
+                startGameSceneController.numberOfPlayerRequest(response));
     }
 
     /**
@@ -215,11 +217,12 @@ public class GuiManager extends ClientGameManager implements DisconnectionListen
     /**
      * The server sends the response to request of the number of players to the client
      * @param username username of the player who has to play
-     * @param cg list of common goals
+     * @param commonGoals list of common goals
      */
     @Override
-    public void firstPlayerCommunication(String username, List<CommonGoal> cg) {
-
+    public void firstPlayerCommunication(String username, List<CommonGoal> commonGoals) {
+        Platform.runLater(() ->
+                gameSceneController.setCommonGoalCards(commonGoals));
     }
 
     /**
@@ -244,15 +247,9 @@ public class GuiManager extends ClientGameManager implements DisconnectionListen
      */
     @Override
     public void displayActions(List<PossibleAction> possibleActions) {
-
-    }
-
-    /**
-     * Picks an object card from the board
-     */
-    @Override
-    public void pickBoardCard() {
-
+        Platform.runLater(() ->
+                gameSceneController.displayAction(possibleActions)
+        );
     }
 
     @Override
@@ -265,6 +262,14 @@ public class GuiManager extends ClientGameManager implements DisconnectionListen
      */
     @Override
     public void createGame() {
+
+    }
+
+    /**
+     * Picks an object card from the board
+     */
+    @Override
+    public void pickBoardCard() {
 
     }
 
@@ -336,16 +341,19 @@ public class GuiManager extends ClientGameManager implements DisconnectionListen
      */
     @Override
     public void onPlayerDisconnection(String username) {
-
+        if (gameSceneController != null) {
+            Platform.runLater(() -> gameSceneController.onPlayerDisconnection(username));
+        }
     }
 
     /**
      * Handles the reconnection of a player
-     * @param username username of the player who reconnected
      */
     @Override
-    public void onPlayerReconnection(String username) {
-
+    public void onPlayerReconnection(String message) {
+        if (gameSceneController != null) {
+            Platform.runLater(() -> gameSceneController.onPlayerReconnection(message));
+        }
     }
 
     /**
@@ -411,10 +419,5 @@ public class GuiManager extends ClientGameManager implements DisconnectionListen
 
             System.exit(0);
         });
-    }
-
-
-    public void closeConnection() {
-        // Implementare qui la logica per chiudere la connessione...
     }
 }

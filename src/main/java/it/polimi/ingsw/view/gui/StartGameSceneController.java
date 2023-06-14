@@ -5,6 +5,7 @@ import it.polimi.ingsw.enumeration.MessageStatus;
 import it.polimi.ingsw.network.message.Response;
 import it.polimi.ingsw.utility.MessageBuilder;
 import javafx.fxml.FXML;
+import javafx.scene.Scene;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
@@ -63,6 +64,10 @@ public class StartGameSceneController {
             guiManager.closeConnection();
             onBackButtonClick();
         }
+        //GuiManager.setLayout(mainPane.getScene(), "fxml/numberPlayersScene.fxml");
+    }
+
+    void numberOfPlayerRequest(Response response) {
         GuiManager.setLayout(mainPane.getScene(), "fxml/numberPlayersScene.fxml");
     }
 

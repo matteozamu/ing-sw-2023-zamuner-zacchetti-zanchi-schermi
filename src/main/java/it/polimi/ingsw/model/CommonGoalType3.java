@@ -42,11 +42,7 @@ public final class CommonGoalType3 extends CommonGoal {
 
     @Override
     public String toString() {
-        return "CommonGoalType3{" +
-                "type=" + type +
-                ", description='" + description + '\'' +
-                ", cardView='" + cardView + '\'' +
-                '}';
+        return "commonGoalCard-3";
     }
 
     /**
