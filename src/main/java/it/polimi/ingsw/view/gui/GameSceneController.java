@@ -12,6 +12,7 @@ import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
+import javafx.scene.control.Separator;
 import javafx.scene.effect.ColorAdjust;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -36,10 +37,13 @@ import static java.awt.Transparency.OPAQUE;
  */
 public class GameSceneController {
     private static final String USERNAME_PROPERTY = "username";
+    private static final String POINTS_PROPERTY = "Points: ";
     private static final String CSS_BUTTON = "button";
     private static final String CSS_SHELF = "shelf";
     private static final String CSS_SHELF_GRIDPANE = "shelfGridPane";
     private static final String CSS_SHELF_LABEL = "shelfLabel";
+    private static final String CSS_PLAYERINFO_LABEL = "playerInfo";
+    private static final String CSS_PLAYERINFO_SEPARATOR = "labelSeparator";
     private static final double OPAQUE = 0.2;
     private static final double NOT_OPAQUE = 1;
     private static final double COMMONGOAL_CARD_WIDTH = 138.5;
@@ -78,6 +82,8 @@ public class GameSceneController {
     VBox shelfLimboVBoxArea;
     @FXML
     FlowPane commonGoalCardInfoPanel;
+    @FXML
+    VBox playersInfoVBox;
     @FXML
     ImageView winnerTile;
     @FXML
@@ -124,7 +130,7 @@ public class GameSceneController {
     @FXML
     BorderPane infoPanel;
     @FXML
-    Pane playersNamePaneArea;
+    Pane playersInfoPaneArea;
     @FXML
     BorderPane actionPanel;
     @FXML
@@ -452,22 +458,51 @@ public class GameSceneController {
 
     }
 
-    // Da completare
     void setPlayerInfo(GameSerialized gameSerialized) {
+        int i = 0;
         List<Player> players = gameSerialized.getAllPlayers();
         String myName = guiManager.getUsername();
+        String myPoints = POINTS_PROPERTY + gameSerialized.getPoints();
 
         Label myNameLabel = new Label(myName);
-        Label myPointsLabel = new Label();
+        myNameLabel.setId("myNameLabel");
+        myNameLabel.getStyleClass().add(CSS_PLAYERINFO_LABEL);
+        playersInfoVBox.getChildren().add(myNameLabel);
+
+        Label myPointsLabel = new Label(myPoints);
+        myPointsLabel.setId("myPointsLabel");
+        myPointsLabel.getStyleClass().add(CSS_PLAYERINFO_LABEL);
+        playersInfoVBox.getChildren().add(myPointsLabel);
+
+        Separator separator = new Separator();
+        separator.getStyleClass().add(CSS_PLAYERINFO_SEPARATOR);
+        playersInfoVBox.getChildren().add(separator);
 
         for(Player player : players) {
             if(!player.getName().equals(myName)) {
-                Label playerNameLabel = new Label(player.getName());
-                Label playerPointsLabel = new Label();
+                String playerName = player.getName();
+                String playerPoints = POINTS_PROPERTY + player.getCurrentPoints();
+
+                Label playerNameLabel = new Label(playerName);
+                playerNameLabel.setId("playerNameLabel" + i);
+                playerNameLabel.getStyleClass().add(CSS_PLAYERINFO_LABEL);
+                playersInfoVBox.getChildren().add(playerNameLabel);
+
+                Label playerPointsLabel = new Label(playerPoints);
+                playerPointsLabel.setId("playerPointsLabel" + i);
+                playerPointsLabel.getStyleClass().add(CSS_PLAYERINFO_LABEL);
+                playersInfoVBox.getChildren().add(playerPointsLabel);
+
+                if(!(player.equals(players.get(players.size() - 1)))) {
+                    Separator separator2 = new Separator();
+                    separator2.getStyleClass().add(CSS_PLAYERINFO_SEPARATOR);
+                    playersInfoVBox.getChildren().add(separator2);
+                }
+
+                i++;
             }
         }
     }
-
 
     /**
      * Hides the zoom panel

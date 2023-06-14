@@ -60,7 +60,6 @@
                             <ImageView fx:id="shelf1" fitHeight="400.0" fitWidth="400.0" styleClass="shelf" />
                             <Label fx:id="shelfLabel1" styleClass="shelfLabel" StackPane.alignment="BOTTOM_CENTER"/>
                             <GridPane fx:id="shelf1GridPane" hgap="17.0" maxHeight="324.0" maxWidth="304.0" translateY="-11.0" vgap="9.0" styleClass="shelfGridPane">
-                                <ImageView fx:id="game1" fitHeight="47.0" fitWidth="47.0" styleClass="Game-1" GridPane.columnIndex="0" GridPane.rowIndex="0" />
                             </GridPane>
                         </StackPane>
 
@@ -97,25 +96,8 @@
 
         </HBox>
 
-        <Pane fx:id="playersNamePaneArea" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="169.0" prefWidth="133.0" translateX="580.0" translateY="-280.0" styleClass="playersNamePaneArea">
-            <VBox>
-                <Label fx:id="namePlayer1" styleClass="playerName" text="Federico" />
-                <Label fx:id="pointsPlayer1" styleClass="playerName" text="Points: 35" />
-
-                <Separator styleClass="labelSeparator" />
-
-                <Label fx:id="namePlayer2" styleClass="playerName" text="Matteo" />
-                <Label fx:id="pointsPlayer2" styleClass="playerName" text="Points: 35" />
-
-                <Separator styleClass="labelSeparator" />
-
-                <Label fx:id="namePlayer3" styleClass="playerName" text="Federica" />
-                <Label fx:id="pointsPlayer3" styleClass="playerName" text="Points: 35" />
-
-                <Separator styleClass="labelSeparator" />
-
-                <Label fx:id="namePlayer4" styleClass="playerName" text="Simone" />
-                <Label fx:id="pointsPlayer4" styleClass="playerName" text="Points: 35" />
+        <Pane fx:id="playersInfoPaneArea" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="169.0" prefWidth="133.0" translateX="580.0" translateY="-280.0" styleClass="playersNamePaneArea">
+            <VBox fx:id="playersInfoVBox">
             </VBox>
         </Pane>
 
