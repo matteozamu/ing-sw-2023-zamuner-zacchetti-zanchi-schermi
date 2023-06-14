@@ -328,8 +328,7 @@ public class GameSceneController {
     }
 
     private void setPersonalGoalCard(PersonalGoalCard personalGoalCard) {
-        int id = personalGoalCard.getID();
-        String cardTypeText = "personalGoalCard-" + id;
+        String cardTypeText = personalGoalCard.getID();
         ImageView imageView = personalGoalCards.get(cardTypeText);
 
         if (imageView != null) {

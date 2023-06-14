@@ -10,7 +10,7 @@ class PersonalGoalCardTest {
 
     @Test
     public void testCalculatePoints() {
-        PersonalGoalCard card = new PersonalGoalCard(new ArrayList<>());
+        PersonalGoalCard card = new PersonalGoalCard(new ArrayList<>(), "personalGoalCard-1");
         card.setTargetsReached(1);
         assertEquals(1, card.calculatePoints());
         card.setTargetsReached(2);
@@ -27,13 +27,13 @@ class PersonalGoalCardTest {
 
     @Test
     public void testGetGoals() {
-        PersonalGoalCard card = new PersonalGoalCard(new ArrayList<>());
+        PersonalGoalCard card = new PersonalGoalCard(new ArrayList<>(), "personalGoalCard-1");
         assertEquals(0, card.getGoals().size());
     }
 
     @Test
     public void testSetTargetsReached() {
-        PersonalGoalCard card = new PersonalGoalCard(new ArrayList<>());
+        PersonalGoalCard card = new PersonalGoalCard(new ArrayList<>(), "personalGoalCard-1");
         card.setTargetsReached(1);
         assertEquals(1, card.calculatePoints());
         card.setTargetsReached(2);
