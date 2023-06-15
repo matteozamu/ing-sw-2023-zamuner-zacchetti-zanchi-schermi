@@ -80,6 +80,6 @@ public class NumberPlayersController {
      */
     private void onBackButtonClick() {
         guiManager.closeConnection();
-        GuiManager.setLayout(mainPane.getScene(), "fxml/startGameScene.fxml");
+        GuiManager.setLayout(mainPane.getScene(), "fxml/connectionScene.fxml");
     }
 }

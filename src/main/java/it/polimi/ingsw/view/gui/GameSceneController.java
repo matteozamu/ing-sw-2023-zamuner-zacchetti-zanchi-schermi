@@ -12,6 +12,7 @@ import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
+import javafx.scene.control.Separator;
 import javafx.scene.effect.ColorAdjust;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -36,15 +37,28 @@ import static java.awt.Transparency.OPAQUE;
  */
 public class GameSceneController {
     private static final String USERNAME_PROPERTY = "username";
+    private static final String POINTS_PROPERTY = "Points: ";
     private static final String CSS_BUTTON = "button";
+    private static final String CSS_SHELF = "shelf";
+    private static final String CSS_SHELF_GRIDPANE = "shelfGridPane";
+    private static final String CSS_SHELF_LABEL = "shelfLabel";
+    private static final String CSS_PLAYERINFO_LABEL = "playerInfo";
+    private static final String CSS_PLAYERINFO_SEPARATOR = "labelSeparator";
     private static final double OPAQUE = 0.2;
     private static final double NOT_OPAQUE = 1;
     private static final double COMMONGOAL_CARD_WIDTH = 138.5;
     private static final double COMMONGOAL_CARD_HEIGHT = 91.3;
-    private static final double BOARD_OBJECT_CARD_WIDTH = 60;
-    private static final double BOARD_OBJECT_CARD_HEIGHT = 60;
+    private static final double BOARD_OBJECT_CARD_WIDTH = 60.0;
+    private static final double BOARD_OBJECT_CARD_HEIGHT = 60.0;
     private static final double PERSONALGOAL_CARD_WIDTH = 137.0;
     private static final double PERSONALGOAL_CARD_HEIGHT = 207.9;
+    private static final double PERSONALGOAL_CARD_TRANSLATE_Y = 51.5;
+    private static final double SHELF_WIDTH = 400.0;
+    private static final double SHELF_HEIGHT = 400.0;
+    private static final double LIMBO_OBJECT_CARD_WIDTH = 75.0;
+    private static final double LIMBO_OBJECT_CARD_HEIGHT = 75.0;
+
+    private static final String SHELF_PATH = "/img/board_shelf/shelf_orth.png";
 
     @FXML
     Pane mainPane;
@@ -67,9 +81,9 @@ public class GameSceneController {
     @FXML
     VBox shelfLimboVBoxArea;
     @FXML
-    ImageView personalGoalCard;
-    @FXML
     FlowPane commonGoalCardInfoPanel;
+    @FXML
+    VBox playersInfoVBox;
     @FXML
     ImageView winnerTile;
     @FXML
@@ -116,7 +130,7 @@ public class GameSceneController {
     @FXML
     BorderPane infoPanel;
     @FXML
-    Pane playersNamePaneArea;
+    Pane playersInfoPaneArea;
     @FXML
     BorderPane actionPanel;
     @FXML
@@ -139,134 +153,6 @@ public class GameSceneController {
     ImageView transparentImage2;
     @FXML
     ImageView transparentImage3;
-    @FXML
-    ImageView book1;
-    @FXML
-    ImageView book2;
-    @FXML
-    ImageView book3;
-    @FXML
-    ImageView book4;
-    @FXML
-    ImageView book5;
-    @FXML
-    ImageView book6;
-    @FXML
-    ImageView book7;
-    @FXML
-    ImageView book8;
-    @FXML
-    ImageView book9;
-    @FXML
-    ImageView book10;
-    @FXML
-    ImageView book11;
-    @FXML
-    ImageView book12;
-    @FXML
-    ImageView book13;
-    @FXML
-    ImageView book14;
-    @FXML
-    ImageView book15;
-    @FXML
-    ImageView book16;
-    @FXML
-    ImageView book17;
-    @FXML
-    ImageView book18;
-    @FXML
-    ImageView book19;
-    @FXML
-    ImageView book20;
-    @FXML
-    ImageView book21;
-    @FXML
-    ImageView book22;
-    @FXML
-    ImageView book23;
-    @FXML
-    ImageView book24;
-    @FXML
-    ImageView book25;
-    @FXML
-    ImageView book26;
-    @FXML
-    ImageView book27;
-    @FXML
-    ImageView book28;
-    @FXML
-    ImageView book29;
-    @FXML
-    ImageView book30;
-    @FXML
-    ImageView book31;
-    @FXML
-    ImageView book32;
-    @FXML
-    ImageView book33;
-    @FXML
-    ImageView book34;
-    @FXML
-    ImageView game1;
-    @FXML
-    ImageView game2;
-    @FXML
-    ImageView game3;
-    @FXML
-    ImageView game4;
-    @FXML
-    ImageView game5;
-    @FXML
-    ImageView game6;
-    @FXML
-    ImageView plant1;
-    @FXML
-    ImageView plant2;
-    @FXML
-    ImageView plant3;
-    @FXML
-    ImageView plant4;
-    @FXML
-    ImageView plant5;
-    @FXML
-    ImageView trophy1;
-    @FXML
-    ImageView trophy2;
-    @FXML
-    ImageView trophy3;
-    @FXML
-    ImageView trophy4;
-    @FXML
-    ImageView trophy5;
-    @FXML
-    ImageView trophy6;
-    @FXML
-    ImageView cat1;
-    @FXML
-    ImageView cat2;
-    @FXML
-    ImageView cat3;
-    @FXML
-    ImageView cat4;
-    @FXML
-    ImageView cat5;
-    @FXML
-    ImageView cat6;
-    @FXML
-    ImageView frame1;
-    @FXML
-    ImageView frame2;
-    @FXML
-    ImageView frame3;
-    @FXML
-    ImageView frame4;
-    @FXML
-    ImageView frame5;
-    @FXML
-    ImageView commonGoal1;
-    @FXML
-    ImageView commonGoal2;
     @FXML
     ImageView scoring81;
     @FXML
@@ -295,6 +181,7 @@ public class GameSceneController {
     private Map<String, ImageView> objectCards;
     private Map<String, ImageView> commonGoalCards;
     private Map<String, ImageView> personalGoalCards;
+    private List<GridPane> shelves;
 
     @FXML
     private void initialize() {
@@ -309,6 +196,7 @@ public class GameSceneController {
         objectCards = new HashMap<>();
         commonGoalCards = new HashMap<>();
         personalGoalCards = new HashMap<>();
+        shelves = new ArrayList<>();
     }
 
     /**
@@ -391,7 +279,7 @@ public class GameSceneController {
      *
      * @param gameSerialized state of the game at the time of the join
      */
-    private void setObjectCardsOnBoard(GameSerialized gameSerialized) {
+    private void setBoard(GameSerialized gameSerialized) {
         Board board = gameSerialized.getBoard();
 
         ObjectCard objectCard;
@@ -436,42 +324,183 @@ public class GameSceneController {
 
                 if (i == 0) {
                     commonGoalCard1StackPane.getChildren().add(imageView);
+                    imageView.toBack();
                 } else if (i == 1) {
                     commonGoalCard2StackPane.getChildren().add(imageView);
+                    imageView.toBack();
                 }
             }
         }
     }
 
     private void setPersonalGoalCard(PersonalGoalCard personalGoalCard) {
-        int id = personalGoalCard.getID();
-        String cardTypeText = "personalGoalCard-" + id;
-        ImageView imageView = commonGoalCards.get(cardTypeText);
+        String cardTypeText = personalGoalCard.getID();
+        ImageView imageView = personalGoalCards.get(cardTypeText);
 
         if (imageView != null) {
             imageView.setFitWidth(PERSONALGOAL_CARD_WIDTH);
             imageView.setFitHeight(PERSONALGOAL_CARD_HEIGHT);
+            imageView.setTranslateY(PERSONALGOAL_CARD_TRANSLATE_Y);
             imageView.setPreserveRatio(true);
             imageView.setPickOnBounds(true);
+            StackPane.setAlignment(imageView, Pos.CENTER);
 
             personalGoalCardPane.getChildren().add(imageView);
         }
     }
 
-    void setShelves() {
+    void setShelves(GameSerialized gameSerialized) {
         int i = 0;
-        List<Player> players = guiManager.getGameSerialized().getAllPlayers();
-        int playerNumber = players.size();
+        List<Player> players = gameSerialized.getAllPlayers();
+        String myName = guiManager.getUsername();
+
+        StackPane myStackPane = new StackPane();
+        myStackPane.setId("myStackPane");
+        shelfHBoxImages.getChildren().add(myStackPane);
+
+        ImageView myShelf = new ImageView(SHELF_PATH);
+        myShelf.setId("myShelfImageView");
+        myShelf.setFitWidth(SHELF_WIDTH);
+        myShelf.setFitHeight(SHELF_HEIGHT);
+        myShelf.getStyleClass().add(CSS_SHELF);
+        myShelf.setPreserveRatio(true);
+        myShelf.setPickOnBounds(true);
+        StackPane.setAlignment(myShelf, Pos.CENTER);
+        myStackPane.getChildren().add(myShelf);
+
+        GridPane myShelfGridPane = new GridPane();
+        myShelfGridPane.setId("myShelfGridPane");
+        myShelfGridPane.setHgap(17.0);
+        myShelfGridPane.setVgap(9.0);
+        myShelfGridPane.setMaxHeight(324.0);
+        myShelfGridPane.setMaxWidth(304.0);
+        myShelfGridPane.setTranslateY(-11.0);
+        myShelfGridPane.getStyleClass().add(CSS_SHELF_GRIDPANE);
+        myStackPane.getChildren().add(myShelfGridPane);
+        myShelfGridPane.toFront();
+
+        Label myNameLabel = new Label(myName);
+        myNameLabel.setId("myNameLabel");
+        myNameLabel.getStyleClass().add(CSS_SHELF_LABEL);
+        StackPane.setAlignment(myNameLabel, Pos.BOTTOM_CENTER);
+        myStackPane.getChildren().add(myNameLabel);
+        myNameLabel.toFront();
+
+        shelves.add(myShelfGridPane);
+
+        // Aggiungere le object card
 
         for(Player player : players) {
-            StackPane stackPane = new StackPane();
-            stackPane.setId("stackPane" + i);
-            shelfHBoxImages.getChildren().add(stackPane);
-            Label playerNameLabel = new Label(player.getName());
-            playerNameLabel.setId("playerNameLabel" + i);
-            playerNameLabel.getStyleClass().add("shelfLabel");
+            if(!player.getName().equals(myName)) {
+                StackPane stackPane = new StackPane();
+                stackPane.setId("stackPane" + i);
+                shelfHBoxImages.getChildren().add(stackPane);
 
-            i++;
+                ImageView imageView = new ImageView(SHELF_PATH);
+                imageView.setId("shelfImageView" + i);
+                imageView.setFitWidth(SHELF_WIDTH);
+                imageView.setFitHeight(SHELF_HEIGHT);
+                imageView.getStyleClass().add(CSS_SHELF);
+                imageView.setPreserveRatio(true);
+                imageView.setPickOnBounds(true);
+                StackPane.setAlignment(imageView, Pos.CENTER);
+                stackPane.getChildren().add(imageView);
+
+                GridPane gridPane = new GridPane();
+                gridPane.setId("shelfGridPane" + i);
+                gridPane.setHgap(17.0);
+                gridPane.setVgap(9.0);
+                gridPane.setMaxHeight(324.0);
+                gridPane.setMaxWidth(304.0);
+                gridPane.setTranslateY(-11.0);
+                gridPane.getStyleClass().add(CSS_SHELF_GRIDPANE);
+                stackPane.getChildren().add(gridPane);
+                gridPane.toFront();
+
+                Label playerNameLabel = new Label(player.getName());
+                playerNameLabel.setId("playerNameLabel" + i);
+                playerNameLabel.getStyleClass().add(CSS_SHELF_LABEL);
+                StackPane.setAlignment(playerNameLabel, Pos.BOTTOM_CENTER);
+                stackPane.getChildren().add(playerNameLabel);
+                playerNameLabel.toFront();
+
+                shelves.add(gridPane);
+
+                // Aggiungere le object card
+
+                i++;
+            }
+        }
+    }
+
+    void setLimbo(GameSerialized gameSerialized) {
+        List<ObjectCard> limboCards = gameSerialized.getAllLimboCards();
+
+        if(!limboCards.isEmpty()){
+            for(ObjectCard objectCard : limboCards) {
+                if(objectCard != null) {
+                    String cardTypeText = objectCard.getType().getText();
+                    String cardNameType = cardTypeText + "-" + objectCard.getId();
+                    ImageView imageView = objectCards.get(cardNameType);
+
+                    if (imageView != null) {
+                        imageView.setFitWidth(LIMBO_OBJECT_CARD_WIDTH);
+                        imageView.setFitHeight(LIMBO_OBJECT_CARD_HEIGHT);
+                        imageView.setPreserveRatio(true);
+                        imageView.setPickOnBounds(true);
+
+                        limboHBoxArea.getChildren().add(imageView);
+                    }
+                }
+
+            }
+        }
+
+    }
+
+    void setPlayerInfo(GameSerialized gameSerialized) {
+        int i = 0;
+        List<Player> players = gameSerialized.getAllPlayers();
+        String myName = guiManager.getUsername();
+        String myPoints = POINTS_PROPERTY + gameSerialized.getPoints();
+
+        Label myNameLabel = new Label(myName);
+        myNameLabel.setId("myNameLabel");
+        myNameLabel.getStyleClass().add(CSS_PLAYERINFO_LABEL);
+        playersInfoVBox.getChildren().add(myNameLabel);
+
+        Label myPointsLabel = new Label(myPoints);
+        myPointsLabel.setId("myPointsLabel");
+        myPointsLabel.getStyleClass().add(CSS_PLAYERINFO_LABEL);
+        playersInfoVBox.getChildren().add(myPointsLabel);
+
+        Separator separator = new Separator();
+        separator.getStyleClass().add(CSS_PLAYERINFO_SEPARATOR);
+        playersInfoVBox.getChildren().add(separator);
+
+        for(Player player : players) {
+            if(!player.getName().equals(myName)) {
+                String playerName = player.getName();
+                String playerPoints = POINTS_PROPERTY + player.getCurrentPoints();
+
+                Label playerNameLabel = new Label(playerName);
+                playerNameLabel.setId("playerNameLabel" + i);
+                playerNameLabel.getStyleClass().add(CSS_PLAYERINFO_LABEL);
+                playersInfoVBox.getChildren().add(playerNameLabel);
+
+                Label playerPointsLabel = new Label(playerPoints);
+                playerPointsLabel.setId("playerPointsLabel" + i);
+                playerPointsLabel.getStyleClass().add(CSS_PLAYERINFO_LABEL);
+                playersInfoVBox.getChildren().add(playerPointsLabel);
+
+                if(!(player.equals(players.get(players.size() - 1)))) {
+                    Separator separator2 = new Separator();
+                    separator2.getStyleClass().add(CSS_PLAYERINFO_SEPARATOR);
+                    playersInfoVBox.getChildren().add(separator2);
+                }
+
+                i++;
+            }
         }
     }
 
@@ -486,7 +515,7 @@ public class GameSceneController {
     }
 
     /**
-     * Sets a opacity value for every element on the board
+     * Sets an opacity value for every element on the board
      *
      * @param value opacity value
      */
@@ -568,6 +597,7 @@ public class GameSceneController {
      */
     private void updateGameArea(GameSerialized gameSerialized) {
         updateBoard(gameSerialized);
+        updateShelves(gameSerialized);
         // Aggiungere altri elementi da aggiornare
 
     }
@@ -579,7 +609,19 @@ public class GameSceneController {
     private void updateBoard(GameSerialized gameSerialized) {
         ObservableList<Node> children = boardGridPane.getChildren();
         children.clear();
-        setObjectCardsOnBoard(gameSerialized);
+        setBoard(gameSerialized);
+    }
+
+    /**
+     * Updates element on the shelves
+     *
+     */
+    private void updateShelves(GameSerialized gameSerialized) {
+        for(GridPane shelf : shelves) {
+            ObservableList<Node> children = shelf.getChildren();
+            children.clear();
+            setShelves(gameSerialized);
+        }
     }
 
     /**
@@ -594,6 +636,15 @@ public class GameSceneController {
     // per impedire che un giocatore non di turno possa compiere azioni
     void notYourTurn(String turnOwner) {
         mainPane.setMouseTransparent(true);
+    }
+
+    /**
+     * Displays action buttons
+     *
+     * @param possibleActions possible actions
+     */
+    void displayAction(List<PossibleAction> possibleActions) {
+
     }
 
     /**
@@ -638,8 +689,16 @@ public class GameSceneController {
      *
      * @param player username of a player who disconnected
      */
-    void onPlayerDisconnect(String player) {
+    void onPlayerDisconnection(String player) {
         GuiManager.showDialog((Stage) mainPane.getScene().getWindow(), "Disconnection", player + " disconnected from the server");
+    }
+
+    /**
+     * Communicates the reconnection of a player
+     *
+     */
+    void onPlayerReconnection(String message) {
+        GuiManager.showDialog((Stage) mainPane.getScene().getWindow(), "Reconnection", message);
     }
 
     /**

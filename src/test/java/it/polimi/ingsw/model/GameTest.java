@@ -239,7 +239,7 @@ class GameTest extends TestCase {
 
     @Test
     public void testGetRandomAvailablePersonalGoalCardFullContainer() {
-        g.getPersonalGoalCardsContainer().add(new PersonalGoalCard(new ArrayList<>()));
+        g.getPersonalGoalCardsContainer().add(new PersonalGoalCard(new ArrayList<>(), "personalGoalCard-1"));
         Object o = g.getRandomAvailablePersonalGoalCard();
         assertTrue(o instanceof PersonalGoalCard);
     }

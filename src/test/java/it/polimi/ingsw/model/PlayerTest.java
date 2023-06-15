@@ -31,9 +31,9 @@ class PlayerTest {
         ArrayList<PersonalGoal> goals = new ArrayList<>();
         goals.add(new PersonalGoal(0,0,ObjectCardType.trophy));
         goals.add(new PersonalGoal(1,2,ObjectCardType.cat));
-        PersonalGoalCard pg = new PersonalGoalCard(goals);
-        Player player = new Player("federica", new Shelf(), pg);
-        assertEquals(player.getPersonalGoalCard(), pg);
+        PersonalGoalCard personalGoalCard = new PersonalGoalCard(goals, "personalGoalCard-1");
+        Player player = new Player("federica", new Shelf(), personalGoalCard);
+        assertEquals(player.getPersonalGoalCard(), personalGoalCard);
     }
 
     @Test

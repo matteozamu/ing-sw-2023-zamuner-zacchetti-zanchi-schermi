@@ -64,6 +64,10 @@ public class StartGameSceneController {
             guiManager.closeConnection();
             onBackButtonClick();
         }
+        //GuiManager.setLayout(mainPane.getScene(), "fxml/numberPlayersScene.fxml");
+    }
+
+    void numberOfPlayerRequest(Response response) {
         GuiManager.setLayout(mainPane.getScene(), "fxml/numberPlayersScene.fxml");
     }
 
