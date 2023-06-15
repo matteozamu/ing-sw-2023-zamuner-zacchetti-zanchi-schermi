@@ -60,7 +60,7 @@ public abstract class ClientGameManager implements ClientGameManagerListener, Cl
             LOGGER.setUseParentHandlers(false);
             LOGGER.addHandler(fh);
         } catch (IOException e) {
-            //LOGGER.severe(e.getMessage());
+//            LOGGER.severe(e.getMessage());
         }
 
         new Thread(this).start();
@@ -307,8 +307,13 @@ public abstract class ClientGameManager implements ClientGameManagerListener, Cl
                 }
                 joinedLobby = response.getStatus() == MessageStatus.OK;
 
-                if (lobbyPlayers.size() == 1) queue.add(() -> numberOfPlayersRequest(response));
-                queue.add(() -> lobbyJoinResponse(response));
+                if (lobbyPlayers.size() == 1) {
+                    queue.add(() -> numberOfPlayersRequest(response));
+                    queue.add(() -> lobbyJoinResponse(response));
+                    return;
+                } else
+                    // TODO check if this is correct
+                    queue.add(() -> lobbyJoinResponse(response));
             } else {
                 if (response.getStatus() == MessageStatus.ERROR) {
                     queue.add(() -> responseError(response.getMessage()));

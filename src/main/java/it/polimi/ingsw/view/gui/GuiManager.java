@@ -24,7 +24,6 @@ import java.util.logging.Logger;
 
 /**
  * Class GuiManager represents the manager of the GUI
- *
  */
 
 public class GuiManager extends ClientGameManager implements DisconnectionListener {
@@ -109,7 +108,8 @@ public class GuiManager extends ClientGameManager implements DisconnectionListen
     }
 
 
-    /** Sets the connection scene controller
+    /**
+     * Sets the connection scene controller
      *
      * @param connectionSceneController connection scene controller
      */
@@ -117,7 +117,8 @@ public class GuiManager extends ClientGameManager implements DisconnectionListen
         this.connectionSceneController = connectionSceneController;
     }
 
-     /** Sets the game scene controller
+    /**
+     * Sets the game scene controller
      *
      * @param gameSceneController game scene controller
      */
@@ -125,7 +126,8 @@ public class GuiManager extends ClientGameManager implements DisconnectionListen
         this.gameSceneController = gameSceneController;
     }
 
-     /** Sets the lobby scene controller
+    /**
+     * Sets the lobby scene controller
      *
      * @param lobbySceneController lobby scene controller
      */
@@ -141,7 +143,8 @@ public class GuiManager extends ClientGameManager implements DisconnectionListen
 //        this.numberPlayersController = numberPlayersController;
 //    }
 
-    /** Sets the start game scene controller
+    /**
+     * Sets the start game scene controller
      *
      * @param startGameSceneController start game scene controller
      */
@@ -159,6 +162,7 @@ public class GuiManager extends ClientGameManager implements DisconnectionListen
 
     /**
      * The server sends the response to the connection request to the client
+     *
      * @param response response to the connection request
      */
     @Override
@@ -186,16 +190,18 @@ public class GuiManager extends ClientGameManager implements DisconnectionListen
 
     /**
      * The server sends the response to request of joining the lobby to the client
+     *
      * @param response response to the request
      */
     @Override
     public void lobbyJoinResponse(Response response) {
-        Platform.runLater(() ->
-                startGameSceneController.onLobbyJoinResponse(response));
+//        Platform.runLater(() ->
+//                startGameSceneController.onLobbyJoinResponse(response));
     }
 
     /**
      * The server sends the response to request of the number of players to the client
+     *
      * @param response response to the request
      */
     @Override
@@ -206,6 +212,7 @@ public class GuiManager extends ClientGameManager implements DisconnectionListen
 
     /**
      * Forbids other players to play the turn except turnOwner
+     *
      * @param turnOwner username of the player who has to play
      */
     @Override
@@ -216,7 +223,8 @@ public class GuiManager extends ClientGameManager implements DisconnectionListen
 
     /**
      * The server sends the response to request of the number of players to the client
-     * @param username username of the player who has to play
+     *
+     * @param username    username of the player who has to play
      * @param commonGoals list of common goals
      */
     @Override
@@ -243,13 +251,14 @@ public class GuiManager extends ClientGameManager implements DisconnectionListen
 
     /**
      * Displays the possible actions
+     *
      * @param possibleActions list of possible actions
      */
     @Override
     public void displayActions(List<PossibleAction> possibleActions) {
-        Platform.runLater(() ->
-                gameSceneController.displayAction(possibleActions)
-        );
+//        Platform.runLater(() ->
+//                gameSceneController.displayAction(possibleActions)
+//        );
     }
 
     @Override
@@ -288,6 +297,7 @@ public class GuiManager extends ClientGameManager implements DisconnectionListen
     public void reorderLimbo() {
 
     }
+
     /**
      * Deletes the limbo
      */
@@ -306,6 +316,7 @@ public class GuiManager extends ClientGameManager implements DisconnectionListen
 
     /**
      * Prints the winner of the game
+     *
      * @param gameSerialized game serialized
      */
     @Override
@@ -315,6 +326,7 @@ public class GuiManager extends ClientGameManager implements DisconnectionListen
 
     /**
      * Prints the end of the game
+     *
      * @param message message to print
      */
     @Override
@@ -337,6 +349,7 @@ public class GuiManager extends ClientGameManager implements DisconnectionListen
 
     /**
      * Handles the disconnection of a player
+     *
      * @param username username of the player who disconnected
      */
     @Override
@@ -358,6 +371,7 @@ public class GuiManager extends ClientGameManager implements DisconnectionListen
 
     /**
      * Updates the lobby list
+     *
      * @param users list of players that are waiting
      */
     @Override
@@ -370,6 +384,7 @@ public class GuiManager extends ClientGameManager implements DisconnectionListen
 
     /**
      * Handles the request of joining an existing game
+     *
      * @param games list of existing games
      */
     @Override
@@ -389,6 +404,7 @@ public class GuiManager extends ClientGameManager implements DisconnectionListen
 
     /**
      * Handles error cases based on the scene
+     *
      * @param error error message
      */
     @Override
