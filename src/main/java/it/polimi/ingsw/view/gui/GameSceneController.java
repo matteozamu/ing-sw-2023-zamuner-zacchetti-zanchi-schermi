@@ -1,36 +1,22 @@
 package it.polimi.ingsw.view.gui;
 
-import it.polimi.ingsw.enumeration.*;
+import it.polimi.ingsw.enumeration.PossibleAction;
 import it.polimi.ingsw.model.*;
 import it.polimi.ingsw.utility.JsonReader;
 import javafx.collections.ObservableList;
 import javafx.event.Event;
 import javafx.fxml.FXML;
-import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
-import javafx.scene.control.Button;
-import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.Separator;
-import javafx.scene.effect.ColorAdjust;
-import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
 import javafx.stage.Stage;
 
-import it.polimi.ingsw.model.Player.*;
-import it.polimi.ingsw.network.client.ClientGameManager;
-import it.polimi.ingsw.utility.MessageBuilder;
-
-import java.awt.*;
 import java.util.*;
-import java.util.List;
 import java.util.stream.Collectors;
-
-import static it.polimi.ingsw.model.ObjectCardType.cat;
-import static java.awt.Transparency.OPAQUE;
 
 /**
  * Class for the graphical interface of the game
@@ -175,8 +161,9 @@ public class GameSceneController {
     Label pointsPlayer3;
     @FXML
     Label pointsPlayer4;
-
-
+    @FXML
+    ImageView cat1;
+    Board board = new Board();
     private GuiManager guiManager;
     private Map<String, ImageView> objectCards;
     private Map<String, ImageView> commonGoalCards;
@@ -201,7 +188,108 @@ public class GameSceneController {
         loadObjectCards();
         loadCommonGoalCards();
         loadPersonalGoalCards();
+
+//        fillBoard();
+        ObjectCard objectCard;
+        JsonReader.readJsonConstant("GameConstant.json");
+        int playerNumber = 2;
+        int[][] boardMatrix = JsonReader.getBoard(playerNumber);
+
+        board.getGrid().put(new Coordinate(0, 0), new ObjectCard(ObjectCardType.cat, 1));
+
+        for (int i = 0; i < boardMatrix.length / 2; i++) {
+            for (int j = 0; j < boardMatrix[i].length; j++) {
+                if (boardMatrix[i][j] == 1) {
+                    objectCard = board.getGrid().get(new Coordinate(4 - i, j - 4));
+                    System.out.println("objectCard: " + objectCard);
+                    if (objectCard != null) {
+                        String cardTypeText = objectCard.getType().getText();
+                        String cardNameType = cardTypeText + "-" + objectCard.getId();
+
+                        ImageView imageView = objectCards.get(cardNameType);
+                        System.out.println("imageView: " + imageView);
+                        if (imageView != null) {
+                            imageView.setFitWidth(BOARD_OBJECT_CARD_WIDTH);
+                            imageView.setFitHeight(BOARD_OBJECT_CARD_HEIGHT);
+                            imageView.setPreserveRatio(true);
+                            imageView.setPickOnBounds(true);
+
+                            System.out.println("i: " + i + " j: " + j);
+//                            boardGridPane.add(imageView, i + 4, j + 4);
+                        }
+                    }
+                }
+            }
+        }
+
+        for (int i = boardMatrix.length / 2; i < boardMatrix.length; i++) {
+            for (int j = 0; j < boardMatrix[i].length; j++) {
+                if (boardMatrix[i][j] == 1) {
+                    objectCard = board.getGrid().get(new Coordinate(4 - i, j - 4));
+                    System.out.println("objectCard: " + objectCard);
+                    if (objectCard != null) {
+                        String cardTypeText = objectCard.getType().getText();
+                        String cardNameType = cardTypeText + "-" + objectCard.getId();
+
+                        ImageView imageView = objectCards.get(cardNameType);
+                        System.out.println("imageView: " + imageView);
+                        if (imageView != null) {
+                            imageView.setFitWidth(BOARD_OBJECT_CARD_WIDTH);
+                            imageView.setFitHeight(BOARD_OBJECT_CARD_HEIGHT);
+                            imageView.setPreserveRatio(true);
+                            imageView.setPickOnBounds(true);
+
+                            System.out.println("i: " + i + " j: " + j);
+                            boardGridPane.add(imageView, i + 4, j + 4);
+                        }
+                    } else {
+                        System.out.println("TEST1 i: " + i + " j: " + j);
+                        ImageView imageView = objectCards.get("Cat-1");
+                        imageView.setId(new UUID(2, 0).toString());
+                        if (imageView != null) {
+                            imageView.setFitWidth(BOARD_OBJECT_CARD_WIDTH);
+                            imageView.setFitHeight(BOARD_OBJECT_CARD_HEIGHT);
+                            imageView.setPreserveRatio(true);
+                            imageView.setPickOnBounds(true);
+                            try {
+                                boardGridPane.add(imageView, i + 4, j + 4);
+                            } catch (Exception e) {
+                                System.out.println("Exception: " + e.getMessage());
+                            }
+                        }
+                    }
+                } else {
+                    System.out.println("TEST2 i: " + i + " j: " + j);
+//                    boardGridPane.add(objectCards.get("Book-1"), i + 4, j + 4);
+                }
+            }
+        }
     }
+
+    public void fillBoard() {
+        int playerNumber = 2;
+
+        Map<Coordinate, ObjectCard> b = board.getGrid();
+
+        int[][] boardMatrix = JsonReader.getBoard(playerNumber);
+
+        for (int i = 0; i < boardMatrix.length / 2; i++) {
+            for (int j = 0; j < boardMatrix[i].length; j++) {
+                if (boardMatrix[i][j] == 1) {
+                    b.put(new Coordinate(4 - i, j - 4), new ObjectCard(ObjectCardType.cat, 1));
+                }
+            }
+        }
+
+        for (int i = boardMatrix.length / 2; i < boardMatrix.length; i++) {
+            for (int j = 0; j < boardMatrix[i].length; j++) {
+                if (boardMatrix[i][j] == 1) {
+                    b.put(new Coordinate(4 - i, j - 4), new ObjectCard(ObjectCardType.book, 0));
+                }
+            }
+        }
+    }
+
 
     /**
      * Setups the board and binds all the events
@@ -304,7 +392,7 @@ public class GameSceneController {
                             imageView.setPreserveRatio(true);
                             imageView.setPickOnBounds(true);
 
-                            boardGridPane.add(imageView, i, j);
+                            boardGridPane.add(imageView, i + boardMatrix.length, j);
                         }
                     }
                 }
@@ -391,8 +479,8 @@ public class GameSceneController {
 
         // Aggiungere le object card
 
-        for(Player player : players) {
-            if(!player.getName().equals(myName)) {
+        for (Player player : players) {
+            if (!player.getName().equals(myName)) {
                 StackPane stackPane = new StackPane();
                 stackPane.setId("stackPane" + i);
                 shelfHBoxImages.getChildren().add(stackPane);
@@ -437,9 +525,9 @@ public class GameSceneController {
     void setLimbo(GameSerialized gameSerialized) {
         List<ObjectCard> limboCards = gameSerialized.getAllLimboCards();
 
-        if(!limboCards.isEmpty()){
-            for(ObjectCard objectCard : limboCards) {
-                if(objectCard != null) {
+        if (!limboCards.isEmpty()) {
+            for (ObjectCard objectCard : limboCards) {
+                if (objectCard != null) {
                     String cardTypeText = objectCard.getType().getText();
                     String cardNameType = cardTypeText + "-" + objectCard.getId();
                     ImageView imageView = objectCards.get(cardNameType);
@@ -479,8 +567,8 @@ public class GameSceneController {
         separator.getStyleClass().add(CSS_PLAYERINFO_SEPARATOR);
         playersInfoVBox.getChildren().add(separator);
 
-        for(Player player : players) {
-            if(!player.getName().equals(myName)) {
+        for (Player player : players) {
+            if (!player.getName().equals(myName)) {
                 String playerName = player.getName();
                 String playerPoints = POINTS_PROPERTY + player.getCurrentPoints();
 
@@ -494,7 +582,7 @@ public class GameSceneController {
                 playerPointsLabel.getStyleClass().add(CSS_PLAYERINFO_LABEL);
                 playersInfoVBox.getChildren().add(playerPointsLabel);
 
-                if(!(player.equals(players.get(players.size() - 1)))) {
+                if (!(player.equals(players.get(players.size() - 1)))) {
                     Separator separator2 = new Separator();
                     separator2.getStyleClass().add(CSS_PLAYERINFO_SEPARATOR);
                     playersInfoVBox.getChildren().add(separator2);
@@ -606,7 +694,6 @@ public class GameSceneController {
 
     /**
      * Updates element on the board
-     *
      */
     private void updateBoard(GameSerialized gameSerialized) {
         ObservableList<Node> children = boardGridPane.getChildren();
@@ -616,10 +703,9 @@ public class GameSceneController {
 
     /**
      * Updates element on the shelves
-     *
      */
     private void updateShelves(GameSerialized gameSerialized) {
-        for(GridPane shelf : shelves) {
+        for (GridPane shelf : shelves) {
             ObservableList<Node> children = shelf.getChildren();
             children.clear();
             setShelves(gameSerialized);
@@ -701,7 +787,6 @@ public class GameSceneController {
 
     /**
      * Communicates the reconnection of a player
-     *
      */
     void onPlayerReconnection(String message) {
         GuiManager.showDialog((Stage) mainPane.getScene().getWindow(), "Reconnection", message);
