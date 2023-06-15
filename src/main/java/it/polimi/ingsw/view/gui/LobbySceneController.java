@@ -63,18 +63,12 @@ public class LobbySceneController {
      * Handles the game start when the lobby is full
      */
     void onGameStart() {
-        Timer timer = new Timer();
-        timer.schedule(new TimerTask() {
-            @Override
-            public void run() {
-                GameSceneController gameSceneController =
-                        GuiManager.setLayout(mainPane.getScene(), "fxml/gameScene.fxml");
+        GameSceneController gameSceneController =
+                GuiManager.setLayout(mainPane.getScene(), "fxml/gameScene.fxml");
 
-                if (gameSceneController != null) {
-                    gameSceneController.setupGame(guiManager.getGameSerialized());
-                }
-            }
-        }, 2500);
+        if (gameSceneController != null) {
+            gameSceneController.setupGame(guiManager.getGameSerialized());
+        }
     }
 
     /**

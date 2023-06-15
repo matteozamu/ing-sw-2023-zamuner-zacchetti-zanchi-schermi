@@ -197,6 +197,10 @@ public class GameSceneController {
         commonGoalCards = new HashMap<>();
         personalGoalCards = new HashMap<>();
         shelves = new ArrayList<>();
+
+        loadObjectCards();
+        loadCommonGoalCards();
+        loadPersonalGoalCards();
     }
 
     /**
@@ -205,15 +209,12 @@ public class GameSceneController {
      * @param gameSerialized state of the game at the time of the join
      */
     void setupGame(GameSerialized gameSerialized) {
-        bindCommonGoalCardInfoPanelZoom();
-        bindPanels();
+        //bindCommonGoalCardInfoPanelZoom();
+        //bindPanels();
 
-        //aggiungere aggiornamento punteggi
-        updateGameArea(gameSerialized);
         setPersonalGoalCard(gameSerialized.getPersonalGoalCard());
-        loadObjectCards();
-        loadCommonGoalCards();
-        loadPersonalGoalCards();
+        setPlayerInfo(gameSerialized);
+        updateGameArea(gameSerialized);
     }
 
     /**
@@ -598,6 +599,7 @@ public class GameSceneController {
     private void updateGameArea(GameSerialized gameSerialized) {
         updateBoard(gameSerialized);
         updateShelves(gameSerialized);
+        updatePoints(gameSerialized);
         // Aggiungere altri elementi da aggiornare
 
     }
@@ -622,6 +624,10 @@ public class GameSceneController {
             children.clear();
             setShelves(gameSerialized);
         }
+    }
+
+    private void updatePoints(GameSerialized gameSerialized) {
+
     }
 
     /**
