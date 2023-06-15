@@ -32,12 +32,10 @@
                 </StackPane>
 
                 <HBox fx:id="commonGoalCardsHBoxArea" styleClass="commonGoalCardsHBoxArea">
-                    <StackPane>
-                        <ImageView fx:id="commonGoal1" id="commonGoalCard-1" fitHeight="91.3" fitWidth="138.5" />
+                    <StackPane fx:id="commonGoalCard1StackPane">
                         <ImageView fx:id="scoring81" fitHeight="39.5" fitWidth="39.5" rotate="-8.0" styleClass="scoring-8" translateX="32.2" translateY="-3.5" />
                     </StackPane>
-                    <StackPane>
-                        <ImageView fx:id="commonGoal2" id="commonGoalCard-2" fitHeight="91.3" fitWidth="138.5" />
+                    <StackPane fx:id="commonGoalCard2StackPane">
                         <ImageView fx:id="scoring82" fitHeight="39.5" fitWidth="39.5" rotate="-8.0" styleClass="scoring-8" translateX="32.2" translateY="-3.5" />
                     </StackPane>
                 </HBox>
@@ -45,11 +43,7 @@
             </VBox>
 
             <VBox fx:id="shelfLimboVBoxArea" maxHeight="656.0" maxWidth="400.0" styleClass="shelfLimboVBoxArea">
-
                 <HBox fx:id="limboHBoxArea" prefHeight="100.0" prefWidth="300.0" styleClass="limboHBoxArea">
-                    <ImageView fx:id="frame5" fitHeight="75.0" fitWidth="75.0" layoutX="62.0" layoutY="12.5" styleClass="Frame-1" />
-                    <ImageView fx:id="game6" fitHeight="75.0" fitWidth="75.0" layoutX="159.5" layoutY="12.5" styleClass="Game-1" />
-                    <ImageView fx:id="cat6" fitHeight="75.0" fitWidth="75.0" layoutX="257" layoutY="12.5" styleClass="Cat-1" />
                 </HBox>
 
                 <AnchorPane fx:id="columnArrowAnchorPane" maxWidth="310" prefHeight="50" styleClass="columnArrowAnchorPane">
@@ -66,36 +60,6 @@
                             <ImageView fx:id="shelf1" fitHeight="400.0" fitWidth="400.0" styleClass="shelf" />
                             <Label fx:id="shelfLabel1" styleClass="shelfLabel" StackPane.alignment="BOTTOM_CENTER"/>
                             <GridPane fx:id="shelf1GridPane" hgap="17.0" maxHeight="324.0" maxWidth="304.0" translateY="-11.0" vgap="9.0" styleClass="shelfGridPane">
-                                <ImageView fx:id="game1" fitHeight="47.0" fitWidth="47.0" styleClass="Game-1" GridPane.columnIndex="0" GridPane.rowIndex="0" />
-                                <ImageView fx:id="game2" fitHeight="47.0" fitWidth="47.0" styleClass="Game-2" GridPane.columnIndex="1" GridPane.rowIndex="0" />
-                                <ImageView fx:id="game3" fitHeight="47.0" fitWidth="47.0" styleClass="Game-0" GridPane.columnIndex="2" GridPane.rowIndex="0" />
-                                <ImageView fx:id="plant1" fitHeight="47.0" fitWidth="47.0" styleClass="Plant-1" GridPane.columnIndex="3" GridPane.rowIndex="0" />
-                                <ImageView fx:id="plant2" fitHeight="47.0" fitWidth="47.0" styleClass="Plant-2" GridPane.columnIndex="4" GridPane.rowIndex="0" />
-                                <ImageView fx:id="plant3" fitHeight="47.0" fitWidth="47.0" styleClass="Plant-0" GridPane.columnIndex="0" GridPane.rowIndex="1" />
-                                <ImageView fx:id="trophy1" fitHeight="47.0" fitWidth="47.0" styleClass="Trophy-1" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-                                <ImageView fx:id="cat3" fitHeight="47.0" fitWidth="47.0" styleClass="Cat-0" GridPane.columnIndex="2" GridPane.rowIndex="1" />
-                                <ImageView fx:id="game4" fitHeight="47.0" fitWidth="47.0" styleClass="Game-1" GridPane.columnIndex="3" GridPane.rowIndex="1" />
-                                <ImageView fx:id="trophy4" fitHeight="47.0" fitWidth="47.0" styleClass="Trophy-1" GridPane.columnIndex="4" GridPane.rowIndex="1" />
-                                <ImageView fx:id="trophy2" fitHeight="47.0" fitWidth="47.0" styleClass="Trophy-2" GridPane.columnIndex="0" GridPane.rowIndex="2" />
-                                <ImageView fx:id="trophy3" fitHeight="47.0" fitWidth="47.0" styleClass="Trophy-0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-                                <ImageView fx:id="book30" fitHeight="47.0" fitWidth="47.0" styleClass="Book-1" GridPane.columnIndex="2" GridPane.rowIndex="2" />
-                                <ImageView fx:id="book31" fitHeight="47.0" fitWidth="47.0" styleClass="Book-2" GridPane.columnIndex="3" GridPane.rowIndex="2" />
-                                <ImageView fx:id="book32" fitHeight="47.0" fitWidth="47.0" styleClass="Book-0" GridPane.columnIndex="4" GridPane.rowIndex="2" />
-                                <ImageView fx:id="frame1" fitHeight="47.0" fitWidth="47.0" styleClass="Frame-1" GridPane.columnIndex="0" GridPane.rowIndex="3" />
-                                <ImageView fx:id="frame2" fitHeight="47.0" fitWidth="47.0" styleClass="Frame-2" GridPane.columnIndex="1" GridPane.rowIndex="3" />
-                                <ImageView fx:id="frame3" fitHeight="47.0" fitWidth="47.0" styleClass="Frame-0" GridPane.columnIndex="2" GridPane.rowIndex="3" />
-                                <ImageView fx:id="cat1" fitHeight="47.0" fitWidth="47.0" styleClass="Cat-1" GridPane.columnIndex="3" GridPane.rowIndex="3" />
-                                <ImageView fx:id="cat2" fitHeight="47.0" fitWidth="47.0" styleClass="Cat-2" GridPane.columnIndex="4" GridPane.rowIndex="3" />
-                                <ImageView fx:id="book33" fitHeight="47.0" fitWidth="47.0" styleClass="Book-2" GridPane.columnIndex="0" GridPane.rowIndex="4" />
-                                <ImageView fx:id="book34" fitHeight="47.0" fitWidth="47.0" styleClass="Book-0" GridPane.columnIndex="1" GridPane.rowIndex="4" />
-                                <ImageView fx:id="frame4" fitHeight="47.0" fitWidth="47.0" styleClass="Frame-0" GridPane.columnIndex="2" GridPane.rowIndex="4" />
-                                <ImageView fx:id="cat4" fitHeight="47.0" fitWidth="47.0" styleClass="Cat-1" GridPane.columnIndex="3" GridPane.rowIndex="4" />
-                                <ImageView fx:id="cat5" fitHeight="47.0" fitWidth="47.0" styleClass="Cat-0" GridPane.columnIndex="4" GridPane.rowIndex="4" />
-                                <ImageView fx:id="game5" fitHeight="47.0" fitWidth="47.0" styleClass="Game-1" GridPane.columnIndex="0" GridPane.rowIndex="5" />
-                                <ImageView fx:id="trophy5" fitHeight="47.0" fitWidth="47.0" styleClass="Trophy-1" GridPane.columnIndex="1" GridPane.rowIndex="5" />
-                                <ImageView fx:id="plant4" fitHeight="47.0" fitWidth="47.0" styleClass="Plant-2" GridPane.columnIndex="2" GridPane.rowIndex="5" />
-                                <ImageView fx:id="plant5" fitHeight="47.0" fitWidth="47.0" styleClass="Plant-0" GridPane.columnIndex="3" GridPane.rowIndex="5" />
-                                <ImageView fx:id="trophy6" fitHeight="47.0" fitWidth="47.0" styleClass="Trophy-1" GridPane.columnIndex="4" GridPane.rowIndex="5" />
                             </GridPane>
                         </StackPane>
 
@@ -128,32 +92,16 @@
             </VBox>
 
             <StackPane fx:id="personalGoalCardPane" styleClass="personalGoalCardPane">
-                <ImageView id="personalGoalCard-1" fx:id="personalGoalCard" fitHeight="207.9" fitWidth="137.0" translateY="51.5" StackPane.alignment="CENTER"/>
             </StackPane>
 
         </HBox>
 
-        <Pane fx:id="playersNamePaneArea" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="169.0" prefWidth="133.0" translateX="580.0" translateY="-280.0" styleClass="playersNamePaneArea">
-            <VBox>
-                <Label fx:id="namePlayer1" styleClass="playerName" text="Federico" />
-                <Label fx:id="pointsPlayer1" styleClass="playerName" text="Points: 35" />
-
-                <Separator styleClass="labelSeparator" />
-
-                <Label fx:id="namePlayer2" styleClass="playerName" text="Matteo" />
-                <Label fx:id="pointsPlayer2" styleClass="playerName" text="Points: 35" />
-
-                <Separator styleClass="labelSeparator" />
-
-                <Label fx:id="namePlayer3" styleClass="playerName" text="Federica" />
-                <Label fx:id="pointsPlayer3" styleClass="playerName" text="Points: 35" />
-
-                <Separator styleClass="labelSeparator" />
-
-                <Label fx:id="namePlayer4" styleClass="playerName" text="Simone" />
-                <Label fx:id="pointsPlayer4" styleClass="playerName" text="Points: 35" />
+        <Pane fx:id="playersInfoPaneArea" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="169.0" prefWidth="133.0" translateX="580.0" translateY="-280.0" styleClass="playersNamePaneArea">
+            <VBox fx:id="playersInfoVBox">
             </VBox>
         </Pane>
+
+        <FlowPane fx:id="commonGoalCardInfoPanel" styleClass="commonGoalCardInfoPanel"/>
 
     </StackPane>
 </FlowPane>

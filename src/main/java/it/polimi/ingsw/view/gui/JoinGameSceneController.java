@@ -40,7 +40,6 @@ public class JoinGameSceneController {
     @FXML
     public void initialize() {
         guiManager = GuiManager.getInstance();
-        guiManager.setJoinGameSceneController(this);
         bindEvents();
     }
 
@@ -70,7 +69,7 @@ public class JoinGameSceneController {
         for (int i = 0; i < games.size(); i++) {
             ControllerGame game = games.get(i);
             Label lbl = new Label();
-            lbl.setText(game.getId().toString());
+            lbl.setText(game.getGame().getGameName());
             lbl.getStyleClass().add("idRow");
 
             final int index = i;

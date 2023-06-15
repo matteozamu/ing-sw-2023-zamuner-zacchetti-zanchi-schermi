@@ -25,6 +25,7 @@ public class Game implements Serializable {
     private int numberOfPlayers;
     private Map<Coordinate, ObjectCard> limbo;
     private List<ObjectCard> limboOrder;
+    private String gameName;
 
     /**
      * constructor of the class
@@ -39,6 +40,7 @@ public class Game implements Serializable {
         this.started = false;
         this.numberOfPlayers = -1;
         this.limbo = new HashMap<>();
+        this.gameName = "GenericGame";
 
         loadObjectCards();
         loadPersonalGoaldCards();
@@ -56,6 +58,7 @@ public class Game implements Serializable {
     /**
      * @return an instance of the map
      */
+
     public static Map<String, Game> getInstanceMap() {
         return instanceMap;
     }
@@ -72,6 +75,14 @@ public class Game implements Serializable {
         return instanceMap.get(username);
     }
 
+    public String getGameName() {
+        return gameName;
+    }
+
+    public void setGameName(String gameName) {
+        this.gameName = gameName;
+    }
+
     /**
      * @return the number of player
      */
@@ -81,6 +92,7 @@ public class Game implements Serializable {
 
     /**
      * set the number of players
+     *
      * @param numberOfPlayers is the number of player to set
      */
     public void setNumberOfPlayers(int numberOfPlayers) {
@@ -96,6 +108,7 @@ public class Game implements Serializable {
 
     /**
      * set the limbo
+     *
      * @param limbo the limbo to set
      */
     public void setLimbo(Map<Coordinate, ObjectCard> limbo) {
@@ -111,6 +124,7 @@ public class Game implements Serializable {
 
     /**
      * set the nwe order of the selected object cards
+     *
      * @param limboOrder is the order to set
      */
     public void setLimboOrder(List<ObjectCard> limboOrder) {
@@ -126,6 +140,7 @@ public class Game implements Serializable {
 
     /**
      * method used to set that the game is started or ended
+     *
      * @param started is true if the game is started, false otherwise
      */
     public void setStarted(boolean started) {
@@ -175,6 +190,7 @@ public class Game implements Serializable {
 
     /**
      * method used to add a player in the game
+     *
      * @param p is the player to add
      * @return true if the player has been successfully added
      */
@@ -195,6 +211,7 @@ public class Game implements Serializable {
 
     /**
      * set the current player of the game
+     *
      * @param currentPlayer is the current player
      */
     public void setCurrentPlayer(Player currentPlayer) {
@@ -241,7 +258,6 @@ public class Game implements Serializable {
     }
 
 
-
     // TODO da eliminare
     public List<String> getPlayersNames() {
         List<String> names = new ArrayList<>();
@@ -253,6 +269,7 @@ public class Game implements Serializable {
 
     /**
      * return a Player given is username
+     *
      * @param name the name of the player
      * @return the player with that username
      */
@@ -357,9 +374,9 @@ public class Game implements Serializable {
 
         Random RANDOM = new Random();
         int index = RANDOM.nextInt(this.personalGoalCardsContainer.size());
-        PersonalGoalCard pg = this.personalGoalCardsContainer.get(index);
+        PersonalGoalCard personalGoalCard = this.personalGoalCardsContainer.get(index);
         this.personalGoalCardsContainer.remove(index);
-        return pg;
+        return personalGoalCard;
     }
 
     /**

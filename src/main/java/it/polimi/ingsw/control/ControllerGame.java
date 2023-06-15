@@ -233,6 +233,7 @@ public class ControllerGame implements TimerRunListener, Serializable {
 
         if (numberOfPlayersMessage.getContent() == MessageContent.NUMBER_OF_PLAYERS && numberOfPlayers >= JsonReader.getMinPlayers() && numberOfPlayers <= JsonReader.getMaxPlayers()) {
             this.game.setNumberOfPlayers(numberOfPlayersMessage.getNumberOfPlayers());
+            this.game.setGameName(numberOfPlayersMessage.getGameName());
             fillBoard();
 
             Server.LOGGER.log(Level.INFO, "Number of players for the game: {0}", numberOfPlayersMessage.getNumberOfPlayers());

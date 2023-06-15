@@ -1,49 +1,45 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import java.net.*?>
 <?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
 <?import javafx.scene.layout.*?>
-<?import java.net.URL?>
-<?import javafx.scene.image.ImageView?>
 
-<BorderPane fx:controller="it.polimi.ingsw.view.gui.ConnectionSceneController"
-            fx:id="mainPane"
-            styleClass="mainPane"
-            xmlns="http://javafx.com/javafx"
-            xmlns:fx="http://javafx.com/fxml">
+<BorderPane fx:id="mainPane" styleClass="mainPane" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.ingsw.view.gui.ConnectionSceneController">
 
     <stylesheets>
-        <URL value="@../css/menu.css"/>
+        <URL value="@../css/menu.css" />
     </stylesheets>
 
     <top>
         <VBox styleClass="topBox">
-            <Label text="Join a game" styleClass="menuTitle"/>
+            <Label styleClass="menuTitle" text="Join a game" />
         </VBox>
     </top>
 
     <center>
         <VBox styleClass="centerBox">
-            <Label text="Enter your username:" styleClass="menuLabel"/>
-            <TextField fx:id="usernameField" styleClass="menuTextField"/>
+            <Label styleClass="menuLabel" text="Enter your username:" />
+            <TextField fx:id="usernameField" styleClass="menuTextField" />
 
-            <Label text="Enter server address:" styleClass="menuLabel"/>
-            <TextField fx:id="addressField" styleClass="menuTextField"/>
+            <Label styleClass="menuLabel" text="Enter server address:" />
+            <TextField fx:id="addressField" styleClass="menuTextField" />
 
-            <Label text="Enter server port:" styleClass="menuLabel"/>
-            <TextField fx:id="portField" styleClass="menuTextField"/>
+            <Label styleClass="menuLabel" text="Enter server port:" />
+            <TextField fx:id="portField" styleClass="menuTextField" />
         </VBox>
     </center>
 
     <bottom>
         <VBox styleClass="botBox">
             <HBox styleClass="selectionButton">
-                <ImageView fx:id="connectSocketButton" fitWidth="400" fitHeight="400" preserveRatio="true" pickOnBounds="true" id="connectSocketButton" styleClass="button"/>
-                <ImageView fx:id="connectRmiButton" fitWidth="400" fitHeight="400" preserveRatio="true" pickOnBounds="true" id="connectRmiButton" styleClass="button"/>
+                <ImageView id="connectSocketButton" fx:id="connectSocketButton" fitHeight="400" fitWidth="400" pickOnBounds="true" preserveRatio="true" styleClass="button" />
+                <ImageView id="connectRmiButton" fx:id="connectRmiButton" fitHeight="400" fitWidth="400" pickOnBounds="true" preserveRatio="true" styleClass="button" />
             </HBox>
 
             <Region prefHeight="20" />
 
-            <ImageView fx:id="backButton" id="backButton" fitWidth="400" fitHeight="400" preserveRatio="true" pickOnBounds="true" styleClass="button"/>
+            <ImageView id="backButton" fx:id="backButton" fitHeight="400" fitWidth="400" pickOnBounds="true" preserveRatio="true" styleClass="button" />
         </VBox>
     </bottom>
 </BorderPane>

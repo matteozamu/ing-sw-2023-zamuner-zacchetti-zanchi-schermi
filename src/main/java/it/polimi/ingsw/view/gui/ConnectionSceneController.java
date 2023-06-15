@@ -108,7 +108,9 @@ public class ConnectionSceneController {
         boolean isUsernameValid =
                 !username.equals("") &&
                 !username.equals("Server") &&
-                !username.equals("User");
+                !username.equals("server") &&
+                !username.equals("User") &&
+                !username.equals("user");
 
         boolean isAddressValid = ServerAddressValidator.isAddressValid(address);
 
