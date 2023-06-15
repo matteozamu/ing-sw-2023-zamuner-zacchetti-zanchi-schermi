@@ -9,7 +9,6 @@ public class Color {
     public static final String ANSI_GREEN = "\u001B[32m"; // cat
     public static final String ANSI_WHITE = "\u001B[37m"; // book
     public static final String ANSI_CYAN = "\u001B[36m"; // trophy
-
     public static final String ANSI_MAGENTA_BACKGROUND = "\u001B[45m"; // plant
     public static final String ANSI_YELLOW_BACKGROUND = "\u001B[43m"; // game
     public static final String ANSI_BLUE_BACKGROUND = "\u001B[44m"; // frame
