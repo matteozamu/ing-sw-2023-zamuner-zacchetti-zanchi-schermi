@@ -229,6 +229,8 @@ public class GuiManager extends ClientGameManager implements DisconnectionListen
      */
     @Override
     public void firstPlayerCommunication(String username, List<CommonGoal> commonGoals) {
+        Platform.runLater(lobbySceneController::onGameStart);
+
         Platform.runLater(() ->
                 gameSceneController.setCommonGoalCards(commonGoals));
     }
@@ -241,9 +243,10 @@ public class GuiManager extends ClientGameManager implements DisconnectionListen
         if (gameSceneController == null) {
             if (lobbySceneController == null) { // Game reconnection
                 Platform.runLater(connectionSceneController::onReconnectionResponse);
-            } else { // Game Start
-                Platform.runLater(lobbySceneController::onGameStart);
             }
+            //else { // Game Start
+            //Platform.runLater(lobbySceneController::onGameStart);
+            //}
         } else {
             Platform.runLater(gameSceneController::onStateUpdate);
         }
