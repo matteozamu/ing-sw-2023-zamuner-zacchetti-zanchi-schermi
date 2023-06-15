@@ -190,105 +190,95 @@ public class GameSceneController {
         loadPersonalGoalCards();
 
 //        fillBoard();
-        ObjectCard objectCard;
-        JsonReader.readJsonConstant("GameConstant.json");
-        int playerNumber = 2;
-        int[][] boardMatrix = JsonReader.getBoard(playerNumber);
-
-        board.getGrid().put(new Coordinate(0, 0), new ObjectCard(ObjectCardType.cat, 1));
-
-        for (int i = 0; i < boardMatrix.length / 2; i++) {
-            for (int j = 0; j < boardMatrix[i].length; j++) {
-                if (boardMatrix[i][j] == 1) {
-                    objectCard = board.getGrid().get(new Coordinate(4 - i, j - 4));
-                    System.out.println("objectCard: " + objectCard);
-                    if (objectCard != null) {
-                        String cardTypeText = objectCard.getType().getText();
-                        String cardNameType = cardTypeText + "-" + objectCard.getId();
-
-                        ImageView imageView = objectCards.get(cardNameType);
-                        System.out.println("imageView: " + imageView);
-                        if (imageView != null) {
-                            imageView.setFitWidth(BOARD_OBJECT_CARD_WIDTH);
-                            imageView.setFitHeight(BOARD_OBJECT_CARD_HEIGHT);
-                            imageView.setPreserveRatio(true);
-                            imageView.setPickOnBounds(true);
-
-                            System.out.println("i: " + i + " j: " + j);
+//        ObjectCard objectCard;
+//        JsonReader.readJsonConstant("GameConstant.json");
+//        int playerNumber = 2;
+//        int[][] boardMatrix = JsonReader.getBoard(playerNumber);
+//
+//        board.getGrid().put(new Coordinate(0, 0), new ObjectCard(ObjectCardType.cat, 1));
+//
+//        for (int i = 0; i < boardMatrix.length / 2; i++) {
+//            for (int j = 0; j < boardMatrix[i].length; j++) {
+//                if (boardMatrix[i][j] == 1) {
+//                    objectCard = board.getGrid().get(new Coordinate(4 - i, j - 4));
+//                    System.out.println("objectCard: " + objectCard);
+//                    if (objectCard != null) {
+//                        String cardTypeText = objectCard.getType().getText();
+//                        String cardNameType = cardTypeText + "-" + objectCard.getId() + "0";
+//
+//                        ImageView imageView = objectCards.get(cardNameType);
+//                        System.out.println("imageView: " + imageView);
+//                        if (imageView != null) {
+//                            imageView.setFitWidth(BOARD_OBJECT_CARD_WIDTH);
+//                            imageView.setFitHeight(BOARD_OBJECT_CARD_HEIGHT);
+//                            imageView.setPreserveRatio(true);
+//                            imageView.setPickOnBounds(true);
+//
+//                            System.out.println("i: " + i + " j: " + j);
 //                            boardGridPane.add(imageView, i + 4, j + 4);
-                        }
-                    }
-                }
-            }
-        }
-
-        for (int i = boardMatrix.length / 2; i < boardMatrix.length; i++) {
-            for (int j = 0; j < boardMatrix[i].length; j++) {
-                if (boardMatrix[i][j] == 1) {
-                    objectCard = board.getGrid().get(new Coordinate(4 - i, j - 4));
-                    System.out.println("objectCard: " + objectCard);
-                    if (objectCard != null) {
-                        String cardTypeText = objectCard.getType().getText();
-                        String cardNameType = cardTypeText + "-" + objectCard.getId();
-
-                        ImageView imageView = objectCards.get(cardNameType);
-                        System.out.println("imageView: " + imageView);
-                        if (imageView != null) {
-                            imageView.setFitWidth(BOARD_OBJECT_CARD_WIDTH);
-                            imageView.setFitHeight(BOARD_OBJECT_CARD_HEIGHT);
-                            imageView.setPreserveRatio(true);
-                            imageView.setPickOnBounds(true);
-
-                            System.out.println("i: " + i + " j: " + j);
-                            boardGridPane.add(imageView, i + 4, j + 4);
-                        }
-                    } else {
-                        System.out.println("TEST1 i: " + i + " j: " + j);
-                        ImageView imageView = objectCards.get("Cat-1");
-                        imageView.setId(new UUID(2, 0).toString());
-                        if (imageView != null) {
-                            imageView.setFitWidth(BOARD_OBJECT_CARD_WIDTH);
-                            imageView.setFitHeight(BOARD_OBJECT_CARD_HEIGHT);
-                            imageView.setPreserveRatio(true);
-                            imageView.setPickOnBounds(true);
-                            try {
-                                boardGridPane.add(imageView, i + 4, j + 4);
-                            } catch (Exception e) {
-                                System.out.println("Exception: " + e.getMessage());
-                            }
-                        }
-                    }
-                } else {
-                    System.out.println("TEST2 i: " + i + " j: " + j);
-//                    boardGridPane.add(objectCards.get("Book-1"), i + 4, j + 4);
-                }
-            }
-        }
+//                        }
+//                    }
+//                }
+//            }
+//        }
+//
+//        for (int i = boardMatrix.length / 2; i < boardMatrix.length; i++) {
+//            for (int j = 0; j < boardMatrix[i].length; j++) {
+//                if (boardMatrix[i][j] == 1) {
+//                    objectCard = board.getGrid().get(new Coordinate(4 - i, j - 4));
+//                    System.out.println("objectCard: " + objectCard);
+//                    if (objectCard != null) {
+//                        String cardTypeText = objectCard.getType().getText();
+//                        String cardNameType = cardTypeText + "-" + objectCard.getId() + "0";
+//
+//
+//                        ImageView imageView = objectCards.get(cardNameType);
+//                        System.out.println("imageView: " + imageView);
+//                        if (imageView != null) {
+//                            imageView.setFitWidth(BOARD_OBJECT_CARD_WIDTH);
+//                            imageView.setFitHeight(BOARD_OBJECT_CARD_HEIGHT);
+//                            imageView.setPreserveRatio(true);
+//                            imageView.setPickOnBounds(true);
+//
+//                            System.out.println("i: " + i + " j: " + j);
+//                            boardGridPane.add(imageView, i + 4, j + 4);
+//                        }
+//                    } else {
+//                        System.out.println("TEST1 i: " + i + " j: " + j);
+////                        ImageView imageView = objectCards.get("Cat-1");
+//
+//                    }
+//                } else {
+//                    System.out.println("TEST2 i: " + i + " j: " + j);
+////                    boardGridPane.add(objectCards.get("Book-1"), i + 4, j + 4);
+//                }
+//            }
+//        }
     }
 
-    public void fillBoard() {
-        int playerNumber = 2;
-
-        Map<Coordinate, ObjectCard> b = board.getGrid();
-
-        int[][] boardMatrix = JsonReader.getBoard(playerNumber);
-
-        for (int i = 0; i < boardMatrix.length / 2; i++) {
-            for (int j = 0; j < boardMatrix[i].length; j++) {
-                if (boardMatrix[i][j] == 1) {
-                    b.put(new Coordinate(4 - i, j - 4), new ObjectCard(ObjectCardType.cat, 1));
-                }
-            }
-        }
-
-        for (int i = boardMatrix.length / 2; i < boardMatrix.length; i++) {
-            for (int j = 0; j < boardMatrix[i].length; j++) {
-                if (boardMatrix[i][j] == 1) {
-                    b.put(new Coordinate(4 - i, j - 4), new ObjectCard(ObjectCardType.book, 0));
-                }
-            }
-        }
-    }
+//    public void fillBoard() {
+//        int playerNumber = 2;
+//
+//        Map<Coordinate, ObjectCard> b = board.getGrid();
+//
+//        int[][] boardMatrix = JsonReader.getBoard(playerNumber);
+//
+//        for (int i = 0; i < boardMatrix.length / 2; i++) {
+//            for (int j = 0; j < boardMatrix[i].length; j++) {
+//                if (boardMatrix[i][j] == 1) {
+//                    b.put(new Coordinate(4 - i, j - 4), new ObjectCard(ObjectCardType.cat, 1));
+//                }
+//            }
+//        }
+//
+//        for (int i = boardMatrix.length / 2; i < boardMatrix.length; i++) {
+//            for (int j = 0; j < boardMatrix[i].length; j++) {
+//                if (boardMatrix[i][j] == 1) {
+//                    b.put(new Coordinate(4 - i, j - 4), new ObjectCard(ObjectCardType.book, 0));
+//                }
+//            }
+//        }
+//    }
 
 
     /**
@@ -323,8 +313,8 @@ public class GameSceneController {
 
     private void loadObjectCards() {
         List<String> types = Arrays.stream(ObjectCardType.values())
-                .map(Enum::name)
-                .collect(Collectors.toList());
+                                    .map(Enum::name)
+                                    .collect(Collectors.toList());
 
         for (int i = 0; i < ObjectCardType.SIZE; i++) {
             addObjectCardImagesToMap(types.get(i), "0", 7);
@@ -336,7 +326,7 @@ public class GameSceneController {
     private void addObjectCardImagesToMap(String type, String ID, int count) {
         for (int i = 0; i < count; i++) {
             ImageView imageView = new ImageView();
-            String id = Character.toUpperCase(type.charAt(0)) + type.substring(1) + "-" + ID;
+            String id = Character.toUpperCase(type.charAt(0)) + type.substring(1) + "-" + ID + i;
             imageView.getStyleClass().add(CSS_BUTTON);
             imageView.setId(id);
             objectCards.put(imageView.getId(), imageView);
@@ -383,7 +373,7 @@ public class GameSceneController {
                     objectCard = board.getGrid().get(new Coordinate(4 - i, j - 4));
                     if (objectCard != null) {
                         String cardTypeText = objectCard.getType().getText();
-                        String cardNameType = cardTypeText + "-" + objectCard.getId();
+                        String cardNameType = cardTypeText + "-" + objectCard.getId() + "0";
 
                         ImageView imageView = objectCards.get(cardNameType);
                         if (imageView != null) {
@@ -392,7 +382,7 @@ public class GameSceneController {
                             imageView.setPreserveRatio(true);
                             imageView.setPickOnBounds(true);
 
-                            boardGridPane.add(imageView, i + boardMatrix.length, j);
+                            boardGridPane.add(imageView, i, j);
                         }
                     }
                 }
