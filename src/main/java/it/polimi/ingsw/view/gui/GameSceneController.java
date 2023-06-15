@@ -24,6 +24,7 @@ import java.util.stream.Collectors;
 public class GameSceneController {
     private static final String USERNAME_PROPERTY = "username";
     private static final String POINTS_PROPERTY = "Points: ";
+    private static final String CSS_TRANSPARENT_IMAGEVIEW = "transparent";
     private static final String CSS_BUTTON = "button";
     private static final String CSS_SHELF = "shelf";
     private static final String CSS_SHELF_GRIDPANE = "shelfGridPane";
@@ -70,6 +71,14 @@ public class GameSceneController {
     FlowPane commonGoalCardInfoPanel;
     @FXML
     VBox playersInfoVBox;
+    @FXML
+    StackPane myStackPane;
+    @FXML
+    StackPane shelfStackPane2;
+    @FXML
+    StackPane shelfStackPane3;
+    @FXML
+    StackPane shelfStackPane4;
     @FXML
     ImageView winnerTile;
     @FXML
@@ -163,123 +172,36 @@ public class GameSceneController {
     Label pointsPlayer4;
     @FXML
     ImageView cat1;
-    Board board = new Board();
+
     private GuiManager guiManager;
     private Map<String, ImageView> objectCards;
     private Map<String, ImageView> commonGoalCards;
     private Map<String, ImageView> personalGoalCards;
-    private List<GridPane> shelves;
+    private List<GridPane> shelvesGridPane;
+    private List<StackPane> shelvesStackPane;
 
     @FXML
     private void initialize() {
         guiManager = GuiManager.getInstance();
         guiManager.setGameSceneController(this);
 
-        shelfLabel1.setText("Federico");
-        shelfLabel2.setText("Matteo");
-        shelfLabel3.setText("Federica");
-        shelfLabel4.setText("Simone");
+        limboHBoxArea.setVisible(true);
+
+//        shelfLabel1.setText("Federico");
+//        shelfLabel2.setText("Matteo");
+//        shelfLabel3.setText("Federica");
+//        shelfLabel4.setText("Simone");
 
         objectCards = new HashMap<>();
         commonGoalCards = new HashMap<>();
         personalGoalCards = new HashMap<>();
-        shelves = new ArrayList<>();
+        shelvesGridPane = new ArrayList<>();
+        shelvesStackPane = List.of(shelfStackPane2, shelfStackPane3, shelfStackPane4);
 
         loadObjectCards();
         loadCommonGoalCards();
         loadPersonalGoalCards();
-
-//        fillBoard();
-//        ObjectCard objectCard;
-//        JsonReader.readJsonConstant("GameConstant.json");
-//        int playerNumber = 2;
-//        int[][] boardMatrix = JsonReader.getBoard(playerNumber);
-//
-//        board.getGrid().put(new Coordinate(0, 0), new ObjectCard(ObjectCardType.cat, 1));
-//
-//        for (int i = 0; i < boardMatrix.length / 2; i++) {
-//            for (int j = 0; j < boardMatrix[i].length; j++) {
-//                if (boardMatrix[i][j] == 1) {
-//                    objectCard = board.getGrid().get(new Coordinate(4 - i, j - 4));
-//                    System.out.println("objectCard: " + objectCard);
-//                    if (objectCard != null) {
-//                        String cardTypeText = objectCard.getType().getText();
-//                        String cardNameType = cardTypeText + "-" + objectCard.getId() + "0";
-//
-//                        ImageView imageView = objectCards.get(cardNameType);
-//                        System.out.println("imageView: " + imageView);
-//                        if (imageView != null) {
-//                            imageView.setFitWidth(BOARD_OBJECT_CARD_WIDTH);
-//                            imageView.setFitHeight(BOARD_OBJECT_CARD_HEIGHT);
-//                            imageView.setPreserveRatio(true);
-//                            imageView.setPickOnBounds(true);
-//
-//                            System.out.println("i: " + i + " j: " + j);
-//                            boardGridPane.add(imageView, i + 4, j + 4);
-//                        }
-//                    }
-//                }
-//            }
-//        }
-//
-//        for (int i = boardMatrix.length / 2; i < boardMatrix.length; i++) {
-//            for (int j = 0; j < boardMatrix[i].length; j++) {
-//                if (boardMatrix[i][j] == 1) {
-//                    objectCard = board.getGrid().get(new Coordinate(4 - i, j - 4));
-//                    System.out.println("objectCard: " + objectCard);
-//                    if (objectCard != null) {
-//                        String cardTypeText = objectCard.getType().getText();
-//                        String cardNameType = cardTypeText + "-" + objectCard.getId() + "0";
-//
-//
-//                        ImageView imageView = objectCards.get(cardNameType);
-//                        System.out.println("imageView: " + imageView);
-//                        if (imageView != null) {
-//                            imageView.setFitWidth(BOARD_OBJECT_CARD_WIDTH);
-//                            imageView.setFitHeight(BOARD_OBJECT_CARD_HEIGHT);
-//                            imageView.setPreserveRatio(true);
-//                            imageView.setPickOnBounds(true);
-//
-//                            System.out.println("i: " + i + " j: " + j);
-//                            boardGridPane.add(imageView, i + 4, j + 4);
-//                        }
-//                    } else {
-//                        System.out.println("TEST1 i: " + i + " j: " + j);
-////                        ImageView imageView = objectCards.get("Cat-1");
-//
-//                    }
-//                } else {
-//                    System.out.println("TEST2 i: " + i + " j: " + j);
-////                    boardGridPane.add(objectCards.get("Book-1"), i + 4, j + 4);
-//                }
-//            }
-//        }
     }
-
-//    public void fillBoard() {
-//        int playerNumber = 2;
-//
-//        Map<Coordinate, ObjectCard> b = board.getGrid();
-//
-//        int[][] boardMatrix = JsonReader.getBoard(playerNumber);
-//
-//        for (int i = 0; i < boardMatrix.length / 2; i++) {
-//            for (int j = 0; j < boardMatrix[i].length; j++) {
-//                if (boardMatrix[i][j] == 1) {
-//                    b.put(new Coordinate(4 - i, j - 4), new ObjectCard(ObjectCardType.cat, 1));
-//                }
-//            }
-//        }
-//
-//        for (int i = boardMatrix.length / 2; i < boardMatrix.length; i++) {
-//            for (int j = 0; j < boardMatrix[i].length; j++) {
-//                if (boardMatrix[i][j] == 1) {
-//                    b.put(new Coordinate(4 - i, j - 4), new ObjectCard(ObjectCardType.book, 0));
-//                }
-//            }
-//        }
-//    }
-
 
     /**
      * Setups the board and binds all the events
@@ -287,9 +209,10 @@ public class GameSceneController {
      * @param gameSerialized state of the game at the time of the join
      */
     void setupGame(GameSerialized gameSerialized) {
-        //bindCommonGoalCardInfoPanelZoom();
+        bindCommonGoalCardInfoPanelZoom();
         //bindPanels();
 
+        setShelves(gameSerialized);
         setPersonalGoalCard(gameSerialized.getPersonalGoalCard());
         setPlayerInfo(gameSerialized);
         updateGameArea(gameSerialized);
@@ -373,7 +296,7 @@ public class GameSceneController {
                     objectCard = board.getGrid().get(new Coordinate(4 - i, j - 4));
                     if (objectCard != null) {
                         String cardTypeText = objectCard.getType().getText();
-                        String cardNameType = cardTypeText + "-" + objectCard.getId() + "0";
+                        String cardNameType = cardTypeText + "-" + objectCard.getId();
 
                         ImageView imageView = objectCards.get(cardNameType);
                         if (imageView != null) {
@@ -382,9 +305,50 @@ public class GameSceneController {
                             imageView.setPreserveRatio(true);
                             imageView.setPickOnBounds(true);
 
-                            boardGridPane.add(imageView, i, j);
+                            boardGridPane.add(imageView, i + 4, j + 4);
                         }
                     }
+                } else if (boardMatrix[i][j] == 0) {
+                    ImageView transparentImageView = new ImageView();
+                    transparentImageView.getStyleClass().add(CSS_TRANSPARENT_IMAGEVIEW);
+                    transparentImageView.setFitWidth(BOARD_OBJECT_CARD_WIDTH);
+                    transparentImageView.setFitHeight(BOARD_OBJECT_CARD_HEIGHT);
+                    transparentImageView.setPreserveRatio(true);
+                    transparentImageView.setPickOnBounds(true);
+
+                    boardGridPane.add(transparentImageView, i + 4, j + 4);
+                }
+            }
+        }
+
+        for (int i = boardMatrix.length / 2; i < boardMatrix.length; i++) {
+            for (int j = 0; j < boardMatrix[i].length; j++) {
+                if (boardMatrix[i][j] == 1) {
+                    objectCard = board.getGrid().get(new Coordinate(4 - i, j - 4));
+                    if (objectCard != null) {
+                        String cardTypeText = objectCard.getType().getText();
+                        String cardNameType = cardTypeText + "-" + objectCard.getId();
+
+
+                        ImageView imageView = objectCards.get(cardNameType);
+                        if (imageView != null) {
+                            imageView.setFitWidth(BOARD_OBJECT_CARD_WIDTH);
+                            imageView.setFitHeight(BOARD_OBJECT_CARD_HEIGHT);
+                            imageView.setPreserveRatio(true);
+                            imageView.setPickOnBounds(true);
+
+                            boardGridPane.add(imageView, i + 4, j + 4);
+                        }
+                    }
+                } else if (boardMatrix[i][j] == 0) {
+                    ImageView transparentImageView = new ImageView();
+                    transparentImageView.getStyleClass().add(CSS_TRANSPARENT_IMAGEVIEW);
+                    transparentImageView.setFitWidth(BOARD_OBJECT_CARD_WIDTH);
+                    transparentImageView.setFitHeight(BOARD_OBJECT_CARD_HEIGHT);
+                    transparentImageView.setPreserveRatio(true);
+                    transparentImageView.setPickOnBounds(true);
+
+                    boardGridPane.add(transparentImageView, i + 4, j + 4);
                 }
             }
         }
@@ -433,9 +397,9 @@ public class GameSceneController {
         List<Player> players = gameSerialized.getAllPlayers();
         String myName = guiManager.getUsername();
 
-        StackPane myStackPane = new StackPane();
-        myStackPane.setId("myStackPane");
-        shelfHBoxImages.getChildren().add(myStackPane);
+//        StackPane myStackPane = new StackPane();
+//        myStackPane.setId("myStackPane");
+//        shelfHBoxImages.getChildren().add(myStackPane);
 
         ImageView myShelf = new ImageView(SHELF_PATH);
         myShelf.setId("myShelfImageView");
@@ -465,15 +429,15 @@ public class GameSceneController {
         myStackPane.getChildren().add(myNameLabel);
         myNameLabel.toFront();
 
-        shelves.add(myShelfGridPane);
-
-        // Aggiungere le object card
+        shelvesGridPane.add(myShelfGridPane);
 
         for (Player player : players) {
             if (!player.getName().equals(myName)) {
-                StackPane stackPane = new StackPane();
-                stackPane.setId("stackPane" + i);
-                shelfHBoxImages.getChildren().add(stackPane);
+//                StackPane stackPane = new StackPane();
+//                stackPane.setId("stackPane" + i);
+//                shelfHBoxImages.getChildren().add(stackPane);
+
+                StackPane playerStackPane = shelvesStackPane.get(i);
 
                 ImageView imageView = new ImageView(SHELF_PATH);
                 imageView.setId("shelfImageView" + i);
@@ -483,7 +447,7 @@ public class GameSceneController {
                 imageView.setPreserveRatio(true);
                 imageView.setPickOnBounds(true);
                 StackPane.setAlignment(imageView, Pos.CENTER);
-                stackPane.getChildren().add(imageView);
+                playerStackPane.getChildren().add(imageView);
 
                 GridPane gridPane = new GridPane();
                 gridPane.setId("shelfGridPane" + i);
@@ -493,19 +457,17 @@ public class GameSceneController {
                 gridPane.setMaxWidth(304.0);
                 gridPane.setTranslateY(-11.0);
                 gridPane.getStyleClass().add(CSS_SHELF_GRIDPANE);
-                stackPane.getChildren().add(gridPane);
+                playerStackPane.getChildren().add(gridPane);
                 gridPane.toFront();
 
                 Label playerNameLabel = new Label(player.getName());
                 playerNameLabel.setId("playerNameLabel" + i);
                 playerNameLabel.getStyleClass().add(CSS_SHELF_LABEL);
                 StackPane.setAlignment(playerNameLabel, Pos.BOTTOM_CENTER);
-                stackPane.getChildren().add(playerNameLabel);
+                playerStackPane.getChildren().add(playerNameLabel);
                 playerNameLabel.toFront();
 
-                shelves.add(gridPane);
-
-                // Aggiungere le object card
+                shelvesGridPane.add(gridPane);
 
                 i++;
             }
@@ -572,11 +534,9 @@ public class GameSceneController {
                 playerPointsLabel.getStyleClass().add(CSS_PLAYERINFO_LABEL);
                 playersInfoVBox.getChildren().add(playerPointsLabel);
 
-                if (!(player.equals(players.get(players.size() - 1)))) {
-                    Separator separator2 = new Separator();
-                    separator2.getStyleClass().add(CSS_PLAYERINFO_SEPARATOR);
-                    playersInfoVBox.getChildren().add(separator2);
-                }
+                Separator separator2 = new Separator();
+                separator2.getStyleClass().add(CSS_PLAYERINFO_SEPARATOR);
+                playersInfoVBox.getChildren().add(separator2);
 
                 i++;
             }
@@ -676,7 +636,7 @@ public class GameSceneController {
      */
     private void updateGameArea(GameSerialized gameSerialized) {
         updateBoard(gameSerialized);
-        updateShelves(gameSerialized);
+        //updateShelves(gameSerialized);
         updatePoints(gameSerialized);
         // Aggiungere altri elementi da aggiornare
 
@@ -695,10 +655,11 @@ public class GameSceneController {
      * Updates element on the shelves
      */
     private void updateShelves(GameSerialized gameSerialized) {
-        for (GridPane shelf : shelves) {
+        for (GridPane shelf : shelvesGridPane) {
             ObservableList<Node> children = shelf.getChildren();
             children.clear();
-            setShelves(gameSerialized);
+            //Invece di questo metodo, creare un metodo che aggiorna solo le objectCard
+            //setShelves(gameSerialized);
         }
     }
 
@@ -717,7 +678,15 @@ public class GameSceneController {
 
     // per impedire che un giocatore non di turno possa compiere azioni
     void notYourTurn(String turnOwner) {
-        mainPane.setMouseTransparent(true);
+        arrowShelf1.setMouseTransparent(true);
+        arrowShelf2.setMouseTransparent(true);
+        arrowShelf3.setMouseTransparent(true);
+        arrowShelf4.setMouseTransparent(true);
+        boardGridPane.setMouseTransparent(true);
+        //impostare il limbo con la scritta LIMBO
+        shelfStackPane2.setMouseTransparent(true);
+        shelfStackPane3.setMouseTransparent(true);
+        shelfStackPane4.setMouseTransparent(true);
     }
 
     /**

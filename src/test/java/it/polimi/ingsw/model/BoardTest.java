@@ -18,7 +18,7 @@ public class BoardTest extends TestCase {
     public void setUp() {
         this.b = new Board();
         this.c = new Coordinate(1, 1);
-        this.objectCard = new ObjectCard(ObjectCardType.randomObjectCardType(), 0);
+        this.objectCard = new ObjectCard(ObjectCardType.randomObjectCardType(), "00");
     }
 
     @Test
@@ -37,7 +37,7 @@ public class BoardTest extends TestCase {
     @Test
     public void testRemoveObjectCard() {
         Coordinate c2 = new Coordinate(2, 2);
-        ObjectCard objectCard2 = new ObjectCard(ObjectCardType.randomObjectCardType(), 1);
+        ObjectCard objectCard2 = new ObjectCard(ObjectCardType.randomObjectCardType(), "00");
 
         this.b.createCell(this.c, this.objectCard);
         this.b.createCell(c2, objectCard2);

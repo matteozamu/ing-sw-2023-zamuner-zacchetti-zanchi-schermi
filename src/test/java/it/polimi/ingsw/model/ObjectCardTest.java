@@ -8,20 +8,20 @@ class ObjectCardTest {
 
     @Test
     void getType() {
-        ObjectCard objectCard = new ObjectCard(ObjectCardType.plant, 0);
+        ObjectCard objectCard = new ObjectCard(ObjectCardType.plant, "00");
         assertEquals(ObjectCardType.plant, objectCard.getType());
     }
 
     @Test
     void getId() {
-        ObjectCard objectCard = new ObjectCard(ObjectCardType.plant, 0);
+        ObjectCard objectCard = new ObjectCard(ObjectCardType.plant, "10");
         assertEquals(0, objectCard.getId());
     }
 
     @Test
     void testIllegalArgumentException(){
         assertThrows(IllegalArgumentException.class, () -> {
-            ObjectCard objectCard = new ObjectCard(ObjectCardType.plant, 3);
+            ObjectCard objectCard = new ObjectCard(ObjectCardType.plant, "20");
         });
     }
 
