@@ -269,7 +269,7 @@ public class Cli extends ClientGameManager implements DisconnectionListener {
                 if (line.equals("")) {
                     return gamePlayers;
                 } else {
-                    try{
+                    try {
                         gamePlayers = Integer.parseInt(line);
 
                         if (gamePlayers >= 2 && gamePlayers <= 4) {
@@ -671,6 +671,21 @@ public class Cli extends ClientGameManager implements DisconnectionListener {
         if (!sendRequest(MessageBuilder.buildLoadShelfRequest(getClientToken(), getUsername(), column))) {
             promptError(SEND_ERROR, true);
         }
+    }
+
+    @Override
+    public void showPersonalGoal() {
+        CliVisual.printPersonalGoalCards(out, getGameSerialized());
+    }
+
+    @Override
+    public void showShelf() {
+        CliVisual.printShelf(out, getGameSerialized());
+        int nameLength = getUsername().length();
+
+        out.print("█".repeat((nameLength % 2 == 0 ? 22 : 21) - nameLength / 2));
+        out.print(" " + getUsername() + " ");
+        out.println("█".repeat(22 - nameLength / 2));
     }
 
     /**
