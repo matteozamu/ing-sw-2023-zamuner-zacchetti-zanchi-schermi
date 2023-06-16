@@ -24,7 +24,7 @@ import java.util.stream.Collectors;
 public class GameSceneController {
     private static final String USERNAME_PROPERTY = "username";
     private static final String POINTS_PROPERTY = "Points: ";
-    private static final String CSS_TRANSPARENT_IMAGEVIEW = "transparent";
+    private static final String TRANSPARENT_IMAGEVIEW_ID = "transparent";
     private static final String CSS_BUTTON = "button";
     private static final String CSS_SHELF = "shelf";
     private static final String CSS_SHELF_GRIDPANE = "shelfGridPane";
@@ -283,6 +283,8 @@ public class GameSceneController {
      */
     private void setBoard(GameSerialized gameSerialized) {
         Board board = gameSerialized.getBoard();
+        int numRows = 9;
+        int numCols = 9;
 
         ObjectCard objectCard;
         JsonReader.readJsonConstant("GameConstant.json");
@@ -305,18 +307,22 @@ public class GameSceneController {
                             imageView.setPreserveRatio(true);
                             imageView.setPickOnBounds(true);
 
-                            boardGridPane.add(imageView, i + 4, j + 4);
+                            int row = numRows/2 - (4 - i);
+                            int col = (j - 4) + numCols/2;
+                            boardGridPane.add(imageView, row, col);
                         }
                     }
                 } else if (boardMatrix[i][j] == 0) {
                     ImageView transparentImageView = new ImageView();
-                    transparentImageView.getStyleClass().add(CSS_TRANSPARENT_IMAGEVIEW);
                     transparentImageView.setFitWidth(BOARD_OBJECT_CARD_WIDTH);
                     transparentImageView.setFitHeight(BOARD_OBJECT_CARD_HEIGHT);
                     transparentImageView.setPreserveRatio(true);
                     transparentImageView.setPickOnBounds(true);
+                    transparentImageView.setId(TRANSPARENT_IMAGEVIEW_ID);
 
-                    boardGridPane.add(transparentImageView, i + 4, j + 4);
+                    int row = numRows/2 - (4 - i);
+                    int col = (j - 4) + numCols/2;
+                    boardGridPane.add(transparentImageView, row, col);
                 }
             }
         }
@@ -337,18 +343,22 @@ public class GameSceneController {
                             imageView.setPreserveRatio(true);
                             imageView.setPickOnBounds(true);
 
-                            boardGridPane.add(imageView, i + 4, j + 4);
+                            int row = numRows/2 - (4 - i);
+                            int col = (j - 4) + numCols/2;
+                            boardGridPane.add(imageView, row, col);
                         }
                     }
                 } else if (boardMatrix[i][j] == 0) {
                     ImageView transparentImageView = new ImageView();
-                    transparentImageView.getStyleClass().add(CSS_TRANSPARENT_IMAGEVIEW);
                     transparentImageView.setFitWidth(BOARD_OBJECT_CARD_WIDTH);
                     transparentImageView.setFitHeight(BOARD_OBJECT_CARD_HEIGHT);
                     transparentImageView.setPreserveRatio(true);
                     transparentImageView.setPickOnBounds(true);
+                    transparentImageView.setId(TRANSPARENT_IMAGEVIEW_ID);
 
-                    boardGridPane.add(transparentImageView, i + 4, j + 4);
+                    int row = numRows/2 - (4 - i);
+                    int col = (j - 4) + numCols/2;
+                    boardGridPane.add(transparentImageView, row, col);
                 }
             }
         }

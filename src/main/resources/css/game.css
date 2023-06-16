@@ -253,7 +253,7 @@
 
 /* Object cards */
 
-.transparent {
+#transparent {
     -fx-image: url("/img/object_cards/transparent.png");
 }
 
