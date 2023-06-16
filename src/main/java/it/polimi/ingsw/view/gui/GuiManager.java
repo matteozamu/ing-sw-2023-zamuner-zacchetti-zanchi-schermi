@@ -317,6 +317,16 @@ public class GuiManager extends ClientGameManager implements DisconnectionListen
 
     }
 
+    @Override
+    public void showPersonalGoal() {
+
+    }
+
+    @Override
+    public void showShelf() {
+
+    }
+
     /**
      * Prints the winner of the game
      *

@@ -28,13 +28,13 @@ public class CliVisual {
                 boolean found = false;
                 for (PersonalGoal goal : goals) {
                     if (goal.getRow() == i && goal.getColumn() == j) {
-                        line.append(goal.getType().getColorBG()).append(" ").append(ANSI_RESET).append(" ");
                         found = true;
+                        line.append(goal.getType().getColorBG()).append(" ").append(ANSI_RESET).append(" ");
                         break;
                     }
                 }
                 if (!found) {
-                    line.append("- ");
+                    line.append("─ ");
                 }
             }
 
@@ -186,7 +186,7 @@ public class CliVisual {
                 Coordinate coord = new Coordinate(row, col);
                 ObjectCard objectCard = s.getObjectCard(coord);
                 if (objectCard == null) {
-                    shelfView.append("-".repeat(maxLengthType));
+                    shelfView.append(" ".repeat(maxLengthType));
                 } else {
                     String cardText = objectCard.getType().getText();
                     int visibleCardLength = cardText.length();
@@ -204,7 +204,6 @@ public class CliVisual {
             }
         }
         shelfView.append(bottomBorder);
-
         out.print(shelfView);
     }
 
