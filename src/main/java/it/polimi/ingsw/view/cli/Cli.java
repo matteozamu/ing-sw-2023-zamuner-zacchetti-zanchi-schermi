@@ -269,10 +269,16 @@ public class Cli extends ClientGameManager implements DisconnectionListener {
                 if (line.equals("")) {
                     return gamePlayers;
                 } else {
-                    gamePlayers = Integer.parseInt(line);
-                    if (gamePlayers >= 2 && gamePlayers <= 4) {
-                        return gamePlayers;
-                    } else {
+                    try{
+                        gamePlayers = Integer.parseInt(line);
+
+                        if (gamePlayers >= 2 && gamePlayers <= 4) {
+                            return gamePlayers;
+                        } else {
+                            promptInputError("Invalid number!");
+                        }
+
+                    } catch (Exception e) {
                         promptInputError("Invalid number!");
                     }
                 }

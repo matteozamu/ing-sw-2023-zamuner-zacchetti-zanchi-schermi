@@ -76,7 +76,6 @@ public class ControllerGame implements TimerRunListener, Serializable {
         switch (receivedMessage.getContent()) {
             case GAME_STATE:
                 return new GameStateResponse(receivedMessage.getSenderUsername(), game.getCurrentPlayer().getName());
-
             case PICK_OBJECT_CARD:
                 return pickObjectCardHandler((ObjectCardRequest) receivedMessage);
 
@@ -841,7 +840,7 @@ public class ControllerGame implements TimerRunListener, Serializable {
         };
 
         // start a timer of 30 seconds (30000 milliseconds)
-        reconnectionTimer.schedule(task, 30000);
+        reconnectionTimer.schedule(task, 10000);
     }
 
     @Override
