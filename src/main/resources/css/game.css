@@ -1153,3 +1153,26 @@
 #exitButton {
     -fx-image: url("/img/buttons/exitButton.png");
 }
+
+#boardPickCard {
+    -fx-image: url("/img/buttons/boardPickCard.png");
+}
+
+#loadShelf {
+    -fx-image: url("/img/buttons/loadShelf.png");
+}
+
+#reorderLimbo {
+    -fx-image: url("/img/buttons/reorderLimbo.png");
+}
+
+#deleteLimbo {
+    -fx-image: url("/img/buttons/deleteLimbo.png");
+}
+
+/* Action list */
+
+.actionList {
+    -fx-min-width: 400px;
+    -fx-max-width: 400px;
+}

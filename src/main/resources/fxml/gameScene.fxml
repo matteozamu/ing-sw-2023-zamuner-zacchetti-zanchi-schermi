@@ -72,6 +72,18 @@
 
                     </HBox>
                 </ScrollPane>
+
+                <FlowPane fx:id="actionListFlowPane" styleClass="actionList" translateY="121.0">
+<!--                    <StackPane.margin>-->
+<!--                        <Insets bottom="20.0" left="20.0"/>-->
+<!--                    </StackPane.margin>-->
+
+<!--                    <ImageView fx:id="prova" id="loadShelf" fitHeight="50.0" fitWidth="190.0" pickOnBounds="true" preserveRatio="true" styleClass="button" />-->
+<!--                    <ImageView fx:id="prova2" id="loadShelf" fitHeight="70.0" fitWidth="190.0" pickOnBounds="true" preserveRatio="true" styleClass="button" />-->
+<!--                    <ImageView fx:id="prova3" id="loadShelf" fitHeight="70.0" fitWidth="190.0" pickOnBounds="true" preserveRatio="true" styleClass="button" />-->
+<!--                    <ImageView fx:id="prova4" id="loadShelf" fitHeight="70.0" fitWidth="190.0" pickOnBounds="true" preserveRatio="true" styleClass="button" />-->
+                </FlowPane>
+
             </VBox>
 
             <StackPane fx:id="personalGoalCardPane" styleClass="personalGoalCardPane">

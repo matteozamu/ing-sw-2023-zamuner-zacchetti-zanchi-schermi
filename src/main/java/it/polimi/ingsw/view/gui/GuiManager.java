@@ -259,9 +259,11 @@ public class GuiManager extends ClientGameManager implements DisconnectionListen
      */
     @Override
     public void displayActions(List<PossibleAction> possibleActions) {
-//        Platform.runLater(() ->
-//                gameSceneController.displayAction(possibleActions)
-//        );
+        if(gameSceneController != null) {
+            Platform.runLater(() ->
+                    gameSceneController.displayAction(possibleActions)
+            );
+        }
     }
 
     @Override
