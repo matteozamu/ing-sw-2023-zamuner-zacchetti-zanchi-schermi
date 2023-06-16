@@ -7,8 +7,6 @@ import static it.polimi.ingsw.enumeration.Color.ANSI_RESET;
 /**
  * Represents an object card in the game.
  */
-
-//TODO : se si pensa che la classe rimarrà cosi in futuro la si può sostituire con un record
 public class ObjectCard implements Serializable {
     private final ObjectCardType type;
     private final String ID;

@@ -129,7 +129,7 @@ public class ControllerGame implements TimerRunListener, Serializable {
 
             sendPrivateUpdates();
 
-//            if (checkIfRefill()) refillBoard();
+            if (checkIfRefill()) refillBoard();
             return new Response("Cards moved", MessageStatus.OK);
         } else {
             System.out.println("Column does not have enough space");
@@ -454,8 +454,8 @@ public class ControllerGame implements TimerRunListener, Serializable {
         Map<Coordinate, ObjectCard> b = game.getBoard().getGrid();
         int[][] boardMatrix = JsonReader.getBoard(playerNumber);
 
-        for (int i = 0; i < boardMatrix.length / 2; i++) {
-            for (int j = 0; j < boardMatrix[i].length; j++) {
+        for (int i = 1; i < boardMatrix.length / 2 -1; i++) {
+            for (int j = 1; j < boardMatrix[i].length -1; j++) {
                 if (b.get(new Coordinate(4 - i, j - 4)) != null) {
                     if (boardMatrix[i + 1][j] == 1 && b.get(new Coordinate(4 - i + 1, j - 4)) != null) {
                         return false;
@@ -473,8 +473,8 @@ public class ControllerGame implements TimerRunListener, Serializable {
             }
         }
 
-        for (int i = boardMatrix.length / 2; i < boardMatrix.length; i++) {
-            for (int j = 0; j < boardMatrix[i].length; j++) {
+        for (int i = boardMatrix.length / 2; i < boardMatrix.length -1; i++) {
+            for (int j = 1; j < boardMatrix[i].length -1; j++) {
                 if (b.get(new Coordinate(4 - i, j - 4)) != null) {
                     if (boardMatrix[i + 1][j] == 1 && b.get(new Coordinate(4 - i + 1, j - 4)) != null) {
                         return false;
