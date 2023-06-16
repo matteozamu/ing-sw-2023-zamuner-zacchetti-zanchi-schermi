@@ -397,10 +397,6 @@ public class GameSceneController {
         List<Player> players = gameSerialized.getAllPlayers();
         String myName = guiManager.getUsername();
 
-//        StackPane myStackPane = new StackPane();
-//        myStackPane.setId("myStackPane");
-//        shelfHBoxImages.getChildren().add(myStackPane);
-
         ImageView myShelf = new ImageView(SHELF_PATH);
         myShelf.setId("myShelfImageView");
         myShelf.setFitWidth(SHELF_WIDTH);
@@ -433,10 +429,6 @@ public class GameSceneController {
 
         for (Player player : players) {
             if (!player.getName().equals(myName)) {
-//                StackPane stackPane = new StackPane();
-//                stackPane.setId("stackPane" + i);
-//                shelfHBoxImages.getChildren().add(stackPane);
-
                 StackPane playerStackPane = shelvesStackPane.get(i);
 
                 ImageView imageView = new ImageView(SHELF_PATH);

@@ -824,7 +824,7 @@ public class ControllerGame implements TimerRunListener, Serializable {
 //    }
 
     /**
-     * method that start a timer whenever only one player is in the game
+     * Method that start a timer whenever only one player is in the game
      */
     public void setTimer() {
         reconnectionTimer = new Timer();
@@ -839,7 +839,7 @@ public class ControllerGame implements TimerRunListener, Serializable {
             }
         };
 
-        // start a timer of 30 seconds (30000 milliseconds)
+        // start a timer of 10 seconds (10000 milliseconds)
         reconnectionTimer.schedule(task, 10000);
     }
 

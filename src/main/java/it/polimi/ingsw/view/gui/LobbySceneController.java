@@ -65,7 +65,7 @@ public class LobbySceneController {
         GameSceneController gameSceneController =
                 GuiManager.setLayout(mainPane.getScene(), "fxml/gameScene.fxml");
 
-        LOGGER.severe("GameSceneController: " + gameSceneController);
+        //LOGGER.severe("GameSceneController: " + gameSceneController);
 
         if (gameSceneController != null) {
             gameSceneController.setupGame(guiManager.getGameSerialized());
