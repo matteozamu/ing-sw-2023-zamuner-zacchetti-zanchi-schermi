@@ -80,7 +80,7 @@
 }
 
 .shelfLimboVBoxArea {
-    -fx-spacing: 25;
+    /*-fx-spacing: 25;*/
 }
 
 #arrowShelf {

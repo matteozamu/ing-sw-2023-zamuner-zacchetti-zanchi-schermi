@@ -52,7 +52,7 @@
                     <ImageView id="arrowShelf" fx:id="arrowShelf5" fitHeight="30" fitWidth="30" layoutX="309.0" layoutY="40.0" styleClass="button" />
                 </AnchorPane>
 
-                <ScrollPane prefHeight="420.0" prefWidth="400.0" styleClass="shelfScrollPane">
+                <ScrollPane maxHeight="420.0" maxWidth="400.0" minHeight="420.0" minWidth="400.0" prefHeight="420.0" prefWidth="400.0" styleClass="shelfScrollPane" translateY="48.0">
                     <HBox fx:id="shelfHBoxImages" styleClass="shelfHBoxImages">
                         <StackPane fx:id="myStackPane">
 
@@ -73,16 +73,7 @@
                     </HBox>
                 </ScrollPane>
 
-                <FlowPane fx:id="actionListFlowPane" styleClass="actionList" translateY="121.0">
-<!--                    <StackPane.margin>-->
-<!--                        <Insets bottom="20.0" left="20.0"/>-->
-<!--                    </StackPane.margin>-->
 
-<!--                    <ImageView fx:id="prova" id="loadShelf" fitHeight="50.0" fitWidth="190.0" pickOnBounds="true" preserveRatio="true" styleClass="button" />-->
-<!--                    <ImageView fx:id="prova2" id="loadShelf" fitHeight="70.0" fitWidth="190.0" pickOnBounds="true" preserveRatio="true" styleClass="button" />-->
-<!--                    <ImageView fx:id="prova3" id="loadShelf" fitHeight="70.0" fitWidth="190.0" pickOnBounds="true" preserveRatio="true" styleClass="button" />-->
-<!--                    <ImageView fx:id="prova4" id="loadShelf" fitHeight="70.0" fitWidth="190.0" pickOnBounds="true" preserveRatio="true" styleClass="button" />-->
-                </FlowPane>
 
             </VBox>
 
@@ -95,6 +86,13 @@
             <VBox fx:id="playersInfoVBox">
             </VBox>
         </Pane>
+
+        <FlowPane fx:id="actionListFlowPane" alignment="CENTER" columnHalignment="CENTER" maxHeight="150.0" maxWidth="600.0" minHeight="150.0" minWidth="600.0" prefHeight="150.0" prefWidth="600.0" styleClass="actionList" translateX="330.0" translateY="364.0" vgap="10.0">
+            <!--                    <ImageView id="exitButton" fx:id="prova" fitHeight="70.0" fitWidth="190.0" pickOnBounds="true" preserveRatio="true" styleClass="button" />-->
+            <!--                    <ImageView id="exitButton" fx:id="prova2" fitHeight="70.0" fitWidth="190.0" pickOnBounds="true" preserveRatio="true" styleClass="button" />-->
+            <!--                    <ImageView id="exitButton" fx:id="prova3" fitHeight="70.0" fitWidth="190.0" pickOnBounds="true" preserveRatio="true" styleClass="button" />-->
+            <!--                    <ImageView id="exitButton" fx:id="prova4" fitHeight="70.0" fitWidth="190.0" pickOnBounds="true" preserveRatio="true" styleClass="button" />-->
+        </FlowPane>
 
         <FlowPane fx:id="commonGoalCardInfoPanel" styleClass="commonGoalCardInfoPanel" />
 
