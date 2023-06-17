@@ -23,7 +23,7 @@ class CommonGoalType2Test {
         ObjectCardType type = ObjectCardType.book;
         for (int col = 0; col < 5; col++) {
             Coordinate coordinate = new Coordinate(col, 2);
-            ObjectCard card = new ObjectCard(type, 0);
+            ObjectCard card = new ObjectCard(type, "00");
             shelf.getGrid().put(coordinate, card);
         }
         Coordinate start = new Coordinate(1, 1);
@@ -41,7 +41,7 @@ class CommonGoalType2Test {
 
         for (int i = 0; i < 5; i++) {
             Coordinate coordinate = new Coordinate(start.getRow() - i, start.getColumn() + i);
-            ObjectCard card = new ObjectCard(type, 0);
+            ObjectCard card = new ObjectCard(type, "00");
             shelf.getGrid().put(coordinate, card);
         }
 
@@ -67,7 +67,7 @@ class CommonGoalType2Test {
         ObjectCardType type = ObjectCardType.book;
         for (int col = 0; col < 5; col++) {
             Coordinate coordinate = new Coordinate(col, 2);
-            ObjectCard card = new ObjectCard(type, 0);
+            ObjectCard card = new ObjectCard(type, "00");
             shelf.getGrid().put(coordinate, card);
         }
         Coordinate start = new Coordinate(3, 1);
@@ -85,7 +85,7 @@ class CommonGoalType2Test {
 
         for (int i = 0; i < 5; i++) {
             Coordinate coordinate = new Coordinate(start.getRow() - i, start.getColumn() - i);
-            ObjectCard card = new ObjectCard(type, 0);
+            ObjectCard card = new ObjectCard(type, "00");
             shelf.getGrid().put(coordinate, card);
         }
 
@@ -97,12 +97,12 @@ class CommonGoalType2Test {
     @Test
     public void testCheckGoalReturnsTrue () {
         Shelf shelf = new Shelf();
-        shelf.getGrid().put(new Coordinate(5, 0), new ObjectCard(ObjectCardType.cat, 2));
-        shelf.getGrid().put(new Coordinate(4, 1), new ObjectCard(ObjectCardType.cat, 0));
-        shelf.getGrid().put(new Coordinate(3, 2), new ObjectCard(ObjectCardType.cat, 1));
-        shelf.getGrid().put(new Coordinate(2, 3), new ObjectCard(ObjectCardType.cat, 0));
-        shelf.getGrid().put(new Coordinate(1, 4), new ObjectCard(ObjectCardType.cat, 2));
-        shelf.getGrid().put(new Coordinate(0, 5), new ObjectCard(ObjectCardType.cat, 1));
+        shelf.getGrid().put(new Coordinate(5, 0), new ObjectCard(ObjectCardType.cat, "20"));
+        shelf.getGrid().put(new Coordinate(4, 1), new ObjectCard(ObjectCardType.cat, "00"));
+        shelf.getGrid().put(new Coordinate(3, 2), new ObjectCard(ObjectCardType.cat, "10"));
+        shelf.getGrid().put(new Coordinate(2, 3), new ObjectCard(ObjectCardType.cat, "00"));
+        shelf.getGrid().put(new Coordinate(1, 4), new ObjectCard(ObjectCardType.cat, "20"));
+        shelf.getGrid().put(new Coordinate(0, 5), new ObjectCard(ObjectCardType.cat, "10"));
         CommonGoalType2 goal = new CommonGoalType2();
         assertTrue(goal.checkGoal(shelf));
     }
@@ -110,12 +110,12 @@ class CommonGoalType2Test {
     @Test
     public void testCheckGoalReturnsFalse(){
         Shelf shelf = new Shelf();
-        shelf.getGrid().put(new Coordinate(5, 0), new ObjectCard(ObjectCardType.cat, 2));
-        shelf.getGrid().put(new Coordinate(4, 1), new ObjectCard(ObjectCardType.cat, 0));
-        shelf.getGrid().put(new Coordinate(3, 2), new ObjectCard(ObjectCardType.plant, 1));
-        shelf.getGrid().put(new Coordinate(2, 3), new ObjectCard(ObjectCardType.cat, 0));
-        shelf.getGrid().put(new Coordinate(1, 4), new ObjectCard(ObjectCardType.cat, 2));
-        shelf.getGrid().put(new Coordinate(0, 5), new ObjectCard(ObjectCardType.cat, 1));
+        shelf.getGrid().put(new Coordinate(5, 0), new ObjectCard(ObjectCardType.cat, "20"));
+        shelf.getGrid().put(new Coordinate(4, 1), new ObjectCard(ObjectCardType.cat, "00"));
+        shelf.getGrid().put(new Coordinate(3, 2), new ObjectCard(ObjectCardType.plant, "10"));
+        shelf.getGrid().put(new Coordinate(2, 3), new ObjectCard(ObjectCardType.cat, "00"));
+        shelf.getGrid().put(new Coordinate(1, 4), new ObjectCard(ObjectCardType.cat, "20"));
+        shelf.getGrid().put(new Coordinate(0, 5), new ObjectCard(ObjectCardType.cat, "10"));
         CommonGoalType2 goal = new CommonGoalType2();
         assertFalse(goal.checkGoal(shelf));
     }

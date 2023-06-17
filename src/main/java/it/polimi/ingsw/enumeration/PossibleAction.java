@@ -10,7 +10,10 @@ public enum PossibleAction {
     PASS_TURN("Pass the turn"),
     REORDER_LIMBO("Reorder the selected object cards:"),
     JOIN_GAME("Join an existing game"),
-    CREATE_GAME("Create a new game");
+    SHOW_COMMON_GOALS("Show common goals"),
+    SHOW_PERSONAL_GOAL("Show personal goal card"),
+    CREATE_GAME("Create a new game"),
+    SHOW_SHELF("Show your personal shelf");
 
     private final String description;
 

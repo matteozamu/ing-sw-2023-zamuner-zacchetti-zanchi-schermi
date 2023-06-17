@@ -3,14 +3,14 @@ package it.polimi.ingsw.view.gui;
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
-import javafx.scene.layout.Pane;
 import javafx.scene.input.KeyCombination;
+import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 
 import java.io.InputStream;
+
 /**
  * Class Gui represents the Graphical User Interface
- *
  */
 
 public class Gui extends Application {
@@ -43,7 +43,8 @@ public class Gui extends Application {
         GuiManager.setLayout(stage.getScene(), "fxml/menuScene.fxml");
         stage.show();
     }
-     /**
+
+    /**
      * Stops the Graphical User Interface
      */
     @Override

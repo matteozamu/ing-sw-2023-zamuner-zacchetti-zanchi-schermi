@@ -80,7 +80,7 @@
 }
 
 .shelfLimboVBoxArea {
-    -fx-spacing: 25;
+    /*-fx-spacing: 25;*/
 }
 
 #arrowShelf {
@@ -131,7 +131,7 @@
 
 }
 
-.playerName {
+.playerInfo {
     -fx-alignment: center;
     -fx-font-family: "Merriweather Regular";
     -fx-font-size: 15px;
@@ -253,96 +253,726 @@
 
 /* Object cards */
 
-.transparent {
+#transparent {
     -fx-image: url("/img/object_cards/transparent.png");
 }
 
-#Frame-0 {
+#Frame-00 {
     -fx-image: url("/img/object_cards/Frame-0.png");
     -fx-effect: dropshadow(gaussian, rgba(255, 255, 255, 0.3), 20, 0.5, 0, 0);
 }
 
-#Frame-1 {
+#Frame-01 {
+    -fx-image: url("/img/object_cards/Frame-0.png");
+    -fx-effect: dropshadow(gaussian, rgba(255, 255, 255, 0.3), 20, 0.5, 0, 0);
+}
+
+#Frame-02 {
+    -fx-image: url("/img/object_cards/Frame-0.png");
+    -fx-effect: dropshadow(gaussian, rgba(255, 255, 255, 0.3), 20, 0.5, 0, 0);
+}
+
+#Frame-03 {
+    -fx-image: url("/img/object_cards/Frame-0.png");
+    -fx-effect: dropshadow(gaussian, rgba(255, 255, 255, 0.3), 20, 0.5, 0, 0);
+}
+
+#Frame-04 {
+    -fx-image: url("/img/object_cards/Frame-0.png");
+    -fx-effect: dropshadow(gaussian, rgba(255, 255, 255, 0.3), 20, 0.5, 0, 0);
+}
+
+#Frame-05 {
+    -fx-image: url("/img/object_cards/Frame-0.png");
+    -fx-effect: dropshadow(gaussian, rgba(255, 255, 255, 0.3), 20, 0.5, 0, 0);
+}
+
+#Frame-06 {
+    -fx-image: url("/img/object_cards/Frame-0.png");
+    -fx-effect: dropshadow(gaussian, rgba(255, 255, 255, 0.3), 20, 0.5, 0, 0);
+}
+
+#Frame-07 {
+    -fx-image: url("/img/object_cards/Frame-0.png");
+    -fx-effect: dropshadow(gaussian, rgba(255, 255, 255, 0.3), 20, 0.5, 0, 0);
+}
+
+#Frame-10 {
     -fx-image: url("/img/object_cards/Frame-1.png");
     -fx-effect: dropshadow(gaussian, rgba(255, 255, 255, 0.3), 20, 0.5, 0, 0);
 }
 
-#Frame-2 {
+#Frame-11 {
+    -fx-image: url("/img/object_cards/Frame-1.png");
+    -fx-effect: dropshadow(gaussian, rgba(255, 255, 255, 0.3), 20, 0.5, 0, 0);
+}
+
+#Frame-12 {
+    -fx-image: url("/img/object_cards/Frame-1.png");
+    -fx-effect: dropshadow(gaussian, rgba(255, 255, 255, 0.3), 20, 0.5, 0, 0);
+}
+
+#Frame-13 {
+    -fx-image: url("/img/object_cards/Frame-1.png");
+    -fx-effect: dropshadow(gaussian, rgba(255, 255, 255, 0.3), 20, 0.5, 0, 0);
+}
+
+#Frame-14 {
+    -fx-image: url("/img/object_cards/Frame-1.png");
+    -fx-effect: dropshadow(gaussian, rgba(255, 255, 255, 0.3), 20, 0.5, 0, 0);
+}
+
+#Frame-15 {
+    -fx-image: url("/img/object_cards/Frame-1.png");
+    -fx-effect: dropshadow(gaussian, rgba(255, 255, 255, 0.3), 20, 0.5, 0, 0);
+}
+
+#Frame-16 {
+    -fx-image: url("/img/object_cards/Frame-1.png");
+    -fx-effect: dropshadow(gaussian, rgba(255, 255, 255, 0.3), 20, 0.5, 0, 0);
+}
+
+#Frame-17 {
+    -fx-image: url("/img/object_cards/Frame-1.png");
+    -fx-effect: dropshadow(gaussian, rgba(255, 255, 255, 0.3), 20, 0.5, 0, 0);
+}
+
+#Frame-20 {
     -fx-image: url("/img/object_cards/Frame-2.png");
     -fx-effect: dropshadow(gaussian, rgba(255, 255, 255, 0.3), 20, 0.5, 0, 0);
 }
 
-#Cat-0 {
+#Frame-21 {
+    -fx-image: url("/img/object_cards/Frame-2.png");
+    -fx-effect: dropshadow(gaussian, rgba(255, 255, 255, 0.3), 20, 0.5, 0, 0);
+}
+
+#Frame-22 {
+    -fx-image: url("/img/object_cards/Frame-2.png");
+    -fx-effect: dropshadow(gaussian, rgba(255, 255, 255, 0.3), 20, 0.5, 0, 0);
+}
+
+#Frame-23 {
+    -fx-image: url("/img/object_cards/Frame-2.png");
+    -fx-effect: dropshadow(gaussian, rgba(255, 255, 255, 0.3), 20, 0.5, 0, 0);
+}
+
+#Frame-24 {
+    -fx-image: url("/img/object_cards/Frame-2.png");
+    -fx-effect: dropshadow(gaussian, rgba(255, 255, 255, 0.3), 20, 0.5, 0, 0);
+}
+
+#Frame-25 {
+    -fx-image: url("/img/object_cards/Frame-2.png");
+    -fx-effect: dropshadow(gaussian, rgba(255, 255, 255, 0.3), 20, 0.5, 0, 0);
+}
+
+#Frame-26 {
+    -fx-image: url("/img/object_cards/Frame-2.png");
+    -fx-effect: dropshadow(gaussian, rgba(255, 255, 255, 0.3), 20, 0.5, 0, 0);
+}
+
+#Frame-27 {
+    -fx-image: url("/img/object_cards/Frame-2.png");
+    -fx-effect: dropshadow(gaussian, rgba(255, 255, 255, 0.3), 20, 0.5, 0, 0);
+}
+
+#Cat-00 {
     -fx-image: url("/img/object_cards/Cat-0.png");
     -fx-effect: dropshadow(gaussian, rgba(255, 255, 255, 0.3), 20, 0.5, 0, 0);
 }
 
-#Cat-1 {
+#Cat-01 {
+    -fx-image: url("/img/object_cards/Cat-0.png");
+    -fx-effect: dropshadow(gaussian, rgba(255, 255, 255, 0.3), 20, 0.5, 0, 0);
+}
+
+#Cat-02 {
+    -fx-image: url("/img/object_cards/Cat-0.png");
+    -fx-effect: dropshadow(gaussian, rgba(255, 255, 255, 0.3), 20, 0.5, 0, 0);
+}
+
+#Cat-03 {
+    -fx-image: url("/img/object_cards/Cat-0.png");
+    -fx-effect: dropshadow(gaussian, rgba(255, 255, 255, 0.3), 20, 0.5, 0, 0);
+}
+
+#Cat-04 {
+    -fx-image: url("/img/object_cards/Cat-0.png");
+    -fx-effect: dropshadow(gaussian, rgba(255, 255, 255, 0.3), 20, 0.5, 0, 0);
+}
+
+#Cat-05 {
+    -fx-image: url("/img/object_cards/Cat-0.png");
+    -fx-effect: dropshadow(gaussian, rgba(255, 255, 255, 0.3), 20, 0.5, 0, 0);
+}
+
+#Cat-06 {
+    -fx-image: url("/img/object_cards/Cat-0.png");
+    -fx-effect: dropshadow(gaussian, rgba(255, 255, 255, 0.3), 20, 0.5, 0, 0);
+}
+
+#Cat-07 {
+    -fx-image: url("/img/object_cards/Cat-0.png");
+    -fx-effect: dropshadow(gaussian, rgba(255, 255, 255, 0.3), 20, 0.5, 0, 0);
+}
+
+#Cat-10 {
     -fx-image: url("/img/object_cards/Cat-1.png");
     -fx-effect: dropshadow(gaussian, rgba(255, 255, 255, 0.3), 20, 0.5, 0, 0);
 }
 
-#Cat-2 {
+#Cat-11 {
+    -fx-image: url("/img/object_cards/Cat-1.png");
+    -fx-effect: dropshadow(gaussian, rgba(255, 255, 255, 0.3), 20, 0.5, 0, 0);
+}
+
+#Cat-12 {
+    -fx-image: url("/img/object_cards/Cat-1.png");
+    -fx-effect: dropshadow(gaussian, rgba(255, 255, 255, 0.3), 20, 0.5, 0, 0);
+}
+
+#Cat-13 {
+    -fx-image: url("/img/object_cards/Cat-1.png");
+    -fx-effect: dropshadow(gaussian, rgba(255, 255, 255, 0.3), 20, 0.5, 0, 0);
+}
+
+#Cat-14 {
+    -fx-image: url("/img/object_cards/Cat-1.png");
+    -fx-effect: dropshadow(gaussian, rgba(255, 255, 255, 0.3), 20, 0.5, 0, 0);
+}
+
+#Cat-15 {
+    -fx-image: url("/img/object_cards/Cat-1.png");
+    -fx-effect: dropshadow(gaussian, rgba(255, 255, 255, 0.3), 20, 0.5, 0, 0);
+}
+
+#Cat-16 {
+    -fx-image: url("/img/object_cards/Cat-1.png");
+    -fx-effect: dropshadow(gaussian, rgba(255, 255, 255, 0.3), 20, 0.5, 0, 0);
+}
+
+#Cat-17 {
+    -fx-image: url("/img/object_cards/Cat-1.png");
+    -fx-effect: dropshadow(gaussian, rgba(255, 255, 255, 0.3), 20, 0.5, 0, 0);
+}
+
+#Cat-20 {
     -fx-image: url("/img/object_cards/Cat-2.png");
     -fx-effect: dropshadow(gaussian, rgba(255, 255, 255, 0.3), 20, 0.5, 0, 0);
 }
 
-#Game-0 {
+#Cat-21 {
+    -fx-image: url("/img/object_cards/Cat-2.png");
+    -fx-effect: dropshadow(gaussian, rgba(255, 255, 255, 0.3), 20, 0.5, 0, 0);
+}
+
+#Cat-22 {
+    -fx-image: url("/img/object_cards/Cat-2.png");
+    -fx-effect: dropshadow(gaussian, rgba(255, 255, 255, 0.3), 20, 0.5, 0, 0);
+}
+
+#Cat-23 {
+    -fx-image: url("/img/object_cards/Cat-2.png");
+    -fx-effect: dropshadow(gaussian, rgba(255, 255, 255, 0.3), 20, 0.5, 0, 0);
+}
+
+#Cat-24 {
+    -fx-image: url("/img/object_cards/Cat-2.png");
+    -fx-effect: dropshadow(gaussian, rgba(255, 255, 255, 0.3), 20, 0.5, 0, 0);
+}
+
+#Cat-25 {
+    -fx-image: url("/img/object_cards/Cat-2.png");
+    -fx-effect: dropshadow(gaussian, rgba(255, 255, 255, 0.3), 20, 0.5, 0, 0);
+}
+
+#Cat-26 {
+    -fx-image: url("/img/object_cards/Cat-2.png");
+    -fx-effect: dropshadow(gaussian, rgba(255, 255, 255, 0.3), 20, 0.5, 0, 0);
+}
+
+#Cat-27 {
+    -fx-image: url("/img/object_cards/Cat-2.png");
+    -fx-effect: dropshadow(gaussian, rgba(255, 255, 255, 0.3), 20, 0.5, 0, 0);
+}
+
+#Game-00 {
     -fx-image: url("/img/object_cards/Game-0.png");
     -fx-effect: dropshadow(gaussian, rgba(255, 255, 255, 0.3), 20, 0.5, 0, 0);
 }
 
-#Game-1 {
+#Game-01 {
+    -fx-image: url("/img/object_cards/Game-0.png");
+    -fx-effect: dropshadow(gaussian, rgba(255, 255, 255, 0.3), 20, 0.5, 0, 0);
+}
+
+#Game-02 {
+    -fx-image: url("/img/object_cards/Game-0.png");
+    -fx-effect: dropshadow(gaussian, rgba(255, 255, 255, 0.3), 20, 0.5, 0, 0);
+}
+
+#Game-03 {
+    -fx-image: url("/img/object_cards/Game-0.png");
+    -fx-effect: dropshadow(gaussian, rgba(255, 255, 255, 0.3), 20, 0.5, 0, 0);
+}
+
+#Game-04 {
+    -fx-image: url("/img/object_cards/Game-0.png");
+    -fx-effect: dropshadow(gaussian, rgba(255, 255, 255, 0.3), 20, 0.5, 0, 0);
+}
+
+#Game-05 {
+    -fx-image: url("/img/object_cards/Game-0.png");
+    -fx-effect: dropshadow(gaussian, rgba(255, 255, 255, 0.3), 20, 0.5, 0, 0);
+}
+
+#Game-06 {
+    -fx-image: url("/img/object_cards/Game-0.png");
+    -fx-effect: dropshadow(gaussian, rgba(255, 255, 255, 0.3), 20, 0.5, 0, 0);
+}
+
+#Game-07 {
+    -fx-image: url("/img/object_cards/Game-0.png");
+    -fx-effect: dropshadow(gaussian, rgba(255, 255, 255, 0.3), 20, 0.5, 0, 0);
+}
+
+#Game-10 {
     -fx-image: url("/img/object_cards/Game-1.png");
     -fx-effect: dropshadow(gaussian, rgba(255, 255, 255, 0.3), 20, 0.5, 0, 0);
 }
 
-#Game-2 {
+#Game-11 {
+    -fx-image: url("/img/object_cards/Game-1.png");
+    -fx-effect: dropshadow(gaussian, rgba(255, 255, 255, 0.3), 20, 0.5, 0, 0);
+}
+
+#Game-12 {
+    -fx-image: url("/img/object_cards/Game-1.png");
+    -fx-effect: dropshadow(gaussian, rgba(255, 255, 255, 0.3), 20, 0.5, 0, 0);
+}
+
+#Game-13 {
+    -fx-image: url("/img/object_cards/Game-1.png");
+    -fx-effect: dropshadow(gaussian, rgba(255, 255, 255, 0.3), 20, 0.5, 0, 0);
+}
+
+#Game-14 {
+    -fx-image: url("/img/object_cards/Game-1.png");
+    -fx-effect: dropshadow(gaussian, rgba(255, 255, 255, 0.3), 20, 0.5, 0, 0);
+}
+
+#Game-15 {
+    -fx-image: url("/img/object_cards/Game-1.png");
+    -fx-effect: dropshadow(gaussian, rgba(255, 255, 255, 0.3), 20, 0.5, 0, 0);
+}
+
+#Game-16 {
+    -fx-image: url("/img/object_cards/Game-1.png");
+    -fx-effect: dropshadow(gaussian, rgba(255, 255, 255, 0.3), 20, 0.5, 0, 0);
+}
+
+#Game-17 {
+    -fx-image: url("/img/object_cards/Game-1.png");
+    -fx-effect: dropshadow(gaussian, rgba(255, 255, 255, 0.3), 20, 0.5, 0, 0);
+}
+
+#Game-20 {
     -fx-image: url("/img/object_cards/Game-2.png");
     -fx-effect: dropshadow(gaussian, rgba(255, 255, 255, 0.3), 20, 0.5, 0, 0);
 }
 
-#Book-0 {
+#Game-21 {
+    -fx-image: url("/img/object_cards/Game-2.png");
+    -fx-effect: dropshadow(gaussian, rgba(255, 255, 255, 0.3), 20, 0.5, 0, 0);
+}
+
+#Game-22 {
+    -fx-image: url("/img/object_cards/Game-2.png");
+    -fx-effect: dropshadow(gaussian, rgba(255, 255, 255, 0.3), 20, 0.5, 0, 0);
+}
+
+#Game-23 {
+    -fx-image: url("/img/object_cards/Game-2.png");
+    -fx-effect: dropshadow(gaussian, rgba(255, 255, 255, 0.3), 20, 0.5, 0, 0);
+}
+
+#Game-24 {
+    -fx-image: url("/img/object_cards/Game-2.png");
+    -fx-effect: dropshadow(gaussian, rgba(255, 255, 255, 0.3), 20, 0.5, 0, 0);
+}
+
+#Game-25 {
+    -fx-image: url("/img/object_cards/Game-2.png");
+    -fx-effect: dropshadow(gaussian, rgba(255, 255, 255, 0.3), 20, 0.5, 0, 0);
+}
+
+#Game-26 {
+    -fx-image: url("/img/object_cards/Game-2.png");
+    -fx-effect: dropshadow(gaussian, rgba(255, 255, 255, 0.3), 20, 0.5, 0, 0);
+}
+
+#Game-27 {
+    -fx-image: url("/img/object_cards/Game-2.png");
+    -fx-effect: dropshadow(gaussian, rgba(255, 255, 255, 0.3), 20, 0.5, 0, 0);
+}
+
+#Book-00 {
     -fx-image: url("/img/object_cards/Book-0.png");
     -fx-effect: dropshadow(gaussian, rgba(255, 255, 255, 0.3), 20, 0.5, 0, 0);
 }
 
-#Book-1 {
+#Book-01 {
+    -fx-image: url("/img/object_cards/Book-0.png");
+    -fx-effect: dropshadow(gaussian, rgba(255, 255, 255, 0.3), 20, 0.5, 0, 0);
+}
+
+#Book-02 {
+    -fx-image: url("/img/object_cards/Book-0.png");
+    -fx-effect: dropshadow(gaussian, rgba(255, 255, 255, 0.3), 20, 0.5, 0, 0);
+}
+
+#Book-03 {
+    -fx-image: url("/img/object_cards/Book-0.png");
+    -fx-effect: dropshadow(gaussian, rgba(255, 255, 255, 0.3), 20, 0.5, 0, 0);
+}
+
+#Book-04 {
+    -fx-image: url("/img/object_cards/Book-0.png");
+    -fx-effect: dropshadow(gaussian, rgba(255, 255, 255, 0.3), 20, 0.5, 0, 0);
+}
+
+#Book-05 {
+    -fx-image: url("/img/object_cards/Book-0.png");
+    -fx-effect: dropshadow(gaussian, rgba(255, 255, 255, 0.3), 20, 0.5, 0, 0);
+}
+
+#Book-06 {
+    -fx-image: url("/img/object_cards/Book-0.png");
+    -fx-effect: dropshadow(gaussian, rgba(255, 255, 255, 0.3), 20, 0.5, 0, 0);
+}
+
+#Book-07 {
+    -fx-image: url("/img/object_cards/Book-0.png");
+    -fx-effect: dropshadow(gaussian, rgba(255, 255, 255, 0.3), 20, 0.5, 0, 0);
+}
+
+#Book-10 {
     -fx-image: url("/img/object_cards/Book-1.png");
     -fx-effect: dropshadow(gaussian, rgba(255, 255, 255, 0.3), 20, 0.5, 0, 0);
 }
 
-#Book-2 {
+#Book-11 {
+    -fx-image: url("/img/object_cards/Book-1.png");
+    -fx-effect: dropshadow(gaussian, rgba(255, 255, 255, 0.3), 20, 0.5, 0, 0);
+}
+
+#Book-12 {
+    -fx-image: url("/img/object_cards/Book-1.png");
+    -fx-effect: dropshadow(gaussian, rgba(255, 255, 255, 0.3), 20, 0.5, 0, 0);
+}
+
+#Book-13 {
+    -fx-image: url("/img/object_cards/Book-1.png");
+    -fx-effect: dropshadow(gaussian, rgba(255, 255, 255, 0.3), 20, 0.5, 0, 0);
+}
+
+#Book-14 {
+    -fx-image: url("/img/object_cards/Book-1.png");
+    -fx-effect: dropshadow(gaussian, rgba(255, 255, 255, 0.3), 20, 0.5, 0, 0);
+}
+
+#Book-15 {
+    -fx-image: url("/img/object_cards/Book-1.png");
+    -fx-effect: dropshadow(gaussian, rgba(255, 255, 255, 0.3), 20, 0.5, 0, 0);
+}
+
+#Book-16 {
+    -fx-image: url("/img/object_cards/Book-1.png");
+    -fx-effect: dropshadow(gaussian, rgba(255, 255, 255, 0.3), 20, 0.5, 0, 0);
+}
+
+#Book-17 {
+    -fx-image: url("/img/object_cards/Book-1.png");
+    -fx-effect: dropshadow(gaussian, rgba(255, 255, 255, 0.3), 20, 0.5, 0, 0);
+}
+
+#Book-20 {
     -fx-image: url("/img/object_cards/Book-2.png");
     -fx-effect: dropshadow(gaussian, rgba(255, 255, 255, 0.3), 20, 0.5, 0, 0);
 }
 
-#Plant-0 {
+#Book-21 {
+    -fx-image: url("/img/object_cards/Book-2.png");
+    -fx-effect: dropshadow(gaussian, rgba(255, 255, 255, 0.3), 20, 0.5, 0, 0);
+}
+
+#Book-22 {
+    -fx-image: url("/img/object_cards/Book-2.png");
+    -fx-effect: dropshadow(gaussian, rgba(255, 255, 255, 0.3), 20, 0.5, 0, 0);
+}
+
+#Book-23 {
+    -fx-image: url("/img/object_cards/Book-2.png");
+    -fx-effect: dropshadow(gaussian, rgba(255, 255, 255, 0.3), 20, 0.5, 0, 0);
+}
+
+#Book-24 {
+    -fx-image: url("/img/object_cards/Book-2.png");
+    -fx-effect: dropshadow(gaussian, rgba(255, 255, 255, 0.3), 20, 0.5, 0, 0);
+}
+
+#Book-25 {
+    -fx-image: url("/img/object_cards/Book-2.png");
+    -fx-effect: dropshadow(gaussian, rgba(255, 255, 255, 0.3), 20, 0.5, 0, 0);
+}
+
+#Book-26 {
+    -fx-image: url("/img/object_cards/Book-2.png");
+    -fx-effect: dropshadow(gaussian, rgba(255, 255, 255, 0.3), 20, 0.5, 0, 0);
+}
+
+#Book-27 {
+    -fx-image: url("/img/object_cards/Book-2.png");
+    -fx-effect: dropshadow(gaussian, rgba(255, 255, 255, 0.3), 20, 0.5, 0, 0);
+}
+
+#Plant-00 {
     -fx-image: url("/img/object_cards/Plant-0.png");
     -fx-effect: dropshadow(gaussian, rgba(255, 255, 255, 0.3), 20, 0.5, 0, 0);
 }
 
-#Plant-1 {
+#Plant-01 {
+    -fx-image: url("/img/object_cards/Plant-0.png");
+    -fx-effect: dropshadow(gaussian, rgba(255, 255, 255, 0.3), 20, 0.5, 0, 0);
+}
+
+#Plant-02 {
+    -fx-image: url("/img/object_cards/Plant-0.png");
+    -fx-effect: dropshadow(gaussian, rgba(255, 255, 255, 0.3), 20, 0.5, 0, 0);
+}
+
+#Plant-03 {
+    -fx-image: url("/img/object_cards/Plant-0.png");
+    -fx-effect: dropshadow(gaussian, rgba(255, 255, 255, 0.3), 20, 0.5, 0, 0);
+}
+
+#Plant-04 {
+    -fx-image: url("/img/object_cards/Plant-0.png");
+    -fx-effect: dropshadow(gaussian, rgba(255, 255, 255, 0.3), 20, 0.5, 0, 0);
+}
+
+#Plant-05 {
+    -fx-image: url("/img/object_cards/Plant-0.png");
+    -fx-effect: dropshadow(gaussian, rgba(255, 255, 255, 0.3), 20, 0.5, 0, 0);
+}
+
+#Plant-06 {
+    -fx-image: url("/img/object_cards/Plant-0.png");
+    -fx-effect: dropshadow(gaussian, rgba(255, 255, 255, 0.3), 20, 0.5, 0, 0);
+}
+
+#Plant-07 {
+    -fx-image: url("/img/object_cards/Plant-0.png");
+    -fx-effect: dropshadow(gaussian, rgba(255, 255, 255, 0.3), 20, 0.5, 0, 0);
+}
+
+#Plant-10 {
     -fx-image: url("/img/object_cards/Plant-1.png");
     -fx-effect: dropshadow(gaussian, rgba(255, 255, 255, 0.3), 20, 0.5, 0, 0);
 }
 
-#Plant-2 {
+#Plant-11 {
+    -fx-image: url("/img/object_cards/Plant-1.png");
+    -fx-effect: dropshadow(gaussian, rgba(255, 255, 255, 0.3), 20, 0.5, 0, 0);
+}
+
+#Plant-12 {
+    -fx-image: url("/img/object_cards/Plant-1.png");
+    -fx-effect: dropshadow(gaussian, rgba(255, 255, 255, 0.3), 20, 0.5, 0, 0);
+}
+
+#Plant-13 {
+    -fx-image: url("/img/object_cards/Plant-1.png");
+    -fx-effect: dropshadow(gaussian, rgba(255, 255, 255, 0.3), 20, 0.5, 0, 0);
+}
+
+#Plant-14 {
+    -fx-image: url("/img/object_cards/Plant-1.png");
+    -fx-effect: dropshadow(gaussian, rgba(255, 255, 255, 0.3), 20, 0.5, 0, 0);
+}
+
+#Plant-15 {
+    -fx-image: url("/img/object_cards/Plant-1.png");
+    -fx-effect: dropshadow(gaussian, rgba(255, 255, 255, 0.3), 20, 0.5, 0, 0);
+}
+
+#Plant-16 {
+    -fx-image: url("/img/object_cards/Plant-1.png");
+    -fx-effect: dropshadow(gaussian, rgba(255, 255, 255, 0.3), 20, 0.5, 0, 0);
+}
+
+#Plant-17 {
+    -fx-image: url("/img/object_cards/Plant-1.png");
+    -fx-effect: dropshadow(gaussian, rgba(255, 255, 255, 0.3), 20, 0.5, 0, 0);
+}
+
+#Plant-20 {
     -fx-image: url("/img/object_cards/Plant-2.png");
     -fx-effect: dropshadow(gaussian, rgba(255, 255, 255, 0.3), 20, 0.5, 0, 0);
 }
 
-#Trophy-0 {
+#Plant-21 {
+    -fx-image: url("/img/object_cards/Plant-2.png");
+    -fx-effect: dropshadow(gaussian, rgba(255, 255, 255, 0.3), 20, 0.5, 0, 0);
+}
+
+#Plant-22 {
+    -fx-image: url("/img/object_cards/Plant-2.png");
+    -fx-effect: dropshadow(gaussian, rgba(255, 255, 255, 0.3), 20, 0.5, 0, 0);
+}
+
+#Plant-23 {
+    -fx-image: url("/img/object_cards/Plant-2.png");
+    -fx-effect: dropshadow(gaussian, rgba(255, 255, 255, 0.3), 20, 0.5, 0, 0);
+}
+
+#Plant-24 {
+    -fx-image: url("/img/object_cards/Plant-2.png");
+    -fx-effect: dropshadow(gaussian, rgba(255, 255, 255, 0.3), 20, 0.5, 0, 0);
+}
+
+#Plant-25 {
+    -fx-image: url("/img/object_cards/Plant-2.png");
+    -fx-effect: dropshadow(gaussian, rgba(255, 255, 255, 0.3), 20, 0.5, 0, 0);
+}
+
+#Plant-26 {
+    -fx-image: url("/img/object_cards/Plant-2.png");
+    -fx-effect: dropshadow(gaussian, rgba(255, 255, 255, 0.3), 20, 0.5, 0, 0);
+}
+
+#Plant-27 {
+    -fx-image: url("/img/object_cards/Plant-2.png");
+    -fx-effect: dropshadow(gaussian, rgba(255, 255, 255, 0.3), 20, 0.5, 0, 0);
+}
+
+#Trophy-00 {
     -fx-image: url("/img/object_cards/Trophy-0.png");
     -fx-effect: dropshadow(gaussian, rgba(255, 255, 255, 0.3), 20, 0.5, 0, 0);
 }
 
-#Trophy-1 {
+#Trophy-01 {
+    -fx-image: url("/img/object_cards/Trophy-0.png");
+    -fx-effect: dropshadow(gaussian, rgba(255, 255, 255, 0.3), 20, 0.5, 0, 0);
+}
+
+#Trophy-02 {
+    -fx-image: url("/img/object_cards/Trophy-0.png");
+    -fx-effect: dropshadow(gaussian, rgba(255, 255, 255, 0.3), 20, 0.5, 0, 0);
+}
+
+#Trophy-03 {
+    -fx-image: url("/img/object_cards/Trophy-0.png");
+    -fx-effect: dropshadow(gaussian, rgba(255, 255, 255, 0.3), 20, 0.5, 0, 0);
+}
+
+#Trophy-04 {
+    -fx-image: url("/img/object_cards/Trophy-0.png");
+    -fx-effect: dropshadow(gaussian, rgba(255, 255, 255, 0.3), 20, 0.5, 0, 0);
+}
+
+#Trophy-05 {
+    -fx-image: url("/img/object_cards/Trophy-0.png");
+    -fx-effect: dropshadow(gaussian, rgba(255, 255, 255, 0.3), 20, 0.5, 0, 0);
+}
+
+#Trophy-06 {
+    -fx-image: url("/img/object_cards/Trophy-0.png");
+    -fx-effect: dropshadow(gaussian, rgba(255, 255, 255, 0.3), 20, 0.5, 0, 0);
+}
+
+#Trophy-07 {
+    -fx-image: url("/img/object_cards/Trophy-0.png");
+    -fx-effect: dropshadow(gaussian, rgba(255, 255, 255, 0.3), 20, 0.5, 0, 0);
+}
+
+#Trophy-10 {
     -fx-image: url("/img/object_cards/Trophy-1.png");
     -fx-effect: dropshadow(gaussian, rgba(255, 255, 255, 0.3), 20, 0.5, 0, 0);
 }
 
-#Trophy-2 {
+#Trophy-11 {
+    -fx-image: url("/img/object_cards/Trophy-1.png");
+    -fx-effect: dropshadow(gaussian, rgba(255, 255, 255, 0.3), 20, 0.5, 0, 0);
+}
+
+#Trophy-12 {
+    -fx-image: url("/img/object_cards/Trophy-1.png");
+    -fx-effect: dropshadow(gaussian, rgba(255, 255, 255, 0.3), 20, 0.5, 0, 0);
+}
+
+#Trophy-13 {
+    -fx-image: url("/img/object_cards/Trophy-1.png");
+    -fx-effect: dropshadow(gaussian, rgba(255, 255, 255, 0.3), 20, 0.5, 0, 0);
+}
+
+#Trophy-14 {
+    -fx-image: url("/img/object_cards/Trophy-1.png");
+    -fx-effect: dropshadow(gaussian, rgba(255, 255, 255, 0.3), 20, 0.5, 0, 0);
+}
+
+#Trophy-15 {
+    -fx-image: url("/img/object_cards/Trophy-1.png");
+    -fx-effect: dropshadow(gaussian, rgba(255, 255, 255, 0.3), 20, 0.5, 0, 0);
+}
+
+#Trophy-16 {
+    -fx-image: url("/img/object_cards/Trophy-1.png");
+    -fx-effect: dropshadow(gaussian, rgba(255, 255, 255, 0.3), 20, 0.5, 0, 0);
+}
+
+#Trophy-17 {
+    -fx-image: url("/img/object_cards/Trophy-1.png");
+    -fx-effect: dropshadow(gaussian, rgba(255, 255, 255, 0.3), 20, 0.5, 0, 0);
+}
+
+#Trophy-20 {
+    -fx-image: url("/img/object_cards/Trophy-2.png");
+    -fx-effect: dropshadow(gaussian, rgba(255, 255, 255, 0.3), 20, 0.5, 0, 0);
+}
+
+#Trophy-21 {
+    -fx-image: url("/img/object_cards/Trophy-2.png");
+    -fx-effect: dropshadow(gaussian, rgba(255, 255, 255, 0.3), 20, 0.5, 0, 0);
+}
+
+#Trophy-22 {
+    -fx-image: url("/img/object_cards/Trophy-2.png");
+    -fx-effect: dropshadow(gaussian, rgba(255, 255, 255, 0.3), 20, 0.5, 0, 0);
+}
+
+#Trophy-23 {
+    -fx-image: url("/img/object_cards/Trophy-2.png");
+    -fx-effect: dropshadow(gaussian, rgba(255, 255, 255, 0.3), 20, 0.5, 0, 0);
+}
+
+#Trophy-24 {
+    -fx-image: url("/img/object_cards/Trophy-2.png");
+    -fx-effect: dropshadow(gaussian, rgba(255, 255, 255, 0.3), 20, 0.5, 0, 0);
+}
+
+#Trophy-25 {
+    -fx-image: url("/img/object_cards/Trophy-2.png");
+    -fx-effect: dropshadow(gaussian, rgba(255, 255, 255, 0.3), 20, 0.5, 0, 0);
+}
+
+#Trophy-26 {
+    -fx-image: url("/img/object_cards/Trophy-2.png");
+    -fx-effect: dropshadow(gaussian, rgba(255, 255, 255, 0.3), 20, 0.5, 0, 0);
+}
+
+#Trophy-27 {
     -fx-image: url("/img/object_cards/Trophy-2.png");
     -fx-effect: dropshadow(gaussian, rgba(255, 255, 255, 0.3), 20, 0.5, 0, 0);
 }
@@ -522,4 +1152,27 @@
 
 #exitButton {
     -fx-image: url("/img/buttons/exitButton.png");
+}
+
+#boardPickCard {
+    -fx-image: url("/img/buttons/boardPickCard.png");
+}
+
+#loadShelf {
+    -fx-image: url("/img/buttons/loadShelf.png");
+}
+
+#reorderLimbo {
+    -fx-image: url("/img/buttons/reorderLimbo.png");
+}
+
+#deleteLimbo {
+    -fx-image: url("/img/buttons/deleteLimbo.png");
+}
+
+/* Action list */
+
+.actionList {
+    -fx-min-width: 400px;
+    -fx-max-width: 400px;
 }

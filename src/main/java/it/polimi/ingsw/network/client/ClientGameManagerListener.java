@@ -101,6 +101,10 @@ interface ClientGameManagerListener {
      */
     void chooseColumn();
 
+    void showPersonalGoal();
+
+    void showShelf();
+
     /**
      * print the user the winner of the game
      *
@@ -122,12 +126,14 @@ interface ClientGameManagerListener {
 
     /**
      * print the disconnection of the player
+     *
      * @param username is the username that disconnected
      */
     void onPlayerDisconnection(String username);
 
     /**
      * print the reconnection of the player
+     *
      * @param message is the message to show
      */
     void onPlayerReconnection(String message);

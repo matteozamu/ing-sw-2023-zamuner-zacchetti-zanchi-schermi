@@ -1,8 +1,5 @@
 package it.polimi.ingsw.view.gui;
 
-import java.util.Timer;
-import java.util.TimerTask;
-
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
@@ -14,10 +11,12 @@ import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
 import java.util.List;
+
+import static it.polimi.ingsw.network.client.ClientGameManager.LOGGER;
+
 /**
  * Class LobbySceneController represents the controller of the lobby scene, the scene where the player waits for the
  * game to start
- *
  */
 
 public class LobbySceneController {
@@ -63,18 +62,14 @@ public class LobbySceneController {
      * Handles the game start when the lobby is full
      */
     void onGameStart() {
-        Timer timer = new Timer();
-        timer.schedule(new TimerTask() {
-            @Override
-            public void run() {
-                GameSceneController gameSceneController =
-                        GuiManager.setLayout(mainPane.getScene(), "fxml/gameScene.fxml");
+        GameSceneController gameSceneController =
+                GuiManager.setLayout(mainPane.getScene(), "fxml/gameScene.fxml");
 
-                if (gameSceneController != null) {
-                    gameSceneController.setupGame(guiManager.getGameSerialized());
-                }
-            }
-        }, 2500);
+        //LOGGER.severe("GameSceneController: " + gameSceneController);
+
+        if (gameSceneController != null) {
+            gameSceneController.setupGame(guiManager.getGameSerialized());
+        }
     }
 
     /**
