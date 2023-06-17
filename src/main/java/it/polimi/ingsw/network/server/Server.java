@@ -261,20 +261,6 @@ public class Server implements Runnable {
 
                     if (controllerGame.getGameState() == PossibleGameState.GAME_ROOM && controllerGame.getIsLobbyFull())
                         controllerGame.gameSetupHandler();
-                    System.out.println(response);
-                    // TODO cambiare condizione
-                    if(((Response) response).getMessage().equals("GAME ENDED")){
-                        System.out.println("GAME ENDED");
-                        synchronized (clientsLock) {
-                            ControllerGame cg = playersGame.get(message.getSenderUsername());
-                            List<Player> players = cg.getGame().getPlayers();
-                            for (Player p : players) {
-                                clients.remove(p.getName());
-                                playersGame.remove(p.getName());
-                            }
-                            controllerGames.remove(cg);
-                        }
-                    }
                 }
             }
         }
@@ -364,8 +350,6 @@ public class Server implements Runnable {
             for (Map.Entry<String, Connection> client : clients.entrySet()) {
                 if (client.getKey().equals(username) && client.getValue() != null && client.getValue().isConnected()) {
                     try {
-                        System.out.println("SENDING MESSAGE TO " + username);
-                        System.out.println("MESSAGE: " + message);
                         client.getValue().sendMessage(message);
                     } catch (IOException e) {
                         LOGGER.severe(e.getMessage());
@@ -450,5 +434,17 @@ public class Server implements Runnable {
      */
     public Map<String, ControllerGame> getPlayersGame() {
         return playersGame;
+    }
+
+    public Object getClientsLock() {
+        return clientsLock;
+    }
+
+    public Map<String, Connection> getClients() {
+        return clients;
+    }
+
+    public List<ControllerGame> getControllerGames() {
+        return controllerGames;
     }
 }

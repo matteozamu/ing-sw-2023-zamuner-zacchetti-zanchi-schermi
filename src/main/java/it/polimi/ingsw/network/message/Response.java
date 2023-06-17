@@ -14,7 +14,6 @@ public class Response extends Message {
 
     public Response(String message, MessageStatus status) {
         super("ServerUser", null, MessageContent.RESPONSE);
-
         this.message = message;
         this.status = status;
     }

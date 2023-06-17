@@ -78,13 +78,10 @@ public class ControllerGame implements TimerRunListener, Serializable {
                 return new GameStateResponse(receivedMessage.getSenderUsername(), game.getCurrentPlayer().getName());
             case PICK_OBJECT_CARD:
                 return pickObjectCardHandler((ObjectCardRequest) receivedMessage);
-
             case REORDER_LIMBO_REQUEST:
                 return reorderLimboHandler((ReorderLimboRequest) receivedMessage);
-
             case DELETE_LIMBO:
                 return deleteLimboHandler((DeleteLimboRequest) receivedMessage);
-
             case LOAD_SHELF_REQUEST:
                 return loadShelfHandler((LoadShelfRequest) receivedMessage);
         }
@@ -115,7 +112,7 @@ public class ControllerGame implements TimerRunListener, Serializable {
                 game.setStarted(false);
                 sendEndGame();
                 changeState(PossibleGameState.GAME_ENDED);
-                return new Response("Game is ended.", MessageStatus.GAME_ENDED);
+                return new Response("Game has ended.", MessageStatus.GAME_ENDED);
             }
 
             Player currentPlayer = game.getCurrentPlayer();
@@ -402,7 +399,12 @@ public class ControllerGame implements TimerRunListener, Serializable {
 
         for (Player player : players) {
             server.sendMessage(player.getName(), new EndGameMessage(player.getName()));
+            synchronized (server.getClientsLock()) {
+                server.getClients().remove(player.getName());
+                server.getPlayersGame().remove(player.getName());
+            }
         }
+        server.getControllerGames().remove(this);
     }
 
     /**
@@ -453,8 +455,8 @@ public class ControllerGame implements TimerRunListener, Serializable {
         Map<Coordinate, ObjectCard> b = game.getBoard().getGrid();
         int[][] boardMatrix = JsonReader.getBoard(playerNumber);
 
-        for (int i = 1; i < boardMatrix.length / 2 -1; i++) {
-            for (int j = 1; j < boardMatrix[i].length -1; j++) {
+        for (int i = 1; i < boardMatrix.length / 2 - 1; i++) {
+            for (int j = 1; j < boardMatrix[i].length - 1; j++) {
                 if (b.get(new Coordinate(4 - i, j - 4)) != null) {
                     if (boardMatrix[i + 1][j] == 1 && b.get(new Coordinate(4 - i + 1, j - 4)) != null) {
                         return false;
@@ -472,8 +474,8 @@ public class ControllerGame implements TimerRunListener, Serializable {
             }
         }
 
-        for (int i = boardMatrix.length / 2; i < boardMatrix.length -1; i++) {
-            for (int j = 1; j < boardMatrix[i].length -1; j++) {
+        for (int i = boardMatrix.length / 2; i < boardMatrix.length - 1; i++) {
+            for (int j = 1; j < boardMatrix[i].length - 1; j++) {
                 if (b.get(new Coordinate(4 - i, j - 4)) != null) {
                     if (boardMatrix[i + 1][j] == 1 && b.get(new Coordinate(4 - i + 1, j - 4)) != null) {
                         return false;
@@ -840,7 +842,7 @@ public class ControllerGame implements TimerRunListener, Serializable {
         };
 
         // start a timer of 10 seconds (10000 milliseconds)
-        reconnectionTimer.schedule(task, 10000);
+        reconnectionTimer.schedule(task, 5000);
     }
 
     @Override
