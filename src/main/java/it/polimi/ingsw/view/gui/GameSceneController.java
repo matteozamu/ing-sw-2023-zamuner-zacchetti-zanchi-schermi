@@ -44,6 +44,8 @@ public class GameSceneController {
     private static final double SHELF_HEIGHT = 400.0;
     private static final double LIMBO_OBJECT_CARD_WIDTH = 75.0;
     private static final double LIMBO_OBJECT_CARD_HEIGHT = 75.0;
+    private static final double ACTION_BUTTON_WIDTH = 190.0;
+    private static final double ACTION_BUTTON_HEIGHT = 70.0;
 
     private static final String SHELF_PATH = "/img/board_shelf/shelf_orth.png";
 
@@ -79,6 +81,16 @@ public class GameSceneController {
     StackPane shelfStackPane3;
     @FXML
     StackPane shelfStackPane4;
+    @FXML
+    FlowPane actionListFlowPane;
+    @FXML
+    ImageView prova;
+    @FXML
+    ImageView prova2;
+    @FXML
+    ImageView prova3;
+    @FXML
+    ImageView prova4;
     @FXML
     ImageView winnerTile;
     @FXML
@@ -143,15 +155,11 @@ public class GameSceneController {
     @FXML
     ImageView arrowShelf5;
     @FXML
-    ImageView transparentImage1;
-    @FXML
-    ImageView transparentImage2;
-    @FXML
-    ImageView transparentImage3;
-    @FXML
     ImageView scoring81;
     @FXML
     ImageView scoring82;
+    @FXML
+    ImageView scoring83;
     @FXML
     ImageView endGameTokenImage;
     @FXML
@@ -502,6 +510,8 @@ public class GameSceneController {
     }
 
     void setPlayerInfo(GameSerialized gameSerialized) {
+        playersInfoVBox.getChildren().clear();
+
         int i = 0;
         List<Player> players = gameSerialized.getAllPlayers();
         String myName = guiManager.getUsername();
@@ -628,7 +638,6 @@ public class GameSceneController {
      */
     void onStateUpdate() {
         updateGameArea(guiManager.getGameSerialized());
-        //aggiungere aggiornamento punteggi
     }
 
     /**
@@ -638,10 +647,9 @@ public class GameSceneController {
      */
     private void updateGameArea(GameSerialized gameSerialized) {
         updateBoard(gameSerialized);
-        //updateShelves(gameSerialized);
+        updateShelves(gameSerialized);
         updatePoints(gameSerialized);
         // Aggiungere altri elementi da aggiornare
-
     }
 
     /**
@@ -666,7 +674,7 @@ public class GameSceneController {
     }
 
     private void updatePoints(GameSerialized gameSerialized) {
-
+        setPlayerInfo(gameSerialized);
     }
 
     /**
@@ -697,7 +705,18 @@ public class GameSceneController {
      * @param possibleActions possible actions
      */
     void displayAction(List<PossibleAction> possibleActions) {
+        actionListFlowPane.getChildren().clear();
 
+        for (PossibleAction possibleAction : possibleActions) {
+            ImageView imageView = new ImageView();
+            imageView.setId(getActionIDFromPossibleAction(possibleAction));
+            imageView.setFitHeight(ACTION_BUTTON_HEIGHT);
+            imageView.setFitWidth(ACTION_BUTTON_WIDTH);
+            imageView.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> guiManager.doAction(possibleAction));
+            imageView.getStyleClass().add(CSS_BUTTON);
+
+            actionListFlowPane.getChildren().add(imageView);
+        }
     }
 
     /**
@@ -707,10 +726,20 @@ public class GameSceneController {
      * @return the CSS ID
      */
     private String getActionIDFromPossibleAction(PossibleAction possibleAction) {
-//        switch (possibleAction) {
-//
-//        }
-        return null;
+        switch (possibleAction) {
+            case JOIN_GAME:
+            case CREATE_GAME:
+            case BOARD_PICK_CARD:
+                return "boardPickCard";
+            case LOAD_SHELF:
+                return "loadShelf";
+            case REORDER_LIMBO:
+                return "reorderLimbo";
+            case DELETE_LIMBO:
+                return "deleteLimbo";
+            default:
+                return null;
+        }
     }
 
     /**
