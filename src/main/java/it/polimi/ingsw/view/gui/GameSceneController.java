@@ -517,6 +517,10 @@ public class GameSceneController {
         String myName = guiManager.getUsername();
         String myPoints = POINTS_PROPERTY + gameSerialized.getPoints();
 
+        Separator upSeparator = new Separator();
+        upSeparator.getStyleClass().add(CSS_PLAYERINFO_SEPARATOR);
+        playersInfoVBox.getChildren().add(upSeparator);
+
         Label myNameLabel = new Label(myName);
         myNameLabel.setId("myNameLabel");
         myNameLabel.getStyleClass().add(CSS_PLAYERINFO_LABEL);
@@ -527,9 +531,9 @@ public class GameSceneController {
         myPointsLabel.getStyleClass().add(CSS_PLAYERINFO_LABEL);
         playersInfoVBox.getChildren().add(myPointsLabel);
 
-        Separator separator = new Separator();
-        separator.getStyleClass().add(CSS_PLAYERINFO_SEPARATOR);
-        playersInfoVBox.getChildren().add(separator);
+        Separator downSeparator = new Separator();
+        downSeparator.getStyleClass().add(CSS_PLAYERINFO_SEPARATOR);
+        playersInfoVBox.getChildren().add(downSeparator);
 
         for (Player player : players) {
             if (!player.getName().equals(myName)) {
