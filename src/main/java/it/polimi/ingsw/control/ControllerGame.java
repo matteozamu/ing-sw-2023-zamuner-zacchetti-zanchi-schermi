@@ -195,7 +195,8 @@ public class ControllerGame implements TimerRunListener, Serializable {
 //            return new ObjectCardResponse(objectCardRequest.getSenderUsername());
         } else {
             System.out.println("Carta non valida");
-            return buildInvalidResponse();
+            return new Response("Carta non valida", MessageStatus.NOT_VALID_CARD);
+//            return buildInvalidResponse();
         }
     }
 

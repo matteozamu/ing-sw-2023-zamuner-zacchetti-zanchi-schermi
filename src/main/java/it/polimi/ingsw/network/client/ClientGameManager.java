@@ -315,8 +315,11 @@ public abstract class ClientGameManager implements ClientGameManagerListener, Cl
                     // TODO check if this is correct
                     queue.add(() -> lobbyJoinResponse(response));
             } else {
+                System.out.println("RESPONSE: " + response);
                 if (response.getStatus() == MessageStatus.ERROR) {
                     queue.add(() -> responseError(response.getMessage()));
+                } else if (response.getStatus() == MessageStatus.NOT_VALID_CARD) {
+                    queue.add(() -> notValidCard(response.getMessage()));
                 } else {
                     onPositiveResponse(response);
                 }

@@ -433,6 +433,11 @@ public class Cli extends ClientGameManager implements DisconnectionListener {
         promptError(error + "\n", false);
     }
 
+    @Override
+    public void notValidCard(String error) {
+        out.println("The card choosen is not valid. Please choose another one.");
+    }
+
     /**
      * Method used fot the first turn
      *
