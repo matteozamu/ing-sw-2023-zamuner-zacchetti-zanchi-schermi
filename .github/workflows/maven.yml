@@ -50,12 +50,6 @@ jobs:
       #          cache: maven
       - name: Build with Maven
         run: mvn -B package --file pom.xml
-      - name: Run tests and collect coverage
-        run: mvn -B test
-      - name: Upload coverage reports to Codecov
-        uses: codecov/codecov-action@v3
-        with:
-          token: ${{ secrets.CODECOV_TOKEN }}
       - name: Make Code Badge
         uses: shadowmoose/GHA-LoC-Badge@1.0.0
         id: badge
@@ -64,6 +58,12 @@ jobs:
           directory: ./
           badge: ./output/badge.svg
           ignore: 'node_modules'
+      - name: Run tests and collect coverage
+        run: mvn -B test
+      - name: Upload coverage reports to Codecov
+        uses: codecov/codecov-action@v3
+        with:
+          token: ${{ secrets.CODECOV_TOKEN }}
 
     # Optional: Uploads the full dependency graph to GitHub to improve the quality of Dependabot alerts this repository can receive
     #- name: Update dependency graph
