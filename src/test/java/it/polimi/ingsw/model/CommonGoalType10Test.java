@@ -22,10 +22,10 @@ class CommonGoalType10Test {
     public void testCheckGoalNotEligibleShelf() {
         CommonGoalType10 goal = new CommonGoalType10();
         Shelf shelf = new Shelf();
-        shelf.getGrid().put(new Coordinate(1,1), new ObjectCard(ObjectCardType.cat, 0));
-        shelf.getGrid().put(new Coordinate(1,2), new ObjectCard(ObjectCardType.cat, 1));
-        shelf.getGrid().put(new Coordinate(2,1), new ObjectCard(ObjectCardType.cat, 0));
-        shelf.getGrid().put(new Coordinate(2,2), new ObjectCard(ObjectCardType.cat, 2));
+        shelf.getGrid().put(new Coordinate(1,1), new ObjectCard(ObjectCardType.cat, "00"));
+        shelf.getGrid().put(new Coordinate(1,2), new ObjectCard(ObjectCardType.cat, "10"));
+        shelf.getGrid().put(new Coordinate(2,1), new ObjectCard(ObjectCardType.cat, "00"));
+        shelf.getGrid().put(new Coordinate(2,2), new ObjectCard(ObjectCardType.cat, "20"));
         assertTrue(shelf.getGrid().size() < 5);
         assertFalse(goal.checkGoal(shelf));
     }
@@ -34,10 +34,10 @@ class CommonGoalType10Test {
     public void testCheckGoalCenterCardIsNull() {
         CommonGoalType10 goal = new CommonGoalType10();
         Shelf shelf = new Shelf();
-        shelf.getGrid().put(new Coordinate(2,2), new ObjectCard(ObjectCardType.game, 2));
-        shelf.getGrid().put(new Coordinate(1,3), new ObjectCard(ObjectCardType.game, 0));
-        shelf.getGrid().put(new Coordinate(3,1), new ObjectCard(ObjectCardType.game, 1));
-        shelf.getGrid().put(new Coordinate(3,3), new ObjectCard(ObjectCardType.game, 2));
+        shelf.getGrid().put(new Coordinate(2,2), new ObjectCard(ObjectCardType.game, "20"));
+        shelf.getGrid().put(new Coordinate(1,3), new ObjectCard(ObjectCardType.game, "00"));
+        shelf.getGrid().put(new Coordinate(3,1), new ObjectCard(ObjectCardType.game, "10"));
+        shelf.getGrid().put(new Coordinate(3,3), new ObjectCard(ObjectCardType.game, "20"));
         assertFalse(goal.checkGoal(shelf));
     }
 
@@ -46,11 +46,11 @@ class CommonGoalType10Test {
     public void testCheckGoalCenterCardDifferentType() {
         CommonGoalType10 goal = new CommonGoalType10();
         Shelf shelf = new Shelf();
-        shelf.getGrid().put(new Coordinate(2,2), new ObjectCard(ObjectCardType.game, 2));
-        shelf.getGrid().put(new Coordinate(1,1), new ObjectCard(ObjectCardType.plant, 2));
-        shelf.getGrid().put(new Coordinate(1,3), new ObjectCard(ObjectCardType.game, 0));
-        shelf.getGrid().put(new Coordinate(3,1), new ObjectCard(ObjectCardType.game, 1));
-        shelf.getGrid().put(new Coordinate(3,3), new ObjectCard(ObjectCardType.game, 2));
+        shelf.getGrid().put(new Coordinate(2,2), new ObjectCard(ObjectCardType.game, "20"));
+        shelf.getGrid().put(new Coordinate(1,1), new ObjectCard(ObjectCardType.plant, "20"));
+        shelf.getGrid().put(new Coordinate(1,3), new ObjectCard(ObjectCardType.game, "00"));
+        shelf.getGrid().put(new Coordinate(3,1), new ObjectCard(ObjectCardType.game, "10"));
+        shelf.getGrid().put(new Coordinate(3,3), new ObjectCard(ObjectCardType.game, "20"));
         assertFalse(goal.checkGoal(shelf));
     }
 
@@ -58,11 +58,11 @@ class CommonGoalType10Test {
     public void testCheckGoalReturnsTrue() {
         CommonGoalType10 goal = new CommonGoalType10();
         Shelf shelf = new Shelf();
-        shelf.getGrid().put(new Coordinate(2,2), new ObjectCard(ObjectCardType.trophy, 0));
-        shelf.getGrid().put(new Coordinate(1,1), new ObjectCard(ObjectCardType.trophy, 1));
-        shelf.getGrid().put(new Coordinate(1,3), new ObjectCard(ObjectCardType.trophy, 0));
-        shelf.getGrid().put(new Coordinate(3,1), new ObjectCard(ObjectCardType.trophy, 2));
-        shelf.getGrid().put(new Coordinate(3,3), new ObjectCard(ObjectCardType.trophy, 1));
+        shelf.getGrid().put(new Coordinate(2,2), new ObjectCard(ObjectCardType.trophy, "00"));
+        shelf.getGrid().put(new Coordinate(1,1), new ObjectCard(ObjectCardType.trophy, "10"));
+        shelf.getGrid().put(new Coordinate(1,3), new ObjectCard(ObjectCardType.trophy, "00"));
+        shelf.getGrid().put(new Coordinate(3,1), new ObjectCard(ObjectCardType.trophy, "20"));
+        shelf.getGrid().put(new Coordinate(3,3), new ObjectCard(ObjectCardType.trophy, "10"));
         assertTrue(goal.checkGoal(shelf));
     }
 

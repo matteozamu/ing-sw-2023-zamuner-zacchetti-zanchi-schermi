@@ -269,10 +269,16 @@ public class Cli extends ClientGameManager implements DisconnectionListener {
                 if (line.equals("")) {
                     return gamePlayers;
                 } else {
-                    gamePlayers = Integer.parseInt(line);
-                    if (gamePlayers >= 2 && gamePlayers <= 4) {
-                        return gamePlayers;
-                    } else {
+                    try {
+                        gamePlayers = Integer.parseInt(line);
+
+                        if (gamePlayers >= 2 && gamePlayers <= 4) {
+                            return gamePlayers;
+                        } else {
+                            promptInputError("Invalid number!");
+                        }
+
+                    } catch (Exception e) {
                         promptInputError("Invalid number!");
                     }
                 }
@@ -427,6 +433,11 @@ public class Cli extends ClientGameManager implements DisconnectionListener {
         promptError(error + "\n", false);
     }
 
+    @Override
+    public void notValidCard(String error) {
+        out.println("The card choosen is not valid. Please choose another one.");
+    }
+
     /**
      * Method used fot the first turn
      *
@@ -533,7 +544,6 @@ public class Cli extends ClientGameManager implements DisconnectionListener {
      */
     @Override
     public void joinGame() {
-        System.out.println("Join game!\n");
         if (!sendRequest(MessageBuilder.buildListGameRequest(getUsername(), getClientToken()))) {
             promptError(SEND_ERROR, true);
         }
@@ -544,7 +554,6 @@ public class Cli extends ClientGameManager implements DisconnectionListener {
      */
     @Override
     public void createGame() {
-        System.out.println("Create game!\n");
         if (!sendRequest(MessageBuilder.buildCreateGameRequest(getUsername(), getClientToken()))) {
             promptError(SEND_ERROR, true);
         }
@@ -566,9 +575,6 @@ public class Cli extends ClientGameManager implements DisconnectionListener {
             objectCard = board.getGrid().get(coordinate);
             if (objectCard != null) validCard = true;
         } while (!validCard);
-
-        System.out.println("Checking card: " + objectCard);
-        System.out.println("Checking token: " + getClientToken());
 
         if (!sendRequest(MessageBuilder.buildPickObjectCardRequest(getPlayer(), getClientToken(), coordinate))) {
             promptError(SEND_ERROR, true);
@@ -665,6 +671,21 @@ public class Cli extends ClientGameManager implements DisconnectionListener {
         if (!sendRequest(MessageBuilder.buildLoadShelfRequest(getClientToken(), getUsername(), column))) {
             promptError(SEND_ERROR, true);
         }
+    }
+
+    @Override
+    public void showPersonalGoal() {
+        CliVisual.printPersonalGoalCards(out, getGameSerialized());
+    }
+
+    @Override
+    public void showShelf() {
+        CliVisual.printShelf(out, getGameSerialized());
+        int nameLength = getUsername().length();
+
+        out.print("█".repeat((nameLength % 2 == 0 ? 22 : 21) - nameLength / 2));
+        out.print(" " + getUsername() + " ");
+        out.println("█".repeat(22 - nameLength / 2));
     }
 
     /**

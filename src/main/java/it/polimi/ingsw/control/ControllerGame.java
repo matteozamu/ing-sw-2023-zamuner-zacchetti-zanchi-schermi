@@ -76,16 +76,12 @@ public class ControllerGame implements TimerRunListener, Serializable {
         switch (receivedMessage.getContent()) {
             case GAME_STATE:
                 return new GameStateResponse(receivedMessage.getSenderUsername(), game.getCurrentPlayer().getName());
-
             case PICK_OBJECT_CARD:
                 return pickObjectCardHandler((ObjectCardRequest) receivedMessage);
-
             case REORDER_LIMBO_REQUEST:
                 return reorderLimboHandler((ReorderLimboRequest) receivedMessage);
-
             case DELETE_LIMBO:
                 return deleteLimboHandler((DeleteLimboRequest) receivedMessage);
-
             case LOAD_SHELF_REQUEST:
                 return loadShelfHandler((LoadShelfRequest) receivedMessage);
         }
@@ -116,7 +112,7 @@ public class ControllerGame implements TimerRunListener, Serializable {
                 game.setStarted(false);
                 sendEndGame();
                 changeState(PossibleGameState.GAME_ENDED);
-                return new Response("Game is ended.", MessageStatus.GAME_ENDED);
+                return new Response("Game has ended.", MessageStatus.GAME_ENDED);
             }
 
             Player currentPlayer = game.getCurrentPlayer();
@@ -129,7 +125,7 @@ public class ControllerGame implements TimerRunListener, Serializable {
 
             sendPrivateUpdates();
 
-//            if (checkIfRefill()) refillBoard();
+            if (checkIfRefill()) refillBoard();
             return new Response("Cards moved", MessageStatus.OK);
         } else {
             System.out.println("Column does not have enough space");
@@ -199,7 +195,8 @@ public class ControllerGame implements TimerRunListener, Serializable {
 //            return new ObjectCardResponse(objectCardRequest.getSenderUsername());
         } else {
             System.out.println("Carta non valida");
-            return buildInvalidResponse();
+            return new Response("Carta non valida", MessageStatus.NOT_VALID_CARD);
+//            return buildInvalidResponse();
         }
     }
 
@@ -403,7 +400,12 @@ public class ControllerGame implements TimerRunListener, Serializable {
 
         for (Player player : players) {
             server.sendMessage(player.getName(), new EndGameMessage(player.getName()));
+            synchronized (server.getClientsLock()) {
+                server.getClients().remove(player.getName());
+                server.getPlayersGame().remove(player.getName());
+            }
         }
+        server.getControllerGames().remove(this);
     }
 
     /**
@@ -454,8 +456,10 @@ public class ControllerGame implements TimerRunListener, Serializable {
         Map<Coordinate, ObjectCard> b = game.getBoard().getGrid();
         int[][] boardMatrix = JsonReader.getBoard(playerNumber);
 
-        for (int i = 0; i < boardMatrix.length / 2; i++) {
-            for (int j = 0; j < boardMatrix[i].length; j++) {
+        if (game.getBoard().getGrid().size() == 0) return true;
+
+        for (int i = 1; i < boardMatrix.length / 2 - 1; i++) {
+            for (int j = 1; j < boardMatrix[i].length - 1; j++) {
                 if (b.get(new Coordinate(4 - i, j - 4)) != null) {
                     if (boardMatrix[i + 1][j] == 1 && b.get(new Coordinate(4 - i + 1, j - 4)) != null) {
                         return false;
@@ -473,8 +477,8 @@ public class ControllerGame implements TimerRunListener, Serializable {
             }
         }
 
-        for (int i = boardMatrix.length / 2; i < boardMatrix.length; i++) {
-            for (int j = 0; j < boardMatrix[i].length; j++) {
+        for (int i = boardMatrix.length / 2; i < boardMatrix.length - 1; i++) {
+            for (int j = 1; j < boardMatrix[i].length - 1; j++) {
                 if (b.get(new Coordinate(4 - i, j - 4)) != null) {
                     if (boardMatrix[i + 1][j] == 1 && b.get(new Coordinate(4 - i + 1, j - 4)) != null) {
                         return false;
@@ -606,23 +610,78 @@ public class ControllerGame implements TimerRunListener, Serializable {
         if (limbo.size() == 2) {
             Coordinate c1 = iterator.next();
             Coordinate c2 = iterator.next();
-            int dx = Math.abs(c1.getColumn() - c2.getColumn());
-            int dy = Math.abs(c1.getRow() - c2.getRow());
 
-            if ((dx == 0 && dy == 1) || (dy == 0 && dx == 1))
-                available = true;
-            else return false;
+            int dx1 = Math.abs(c1.getColumn() - coordinate.getColumn());
+            int dy1 = Math.abs(c1.getRow() - coordinate.getRow());
 
-            dx = Math.abs(c2.getColumn() - coordinate.getColumn());
-            dy = Math.abs(c2.getRow() - coordinate.getRow());
+            int dx2 = Math.abs(c2.getColumn() - coordinate.getColumn());
+            int dy2 = Math.abs(c2.getRow() - coordinate.getRow());
 
-            if ((dx == 0 && dy == 1) || (dy == 0 && dx == 1))
-                available = true;
-            else return false;
+            // Check if coordinate is close to either of the limbo cards
+            if ((dx1 == 0 && dy1 == 1) || (dy1 == 0 && dx1 == 1) ||
+                    (dx2 == 0 && dy2 == 1) || (dy2 == 0 && dx2 == 1)) {
+
+                // Check if coordinate forms a straight line with the limbo cards
+                if ((c1.getColumn() == c2.getColumn() && coordinate.getColumn() == c1.getColumn()) ||
+                        (c1.getRow() == c2.getRow() && coordinate.getRow() == c1.getRow())) {
+                    available = true;
+                } else {
+                    return false;
+                }
+            } else {
+                return false;
+            }
         }
 
         return available;
     }
+
+//    public boolean isObjectCardAvailable(Coordinate coordinate) {
+//        Map<Coordinate, ObjectCard> limbo = game.getLimbo();
+//        Map<Coordinate, ObjectCard> board = game.getBoard().getGrid();
+//        Iterator<Coordinate> iterator = limbo.keySet().iterator();
+//        boolean available = false;
+//
+//        if (!board.containsKey(coordinate))
+//            return false;
+//
+//        if (!this.game.getBoard().isEmptyAtDirection(coordinate, UP) &&
+//                !this.game.getBoard().isEmptyAtDirection(coordinate, DOWN) &&
+//                !this.game.getBoard().isEmptyAtDirection(coordinate, RIGHT) &&
+//                !this.game.getBoard().isEmptyAtDirection(coordinate, LEFT)) return false;
+//
+//        if (limbo.size() == 0) available = true;
+//
+//        if (limbo.size() == 1) {
+//            Coordinate c = iterator.next();
+//            int dx = Math.abs(c.getColumn() - coordinate.getColumn());
+//            int dy = Math.abs(c.getRow() - coordinate.getRow());
+//
+//            if ((dx == 0 && dy == 1) || (dy == 0 && dx == 1))
+//                available = true;
+//            else return false;
+//        }
+//
+//        if (limbo.size() == 2) {
+//            Coordinate c1 = iterator.next();
+//            Coordinate c2 = iterator.next();
+//            int dx = Math.abs(c1.getColumn() - c2.getColumn());
+//            int dy = Math.abs(c1.getRow() - c2.getRow());
+//
+//            if ((dx == 0 && dy == 1) || (dy == 0 && dx == 1))
+//                available = true;
+//            else return false;
+//
+//            dx = Math.abs(c2.getColumn() - coordinate.getColumn());
+//            dy = Math.abs(c2.getRow() - coordinate.getRow());
+//
+//            if ((dx == 0 && dy == 1) || (dy == 0 && dx == 1))
+//                available = true;
+//            else return false;
+//        }
+//
+//        return available;
+//    }
 
 
     /*
@@ -825,7 +884,7 @@ public class ControllerGame implements TimerRunListener, Serializable {
 //    }
 
     /**
-     * method that start a timer whenever only one player is in the game
+     * Method that start a timer whenever only one player is in the game
      */
     public void setTimer() {
         reconnectionTimer = new Timer();
@@ -840,8 +899,8 @@ public class ControllerGame implements TimerRunListener, Serializable {
             }
         };
 
-        // start a timer of 30 seconds (30000 milliseconds)
-        reconnectionTimer.schedule(task, 30000);
+        // start a timer of 10 seconds (10000 milliseconds)
+        reconnectionTimer.schedule(task, 5000);
     }
 
     @Override

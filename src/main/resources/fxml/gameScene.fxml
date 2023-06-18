@@ -5,11 +5,7 @@
 <?import javafx.scene.image.*?>
 <?import javafx.scene.layout.*?>
 
-<FlowPane fx:id="mainPane"
-          fx:controller="it.polimi.ingsw.view.gui.GameSceneController"
-          styleClass="mainPane"
-          xmlns="http://javafx.com/javafx/17.0.2-ea"
-          xmlns:fx="http://javafx.com/fxml/1">
+<FlowPane fx:id="mainPane" styleClass="mainPane" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.ingsw.view.gui.GameSceneController">
 
     <stylesheets>
         <URL value="@../css/game.css" />
@@ -22,12 +18,13 @@
             <VBox fx:id="boardCommonGoalCardsVBoxArea" styleClass="boardCommonGoalCardsVBoxArea">
 
                 <StackPane fx:id="boardStackPaneArea" styleClass="boardStackPaneArea">
-                    <ImageView fx:id="boardImage" fitHeight="656.0" fitWidth="656.0" styleClass="boardImage" />
-                    <GridPane fx:id="boardGridPane" hgap="6.0" vgap="6.0" translateX="-2.0" maxHeight="592.0" maxWidth="592.0" styleClass="boardGridPane" StackPane.alignment="CENTER">
-                        <ImageView fx:id="transparentImage1" fitHeight="60.0" fitWidth="60.0" styleClass="transparent" GridPane.columnIndex="0" GridPane.rowIndex="0" />
-                        <ImageView fx:id="transparentImage2" fitHeight="60.0" fitWidth="60.0" styleClass="transparent" GridPane.columnIndex="1" GridPane.rowIndex="0" />
-                        <ImageView fx:id="transparentImage3" fitHeight="60.0" fitWidth="60.0" styleClass="transparent" GridPane.columnIndex="2" GridPane.rowIndex="0" />
+                    <ImageView fx:id="boardImage" fitHeight="656.0" fitWidth="656.0" styleClass="boardImage">
+
+                    </ImageView>
+
+                    <GridPane fx:id="boardGridPane" hgap="6.0" maxHeight="592.0" maxWidth="592.0" styleClass="boardGridPane" translateX="-2.0" vgap="6.0" StackPane.alignment="CENTER">
                     </GridPane>
+
                     <ImageView fx:id="endGameTokenImage" fitHeight="72.0" fitWidth="72.0" rotate="9.0" styleClass="endGameTokenImage" translateX="236.0" translateY="162.0" />
                 </StackPane>
 
@@ -42,11 +39,12 @@
 
             </VBox>
 
-            <VBox fx:id="shelfLimboVBoxArea" maxHeight="656.0" maxWidth="400.0" styleClass="shelfLimboVBoxArea">
-                <HBox fx:id="limboHBoxArea" prefHeight="100.0" prefWidth="300.0" styleClass="limboHBoxArea">
+            <VBox fx:id="shelfLimboVBoxArea" maxWidth="400.0" styleClass="shelfLimboVBoxArea">
+
+                <HBox fx:id="limboHBoxArea" prefHeight="100.0" prefWidth="300.0" styleClass="limboHBoxArea" translateY="18.0">
                 </HBox>
 
-                <AnchorPane fx:id="columnArrowAnchorPane" maxWidth="310" prefHeight="50" styleClass="columnArrowAnchorPane">
+                <AnchorPane fx:id="columnArrowAnchorPane" maxWidth="310" prefHeight="50" styleClass="columnArrowAnchorPane" translateY="40.0">
                     <ImageView id="arrowShelf" fx:id="arrowShelf1" fitHeight="30" fitWidth="30" layoutX="57.0" layoutY="40.0" styleClass="button" />
                     <ImageView id="arrowShelf" fx:id="arrowShelf2" fitHeight="30" fitWidth="30" layoutX="120.0" layoutY="40.0" styleClass="button" />
                     <ImageView id="arrowShelf" fx:id="arrowShelf3" fitHeight="30" fitWidth="30" layoutX="183.0" layoutY="40.0" styleClass="button" />
@@ -54,41 +52,38 @@
                     <ImageView id="arrowShelf" fx:id="arrowShelf5" fitHeight="30" fitWidth="30" layoutX="309.0" layoutY="40.0" styleClass="button" />
                 </AnchorPane>
 
-                <ScrollPane prefHeight="420.0" prefWidth="400.0" styleClass="shelfScrollPane"> <!-- Aggiungere ID -->
+                <ScrollPane prefHeight="420.0" prefWidth="400.0" styleClass="shelfScrollPane" translateY="68.0">
                     <HBox fx:id="shelfHBoxImages" styleClass="shelfHBoxImages">
-                        <StackPane>
-                            <ImageView fx:id="shelf1" fitHeight="400.0" fitWidth="400.0" styleClass="shelf" />
-                            <Label fx:id="shelfLabel1" styleClass="shelfLabel" StackPane.alignment="BOTTOM_CENTER"/>
-                            <GridPane fx:id="shelf1GridPane" hgap="17.0" maxHeight="324.0" maxWidth="304.0" translateY="-11.0" vgap="9.0" styleClass="shelfGridPane">
-                            </GridPane>
+                        <StackPane fx:id="myStackPane">
+
                         </StackPane>
 
-                        <StackPane>
-                            <ImageView fx:id="shelf2" fitHeight="400.0" fitWidth="400.0" styleClass="shelf" />
-                            <Label fx:id="shelfLabel2" styleClass="shelfLabel" StackPane.alignment="BOTTOM_CENTER" />
-                            <GridPane fx:id="shelf2GridPane" hgap="17.0" maxHeight="324.0" maxWidth="304.0" translateY="-11.0" vgap="9.0" styleClass="shelfGridPane">
+                        <StackPane fx:id="shelfStackPane2">
 
-                            </GridPane>
                         </StackPane>
 
-                        <StackPane>
-                            <ImageView fx:id="shelf3" fitHeight="400.0" fitWidth="400.0" styleClass="shelf" />
-                            <Label fx:id="shelfLabel3" styleClass="shelfLabel" StackPane.alignment="BOTTOM_CENTER" />
-                            <GridPane fx:id="shelf3GridPane" hgap="17.0" maxHeight="324.0" maxWidth="304.0" translateY="-11.0" vgap="9.0" styleClass="shelfGridPane">
+                        <StackPane fx:id="shelfStackPane3">
 
-                            </GridPane>
                         </StackPane>
 
-                        <StackPane>
-                            <ImageView fx:id="shelf4" fitHeight="400.0" fitWidth="400.0" styleClass="shelf" />
-                            <Label fx:id="shelfLabel4" styleClass="shelfLabel" StackPane.alignment="BOTTOM_CENTER" />
-                            <GridPane fx:id="shelf4GridPane" hgap="17.0" maxHeight="324.0" maxWidth="304.0" translateY="-11.0" vgap="9.0" styleClass="shelfGridPane">
+                        <StackPane fx:id="shelfStackPane4">
 
-                            </GridPane>
                         </StackPane>
 
                     </HBox>
                 </ScrollPane>
+
+                <FlowPane fx:id="actionListFlowPane" maxHeight="140.0" maxWidth="400.0" minHeight="140.0" minWidth="400.0" prefHeight="140.0" prefWidth="400.0" styleClass="actionList" translateY="86.0">
+                    <!--                    <StackPane.margin>-->
+                    <!--                        <Insets bottom="20.0" left="20.0"/>-->
+                    <!--                    </StackPane.margin>-->
+
+                    <!--                    <ImageView fx:id="prova" id="loadShelf" fitHeight="50.0" fitWidth="190.0" pickOnBounds="true" preserveRatio="true" styleClass="button" />-->
+                    <!--                    <ImageView fx:id="prova2" id="loadShelf" fitHeight="70.0" fitWidth="190.0" pickOnBounds="true" preserveRatio="true" styleClass="button" />-->
+                    <!--                    <ImageView fx:id="prova3" id="loadShelf" fitHeight="70.0" fitWidth="190.0" pickOnBounds="true" preserveRatio="true" styleClass="button" />-->
+                    <!--                    <ImageView fx:id="prova4" id="loadShelf" fitHeight="70.0" fitWidth="190.0" pickOnBounds="true" preserveRatio="true" styleClass="button" />-->
+                </FlowPane>
+
             </VBox>
 
             <StackPane fx:id="personalGoalCardPane" styleClass="personalGoalCardPane">
@@ -96,12 +91,15 @@
 
         </HBox>
 
-        <Pane fx:id="playersInfoPaneArea" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="169.0" prefWidth="133.0" translateX="580.0" translateY="-280.0" styleClass="playersNamePaneArea">
-            <VBox fx:id="playersInfoVBox">
-            </VBox>
-        </Pane>
+        <VBox fx:id="playersInfoVBox" maxHeight="169.0" maxWidth="133.0" minHeight="169.0" minWidth="133.0" prefHeight="169.0" prefWidth="133.0" translateX="580.0" translateY="-280.0" >
+        </VBox>
 
-        <FlowPane fx:id="commonGoalCardInfoPanel" styleClass="commonGoalCardInfoPanel"/>
+<!--        <Pane fx:id="playersInfoPaneArea" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="169.0" prefWidth="133.0" styleClass="playersNamePaneArea" translateX="580.0" translateY="-280.0">-->
+<!--            <VBox fx:id="playersInfoVBox">-->
+<!--            </VBox>-->
+<!--        </Pane>-->
+
+        <FlowPane fx:id="commonGoalCardInfoPanel" styleClass="commonGoalCardInfoPanel" />
 
     </StackPane>
 </FlowPane>

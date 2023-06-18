@@ -251,7 +251,7 @@ class GameTest extends TestCase {
 
     @Test
     public void testGetRandomAvailableObjectCardFullContainer() {
-        g.getObjectCardContainer().add(new ObjectCard(ObjectCardType.randomObjectCardType(), 0));
+        g.getObjectCardContainer().add(new ObjectCard(ObjectCardType.randomObjectCardType(), "00"));
         Object o = g.getRandomAvailableObjectCard();
         assertTrue(o instanceof ObjectCard);
     }
@@ -265,18 +265,18 @@ class GameTest extends TestCase {
         g.addPlayer(p);
         g.setCurrentPlayer(p);
 
-        objectCards.add(new ObjectCard(ObjectCardType.randomObjectCardType(), 1));
-        objectCards.add(new ObjectCard(ObjectCardType.randomObjectCardType(), 2));
-        objectCards.add(new ObjectCard(ObjectCardType.randomObjectCardType(), 0));
+        objectCards.add(new ObjectCard(ObjectCardType.randomObjectCardType(), "10"));
+        objectCards.add(new ObjectCard(ObjectCardType.randomObjectCardType(), "20"));
+        objectCards.add(new ObjectCard(ObjectCardType.randomObjectCardType(), "00"));
 
         assertTrue(g.addObjectCardsToShelf(objectCards, 1));
         assertEquals(3, p.getShelf().getGrid().size());
 
         List<ObjectCard> objectCards2 = new ArrayList<>();
-        objectCards2.add(new ObjectCard(ObjectCardType.randomObjectCardType(), 1));
-        objectCards2.add(new ObjectCard(ObjectCardType.randomObjectCardType(), 0));
-        objectCards2.add(new ObjectCard(ObjectCardType.randomObjectCardType(), 2));
-        objectCards2.add(new ObjectCard(ObjectCardType.randomObjectCardType(), 0));
+        objectCards2.add(new ObjectCard(ObjectCardType.randomObjectCardType(), "10"));
+        objectCards2.add(new ObjectCard(ObjectCardType.randomObjectCardType(), "00"));
+        objectCards2.add(new ObjectCard(ObjectCardType.randomObjectCardType(), "20"));
+        objectCards2.add(new ObjectCard(ObjectCardType.randomObjectCardType(), "00"));
 
         assertFalse(g.addObjectCardsToShelf(objectCards2, 1));
         assertEquals(3, p.getShelf().getGrid().size());
@@ -299,7 +299,7 @@ class GameTest extends TestCase {
         g.addPlayer(p);
         g.setCurrentPlayer(p);
         List<ObjectCard> limbo = new ArrayList<>();
-        ObjectCard oc = new ObjectCard(ObjectCardType.randomObjectCardType(), 2);
+        ObjectCard oc = new ObjectCard(ObjectCardType.randomObjectCardType(), "20");
         limbo.add(oc);
 
         g.addObjectCardsToShelf(limbo, 0);
@@ -315,16 +315,16 @@ class GameTest extends TestCase {
 
         for (int i = 0; i < 6; i++) {
             for (int j = 0; j < 4; j++) {
-                g.getCurrentPlayer().getShelf().getGrid().put(new Coordinate(i, j), new ObjectCard(ObjectCardType.randomObjectCardType(), 1));
+                g.getCurrentPlayer().getShelf().getGrid().put(new Coordinate(i, j), new ObjectCard(ObjectCardType.randomObjectCardType(), "10"));
             }
         }
-        g.getCurrentPlayer().getShelf().getGrid().put(new Coordinate(0, 5), new ObjectCard(ObjectCardType.randomObjectCardType(), 1));
-        g.getCurrentPlayer().getShelf().getGrid().put(new Coordinate(1, 5), new ObjectCard(ObjectCardType.randomObjectCardType(), 1));
-        g.getCurrentPlayer().getShelf().getGrid().put(new Coordinate(2, 5), new ObjectCard(ObjectCardType.randomObjectCardType(), 1));
-        g.getCurrentPlayer().getShelf().getGrid().put(new Coordinate(3, 5), new ObjectCard(ObjectCardType.randomObjectCardType(), 1));
-        g.getCurrentPlayer().getShelf().getGrid().put(new Coordinate(4, 5), new ObjectCard(ObjectCardType.randomObjectCardType(), 1));
+        g.getCurrentPlayer().getShelf().getGrid().put(new Coordinate(0, 5), new ObjectCard(ObjectCardType.randomObjectCardType(), "10"));
+        g.getCurrentPlayer().getShelf().getGrid().put(new Coordinate(1, 5), new ObjectCard(ObjectCardType.randomObjectCardType(), "10"));
+        g.getCurrentPlayer().getShelf().getGrid().put(new Coordinate(2, 5), new ObjectCard(ObjectCardType.randomObjectCardType(), "10"));
+        g.getCurrentPlayer().getShelf().getGrid().put(new Coordinate(3, 5), new ObjectCard(ObjectCardType.randomObjectCardType(), "10"));
+        g.getCurrentPlayer().getShelf().getGrid().put(new Coordinate(4, 5), new ObjectCard(ObjectCardType.randomObjectCardType(), "10"));
 
-        limbo.add(new ObjectCard(ObjectCardType.randomObjectCardType(), 1));
+        limbo.add(new ObjectCard(ObjectCardType.randomObjectCardType(), "10"));
 
         g.addObjectCardsToShelf(limbo, 5);
         assertTrue(g.getCurrentPlayer().getShelf().isFull());

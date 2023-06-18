@@ -5,7 +5,6 @@ import it.polimi.ingsw.utility.MessageBuilder;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
-import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
@@ -13,9 +12,8 @@ import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.UUID;
+
 /**
  * Class JoinGameSceneController represents the controller of the join game scene, the scene where the player
  * can see the list of existing games they can join
@@ -79,7 +77,10 @@ public class JoinGameSceneController {
         }
 
     }
-    /** Handles the label click
+
+    /**
+     * Handles the label click
+     *
      * @param index the index of the label
      * @param games the list of games
      */
@@ -87,7 +88,7 @@ public class JoinGameSceneController {
     private void onLabelClicked(int index, List<ControllerGame> games) {
         int choose = index;
 
-        if(!guiManager.sendRequest(MessageBuilder.buildJoinGameRequest(guiManager.getClientToken(), guiManager.getUsername(), games.get(choose).getId()))){
+        if (!guiManager.sendRequest(MessageBuilder.buildJoinGameRequest(guiManager.getClientToken(), guiManager.getUsername(), games.get(choose).getId()))) {
             GuiManager.showDialog((Stage) mainPane.getScene().getWindow(), GuiManager.ERROR_DIALOG_TITLE,
                     GuiManager.SEND_ERROR);
 
@@ -97,8 +98,8 @@ public class JoinGameSceneController {
 
         LobbySceneController lobbySceneController = GuiManager.setLayout(mainPane.getScene(), "fxml/lobbyScene.fxml");
 
-        if (lobbySceneController != null) {
-            lobbySceneController.updateLobbyList();
-        }
+//        if (lobbySceneController != null) {
+//            lobbySceneController.updateLobbyList();
+//        }
     }
 }

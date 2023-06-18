@@ -310,9 +310,9 @@ public class Game implements Serializable {
 
 
         for (int i = 0; i < ObjectCardType.SIZE; i++) {
-            for (int j = 0; j < 7; j++) this.objectCardContainer.add(new ObjectCard(types.get(i), 0));
-            for (int j = 0; j < 7; j++) this.objectCardContainer.add(new ObjectCard(types.get(i), 1));
-            for (int j = 0; j < 8; j++) this.objectCardContainer.add(new ObjectCard(types.get(i), 2));
+            for (int j = 0; j < 7; j++) this.objectCardContainer.add(new ObjectCard(types.get(i), "0" + j));
+            for (int j = 0; j < 7; j++) this.objectCardContainer.add(new ObjectCard(types.get(i), "1" + j));
+            for (int j = 0; j < 8; j++) this.objectCardContainer.add(new ObjectCard(types.get(i), "2" + j));
         }
     }
 

@@ -350,8 +350,6 @@ public class Server implements Runnable {
             for (Map.Entry<String, Connection> client : clients.entrySet()) {
                 if (client.getKey().equals(username) && client.getValue() != null && client.getValue().isConnected()) {
                     try {
-                        System.out.println("SENDING MESSAGE TO " + username);
-                        System.out.println("MESSAGE: " + message);
                         client.getValue().sendMessage(message);
                     } catch (IOException e) {
                         LOGGER.severe(e.getMessage());
@@ -436,5 +434,17 @@ public class Server implements Runnable {
      */
     public Map<String, ControllerGame> getPlayersGame() {
         return playersGame;
+    }
+
+    public Object getClientsLock() {
+        return clientsLock;
+    }
+
+    public Map<String, Connection> getClients() {
+        return clients;
+    }
+
+    public List<ControllerGame> getControllerGames() {
+        return controllerGames;
     }
 }
