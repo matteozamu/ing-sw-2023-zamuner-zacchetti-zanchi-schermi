@@ -17,7 +17,6 @@ import java.util.List;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.LinkedBlockingQueue;
 import java.util.logging.FileHandler;
-import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.logging.SimpleFormatter;
 
@@ -102,7 +101,7 @@ public abstract class ClientGameManager implements ClientGameManagerListener, Cl
      */
     @Override
     public void onUpdate(Message message) {
-        LOGGER.log(Level.INFO, "Received: {0}", message);
+//        LOGGER.log(Level.INFO, "Received: {0}", message);
 
         if (gameEnded) {
             return;
