@@ -2,6 +2,8 @@ package it.polimi.ingsw.enumeration;
 
 public class Color {
     public static final String ANSI_RESET = "\u001B[0m";
+    public static final String CLEAR_CONSOLE = "\033[H\033[2J";
+
 
     public static final String ANSI_MAGENTA = "\u001B[35m"; // plant
     public static final String ANSI_YELLOW = "\u001B[33m"; // game

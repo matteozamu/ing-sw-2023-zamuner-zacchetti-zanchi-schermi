@@ -87,10 +87,8 @@ public class CliVisual {
         Board board = gameSerialized.getBoard();
         List<Player> players = gameSerialized.getAllPlayers();
 
-        JsonReader.readJsonConstant("GameConstant.json");
-
         int playerNumber = players.size();
-        int[][] boardMatrix = JsonReader.getBoard(playerNumber);
+        int[][] boardMatrix = gameSerialized.getBoardMatrix();
 
         if (playerNumber == 2) {
             boardView.append(" ".repeat(15));

@@ -16,9 +16,9 @@ public class GameStartMessage extends Message {
     private final List<CommonGoal> cg;
     private final GameSerialized gameSerialized;
 
-    public GameStartMessage(String firstPlayer, List<CommonGoal> cg, String username) {
+    public GameStartMessage(String firstPlayer, List<CommonGoal> cg, String username, String filepath) {
         super("ServerUser", null, MessageContent.READY);
-        this.gameSerialized = new GameSerialized(username);
+        this.gameSerialized = new GameSerialized(username, filepath);
         this.firstPlayer = firstPlayer;
         this.cg = cg;
     }
