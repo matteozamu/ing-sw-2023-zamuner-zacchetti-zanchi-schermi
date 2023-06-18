@@ -39,12 +39,12 @@
 
             </VBox>
 
-            <VBox fx:id="shelfLimboVBoxArea" maxHeight="656.0" maxWidth="400.0" styleClass="shelfLimboVBoxArea" translateY="-40.0">
+            <VBox fx:id="shelfLimboVBoxArea" maxWidth="400.0" styleClass="shelfLimboVBoxArea">
 
-                <HBox fx:id="limboHBoxArea" prefHeight="100.0" prefWidth="300.0" styleClass="limboHBoxArea">
+                <HBox fx:id="limboHBoxArea" prefHeight="100.0" prefWidth="300.0" styleClass="limboHBoxArea" translateY="18.0">
                 </HBox>
 
-                <AnchorPane fx:id="columnArrowAnchorPane" maxWidth="310" prefHeight="50" styleClass="columnArrowAnchorPane">
+                <AnchorPane fx:id="columnArrowAnchorPane" maxWidth="310" prefHeight="50" styleClass="columnArrowAnchorPane" translateY="40.0">
                     <ImageView id="arrowShelf" fx:id="arrowShelf1" fitHeight="30" fitWidth="30" layoutX="57.0" layoutY="40.0" styleClass="button" />
                     <ImageView id="arrowShelf" fx:id="arrowShelf2" fitHeight="30" fitWidth="30" layoutX="120.0" layoutY="40.0" styleClass="button" />
                     <ImageView id="arrowShelf" fx:id="arrowShelf3" fitHeight="30" fitWidth="30" layoutX="183.0" layoutY="40.0" styleClass="button" />
@@ -52,7 +52,7 @@
                     <ImageView id="arrowShelf" fx:id="arrowShelf5" fitHeight="30" fitWidth="30" layoutX="309.0" layoutY="40.0" styleClass="button" />
                 </AnchorPane>
 
-                <ScrollPane maxHeight="420.0" maxWidth="400.0" minHeight="420.0" minWidth="400.0" prefHeight="420.0" prefWidth="400.0" styleClass="shelfScrollPane" translateY="48.0">
+                <ScrollPane prefHeight="420.0" prefWidth="400.0" styleClass="shelfScrollPane" translateY="68.0">
                     <HBox fx:id="shelfHBoxImages" styleClass="shelfHBoxImages">
                         <StackPane fx:id="myStackPane">
 
@@ -73,7 +73,16 @@
                     </HBox>
                 </ScrollPane>
 
+                <FlowPane fx:id="actionListFlowPane" maxHeight="140.0" maxWidth="400.0" minHeight="140.0" minWidth="400.0" prefHeight="140.0" prefWidth="400.0" styleClass="actionList" translateY="86.0">
+                    <!--                    <StackPane.margin>-->
+                    <!--                        <Insets bottom="20.0" left="20.0"/>-->
+                    <!--                    </StackPane.margin>-->
 
+                    <!--                    <ImageView fx:id="prova" id="loadShelf" fitHeight="50.0" fitWidth="190.0" pickOnBounds="true" preserveRatio="true" styleClass="button" />-->
+                    <!--                    <ImageView fx:id="prova2" id="loadShelf" fitHeight="70.0" fitWidth="190.0" pickOnBounds="true" preserveRatio="true" styleClass="button" />-->
+                    <!--                    <ImageView fx:id="prova3" id="loadShelf" fitHeight="70.0" fitWidth="190.0" pickOnBounds="true" preserveRatio="true" styleClass="button" />-->
+                    <!--                    <ImageView fx:id="prova4" id="loadShelf" fitHeight="70.0" fitWidth="190.0" pickOnBounds="true" preserveRatio="true" styleClass="button" />-->
+                </FlowPane>
 
             </VBox>
 
@@ -82,17 +91,13 @@
 
         </HBox>
 
-        <Pane fx:id="playersInfoPaneArea" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="169.0" prefWidth="133.0" styleClass="playersNamePaneArea" translateX="580.0" translateY="-280.0">
-            <VBox fx:id="playersInfoVBox">
-            </VBox>
-        </Pane>
+        <VBox fx:id="playersInfoVBox" maxHeight="169.0" maxWidth="133.0" minHeight="169.0" minWidth="133.0" prefHeight="169.0" prefWidth="133.0" translateX="580.0" translateY="-280.0" >
+        </VBox>
 
-        <FlowPane fx:id="actionListFlowPane" alignment="CENTER" columnHalignment="CENTER" maxHeight="150.0" maxWidth="600.0" minHeight="150.0" minWidth="600.0" prefHeight="150.0" prefWidth="600.0" styleClass="actionList" translateX="330.0" translateY="364.0" vgap="10.0">
-            <!--                    <ImageView id="exitButton" fx:id="prova" fitHeight="70.0" fitWidth="190.0" pickOnBounds="true" preserveRatio="true" styleClass="button" />-->
-            <!--                    <ImageView id="exitButton" fx:id="prova2" fitHeight="70.0" fitWidth="190.0" pickOnBounds="true" preserveRatio="true" styleClass="button" />-->
-            <!--                    <ImageView id="exitButton" fx:id="prova3" fitHeight="70.0" fitWidth="190.0" pickOnBounds="true" preserveRatio="true" styleClass="button" />-->
-            <!--                    <ImageView id="exitButton" fx:id="prova4" fitHeight="70.0" fitWidth="190.0" pickOnBounds="true" preserveRatio="true" styleClass="button" />-->
-        </FlowPane>
+<!--        <Pane fx:id="playersInfoPaneArea" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="169.0" prefWidth="133.0" styleClass="playersNamePaneArea" translateX="580.0" translateY="-280.0">-->
+<!--            <VBox fx:id="playersInfoVBox">-->
+<!--            </VBox>-->
+<!--        </Pane>-->
 
         <FlowPane fx:id="commonGoalCardInfoPanel" styleClass="commonGoalCardInfoPanel" />
 

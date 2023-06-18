@@ -3,6 +3,7 @@ package it.polimi.ingsw.view.gui;
 import it.polimi.ingsw.enumeration.PossibleAction;
 import it.polimi.ingsw.model.*;
 import it.polimi.ingsw.utility.JsonReader;
+import it.polimi.ingsw.utility.MessageBuilder;
 import javafx.collections.ObservableList;
 import javafx.event.Event;
 import javafx.fxml.FXML;
@@ -195,11 +196,6 @@ public class GameSceneController {
 
         limboHBoxArea.setVisible(true);
 
-//        shelfLabel1.setText("Federico");
-//        shelfLabel2.setText("Matteo");
-//        shelfLabel3.setText("Federica");
-//        shelfLabel4.setText("Simone");
-
         objectCards = new HashMap<>();
         commonGoalCards = new HashMap<>();
         personalGoalCards = new HashMap<>();
@@ -318,6 +314,9 @@ public class GameSceneController {
                             int row = numRows/2 - (4 - i);
                             int col = (j - 4) + numCols/2;
                             boardGridPane.add(imageView, row, col);
+                            int finalI = i;
+                            int finalJ = j;
+                            imageView.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> onObjectCardClick(4 - finalI, finalJ - 4));
                         }
                     }
                 } else if (boardMatrix[i][j] == 0) {
@@ -354,6 +353,9 @@ public class GameSceneController {
                             int row = numRows/2 - (4 - i);
                             int col = (j - 4) + numCols/2;
                             boardGridPane.add(imageView, row, col);
+                            int finalI = i;
+                            int finalJ = j;
+                            imageView.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> onObjectCardClick(4 - finalI, finalJ - 4));
                         }
                     }
                 } else if (boardMatrix[i][j] == 0) {
@@ -517,6 +519,10 @@ public class GameSceneController {
         String myName = guiManager.getUsername();
         String myPoints = POINTS_PROPERTY + gameSerialized.getPoints();
 
+        Separator upSeparator = new Separator();
+        upSeparator.getStyleClass().add(CSS_PLAYERINFO_SEPARATOR);
+        playersInfoVBox.getChildren().add(upSeparator);
+
         Label myNameLabel = new Label(myName);
         myNameLabel.setId("myNameLabel");
         myNameLabel.getStyleClass().add(CSS_PLAYERINFO_LABEL);
@@ -527,9 +533,9 @@ public class GameSceneController {
         myPointsLabel.getStyleClass().add(CSS_PLAYERINFO_LABEL);
         playersInfoVBox.getChildren().add(myPointsLabel);
 
-        Separator separator = new Separator();
-        separator.getStyleClass().add(CSS_PLAYERINFO_SEPARATOR);
-        playersInfoVBox.getChildren().add(separator);
+        Separator downSeparator = new Separator();
+        downSeparator.getStyleClass().add(CSS_PLAYERINFO_SEPARATOR);
+        playersInfoVBox.getChildren().add(downSeparator);
 
         for (Player player : players) {
             if (!player.getName().equals(myName)) {
@@ -688,15 +694,15 @@ public class GameSceneController {
 
     // per impedire che un giocatore non di turno possa compiere azioni
     void notYourTurn(String turnOwner) {
-        arrowShelf1.setMouseTransparent(true);
-        arrowShelf2.setMouseTransparent(true);
-        arrowShelf3.setMouseTransparent(true);
-        arrowShelf4.setMouseTransparent(true);
-        boardGridPane.setMouseTransparent(true);
-        //impostare il limbo con la scritta LIMBO
-        shelfStackPane2.setMouseTransparent(true);
-        shelfStackPane3.setMouseTransparent(true);
-        shelfStackPane4.setMouseTransparent(true);
+//        arrowShelf1.setMouseTransparent(true);
+//        arrowShelf2.setMouseTransparent(true);
+//        arrowShelf3.setMouseTransparent(true);
+//        arrowShelf4.setMouseTransparent(true);
+//        boardGridPane.setMouseTransparent(true);
+//        //impostare il limbo con la scritta LIMBO
+//        shelfStackPane2.setMouseTransparent(true);
+//        shelfStackPane3.setMouseTransparent(true);
+//        shelfStackPane4.setMouseTransparent(true);
     }
 
     /**
@@ -739,6 +745,15 @@ public class GameSceneController {
                 return "deleteLimbo";
             default:
                 return null;
+        }
+    }
+
+    private void onObjectCardClick(int row, int col) {
+        Coordinate coordinate = new Coordinate(row, col);
+
+        if (!guiManager.sendRequest(MessageBuilder.buildPickObjectCardRequest(guiManager.getPlayer(), guiManager.getClientToken(), coordinate))) {
+            GuiManager.showDialog((Stage) mainPane.getScene().getWindow(), GuiManager.ERROR_DIALOG_TITLE,
+                    GuiManager.SEND_ERROR);
         }
     }
 
