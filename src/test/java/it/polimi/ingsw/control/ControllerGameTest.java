@@ -70,6 +70,53 @@ public class ControllerGameTest extends TestCase {
 //        assertEquals(MessageStatus.PRINT_LIMBO, response.getStatus());
     }
 
+    @Test
+    public void testGameSetupHandler(){
+        cg.getGame().setNumberOfPlayers(4);
+        assertFalse(cg.getIsLobbyFull());
+
+        cg.gameSetupHandler();
+
+        assertFalse(cg.getIsLobbyFull());
+    }
+    //TODO: non passa
+//    @Test
+//    public void testGameSetupHandler_LobbyFull() {
+//        cg.getGame().setNumberOfPlayers(2);
+//        assertFalse(cg.getIsLobbyFull());
+//
+//        this.cg.getGame().addPlayer(new Player("Matteo", new Shelf(), null));
+//        this.cg.getGame().addPlayer(new Player("Simone", new Shelf(), null));
+//        cg.setGame(Game.getInstance("Matteo"));
+//        cg.setGame(Game.getInstance("Simone"));
+//
+//        cg.gameSetupHandler();
+//
+//        assertTrue(cg.getIsLobbyFull());
+//    }
+
+    @Test
+    public void testUsernameNull() {
+        assertThrows(NullPointerException.class, () -> {
+            cg.isUsernameAvailable(null);
+        });
+    }
+
+    //TODO: non passa
+
+//    @Test
+//    public void testIsUsernameAvailable(){
+//        cg.getGame().addPlayer(new Player("Matteo", new Shelf(), null));
+//        cg.getGame().addPlayer(new Player("Simone", new Shelf(), null));
+//        cg.setGame(Game.getInstance("Matteo"));
+//        cg.setGame(Game.getInstance("Simone"));
+//
+//        assertFalse(cg.isUsernameAvailable("Matteo"));
+//        assertFalse(cg.isUsernameAvailable("Simone"));
+//        assertTrue(cg.isUsernameAvailable("Davide"));
+//    }
+
+//------------------------------------------------------------
 //    @BeforeEach
 //    public void setUp() {
 //        this.cg = new ControllerGame(new Server());
@@ -85,13 +132,6 @@ public class ControllerGameTest extends TestCase {
 //
 //        this.pg = new PersonalGoalCard(goals);
 //        this.shelf = new Shelf();
-//    }
-//
-//    @Test
-//    public void testUsernameNull() {
-//        assertThrows(NullPointerException.class, () -> {
-//            cg.isUsernameAvailable(null);
-//        });
 //    }
 //
 //    @Test

@@ -17,7 +17,6 @@ import java.util.List;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.LinkedBlockingQueue;
 import java.util.logging.FileHandler;
-import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.logging.SimpleFormatter;
 
@@ -102,7 +101,7 @@ public abstract class ClientGameManager implements ClientGameManagerListener, Cl
      */
     @Override
     public void onUpdate(Message message) {
-        LOGGER.log(Level.INFO, "Received: {0}", message);
+//        LOGGER.log(Level.INFO, "Received: {0}", message);
 
         if (gameEnded) {
             return;
@@ -213,12 +212,7 @@ public abstract class ClientGameManager implements ClientGameManagerListener, Cl
      * @param stateMessage game state message received
      */
     private void checkTurnChange(GameStateResponse stateMessage) {
-        System.out.println("CHECK TURN CHANGE: " + stateMessage.getGameSerialized());
-        System.out.println("CHECK TURN CHANGE: " + stateMessage.getTurnOwner());
-        System.out.println("CHECK TURN CHANGE: " + firstTurn);
-        System.out.println("CHECK TURN CHANGE: " + yourTurn);
         if (!firstTurn) {
-            System.out.println(getGameSerialized().getCurrentPlayer() + " " + turnOwner);
             if (!getGameSerialized().getCurrentPlayer().getName().equals(turnOwner)) {
                 turnOwner = stateMessage.getTurnOwner();
                 turnOwnerChanged = true;
@@ -230,8 +224,6 @@ public abstract class ClientGameManager implements ClientGameManagerListener, Cl
                 if (turnOwner.equals(getUsername())) {
                     yourTurn = true;
                 }
-
-                System.out.println("CHECK TURN CHANGE");
                 newTurn();
             }
         }
@@ -286,7 +278,6 @@ public abstract class ClientGameManager implements ClientGameManagerListener, Cl
      * @param message is the message received from the server
      */
     private void handlePlayersInLobby(LobbyPlayersResponse message) {
-//        System.out.println("PLAYERS IN LOBBY " + message.getUsers());
         lobbyPlayers = message.getUsers();
         queue.add(() -> playersWaitingUpdate(message.getUsers()));
     }
@@ -317,11 +308,12 @@ public abstract class ClientGameManager implements ClientGameManagerListener, Cl
             } else {
                 if (response.getStatus() == MessageStatus.ERROR) {
                     queue.add(() -> responseError(response.getMessage()));
+                } else if (response.getStatus() == MessageStatus.NOT_VALID_CARD) {
+                    queue.add(() -> notValidCard(response.getMessage()));
                 } else {
                     onPositiveResponse(response);
                 }
             }
-            System.out.println(firstPlayer + " check");
             if (firstPlayer != null || reconnection) checkNextAction();
         }
     }
@@ -368,7 +360,6 @@ public abstract class ClientGameManager implements ClientGameManagerListener, Cl
      * Check what is the next action for the client
      */
     private void checkNextAction() {
-        System.out.println("CHECK NEXT ACTION: " + gameSerialized.getCurrentPlayer().isConnected());
         // se il giocatore è disconnesso creo un nuovo turno
         // TODO gestire il caso di un singolo giocatore
         if (!gameSerialized.getCurrentPlayer().isConnected()) {
@@ -385,7 +376,6 @@ public abstract class ClientGameManager implements ClientGameManagerListener, Cl
                 turnOwnerChanged = false;
                 yourTurn = false;
 
-                System.out.println("CHECK NEXT ACTION");
                 newTurn();
             }
         }
@@ -516,7 +506,6 @@ public abstract class ClientGameManager implements ClientGameManagerListener, Cl
      * Called when a change of turn owner happen
      */
     private void newTurn() {
-        System.out.println("NEW TURN: " + yourTurn);
         if (yourTurn) {
             turnManager.startTurn();
             makeMove();
@@ -585,38 +574,38 @@ public abstract class ClientGameManager implements ClientGameManagerListener, Cl
 
         switch (chosenAction) {
             case JOIN_GAME -> {
-                System.out.println("JOIN GAME");
+//                System.out.println("JOIN GAME");
                 action = this::joinGame;
             }
             case CREATE_GAME -> {
-                System.out.println("CREATE GAME");
+//                System.out.println("CREATE GAME");
                 action = this::createGame;
             }
             case BOARD_PICK_CARD -> {
-                System.out.println("SCEGLI CARTA");
+//                System.out.println("SCEGLI CARTA");
                 action = this::pickBoardCard;
             }
             case LOAD_SHELF -> {
-                System.out.println("CARICA SHELF");
+//                System.out.println("CARICA SHELF");
                 turnManager.loadingShelf();
                 action = this::chooseColumn;
             }
             case REORDER_LIMBO -> {
-                System.out.println("SCEGLI ORDINE");
+//                System.out.println("SCEGLI ORDINE");
                 action = this::reorderLimbo;
             }
             case SHOW_PERSONAL_GOAL -> {
-                System.out.println("SHOW PERSONAL GOAL");
+//                System.out.println("SHOW PERSONAL GOAL");
                 action = this::showPersonalGoal;
                 checkNextAction();
             }
             case SHOW_SHELF -> {
-                System.out.println("SHOW SHELF");
+//                System.out.println("SHOW SHELF");
                 action = this::showShelf;
                 checkNextAction();
             }
             case DELETE_LIMBO -> {
-                System.out.println("ELIMINO LIMBO");
+//                System.out.println("ELIMINO LIMBO");
                 turnManager.deleteLimbo();
                 action = this::deleteLimbo;
             }

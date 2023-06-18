@@ -21,7 +21,6 @@ class ClientTurnManager {
 //        if (!turnStarted)
 //            throw new ClientRoundManagerException("Error, round not started yet (before call nextState() you must call startTurn())");
 
-        System.out.println("STATO: " + getUserPlayerState());
         switch (playerState) {
             case PICK_CARD_BOARD:
                 playerState = UserPlayerState.AFTER_FIRST_PICK;
@@ -96,19 +95,19 @@ class ClientTurnManager {
     }
 
     /**
+     * @return the current user player state
+     */
+    UserPlayerState getUserPlayerState() {
+        return playerState;
+    }
+
+    /**
      * Sets the player state
      *
      * @param playerState player state that have to be setted
      */
     void setUserPlayerState(UserPlayerState playerState) {
         this.playerState = playerState;
-    }
-
-    /**
-     * @return the current user player state
-     */
-    UserPlayerState getUserPlayerState() {
-        return playerState;
     }
 
 }

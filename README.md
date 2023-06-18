@@ -1,6 +1,6 @@
-README
-
 # Prova Finale di Ingegneria del Software - a.a. 2022-2023
+
+[![codecov](https://codecov.io/gh/matteozamu/ing-sw-2023-zamuner-zacchetti-zanchi-schermi/branch/dev/graph/badge.svg?token=KBR43CAQFL)](https://codecov.io/gh/matteozamu/ing-sw-2023-zamuner-zacchetti-zanchi-schermi)
 
 ![alt text](https://www.craniocreations.it/storage/media/products/54/112/My_Shelfie_box_ITA-ENG.png)
 
@@ -32,16 +32,17 @@ Di seguito sono riportati diagrammi delle classi dell’architettura di rete dei
 
 Il presente documento fornisce una descrizione dettagliata della maggior parte delle classi e dei metodi utilizzati nel
 progetto, seguendo le convenzioni di documentazione di Java. È possibile consultare questa
-documentazione [cliccando qui] (*LINK GIT*)
+documentazione [cliccando qui](*LINK GIT*)
 
 ### Librerie e Plugins
 
-| Libreria/Plugin | Descrizione                                                          |
-|-----------------|----------------------------------------------------------------------|
-| __maven__       | Strumento di gestione per software basati su Java e build automation |
-| __junit__       | Framework dedicato a Java per unit testing                           |
-| __gson__        | Libreria per il supporto al parsing di file in formato json          |
-| __JavaFx__      | Libreria grafica di Java                                             |
+| Libreria/Plugin | Descrizione                                                                                 |
+|-----------------|---------------------------------------------------------------------------------------------|
+| __maven__       | Strumento di gestione per software basati su Java e build automation                        |
+| __junit__       | Framework dedicato a Java per unit testing                                                  |
+| __gson__        | Libreria per il supporto al parsing di file in formato json                                 |
+| __JavaFx__      | Libreria grafica di Java                                                                    |
+| __jacoco__      | Strumento di supporto al testing per evidenziare le linee di codice coperte dagli unit test |
 
 ### Jars
 
@@ -49,7 +50,7 @@ Per la consegna del progetto sono stati utilizzati i seguenti Jar, i quali conse
 funzionalità descritte nell'introduzione. Le funzionalità sviluppate in accordo con la specifica del progetto saranno
 elencate nella prossima sezione, mentre i dettagli relativi all'esecuzione dei Jar saranno forniti nella sezione
 denominata "Esecuzione dei Jar". La cartella che ospita il software del client e del server si trova all'indirizzo
-seguente: [Jars] (*LINK GIT*).
+seguente: [Jars](*LINK GIT*).
 
 ## Funzionalità
 
@@ -70,11 +71,16 @@ seguente: [Jars] (*LINK GIT*).
 
 ### Client
 
-DA SCRIVERE
+Il client può essere eseguito in due modalità: CLI e GUI; il giocatore può scegliere la modalità di gioco tramite un
+comando apposito all'inizio dell'esecuzione del Jar.
 
 #### CLI
 
-DA SCRIVERE
+Per eseguire in client in modalità testuale, è necessario eseguire il seguente comando da terminale:
+
+```bash
+java -jar client.jar cli
+```
 
 #### GUI
 
@@ -82,15 +88,34 @@ DA SCRIVERE
 
 ### Server
 
-DA SCRIVERE
+L'esecuzione del Server prevede la lettura di un file di configurazione di tipo Json, contenente costanti e impostazioni
+di gioco; i valori eventualmente modificabili sono i seguenti:
+
+```
+"socketPort": 2727,
+"RMIPort": 7272,
+"maxPlayers": 4,
+"minPlayers": 2,
+"disconnectionTimer": 30000
+```
 
 #### Options
 
-DA SCRIVERE
+- `socketPort`: porta del server che usa le socket.
+- `RMIPort`: porta del server che usa il servizio RMI.
+- `maxPlayers`: numero massimo di giocatori che possono partecipare ad una partita.
+- `minPlayers`: numero minimo di giocatori che possono partecipare ad una partita.
+- `disconnectionTimer`: tempo in millisecondi che il server aspetta prima di considerare un giocatore definitivamente
+  disconnesso dalla partita in corso.
 
-#### Parameters
+L'esecuzione del server avviene attraverso il seguente comando, in cui si specifica il percorso del file di
+configurazione:
 
-DA SCRIVERE
+```bash
+java -jar server.jar [configFilePath] 
+```
+
+Se non specificato nessun percorso, il valore di default è _GameConstant.json_.
 
 ## Componenti del gruppo
 
