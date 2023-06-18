@@ -56,6 +56,14 @@ jobs:
         uses: codecov/codecov-action@v3
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
+      - name: Make Code Badge
+        uses: shadowmoose/GHA-LoC-Badge@1.0.0
+        id: badge
+        with:
+          debug: true
+          directory: ./
+          badge: ./output/badge.svg
+          ignore: 'node_modules'
 
     # Optional: Uploads the full dependency graph to GitHub to improve the quality of Dependabot alerts this repository can receive
     #- name: Update dependency graph
