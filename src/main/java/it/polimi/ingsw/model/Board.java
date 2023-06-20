@@ -11,16 +11,6 @@ import java.util.Map;
 
 public class Board implements Serializable {
 
-    /**
-     * Represents the four possible directions: UP, DOWN, LEFT, and RIGHT.
-     */
-    public enum Direction {
-        UP,
-        DOWN,
-        LEFT,
-        RIGHT
-    }
-
     private Map<Coordinate, ObjectCard> grid;
 
     public Board() {
@@ -33,6 +23,10 @@ public class Board implements Serializable {
 
     public Map<Coordinate, ObjectCard> getGrid() {
         return grid;
+    }
+
+    public void setGrid(Map<Coordinate, ObjectCard> grid) {
+        this.grid = grid;
     }
 
     /**
@@ -96,5 +90,15 @@ public class Board implements Serializable {
         return "Board{" +
                 "grid=" + grid +
                 '}';
+    }
+
+    /**
+     * Represents the four possible directions: UP, DOWN, LEFT, and RIGHT.
+     */
+    public enum Direction {
+        UP,
+        DOWN,
+        LEFT,
+        RIGHT
     }
 }

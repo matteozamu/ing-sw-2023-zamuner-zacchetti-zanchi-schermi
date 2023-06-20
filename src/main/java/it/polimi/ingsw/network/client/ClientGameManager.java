@@ -307,8 +307,9 @@ public abstract class ClientGameManager implements ClientGameManagerListener, Cl
                     // TODO check if this is correct
                     queue.add(() -> lobbyJoinResponse(response));
             } else {
+                if (turnManager != null) System.out.println("TURN MANAGER: " + turnManager.getUserPlayerState());
                 if (response.getStatus() == MessageStatus.ERROR) {
-                    queue.add(() -> responseError(response.getMessage()));
+//                    queue.add(() -> responseError(response.getMessage()));
                 } else if (response.getStatus() == MessageStatus.NOT_VALID_CARD) {
                     queue.add(() -> responseError("The card choosen is not valid. Please choose another one"));
                 } else if (turnManager != null && turnManager.getUserPlayerState().equals(UserPlayerState.LOADING_SHELF)) {
