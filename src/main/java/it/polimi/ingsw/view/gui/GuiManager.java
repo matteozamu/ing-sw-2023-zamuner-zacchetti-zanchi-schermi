@@ -8,6 +8,7 @@ import it.polimi.ingsw.network.client.ClientGameManager;
 import it.polimi.ingsw.network.client.DisconnectionListener;
 import it.polimi.ingsw.network.message.ConnectionResponse;
 import it.polimi.ingsw.network.message.Response;
+import it.polimi.ingsw.utility.MessageBuilder;
 import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -445,7 +446,8 @@ public class GuiManager extends ClientGameManager implements DisconnectionListen
      */
     @Override
     public void notValidCard(String error) {
-
+        Platform.runLater(() ->
+                gameSceneController.notValidCard(error));
     }
 
     /**

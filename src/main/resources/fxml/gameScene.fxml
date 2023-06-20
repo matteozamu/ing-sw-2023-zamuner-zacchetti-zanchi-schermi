@@ -45,17 +45,68 @@
                 </HBox>
 
                 <AnchorPane fx:id="columnArrowAnchorPane" maxWidth="310" prefHeight="50" styleClass="columnArrowAnchorPane" translateY="40.0">
-                    <ImageView id="arrowShelf" fx:id="arrowShelf1" fitHeight="30" fitWidth="30" layoutX="57.0" layoutY="40.0" styleClass="button" />
-                    <ImageView id="arrowShelf" fx:id="arrowShelf2" fitHeight="30" fitWidth="30" layoutX="120.0" layoutY="40.0" styleClass="button" />
-                    <ImageView id="arrowShelf" fx:id="arrowShelf3" fitHeight="30" fitWidth="30" layoutX="183.0" layoutY="40.0" styleClass="button" />
-                    <ImageView id="arrowShelf" fx:id="arrowShelf4" fitHeight="30" fitWidth="30" layoutX="246.0" layoutY="40.0" styleClass="button" />
-                    <ImageView id="arrowShelf" fx:id="arrowShelf5" fitHeight="30" fitWidth="30" layoutX="309.0" layoutY="40.0" styleClass="button" />
+                    <ImageView id="arrowShelf" fx:id="arrowShelf0" fitHeight="30" fitWidth="30" layoutX="57.0" layoutY="40.0" styleClass="button" />
+                    <ImageView id="arrowShelf" fx:id="arrowShelf1" fitHeight="30" fitWidth="30" layoutX="120.0" layoutY="40.0" styleClass="button" />
+                    <ImageView id="arrowShelf" fx:id="arrowShelf2" fitHeight="30" fitWidth="30" layoutX="183.0" layoutY="40.0" styleClass="button" />
+                    <ImageView id="arrowShelf" fx:id="arrowShelf3" fitHeight="30" fitWidth="30" layoutX="246.0" layoutY="40.0" styleClass="button" />
+                    <ImageView id="arrowShelf" fx:id="arrowShelf4" fitHeight="30" fitWidth="30" layoutX="309.0" layoutY="40.0" styleClass="button" />
                 </AnchorPane>
 
                 <ScrollPane prefHeight="420.0" prefWidth="400.0" styleClass="shelfScrollPane" translateY="68.0">
                     <HBox fx:id="shelfHBoxImages" styleClass="shelfHBoxImages">
                         <StackPane fx:id="myStackPane">
-
+<!--                            <ImageView fx:id="shelf1" fitHeight="400.0" fitWidth="400.0" styleClass="shelf" >-->
+<!--                        <image>-->
+<!--                           <Image url="@../img/board_shelf/shelf_orth.png" />-->
+<!--                        </image></ImageView>-->
+<!--                            <Label fx:id="shelfLabel1" styleClass="shelfLabel" StackPane.alignment="BOTTOM_CENTER" />-->
+<!--                            <GridPane fx:id="shelf1GridPane" hgap="17.0" maxHeight="324.0" maxWidth="304.0" styleClass="shelfGridPane" translateY="-11.0" vgap="9.0">-->
+<!--                                <ImageView id="Game-01" fx:id="game1" fitHeight="47.0" fitWidth="47.0" GridPane.columnIndex="0" GridPane.rowIndex="0" />-->
+<!--                                <ImageView id="Game-02" fx:id="game2" fitHeight="47.0" fitWidth="47.0" GridPane.columnIndex="1" GridPane.rowIndex="0" />-->
+<!--                                <ImageView id="Game-00" fx:id="game3" fitHeight="47.0" fitWidth="47.0" GridPane.columnIndex="2" GridPane.rowIndex="0" />-->
+<!--                                <ImageView id="Plant-01" fx:id="plant1" fitHeight="47.0" fitWidth="47.0" GridPane.columnIndex="3" GridPane.rowIndex="0" />-->
+<!--                                <ImageView id="Plant-02" fx:id="plant2" fitHeight="47.0" fitWidth="47.0" GridPane.columnIndex="4" GridPane.rowIndex="0" />-->
+<!--                                <ImageView id="Plant-00" fx:id="plant3" fitHeight="47.0" fitWidth="47.0" GridPane.columnIndex="0" GridPane.rowIndex="1" />-->
+<!--                                <ImageView id="Plant-02" fx:id="trophy1" fitHeight="47.0" fitWidth="47.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />-->
+<!--                                <ImageView id="Plant-02" fx:id="cat3" fitHeight="47.0" fitWidth="47.0" GridPane.columnIndex="2" GridPane.rowIndex="1" />-->
+<!--                                <ImageView id="Plant-02" fx:id="game4" fitHeight="47.0" fitWidth="47.0" GridPane.columnIndex="3" GridPane.rowIndex="1" />-->
+<!--                                <ImageView id="Plant-02" fx:id="trophy4" fitHeight="47.0" fitWidth="47.0" GridPane.columnIndex="4" GridPane.rowIndex="1" />-->
+<!--                                <ImageView id="Plant-02" fx:id="trophy2" fitHeight="47.0" fitWidth="47.0" GridPane.columnIndex="0" GridPane.rowIndex="2" />-->
+<!--                                <ImageView id="Plant-02" fx:id="trophy3" fitHeight="47.0" fitWidth="47.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />-->
+<!--                                <ImageView id="Plant-02" fx:id="book30" fitHeight="47.0" fitWidth="47.0" GridPane.columnIndex="2" GridPane.rowIndex="2" />-->
+<!--                                <ImageView id="Plant-02" fx:id="book31" fitHeight="47.0" fitWidth="47.0" GridPane.columnIndex="3" GridPane.rowIndex="2" />-->
+<!--                                <ImageView id="Plant-02" fx:id="book32" fitHeight="47.0" fitWidth="47.0" GridPane.columnIndex="4" GridPane.rowIndex="2" />-->
+<!--                                <ImageView id="Plant-02" fx:id="frame1" fitHeight="47.0" fitWidth="47.0" GridPane.columnIndex="0" GridPane.rowIndex="3" />-->
+<!--                                <ImageView id="Plant-02" fx:id="frame2" fitHeight="47.0" fitWidth="47.0" GridPane.columnIndex="1" GridPane.rowIndex="3" />-->
+<!--                                <ImageView id="Plant-02" fx:id="frame3" fitHeight="47.0" fitWidth="47.0" GridPane.columnIndex="2" GridPane.rowIndex="3" />-->
+<!--                                <ImageView id="Plant-02" fx:id="cat1" fitHeight="47.0" fitWidth="47.0" GridPane.columnIndex="3" GridPane.rowIndex="3" />-->
+<!--                                <ImageView id="Plant-02" fx:id="cat2" fitHeight="47.0" fitWidth="47.0" GridPane.columnIndex="4" GridPane.rowIndex="3" />-->
+<!--                                <ImageView id="Plant-02" fx:id="book33" fitHeight="47.0" fitWidth="47.0" GridPane.columnIndex="0" GridPane.rowIndex="4" />-->
+<!--                                <ImageView id="Plant-02" fx:id="book34" fitHeight="47.0" fitWidth="47.0" GridPane.columnIndex="1" GridPane.rowIndex="4" />-->
+<!--                                <ImageView id="Plant-02" fx:id="frame4" fitHeight="47.0" fitWidth="47.0" GridPane.columnIndex="2" GridPane.rowIndex="4" />-->
+<!--                                <ImageView id="Plant-02" fx:id="cat4" fitHeight="47.0" fitWidth="47.0" GridPane.columnIndex="3" GridPane.rowIndex="4" />-->
+<!--                                <ImageView id="Plant-02" fx:id="cat5" fitHeight="47.0" fitWidth="47.0" GridPane.columnIndex="4" GridPane.rowIndex="4" />-->
+<!--                                <ImageView id="Plant-02" fx:id="game5" fitHeight="47.0" fitWidth="47.0" GridPane.columnIndex="0" GridPane.rowIndex="5" />-->
+<!--                                <ImageView id="Plant-02" fx:id="trophy5" fitHeight="47.0" fitWidth="47.0" GridPane.columnIndex="1" GridPane.rowIndex="5" />-->
+<!--                                <ImageView id="Plant-02" fx:id="plant4" fitHeight="47.0" fitWidth="47.0" GridPane.columnIndex="2" GridPane.rowIndex="5" />-->
+<!--                                <ImageView id="Plant-02" fx:id="plant5" fitHeight="47.0" fitWidth="47.0" GridPane.columnIndex="3" GridPane.rowIndex="5" />-->
+<!--                                <ImageView id="Plant-02" fx:id="trophy6" fitHeight="47.0" fitWidth="47.0" GridPane.columnIndex="4" GridPane.rowIndex="5" />-->
+<!--                        <columnConstraints>-->
+<!--                           <ColumnConstraints />-->
+<!--                           <ColumnConstraints />-->
+<!--                           <ColumnConstraints />-->
+<!--                           <ColumnConstraints />-->
+<!--                           <ColumnConstraints />-->
+<!--                        </columnConstraints>-->
+<!--                        <rowConstraints>-->
+<!--                           <RowConstraints />-->
+<!--                           <RowConstraints />-->
+<!--                           <RowConstraints />-->
+<!--                           <RowConstraints />-->
+<!--                           <RowConstraints />-->
+<!--                           <RowConstraints />-->
+<!--                        </rowConstraints>-->
+<!--                            </GridPane>-->
                         </StackPane>
 
                         <StackPane fx:id="shelfStackPane2">
@@ -91,7 +142,7 @@
 
         </HBox>
 
-        <VBox fx:id="playersInfoVBox" maxHeight="169.0" maxWidth="133.0" minHeight="169.0" minWidth="133.0" prefHeight="169.0" prefWidth="133.0" translateX="580.0" translateY="-280.0" >
+        <VBox fx:id="playersInfoVBox" maxHeight="169.0" maxWidth="133.0" minHeight="169.0" minWidth="133.0" prefHeight="169.0" prefWidth="133.0" translateX="580.0" translateY="-280.0">
         </VBox>
 
 <!--        <Pane fx:id="playersInfoPaneArea" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="169.0" prefWidth="133.0" styleClass="playersNamePaneArea" translateX="580.0" translateY="-280.0">-->

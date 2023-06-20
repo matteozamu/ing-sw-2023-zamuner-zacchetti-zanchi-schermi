@@ -6,6 +6,7 @@ import it.polimi.ingsw.utility.JsonReader;
 import it.polimi.ingsw.utility.MessageBuilder;
 import javafx.collections.ObservableList;
 import javafx.event.Event;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
@@ -100,7 +101,6 @@ public class GameSceneController {
     ImageView pointsTile;
     @FXML
     ImageView chair;
-    //TODO: Mappa per associare nome shelf e immagine shelf?
     @FXML
     ImageView shelf1;
     @FXML
@@ -148,6 +148,8 @@ public class GameSceneController {
     @FXML
     AnchorPane columnArrowAnchorPane;
     @FXML
+    ImageView arrowShelf0;
+    @FXML
     ImageView arrowShelf1;
     @FXML
     ImageView arrowShelf2;
@@ -155,8 +157,6 @@ public class GameSceneController {
     ImageView arrowShelf3;
     @FXML
     ImageView arrowShelf4;
-    @FXML
-    ImageView arrowShelf5;
     @FXML
     ImageView scoring81;
     @FXML
@@ -183,6 +183,128 @@ public class GameSceneController {
     Label pointsPlayer4;
     @FXML
     ImageView cat1;
+    @FXML
+    ImageView book1;
+    @FXML
+    ImageView book2;
+    @FXML
+    ImageView book3;
+    @FXML
+    ImageView book4;
+    @FXML
+    ImageView book5;
+    @FXML
+    ImageView book6;
+    @FXML
+    ImageView book7;
+    @FXML
+    ImageView book8;
+    @FXML
+    ImageView book9;
+    @FXML
+    ImageView book10;
+    @FXML
+    ImageView book11;
+    @FXML
+    ImageView book12;
+    @FXML
+    ImageView book13;
+    @FXML
+    ImageView book14;
+    @FXML
+    ImageView book15;
+    @FXML
+    ImageView book16;
+    @FXML
+    ImageView book17;
+    @FXML
+    ImageView book18;
+    @FXML
+    ImageView book19;
+    @FXML
+    ImageView book20;
+    @FXML
+    ImageView book21;
+    @FXML
+    ImageView book22;
+    @FXML
+    ImageView book23;
+    @FXML
+    ImageView book24;
+    @FXML
+    ImageView book25;
+    @FXML
+    ImageView book26;
+    @FXML
+    ImageView book27;
+    @FXML
+    ImageView book28;
+    @FXML
+    ImageView book29;
+    @FXML
+    ImageView book30;
+    @FXML
+    ImageView book31;
+    @FXML
+    ImageView book32;
+    @FXML
+    ImageView book33;
+    @FXML
+    ImageView book34;
+    @FXML
+    ImageView game1;
+    @FXML
+    ImageView game2;
+    @FXML
+    ImageView game3;
+    @FXML
+    ImageView game4;
+    @FXML
+    ImageView game5;
+    @FXML
+    ImageView game6;
+    @FXML
+    ImageView plant1;
+    @FXML
+    ImageView plant2;
+    @FXML
+    ImageView plant3;
+    @FXML
+    ImageView plant4;
+    @FXML
+    ImageView plant5;
+    @FXML
+    ImageView trophy1;
+    @FXML
+    ImageView trophy2;
+    @FXML
+    ImageView trophy3;
+    @FXML
+    ImageView trophy4;
+    @FXML
+    ImageView trophy5;
+    @FXML
+    ImageView trophy6;
+    @FXML
+    ImageView cat2;
+    @FXML
+    ImageView cat3;
+    @FXML
+    ImageView cat4;
+    @FXML
+    ImageView cat5;
+    @FXML
+    ImageView cat6;
+    @FXML
+    ImageView frame1;
+    @FXML
+    ImageView frame2;
+    @FXML
+    ImageView frame3;
+    @FXML
+    ImageView frame4;
+    @FXML
+    ImageView frame5;
 
     private GuiManager guiManager;
     private Map<String, ImageView> objectCards;
@@ -205,6 +327,18 @@ public class GameSceneController {
         shelvesGridPane = new ArrayList<>();
         shelvesStackPane = List.of(shelfStackPane2, shelfStackPane3, shelfStackPane4);
 
+        arrowShelf0.setMouseTransparent(true);
+        arrowShelf1.setMouseTransparent(true);
+        arrowShelf2.setMouseTransparent(true);
+        arrowShelf3.setMouseTransparent(true);
+        arrowShelf4.setMouseTransparent(true);
+        boardGridPane.setMouseTransparent(true);
+        //impostare il limbo con la scritta LIMBO
+        myStackPane.setMouseTransparent(true);
+        shelfStackPane2.setMouseTransparent(true);
+        shelfStackPane3.setMouseTransparent(true);
+        shelfStackPane4.setMouseTransparent(true);
+
         loadObjectCards();
         loadCommonGoalCards();
         loadPersonalGoalCards();
@@ -218,11 +352,20 @@ public class GameSceneController {
     void setupGame(GameSerialized gameSerialized) {
         bindCommonGoalCardInfoPanelZoom();
         //bindPanels();
+        bindChooseColumn();
 
         setShelves(gameSerialized);
         setPersonalGoalCard(gameSerialized.getPersonalGoalCard());
         setPlayerInfo(gameSerialized);
         updateGameArea(gameSerialized);
+    }
+
+    private void bindChooseColumn() {
+        arrowShelf0.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> onChooseColumnButtonClick(0));
+        arrowShelf1.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> onChooseColumnButtonClick(1));
+        arrowShelf2.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> onChooseColumnButtonClick(2));
+        arrowShelf3.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> onChooseColumnButtonClick(3));
+        arrowShelf4.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> onChooseColumnButtonClick(4));
     }
 
     /**
@@ -313,9 +456,10 @@ public class GameSceneController {
 
                             int row = numRows/2 - (4 - i);
                             int col = (j - 4) + numCols/2;
-                            boardGridPane.add(imageView, row, col);
+                            boardGridPane.add(imageView, col, row);
                             int finalI = i;
                             int finalJ = j;
+
                             if(!flagFirstSetBoard) {
                                 imageView.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> onObjectCardClick(4 - finalI, finalJ - 4));
                             }
@@ -331,7 +475,7 @@ public class GameSceneController {
 
                     int row = numRows/2 - (4 - i);
                     int col = (j - 4) + numCols/2;
-                    boardGridPane.add(transparentImageView, row, col);
+                    boardGridPane.add(transparentImageView, col, row);
                 }
             }
         }
@@ -354,9 +498,10 @@ public class GameSceneController {
 
                             int row = numRows/2 - (4 - i);
                             int col = (j - 4) + numCols/2;
-                            boardGridPane.add(imageView, row, col);
+                            boardGridPane.add(imageView, col, row);
                             int finalI = i;
                             int finalJ = j;
+
                             if(!flagFirstSetBoard) {
                                 imageView.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> onObjectCardClick(4 - finalI, finalJ - 4));
                             }
@@ -372,7 +517,7 @@ public class GameSceneController {
 
                     int row = numRows/2 - (4 - i);
                     int col = (j - 4) + numCols/2;
-                    boardGridPane.add(transparentImageView, row, col);
+                    boardGridPane.add(transparentImageView, col, row);
                 }
             }
         }
@@ -399,7 +544,7 @@ public class GameSceneController {
                     transparentImageView.setPickOnBounds(true);
                     transparentImageView.setId(TRANSPARENT_IMAGEVIEW_ID);
 
-                    shelfGrid.add(transparentImageView, row, col);
+                    shelfGrid.add(transparentImageView, col, Shelf.ROWS - 1 - row);
                 } else {
                     String cardTypeText = objectCard.getType().getText();
                     String cardNameType = cardTypeText + "-" + objectCard.getId();
@@ -412,7 +557,7 @@ public class GameSceneController {
                         imageView.setPickOnBounds(true);
                         imageView.setMouseTransparent(true);
 
-                        shelfGrid.add(imageView, row, col);
+                        shelfGrid.add(imageView, col, Shelf.ROWS - 1 - row);
                     }
                 }
             }
@@ -609,6 +754,13 @@ public class GameSceneController {
         }
     }
 
+    private void onChooseColumnButtonClick(int column) {
+        if (!guiManager.sendRequest(MessageBuilder.buildLoadShelfRequest(guiManager.getClientToken(), guiManager.getUsername(), column))) {
+            GuiManager.showDialog((Stage) mainPane.getScene().getWindow(), GuiManager.ERROR_DIALOG_TITLE,
+                    GuiManager.SEND_ERROR);
+        }
+    }
+
     /**
      * Hides the zoom panel
      */
@@ -742,15 +894,17 @@ public class GameSceneController {
 
     // per impedire che un giocatore non di turno possa compiere azioni
     void notYourTurn(String turnOwner) {
-//        arrowShelf1.setMouseTransparent(true);
-//        arrowShelf2.setMouseTransparent(true);
-//        arrowShelf3.setMouseTransparent(true);
-//        arrowShelf4.setMouseTransparent(true);
-//        boardGridPane.setMouseTransparent(true);
-//        //impostare il limbo con la scritta LIMBO
-//        shelfStackPane2.setMouseTransparent(true);
-//        shelfStackPane3.setMouseTransparent(true);
-//        shelfStackPane4.setMouseTransparent(true);
+        arrowShelf0.setMouseTransparent(true);
+        arrowShelf1.setMouseTransparent(true);
+        arrowShelf2.setMouseTransparent(true);
+        arrowShelf3.setMouseTransparent(true);
+        arrowShelf4.setMouseTransparent(true);
+        boardGridPane.setMouseTransparent(true);
+        //impostare il limbo con la scritta LIMBO
+        myStackPane.setMouseTransparent(true);
+        shelfStackPane2.setMouseTransparent(true);
+        shelfStackPane3.setMouseTransparent(true);
+        shelfStackPane4.setMouseTransparent(true);
     }
 
     /**
@@ -759,18 +913,32 @@ public class GameSceneController {
      * @param possibleActions possible actions
      */
     void displayAction(List<PossibleAction> possibleActions) {
-        actionListFlowPane.getChildren().clear();
-
         for (PossibleAction possibleAction : possibleActions) {
-            ImageView imageView = new ImageView();
-            imageView.setId(getActionIDFromPossibleAction(possibleAction));
-            imageView.setFitHeight(ACTION_BUTTON_HEIGHT);
-            imageView.setFitWidth(ACTION_BUTTON_WIDTH);
-            imageView.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> guiManager.doAction(possibleAction));
-            imageView.getStyleClass().add(CSS_BUTTON);
+            String actionID = getActionIDFromPossibleAction(possibleAction);
 
-            actionListFlowPane.getChildren().add(imageView);
+            switch (actionID) {
+                case "boardPickCard":
+                    setObjectCardsAvailable();
+                    break;
+                case "loadShelf":
+                    setShelfArrowsAvailable();
+                    break;
+                default:
+                    break;
+            }
         }
+//        actionListFlowPane.getChildren().clear();
+//
+//        for (PossibleAction possibleAction : possibleActions) {
+//            ImageView imageView = new ImageView();
+//            imageView.setId(getActionIDFromPossibleAction(possibleAction));
+//            imageView.setFitHeight(ACTION_BUTTON_HEIGHT);
+//            imageView.setFitWidth(ACTION_BUTTON_WIDTH);
+//            imageView.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> guiManager.doAction(possibleAction));
+//            imageView.getStyleClass().add(CSS_BUTTON);
+//
+//            actionListFlowPane.getChildren().add(imageView);
+//        }
     }
 
     /**
@@ -828,6 +996,23 @@ public class GameSceneController {
 //            GuiManager.showDialog((Stage) mainPane.getScene().getWindow(), GuiManager.ERROR_DIALOG_TITLE, e.getMessage());
 //        }
 //    }
+
+    private void setObjectCardsAvailable() {
+        boardGridPane.setMouseTransparent(false);
+    }
+
+    private void setShelfArrowsAvailable() {
+        arrowShelf0.setMouseTransparent(false);
+        arrowShelf1.setMouseTransparent(false);
+        arrowShelf2.setMouseTransparent(false);
+        arrowShelf3.setMouseTransparent(false);
+        arrowShelf4.setMouseTransparent(false);
+    }
+
+    void notValidCard(String error) {
+        GuiManager.showDialog((Stage) mainPane.getScene().getWindow(), GuiManager.ERROR_DIALOG_TITLE,
+                "The card chosen is not valid");
+    }
 
     /**
      * Communicates the disconnection of a player
