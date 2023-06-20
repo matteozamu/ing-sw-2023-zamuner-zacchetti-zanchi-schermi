@@ -13,10 +13,8 @@ import junit.framework.TestCase;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.Map;
+import java.io.PrintStream;
+import java.util.*;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -33,7 +31,7 @@ public class ControllerGameTest extends TestCase {
         cg = new ControllerGame(server);
         cg.setGame(new Game());
         cg.getGame().setNumberOfPlayers(2);
-        cg.fillBoard();
+        //cg.fillBoard();
 
     }
 
@@ -115,6 +113,70 @@ public class ControllerGameTest extends TestCase {
 //        assertFalse(cg.isUsernameAvailable("Simone"));
 //        assertTrue(cg.isUsernameAvailable("Davide"));
 //    }
+public void printBoard(Board board) {
+    ObjectCard objectCard;
+    StringBuilder boardView = new StringBuilder();
+
+    int playerNumber = 2;
+    JsonReader.readJsonConstant("GameConstant.json");
+    int[][] boardMatrix = JsonReader.getBoard(2);
+
+    if (playerNumber == 2) {
+        boardView.append(" ".repeat(15));
+        boardView.append("-3       -2        -1       0        1        2        3\n");
+    } else if (playerNumber == 3 || playerNumber == 4) {
+        boardView.append(" ".repeat(7));
+        boardView.append("-4       -3       -2       -1       0        1        2        3        4\n\n");
+    }
+
+    for (int i = 0; i < boardMatrix.length / 2; i++) {
+        if (!(playerNumber == 2 && 4 - i == 4)) {
+            boardView.append(String.format("%2s ", 4 - i));
+        }
+        for (int j = 0; j < boardMatrix[i].length; j++) {
+            if (boardMatrix[i][j] == 1) {
+                objectCard = board.getGrid().get(new Coordinate(4 - i, j - 4));
+                if (objectCard != null) {
+                    String cardText = objectCard.getType().getText();
+                    int visibleCardLength = cardText.length();
+                    if (visibleCardLength % 2 == 0) {
+                        boardView.append("║").append(" ".repeat((8 - visibleCardLength) / 2)).append(objectCard).append(" ".repeat((8 - visibleCardLength) / 2));
+                    } else {
+                        boardView.append("║").append(" ".repeat((8 - visibleCardLength) / 2)).append(objectCard).append(" ".repeat((int) Math.ceil((double) (8 - visibleCardLength) / 2)));
+                    }
+                } else {
+                    boardView.append("║").append(" ".repeat(8));
+                }
+                if (playerNumber == 2) {
+                    if ((4 - i == 3 && j - 4 == 0) || (4 - i == 2 && j - 4 == 1) || (4 - i == 1 && j - 4 == 3)) {
+                        boardView.append("║");
+                    }
+                }
+            } else {
+                boardView.append(" ".repeat(9));
+            }
+        }
+        boardView.append("\n");
+    }
+    System.out.print(boardView);
+}
+
+
+    @Test
+    public void testRefillBoardEmptyBoard(){
+        cg.getGame().setNumberOfPlayers(2);
+        cg.refillBoard();
+        assertEquals(29, cg.getGame().getBoard().getGrid().size());
+    }
+
+    @Test
+    public void testRefillBoardFewTilesLeft(){
+        cg.getGame().setNumberOfPlayers(2);
+        cg.getGame().getBoard().getGrid().put(new Coordinate(3,-1), new ObjectCard(ObjectCardType.randomObjectCardType(), "00"));
+        cg.getGame().getBoard().getGrid().put(new Coordinate(-3,0), new ObjectCard(ObjectCardType.randomObjectCardType(), "00"));
+        cg.refillBoard();
+        assertEquals(29, cg.getGame().getBoard().getGrid().size());
+    }
 
 //------------------------------------------------------------
 //    @BeforeEach
@@ -232,7 +294,7 @@ public class ControllerGameTest extends TestCase {
 //    }
 //
 //
-    /*
+
     @Test
     public void testIsObjectCardAvailableAllEmptyDirections() {
         Coordinate c = new Coordinate(0, 0);
@@ -241,7 +303,7 @@ public class ControllerGameTest extends TestCase {
 
     @Test
     public void testIsObjectCardAvailableOneDirectionFull() {
-        Coordinate c = new Coordinate(0, 4);
+        Coordinate c = new Coordinate(0, 3);
         cg.fillBoard();
         assertTrue(cg.isObjectCardAvailable(c));
     }
@@ -255,7 +317,7 @@ public class ControllerGameTest extends TestCase {
         cg.fillBoard();
         assertFalse(cg.isObjectCardAvailable(c));
     }
-     */
+
 //
 //    @Test
 //    public void testAddObjectCardToLimbo() {
@@ -277,38 +339,66 @@ public class ControllerGameTest extends TestCase {
 //        });
 //    }
 //
-//    @Test
-//    public void testPointsCalculatorNoCompletedRows() {
-//        Player p = new Player("Alice", this.shelf, this.pg);
-//        cg.getGame().addPlayer(p);
-//        cg.getGame().setCurrentPlayer(p);
-//
-//        assertEquals(0, cg.pointsCalculator());
-//    }
-//
-//    @Test
-//    public void testPointsCalculatorOneCompletedRowInShelf() {
-//        Player p = new Player("Wejdene", this.shelf, this.pg);
-//        cg.getGame().addPlayer(p);
-//        cg.getGame().setCurrentPlayer(p);
-//
-//        ObjectCardType type = ObjectCardType.randomObjectCardType();
-//        ObjectCard oc = new ObjectCard(type, 0);
-//
-//        for (int i = 0; i < 5; i++) cg.getGame().getCurrentPlayer().getShelf().getGrid().put(new Coordinate(i, 0), oc);
-//
-//        assertEquals(5, cg.pointsCalculator());
-//    }
-//
-//    @Test
-//    public void testPointsCalculatorPersonalGoalCard() {
-//        Player p = new Player("Karol", this.shelf, this.pg);
-//        cg.getGame().addPlayer(p);
-//        cg.getGame().setCurrentPlayer(p);
-//
-//        cg.getGame().getCurrentPlayer().getPersonalGoalCard().setTargetsReached(4);
-//        assertEquals(6, cg.pointsCalculator());
-//    }
+    @Test
+    public void testPointsCalculatorNoCompletedRows() {
+        ArrayList<PersonalGoal> goals = new ArrayList<>();
+        goals.add(new PersonalGoal(1, 1, ObjectCardType.randomObjectCardType()));
+        goals.add(new PersonalGoal(2, 2, ObjectCardType.randomObjectCardType()));
+        goals.add(new PersonalGoal(2, 3, ObjectCardType.randomObjectCardType()));
+        goals.add(new PersonalGoal(4, 5, ObjectCardType.randomObjectCardType()));
+        goals.add(new PersonalGoal(5, 2, ObjectCardType.randomObjectCardType()));
+        goals.add(new PersonalGoal(3, 6, ObjectCardType.randomObjectCardType()));
+
+        this.pg = new PersonalGoalCard(goals, "personalGoalCard-1");
+        this.shelf = new Shelf();
+        Player p = new Player("Alice", this.shelf, this.pg);
+        cg.getGame().addPlayer(p);
+        cg.getGame().setCurrentPlayer(p);
+
+        assertEquals(0, cg.pointsCalculator());
+    }
+
+    @Test
+    public void testPointsCalculatorOneCompletedRowInShelf() {
+        ArrayList<PersonalGoal> goals = new ArrayList<>();
+//        goals.add(new PersonalGoal(1, 1, ObjectCardType.randomObjectCardType()));
+//        goals.add(new PersonalGoal(2, 2, ObjectCardType.randomObjectCardType()));
+//        goals.add(new PersonalGoal(2, 3, ObjectCardType.randomObjectCardType()));
+//        goals.add(new PersonalGoal(4, 5, ObjectCardType.randomObjectCardType()));
+//        goals.add(new PersonalGoal(5, 2, ObjectCardType.randomObjectCardType()));
+//        goals.add(new PersonalGoal(3, 6, ObjectCardType.randomObjectCardType()));
+        cg.getGame().loadPersonalGoaldCards();
+        PersonalGoalCard pgc = cg.getGame().getRandomAvailablePersonalGoalCard();
+        this.pg = pgc;
+        this.shelf = new Shelf();
+
+        Player p = new Player("Wejdene", this.shelf, this.pg);
+        cg.getGame().addPlayer(p);
+        cg.getGame().setCurrentPlayer(p);
+
+        ObjectCardType type = ObjectCardType.randomObjectCardType();
+        ObjectCard oc = new ObjectCard(type, "00");
+
+        for (int i = 0; i < 5; i++){
+            cg.getGame().getCurrentPlayer().getShelf().getGrid().put(new Coordinate(i, 0), oc);
+        }
+
+        assertEquals(5, cg.pointsCalculator());
+    }
+
+    @Test
+    public void testPointsCalculatorPersonalGoalCard() {
+        cg.getGame().loadPersonalGoaldCards();
+        PersonalGoalCard pgc = cg.getGame().getRandomAvailablePersonalGoalCard();
+        this.shelf = new Shelf();
+        this.pg = pgc;
+        Player p = new Player("Karol", this.shelf, this.pg);
+        cg.getGame().addPlayer(p);
+        cg.getGame().setCurrentPlayer(p);
+
+        cg.getGame().getCurrentPlayer().getPersonalGoalCard().setTargetsReached(4);
+        assertEquals(6, cg.pointsCalculator());
+    }
 
 //    @Test
 //    public void testPickObjectCardFailed() {
