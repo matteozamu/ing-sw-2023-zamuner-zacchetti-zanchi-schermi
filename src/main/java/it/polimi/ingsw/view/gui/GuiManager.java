@@ -328,6 +328,11 @@ public class GuiManager extends ClientGameManager implements DisconnectionListen
     }
 
     @Override
+    public void cancelAction() {
+
+    }
+
+    @Override
     public void showShelf() {
 
     }
@@ -437,17 +442,6 @@ public class GuiManager extends ClientGameManager implements DisconnectionListen
             Platform.runLater(() ->
                     connectionSceneController.onError(error));
         }
-    }
-
-    /**
-     * The card chosen by the user is not valid
-     *
-     * @param error
-     */
-    @Override
-    public void notValidCard(String error) {
-        Platform.runLater(() ->
-                gameSceneController.notValidCard(error));
     }
 
     /**

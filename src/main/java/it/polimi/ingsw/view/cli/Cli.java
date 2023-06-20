@@ -17,8 +17,6 @@ import java.util.List;
 import java.util.Scanner;
 import java.util.stream.Collectors;
 
-import static it.polimi.ingsw.enumeration.Color.CLEAR_CONSOLE;
-
 public class Cli extends ClientGameManager implements DisconnectionListener {
     private Scanner in;
     private PrintStream out;
@@ -63,7 +61,6 @@ public class Cli extends ClientGameManager implements DisconnectionListener {
     public void noGameAvailable() {
         out.println("No game available");
     }
-
 
     /**
      * show an error message
@@ -136,8 +133,8 @@ public class Cli extends ClientGameManager implements DisconnectionListener {
         String username = askUsername();
 
         out.printf("Hi %s!%n", username);
-//        int connection = askConnection();
-        int connection = 0;
+        int connection = askConnection();
+//        int connection = 0;
 
         if (connection == 0) {
             out.println("You chose Socket connection\n");
@@ -149,8 +146,8 @@ public class Cli extends ClientGameManager implements DisconnectionListener {
 //        String address = "localhost";
         out.println("Server Address: " + address);
 
-//        int port = askPort(connection);
-        int port = 2727;
+        int port = askPort(connection);
+//        int port = 2727;
         out.println("Server Port: " + port);
 
         try {
@@ -457,11 +454,6 @@ public class Cli extends ClientGameManager implements DisconnectionListener {
         promptError(error + "\n", false);
     }
 
-    @Override
-    public void notValidCard(String error) {
-        out.println("The card chosen is not valid.");
-    }
-
     /**
      * Method used fot the first turn
      *
@@ -486,7 +478,7 @@ public class Cli extends ClientGameManager implements DisconnectionListener {
      */
     @Override
     public void chooseGameToJoin(List<ControllerGame> games) {
-        int choose = -1;
+        Integer choose = -1;
         out.println();
 
         if (games.isEmpty()) {
@@ -505,7 +497,14 @@ public class Cli extends ClientGameManager implements DisconnectionListener {
             out.println(playerNames);
         }
 
-        choose = readInt(0, games.size() - 1);
+
+        do {
+            choose = readInt(0, games.size() - 1);
+            if (choose == null) {
+                System.out.println("NOOOO");
+                promptInputError("Not valid input!");
+            }
+        } while (choose == null);
 
         if (!sendRequest(MessageBuilder.buildJoinGameRequest(getClientToken(), getUsername(), games.get(choose).getId()))) {
             promptError(SEND_ERROR, true);
@@ -519,7 +518,7 @@ public class Cli extends ClientGameManager implements DisconnectionListener {
      */
     @Override
     public void displayActions(List<PossibleAction> possibleActions) {
-        int choose = -1;
+        Integer choose = -1;
         out.println();
         out.println("Choose the next move:");
 
@@ -527,7 +526,12 @@ public class Cli extends ClientGameManager implements DisconnectionListener {
             out.println("\t" + (i) + " - " + possibleActions.get(i).getDescription());
         }
 
-        choose = readInt(0, possibleActions.size() - 1);
+        do {
+            choose = readInt(0, possibleActions.size() - 1);
+            if (choose == null) {
+                promptInputError("Not valid input!");
+            }
+        } while (choose == null);
 
         doAction(possibleActions.get(choose));
     }
@@ -546,6 +550,11 @@ public class Cli extends ClientGameManager implements DisconnectionListener {
         do {
             out.print(">>> ");
             String line = in.nextLine();
+
+            if (line.equals("CANCEL")) {
+                System.out.println("RETURNING NULL");
+                return null;
+            }
 
             try {
                 choose = Integer.valueOf(line);
@@ -596,6 +605,10 @@ public class Cli extends ClientGameManager implements DisconnectionListener {
         out.println("Write the coordinate of the card (0,0 is the centre):");
         do {
             coordinate = readCoordinate();
+            if (coordinate == null) {
+                cancelAction(String.valueOf(PossibleAction.CANCEL));
+                return;
+            }
             objectCard = board.getGrid().get(coordinate);
             if (objectCard != null) validCard = true;
         } while (!validCard);
@@ -603,6 +616,12 @@ public class Cli extends ClientGameManager implements DisconnectionListener {
         if (!sendRequest(MessageBuilder.buildPickObjectCardRequest(getPlayer(), getClientToken(), coordinate))) {
             promptError(SEND_ERROR, true);
         }
+    }
+
+    private void cancelAction(String message) {
+        CliVisual.clearConsole(out);
+        out.println(message);
+        makeMove();
     }
 
     /**
@@ -618,6 +637,8 @@ public class Cli extends ClientGameManager implements DisconnectionListener {
         do {
             out.print(">>> ");
             stringCoordinate = in.nextLine();
+
+            if (stringCoordinate.equals("CANCEL")) return null;
 
             try {
                 String[] parts = stringCoordinate.split(",");
@@ -650,12 +671,15 @@ public class Cli extends ClientGameManager implements DisconnectionListener {
         }
 
         do {
-
             choose = readInt(0, limbo.size() - 1);
-            newLimbo.add(limbo.get(choose));
-            limbo.remove(choose);
 
-            if (limbo.isEmpty()) accepted = true;
+            if (newLimbo.contains(limbo.get(choose))) {
+                promptInputError("You can't choose the same card twice!");
+            } else {
+                newLimbo.add(limbo.get(choose));
+            }
+//            limbo.remove(choose);
+            if (newLimbo.size() == limbo.size()) accepted = true;
         } while (!accepted);
 
         if (!sendRequest(MessageBuilder.buildReorderLimboRequest(getUsername(), getClientToken(), newLimbo))) {
@@ -691,7 +715,16 @@ public class Cli extends ClientGameManager implements DisconnectionListener {
     @Override
     public void chooseColumn() {
         out.println("Choose the column you want to load:");
-        int column = readInt(0, 4);
+        Integer column;
+
+        do {
+            column = readInt(0, 4);
+            if (column == null) {
+                cancelAction(String.valueOf(PossibleAction.CANCEL));
+                return;
+            }
+        } while (column == null);
+
         if (!sendRequest(MessageBuilder.buildLoadShelfRequest(getClientToken(), getUsername(), column))) {
             promptError(SEND_ERROR, true);
         }
@@ -700,6 +733,11 @@ public class Cli extends ClientGameManager implements DisconnectionListener {
     @Override
     public void showPersonalGoal() {
         CliVisual.printPersonalGoalCards(out, getGameSerialized());
+    }
+
+    @Override
+    public void cancelAction() {
+        out.println("Action canceled");
     }
 
     @Override

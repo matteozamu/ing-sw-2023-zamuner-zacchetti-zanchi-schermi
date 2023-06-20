@@ -458,7 +458,7 @@ public class ControllerGame implements TimerRunListener, Serializable {
 
         if (game.getBoard().getGrid().size() == 0) return true;
 
-        for (int i = 1; i < boardMatrix.length / 2 - 1; i++) {
+        for (int i = 1; i < boardMatrix.length / 2; i++) {
             for (int j = 1; j < boardMatrix[i].length - 1; j++) {
                 if (b.get(new Coordinate(4 - i, j - 4)) != null) {
                     if (boardMatrix[i + 1][j] == 1 && b.get(new Coordinate(4 - i + 1, j - 4)) != null) {
@@ -583,17 +583,23 @@ public class ControllerGame implements TimerRunListener, Serializable {
 //    }
     public boolean isObjectCardAvailable(Coordinate coordinate) {
         Map<Coordinate, ObjectCard> limbo = game.getLimbo();
-        Map<Coordinate, ObjectCard> board = game.getBoard().getGrid();
+        Map<Coordinate, ObjectCard> boardOrig = game.getBoard().getGrid();
         Iterator<Coordinate> iterator = limbo.keySet().iterator();
         boolean available = false;
 
-        if (!board.containsKey(coordinate))
+        Board board = new Board();
+        Map<Coordinate, ObjectCard> grid = new HashMap<>(boardOrig);
+        limbo.forEach(grid::put);
+        board.setGrid(grid);
+
+
+        if (!grid.containsKey(coordinate))
             return false;
 
-        if (!this.game.getBoard().isEmptyAtDirection(coordinate, UP) &&
-                !this.game.getBoard().isEmptyAtDirection(coordinate, DOWN) &&
-                !this.game.getBoard().isEmptyAtDirection(coordinate, RIGHT) &&
-                !this.game.getBoard().isEmptyAtDirection(coordinate, LEFT)) return false;
+        if (!board.isEmptyAtDirection(coordinate, UP) &&
+                !board.isEmptyAtDirection(coordinate, DOWN) &&
+                !board.isEmptyAtDirection(coordinate, RIGHT) &&
+                !board.isEmptyAtDirection(coordinate, LEFT)) return false;
 
         if (limbo.size() == 0) available = true;
 
@@ -733,8 +739,11 @@ public class ControllerGame implements TimerRunListener, Serializable {
         points += this.game.getCurrentPlayer().getPersonalGoalCard().calculatePoints();
 
         for (CommonGoal c : this.game.getCommonGoals()) {
-            if (c.checkGoal(this.game.getCurrentPlayer().getShelf()))
+            if (c.checkGoal(this.game.getCurrentPlayer().getShelf())){
                 points += c.updateCurrentPoints(this.game.getPlayers().size());
+//                System.out.println("+ 8 PUNTI");
+            }
+
         }
 
         points += this.game.getCurrentPlayer().getShelf().closeObjectCardsPoints();
