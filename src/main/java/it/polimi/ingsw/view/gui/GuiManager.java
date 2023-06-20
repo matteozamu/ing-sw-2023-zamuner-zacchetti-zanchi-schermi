@@ -444,16 +444,6 @@ public class GuiManager extends ClientGameManager implements DisconnectionListen
     }
 
     /**
-     * The card chosen by the user is not valid
-     *
-     * @param error
-     */
-    @Override
-    public void notValidCard(String error) {
-
-    }
-
-    /**
      * Handles the disconnection of the client
      */
     @Override

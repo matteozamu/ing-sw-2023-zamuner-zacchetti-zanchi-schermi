@@ -17,8 +17,6 @@ import java.util.List;
 import java.util.Scanner;
 import java.util.stream.Collectors;
 
-import static it.polimi.ingsw.enumeration.Color.CLEAR_CONSOLE;
-
 public class Cli extends ClientGameManager implements DisconnectionListener {
     private Scanner in;
     private PrintStream out;
@@ -455,11 +453,6 @@ public class Cli extends ClientGameManager implements DisconnectionListener {
     @Override
     public void responseError(String error) {
         promptError(error + "\n", false);
-    }
-
-    @Override
-    public void notValidCard(String error) {
-        out.println("The card choosen is not valid. Please choose another one.");
     }
 
     /**

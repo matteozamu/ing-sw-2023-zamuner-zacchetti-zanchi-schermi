@@ -29,11 +29,6 @@ interface ClientGameManagerListener {
     void responseError(String error);
 
     /**
-     * The card chosen by the user is not valid
-     */
-    void notValidCard(String error);
-
-    /**
      * Handles the response to the lobby join
      *
      * @param response to the lobby join
