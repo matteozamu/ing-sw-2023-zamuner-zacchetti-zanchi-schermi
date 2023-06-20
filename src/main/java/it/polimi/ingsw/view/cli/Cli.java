@@ -62,7 +62,6 @@ public class Cli extends ClientGameManager implements DisconnectionListener {
         out.println("No game available");
     }
 
-
     /**
      * show an error message
      *
@@ -673,10 +672,14 @@ public class Cli extends ClientGameManager implements DisconnectionListener {
 
         do {
             choose = readInt(0, limbo.size() - 1);
-            newLimbo.add(limbo.get(choose));
-            limbo.remove(choose);
 
-            if (limbo.isEmpty()) accepted = true;
+            if (newLimbo.contains(limbo.get(choose))) {
+                promptInputError("You can't choose the same card twice!");
+            } else {
+                newLimbo.add(limbo.get(choose));
+            }
+//            limbo.remove(choose);
+            if (newLimbo.size() == limbo.size()) accepted = true;
         } while (!accepted);
 
         if (!sendRequest(MessageBuilder.buildReorderLimboRequest(getUsername(), getClientToken(), newLimbo))) {
