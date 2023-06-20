@@ -294,10 +294,7 @@ public class GameSceneController {
         int numCols = 9;
 
         ObjectCard objectCard;
-        JsonReader.readJsonConstant("GameConstant.json");
-        List<Player> players = gameSerialized.getAllPlayers();
-        int playerNumber = players.size();
-        int[][] boardMatrix = JsonReader.getBoard(playerNumber);
+        int[][] boardMatrix = gameSerialized.getBoardMatrix();
 
         for (int i = 0; i < boardMatrix.length / 2; i++) {
             for (int j = 0; j < boardMatrix[i].length; j++) {
