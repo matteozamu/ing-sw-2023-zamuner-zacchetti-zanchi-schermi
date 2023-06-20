@@ -108,6 +108,8 @@ interface ClientGameManagerListener {
 
     void showPersonalGoal();
 
+    void cancelAction();
+
     void showShelf();
 
     /**

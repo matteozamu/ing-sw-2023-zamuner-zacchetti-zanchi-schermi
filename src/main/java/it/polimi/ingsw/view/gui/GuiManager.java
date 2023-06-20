@@ -325,6 +325,11 @@ public class GuiManager extends ClientGameManager implements DisconnectionListen
     }
 
     @Override
+    public void cancelAction() {
+
+    }
+
+    @Override
     public void showShelf() {
 
     }

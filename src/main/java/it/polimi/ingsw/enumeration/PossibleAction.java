@@ -13,7 +13,8 @@ public enum PossibleAction {
     SHOW_COMMON_GOALS("Show common goals"),
     SHOW_PERSONAL_GOAL("Show personal goal card"),
     CREATE_GAME("Create a new game"),
-    SHOW_SHELF("Show your personal shelf");
+    SHOW_SHELF("Show your personal shelf"),
+    CANCEL("Cancel");
 
     private final String description;
 
