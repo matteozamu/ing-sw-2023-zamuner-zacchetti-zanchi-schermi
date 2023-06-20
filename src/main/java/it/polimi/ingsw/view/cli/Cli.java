@@ -133,8 +133,8 @@ public class Cli extends ClientGameManager implements DisconnectionListener {
         String username = askUsername();
 
         out.printf("Hi %s!%n", username);
-//        int connection = askConnection();
-        int connection = 0;
+        int connection = askConnection();
+//        int connection = 0;
 
         if (connection == 0) {
             out.println("You chose Socket connection\n");
@@ -146,8 +146,8 @@ public class Cli extends ClientGameManager implements DisconnectionListener {
 //        String address = "localhost";
         out.println("Server Address: " + address);
 
-//        int port = askPort(connection);
-        int port = 2727;
+        int port = askPort(connection);
+//        int port = 2727;
         out.println("Server Port: " + port);
 
         try {
