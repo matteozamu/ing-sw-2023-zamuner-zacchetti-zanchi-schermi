@@ -458,7 +458,7 @@ public class ControllerGame implements TimerRunListener, Serializable {
 
         if (game.getBoard().getGrid().size() == 0) return true;
 
-        for (int i = 1; i < boardMatrix.length / 2 - 1; i++) {
+        for (int i = 1; i < boardMatrix.length / 2 ; i++) {
             for (int j = 1; j < boardMatrix[i].length - 1; j++) {
                 if (b.get(new Coordinate(4 - i, j - 4)) != null) {
                     if (boardMatrix[i + 1][j] == 1 && b.get(new Coordinate(4 - i + 1, j - 4)) != null) {
