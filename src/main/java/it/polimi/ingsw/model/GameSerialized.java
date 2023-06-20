@@ -1,5 +1,7 @@
 package it.polimi.ingsw.model;
 
+import it.polimi.ingsw.utility.JsonReader;
+
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -11,7 +13,6 @@ import java.util.Map;
  */
 public class GameSerialized implements Serializable {
     private static final long serialVersionUID = 526685006552543525L;
-
     private ArrayList<Player> players;
     private Board board;
 
@@ -21,6 +22,7 @@ public class GameSerialized implements Serializable {
     private PersonalGoalCard personalGoalCard;
     private Map<Coordinate, ObjectCard> limbo;
     private Player currentPlayer;
+    private int[][] boardMatrix;
 
 
     /**
@@ -28,7 +30,7 @@ public class GameSerialized implements Serializable {
      *
      * @param username is the username of the player that is asking for the game state
      */
-    public GameSerialized(String username) {
+    public GameSerialized(String username, String filepath) {
         Game instance = Game.getInstance(username);
 
         if (instance.getPlayers() != null) {
@@ -45,6 +47,17 @@ public class GameSerialized implements Serializable {
         this.shelf = player.getShelf();
         this.personalGoalCard = player.getPersonalGoalCard();
         this.points = player.getCurrentPoints();
+        JsonReader.readJsonConstant(filepath);
+        this.boardMatrix = JsonReader.getBoard(players.size());
+    }
+
+    /**
+     * this method returns the board matrix
+     *
+     * @return the board matrix
+     */
+    public int[][] getBoardMatrix() {
+        return boardMatrix;
     }
 
     /**

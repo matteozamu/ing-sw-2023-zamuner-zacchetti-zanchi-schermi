@@ -17,6 +17,8 @@ import java.util.List;
 import java.util.Scanner;
 import java.util.stream.Collectors;
 
+import static it.polimi.ingsw.enumeration.Color.CLEAR_CONSOLE;
+
 public class Cli extends ClientGameManager implements DisconnectionListener {
     private Scanner in;
     private PrintStream out;
@@ -29,6 +31,22 @@ public class Cli extends ClientGameManager implements DisconnectionListener {
 
         this.in = new Scanner(System.in);
         this.out = new PrintStream(System.out, true);
+    }
+
+    /**
+     * clear the console
+     */
+    public void clearConsole() {
+        try {
+            if (System.getProperty("os.name").contains("Windows")) {
+                new ProcessBuilder("cmd", "/c", "cls").inheritIO().start().waitFor();
+            } else {
+                System.out.print("\033[H\033[2J");
+                System.out.flush();
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     /**
@@ -104,6 +122,8 @@ public class Cli extends ClientGameManager implements DisconnectionListener {
             }
         } while (username == null);
 
+        clearConsole();
+
         return username;
     }
 
@@ -138,6 +158,8 @@ public class Cli extends ClientGameManager implements DisconnectionListener {
         } catch (Exception e) {
             promptError(e.getMessage(), true);
         }
+
+        clearConsole();
     }
 
     /**
@@ -195,6 +217,7 @@ public class Cli extends ClientGameManager implements DisconnectionListener {
                 if (address.equals("")) {
                     return "localhost";
                 } else if (ServerAddressValidator.isAddressValid(address)) {
+                    clearConsole();
                     return address;
                 } else {
                     promptInputError("Invalid address!");
@@ -204,6 +227,7 @@ public class Cli extends ClientGameManager implements DisconnectionListener {
                 promptInputError(INVALID_STRING);
             }
         } while (true);
+
     }
 
     /**

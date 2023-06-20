@@ -20,7 +20,7 @@ import java.util.logging.SimpleFormatter;
 import java.util.stream.Collectors;
 
 /**
- * This class is the main server class which starts a Socket and a RMI server.
+ * This class is the main server class which starts a Socket and an RMI server.
  * It handles all the client regardless of whether they are Sockets or RMI
  */
 public class Server implements Runnable {
@@ -32,6 +32,7 @@ public class Server implements Runnable {
     private Map<String, ControllerGame> playersGame;
     private List<ControllerGame> controllerGames;
     private boolean waitForLoad;
+    private String filepath;
 
     private Timer moveTimer;
 
@@ -45,6 +46,7 @@ public class Server implements Runnable {
         }
         this.waitForLoad = false;
         JsonReader.readJsonConstant(confFilePath);
+        this.filepath = confFilePath;
         this.socketPort = JsonReader.getSocketPort();
         this.RMIPort = JsonReader.getRMIPort();
 
@@ -448,5 +450,9 @@ public class Server implements Runnable {
 
     public List<ControllerGame> getControllerGames() {
         return controllerGames;
+    }
+
+    public String getFilepath() {
+        return filepath;
     }
 }

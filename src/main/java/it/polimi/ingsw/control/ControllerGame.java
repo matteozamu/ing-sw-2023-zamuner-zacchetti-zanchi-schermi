@@ -75,7 +75,7 @@ public class ControllerGame implements TimerRunListener, Serializable {
 
         switch (receivedMessage.getContent()) {
             case GAME_STATE:
-                return new GameStateResponse(receivedMessage.getSenderUsername(), game.getCurrentPlayer().getName());
+                return new GameStateResponse(receivedMessage.getSenderUsername(), game.getCurrentPlayer().getName(), server.getFilepath());
             case PICK_OBJECT_CARD:
                 return pickObjectCardHandler((ObjectCardRequest) receivedMessage);
             case REORDER_LIMBO_REQUEST:
@@ -374,7 +374,7 @@ public class ControllerGame implements TimerRunListener, Serializable {
         List<Player> players = game.getPlayers();
 
         for (Player player : players) {
-            server.sendMessage(player.getName(), new GameStartMessage(game.getCurrentPlayer().getName(), game.getCommonGoals(), player.getName()));
+            server.sendMessage(player.getName(), new GameStartMessage(game.getCurrentPlayer().getName(), game.getCommonGoals(), player.getName(), server.getFilepath()));
         }
 //        server.sendMessageToAll(new GameStartMessage(game.getCurrentPlayer().getName(), game.getCommonGoals(), player.getName()));
     }
@@ -388,7 +388,7 @@ public class ControllerGame implements TimerRunListener, Serializable {
         List<Player> players = game.getPlayers();
 
         for (Player player : players) {
-            server.sendMessage(player.getName(), new GameStateResponse(player.getName(), game.getCurrentPlayer().getName()));
+            server.sendMessage(player.getName(), new GameStateResponse(player.getName(), game.getCurrentPlayer().getName(), server.getFilepath()));
         }
     }
 
@@ -399,7 +399,7 @@ public class ControllerGame implements TimerRunListener, Serializable {
         List<Player> players = game.getPlayers();
 
         for (Player player : players) {
-            server.sendMessage(player.getName(), new EndGameMessage(player.getName()));
+            server.sendMessage(player.getName(), new EndGameMessage(player.getName(), server.getFilepath()));
             synchronized (server.getClientsLock()) {
                 server.getClients().remove(player.getName());
                 server.getPlayersGame().remove(player.getName());
@@ -458,7 +458,7 @@ public class ControllerGame implements TimerRunListener, Serializable {
 
         if (game.getBoard().getGrid().size() == 0) return true;
 
-        for (int i = 1; i < boardMatrix.length / 2 - 1; i++) {
+        for (int i = 1; i < boardMatrix.length / 2 ; i++) {
             for (int j = 1; j < boardMatrix[i].length - 1; j++) {
                 if (b.get(new Coordinate(4 - i, j - 4)) != null) {
                     if (boardMatrix[i + 1][j] == 1 && b.get(new Coordinate(4 - i + 1, j - 4)) != null) {
@@ -851,7 +851,7 @@ public class ControllerGame implements TimerRunListener, Serializable {
         }
 //        return new GameStateResponse(reconnectingPlayerName, turnController.getActivePlayer().getName());
 //        return new GameStateResponse(reconnectingPlayerName, game.getCurrentPlayer().getName());
-        server.sendMessage(reconnectingPlayerName, new GameStateResponse(reconnectingPlayerName, game.getCurrentPlayer().getName()));
+        server.sendMessage(reconnectingPlayerName, new GameStateResponse(reconnectingPlayerName, game.getCurrentPlayer().getName(), server.getFilepath()));
         return new ReconnectionRequest("Reconnection request", receivedConnectionMessage.getToken());
     }
 

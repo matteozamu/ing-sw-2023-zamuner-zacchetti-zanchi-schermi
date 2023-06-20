@@ -12,9 +12,9 @@ public class EndGameMessage extends Message {
 
     private final GameSerialized gameSerialized;
 
-    public EndGameMessage(String username) {
+    public EndGameMessage(String username, String filepath) {
         super("serverUser", null, MessageContent.GAME_ENDED);
-        this.gameSerialized = new GameSerialized(username);
+        this.gameSerialized = new GameSerialized(username, filepath);
     }
 
     public GameSerialized getGameSerialized() {

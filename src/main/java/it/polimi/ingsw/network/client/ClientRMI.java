@@ -12,7 +12,7 @@ import java.util.Objects;
 import java.util.Timer;
 
 /**
- * This class represents a RMI Client
+ * This class represents an RMI Client
  */
 public class ClientRMI extends Client implements RMIClientConnection {
     private static final long serialVersionUID = -6701767031892802332L;
@@ -34,7 +34,7 @@ public class ClientRMI extends Client implements RMIClientConnection {
      * Starts a connection with server
      *
      * @throws IOException       in case of problems with communication with server
-     * @throws NotBoundException when the registry doesn't exists
+     * @throws NotBoundException when the registry doesn't exist
      */
     @Override
     public void startConnection() throws IOException, NotBoundException {

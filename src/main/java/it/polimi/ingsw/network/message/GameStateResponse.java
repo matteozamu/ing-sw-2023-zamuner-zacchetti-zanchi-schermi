@@ -12,9 +12,9 @@ public class GameStateResponse extends Message {
     private final GameSerialized gameSerialized;
     private final String turnOwner;
 
-    public GameStateResponse(String username, String turnOwner) {
+    public GameStateResponse(String username, String turnOwner, String filepath) {
         super("serverUser", null, MessageContent.GAME_STATE);
-        this.gameSerialized = new GameSerialized(username);
+        this.gameSerialized = new GameSerialized(username, filepath);
         this.turnOwner = turnOwner;
     }
 

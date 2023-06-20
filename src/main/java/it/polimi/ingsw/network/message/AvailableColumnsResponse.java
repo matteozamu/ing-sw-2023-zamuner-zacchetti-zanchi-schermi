@@ -13,9 +13,9 @@ public class AvailableColumnsResponse extends Message {
     private final List availableColumns;
     private final MessageStatus status;
 
-    public AvailableColumnsResponse(String username, MessageStatus status, List<Integer> availableColumns) {
+    public AvailableColumnsResponse(String username, MessageStatus status, List<Integer> availableColumns, String filepath) {
         super("serverUser", null, MessageContent.AVAILABLE_COLUMNS_RESPONSE);
-        this.gameSerialized = new GameSerialized(username);
+        this.gameSerialized = new GameSerialized(username, filepath);
         this.status = status;
         this.availableColumns = availableColumns;
     }
