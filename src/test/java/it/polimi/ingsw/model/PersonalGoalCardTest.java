@@ -9,7 +9,7 @@ import static org.junit.jupiter.api.Assertions.*;
 class PersonalGoalCardTest {
 
     @Test
-    public void testCalculatePoints() {
+    public void testCalxculatePoints() {
         PersonalGoalCard card = new PersonalGoalCard(new ArrayList<>(), "personalGoalCard-1");
         card.setTargetsReached(1);
         assertEquals(1, card.calculatePoints());

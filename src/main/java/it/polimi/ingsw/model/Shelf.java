@@ -96,9 +96,9 @@ public class Shelf implements Serializable {
                 }
             }
             if (closeCards == 3) points += 2;
-            if (closeCards == 4) points += 3;
-            if (closeCards == 5) points += 5;
-            if (closeCards >= 6) points += 8;
+            else if (closeCards == 4) points += 3;
+            else if (closeCards == 5) points += 5;
+            else if (closeCards >= 6) points += 8;
         }
 
         return points;
