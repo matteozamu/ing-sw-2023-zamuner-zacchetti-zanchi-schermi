@@ -327,17 +327,17 @@ public class GameSceneController {
         shelvesGridPane = new ArrayList<>();
         shelvesStackPane = List.of(shelfStackPane2, shelfStackPane3, shelfStackPane4);
 
-        arrowShelf0.setMouseTransparent(true);
-        arrowShelf1.setMouseTransparent(true);
-        arrowShelf2.setMouseTransparent(true);
-        arrowShelf3.setMouseTransparent(true);
-        arrowShelf4.setMouseTransparent(true);
-        boardGridPane.setMouseTransparent(true);
-        //impostare il limbo con la scritta LIMBO
-        myStackPane.setMouseTransparent(true);
-        shelfStackPane2.setMouseTransparent(true);
-        shelfStackPane3.setMouseTransparent(true);
-        shelfStackPane4.setMouseTransparent(true);
+//        arrowShelf0.setMouseTransparent(true);
+//        arrowShelf1.setMouseTransparent(true);
+//        arrowShelf2.setMouseTransparent(true);
+//        arrowShelf3.setMouseTransparent(true);
+//        arrowShelf4.setMouseTransparent(true);
+//        boardGridPane.setMouseTransparent(true);
+//        //impostare il limbo con la scritta LIMBO
+//        myStackPane.setMouseTransparent(true);
+//        shelfStackPane2.setMouseTransparent(true);
+//        shelfStackPane3.setMouseTransparent(true);
+//        shelfStackPane4.setMouseTransparent(true);
 
         loadObjectCards();
         loadCommonGoalCards();
