@@ -67,7 +67,11 @@ public class Coordinate implements Serializable {
 
     @Override
     public int hashCode() {
-        return Objects.hash(row, column);
+        final int prime = 31;
+        int result = 1;
+        result = prime * result + column;
+        result = prime * result + row;
+        return result;
     }
 
     @Override

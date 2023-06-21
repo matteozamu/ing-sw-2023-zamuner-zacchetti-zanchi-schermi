@@ -162,17 +162,75 @@ public class ControllerGame implements TimerRunListener, Serializable {
      * @return the response to the message
      */
     private Response reorderLimboHandler(ReorderLimboRequest reorderLimboRequest) {
-        List<ObjectCard> limboOrder = reorderLimboRequest.getLimboOrder();
+        ArrayList<Integer> newLimboOrder = reorderLimboRequest.getLimboOrder();
+        List<Coordinate> limboCoordinates;
 
-        if (reorderLimboRequest.getContent() == MessageContent.REORDER_LIMBO_REQUEST && limboOrder.size() == game.getLimbo().size()) {
+        if (reorderLimboRequest.getContent() == MessageContent.REORDER_LIMBO_REQUEST && newLimboOrder.size() == game.getLimbo().size()) {
             Server.LOGGER.log(Level.INFO, "Reordering limbo for player: {0}", reorderLimboRequest.getSenderUsername());
-            game.setLimboOrder(limboOrder);
 
+            System.out.println(game.getLimbo());
+            limboCoordinates = getKeysAsArrayList(game.getLimbo());
+System.out.println(limboCoordinates);
+            reorderList(limboCoordinates, newLimboOrder);
+System.out.println(limboCoordinates);
+            game.setLimbo(reorderMap(game.getLimbo(), limboCoordinates));
+System.out.println(game.getLimbo());
             return new Response("Limbo reordered", MessageStatus.PRINT_LIMBO);
         } else {
             System.out.println("Limbo order is not valid");
             return buildInvalidResponse();
         }
+    }
+
+    /**
+     * Method used to get the keys of a map as an ArrayList
+     * @param map is the map
+     * @return the ArrayList of the keys of the map
+     */
+    private static ArrayList<Coordinate> getKeysAsArrayList(Map<Coordinate, ObjectCard> map) {
+        ArrayList<Coordinate> keys = new ArrayList<>();
+        for (Map.Entry<Coordinate, ObjectCard> entry : map.entrySet()) {
+            keys.add(entry.getKey());
+        }
+        return keys;
+    }
+
+    /**
+     * Method used to reorder a list
+     * @param list1 is the list to reorder
+     * @param list2 is the list with the new order
+     */
+    private static void reorderList(List<Coordinate> list1, List<Integer> list2) {
+        List<Coordinate> tempList = new ArrayList<>(list1);
+
+        for (int i = 0; i < list2.size(); i++) {
+            int index = list2.get(i);
+            if (index >= 0 && index < tempList.size()) {
+                Coordinate element = tempList.get(index);
+                list1.set(i, element);
+            }
+        }
+    }
+
+    /**
+     * Method use to
+     * @param map is the map to reorder
+     * @param order is the list with the new order
+     * @return the reordered map
+     */
+    public static Map<Coordinate, ObjectCard> reorderMap(Map<Coordinate, ObjectCard> map, List<Coordinate> order) {
+        Map<Coordinate, ObjectCard> orderedMap = new HashMap<>();
+
+        for (Coordinate coordinate : order) {
+            if (map.containsKey(coordinate)) {
+                // if the original map contains the coordinate, put it in the new map
+                ObjectCard objectCard = map.get(coordinate);
+                System.out.println(orderedMap);
+                orderedMap.put(coordinate, objectCard);
+            }
+        }
+        System.out.println(orderedMap);
+        return orderedMap;
     }
 
     /**

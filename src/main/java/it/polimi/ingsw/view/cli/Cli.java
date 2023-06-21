@@ -12,9 +12,7 @@ import it.polimi.ingsw.utility.MessageBuilder;
 import it.polimi.ingsw.utility.ServerAddressValidator;
 
 import java.io.PrintStream;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Scanner;
+import java.util.*;
 import java.util.stream.Collectors;
 
 public class Cli extends ClientGameManager implements DisconnectionListener {
@@ -659,16 +657,21 @@ public class Cli extends ClientGameManager implements DisconnectionListener {
      */
     @Override
     public void reorderLimbo() {
-        List<ObjectCard> limbo = getGameSerialized().getAllLimboCards();
-        List<ObjectCard> newLimbo = new ArrayList<>();
+        // TODO finire riordino limbo
+//        Map<Coordinate, ObjectCard> limbo = getGameSerialized().getLimbo();
+//        List<ObjectCard> limbo = getGameSerialized().getAllLimboCards();
+        List<Coordinate> limboCoordinates;
         int choose;
         boolean accepted = false;
 
         out.println("Choose the order of the cards in the limbo:");
+        ArrayList<Integer> limboOrder = readLimboInput();
 
+        /*
         for (int i = 0; i < limbo.size(); i++) {
             out.println("\t" + (i) + " - " + limbo.get(i));
         }
+
 
         do {
             choose = readInt(0, limbo.size() - 1);
@@ -680,11 +683,33 @@ public class Cli extends ClientGameManager implements DisconnectionListener {
             }
 //            limbo.remove(choose);
             if (newLimbo.size() == limbo.size()) accepted = true;
-        } while (!accepted);
+        } while (!accepted);*/
 
-        if (!sendRequest(MessageBuilder.buildReorderLimboRequest(getUsername(), getClientToken(), newLimbo))) {
+        if (!sendRequest(MessageBuilder.buildReorderLimboRequest(getUsername(), getClientToken(), limboOrder))) {
             promptError(SEND_ERROR, true);
         }
+    }
+
+    /**
+     * Method used to read the input for the reorderLimbo method
+     * @return the list of the index read
+     */
+    private static ArrayList<Integer> readLimboInput(){
+        ArrayList<Integer> numbers = new ArrayList<>();
+        Scanner scanner = new Scanner(System.in);
+        String input = scanner.nextLine();
+
+        String[] numberStrings = input.split(" ");
+        for (String numberString : numberStrings) {
+            try {
+                int number = Integer.parseInt(numberString);
+                numbers.add(number);
+            } catch (NumberFormatException e) {
+                System.out.println("Invalid number: " + numberString);
+            }
+        }
+
+        return numbers;
     }
 
     /**
