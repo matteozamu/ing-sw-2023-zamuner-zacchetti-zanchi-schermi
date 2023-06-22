@@ -5,10 +5,7 @@ import junit.framework.TestCase;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 class GameTest extends TestCase {
     private Game g;
@@ -54,7 +51,7 @@ class GameTest extends TestCase {
 
     @Test
     public void testSetLimbo() {
-        g.setLimbo(new HashMap<>());
+        g.setLimbo(new LinkedHashMap<>());
         assertNotNull(g.getLimbo());
     }
 
