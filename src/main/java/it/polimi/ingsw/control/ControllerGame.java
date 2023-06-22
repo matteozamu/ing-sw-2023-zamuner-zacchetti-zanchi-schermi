@@ -796,15 +796,18 @@ public class ControllerGame implements TimerRunListener, Serializable {
 
         points += this.game.getCurrentPlayer().getPersonalGoalCard().calculatePoints();
 
+        System.out.println("PUNTI PERSONALI: " + points);
         for (CommonGoal c : this.game.getCommonGoals()) {
+            System.out.println("cg: " + c.getDescription());
             if (c.checkGoal(this.game.getCurrentPlayer().getShelf())){
                 points += c.updateCurrentPoints(this.game.getPlayers().size());
 //                System.out.println("+ 8 PUNTI");
             }
-
         }
+        System.out.println("PUNTI COMUNI: " + points);
 
         points += this.game.getCurrentPlayer().getShelf().closeObjectCardsPoints();
+        System.out.println("PUNTI OGGETTI: " + points);
 
         if (this.game.getCurrentPlayer().getShelf().isFull()) points++;
 

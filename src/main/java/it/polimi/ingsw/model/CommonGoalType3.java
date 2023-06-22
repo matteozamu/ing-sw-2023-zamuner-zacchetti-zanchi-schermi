@@ -66,23 +66,18 @@ public final class CommonGoalType3 extends CommonGoal {
         Map<Coordinate, ObjectCard> grid = shelf.getGrid();
         Set<ObjectCardType> cornerTypes = new HashSet<>();
 
-        ObjectCard topLeft = grid.get(new Coordinate(0, 0));
-        ObjectCard topRight = grid.get(new Coordinate(0, 4));
-        ObjectCard bottomLeft = grid.get(new Coordinate(5, 0));
-        ObjectCard bottomRight = grid.get(new Coordinate(5, 4));
+        ObjectCard bottomLeft = grid.get(new Coordinate(0, 0));
+        ObjectCard bottomRight = grid.get(new Coordinate(0, 4));
+        ObjectCard topLeft = grid.get(new Coordinate(5, 0));
+        ObjectCard topRight = grid.get(new Coordinate(5, 4));
 
-        if (topLeft != null) {
+        if (topLeft != null && topRight != null && bottomLeft != null && bottomRight != null) {
             cornerTypes.add(topLeft.getType());
-        }
-        if (topRight != null) {
             cornerTypes.add(topRight.getType());
-        }
-        if (bottomLeft != null) {
             cornerTypes.add(bottomLeft.getType());
-        }
-        if (bottomRight != null) {
             cornerTypes.add(bottomRight.getType());
         }
+
 
         return cornerTypes.size() == 1;
     }
