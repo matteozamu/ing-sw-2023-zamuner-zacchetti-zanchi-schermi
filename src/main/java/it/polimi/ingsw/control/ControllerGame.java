@@ -163,18 +163,16 @@ public class ControllerGame implements TimerRunListener, Serializable {
      */
     private Response reorderLimboHandler(ReorderLimboRequest reorderLimboRequest) {
         ArrayList<Integer> newLimboOrder = reorderLimboRequest.getLimboOrder();
-        List<Coordinate> limboCoordinates;
+        ArrayList<Coordinate> limboCoordinates;
 
         if (reorderLimboRequest.getContent() == MessageContent.REORDER_LIMBO_REQUEST && newLimboOrder.size() == game.getLimbo().size()) {
             Server.LOGGER.log(Level.INFO, "Reordering limbo for player: {0}", reorderLimboRequest.getSenderUsername());
 
-            System.out.println(game.getLimbo());
             limboCoordinates = getKeysAsArrayList(game.getLimbo());
-System.out.println(limboCoordinates);
             reorderList(limboCoordinates, newLimboOrder);
-System.out.println(limboCoordinates);
-            game.setLimbo(reorderMap(game.getLimbo(), limboCoordinates));
-System.out.println(game.getLimbo());
+            Map<Coordinate, ObjectCard> newLimbo = reorderMap(game.getLimbo(), limboCoordinates);
+            game.setLimbo(newLimbo);
+            //TODO si puo mandare un altro game state message cosi il limbo viene aggiornato amche lato client
             return new Response("Limbo reordered", MessageStatus.PRINT_LIMBO);
         } else {
             System.out.println("Limbo order is not valid");
@@ -219,17 +217,17 @@ System.out.println(game.getLimbo());
      * @return the reordered map
      */
     public static Map<Coordinate, ObjectCard> reorderMap(Map<Coordinate, ObjectCard> map, List<Coordinate> order) {
-        Map<Coordinate, ObjectCard> orderedMap = new HashMap<>();
+        LinkedHashMap<Coordinate, ObjectCard> orderedMap = new LinkedHashMap<>();
 
         for (Coordinate coordinate : order) {
             if (map.containsKey(coordinate)) {
                 // if the original map contains the coordinate, put it in the new map
                 ObjectCard objectCard = map.get(coordinate);
-                System.out.println(orderedMap);
+//                System.out.println(orderedMap);
                 orderedMap.put(coordinate, objectCard);
             }
         }
-        System.out.println(orderedMap);
+        System.out.println("ordered map " + orderedMap);
         return orderedMap;
     }
 
