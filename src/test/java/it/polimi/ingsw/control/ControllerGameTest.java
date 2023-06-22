@@ -369,6 +369,7 @@ public void printBoard(Board board) {
 //        goals.add(new PersonalGoal(3, 6, ObjectCardType.randomObjectCardType()));
         cg.getGame().loadPersonalGoaldCards();
         PersonalGoalCard pgc = cg.getGame().getRandomAvailablePersonalGoalCard();
+        System.out.println(pgc);
         this.pg = pgc;
         this.shelf = new Shelf();
 
