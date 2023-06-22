@@ -124,7 +124,7 @@
                     </HBox>
                 </ScrollPane>
 
-                <FlowPane fx:id="actionListFlowPane" maxHeight="140.0" maxWidth="400.0" minHeight="140.0" minWidth="400.0" prefHeight="140.0" prefWidth="400.0" styleClass="actionList" translateY="86.0">
+                <StackPane fx:id="actionListStackPane" maxHeight="70.0" maxWidth="400.0" minHeight="70.0" minWidth="400.0" prefHeight="70.0" prefWidth="400.0" styleClass="actionList" translateY="86.0">
                     <!--                    <StackPane.margin>-->
                     <!--                        <Insets bottom="20.0" left="20.0"/>-->
                     <!--                    </StackPane.margin>-->
@@ -133,7 +133,7 @@
                     <!--                    <ImageView fx:id="prova2" id="loadShelf" fitHeight="70.0" fitWidth="190.0" pickOnBounds="true" preserveRatio="true" styleClass="button" />-->
                     <!--                    <ImageView fx:id="prova3" id="loadShelf" fitHeight="70.0" fitWidth="190.0" pickOnBounds="true" preserveRatio="true" styleClass="button" />-->
                     <!--                    <ImageView fx:id="prova4" id="loadShelf" fitHeight="70.0" fitWidth="190.0" pickOnBounds="true" preserveRatio="true" styleClass="button" />-->
-                </FlowPane>
+                </StackPane>
 
             </VBox>
 

@@ -49,6 +49,8 @@ public class GameSceneController {
     private static final double LIMBO_OBJECT_CARD_WIDTH = 75.0;
     private static final double LIMBO_OBJECT_CARD_HEIGHT = 75.0;
     private static final String SHELF_PATH = "/img/board_shelf/shelf_orth.png";
+    private static final double ACTION_BUTTON_WIDTH = 190.0;
+    private static final double ACTION_BUTTON_HEIGHT = 70.0;
 
     @FXML
     Pane mainPane;
@@ -83,7 +85,7 @@ public class GameSceneController {
     @FXML
     StackPane shelfStackPane4;
     @FXML
-    FlowPane actionListFlowPane;
+    StackPane actionListStackPane;
     @FXML
     ImageView winnerTile;
     @FXML
@@ -125,6 +127,7 @@ public class GameSceneController {
     private Map<String, ImageView> personalGoalCards;
     private List<GridPane> shelvesGridPane;
     private List<StackPane> shelvesStackPane;
+    private ArrayList<Integer> orderLimboObjectCards;
     private boolean flagFirstSetBoard = false;
 
     @FXML
@@ -138,6 +141,7 @@ public class GameSceneController {
         commonGoalCards = new HashMap<>();
         personalGoalCards = new HashMap<>();
         shelvesGridPane = new ArrayList<>();
+        orderLimboObjectCards = new ArrayList<>();
         shelvesStackPane = List.of(shelfStackPane2, shelfStackPane3, shelfStackPane4);
 
 //        arrowShelf0.setMouseTransparent(true);
@@ -496,7 +500,8 @@ public class GameSceneController {
         limboHBoxArea.getChildren().clear();
 
         if (!limboCards.isEmpty()) {
-            for (ObjectCard objectCard : limboCards) {
+            for (int i = 0; i < limboCards.size(); i++) {
+                ObjectCard objectCard = limboCards.get(i);
                 if (objectCard != null) {
                     String cardTypeText = objectCard.getType().getText();
                     String cardNameType = cardTypeText + "-" + objectCard.getId();
@@ -507,13 +512,24 @@ public class GameSceneController {
                         imageView.setFitHeight(LIMBO_OBJECT_CARD_HEIGHT);
                         imageView.setPreserveRatio(true);
                         imageView.setPickOnBounds(true);
-                        imageView.setMouseTransparent(true);
+                        //imageView.setMouseTransparent(false);
 
                         limboHBoxArea.getChildren().add(imageView);
+
+                        int finalI = i;
+                        imageView.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> onObjectCardInLimboClick(finalI, limboCards));
                     }
                 }
 
             }
+        }
+    }
+
+    private void onObjectCardInLimboClick(int index, List<ObjectCard> limboCards) {
+        orderLimboObjectCards.add(index);
+
+        if(orderLimboObjectCards.size() == limboCards.size()) {
+            onReorderLimboRequest(orderLimboObjectCards);
         }
     }
 
@@ -707,6 +723,7 @@ public class GameSceneController {
 
     // per impedire che un giocatore non di turno possa compiere azioni
     void notYourTurn(String turnOwner) {
+        actionListStackPane.getChildren().clear();
         arrowShelf0.setMouseTransparent(true);
         arrowShelf1.setMouseTransparent(true);
         arrowShelf2.setMouseTransparent(true);
@@ -718,6 +735,7 @@ public class GameSceneController {
         shelfStackPane2.setMouseTransparent(true);
         shelfStackPane3.setMouseTransparent(true);
         shelfStackPane4.setMouseTransparent(true);
+        limboHBoxArea.setMouseTransparent(true);
     }
 
     /**
@@ -728,6 +746,7 @@ public class GameSceneController {
     void displayAction(List<PossibleAction> possibleActions) {
         boolean isBoardPickCardActionPresent = false;
         boolean isLoadShelfActionPresent = false;
+        boolean isReorderLimboActionPresent = false;
 
         for (PossibleAction possibleAction : possibleActions) {
             String actionID = getActionIDFromPossibleAction(possibleAction);
@@ -740,6 +759,10 @@ public class GameSceneController {
                 case "loadShelf":
                     setShelfArrowsAvailability(false);
                     isLoadShelfActionPresent = true;
+                    break;
+                case "reorderLimbo":
+                    setLimboAvailability(false);
+                    isReorderLimboActionPresent = true;
                     break;
                 default:
                     break;
@@ -754,18 +777,23 @@ public class GameSceneController {
             setShelfArrowsAvailability(true);
         }
 
-//        actionListFlowPane.getChildren().clear();
-//
-//        for (PossibleAction possibleAction : possibleActions) {
-//            ImageView imageView = new ImageView();
-//            imageView.setId(getActionIDFromPossibleAction(possibleAction));
-//            imageView.setFitHeight(ACTION_BUTTON_HEIGHT);
-//            imageView.setFitWidth(ACTION_BUTTON_WIDTH);
-//            imageView.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> guiManager.doAction(possibleAction));
-//            imageView.getStyleClass().add(CSS_BUTTON);
-//
-//            actionListFlowPane.getChildren().add(imageView);
-//        }
+        if (!isReorderLimboActionPresent) {
+            setLimboAvailability(true);
+        }
+
+        actionListStackPane.getChildren().clear();
+        for (PossibleAction possibleAction : possibleActions) {
+            if(possibleAction.equals(PossibleAction.DELETE_LIMBO)) {
+                ImageView imageView = new ImageView();
+                imageView.setId(getActionIDFromPossibleAction(possibleAction));
+                imageView.setFitHeight(ACTION_BUTTON_HEIGHT);
+                imageView.setFitWidth(ACTION_BUTTON_WIDTH);
+                imageView.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> guiManager.doAction(possibleAction));
+                imageView.getStyleClass().add(CSS_BUTTON);
+
+                actionListStackPane.getChildren().add(imageView);
+            }
+        }
     }
 
     /**
@@ -800,29 +828,19 @@ public class GameSceneController {
         }
     }
 
-    /**
-     * Handles the pass turn
-     */
-    //TODO: non c'è buildPassTurnRequest in MessageBuilder? Forse non serve
-    void passTurn() {
-//        if (!guiManager.sendRequest(MessageBuilder.buildPassTurnRequest(guiManager.getClientToken(), guiManager.getPlayer()))) {
-//            GuiManager.showDialog((Stage) mainPane.getScene().getWindow(), GuiManager.ERROR_DIALOG_TITLE, GuiManager.SEND_ERROR);
-//        }
+    private void onReorderLimboRequest(ArrayList limboOrder) {
+        if (!guiManager.sendRequest(MessageBuilder.buildReorderLimboRequest(guiManager.getUsername(), guiManager.getClientToken(), limboOrder))) {
+            GuiManager.showDialog((Stage) mainPane.getScene().getWindow(), GuiManager.ERROR_DIALOG_TITLE,
+                    GuiManager.SEND_ERROR);
+        }
     }
 
-    //TODO: Può servire per selezionare le objectcards dalla board
-//    private void sendPickRequest(final PlayerPosition pickPosition, final WeaponCard weaponCard, final ArrayList<Integer> paymentPowerups, final WeaponCard discardingWeapon) {
-//        hideActionPanel();
-//
-//        try {
-//            if (!guiManager.sendRequest(MessageBuilder.buildMovePickRequest(guiManager.getClientToken(), guiManager.getPlayer(), pickPosition, paymentPowerups, weaponCard, discardingWeapon))) {
-//                GuiManager.showDialog((Stage) mainPane.getScene().getWindow(), GuiManager.ERROR_DIALOG_TITLE, GuiManager.SEND_ERROR);
-//            }
-//        } catch (
-//                PowerupCardsNotFoundException e) {
-//            GuiManager.showDialog((Stage) mainPane.getScene().getWindow(), GuiManager.ERROR_DIALOG_TITLE, e.getMessage());
-//        }
-//    }
+    void deleteLimbo() {
+        if (!guiManager.sendRequest(MessageBuilder.buildDeleteLimboRequest(guiManager.getUsername(), guiManager.getClientToken()))) {
+            GuiManager.showDialog((Stage) mainPane.getScene().getWindow(), GuiManager.ERROR_DIALOG_TITLE,
+                    GuiManager.SEND_ERROR);
+        }
+    }
 
     private void setObjectsCardAvailability(boolean isAvailable) {
         boardGridPane.setMouseTransparent(isAvailable);
@@ -834,6 +852,10 @@ public class GameSceneController {
         arrowShelf2.setMouseTransparent(isAvailable);
         arrowShelf3.setMouseTransparent(isAvailable);
         arrowShelf4.setMouseTransparent(isAvailable);
+    }
+
+    private void setLimboAvailability(boolean isAvailable) {
+        limboHBoxArea.setMouseTransparent(isAvailable);
     }
 
     /**
