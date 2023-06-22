@@ -2,11 +2,9 @@ package it.polimi.ingsw.view.gui;
 
 import it.polimi.ingsw.enumeration.PossibleAction;
 import it.polimi.ingsw.model.*;
-import it.polimi.ingsw.utility.JsonReader;
 import it.polimi.ingsw.utility.MessageBuilder;
 import javafx.collections.ObservableList;
 import javafx.event.Event;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
