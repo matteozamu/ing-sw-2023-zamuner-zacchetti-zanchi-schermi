@@ -48,9 +48,6 @@ public class GameSceneController {
     private static final double SHELF_HEIGHT = 400.0;
     private static final double LIMBO_OBJECT_CARD_WIDTH = 75.0;
     private static final double LIMBO_OBJECT_CARD_HEIGHT = 75.0;
-    private static final double ACTION_BUTTON_WIDTH = 190.0;
-    private static final double ACTION_BUTTON_HEIGHT = 70.0;
-
     private static final String SHELF_PATH = "/img/board_shelf/shelf_orth.png";
 
     @FXML
@@ -88,59 +85,17 @@ public class GameSceneController {
     @FXML
     FlowPane actionListFlowPane;
     @FXML
-    ImageView prova;
-    @FXML
-    ImageView prova2;
-    @FXML
-    ImageView prova3;
-    @FXML
-    ImageView prova4;
-    @FXML
     ImageView winnerTile;
     @FXML
     ImageView pointsTile;
-    @FXML
-    ImageView chair;
-    @FXML
-    ImageView shelf1;
-    @FXML
-    ImageView shelf2;
-    @FXML
-    ImageView shelf3;
-    @FXML
-    ImageView shelf4;
-    @FXML
-    HBox shelfHBoxImages;
-    @FXML
-    Label shelfLabel1;
-    @FXML
-    Label shelfLabel2;
-    @FXML
-    Label shelfLabel3;
-    @FXML
-    Label shelfLabel4;
-    @FXML
-    GridPane shelf1GridPane;
-    @FXML
-    GridPane shelf2GridPane;
-    @FXML
-    GridPane shelf3GridPane;
-    @FXML
-    GridPane shelf4GridPane;
     @FXML
     HBox limboHBoxArea;
     @FXML
     StackPane personalGoalCardPane;
     @FXML
-    Label pointLabel;
-    @FXML
-    VBox usernameList;
-    @FXML
     FlowPane zoomPanel;
     @FXML
     BorderPane infoPanel;
-    @FXML
-    Pane playersInfoPaneArea;
     @FXML
     BorderPane actionPanel;
     @FXML
@@ -162,149 +117,7 @@ public class GameSceneController {
     @FXML
     ImageView scoring82;
     @FXML
-    ImageView scoring83;
-    @FXML
     ImageView endGameTokenImage;
-    @FXML
-    Label namePlayer1;
-    @FXML
-    Label namePlayer2;
-    @FXML
-    Label namePlayer3;
-    @FXML
-    Label namePlayer4;
-    @FXML
-    Label pointsPlayer1;
-    @FXML
-    Label pointsPlayer2;
-    @FXML
-    Label pointsPlayer3;
-    @FXML
-    Label pointsPlayer4;
-    @FXML
-    ImageView cat1;
-    @FXML
-    ImageView book1;
-    @FXML
-    ImageView book2;
-    @FXML
-    ImageView book3;
-    @FXML
-    ImageView book4;
-    @FXML
-    ImageView book5;
-    @FXML
-    ImageView book6;
-    @FXML
-    ImageView book7;
-    @FXML
-    ImageView book8;
-    @FXML
-    ImageView book9;
-    @FXML
-    ImageView book10;
-    @FXML
-    ImageView book11;
-    @FXML
-    ImageView book12;
-    @FXML
-    ImageView book13;
-    @FXML
-    ImageView book14;
-    @FXML
-    ImageView book15;
-    @FXML
-    ImageView book16;
-    @FXML
-    ImageView book17;
-    @FXML
-    ImageView book18;
-    @FXML
-    ImageView book19;
-    @FXML
-    ImageView book20;
-    @FXML
-    ImageView book21;
-    @FXML
-    ImageView book22;
-    @FXML
-    ImageView book23;
-    @FXML
-    ImageView book24;
-    @FXML
-    ImageView book25;
-    @FXML
-    ImageView book26;
-    @FXML
-    ImageView book27;
-    @FXML
-    ImageView book28;
-    @FXML
-    ImageView book29;
-    @FXML
-    ImageView book30;
-    @FXML
-    ImageView book31;
-    @FXML
-    ImageView book32;
-    @FXML
-    ImageView book33;
-    @FXML
-    ImageView book34;
-    @FXML
-    ImageView game1;
-    @FXML
-    ImageView game2;
-    @FXML
-    ImageView game3;
-    @FXML
-    ImageView game4;
-    @FXML
-    ImageView game5;
-    @FXML
-    ImageView game6;
-    @FXML
-    ImageView plant1;
-    @FXML
-    ImageView plant2;
-    @FXML
-    ImageView plant3;
-    @FXML
-    ImageView plant4;
-    @FXML
-    ImageView plant5;
-    @FXML
-    ImageView trophy1;
-    @FXML
-    ImageView trophy2;
-    @FXML
-    ImageView trophy3;
-    @FXML
-    ImageView trophy4;
-    @FXML
-    ImageView trophy5;
-    @FXML
-    ImageView trophy6;
-    @FXML
-    ImageView cat2;
-    @FXML
-    ImageView cat3;
-    @FXML
-    ImageView cat4;
-    @FXML
-    ImageView cat5;
-    @FXML
-    ImageView cat6;
-    @FXML
-    ImageView frame1;
-    @FXML
-    ImageView frame2;
-    @FXML
-    ImageView frame3;
-    @FXML
-    ImageView frame4;
-    @FXML
-    ImageView frame5;
 
     private GuiManager guiManager;
     private Map<String, ImageView> objectCards;
@@ -913,20 +726,34 @@ public class GameSceneController {
      * @param possibleActions possible actions
      */
     void displayAction(List<PossibleAction> possibleActions) {
+        boolean isBoardPickCardActionPresent = false;
+        boolean isLoadShelfActionPresent = false;
+
         for (PossibleAction possibleAction : possibleActions) {
             String actionID = getActionIDFromPossibleAction(possibleAction);
 
             switch (actionID) {
                 case "boardPickCard":
-                    setObjectCardsAvailable();
+                    setObjectsCardAvailability(false);
+                    isBoardPickCardActionPresent = true;
                     break;
                 case "loadShelf":
-                    setShelfArrowsAvailable();
+                    setShelfArrowsAvailability(false);
+                    isLoadShelfActionPresent = true;
                     break;
                 default:
                     break;
             }
         }
+
+        if (!isBoardPickCardActionPresent) {
+            setObjectsCardAvailability(true);
+        }
+
+        if (!isLoadShelfActionPresent) {
+            setShelfArrowsAvailability(true);
+        }
+
 //        actionListFlowPane.getChildren().clear();
 //
 //        for (PossibleAction possibleAction : possibleActions) {
@@ -997,21 +824,16 @@ public class GameSceneController {
 //        }
 //    }
 
-    private void setObjectCardsAvailable() {
-        boardGridPane.setMouseTransparent(false);
+    private void setObjectsCardAvailability(boolean isAvailable) {
+        boardGridPane.setMouseTransparent(isAvailable);
     }
 
-    private void setShelfArrowsAvailable() {
-        arrowShelf0.setMouseTransparent(false);
-        arrowShelf1.setMouseTransparent(false);
-        arrowShelf2.setMouseTransparent(false);
-        arrowShelf3.setMouseTransparent(false);
-        arrowShelf4.setMouseTransparent(false);
-    }
-
-    void notValidCard(String error) {
-        GuiManager.showDialog((Stage) mainPane.getScene().getWindow(), GuiManager.ERROR_DIALOG_TITLE,
-                "The card chosen is not valid");
+    private void setShelfArrowsAvailability(boolean isAvailable) {
+        arrowShelf0.setMouseTransparent(isAvailable);
+        arrowShelf1.setMouseTransparent(isAvailable);
+        arrowShelf2.setMouseTransparent(isAvailable);
+        arrowShelf3.setMouseTransparent(isAvailable);
+        arrowShelf4.setMouseTransparent(isAvailable);
     }
 
     /**
