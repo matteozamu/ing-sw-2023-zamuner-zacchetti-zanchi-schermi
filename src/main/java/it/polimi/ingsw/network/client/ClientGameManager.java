@@ -196,7 +196,6 @@ public abstract class ClientGameManager implements ClientGameManagerListener, Cl
      *
      * @param gameStateMessage game state update received
      */
-    // il game state lo mandiamo all'inizio di ogni turno? o anche durante le fasi di game in un turno?
     private void handleGameStateResponse(GameStateResponse gameStateMessage) {
         synchronized (gameSerializedLock) {
             gameSerialized = gameStateMessage.getGameSerialized();

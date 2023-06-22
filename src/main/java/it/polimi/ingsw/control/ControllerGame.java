@@ -170,8 +170,9 @@ public class ControllerGame implements TimerRunListener, Serializable {
 
             limboCoordinates = getKeysAsArrayList(game.getLimbo());
             reorderList(limboCoordinates, newLimboOrder);
-            Map<Coordinate, ObjectCard> newLimbo = reorderMap(game.getLimbo(), limboCoordinates);
+            LinkedHashMap<Coordinate, ObjectCard> newLimbo = reorderMap(game.getLimbo(), limboCoordinates);
             game.setLimbo(newLimbo);
+            server.sendMessage(reorderLimboRequest.getSenderUsername(), new GameStateResponse(reorderLimboRequest.getSenderUsername(), game.getCurrentPlayer().getName(), server.getFilepath()));
             //TODO si puo mandare un altro game state message cosi il limbo viene aggiornato amche lato client
             return new Response("Limbo reordered", MessageStatus.PRINT_LIMBO);
         } else {
@@ -216,7 +217,7 @@ public class ControllerGame implements TimerRunListener, Serializable {
      * @param order is the list with the new order
      * @return the reordered map
      */
-    public static Map<Coordinate, ObjectCard> reorderMap(Map<Coordinate, ObjectCard> map, List<Coordinate> order) {
+    public static LinkedHashMap<Coordinate, ObjectCard> reorderMap(LinkedHashMap<Coordinate, ObjectCard> map, List<Coordinate> order) {
         LinkedHashMap<Coordinate, ObjectCard> orderedMap = new LinkedHashMap<>();
 
         for (Coordinate coordinate : order) {
@@ -244,8 +245,9 @@ public class ControllerGame implements TimerRunListener, Serializable {
         if (objectCardRequest.getContent() == MessageContent.PICK_OBJECT_CARD && c != null && isObjectCardAvailable(c)) {
             Server.LOGGER.log(Level.INFO, "Coordinate of the card: {0}", c);
             // TODO cambiare metodo con pick object card
-            this.getGame().getLimbo().put(c, this.getGame().getBoard().removeObjectCard(c));
 
+            this.getGame().getLimbo().put(c, this.getGame().getBoard().removeObjectCard(c));
+            System.out.println(this.getGame().getLimbo());
             sendPrivateUpdates();
             return new Response("Valid card!", MessageStatus.PRINT_LIMBO);
 //            return new ObjectCardResponse(objectCardRequest.getSenderUsername());
