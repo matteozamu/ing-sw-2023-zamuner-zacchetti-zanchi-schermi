@@ -101,6 +101,8 @@ public class GameSceneController {
     @FXML
     HBox commonGoalCardsHBoxArea;
     @FXML
+    HBox shelfHBoxImages;
+    @FXML
     AnchorPane columnArrowAnchorPane;
     @FXML
     ImageView arrowShelf0;
@@ -126,7 +128,7 @@ public class GameSceneController {
     private List<GridPane> shelvesGridPane;
     private List<StackPane> shelvesStackPane;
     private ArrayList<Integer> orderLimboObjectCards;
-    private boolean flagFirstSetBoard = false;
+    private Set<ImageView> imageViewsWithListener;
 
     @FXML
     private void initialize() {
@@ -140,6 +142,7 @@ public class GameSceneController {
         personalGoalCards = new HashMap<>();
         shelvesGridPane = new ArrayList<>();
         orderLimboObjectCards = new ArrayList<>();
+        imageViewsWithListener = new HashSet<>();
         shelvesStackPane = List.of(shelfStackPane2, shelfStackPane3, shelfStackPane4);
 
 //        arrowShelf0.setMouseTransparent(true);
@@ -275,8 +278,9 @@ public class GameSceneController {
                             int finalI = i;
                             int finalJ = j;
 
-                            if(!flagFirstSetBoard) {
+                            if (!imageViewsWithListener.contains(imageView)) {
                                 imageView.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> onObjectCardClick(4 - finalI, finalJ - 4));
+                                imageViewsWithListener.add(imageView);
                             }
                         }
                     }
@@ -317,8 +321,9 @@ public class GameSceneController {
                             int finalI = i;
                             int finalJ = j;
 
-                            if(!flagFirstSetBoard) {
+                            if (!imageViewsWithListener.contains(imageView)) {
                                 imageView.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> onObjectCardClick(4 - finalI, finalJ - 4));
+                                imageViewsWithListener.add(imageView);
                             }
                         }
                     }
@@ -336,7 +341,6 @@ public class GameSceneController {
                 }
             }
         }
-        flagFirstSetBoard = true;
     }
 
     private void updateShelfGrid(GameSerialized gameSerialized, GridPane shelfGrid, String shelfOwner) {
