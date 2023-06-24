@@ -36,6 +36,9 @@ public class MenuSceneController {
      * Handles the start button click
      */
     private void onStartButtonClick() {
+        startButton.setDisable(true);
+        exitButton.setDisable(true);
+
         GuiManager.setLayout(mainPane.getScene(), "fxml/connectionScene.fxml");
     }
 }

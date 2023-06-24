@@ -54,6 +54,9 @@ public class LobbySceneController {
      * Handles the back button click
      */
     private void onBackButtonClick() {
+        backButton.setDisable(true);
+        exitButton.setDisable(true);
+
         guiManager.closeConnection();
         GuiManager.setLayout(mainPane.getScene(), "fxml/connectionScene.fxml");
     }
@@ -62,10 +65,11 @@ public class LobbySceneController {
      * Handles the game start when the lobby is full
      */
     void onGameStart() {
+        exitButton.setDisable(true);
+        backButton.setDisable(true);
+
         GameSceneController gameSceneController =
                 GuiManager.setLayout(mainPane.getScene(), "fxml/gameScene.fxml");
-
-        //LOGGER.severe("GameSceneController: " + gameSceneController);
 
         if (gameSceneController != null) {
             gameSceneController.setupGame(guiManager.getGameSerialized());
@@ -76,16 +80,16 @@ public class LobbySceneController {
      * Updates the lobby list
      */
     void updateLobbyList() {
-        List<String> users = guiManager.getLobbyPlayers();
+        List<String> lobbyPlayers = guiManager.getLobbyPlayers();
         ObservableList<Node> childrens = lobbyLabelsBox.getChildren();
         childrens.clear();
 
-        for (String user : users) {
-            Label lbl = new Label();
-            lbl.setText(user);
-            lbl.getStyleClass().add("playerRow");
+        for (String lobbyPlayer : lobbyPlayers) {
+            Label label = new Label();
+            label.setText(lobbyPlayer);
+            label.getStyleClass().add("playerRow");
 
-            childrens.add(lbl);
+            childrens.add(label);
         }
     }
 

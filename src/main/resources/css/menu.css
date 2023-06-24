@@ -57,12 +57,14 @@
     -fx-font-family: "Berkshire Swash Regular";
     -fx-font-size: 50px;
     -fx-text-fill: #F1E1B2;
+    -fx-effect: dropshadow(three-pass-box, #796939, 1, 1.0, 0, 0);
 }
 
 .menuLabel {
     -fx-font-family: "Merriweather Regular";
     -fx-font-size: 25px;
     -fx-text-fill: #F1E1B2;
+    -fx-effect: dropshadow(three-pass-box, #796939, 1, 1.0, 0, 0);
 }
 
 .menuTextField {
@@ -85,6 +87,7 @@
 
 .dialogPane {
     -fx-background-image: url("../img/misc/parquet_dialog.jpg");
+    -fx-effect: dropshadow(gaussian, rgba(255, 255, 255, 0.3), 20, 0.5, 0, 0);
 }
 
 .topDialog {
@@ -104,8 +107,9 @@
 
 .dialogTitle {
     -fx-font-family: "Berkshire Swash Regular";
-    -fx-font-size: 30px;
+    -fx-font-size: 40px;
     -fx-text-fill: #f35137;
+    -fx-effect: dropshadow(three-pass-box, #9a2000, 1, 1.0, 0, 0);
 }
 
 .dialogLabel {

@@ -346,7 +346,9 @@ public class GuiManager extends ClientGameManager implements DisconnectionListen
      */
     @Override
     public void printWinner(GameSerialized gameSerialized) {
-
+        Platform.runLater(() ->
+                gameSceneController.onGameEnd(gameSerialized.getAllPlayers())
+        );
     }
 
     /**

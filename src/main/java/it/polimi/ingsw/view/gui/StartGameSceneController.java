@@ -56,6 +56,10 @@ public class StartGameSceneController {
      *
      */
     private void onCreateGameClick() {
+        createGameButton.setDisable(true);
+        joinGameButton.setDisable(true);
+        backButton.setDisable(true);
+
         if (!guiManager.sendRequest(MessageBuilder.buildCreateGameRequest(guiManager.getUsername(), guiManager.getClientToken()))) {
 
             GuiManager.showDialog((Stage) mainPane.getScene().getWindow(), GuiManager.ERROR_DIALOG_TITLE,
@@ -76,6 +80,10 @@ public class StartGameSceneController {
      *
      */
     private void onJoinGameClick() {
+        createGameButton.setDisable(true);
+        joinGameButton.setDisable(true);
+        backButton.setDisable(true);
+
         if (!guiManager.sendRequest(MessageBuilder.buildListGameRequest(guiManager.getUsername(), guiManager.getClientToken()))) {
 
             GuiManager.showDialog((Stage) mainPane.getScene().getWindow(), GuiManager.ERROR_DIALOG_TITLE,
@@ -138,6 +146,10 @@ public class StartGameSceneController {
      * Handles back button click
      */
     private void onBackButtonClick() {
+        createGameButton.setDisable(true);
+        joinGameButton.setDisable(true);
+        backButton.setDisable(true);
+
         guiManager.closeConnection();
         GuiManager.setLayout(mainPane.getScene(), "fxml/connectionScene.fxml");
     }

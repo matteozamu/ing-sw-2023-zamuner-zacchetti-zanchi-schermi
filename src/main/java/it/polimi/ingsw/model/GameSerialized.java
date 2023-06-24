@@ -62,6 +62,7 @@ public class GameSerialized implements Serializable {
      *
      * @return the list of the players
      */
+    // TODO: Si può eliminare?
     public List<Player> getPlayers() {
         return players;
     }
