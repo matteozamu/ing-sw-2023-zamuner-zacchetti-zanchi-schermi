@@ -15,13 +15,13 @@ class ObjectCardTest {
     @Test
     void getId() {
         ObjectCard objectCard = new ObjectCard(ObjectCardType.plant, "10");
-        assertEquals(0, objectCard.getId());
+        assertEquals("10", objectCard.getId());
     }
 
     @Test
     void testIllegalArgumentException(){
         assertThrows(IllegalArgumentException.class, () -> {
-            ObjectCard objectCard = new ObjectCard(ObjectCardType.plant, "20");
+            ObjectCard objectCard = new ObjectCard(ObjectCardType.plant, "???");
         });
     }
 

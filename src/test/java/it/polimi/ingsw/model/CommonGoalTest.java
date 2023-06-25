@@ -7,13 +7,13 @@ import static org.junit.jupiter.api.Assertions.*;
 class CommonGoalTest {
 
     @Test
-    void getType() {
+    public void testGetType() {
         CommonGoal goal = new CommonGoalType1();
         assertEquals(1, goal.getType());
     }
 
     @Test
-    void getDescription() {
+    public void testGetDescription() {
         CommonGoal goal = new CommonGoalType1();
         assertEquals("""
             Six groups each containing at least
@@ -24,7 +24,7 @@ class CommonGoalTest {
     }
 
     @Test
-    void getCardView() {
+    public void testGetCardView() {
         CommonGoal goal = new CommonGoalType1();
         assertEquals("""
             ╔═══════════╗
@@ -38,28 +38,37 @@ class CommonGoalTest {
     }
 
     @Test
-    void checkGoal() {
+    public void testCheckGoal() {
         CommonGoal goal = new CommonGoalType1();
         Shelf shelf = new Shelf();
         assertFalse(goal.checkGoal(shelf));
     }
 
     @Test
-    void isShelfEligible() {
+    public void testIsShelfEligible() {
         CommonGoal goal = new CommonGoalType1();
         Shelf shelf = new Shelf();
         assertFalse(goal.isShelfEligible(shelf));
     }
 
     @Test
-    void getCurrentPoints() {
+    public void TestGetCurrentPoints() {
         CommonGoal goal = new CommonGoalType1();
         assertEquals(8, goal.getCurrentPoints());
     }
 
     @Test
-    void updateCurrentPoints() {
+    public void testUpdateCurrentPoints1() {
         CommonGoal goal = new CommonGoalType1();
         assertEquals(8, goal.updateCurrentPoints(4));
     }
+
+    @Test
+    public void testUpdateCurrentPoints2() {
+        CommonGoal goal = new CommonGoalType1();
+        assertEquals(8, goal.updateCurrentPoints(4));
+    }
+
+
+
 }

@@ -199,7 +199,7 @@ public class ControllerGame implements TimerRunListener, Serializable {
      * @param list1 is the list to reorder
      * @param list2 is the list with the new order
      */
-    private static void reorderList(List<Coordinate> list1, List<Integer> list2) {
+    public static void reorderList(List<Coordinate> list1, List<Integer> list2) {
         List<Coordinate> tempList = new ArrayList<>(list1);
 
         for (int i = 0; i < list2.size(); i++) {
@@ -820,7 +820,7 @@ public class ControllerGame implements TimerRunListener, Serializable {
      * this method is used to calculate the winner of the game at the end of it, setting the winner attribute of the
      * {@link Player player} who has the highest score to true
      */
-    private void calculateWinner() {
+    public void calculateWinner() {
         int maxPoints = 0;
 //        String winner = "";
         for (Player p : this.game.getPlayers()) {

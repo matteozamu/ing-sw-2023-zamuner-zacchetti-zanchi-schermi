@@ -12,6 +12,36 @@ class CommonGoalType10Test {
 //    }
 
     @Test
+    public void testGetType() {
+        CommonGoalType10 goal = new CommonGoalType10();
+        assertEquals(10, goal.getType());
+    }
+
+    @Test
+    public void testGetDescription() {
+        CommonGoalType10 goal = new CommonGoalType10();
+        assertEquals("Five tiles of the same type forming an X.", goal.getDescription());
+    }
+
+    @Test
+    public void testGetCardView() {
+        CommonGoalType10 goal = new CommonGoalType10();
+        assertEquals("""
+            ╔═════════╗
+            ║  ■   ■  ║
+            ║    ■    ║
+            ║  ■   ■  ║
+            ╚═════════╝
+            """, goal.getCardView());
+    }
+
+    @Test
+    public void testToString() {
+        CommonGoalType10 goal = new CommonGoalType10();
+        assertEquals("commonGoalCard-10", goal.toString());
+    }
+
+    @Test
     public void testCheckGoalEmptyShelf() {
         CommonGoalType10 goal = new CommonGoalType10();
         Shelf shelf = new Shelf();
@@ -38,6 +68,8 @@ class CommonGoalType10Test {
         shelf.getGrid().put(new Coordinate(1,3), new ObjectCard(ObjectCardType.game, "00"));
         shelf.getGrid().put(new Coordinate(3,1), new ObjectCard(ObjectCardType.game, "10"));
         shelf.getGrid().put(new Coordinate(3,3), new ObjectCard(ObjectCardType.game, "20"));
+        shelf.getGrid().put(new Coordinate(4,4), new ObjectCard(ObjectCardType.game, "20"));
+
         assertFalse(goal.checkGoal(shelf));
     }
 
