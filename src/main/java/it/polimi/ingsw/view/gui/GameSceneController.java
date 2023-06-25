@@ -145,17 +145,11 @@ public class GameSceneController {
         imageViewsWithListener = new HashSet<>();
         shelvesStackPane = List.of(shelfStackPane2, shelfStackPane3, shelfStackPane4);
 
-//        arrowShelf0.setMouseTransparent(true);
-//        arrowShelf1.setMouseTransparent(true);
-//        arrowShelf2.setMouseTransparent(true);
-//        arrowShelf3.setMouseTransparent(true);
-//        arrowShelf4.setMouseTransparent(true);
-//        boardGridPane.setMouseTransparent(true);
-//        //impostare il limbo con la scritta LIMBO
-//        myStackPane.setMouseTransparent(true);
-//        shelfStackPane2.setMouseTransparent(true);
-//        shelfStackPane3.setMouseTransparent(true);
-//        shelfStackPane4.setMouseTransparent(true);
+        arrowShelf0.setMouseTransparent(true);
+        arrowShelf1.setMouseTransparent(true);
+        arrowShelf2.setMouseTransparent(true);
+        arrowShelf3.setMouseTransparent(true);
+        arrowShelf4.setMouseTransparent(true);
 
         loadObjectCards();
         loadCommonGoalCards();
@@ -170,7 +164,7 @@ public class GameSceneController {
     void setupGame(GameSerialized gameSerialized) {
         bindCommonGoalCardInfoPanelZoom();
         //bindPanels();
-        bindChooseColumn();
+        bindChooseColumnArrows();
 
         setShelves(gameSerialized);
         setPersonalGoalCard(gameSerialized.getPersonalGoalCard());
@@ -178,7 +172,7 @@ public class GameSceneController {
         updateGameArea(gameSerialized);
     }
 
-    private void bindChooseColumn() {
+    private void bindChooseColumnArrows() {
         arrowShelf0.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> onChooseColumnButtonClick(0));
         arrowShelf1.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> onChooseColumnButtonClick(1));
         arrowShelf2.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> onChooseColumnButtonClick(2));

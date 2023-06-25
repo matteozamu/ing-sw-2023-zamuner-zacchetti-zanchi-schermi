@@ -64,7 +64,7 @@
     -fx-font-family: "Merriweather Regular";
     -fx-font-size: 25px;
     -fx-text-fill: #F1E1B2;
-    -fx-effect: dropshadow(three-pass-box, #796939, 1, 1.0, 0, 0);
+    -fx-effect: dropshadow(three-pass-box, #796939, 0.3, 1.0, 0, 0);
 }
 
 .menuTextField {
@@ -115,6 +115,8 @@
 .dialogLabel {
     -fx-font-family: "Merriweather Regular";
     -fx-font-size: 25px;
+    -fx-text-fill: #F1E1B2;
+    -fx-effect: dropshadow(three-pass-box, #796939, 0.3, 1.0, 0, 0);
     -fx-wrap-text: true;
 }
 

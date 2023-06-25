@@ -18,12 +18,15 @@ public class ObjectCard implements Serializable {
      * @param ID   The ID of the object card.
      * @throws IllegalArgumentException If the ID is not between 0 and 2.
      */
-
-    //TODO: controllo sull'ID con IllegalArgumentException
     public ObjectCard(ObjectCardType type, String ID) throws IllegalArgumentException {
+        if (ID == null || ID.isEmpty()) {
+            throw new IllegalArgumentException("ID cannot be null or empty");
+        }
+
         this.type = type;
         this.ID = ID;
     }
+
 
     /**
      * Gets the type of the object card.
