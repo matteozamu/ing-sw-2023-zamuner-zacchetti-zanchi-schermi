@@ -180,13 +180,12 @@ public class Game implements Serializable {
         return players;
     }
 
-    // TODO togliere
-    public boolean doesPlayerExists(String username) {
-        for (Player p : players) {
-            if (p.getName().equals(username)) return true;
-        }
-        return false;
-    }
+//    public boolean doesPlayerExists(String username) {
+//        for (Player p : players) {
+//            if (p.getName().equals(username)) return true;
+//        }
+//        return false;
+//    }
 
     /**
      * method used to add a player in the game
@@ -388,18 +387,18 @@ public class Game implements Serializable {
             this.personalGoalCardsContainer = gson.fromJson(reader, new TypeToken<List<PersonalGoalCard>>() {
             }.getType());
         } catch (Exception e) {
-            e.printStackTrace();
+//            e.printStackTrace();
         }
     }
 
-    @Override
-    public String toString() {
-        return "Game{" +
-                ", players=" + players +
-                ", currentPlayer=" + currentPlayer +
-                ", board=" + board +
-                ", started=" + started +
-                ", numberOfPlayers=" + numberOfPlayers +
-                '}';
-    }
+//    @Override
+//    public String toString() {
+//        return "Game{" +
+//                ", players=" + players +
+//                ", currentPlayer=" + currentPlayer +
+//                ", board=" + board +
+//                ", started=" + started +
+//                ", numberOfPlayers=" + numberOfPlayers +
+//                '}';
+//    }
 }

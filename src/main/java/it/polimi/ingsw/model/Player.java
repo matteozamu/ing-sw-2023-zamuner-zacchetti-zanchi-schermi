@@ -37,6 +37,7 @@ public class Player implements Serializable {
 
     /**
      * method used to set the connection state of the player
+     *
      * @param connected is true if the player is connected, false otherwise
      */
     public void setConnected(boolean connected) {
@@ -71,10 +72,12 @@ public class Player implements Serializable {
     }
 
     /**
-     * @param winner set the winner
+     * set the player current point
+     *
+     * @param currentPoints the points of the player
      */
-    public void setWinner(boolean winner) {
-        this.winner = winner;
+    public void setCurrentPoints(int currentPoints) {
+        this.currentPoints = currentPoints;
     }
 
     /**
@@ -85,15 +88,15 @@ public class Player implements Serializable {
     }
 
     /**
-     * set the player current point
-     * @param currentPoints the points of the player
+     * @param winner set the winner
      */
-    public void setCurrentPoints(int currentPoints) {
-        this.currentPoints = currentPoints;
+    public void setWinner(boolean winner) {
+        this.winner = winner;
     }
 
     /**
      * Returns the player's personal goal card.
+     *
      * @return The PersonalGoalCard object representing the player's personal goal card.
      */
     public PersonalGoalCard getPersonalGoalCard() {
@@ -104,10 +107,8 @@ public class Player implements Serializable {
      * Returns a string representation of the player, including their name, current points, and personal goal card.
      * @return A string representation of the player.
      */
-    @Override
-    public String toString() {
-        return name + ", points=" + currentPoints + ", personalGoalCard=" + personalGoalCard;
-    }
-
-
+//    @Override
+//    public String toString() {
+//        return name + ", points=" + currentPoints + ", personalGoalCard=" + personalGoalCard;
+//    }
 }

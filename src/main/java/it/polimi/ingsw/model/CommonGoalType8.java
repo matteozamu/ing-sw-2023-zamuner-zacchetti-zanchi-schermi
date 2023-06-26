@@ -11,21 +11,17 @@ public final class CommonGoalType8 extends CommonGoal {
 
     public int type = 8;
 
-    public String description = """
-            Two lines each formed by 5 different
-            types of tiles. One line can show the
-            same or a different combination of the
-            other line.""";
+    public String description = "Two lines each formed by 5 different types of tiles. One line can show the same or a different combination of the other line.";
 
     public String cardView = """
-                ╔═══════════╗
-                ║           ║
-                ║ ■ ■ ■ ■ ■ ║
-                ║    x2     ║
-                ║           ║
-                ║           ║
-                ╚═══════════╝
-                """;
+            ╔═══════════╗
+            ║           ║
+            ║ ■ ■ ■ ■ ■ ║
+            ║    x2     ║
+            ║           ║
+            ║           ║
+            ╚═══════════╝
+            """;
 
     @Override
     public int getType() {

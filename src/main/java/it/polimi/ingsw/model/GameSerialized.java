@@ -3,7 +3,9 @@ package it.polimi.ingsw.model;
 import it.polimi.ingsw.utility.JsonReader;
 
 import java.io.Serializable;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.LinkedHashMap;
+import java.util.List;
 
 /**
  * this class represents the game state, it is used to send the game state to the clients
@@ -150,16 +152,16 @@ public class GameSerialized implements Serializable {
         return commonGoals;
     }
 
-    @Override
-    public String toString() {
-        return "GameSerialized{" +
-                "players=" + players +
-                ", board=" + board +
-                ", points=" + points +
-                ", shelf=" + shelf +
-                ", personalGoalCard=" + personalGoalCard +
-                ", limbo=" + limbo +
-                ", currentPlayer=" + currentPlayer +
-                '}';
-    }
+//    @Override
+//    public String toString() {
+//        return "GameSerialized{" +
+//                "players=" + players +
+//                ", board=" + board +
+//                ", points=" + points +
+//                ", shelf=" + shelf +
+//                ", personalGoalCard=" + personalGoalCard +
+//                ", limbo=" + limbo +
+//                ", currentPlayer=" + currentPlayer +
+//                '}';
+//    }
 }

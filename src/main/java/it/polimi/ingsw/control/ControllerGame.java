@@ -48,7 +48,7 @@ public class ControllerGame implements TimerRunListener, Serializable {
      * @param map is the map
      * @return the ArrayList of the keys of the map
      */
-    private static ArrayList<Coordinate> getKeysAsArrayList(Map<Coordinate, ObjectCard> map) {
+    public static ArrayList<Coordinate> getKeysAsArrayList(Map<Coordinate, ObjectCard> map) {
         ArrayList<Coordinate> keys = new ArrayList<>();
         for (Map.Entry<Coordinate, ObjectCard> entry : map.entrySet()) {
             keys.add(entry.getKey());
@@ -149,7 +149,7 @@ public class ControllerGame implements TimerRunListener, Serializable {
      * @param LoadShelfRequest is the message received
      * @return the response to the message
      */
-    private Response loadShelfHandler(LoadShelfRequest LoadShelfRequest) {
+    protected Response loadShelfHandler(LoadShelfRequest LoadShelfRequest) {
         int col = LoadShelfRequest.getColumn();
 
         if (LoadShelfRequest.getContent() == MessageContent.LOAD_SHELF_REQUEST && game.getCurrentPlayer().getShelf().getFreeCellsPerColumn(col) >= game.getLimbo().size()) {
@@ -175,7 +175,7 @@ public class ControllerGame implements TimerRunListener, Serializable {
             if (nextPlayer == currentPlayer) {
                 setTimer();
             }
-            turnController.setActivePlayer(game.getCurrentPlayer());
+//            turnController.setActivePlayer(game.getCurrentPlayer());
 
             sendPrivateUpdates();
 
@@ -372,6 +372,10 @@ public class ControllerGame implements TimerRunListener, Serializable {
      */
     public PossibleGameState getGameState() {
         return gameState;
+    }
+
+    public void setGameState(PossibleGameState gameState) {
+        this.gameState = gameState;
     }
 
     /**
@@ -801,7 +805,6 @@ public class ControllerGame implements TimerRunListener, Serializable {
         System.out.println("PUNTI PERSONAL GOAL: " + points);
 
         for (CommonGoal c : this.game.getCommonGoals()) {
-            System.out.println("cg: " + c.getDescription());
             if (c.checkGoal(this.game.getCurrentPlayer().getShelf())) {
                 points += c.updateCurrentPoints(this.game.getPlayers().size());
             }

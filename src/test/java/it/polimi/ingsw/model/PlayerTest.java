@@ -29,8 +29,8 @@ class PlayerTest {
     @Test
     void getPersonalGoalCard() {
         ArrayList<PersonalGoal> goals = new ArrayList<>();
-        goals.add(new PersonalGoal(0,0,ObjectCardType.trophy));
-        goals.add(new PersonalGoal(1,2,ObjectCardType.cat));
+        goals.add(new PersonalGoal(0, 0, ObjectCardType.trophy));
+        goals.add(new PersonalGoal(1, 2, ObjectCardType.cat));
         PersonalGoalCard personalGoalCard = new PersonalGoalCard(goals, "personalGoalCard-1");
         Player player = new Player("federica", new Shelf(), personalGoalCard);
         assertEquals(player.getPersonalGoalCard(), personalGoalCard);
@@ -41,6 +41,13 @@ class PlayerTest {
         Player player = new Player("federica", new Shelf(), null);
         player.setWinner(true);
         assertTrue(player.isWinner());
+    }
+
+    @Test
+    void setConnected() {
+        Player player = new Player("federicaSeiMitica", new Shelf(), null);
+        player.setConnected(true);
+        assertTrue(player.isConnected());
     }
 
     @Test
