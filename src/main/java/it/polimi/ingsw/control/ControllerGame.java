@@ -707,90 +707,6 @@ public class ControllerGame implements TimerRunListener, Serializable {
         return available;
     }
 
-//    public boolean isObjectCardAvailable(Coordinate coordinate) {
-//        Map<Coordinate, ObjectCard> limbo = game.getLimbo();
-//        Map<Coordinate, ObjectCard> board = game.getBoard().getGrid();
-//        Iterator<Coordinate> iterator = limbo.keySet().iterator();
-//        boolean available = false;
-//
-//        if (!board.containsKey(coordinate))
-//            return false;
-//
-//        if (!this.game.getBoard().isEmptyAtDirection(coordinate, UP) &&
-//                !this.game.getBoard().isEmptyAtDirection(coordinate, DOWN) &&
-//                !this.game.getBoard().isEmptyAtDirection(coordinate, RIGHT) &&
-//                !this.game.getBoard().isEmptyAtDirection(coordinate, LEFT)) return false;
-//
-//        if (limbo.size() == 0) available = true;
-//
-//        if (limbo.size() == 1) {
-//            Coordinate c = iterator.next();
-//            int dx = Math.abs(c.getColumn() - coordinate.getColumn());
-//            int dy = Math.abs(c.getRow() - coordinate.getRow());
-//
-//            if ((dx == 0 && dy == 1) || (dy == 0 && dx == 1))
-//                available = true;
-//            else return false;
-//        }
-//
-//        if (limbo.size() == 2) {
-//            Coordinate c1 = iterator.next();
-//            Coordinate c2 = iterator.next();
-//            int dx = Math.abs(c1.getColumn() - c2.getColumn());
-//            int dy = Math.abs(c1.getRow() - c2.getRow());
-//
-//            if ((dx == 0 && dy == 1) || (dy == 0 && dx == 1))
-//                available = true;
-//            else return false;
-//
-//            dx = Math.abs(c2.getColumn() - coordinate.getColumn());
-//            dy = Math.abs(c2.getRow() - coordinate.getRow());
-//
-//            if ((dx == 0 && dy == 1) || (dy == 0 && dx == 1))
-//                available = true;
-//            else return false;
-//        }
-//
-//        return available;
-//    }
-
-
-    /*
-    Questo è il metodo originale, quello sopra è il metodo aggiornato
-    public boolean isObjectCardAvailable(Coordinate coordinate) {
-        return this.game.getBoard().isEmptyAtDirection(coordinate, UP) || this.game.getBoard().isEmptyAtDirection(coordinate, DOWN) || this.game.getBoard().isEmptyAtDirection(coordinate, RIGHT) || this.game.getBoard().isEmptyAtDirection(coordinate, LEFT);
-    }
-
-     */
-
-    /**
-     * Adds the object card at the specified coordinate to the limbo area.
-     * The limbo area is used to store object cards that a player has picked up but not yet placed on their shelf.
-     *
-     * @param card The object card to add to the limbo area.
-     * @throws NullPointerException If the object card is null (should not happen).
-     */
-    // TODO aggiustare metodi sapendo che il limbo è una mappa coordinata-carta per un eventuale annullamento
-    // limbo e reinserimento nella board
-    public boolean addObjectCardToLimbo(ObjectCard card) throws NullPointerException {
-        if (card == null) throw new NullPointerException("ObjectCard is null");
-        if (this.getGame().getLimbo().size() == 3) return false;
-
-//        this.getGame().getLimbo().add(card);
-        return true;
-    }
-
-    /**
-     * pick the ObjectCard from the board
-     *
-     * @param coordinate is the coordinate of the ObjectCard clicked by the user
-     * @return the ObjectCard with that Coordinate
-     */
-    public ObjectCard pickObjectCard(Coordinate coordinate) {
-        if (isObjectCardAvailable(coordinate)) {
-            return this.game.getBoard().removeObjectCard(coordinate);
-        } else return null;
-    }
 
     /**
      * Calculate the points of the currentPlayer. Each time the method counts the points starting from 0.
@@ -800,24 +716,31 @@ public class ControllerGame implements TimerRunListener, Serializable {
      */
     public int pointsCalculator() {
         int points = 0;
+        Player player = game.getCurrentPlayer();
 
         points += this.game.getCurrentPlayer().getPersonalGoalCard().calculatePoints();
         System.out.println("PUNTI PERSONAL GOAL: " + points);
 
         for (CommonGoal c : this.game.getCommonGoals()) {
-            if (c.checkGoal(this.game.getCurrentPlayer().getShelf())) {
-                points += c.updateCurrentPoints(this.game.getPlayers().size());
+            if (c.checkGoal(player.getShelf())) {
+                if (!player.getCommonGoalsReached().containsKey(c)) {
+                    int pointsToAdd = c.updateCurrentPoints(this.game.getPlayers().size());
+                    points += pointsToAdd;
+                    player.getCommonGoalsReached().put(c, pointsToAdd);
+                } else {
+                    points += player.getCommonGoalsReached().get(c);
+                }
             }
         }
         System.out.println("PUNTI COMMON GOALS: " + points);
 
-        points += this.game.getCurrentPlayer().getShelf().closeObjectCardsPoints();
+        points += player.getShelf().closeObjectCardsPoints();
         System.out.println("PUNTI CARTE OGGETTO VICINE: " + points);
 
-        if (this.game.getCurrentPlayer().getShelf().isFull()) points++;
+        if (player.getShelf().isFull()) points++;
         System.out.println("PUNTI SHELF PIENA: " + points);
 
-        this.game.getCurrentPlayer().setCurrentPoints(points);
+        player.setCurrentPoints(points);
 
         return points;
     }
