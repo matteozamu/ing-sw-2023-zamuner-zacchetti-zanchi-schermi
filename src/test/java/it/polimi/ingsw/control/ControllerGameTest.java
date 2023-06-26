@@ -1,22 +1,19 @@
 package it.polimi.ingsw.control;
 
-import it.polimi.ingsw.enumeration.MessageContent;
 import it.polimi.ingsw.enumeration.MessageStatus;
+import it.polimi.ingsw.enumeration.PossibleGameState;
 import it.polimi.ingsw.model.*;
-import it.polimi.ingsw.network.message.GameStateRequest;
+import it.polimi.ingsw.network.message.LoadShelfRequest;
 import it.polimi.ingsw.network.message.ObjectCardRequest;
 import it.polimi.ingsw.network.message.ReorderLimboRequest;
 import it.polimi.ingsw.network.message.Response;
 import it.polimi.ingsw.network.server.Server;
-import it.polimi.ingsw.utility.JsonReader;
 import junit.framework.TestCase;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import java.io.PrintStream;
 import java.util.*;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public class ControllerGameTest extends TestCase {
@@ -33,6 +30,30 @@ public class ControllerGameTest extends TestCase {
         cg.getGame().setNumberOfPlayers(2);
         //cg.fillBoard();
 
+    }
+
+    @Test
+    void testGetKeysAsArrayList() {
+        Map<Coordinate, ObjectCard> map = new HashMap<>();
+        map.put(new Coordinate(1, 1), new ObjectCard(ObjectCardType.randomObjectCardType(), "00"));
+        map.put(new Coordinate(2, 2), new ObjectCard(ObjectCardType.randomObjectCardType(), "01"));
+        map.put(new Coordinate(3, 3), new ObjectCard(ObjectCardType.randomObjectCardType(), "02"));
+
+        ArrayList<Coordinate> keys = cg.getKeysAsArrayList(map);
+
+        assertEquals(3, keys.size());
+
+        assertTrue(keys.contains(new Coordinate(1, 1)));
+        assertTrue(keys.contains(new Coordinate(2, 2)));
+        assertTrue(keys.contains(new Coordinate(3, 3)));
+    }
+
+    @Test
+    public void testOnMessageGameEnded() {
+        cg.setGameState(PossibleGameState.GAME_ENDED);
+        Response response = (Response) cg.onMessage(
+                new ObjectCardRequest("federica", null, null));
+        assertEquals(MessageStatus.ERROR, response.getStatus());
     }
 
     @Test
@@ -77,22 +98,7 @@ public class ControllerGameTest extends TestCase {
 
         assertFalse(cg.getIsLobbyFull());
     }
-    //TODO: non passa
-//    @Test
-//    public void testGameSetupHandler_LobbyFull() {
-//        cg.getGame().setNumberOfPlayers(2);
-//        assertFalse(cg.getIsLobbyFull());
-//
-//        this.cg.getGame().addPlayer(new Player("Matteo", new Shelf(), null));
-//        this.cg.getGame().addPlayer(new Player("Simone", new Shelf(), null));
-//        cg.setGame(Game.getInstance("Matteo"));
-//        cg.setGame(Game.getInstance("Simone"));
-//
-//        cg.gameSetupHandler();
-//
-//        assertTrue(cg.getIsLobbyFull());
-//    }
-
+    
     @Test
     public void testUsernameNull() {
         assertThrows(NullPointerException.class, () -> {
@@ -100,65 +106,32 @@ public class ControllerGameTest extends TestCase {
         });
     }
 
-    //TODO: non passa
+    @Test
+    void testLoadShelfHandler_ValidRequest() {
+        LoadShelfRequest request = new LoadShelfRequest("Armando", null, 1);
 
-    //    @Test
-//    public void testIsUsernameAvailable(){
-//        cg.getGame().addPlayer(new Player("Matteo", new Shelf(), null));
-//        cg.getGame().addPlayer(new Player("Simone", new Shelf(), null));
-//        cg.setGame(Game.getInstance("Matteo"));
-//        cg.setGame(Game.getInstance("Simone"));
-//
-//        assertFalse(cg.isUsernameAvailable("Matteo"));
-//        assertFalse(cg.isUsernameAvailable("Simone"));
-//        assertTrue(cg.isUsernameAvailable("Davide"));
-//    }
-    public void printBoard(Board board) {
-        ObjectCard objectCard;
-        StringBuilder boardView = new StringBuilder();
+        ArrayList<PersonalGoal> goals = new ArrayList<>();
+        goals.add(new PersonalGoal(1, 1, ObjectCardType.randomObjectCardType()));
+        goals.add(new PersonalGoal(2, 2, ObjectCardType.randomObjectCardType()));
+        goals.add(new PersonalGoal(2, 3, ObjectCardType.randomObjectCardType()));
+        goals.add(new PersonalGoal(4, 5, ObjectCardType.randomObjectCardType()));
+        goals.add(new PersonalGoal(5, 2, ObjectCardType.randomObjectCardType()));
+        goals.add(new PersonalGoal(3, 6, ObjectCardType.randomObjectCardType()));
 
-        int playerNumber = 2;
-        JsonReader.readJsonConstant("GameConstant.json");
-        int[][] boardMatrix = JsonReader.getBoard(2);
+        Player currentPlayer = new Player("Player 1", new Shelf(), new PersonalGoalCard(goals, "1"));
+        cg.getGame().setCurrentPlayer(currentPlayer);
 
-        if (playerNumber == 2) {
-            boardView.append(" ".repeat(15));
-            boardView.append("-3       -2        -1       0        1        2        3\n");
-        } else if (playerNumber == 3 || playerNumber == 4) {
-            boardView.append(" ".repeat(7));
-            boardView.append("-4       -3       -2       -1       0        1        2        3        4\n\n");
-        }
+        LinkedHashMap<Coordinate, ObjectCard> limbo = new LinkedHashMap<>();
+        limbo.put(new Coordinate(-3, 0), new ObjectCard(ObjectCardType.randomObjectCardType(), "02"));
+        limbo.put(new Coordinate(-3, 1), new ObjectCard(ObjectCardType.randomObjectCardType(), "02"));
+        limbo.put(new Coordinate(-2, 0), new ObjectCard(ObjectCardType.randomObjectCardType(), "02"));
+        cg.getGame().setLimbo(limbo);
 
-        for (int i = 0; i < boardMatrix.length / 2; i++) {
-            if (!(playerNumber == 2 && 4 - i == 4)) {
-                boardView.append(String.format("%2s ", 4 - i));
-            }
-            for (int j = 0; j < boardMatrix[i].length; j++) {
-                if (boardMatrix[i][j] == 1) {
-                    objectCard = board.getGrid().get(new Coordinate(4 - i, j - 4));
-                    if (objectCard != null) {
-                        String cardText = objectCard.getType().getText();
-                        int visibleCardLength = cardText.length();
-                        if (visibleCardLength % 2 == 0) {
-                            boardView.append("║").append(" ".repeat((8 - visibleCardLength) / 2)).append(objectCard).append(" ".repeat((8 - visibleCardLength) / 2));
-                        } else {
-                            boardView.append("║").append(" ".repeat((8 - visibleCardLength) / 2)).append(objectCard).append(" ".repeat((int) Math.ceil((double) (8 - visibleCardLength) / 2)));
-                        }
-                    } else {
-                        boardView.append("║").append(" ".repeat(8));
-                    }
-                    if (playerNumber == 2) {
-                        if ((4 - i == 3 && j - 4 == 0) || (4 - i == 2 && j - 4 == 1) || (4 - i == 1 && j - 4 == 3)) {
-                            boardView.append("║");
-                        }
-                    }
-                } else {
-                    boardView.append(" ".repeat(9));
-                }
-            }
-            boardView.append("\n");
-        }
-        System.out.print(boardView);
+        Response response = cg.loadShelfHandler(request);
+
+        assertEquals("Cards moved", response.getMessage());
+        assertEquals(MessageStatus.OK, response.getStatus());
+        assertEquals(0, cg.getGame().getLimbo().size());
     }
 
 
@@ -435,18 +408,18 @@ public class ControllerGameTest extends TestCase {
     }
 
     @Test
-    public void testReorderMap(){
-        LinkedHashMap<Coordinate, ObjectCard> map= new LinkedHashMap<>();
+    public void testReorderMap() {
+        LinkedHashMap<Coordinate, ObjectCard> map = new LinkedHashMap<>();
         map.put(new Coordinate(1, 1), new ObjectCard(ObjectCardType.randomObjectCardType(), "10"));
         map.put(new Coordinate(2, 2), new ObjectCard(ObjectCardType.randomObjectCardType(), "20"));
         map.put(new Coordinate(3, 3), new ObjectCard(ObjectCardType.randomObjectCardType(), "30"));
         map.put(new Coordinate(4, 4), new ObjectCard(ObjectCardType.randomObjectCardType(), "00"));
 
         List<Coordinate> order = new ArrayList<>(Arrays.asList(
-                    new Coordinate(3, 3),
-                    new Coordinate(1, 1),
-                    new Coordinate(4, 4),
-                    new Coordinate(2, 2)
+                new Coordinate(3, 3),
+                new Coordinate(1, 1),
+                new Coordinate(4, 4),
+                new Coordinate(2, 2)
         ));
         LinkedHashMap<Coordinate, ObjectCard> orderedMap = cg.reorderMap(map, order);
         assertEquals("30", orderedMap.get(new Coordinate(3, 3)).getId());
@@ -519,7 +492,7 @@ public class ControllerGameTest extends TestCase {
         ObjectCardType type = ObjectCardType.randomObjectCardType();
         ObjectCard oc = new ObjectCard(type, "00");
 
-        for (int i = 0; i < 5; i++){
+        for (int i = 0; i < 5; i++) {
             cg.getGame().getCurrentPlayer().getShelf().getGrid().put(new Coordinate(i, 0), oc);
         }
 

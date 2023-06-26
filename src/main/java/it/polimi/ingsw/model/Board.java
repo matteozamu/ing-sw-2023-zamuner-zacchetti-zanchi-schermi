@@ -68,11 +68,11 @@ public class Board implements Serializable {
 
     public boolean isEmptyAtDirection(Coordinate coord, Direction direction) throws NullPointerException, IllegalArgumentException {
         if (coord == null) {
-            throw new NullPointerException("Coordinate cannot be null");
+//            throw new NullPointerException("Coordinate cannot be null");
         }
 
         if (direction == null) {
-            throw new IllegalArgumentException("Direction cannot be null");
+//            throw new IllegalArgumentException("Direction cannot be null");
         }
 
         Coordinate tmp = switch (direction) {
@@ -85,12 +85,12 @@ public class Board implements Serializable {
         return !grid.containsKey(tmp);
     }
 
-    @Override
-    public String toString() {
-        return "Board{" +
-                "grid=" + grid +
-                '}';
-    }
+//    @Override
+//    public String toString() {
+//        return "Board{" +
+//                "grid=" + grid +
+//                '}';
+//    }
 
     /**
      * Represents the four possible directions: UP, DOWN, LEFT, and RIGHT.
