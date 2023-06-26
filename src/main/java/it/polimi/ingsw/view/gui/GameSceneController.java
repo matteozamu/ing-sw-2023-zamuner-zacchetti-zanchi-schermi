@@ -14,7 +14,6 @@ import javafx.scene.control.Separator;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
-import javafx.stage.Popup;
 import javafx.stage.Stage;
 
 import java.util.*;
@@ -512,6 +511,7 @@ public class GameSceneController {
 
     void setLimbo(GameSerialized gameSerialized) {
         List<ObjectCard> limboCards = gameSerialized.getAllLimboCards();
+//        createNewLimboCards(limboCards);
         limboHBoxArea.getChildren().clear();
 
         if(limboCards.isEmpty()){
@@ -548,11 +548,17 @@ public class GameSceneController {
                             imageView.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> onObjectCardInLimboClick(finalI, limboCards));
                         }
                     }
-
                 }
             }
         }
     }
+
+//    private List<ObjectCard> createNewLimboCards(List<ObjectCard> limboCards) {
+//        for(ObjectCard objectCard: limboCards) {
+//            ObjectCard newObjectCard = new ObjectCard(objectCard.getType(), objectCard.getType());
+//
+//        }
+//    }
 
     private void onObjectCardInLimboClick(int index, List<ObjectCard> limboCards) {
         orderLimboObjectCards.add(index);
