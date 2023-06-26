@@ -52,7 +52,7 @@
                     <ImageView id="arrowShelf" fx:id="arrowShelf4" fitHeight="30" fitWidth="30" layoutX="309.0" layoutY="40.0" styleClass="button" />
                 </AnchorPane>
 
-                <ScrollPane prefHeight="420.0" prefWidth="400.0" styleClass="shelfScrollPane" translateY="68.0">
+                <ScrollPane fx:id="shelfScrollPane" prefHeight="420.0" prefWidth="400.0" fitToWidth="true" styleClass="shelfScrollPane" translateY="68.0">
                     <HBox fx:id="shelfHBoxImages" styleClass="shelfHBoxImages">
                         <StackPane fx:id="myStackPane">
 

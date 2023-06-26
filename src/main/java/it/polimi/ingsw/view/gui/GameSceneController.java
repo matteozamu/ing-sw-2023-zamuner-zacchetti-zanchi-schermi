@@ -9,10 +9,12 @@ import javafx.fxml.FXML;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.control.Label;
+import javafx.scene.control.ScrollPane;
 import javafx.scene.control.Separator;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
+import javafx.stage.Popup;
 import javafx.stage.Stage;
 
 import java.util.*;
@@ -95,6 +97,8 @@ public class GameSceneController {
     @FXML
     StackPane actionListStackPane;
     @FXML
+    ScrollPane shelfScrollPane;
+    @FXML
     ImageView winnerTile;
     @FXML
     ImageView pointsTile;
@@ -143,7 +147,6 @@ public class GameSceneController {
     private List<StackPane> shelvesStackPane;
     private ArrayList<Integer> orderLimboObjectCards;
     private Set<ImageView> imageViewsWithListener;
-    private String firstPlayerName;
 
     @FXML
     private void initialize() {
@@ -183,7 +186,6 @@ public class GameSceneController {
 
         setShelves(gameSerialized);
         setPersonalGoalCard(gameSerialized);
-        setFirstPlayerName(gameSerialized);
         setPlayerInfo(gameSerialized);
         updateGameArea(gameSerialized);
     }
@@ -391,10 +393,6 @@ public class GameSceneController {
                 }
             }
         }
-    }
-
-    void setFirstPlayerName(GameSerialized gameSerialized) {
-        firstPlayerName = gameSerialized.getAllPlayers().get(0).getName();
     }
 
     void setCommonGoalCards(List<CommonGoal> commonGoals) {
@@ -778,7 +776,6 @@ public class GameSceneController {
         arrowShelf3.setMouseTransparent(true);
         arrowShelf4.setMouseTransparent(true);
         boardGridPane.setMouseTransparent(true);
-        //impostare il limbo con la scritta LIMBO
         myStackPane.setMouseTransparent(true);
         shelfStackPane2.setMouseTransparent(true);
         shelfStackPane3.setMouseTransparent(true);
