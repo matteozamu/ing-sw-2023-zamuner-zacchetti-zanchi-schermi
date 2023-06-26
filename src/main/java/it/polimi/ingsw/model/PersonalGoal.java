@@ -6,9 +6,9 @@ import java.io.Serializable;
  * Represents a personal goal for a player in the game.
  */
 public class PersonalGoal implements Serializable {
-    private int row;
-    private int column;
-    private ObjectCardType type;
+    private final int row;
+    private final int column;
+    private final ObjectCardType type;
 
     /**
      * Constructs a PersonalGoal with the given row, column, and ObjectCardType.
@@ -43,13 +43,4 @@ public class PersonalGoal implements Serializable {
     public ObjectCardType getType() {
         return type;
     }
-
-//    @Override
-//    public String toString() {
-//        return "PersonalGoal{" +
-//                "row=" + row +
-//                ", column=" + column +
-//                ", type=" + type +
-//                '}';
-//    }
 }

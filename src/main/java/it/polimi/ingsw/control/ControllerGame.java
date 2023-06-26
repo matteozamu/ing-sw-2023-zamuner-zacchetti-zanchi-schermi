@@ -801,7 +801,7 @@ public class ControllerGame implements TimerRunListener, Serializable {
     public int pointsCalculator() {
         int points = 0;
 
-        points += this.game.getCurrentPlayer().getPersonalGoalCard().calculatePoints();
+        points += this.game.getCurrentPlayer().getPersonalGoalCard().calculatePoints(this.game.getCurrentPlayer().getShelf());
         System.out.println("PUNTI PERSONAL GOAL: " + points);
 
         for (CommonGoal c : this.game.getCommonGoals()) {
