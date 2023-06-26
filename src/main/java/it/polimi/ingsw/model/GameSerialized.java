@@ -12,6 +12,8 @@ public class GameSerialized implements Serializable {
     private static final long serialVersionUID = 526685006552543525L;
     private ArrayList<Player> players;
     private Board board;
+    private int[][] boardMatrix;
+    private List<CommonGoal> commonGoals;
 
     // attributes for each single player, initialized thanks to the username passed to the constructor
     private int points;
@@ -19,7 +21,6 @@ public class GameSerialized implements Serializable {
     private PersonalGoalCard personalGoalCard;
     private LinkedHashMap<Coordinate, ObjectCard> limbo;
     private Player currentPlayer;
-    private int[][] boardMatrix;
 
 
     /**
@@ -39,6 +40,7 @@ public class GameSerialized implements Serializable {
         this.board = new Board(instance.getBoard());
         this.limbo = new LinkedHashMap<>(instance.getLimbo());
         this.currentPlayer = instance.getCurrentPlayer();
+        this.commonGoals = instance.getCommonGoals();
 
         Player player = instance.getPlayerByName(username);
         this.shelf = player.getShelf();

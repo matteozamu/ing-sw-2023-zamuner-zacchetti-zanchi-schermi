@@ -657,7 +657,6 @@ public class Cli extends ClientGameManager implements DisconnectionListener {
      */
     @Override
     public void reorderLimbo() {
-        // TODO finire riordino limbo
 //        Map<Coordinate, ObjectCard> limbo = getGameSerialized().getLimbo();
 //        List<ObjectCard> limbo = getGameSerialized().getAllLimboCards();
         List<Coordinate> limboCoordinates;
