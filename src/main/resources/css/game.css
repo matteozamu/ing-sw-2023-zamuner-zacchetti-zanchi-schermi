@@ -23,7 +23,7 @@
  */
 
 .commonGoalCardsHBoxArea {
-    -fx-spacing: 10;
+    -fx-spacing: 68;
     -fx-alignment: CENTER;
 }
 
@@ -1047,7 +1047,7 @@
 /* Personal goal cards */
 
 .personalGoalCardPane {
-
+    -fx-alignment: CENTER;
 }
 
 #personalGoalCard-1 {

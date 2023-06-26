@@ -41,7 +41,7 @@
 
             <VBox fx:id="shelfLimboVBoxArea" maxWidth="400.0" styleClass="shelfLimboVBoxArea">
 
-                <HBox fx:id="limboHBoxArea" prefHeight="100.0" prefWidth="300.0" styleClass="limboHBoxArea" translateY="18.0">
+                <HBox fx:id="limboHBoxArea" prefHeight="100.0" prefWidth="300.0" translateY="18.0">
                 </HBox>
 
                 <AnchorPane fx:id="columnArrowAnchorPane" maxWidth="310" prefHeight="50" styleClass="columnArrowAnchorPane" translateY="40.0">
@@ -79,13 +79,17 @@
 
             </VBox>
 
-            <StackPane fx:id="personalGoalCardPane" styleClass="personalGoalCardPane">
-            </StackPane>
+            <Region maxWidth="3" minWidth="3" prefWidth="3" />
+
+            <VBox fx:id="playersInfoPersonalGoalCardVBox" maxWidth="133.0" minWidth="133.0" prefWidth="133.0">
+                <VBox fx:id="playersInfoVBox" maxHeight="169.0" maxWidth="133.0" minHeight="169.0" minWidth="133.0" prefHeight="169.0" prefWidth="133.0" translateY="20.0">
+                </VBox>
+
+                <StackPane fx:id="personalGoalCardPane" styleClass="personalGoalCardPane" translateY="120.0">
+                </StackPane>
+            </VBox>
 
         </HBox>
-
-        <VBox fx:id="playersInfoVBox" maxHeight="169.0" maxWidth="133.0" minHeight="169.0" minWidth="133.0" prefHeight="169.0" prefWidth="133.0" translateX="580.0" translateY="-280.0">
-        </VBox>
 
         <FlowPane fx:id="commonGoalCardInfoPanel" styleClass="commonGoalCardInfoPanel" />
 

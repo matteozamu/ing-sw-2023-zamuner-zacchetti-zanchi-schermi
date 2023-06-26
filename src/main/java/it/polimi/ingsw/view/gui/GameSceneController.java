@@ -31,6 +31,7 @@ public class GameSceneController {
     private static final String CSS_SHELF_LABEL = "shelfLabel";
     private static final String CSS_PLAYERINFO_LABEL = "playerInfo";
     private static final String CSS_PLAYERINFO_SEPARATOR = "labelSeparator";
+    private static final String CSS_LIMBO_HBOX = "limboHBoxArea";
     private static final double OPAQUE = 0.2;
     private static final double NOT_OPAQUE = 1;
     private static final double COMMONGOAL_CARD_WIDTH = 138.5;
@@ -51,9 +52,13 @@ public class GameSceneController {
     private static final double SHELF_GRIDPANE_TRANSLATE_Y = -11.0;
     private static final double LIMBO_OBJECT_CARD_WIDTH = 75.0;
     private static final double LIMBO_OBJECT_CARD_HEIGHT = 75.0;
-    private static final String SHELF_PATH = "/img/board_shelf/shelf_orth.png";
+    private static final double MYSHELFIE_LOGO_WIDTH = 300;
+    private static final double MYSHELFIE_LOGO_HEIGHT = 100;
+    private static final double MYSHELFIE_LOGO_TRANSLATE_X = 48;
     private static final double ACTION_BUTTON_WIDTH = 190.0;
     private static final double ACTION_BUTTON_HEIGHT = 70.0;
+    private static final String SHELF_PATH = "/img/board_shelf/shelf_orth.png";
+    private static final String MYSHELFIE_LOGO_PATH = "/img/logos/nanoTitleV1.png";
 
     @FXML
     Pane mainPane;
@@ -103,6 +108,8 @@ public class GameSceneController {
     BorderPane infoPanel;
     @FXML
     BorderPane actionPanel;
+    @FXML
+    VBox playersInfoPersonalGoalCardVBox;
     @FXML
     HBox commonGoalCardsHBoxArea;
     @FXML
@@ -509,28 +516,42 @@ public class GameSceneController {
         List<ObjectCard> limboCards = gameSerialized.getAllLimboCards();
         limboHBoxArea.getChildren().clear();
 
-        if (!limboCards.isEmpty()) {
-            for (int i = 0; i < limboCards.size(); i++) {
-                ObjectCard objectCard = limboCards.get(i);
-                if (objectCard != null) {
-                    String cardTypeText = objectCard.getType().getText();
-                    String cardNameType = cardTypeText + "-" + objectCard.getId();
-                    ImageView imageView = objectCards.get(cardNameType);
+        if(limboCards.isEmpty()){
+            ImageView imageView = new ImageView(MYSHELFIE_LOGO_PATH);
+            imageView.setFitHeight(MYSHELFIE_LOGO_HEIGHT);
+            imageView.setFitWidth(MYSHELFIE_LOGO_WIDTH);
+            imageView.setTranslateX(MYSHELFIE_LOGO_TRANSLATE_X);
+            imageView.setId("MyShelfieLogo");
+            imageView.setPreserveRatio(true);
 
-                    if (imageView != null) {
-                        imageView.setFitWidth(LIMBO_OBJECT_CARD_WIDTH);
-                        imageView.setFitHeight(LIMBO_OBJECT_CARD_HEIGHT);
-                        imageView.setPreserveRatio(true);
-                        imageView.setPickOnBounds(true);
-                        //imageView.setMouseTransparent(false);
+            limboHBoxArea.getStyleClass().clear();
+            limboHBoxArea.getChildren().add(imageView);
+        } else {
+            limboHBoxArea.getStyleClass().add(CSS_LIMBO_HBOX);
 
-                        limboHBoxArea.getChildren().add(imageView);
+            if (!limboCards.isEmpty()) {
+                for (int i = 0; i < limboCards.size(); i++) {
+                    ObjectCard objectCard = limboCards.get(i);
+                    if (objectCard != null) {
+                        String cardTypeText = objectCard.getType().getText();
+                        String cardNameType = cardTypeText + "-" + objectCard.getId();
+                        ImageView imageView = objectCards.get(cardNameType);
 
-                        int finalI = i;
-                        imageView.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> onObjectCardInLimboClick(finalI, limboCards));
+                        if (imageView != null) {
+                            imageView.setFitWidth(LIMBO_OBJECT_CARD_WIDTH);
+                            imageView.setFitHeight(LIMBO_OBJECT_CARD_HEIGHT);
+                            imageView.setPreserveRatio(true);
+                            imageView.setPickOnBounds(true);
+                            //imageView.setMouseTransparent(false);
+
+                            limboHBoxArea.getChildren().add(imageView);
+
+                            int finalI = i;
+                            imageView.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> onObjectCardInLimboClick(finalI, limboCards));
+                        }
                     }
-                }
 
+                }
             }
         }
     }
@@ -705,6 +726,7 @@ public class GameSceneController {
     private void updateGameArea(GameSerialized gameSerialized) {
         updateBoard(gameSerialized);
         updateShelves(gameSerialized);
+        updateLimbo(gameSerialized);
         updatePlayersInfo(gameSerialized);
         // Aggiungere altri elementi da aggiornare
     }
@@ -728,6 +750,10 @@ public class GameSceneController {
             String shelfOwner = (String) shelfGrid.getProperties().get(USERNAME_PROPERTY);
             updateShelfGrid(gameSerialized, shelfGrid, shelfOwner);
         }
+    }
+
+    private void updateLimbo(GameSerialized gameSerialized) {
+        setLimbo(gameSerialized);
     }
 
     private void updatePlayersInfo(GameSerialized gameSerialized) {
