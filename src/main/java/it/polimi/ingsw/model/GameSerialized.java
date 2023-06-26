@@ -3,7 +3,9 @@ package it.polimi.ingsw.model;
 import it.polimi.ingsw.utility.JsonReader;
 
 import java.io.Serializable;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.LinkedHashMap;
+import java.util.List;
 
 /**
  * this class represents the game state, it is used to send the game state to the clients

@@ -310,7 +310,7 @@ public abstract class ClientGameManager implements ClientGameManagerListener, Cl
                 if (response.getStatus() == MessageStatus.ERROR) {
 //                    queue.add(() -> responseError(response.getMessage()));
                 } else if (response.getStatus() == MessageStatus.NOT_VALID_CARD) {
-                    queue.add(() -> responseError("The card chosen is not valid"));
+                    queue.add(() -> responseError("The card chosen is not available"));
                 } else if (turnManager != null && turnManager.getUserPlayerState().equals(UserPlayerState.LOADING_SHELF)) {
                     queue.add(() -> responseError("This column is full"));
                 } else {
