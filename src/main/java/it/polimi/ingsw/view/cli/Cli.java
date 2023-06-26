@@ -423,6 +423,9 @@ public class Cli extends ClientGameManager implements DisconnectionListener {
      */
     @Override
     public void gameStateUpdate() {
+        List<CommonGoal> cg = getGameSerialized().getCommonGoals();
+        out.println("The common goal cards are: \n" + cg.get(0).getDescription() + "\n" + cg.get(0).getCardView() + "\n\n" + cg.get(1).getDescription() + "\n" + cg.get(1).getCardView());
+
         CliVisual.printPersonalGoalCards(out, getGameSerialized());
         out.println();
         CliVisual.printBoard(out, getGameSerialized());
@@ -461,7 +464,7 @@ public class Cli extends ClientGameManager implements DisconnectionListener {
     @Override
     public void firstPlayerCommunication(String username, List<CommonGoal> cg) {
         out.println("Game has started!");
-        out.println("The common goal cards are: \n" + cg.get(0).getDescription() + "\n" + cg.get(0).getCardView() + "\n\n" + cg.get(1).getDescription() + "\n" + cg.get(1).getCardView());
+//        out.println("The common goal cards are: \n" + cg.get(0).getDescription() + "\n" + cg.get(0).getCardView() + "\n\n" + cg.get(1).getDescription() + "\n" + cg.get(1).getCardView());
 
         if (username.equals(getUsername())) {
             out.println("You are the first player!\n");
