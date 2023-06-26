@@ -92,6 +92,10 @@ public class ConnectionSceneController {
      * Handles the back button click
      */
     private void onBackButtonClick() {
+        connectSocketButton.setDisable(true);
+        connectRmiButton.setDisable(true);
+        backButton.setDisable(true);
+
         GuiManager.setLayout(mainPane.getScene(), "fxml/menuScene.fxml");
     }
 

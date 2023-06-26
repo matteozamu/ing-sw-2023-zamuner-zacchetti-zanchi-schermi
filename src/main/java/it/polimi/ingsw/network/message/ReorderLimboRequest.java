@@ -1,27 +1,26 @@
 package it.polimi.ingsw.network.message;
 
-import it.polimi.ingsw.model.ObjectCard;
 import it.polimi.ingsw.enumeration.MessageContent;
 
-import java.util.List;
+import java.util.ArrayList;
 
 public class ReorderLimboRequest extends Message{
     private static final long serialVersionUID = 127258524891232293L;
-    private List<ObjectCard> limboOrder;
+    private ArrayList<Integer> newLimbo;
 
-    public ReorderLimboRequest(String username, String token, List<ObjectCard> limboOrder) {
+    public ReorderLimboRequest(String username, String token, ArrayList<Integer> newLimbo) {
         super(username, token, MessageContent.REORDER_LIMBO_REQUEST);
-        this.limboOrder = limboOrder;
+        this.newLimbo = newLimbo;
     }
 
-    public List<ObjectCard> getLimboOrder() {
-        return limboOrder;
+    public ArrayList<Integer> getLimboOrder() {
+        return newLimbo;
     }
 
     @Override
     public String toString() {
         return "ReorderLimboRequest{" +
-                "limboOrder=" + limboOrder +
+                "limboOrder=" + newLimbo +
                 '}';
     }
 }

@@ -4,12 +4,12 @@ import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class PersonalGoalCardTest {
 
     @Test
-    public void testCalculatePoints() {
+    public void testCalxculatePoints() {
         PersonalGoalCard card = new PersonalGoalCard(new ArrayList<>(), "personalGoalCard-1");
         card.setTargetsReached(1);
         assertEquals(1, card.calculatePoints());
@@ -29,6 +29,12 @@ class PersonalGoalCardTest {
     public void testGetGoals() {
         PersonalGoalCard card = new PersonalGoalCard(new ArrayList<>(), "personalGoalCard-1");
         assertEquals(0, card.getGoals().size());
+    }
+
+    @Test
+    public void testGetID() {
+        PersonalGoalCard card = new PersonalGoalCard(new ArrayList<>(), "personalGoalCard-1");
+        assertEquals("personalGoalCard-1", card.getID());
     }
 
     @Test

@@ -6,7 +6,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
-import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -54,7 +54,7 @@ class GameTest extends TestCase {
 
     @Test
     public void testSetLimbo() {
-        g.setLimbo(new HashMap<>());
+        g.setLimbo(new LinkedHashMap<>());
         assertNotNull(g.getLimbo());
     }
 
@@ -200,6 +200,20 @@ class GameTest extends TestCase {
 
         p = g.nextPlayer();
         assertEquals(g.getPlayers().get(0), p);
+    }
+
+    @Test
+    public void testNextPlayerSinglePlayer() {
+        Player p = new Player("Maddy", this.shelf, this.pg);
+        g.addPlayer(p);
+        g.setCurrentPlayer(p);
+
+        Player p2 = new Player("Patty", this.shelf, this.pg);
+        g.addPlayer(p2);
+        p2.setConnected(false);
+
+        Player p3 = g.nextPlayer();
+        assertEquals(p3, p);
     }
 
     @Test

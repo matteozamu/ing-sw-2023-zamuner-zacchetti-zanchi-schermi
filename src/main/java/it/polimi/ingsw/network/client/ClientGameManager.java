@@ -11,6 +11,7 @@ import it.polimi.ingsw.network.message.*;
 import java.io.IOException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.List;
@@ -195,7 +196,6 @@ public abstract class ClientGameManager implements ClientGameManagerListener, Cl
      *
      * @param gameStateMessage game state update received
      */
-    // il game state lo mandiamo all'inizio di ogni turno? o anche durante le fasi di game in un turno?
     private void handleGameStateResponse(GameStateResponse gameStateMessage) {
         synchronized (gameSerializedLock) {
             gameSerialized = gameStateMessage.getGameSerialized();
@@ -306,10 +306,13 @@ public abstract class ClientGameManager implements ClientGameManagerListener, Cl
                     // TODO check if this is correct
                     queue.add(() -> lobbyJoinResponse(response));
             } else {
+                if (turnManager != null) System.out.println("TURN MANAGER: " + turnManager.getUserPlayerState());
                 if (response.getStatus() == MessageStatus.ERROR) {
-                    queue.add(() -> responseError(response.getMessage()));
+//                    queue.add(() -> responseError(response.getMessage()));
                 } else if (response.getStatus() == MessageStatus.NOT_VALID_CARD) {
-                    queue.add(() -> notValidCard(response.getMessage()));
+                    queue.add(() -> responseError("The card chosen is not available"));
+                } else if (turnManager != null && turnManager.getUserPlayerState().equals(UserPlayerState.LOADING_SHELF)) {
+                    queue.add(() -> responseError("This column is full"));
                 } else {
                     onPositiveResponse(response);
                 }
@@ -536,32 +539,41 @@ public abstract class ClientGameManager implements ClientGameManagerListener, Cl
      * @return a list of possible actions based on the current state of the player
      */
     private List<PossibleAction> getPossibleActions() {
+        List actions = new ArrayList();
         switch (turnManager.getUserPlayerState()) {
             case PICK_CARD_BOARD -> {
-                return List.of(PossibleAction.BOARD_PICK_CARD, PossibleAction.SHOW_PERSONAL_GOAL, PossibleAction.SHOW_SHELF);
+                actions.add(PossibleAction.BOARD_PICK_CARD);
+//                actions = List.of(PossibleAction.BOARD_PICK_CARD, PossibleAction.SHOW_PERSONAL_GOAL, PossibleAction.SHOW_SHELF);
             }
             case AFTER_FIRST_PICK -> {
                 if (gameSerialized.getLimbo().size() == 3) {
-                    return List.of(PossibleAction.LOAD_SHELF, PossibleAction.REORDER_LIMBO, PossibleAction.DELETE_LIMBO, PossibleAction.SHOW_PERSONAL_GOAL, PossibleAction.SHOW_SHELF);
+                    actions.add(PossibleAction.LOAD_SHELF);
+                    actions.add(PossibleAction.REORDER_LIMBO);
+                    actions.add(PossibleAction.DELETE_LIMBO);
+//                    actions = List.of(PossibleAction.LOAD_SHELF, PossibleAction.REORDER_LIMBO, PossibleAction.DELETE_LIMBO, PossibleAction.SHOW_PERSONAL_GOAL, PossibleAction.SHOW_SHELF);
                 } else if (gameSerialized.getLimbo().size() > 1) {
-                    return List.of(PossibleAction.BOARD_PICK_CARD, PossibleAction.LOAD_SHELF, PossibleAction.REORDER_LIMBO, PossibleAction.DELETE_LIMBO, PossibleAction.SHOW_PERSONAL_GOAL, PossibleAction.SHOW_SHELF);
+                    actions.add(PossibleAction.BOARD_PICK_CARD);
+                    actions.add(PossibleAction.LOAD_SHELF);
+                    actions.add(PossibleAction.REORDER_LIMBO);
+                    actions.add(PossibleAction.DELETE_LIMBO);
+                    //actions = List.of(PossibleAction.BOARD_PICK_CARD, PossibleAction.LOAD_SHELF, PossibleAction.REORDER_LIMBO, PossibleAction.DELETE_LIMBO, PossibleAction.SHOW_PERSONAL_GOAL, PossibleAction.SHOW_SHELF);
                 } else {
-                    return List.of(PossibleAction.BOARD_PICK_CARD, PossibleAction.LOAD_SHELF, PossibleAction.DELETE_LIMBO, PossibleAction.SHOW_PERSONAL_GOAL, PossibleAction.SHOW_SHELF);
+                    actions.add(PossibleAction.BOARD_PICK_CARD);
+                    actions.add(PossibleAction.LOAD_SHELF);
+                    actions.add(PossibleAction.DELETE_LIMBO);
+                    //actions = List.of(PossibleAction.BOARD_PICK_CARD, PossibleAction.LOAD_SHELF, PossibleAction.DELETE_LIMBO, PossibleAction.SHOW_PERSONAL_GOAL, PossibleAction.SHOW_SHELF);
                 }
             }
             case LOADING_SHELF -> {
-                return List.of(PossibleAction.LOAD_SHELF, PossibleAction.SHOW_PERSONAL_GOAL, PossibleAction.SHOW_SHELF);
-            } // non ci dovrebbe mai entrare perche viene risettato lo stato a pick_card_board
-
-
-//            case DEAD:
-//                return List.of(PossibleAction.CHOOSE_RESPAWN);
-
+                actions.add(PossibleAction.LOAD_SHELF);
+                //actions.add(PossibleAction.SHOW_PERSONAL_GOAL);
+                //actions.add(PossibleAction.SHOW_SHELF);
+            }
             default -> {
                 return null;
             }
-//                throw new ClientRoundManagerException("Cannot be here: " + roundManager.getUserPlayerState().name());
         }
+        return actions;
     }
 
     /**
@@ -587,7 +599,7 @@ public abstract class ClientGameManager implements ClientGameManagerListener, Cl
             }
             case LOAD_SHELF -> {
 //                System.out.println("CARICA SHELF");
-                turnManager.loadingShelf();
+//                turnManager.loadingShelf();
                 action = this::chooseColumn;
             }
             case REORDER_LIMBO -> {
@@ -602,6 +614,10 @@ public abstract class ClientGameManager implements ClientGameManagerListener, Cl
             case SHOW_SHELF -> {
 //                System.out.println("SHOW SHELF");
                 action = this::showShelf;
+                checkNextAction();
+            }
+            case CANCEL -> {
+                action = this::cancelAction;
                 checkNextAction();
             }
             case DELETE_LIMBO -> {

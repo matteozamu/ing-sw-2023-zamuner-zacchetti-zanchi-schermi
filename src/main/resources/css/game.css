@@ -23,7 +23,7 @@
  */
 
 .commonGoalCardsHBoxArea {
-    -fx-spacing: 10;
+    -fx-spacing: 68;
     -fx-alignment: CENTER;
 }
 
@@ -55,6 +55,7 @@
 
 .boardImage {
     -fx-image: url("/img/board_shelf/livingroom.png");
+    -fx-background-radius: 20;
     -fx-effect: dropshadow(gaussian, rgba(255, 255, 255, 0.3), 20, 0.5, 0, 0);
 }
 
@@ -71,7 +72,6 @@
 /* Shelf */
 
 .shelf {
-    -fx-image: url("/img/board_shelf/shelf_orth.png");
     -fx-effect: dropshadow(gaussian, rgba(255, 255, 255, 0.3), 20, 0.5, 0, 0);
 }
 
@@ -1047,7 +1047,7 @@
 /* Personal goal cards */
 
 .personalGoalCardPane {
-
+    -fx-alignment: CENTER;
 }
 
 #personalGoalCard-1 {

@@ -12,9 +12,9 @@ public class ObjectCardResponse extends Message {
 
     private final GameSerialized gameSerialized;
 
-    public ObjectCardResponse(String username) {
+    public ObjectCardResponse(String username, String filepath) {
         super("serverUser", null, MessageContent.OBJECT_CARD_VALID);
-        this.gameSerialized = new GameSerialized(username);
+        this.gameSerialized = new GameSerialized(username, filepath);
     }
 
     public GameSerialized getGameSerialized() {

@@ -11,16 +11,6 @@ import java.util.Map;
 
 public class Board implements Serializable {
 
-    /**
-     * Represents the four possible directions: UP, DOWN, LEFT, and RIGHT.
-     */
-    public enum Direction {
-        UP,
-        DOWN,
-        LEFT,
-        RIGHT
-    }
-
     private Map<Coordinate, ObjectCard> grid;
 
     public Board() {
@@ -33,6 +23,10 @@ public class Board implements Serializable {
 
     public Map<Coordinate, ObjectCard> getGrid() {
         return grid;
+    }
+
+    public void setGrid(Map<Coordinate, ObjectCard> grid) {
+        this.grid = grid;
     }
 
     /**
@@ -74,11 +68,11 @@ public class Board implements Serializable {
 
     public boolean isEmptyAtDirection(Coordinate coord, Direction direction) throws NullPointerException, IllegalArgumentException {
         if (coord == null) {
-            throw new NullPointerException("Coordinate cannot be null");
+//            throw new NullPointerException("Coordinate cannot be null");
         }
 
         if (direction == null) {
-            throw new IllegalArgumentException("Direction cannot be null");
+//            throw new IllegalArgumentException("Direction cannot be null");
         }
 
         Coordinate tmp = switch (direction) {
@@ -91,10 +85,20 @@ public class Board implements Serializable {
         return !grid.containsKey(tmp);
     }
 
-    @Override
-    public String toString() {
-        return "Board{" +
-                "grid=" + grid +
-                '}';
+//    @Override
+//    public String toString() {
+//        return "Board{" +
+//                "grid=" + grid +
+//                '}';
+//    }
+
+    /**
+     * Represents the four possible directions: UP, DOWN, LEFT, and RIGHT.
+     */
+    public enum Direction {
+        UP,
+        DOWN,
+        LEFT,
+        RIGHT
     }
 }

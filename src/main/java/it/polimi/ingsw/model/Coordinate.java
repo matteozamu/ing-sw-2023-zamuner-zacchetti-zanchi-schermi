@@ -1,7 +1,6 @@
 package it.polimi.ingsw.model;
 
 import java.io.Serializable;
-import java.util.Objects;
 
 /**
  * Represents a 2D coordinate in the game grid with methods to obtain neighboring coordinates.
@@ -49,7 +48,7 @@ public class Coordinate implements Serializable {
             case DOWN -> new Coordinate(row - 1, column);
             case LEFT -> new Coordinate(row, column - 1);
             case RIGHT -> new Coordinate(row, column + 1);
-            default -> throw new IllegalArgumentException("Invalid direction: " + direction);
+//            default -> throw new IllegalArgumentException("Invalid direction: " + direction);
         };
     }
 
@@ -67,7 +66,11 @@ public class Coordinate implements Serializable {
 
     @Override
     public int hashCode() {
-        return Objects.hash(row, column);
+        final int prime = 31;
+        int result = 1;
+        result = prime * result + column;
+        result = prime * result + row;
+        return result;
     }
 
     @Override

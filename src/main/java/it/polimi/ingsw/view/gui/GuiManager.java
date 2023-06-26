@@ -8,6 +8,7 @@ import it.polimi.ingsw.network.client.ClientGameManager;
 import it.polimi.ingsw.network.client.DisconnectionListener;
 import it.polimi.ingsw.network.message.ConnectionResponse;
 import it.polimi.ingsw.network.message.Response;
+import it.polimi.ingsw.utility.MessageBuilder;
 import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -231,8 +232,8 @@ public class GuiManager extends ClientGameManager implements DisconnectionListen
     public void firstPlayerCommunication(String username, List<CommonGoal> commonGoals) {
         Platform.runLater(lobbySceneController::onGameStart);
 
-        Platform.runLater(() ->
-                gameSceneController.setCommonGoalCards(commonGoals));
+//        Platform.runLater(() ->
+//                gameSceneController.setCommonGoalCards(commonGoals));
     }
 
     /**
@@ -292,7 +293,9 @@ public class GuiManager extends ClientGameManager implements DisconnectionListen
      */
     @Override
     public void printLimbo() {
-
+        Platform.runLater(() ->
+                gameSceneController.setLimbo(getGameSerialized())
+        );
     }
 
     /**
@@ -308,7 +311,9 @@ public class GuiManager extends ClientGameManager implements DisconnectionListen
      */
     @Override
     public void deleteLimbo() {
-
+        Platform.runLater(() ->
+                gameSceneController.deleteLimbo()
+        );
     }
 
     /**
@@ -325,6 +330,11 @@ public class GuiManager extends ClientGameManager implements DisconnectionListen
     }
 
     @Override
+    public void cancelAction() {
+
+    }
+
+    @Override
     public void showShelf() {
 
     }
@@ -336,7 +346,9 @@ public class GuiManager extends ClientGameManager implements DisconnectionListen
      */
     @Override
     public void printWinner(GameSerialized gameSerialized) {
-
+        Platform.runLater(() ->
+                gameSceneController.onGameEnd(gameSerialized.getAllPlayers())
+        );
     }
 
     /**
@@ -434,16 +446,6 @@ public class GuiManager extends ClientGameManager implements DisconnectionListen
             Platform.runLater(() ->
                     connectionSceneController.onError(error));
         }
-    }
-
-    /**
-     * The card chosen by the user is not valid
-     *
-     * @param error
-     */
-    @Override
-    public void notValidCard(String error) {
-
     }
 
     /**

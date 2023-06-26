@@ -57,6 +57,10 @@ public abstract class CommonGoal implements Serializable {
      */
     public int updateCurrentPoints(int numberOfPlayers) {
         int points = currentPoints;
+
+        if (points <= 0) {
+            return 0;
+        }
         if (numberOfPlayers == 4 || numberOfPlayers == 3) {
             this.currentPoints -= 2;
         } else if (numberOfPlayers == 2) {

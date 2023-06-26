@@ -1,6 +1,6 @@
-README
-
 # Prova Finale di Ingegneria del Software - a.a. 2022-2023
+
+[![codecov](https://codecov.io/gh/matteozamu/ing-sw-2023-zamuner-zacchetti-zanchi-schermi/branch/dev/graph/badge.svg?token=KBR43CAQFL)](https://codecov.io/gh/matteozamu/ing-sw-2023-zamuner-zacchetti-zanchi-schermi)
 
 ![alt text](https://www.craniocreations.it/storage/media/products/54/112/My_Shelfie_box_ITA-ENG.png)
 
@@ -43,6 +43,7 @@ documentazione [cliccando qui](*LINK GIT*)
 | __gson__        | Libreria per il supporto al parsing di file in formato json                                 |
 | __JavaFx__      | Libreria grafica di Java                                                                    |
 | __jacoco__      | Strumento di supporto al testing per evidenziare le linee di codice coperte dagli unit test |
+
 ### Jars
 
 Per la consegna del progetto sono stati utilizzati i seguenti Jar, i quali consentono di avviare il gioco secondo le
@@ -70,9 +71,11 @@ seguente: [Jars](*LINK GIT*).
 
 ### Client
 
-Il client può essere eseguito in due modalità: CLI e GUI; il giocatore può scegliere la modalità di gioco tramite un comando apposito all'inizio dell'esecuzione del Jar.
+Il client può essere eseguito in due modalità: CLI e GUI; il giocatore può scegliere la modalità di gioco tramite un
+comando apposito all'inizio dell'esecuzione del Jar.
 
 #### CLI
+
 Per eseguire in client in modalità testuale, è necessario eseguire il seguente comando da terminale:
 
 ```bash
@@ -84,7 +87,10 @@ java -jar client.jar cli
 DA SCRIVERE
 
 ### Server
-L'esecuzione del Server prevede la lettura di un file di configurazione di tipo Json, contenente costanti e impostazioni di gioco; i valori eventualmente modificabili sono i seguenti:
+
+L'esecuzione del Server prevede la lettura di un file di configurazione di tipo Json, contenente costanti e impostazioni
+di gioco; i valori eventualmente modificabili sono i seguenti:
+
 ```
 "socketPort": 2727,
 "RMIPort": 7272,
@@ -99,13 +105,17 @@ L'esecuzione del Server prevede la lettura di un file di configurazione di tipo 
 - `RMIPort`: porta del server che usa il servizio RMI.
 - `maxPlayers`: numero massimo di giocatori che possono partecipare ad una partita.
 - `minPlayers`: numero minimo di giocatori che possono partecipare ad una partita.
-- `disconnectionTimer`: tempo in millisecondi che il server aspetta prima di considerare un giocatore definitivamente disconnesso dalla partita in corso.
+- `disconnectionTimer`: tempo in millisecondi che il server aspetta prima di considerare un giocatore definitivamente
+  disconnesso dalla partita in corso.
 
-L'esecuzione del server avviene attraverso il seguente comando, in cui si specifica il percorso del file di configurazione:
-```
+L'esecuzione del server avviene attraverso il seguente comando, in cui si specifica il percorso del file di
+configurazione:
+
+```bash
 java -jar server.jar [configFilePath] 
 ```
-Se non specificato il valore di default è GameConstant.json.
+
+Se non specificato nessun percorso, il valore di default è _GameConstant.json_.
 
 ## Componenti del gruppo
 

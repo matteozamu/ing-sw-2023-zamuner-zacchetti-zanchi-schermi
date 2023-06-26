@@ -1,6 +1,7 @@
 package it.polimi.ingsw.view.gui;
 
 import it.polimi.ingsw.utility.MessageBuilder;
+import javafx.css.PseudoClass;
 import javafx.fxml.FXML;
 import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
@@ -14,6 +15,7 @@ import javafx.stage.Stage;
  */
 public class NumberPlayersController {
 
+    private final PseudoClass errorPseudo = PseudoClass.getPseudoClass("error");
     private GuiManager guiManager;
 
     @FXML
@@ -38,6 +40,7 @@ public class NumberPlayersController {
         guiManager = GuiManager.getInstance();
 
         bindEvents();
+        setInputFormat();
     }
 
     /**
@@ -52,6 +55,17 @@ public class NumberPlayersController {
     }
 
     /**
+     * Sets the input formats for the textfield
+     */
+    private void setInputFormat() {
+        gameNameField.textProperty().addListener((observable, oldValue, newValue) -> {
+            if (newValue.trim().isEmpty()) {
+                gameNameField.setText(oldValue);
+            }
+        });
+    }
+
+    /**
      * Handles number of players click
      *
      * @param numberOfPlayers number of players
@@ -59,26 +73,43 @@ public class NumberPlayersController {
     private void onNumberClick(int numberOfPlayers) {
         final String gameName = gameNameField.getText();
 
-        if (!guiManager.sendRequest(MessageBuilder.buildNumberOfPlayerMessage(guiManager.getClientToken(), guiManager.getUsername(), numberOfPlayers, gameName))) {
+        boolean isGameNameValid = !gameName.trim().isEmpty();
+        gameNameField.pseudoClassStateChanged(errorPseudo, !isGameNameValid);
 
-            GuiManager.showDialog((Stage) mainPane.getScene().getWindow(), GuiManager.ERROR_DIALOG_TITLE,
-                    GuiManager.SEND_ERROR);
+        if(isGameNameValid) {
+            twoPlayersButton.setDisable(true);
+            threePlayersButton.setDisable(true);
+            fourPlayersButton.setDisable(true);
+            backButton.setDisable(true);
 
-            guiManager.closeConnection();
-            onBackButtonClick();
+            if (!guiManager.sendRequest(MessageBuilder.buildNumberOfPlayerMessage(guiManager.getClientToken(), guiManager.getUsername(), numberOfPlayers, gameName))) {
+
+                GuiManager.showDialog((Stage) mainPane.getScene().getWindow(), GuiManager.ERROR_DIALOG_TITLE,
+                        GuiManager.SEND_ERROR);
+
+                guiManager.closeConnection();
+                onBackButtonClick();
+            }
+
+            LobbySceneController lobbySceneController = GuiManager.setLayout(mainPane.getScene(), "fxml/lobbyScene.fxml");
+
+            if (lobbySceneController != null) {
+                lobbySceneController.updateLobbyList();
+            }
         }
 
-        LobbySceneController lobbySceneController = GuiManager.setLayout(mainPane.getScene(), "fxml/lobbyScene.fxml");
 
-        if (lobbySceneController != null) {
-            lobbySceneController.updateLobbyList();
-        }
     }
 
     /**
      * Handles back button click
      */
     private void onBackButtonClick() {
+        twoPlayersButton.setDisable(true);
+        threePlayersButton.setDisable(true);
+        fourPlayersButton.setDisable(true);
+        backButton.setDisable(true);
+
         guiManager.closeConnection();
         GuiManager.setLayout(mainPane.getScene(), "fxml/connectionScene.fxml");
     }

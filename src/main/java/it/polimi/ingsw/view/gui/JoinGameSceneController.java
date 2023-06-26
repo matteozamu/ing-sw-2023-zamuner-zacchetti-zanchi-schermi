@@ -53,6 +53,9 @@ public class JoinGameSceneController {
      * Handles the back button click
      */
     private void onBackButtonClick() {
+        backButton.setDisable(true);
+        exitButton.setDisable(true);
+
         guiManager.closeConnection();
         GuiManager.setLayout(mainPane.getScene(), "fxml/startGameScene.fxml");
     }
@@ -66,14 +69,14 @@ public class JoinGameSceneController {
 
         for (int i = 0; i < games.size(); i++) {
             ControllerGame game = games.get(i);
-            Label lbl = new Label();
-            lbl.setText(game.getGame().getGameName());
-            lbl.getStyleClass().add("idRow");
+            Label label = new Label();
+            label.setText(game.getGame().getGameName());
+            label.getStyleClass().add("idRow");
 
             final int index = i;
-            lbl.setOnMouseClicked(event -> onLabelClicked(index, games));
+            label.setOnMouseClicked(event -> onLabelClicked(index, games));
 
-            childrens.add(lbl);
+            childrens.add(label);
         }
 
     }
@@ -86,9 +89,10 @@ public class JoinGameSceneController {
      */
 
     private void onLabelClicked(int index, List<ControllerGame> games) {
-        int choose = index;
+        backButton.setDisable(true);
+        exitButton.setDisable(true);
 
-        if (!guiManager.sendRequest(MessageBuilder.buildJoinGameRequest(guiManager.getClientToken(), guiManager.getUsername(), games.get(choose).getId()))) {
+        if (!guiManager.sendRequest(MessageBuilder.buildJoinGameRequest(guiManager.getClientToken(), guiManager.getUsername(), games.get(index).getId()))) {
             GuiManager.showDialog((Stage) mainPane.getScene().getWindow(), GuiManager.ERROR_DIALOG_TITLE,
                     GuiManager.SEND_ERROR);
 

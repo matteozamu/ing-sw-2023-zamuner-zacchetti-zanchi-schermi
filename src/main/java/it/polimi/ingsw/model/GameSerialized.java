@@ -1,25 +1,27 @@
 package it.polimi.ingsw.model;
 
+import it.polimi.ingsw.utility.JsonReader;
+
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
-import java.util.Map;
 
 /**
  * this class represents the game state, it is used to send the game state to the clients
  */
 public class GameSerialized implements Serializable {
     private static final long serialVersionUID = 526685006552543525L;
-
     private ArrayList<Player> players;
     private Board board;
+    private int[][] boardMatrix;
+    private List<CommonGoal> commonGoals;
 
     // attributes for each single player, initialized thanks to the username passed to the constructor
     private int points;
     private Shelf shelf;
     private PersonalGoalCard personalGoalCard;
-    private Map<Coordinate, ObjectCard> limbo;
+    private LinkedHashMap<Coordinate, ObjectCard> limbo;
     private Player currentPlayer;
 
 
@@ -28,7 +30,7 @@ public class GameSerialized implements Serializable {
      *
      * @param username is the username of the player that is asking for the game state
      */
-    public GameSerialized(String username) {
+    public GameSerialized(String username, String filepath) {
         Game instance = Game.getInstance(username);
 
         if (instance.getPlayers() != null) {
@@ -38,13 +40,25 @@ public class GameSerialized implements Serializable {
         }
 
         this.board = new Board(instance.getBoard());
-        this.limbo = new HashMap<>(instance.getLimbo());
+        this.limbo = new LinkedHashMap<>(instance.getLimbo());
         this.currentPlayer = instance.getCurrentPlayer();
+        this.commonGoals = instance.getCommonGoals();
 
         Player player = instance.getPlayerByName(username);
         this.shelf = player.getShelf();
         this.personalGoalCard = player.getPersonalGoalCard();
         this.points = player.getCurrentPoints();
+        JsonReader.readJsonConstant(filepath);
+        this.boardMatrix = JsonReader.getBoard(players.size());
+    }
+
+    /**
+     * this method returns the board matrix
+     *
+     * @return the board matrix
+     */
+    public int[][] getBoardMatrix() {
+        return boardMatrix;
     }
 
     /**
@@ -52,6 +66,7 @@ public class GameSerialized implements Serializable {
      *
      * @return the list of the players
      */
+    // TODO: Si può eliminare?
     public List<Player> getPlayers() {
         return players;
     }
@@ -113,7 +128,7 @@ public class GameSerialized implements Serializable {
      *
      * @return the limbo
      */
-    public Map<Coordinate, ObjectCard> getLimbo() {
+    public LinkedHashMap<Coordinate, ObjectCard> getLimbo() {
         return limbo;
     }
 
@@ -128,16 +143,25 @@ public class GameSerialized implements Serializable {
         return allLimboCards;
     }
 
-    @Override
-    public String toString() {
-        return "GameSerialized{" +
-                "players=" + players +
-                ", board=" + board +
-                ", points=" + points +
-                ", shelf=" + shelf +
-                ", personalGoalCard=" + personalGoalCard +
-                ", limbo=" + limbo +
-                ", currentPlayer=" + currentPlayer +
-                '}';
+    /**
+     * This method returns the list of all the common goals
+     *
+     * @return the list of all the common goals
+     */
+    public List<CommonGoal> getCommonGoals() {
+        return commonGoals;
     }
+
+//    @Override
+//    public String toString() {
+//        return "GameSerialized{" +
+//                "players=" + players +
+//                ", board=" + board +
+//                ", points=" + points +
+//                ", shelf=" + shelf +
+//                ", personalGoalCard=" + personalGoalCard +
+//                ", limbo=" + limbo +
+//                ", currentPlayer=" + currentPlayer +
+//                '}';
+//    }
 }

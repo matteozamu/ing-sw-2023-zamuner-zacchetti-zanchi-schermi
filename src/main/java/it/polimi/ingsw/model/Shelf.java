@@ -96,9 +96,9 @@ public class Shelf implements Serializable {
                 }
             }
             if (closeCards == 3) points += 2;
-            if (closeCards == 4) points += 3;
-            if (closeCards == 5) points += 5;
-            if (closeCards >= 6) points += 8;
+            else if (closeCards == 4) points += 3;
+            else if (closeCards == 5) points += 5;
+            else if (closeCards >= 6) points += 8;
         }
 
         return points;
@@ -110,15 +110,15 @@ public class Shelf implements Serializable {
      * @return A Map<Integer, Integer> where the key represents the column index and the value
      * represents the number of free cells in that column.
      */
-    public Map<Integer, Integer> getFreeCellsPerColumnMap() {
-        Map<Integer, Integer> freeCellsPerColumn = new HashMap<>();
-
-        for (int col = 0; col < COLUMNS; col++) {
-            int freeRows = getFreeCellsPerColumn(col);
-            freeCellsPerColumn.put(col, freeRows);
-        }
-        return freeCellsPerColumn;
-    }
+//    public Map<Integer, Integer> getFreeCellsPerColumnMap() {
+//        Map<Integer, Integer> freeCellsPerColumn = new HashMap<>();
+//
+//        for (int col = 0; col < COLUMNS; col++) {
+//            int freeRows = getFreeCellsPerColumn(col);
+//            freeCellsPerColumn.put(col, freeRows);
+//        }
+//        return freeCellsPerColumn;
+//    }
 
     /**
      * Returns the ObjectCard at the specified coordinate in the shelf.
@@ -130,8 +130,8 @@ public class Shelf implements Serializable {
         return grid.get(coord);
     }
 
-    @Override
-    public String toString() {
-        return "Shelf{" + "grid=" + grid + '}';
-    }
+//    @Override
+//    public String toString() {
+//        return "Shelf{" + "grid=" + grid + '}';
+//    }
 }

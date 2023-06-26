@@ -43,6 +43,60 @@ public class ControllerGame implements TimerRunListener, Serializable {
     }
 
     /**
+     * Method used to get the keys of a map as an ArrayList
+     *
+     * @param map is the map
+     * @return the ArrayList of the keys of the map
+     */
+    public static ArrayList<Coordinate> getKeysAsArrayList(Map<Coordinate, ObjectCard> map) {
+        ArrayList<Coordinate> keys = new ArrayList<>();
+        for (Map.Entry<Coordinate, ObjectCard> entry : map.entrySet()) {
+            keys.add(entry.getKey());
+        }
+        return keys;
+    }
+
+    /**
+     * Method used to reorder a list
+     *
+     * @param list1 is the list to reorder
+     * @param list2 is the list with the new order
+     */
+    public static void reorderList(List<Coordinate> list1, List<Integer> list2) {
+        List<Coordinate> tempList = new ArrayList<>(list1);
+
+        for (int i = 0; i < list2.size(); i++) {
+            int index = list2.get(i);
+            if (index >= 0 && index < tempList.size()) {
+                Coordinate element = tempList.get(index);
+                list1.set(i, element);
+            }
+        }
+    }
+
+    /**
+     * Method use to
+     *
+     * @param map   is the map to reorder
+     * @param order is the list with the new order
+     * @return the reordered map
+     */
+    public static LinkedHashMap<Coordinate, ObjectCard> reorderMap(LinkedHashMap<Coordinate, ObjectCard> map, List<Coordinate> order) {
+        LinkedHashMap<Coordinate, ObjectCard> orderedMap = new LinkedHashMap<>();
+
+        for (Coordinate coordinate : order) {
+            if (map.containsKey(coordinate)) {
+                // if the original map contains the coordinate, put it in the new map
+                ObjectCard objectCard = map.get(coordinate);
+//                System.out.println(orderedMap);
+                orderedMap.put(coordinate, objectCard);
+            }
+        }
+        System.out.println("ordered map " + orderedMap);
+        return orderedMap;
+    }
+
+    /**
      * @return the id of the game
      */
     public UUID getId() {
@@ -75,7 +129,7 @@ public class ControllerGame implements TimerRunListener, Serializable {
 
         switch (receivedMessage.getContent()) {
             case GAME_STATE:
-                return new GameStateResponse(receivedMessage.getSenderUsername(), game.getCurrentPlayer().getName());
+                return new GameStateResponse(receivedMessage.getSenderUsername(), game.getCurrentPlayer().getName(), server.getFilepath());
             case PICK_OBJECT_CARD:
                 return pickObjectCardHandler((ObjectCardRequest) receivedMessage);
             case REORDER_LIMBO_REQUEST:
@@ -95,7 +149,7 @@ public class ControllerGame implements TimerRunListener, Serializable {
      * @param LoadShelfRequest is the message received
      * @return the response to the message
      */
-    private Response loadShelfHandler(LoadShelfRequest LoadShelfRequest) {
+    protected Response loadShelfHandler(LoadShelfRequest LoadShelfRequest) {
         int col = LoadShelfRequest.getColumn();
 
         if (LoadShelfRequest.getContent() == MessageContent.LOAD_SHELF_REQUEST && game.getCurrentPlayer().getShelf().getFreeCellsPerColumn(col) >= game.getLimbo().size()) {
@@ -121,11 +175,12 @@ public class ControllerGame implements TimerRunListener, Serializable {
             if (nextPlayer == currentPlayer) {
                 setTimer();
             }
-            turnController.setActivePlayer(game.getCurrentPlayer());
-
-            sendPrivateUpdates();
+//            turnController.setActivePlayer(game.getCurrentPlayer());
 
             if (checkIfRefill()) refillBoard();
+            
+            sendPrivateUpdates();
+
             return new Response("Cards moved", MessageStatus.OK);
         } else {
             System.out.println("Column does not have enough space");
@@ -162,12 +217,18 @@ public class ControllerGame implements TimerRunListener, Serializable {
      * @return the response to the message
      */
     private Response reorderLimboHandler(ReorderLimboRequest reorderLimboRequest) {
-        List<ObjectCard> limboOrder = reorderLimboRequest.getLimboOrder();
+        ArrayList<Integer> newLimboOrder = reorderLimboRequest.getLimboOrder();
+        ArrayList<Coordinate> limboCoordinates;
 
-        if (reorderLimboRequest.getContent() == MessageContent.REORDER_LIMBO_REQUEST && limboOrder.size() == game.getLimbo().size()) {
+        if (reorderLimboRequest.getContent() == MessageContent.REORDER_LIMBO_REQUEST && newLimboOrder.size() == game.getLimbo().size()) {
             Server.LOGGER.log(Level.INFO, "Reordering limbo for player: {0}", reorderLimboRequest.getSenderUsername());
-            game.setLimboOrder(limboOrder);
 
+            limboCoordinates = getKeysAsArrayList(game.getLimbo());
+            reorderList(limboCoordinates, newLimboOrder);
+            LinkedHashMap<Coordinate, ObjectCard> newLimbo = reorderMap(game.getLimbo(), limboCoordinates);
+            game.setLimbo(newLimbo);
+            server.sendMessage(reorderLimboRequest.getSenderUsername(), new GameStateResponse(reorderLimboRequest.getSenderUsername(), game.getCurrentPlayer().getName(), server.getFilepath()));
+            //TODO si puo mandare un altro game state message cosi il limbo viene aggiornato amche lato client
             return new Response("Limbo reordered", MessageStatus.PRINT_LIMBO);
         } else {
             System.out.println("Limbo order is not valid");
@@ -188,8 +249,9 @@ public class ControllerGame implements TimerRunListener, Serializable {
         if (objectCardRequest.getContent() == MessageContent.PICK_OBJECT_CARD && c != null && isObjectCardAvailable(c)) {
             Server.LOGGER.log(Level.INFO, "Coordinate of the card: {0}", c);
             // TODO cambiare metodo con pick object card
-            this.getGame().getLimbo().put(c, this.getGame().getBoard().removeObjectCard(c));
 
+            this.getGame().getLimbo().put(c, this.getGame().getBoard().removeObjectCard(c));
+            System.out.println(this.getGame().getLimbo());
             sendPrivateUpdates();
             return new Response("Valid card!", MessageStatus.PRINT_LIMBO);
 //            return new ObjectCardResponse(objectCardRequest.getSenderUsername());
@@ -313,6 +375,10 @@ public class ControllerGame implements TimerRunListener, Serializable {
         return gameState;
     }
 
+    public void setGameState(PossibleGameState gameState) {
+        this.gameState = gameState;
+    }
+
     /**
      * @return the game
      */
@@ -374,7 +440,7 @@ public class ControllerGame implements TimerRunListener, Serializable {
         List<Player> players = game.getPlayers();
 
         for (Player player : players) {
-            server.sendMessage(player.getName(), new GameStartMessage(game.getCurrentPlayer().getName(), game.getCommonGoals(), player.getName()));
+            server.sendMessage(player.getName(), new GameStartMessage(game.getCurrentPlayer().getName(), game.getCommonGoals(), player.getName(), server.getFilepath()));
         }
 //        server.sendMessageToAll(new GameStartMessage(game.getCurrentPlayer().getName(), game.getCommonGoals(), player.getName()));
     }
@@ -388,7 +454,7 @@ public class ControllerGame implements TimerRunListener, Serializable {
         List<Player> players = game.getPlayers();
 
         for (Player player : players) {
-            server.sendMessage(player.getName(), new GameStateResponse(player.getName(), game.getCurrentPlayer().getName()));
+            server.sendMessage(player.getName(), new GameStateResponse(player.getName(), game.getCurrentPlayer().getName(), server.getFilepath()));
         }
     }
 
@@ -399,7 +465,7 @@ public class ControllerGame implements TimerRunListener, Serializable {
         List<Player> players = game.getPlayers();
 
         for (Player player : players) {
-            server.sendMessage(player.getName(), new EndGameMessage(player.getName()));
+            server.sendMessage(player.getName(), new EndGameMessage(player.getName(), server.getFilepath()));
             synchronized (server.getClientsLock()) {
                 server.getClients().remove(player.getName());
                 server.getPlayersGame().remove(player.getName());
@@ -458,7 +524,7 @@ public class ControllerGame implements TimerRunListener, Serializable {
 
         if (game.getBoard().getGrid().size() == 0) return true;
 
-        for (int i = 1; i < boardMatrix.length / 2 - 1; i++) {
+        for (int i = 1; i < boardMatrix.length / 2; i++) {
             for (int j = 1; j < boardMatrix[i].length - 1; j++) {
                 if (b.get(new Coordinate(4 - i, j - 4)) != null) {
                     if (boardMatrix[i + 1][j] == 1 && b.get(new Coordinate(4 - i + 1, j - 4)) != null) {
@@ -583,17 +649,23 @@ public class ControllerGame implements TimerRunListener, Serializable {
 //    }
     public boolean isObjectCardAvailable(Coordinate coordinate) {
         Map<Coordinate, ObjectCard> limbo = game.getLimbo();
-        Map<Coordinate, ObjectCard> board = game.getBoard().getGrid();
+        Map<Coordinate, ObjectCard> boardOrig = game.getBoard().getGrid();
         Iterator<Coordinate> iterator = limbo.keySet().iterator();
         boolean available = false;
 
-        if (!board.containsKey(coordinate))
+        Board board = new Board();
+        Map<Coordinate, ObjectCard> grid = new HashMap<>(boardOrig);
+        limbo.forEach(grid::put);
+        board.setGrid(grid);
+
+
+        if (!grid.containsKey(coordinate))
             return false;
 
-        if (!this.game.getBoard().isEmptyAtDirection(coordinate, UP) &&
-                !this.game.getBoard().isEmptyAtDirection(coordinate, DOWN) &&
-                !this.game.getBoard().isEmptyAtDirection(coordinate, RIGHT) &&
-                !this.game.getBoard().isEmptyAtDirection(coordinate, LEFT)) return false;
+        if (!board.isEmptyAtDirection(coordinate, UP) &&
+                !board.isEmptyAtDirection(coordinate, DOWN) &&
+                !board.isEmptyAtDirection(coordinate, RIGHT) &&
+                !board.isEmptyAtDirection(coordinate, LEFT)) return false;
 
         if (limbo.size() == 0) available = true;
 
@@ -636,90 +708,6 @@ public class ControllerGame implements TimerRunListener, Serializable {
         return available;
     }
 
-//    public boolean isObjectCardAvailable(Coordinate coordinate) {
-//        Map<Coordinate, ObjectCard> limbo = game.getLimbo();
-//        Map<Coordinate, ObjectCard> board = game.getBoard().getGrid();
-//        Iterator<Coordinate> iterator = limbo.keySet().iterator();
-//        boolean available = false;
-//
-//        if (!board.containsKey(coordinate))
-//            return false;
-//
-//        if (!this.game.getBoard().isEmptyAtDirection(coordinate, UP) &&
-//                !this.game.getBoard().isEmptyAtDirection(coordinate, DOWN) &&
-//                !this.game.getBoard().isEmptyAtDirection(coordinate, RIGHT) &&
-//                !this.game.getBoard().isEmptyAtDirection(coordinate, LEFT)) return false;
-//
-//        if (limbo.size() == 0) available = true;
-//
-//        if (limbo.size() == 1) {
-//            Coordinate c = iterator.next();
-//            int dx = Math.abs(c.getColumn() - coordinate.getColumn());
-//            int dy = Math.abs(c.getRow() - coordinate.getRow());
-//
-//            if ((dx == 0 && dy == 1) || (dy == 0 && dx == 1))
-//                available = true;
-//            else return false;
-//        }
-//
-//        if (limbo.size() == 2) {
-//            Coordinate c1 = iterator.next();
-//            Coordinate c2 = iterator.next();
-//            int dx = Math.abs(c1.getColumn() - c2.getColumn());
-//            int dy = Math.abs(c1.getRow() - c2.getRow());
-//
-//            if ((dx == 0 && dy == 1) || (dy == 0 && dx == 1))
-//                available = true;
-//            else return false;
-//
-//            dx = Math.abs(c2.getColumn() - coordinate.getColumn());
-//            dy = Math.abs(c2.getRow() - coordinate.getRow());
-//
-//            if ((dx == 0 && dy == 1) || (dy == 0 && dx == 1))
-//                available = true;
-//            else return false;
-//        }
-//
-//        return available;
-//    }
-
-
-    /*
-    Questo è il metodo originale, quello sopra è il metodo aggiornato
-    public boolean isObjectCardAvailable(Coordinate coordinate) {
-        return this.game.getBoard().isEmptyAtDirection(coordinate, UP) || this.game.getBoard().isEmptyAtDirection(coordinate, DOWN) || this.game.getBoard().isEmptyAtDirection(coordinate, RIGHT) || this.game.getBoard().isEmptyAtDirection(coordinate, LEFT);
-    }
-
-     */
-
-    /**
-     * Adds the object card at the specified coordinate to the limbo area.
-     * The limbo area is used to store object cards that a player has picked up but not yet placed on their shelf.
-     *
-     * @param card The object card to add to the limbo area.
-     * @throws NullPointerException If the object card is null (should not happen).
-     */
-    // TODO aggiustare metodi sapendo che il limbo è una mappa coordinata-carta per un eventuale annullamento
-    // limbo e reinserimento nella board
-    public boolean addObjectCardToLimbo(ObjectCard card) throws NullPointerException {
-        if (card == null) throw new NullPointerException("ObjectCard is null");
-        if (this.getGame().getLimbo().size() == 3) return false;
-
-//        this.getGame().getLimbo().add(card);
-        return true;
-    }
-
-    /**
-     * pick the ObjectCard from the board
-     *
-     * @param coordinate is the coordinate of the ObjectCard clicked by the user
-     * @return the ObjectCard with that Coordinate
-     */
-    public ObjectCard pickObjectCard(Coordinate coordinate) {
-        if (isObjectCardAvailable(coordinate)) {
-            return this.game.getBoard().removeObjectCard(coordinate);
-        } else return null;
-    }
 
     /**
      * Calculate the points of the currentPlayer. Each time the method counts the points starting from 0.
@@ -729,19 +717,31 @@ public class ControllerGame implements TimerRunListener, Serializable {
      */
     public int pointsCalculator() {
         int points = 0;
+        Player player = game.getCurrentPlayer();
 
         points += this.game.getCurrentPlayer().getPersonalGoalCard().calculatePoints();
+        System.out.println("PUNTI PERSONAL GOAL: " + points);
 
         for (CommonGoal c : this.game.getCommonGoals()) {
-            if (c.checkGoal(this.game.getCurrentPlayer().getShelf()))
-                points += c.updateCurrentPoints(this.game.getPlayers().size());
+            if (c.checkGoal(player.getShelf())) {
+                if (!player.getCommonGoalsReached().containsKey(c)) {
+                    int pointsToAdd = c.updateCurrentPoints(this.game.getPlayers().size());
+                    points += pointsToAdd;
+                    player.getCommonGoalsReached().put(c, pointsToAdd);
+                } else {
+                    points += player.getCommonGoalsReached().get(c);
+                }
+            }
         }
+        System.out.println("PUNTI COMMON GOALS: " + points);
 
-        points += this.game.getCurrentPlayer().getShelf().closeObjectCardsPoints();
+        points += player.getShelf().closeObjectCardsPoints();
+        System.out.println("PUNTI CARTE OGGETTO VICINE: " + points);
 
-        if (this.game.getCurrentPlayer().getShelf().isFull()) points++;
+        if (player.getShelf().isFull()) points++;
+        System.out.println("PUNTI SHELF PIENA: " + points);
 
-        this.game.getCurrentPlayer().setCurrentPoints(points);
+        player.setCurrentPoints(points);
 
         return points;
     }
@@ -750,13 +750,11 @@ public class ControllerGame implements TimerRunListener, Serializable {
      * this method is used to calculate the winner of the game at the end of it, setting the winner attribute of the
      * {@link Player player} who has the highest score to true
      */
-    private void calculateWinner() {
+    public void calculateWinner() {
         int maxPoints = 0;
-//        String winner = "";
         for (Player p : this.game.getPlayers()) {
             if (p.getCurrentPoints() > maxPoints) {
                 maxPoints = p.getCurrentPoints();
-//                winner = p.getName();
             }
         }
 
@@ -851,7 +849,7 @@ public class ControllerGame implements TimerRunListener, Serializable {
         }
 //        return new GameStateResponse(reconnectingPlayerName, turnController.getActivePlayer().getName());
 //        return new GameStateResponse(reconnectingPlayerName, game.getCurrentPlayer().getName());
-        server.sendMessage(reconnectingPlayerName, new GameStateResponse(reconnectingPlayerName, game.getCurrentPlayer().getName()));
+        server.sendMessage(reconnectingPlayerName, new GameStateResponse(reconnectingPlayerName, game.getCurrentPlayer().getName(), server.getFilepath()));
         return new ReconnectionRequest("Reconnection request", receivedConnectionMessage.getToken());
     }
 

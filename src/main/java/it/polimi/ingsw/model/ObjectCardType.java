@@ -1,10 +1,9 @@
 package it.polimi.ingsw.model;
 
-import org.fusesource.jansi.Ansi;
-import static it.polimi.ingsw.enumeration.Color.*;
-
 import java.util.List;
 import java.util.Random;
+
+import static it.polimi.ingsw.enumeration.Color.*;
 
 /**
  * Represents the type of object card in the game.
@@ -17,6 +16,10 @@ public enum ObjectCardType {
     trophy("Trophy", ANSI_CYAN, ANSI_CYAN_BACKGROUND),
     plant("Plant", ANSI_MAGENTA, ANSI_MAGENTA_BACKGROUND);
 
+    public static final List<ObjectCardType> VALUES =
+            List.of(values());
+    public static final int SIZE = VALUES.size();
+    private static final Random RANDOM = new Random();
     private final String text;
     private final String color;
     private final String colorBG;
@@ -30,6 +33,22 @@ public enum ObjectCardType {
         this.text = text;
         this.color = color;
         this.colorBG = colorBG;
+    }
+
+    //    /**
+//     * @return a coloured string
+//     */
+//    public String getColoredText() {
+//        return Ansi.ansi().fgRgb(r, g, b).a(text).reset().toString();
+//    }
+
+    /**
+     * Returns a random ObjectCardType.
+     *
+     * @return A randomly selected ObjectCardType.
+     */
+    public static ObjectCardType randomObjectCardType() {
+        return VALUES.get(RANDOM.nextInt(SIZE));
     }
 
     /**
@@ -50,27 +69,6 @@ public enum ObjectCardType {
         return text;
     }
 
-    //    /**
-//     * @return a coloured string
-//     */
-//    public String getColoredText() {
-//        return Ansi.ansi().fgRgb(r, g, b).a(text).reset().toString();
-//    }
-
-    public static final List<ObjectCardType> VALUES =
-            List.of(values());
-    public static final int SIZE = VALUES.size();
-    private static final Random RANDOM = new Random();
-
-    /**
-     * Returns a random ObjectCardType.
-     *
-     * @return A randomly selected ObjectCardType.
-     */
-    public static ObjectCardType randomObjectCardType()  {
-        return VALUES.get(RANDOM.nextInt(SIZE));
-    }
-
     /**
      * Returns the text representation of the ObjectCardType.
      *
@@ -80,6 +78,4 @@ public enum ObjectCardType {
     public String toString() {
         return text;
     }
-
-
 }

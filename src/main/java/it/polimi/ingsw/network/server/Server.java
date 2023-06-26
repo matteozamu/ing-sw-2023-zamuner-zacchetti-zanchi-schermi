@@ -20,7 +20,7 @@ import java.util.logging.SimpleFormatter;
 import java.util.stream.Collectors;
 
 /**
- * This class is the main server class which starts a Socket and a RMI server.
+ * This class is the main server class which starts a Socket and an RMI server.
  * It handles all the client regardless of whether they are Sockets or RMI
  */
 public class Server implements Runnable {
@@ -32,6 +32,7 @@ public class Server implements Runnable {
     private Map<String, ControllerGame> playersGame;
     private List<ControllerGame> controllerGames;
     private boolean waitForLoad;
+    private String filepath;
 
     private Timer moveTimer;
 
@@ -45,6 +46,7 @@ public class Server implements Runnable {
         }
         this.waitForLoad = false;
         JsonReader.readJsonConstant(confFilePath);
+        this.filepath = confFilePath;
         this.socketPort = JsonReader.getSocketPort();
         this.RMIPort = JsonReader.getRMIPort();
 
@@ -279,15 +281,18 @@ public class Server implements Runnable {
             LOGGER.log(Level.INFO, "{0} disconnected from server!", username);
 
 
-            ControllerGame controllerGame = findGameByPlayerUsername(username);
-            Player p = controllerGame.getGame().getPlayerByName(username);
-            p.setConnected(false);
+            if (playersGame.get(username) != null) {
+                ControllerGame controllerGame = findGameByPlayerUsername(username);
+                Player p = controllerGame.getGame().getPlayerByName(username);
+                p.setConnected(false);
 
-//            synchronized (clientsLock) {
-//                clients.remove(username);
-//            }
-
-            LOGGER.log(Level.INFO, "{0} removed from client list!", username);
+                LOGGER.log(Level.INFO, "{0} removed from client list!", username);
+                sendMessageToAll(controllerGame.getId(), new DisconnectionMessage(username));
+            } else {
+                synchronized (clientsLock) {
+                    clients.remove(username);
+                }
+            }
 
 //            if (controllerGame.getGameState() == PossibleGameState.GAME_ROOM) {
 //                synchronized (clientsLock) {
@@ -298,7 +303,6 @@ public class Server implements Runnable {
 //            }
 //        else {
 //                controllerGame.onConnectionMessage(new LobbyMessage(username, null, true));
-            sendMessageToAll(controllerGame.getId(), new DisconnectionMessage(username));
 //            }
         }
     }
@@ -446,5 +450,9 @@ public class Server implements Runnable {
 
     public List<ControllerGame> getControllerGames() {
         return controllerGames;
+    }
+
+    public String getFilepath() {
+        return filepath;
     }
 }

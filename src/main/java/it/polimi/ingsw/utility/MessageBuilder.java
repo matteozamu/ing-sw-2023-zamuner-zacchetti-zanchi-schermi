@@ -8,6 +8,7 @@ import it.polimi.ingsw.network.message.*;
 
 import java.util.List;
 import java.util.UUID;
+import java.util.ArrayList;
 
 public class MessageBuilder {
 
@@ -118,7 +119,7 @@ public class MessageBuilder {
      * @param order    the new order of the selected object card
      * @return the {@link ReorderLimboRequest ReorderLimboRequest} object to send to the server
      */
-    public static ReorderLimboRequest buildReorderLimboRequest(String username, String token, List<ObjectCard> order) {
+    public static ReorderLimboRequest buildReorderLimboRequest(String username, String token, ArrayList<Integer> order) {
         return new ReorderLimboRequest(username, token, order);
     }
 

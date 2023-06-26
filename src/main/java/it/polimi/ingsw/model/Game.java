@@ -23,7 +23,7 @@ public class Game implements Serializable {
     private List<CommonGoal> commonGoals;
     private boolean started;
     private int numberOfPlayers;
-    private Map<Coordinate, ObjectCard> limbo;
+    private LinkedHashMap<Coordinate, ObjectCard> limbo;
     private List<ObjectCard> limboOrder;
     private String gameName;
 
@@ -39,7 +39,7 @@ public class Game implements Serializable {
         this.commonGoals = new ArrayList<>();
         this.started = false;
         this.numberOfPlayers = -1;
-        this.limbo = new HashMap<>();
+        this.limbo = new LinkedHashMap<>();
         this.gameName = "GenericGame";
 
         loadObjectCards();
@@ -102,7 +102,7 @@ public class Game implements Serializable {
     /**
      * @return a map with the selected object cards with their coordinates
      */
-    public Map<Coordinate, ObjectCard> getLimbo() {
+    public LinkedHashMap<Coordinate, ObjectCard> getLimbo() {
         return limbo;
     }
 
@@ -111,7 +111,7 @@ public class Game implements Serializable {
      *
      * @param limbo the limbo to set
      */
-    public void setLimbo(Map<Coordinate, ObjectCard> limbo) {
+    public void setLimbo(LinkedHashMap<Coordinate, ObjectCard> limbo) {
         this.limbo = limbo;
     }
 
@@ -180,13 +180,12 @@ public class Game implements Serializable {
         return players;
     }
 
-    // TODO togliere
-    public boolean doesPlayerExists(String username) {
-        for (Player p : players) {
-            if (p.getName().equals(username)) return true;
-        }
-        return false;
-    }
+//    public boolean doesPlayerExists(String username) {
+//        for (Player p : players) {
+//            if (p.getName().equals(username)) return true;
+//        }
+//        return false;
+//    }
 
     /**
      * method used to add a player in the game
@@ -388,18 +387,18 @@ public class Game implements Serializable {
             this.personalGoalCardsContainer = gson.fromJson(reader, new TypeToken<List<PersonalGoalCard>>() {
             }.getType());
         } catch (Exception e) {
-            e.printStackTrace();
+//            e.printStackTrace();
         }
     }
 
-    @Override
-    public String toString() {
-        return "Game{" +
-                ", players=" + players +
-                ", currentPlayer=" + currentPlayer +
-                ", board=" + board +
-                ", started=" + started +
-                ", numberOfPlayers=" + numberOfPlayers +
-                '}';
-    }
+//    @Override
+//    public String toString() {
+//        return "Game{" +
+//                ", players=" + players +
+//                ", currentPlayer=" + currentPlayer +
+//                ", board=" + board +
+//                ", started=" + started +
+//                ", numberOfPlayers=" + numberOfPlayers +
+//                '}';
+//    }
 }

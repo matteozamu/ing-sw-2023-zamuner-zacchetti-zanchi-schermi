@@ -64,6 +64,10 @@ public class CliVisual {
 //
 //    }
 
+    static void clearConsole(PrintStream out) {
+        out.print("\033[H\033[2J");
+        out.flush();
+    }
 
     /**
      * print the score of the user
@@ -87,10 +91,8 @@ public class CliVisual {
         Board board = gameSerialized.getBoard();
         List<Player> players = gameSerialized.getAllPlayers();
 
-        JsonReader.readJsonConstant("GameConstant.json");
-
         int playerNumber = players.size();
-        int[][] boardMatrix = JsonReader.getBoard(playerNumber);
+        int[][] boardMatrix = gameSerialized.getBoardMatrix();
 
         if (playerNumber == 2) {
             boardView.append(" ".repeat(15));
