@@ -44,9 +44,9 @@ public class PersonalGoalCard implements Serializable {
     }
 
     /**
-     * return the points to add to the player's score
+     * return the points of the target reached
      * @param shelf is the shelf of the player
-     * @return the points to add to the player's score
+     * @return the points of the target reached
      */
     public int calculatePoints(Shelf shelf) {
         int targetReached = 0;
@@ -58,11 +58,13 @@ public class PersonalGoalCard implements Serializable {
                 }
             }
         }
-        // return the difference between the current points and the previous points, in order to add it to the current points
         switch (targetReached) {
-            case 1, 2 -> points = 1;
-            case 3, 4 -> points = 2;
-            case 5, 6 -> points = 3;
+            case 1 -> points = 1;
+            case 2 -> points = 2;
+            case 3 -> points = 4;
+            case 4 -> points = 6;
+            case 5 -> points = 9;
+            case 6 -> points = 12;
         }
         return points;
     }
