@@ -6,6 +6,43 @@ import org.junit.jupiter.api.Test;
 class CommonGoalType4Test {
 
     @Test
+    public void testToString(){
+        CommonGoalType4 commonGoalType4 = new CommonGoalType4();
+        assertEquals("commonGoalCard-4", commonGoalType4.toString());
+    }
+
+    @Test
+    public void testGetType(){
+        CommonGoalType4 commonGoalType4 = new CommonGoalType4();
+        assertEquals(4, commonGoalType4.getType());
+    }
+
+    @Test
+    public void testGetDescription(){
+        CommonGoalType4 commonGoalType4 = new CommonGoalType4();
+        assertEquals("""
+            Four lines each formed by 5 tiles of
+            maximum three different types. One
+            line can show the same or a different
+            combination of another line.""", commonGoalType4.getDescription());
+
+    }
+
+    @Test
+    public void testGetCardView(){
+        CommonGoalType4 commonGoalType4 = new CommonGoalType4();
+        assertEquals("""
+                ╔═══════════╗
+                ║           ║
+                ║ ■ ■ ■ ■ ■ ║
+                ║    x4     ║
+                ║           ║
+                ║           ║
+                ╚═══════════╝
+                """, commonGoalType4.getCardView());
+    }
+
+    @Test
     public void testCheckGoalNotEligibleShelf() {
         Shelf shelf = new Shelf();
         assertFalse(new CommonGoalType4().checkGoal(shelf));
