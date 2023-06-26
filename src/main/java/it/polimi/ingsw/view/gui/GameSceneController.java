@@ -397,7 +397,10 @@ public class GameSceneController {
 
     //TODO : implementare l'aggiornamento dei punteggi
     private void setCommonGoalCards(GameSerialized gameSerialized) {
+        commonGoalCard1StackPane.getChildren().clear();
+        commonGoalCard2StackPane.getChildren().clear();
         List<CommonGoal> commonGoals = gameSerialized.getCommonGoals();
+
 
         for (int i = 0; i < commonGoals.size(); i++) {
             String cardTypeText = commonGoals.get(i).toString();
