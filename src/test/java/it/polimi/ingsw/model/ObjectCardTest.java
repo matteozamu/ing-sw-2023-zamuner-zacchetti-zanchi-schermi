@@ -20,6 +20,12 @@ class ObjectCardTest {
     }
 
     @Test
+    void getColorBG() {
+        ObjectCard objectCard = new ObjectCard(ObjectCardType.plant, "10");
+        assertEquals("\u001B[45m", objectCard.getType().getColorBG());
+    }
+
+    @Test
     void testIllegalArgumentException() {
         assertThrows(IllegalArgumentException.class, () -> {
             new ObjectCard(ObjectCardType.plant, "");

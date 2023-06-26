@@ -2,7 +2,8 @@ package it.polimi.ingsw.model;
 
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 
 class CommonGoalTest {
 
@@ -16,25 +17,25 @@ class CommonGoalTest {
     public void testGetDescription() {
         CommonGoal goal = new CommonGoalType1();
         assertEquals("""
-            Six groups each containing at least
-            2 tiles of the same type (not necessarily
-            in the depicted shape).
-            The tiles of one group can be different
-            from those of another group.""", goal.getDescription());
+                Six groups each containing at least
+                2 tiles of the same type (not necessarily
+                in the depicted shape).
+                The tiles of one group can be different
+                from those of another group.""", goal.getDescription());
     }
 
     @Test
     public void testGetCardView() {
         CommonGoal goal = new CommonGoalType1();
         assertEquals("""
-            ╔═══════════╗
-            ║           ║
-            ║     ■     ║
-            ║     ■     ║
-            ║     x6    ║
-            ║           ║
-            ╚═══════════╝
-            """, goal.getCardView());
+                ╔═══════════╗
+                ║           ║
+                ║     ■     ║
+                ║     ■     ║
+                ║     x6    ║
+                ║           ║
+                ╚═══════════╝
+                """, goal.getCardView());
     }
 
     @Test
@@ -69,6 +70,19 @@ class CommonGoalTest {
         assertEquals(8, goal.updateCurrentPoints(4));
     }
 
+    @Test
+    public void testUpdateCurrentPointsTwoPlayers() {
+        CommonGoal goal = new CommonGoalType1();
+        assertEquals(8, goal.updateCurrentPoints(2));
+    }
+
+    @Test
+    public void testUpdateCurrentPointsZeroRemaining() {
+        CommonGoal goal = new CommonGoalType1();
+        goal.updateCurrentPoints(2);
+        goal.updateCurrentPoints(2);
+        assertEquals(0, goal.updateCurrentPoints(2));
+    }
 
 
 }
