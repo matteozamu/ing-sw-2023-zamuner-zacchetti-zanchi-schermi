@@ -145,7 +145,7 @@ public class Cli extends ClientGameManager implements DisconnectionListener {
         out.println("Server Address: " + address);
 
         int port = askPort(connection);
-//        int port = 2727;
+//        int port = 6666;
         out.println("Server Port: " + port);
 
         try {
@@ -233,7 +233,7 @@ public class Cli extends ClientGameManager implements DisconnectionListener {
      */
     private int askPort(int connection) {
 
-        int defaultPort = (connection == 0 ? 2727 : 7272);
+        int defaultPort = (connection == 0 ? 6666 : 7777);
         out.println("\nEnter the server port (default " + defaultPort + "):");
         in.reset();
 
@@ -436,7 +436,7 @@ public class Cli extends ClientGameManager implements DisconnectionListener {
     }
 
     /**
-     * Tells the other players who is playing
+     * Tells the other players who are playing
      *
      * @param turnOwner the player who is playing
      */
