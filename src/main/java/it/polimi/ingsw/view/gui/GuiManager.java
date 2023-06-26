@@ -232,8 +232,8 @@ public class GuiManager extends ClientGameManager implements DisconnectionListen
     public void firstPlayerCommunication(String username, List<CommonGoal> commonGoals) {
         Platform.runLater(lobbySceneController::onGameStart);
 
-        Platform.runLater(() ->
-                gameSceneController.setCommonGoalCards(commonGoals));
+//        Platform.runLater(() ->
+//                gameSceneController.setCommonGoalCards(commonGoals));
     }
 
     /**

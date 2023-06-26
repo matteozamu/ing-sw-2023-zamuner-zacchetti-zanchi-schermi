@@ -14,7 +14,6 @@ import javafx.scene.control.Separator;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
-import javafx.stage.Popup;
 import javafx.stage.Stage;
 
 import java.util.*;
@@ -186,6 +185,7 @@ public class GameSceneController {
 
         setShelves(gameSerialized);
         setPersonalGoalCard(gameSerialized);
+        setCommonGoalCards(gameSerialized);
         setPlayerInfo(gameSerialized);
         updateGameArea(gameSerialized);
     }
@@ -395,7 +395,10 @@ public class GameSceneController {
         }
     }
 
-    void setCommonGoalCards(List<CommonGoal> commonGoals) {
+    //TODO : implementare l'aggiornamento dei punteggi
+    private void setCommonGoalCards(GameSerialized gameSerialized) {
+        List<CommonGoal> commonGoals = gameSerialized.getCommonGoals();
+
         for (int i = 0; i < commonGoals.size(); i++) {
             String cardTypeText = commonGoals.get(i).toString();
             ImageView imageView = commonGoalCards.get(cardTypeText);
@@ -512,6 +515,7 @@ public class GameSceneController {
 
     void setLimbo(GameSerialized gameSerialized) {
         List<ObjectCard> limboCards = gameSerialized.getAllLimboCards();
+//        createNewLimboCards(limboCards);
         limboHBoxArea.getChildren().clear();
 
         if(limboCards.isEmpty()){
@@ -548,11 +552,17 @@ public class GameSceneController {
                             imageView.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> onObjectCardInLimboClick(finalI, limboCards));
                         }
                     }
-
                 }
             }
         }
     }
+
+//    private List<ObjectCard> createNewLimboCards(List<ObjectCard> limboCards) {
+//        for(ObjectCard objectCard: limboCards) {
+//            ObjectCard newObjectCard = new ObjectCard(objectCard.getType(), objectCard.getType());
+//
+//        }
+//    }
 
     private void onObjectCardInLimboClick(int index, List<ObjectCard> limboCards) {
         orderLimboObjectCards.add(index);
@@ -725,6 +735,7 @@ public class GameSceneController {
         updateBoard(gameSerialized);
         updateShelves(gameSerialized);
         updateLimbo(gameSerialized);
+        updateCommonGoalCards(gameSerialized);
         updatePlayersInfo(gameSerialized);
         // Aggiungere altri elementi da aggiornare
     }
@@ -752,6 +763,10 @@ public class GameSceneController {
 
     private void updateLimbo(GameSerialized gameSerialized) {
         setLimbo(gameSerialized);
+    }
+
+    private void updateCommonGoalCards(GameSerialized gameSerialized) {
+        setCommonGoalCards(gameSerialized);
     }
 
     private void updatePlayersInfo(GameSerialized gameSerialized) {
