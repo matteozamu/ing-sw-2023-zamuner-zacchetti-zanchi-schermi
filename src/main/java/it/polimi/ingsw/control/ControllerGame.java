@@ -43,6 +43,60 @@ public class ControllerGame implements TimerRunListener, Serializable {
     }
 
     /**
+     * Method used to get the keys of a map as an ArrayList
+     *
+     * @param map is the map
+     * @return the ArrayList of the keys of the map
+     */
+    private static ArrayList<Coordinate> getKeysAsArrayList(Map<Coordinate, ObjectCard> map) {
+        ArrayList<Coordinate> keys = new ArrayList<>();
+        for (Map.Entry<Coordinate, ObjectCard> entry : map.entrySet()) {
+            keys.add(entry.getKey());
+        }
+        return keys;
+    }
+
+    /**
+     * Method used to reorder a list
+     *
+     * @param list1 is the list to reorder
+     * @param list2 is the list with the new order
+     */
+    public static void reorderList(List<Coordinate> list1, List<Integer> list2) {
+        List<Coordinate> tempList = new ArrayList<>(list1);
+
+        for (int i = 0; i < list2.size(); i++) {
+            int index = list2.get(i);
+            if (index >= 0 && index < tempList.size()) {
+                Coordinate element = tempList.get(index);
+                list1.set(i, element);
+            }
+        }
+    }
+
+    /**
+     * Method use to
+     *
+     * @param map   is the map to reorder
+     * @param order is the list with the new order
+     * @return the reordered map
+     */
+    public static LinkedHashMap<Coordinate, ObjectCard> reorderMap(LinkedHashMap<Coordinate, ObjectCard> map, List<Coordinate> order) {
+        LinkedHashMap<Coordinate, ObjectCard> orderedMap = new LinkedHashMap<>();
+
+        for (Coordinate coordinate : order) {
+            if (map.containsKey(coordinate)) {
+                // if the original map contains the coordinate, put it in the new map
+                ObjectCard objectCard = map.get(coordinate);
+//                System.out.println(orderedMap);
+                orderedMap.put(coordinate, objectCard);
+            }
+        }
+        System.out.println("ordered map " + orderedMap);
+        return orderedMap;
+    }
+
+    /**
      * @return the id of the game
      */
     public UUID getId() {
@@ -179,57 +233,6 @@ public class ControllerGame implements TimerRunListener, Serializable {
             System.out.println("Limbo order is not valid");
             return buildInvalidResponse();
         }
-    }
-
-    /**
-     * Method used to get the keys of a map as an ArrayList
-     * @param map is the map
-     * @return the ArrayList of the keys of the map
-     */
-    private static ArrayList<Coordinate> getKeysAsArrayList(Map<Coordinate, ObjectCard> map) {
-        ArrayList<Coordinate> keys = new ArrayList<>();
-        for (Map.Entry<Coordinate, ObjectCard> entry : map.entrySet()) {
-            keys.add(entry.getKey());
-        }
-        return keys;
-    }
-
-    /**
-     * Method used to reorder a list
-     * @param list1 is the list to reorder
-     * @param list2 is the list with the new order
-     */
-    public static void reorderList(List<Coordinate> list1, List<Integer> list2) {
-        List<Coordinate> tempList = new ArrayList<>(list1);
-
-        for (int i = 0; i < list2.size(); i++) {
-            int index = list2.get(i);
-            if (index >= 0 && index < tempList.size()) {
-                Coordinate element = tempList.get(index);
-                list1.set(i, element);
-            }
-        }
-    }
-
-    /**
-     * Method use to
-     * @param map is the map to reorder
-     * @param order is the list with the new order
-     * @return the reordered map
-     */
-    public static LinkedHashMap<Coordinate, ObjectCard> reorderMap(LinkedHashMap<Coordinate, ObjectCard> map, List<Coordinate> order) {
-        LinkedHashMap<Coordinate, ObjectCard> orderedMap = new LinkedHashMap<>();
-
-        for (Coordinate coordinate : order) {
-            if (map.containsKey(coordinate)) {
-                // if the original map contains the coordinate, put it in the new map
-                ObjectCard objectCard = map.get(coordinate);
-//                System.out.println(orderedMap);
-                orderedMap.put(coordinate, objectCard);
-            }
-        }
-        System.out.println("ordered map " + orderedMap);
-        return orderedMap;
     }
 
     /**
@@ -795,21 +798,21 @@ public class ControllerGame implements TimerRunListener, Serializable {
         int points = 0;
 
         points += this.game.getCurrentPlayer().getPersonalGoalCard().calculatePoints();
-        System.out.println("PUNTI PERSONALI: " + points);
+        System.out.println("PUNTI PERSONAL GOAL: " + points);
 
         for (CommonGoal c : this.game.getCommonGoals()) {
             System.out.println("cg: " + c.getDescription());
-            if (c.checkGoal(this.game.getCurrentPlayer().getShelf())){
+            if (c.checkGoal(this.game.getCurrentPlayer().getShelf())) {
                 points += c.updateCurrentPoints(this.game.getPlayers().size());
-//                System.out.println("+ 8 PUNTI");
             }
         }
-        System.out.println("PUNTI COMUNI: " + points);
+        System.out.println("PUNTI COMMON GOALS: " + points);
 
         points += this.game.getCurrentPlayer().getShelf().closeObjectCardsPoints();
-        System.out.println("PUNTI OGGETTI: " + points);
+        System.out.println("PUNTI CARTE OGGETTO VICINE: " + points);
 
         if (this.game.getCurrentPlayer().getShelf().isFull()) points++;
+        System.out.println("PUNTI SHELF PIENA: " + points);
 
         this.game.getCurrentPlayer().setCurrentPoints(points);
 
@@ -822,11 +825,9 @@ public class ControllerGame implements TimerRunListener, Serializable {
      */
     public void calculateWinner() {
         int maxPoints = 0;
-//        String winner = "";
         for (Player p : this.game.getPlayers()) {
             if (p.getCurrentPoints() > maxPoints) {
                 maxPoints = p.getCurrentPoints();
-//                winner = p.getName();
             }
         }
 
