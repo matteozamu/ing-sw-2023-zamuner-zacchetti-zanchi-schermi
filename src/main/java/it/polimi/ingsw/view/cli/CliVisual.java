@@ -210,6 +210,11 @@ public class CliVisual {
     }
 
 
+    /**
+     * Prints the layout of the selected object cards.
+     * @param out the output stream
+     * @param gameSerialized the game serialized
+     */
     public static void printLimbo(PrintStream out, GameSerialized gameSerialized) {
         List<ObjectCard> limboCards = gameSerialized.getAllLimboCards();
         StringBuilder limbo = new StringBuilder();
