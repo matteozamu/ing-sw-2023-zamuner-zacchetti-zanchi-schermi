@@ -177,9 +177,10 @@ public class ControllerGame implements TimerRunListener, Serializable {
             }
 //            turnController.setActivePlayer(game.getCurrentPlayer());
 
+            if (checkIfRefill()) refillBoard();
+            
             sendPrivateUpdates();
 
-            if (checkIfRefill()) refillBoard();
             return new Response("Cards moved", MessageStatus.OK);
         } else {
             System.out.println("Column does not have enough space");
