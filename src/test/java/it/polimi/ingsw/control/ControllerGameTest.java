@@ -107,7 +107,7 @@ public class ControllerGameTest extends TestCase {
     }
 
     @Test
-    void testLoadShelfHandler_ValidRequest() {
+    void testLoadShelfHandler() {
         LoadShelfRequest request = new LoadShelfRequest("Armando", null, 1);
 
         ArrayList<PersonalGoal> goals = new ArrayList<>();

@@ -772,13 +772,13 @@ public class ControllerGame implements TimerRunListener, Serializable {
      */
     // TODO aggiustare metodi sapendo che il limbo è una mappa coordinata-carta per un eventuale annullamento
     // limbo e reinserimento nella board
-    public boolean addObjectCardToLimbo(ObjectCard card) throws NullPointerException {
-        if (card == null) throw new NullPointerException("ObjectCard is null");
-        if (this.getGame().getLimbo().size() == 3) return false;
-
-//        this.getGame().getLimbo().add(card);
-        return true;
-    }
+//    public boolean addObjectCardToLimbo(ObjectCard card) throws NullPointerException {
+//        if (card == null) throw new NullPointerException("ObjectCard is null");
+//        if (this.getGame().getLimbo().size() == 3) return false;
+//
+////        this.getGame().getLimbo().add(card);
+//        return true;
+//    }
 
     /**
      * pick the ObjectCard from the board
@@ -786,11 +786,11 @@ public class ControllerGame implements TimerRunListener, Serializable {
      * @param coordinate is the coordinate of the ObjectCard clicked by the user
      * @return the ObjectCard with that Coordinate
      */
-    public ObjectCard pickObjectCard(Coordinate coordinate) {
-        if (isObjectCardAvailable(coordinate)) {
-            return this.game.getBoard().removeObjectCard(coordinate);
-        } else return null;
-    }
+//    public ObjectCard pickObjectCard(Coordinate coordinate) {
+//        if (isObjectCardAvailable(coordinate)) {
+//            return this.game.getBoard().removeObjectCard(coordinate);
+//        } else return null;
+//    }
 
     /**
      * Calculate the points of the currentPlayer. Each time the method counts the points starting from 0.
@@ -982,17 +982,17 @@ public class ControllerGame implements TimerRunListener, Serializable {
         // TODO
     }
 
-    @Override
-    public String toString() {
-        return "ControllerGame{" +
-                "server=" + server +
-                ", id=" + id +
-                ", game=" + game +
-                ", selectedCoordinates=" + selectedCoordinates +
-                ", gameState=" + gameState +
-                ", isLobbyFull=" + isLobbyFull +
-                ", turnController=" + turnController +
-                '}';
-    }
+//    @Override
+//    public String toString() {
+//        return "ControllerGame{" +
+//                "server=" + server +
+//                ", id=" + id +
+//                ", game=" + game +
+//                ", selectedCoordinates=" + selectedCoordinates +
+//                ", gameState=" + gameState +
+//                ", isLobbyFull=" + isLobbyFull +
+//                ", turnController=" + turnController +
+//                '}';
+//    }
 }
 

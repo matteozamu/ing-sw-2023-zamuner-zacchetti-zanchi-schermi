@@ -7,6 +7,43 @@ import static org.junit.jupiter.api.Assertions.*;
 class CommonGoalType9Test {
 
     @Test
+    public void testToString(){
+        CommonGoalType9 commonGoalType9 = new CommonGoalType9();
+        assertEquals("commonGoalCard-9", commonGoalType9.toString());
+    }
+
+    @Test
+    public void testGetType(){
+        CommonGoalType9 commonGoalType9 = new CommonGoalType9();
+        assertEquals(9, commonGoalType9.getType());
+    }
+
+    @Test
+    public void testGetDescription(){
+        CommonGoalType9 commonGoalType9 = new CommonGoalType9();
+        assertEquals("""
+            Three columns each formed by 6 tiles Five tiles of the same type forming an X.
+            of maximum three different types. One
+            column can show the same or a different
+            combination of another column.""", commonGoalType9.getDescription());
+    }
+
+    @Test
+    public void testGetCardView(){
+        CommonGoalType9 commonGoalType9 = new CommonGoalType9();
+        assertEquals("""
+            ╔═════════════╗
+            ║      ■      ║
+            ║      ■      ║
+            ║      ■      ║
+            ║      ■  x3  ║
+            ║      ■      ║
+            ║      ■      ║
+            ╚═════════════╝
+            """, commonGoalType9.getCardView());
+    }
+
+    @Test
     public void testCheckGoalShelfNotEligible(){
         Shelf shelf = new Shelf();
         CommonGoalType9 goal = new CommonGoalType9();

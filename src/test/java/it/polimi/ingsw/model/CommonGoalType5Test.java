@@ -10,6 +10,43 @@ import java.util.ArrayList;
 class CommonGoalType5Test {
 
     @Test
+    public void testToString(){
+        CommonGoalType5 commonGoalType5 = new CommonGoalType5();
+        assertEquals("commonGoalCard-5", commonGoalType5.toString());
+    }
+
+    @Test
+    public void testGetType(){
+        CommonGoalType5 commonGoalType5 = new CommonGoalType5();
+        assertEquals(5, commonGoalType5.getType());
+    }
+
+    @Test
+    public void testGetDescription(){
+        CommonGoalType5 commonGoalType5 = new CommonGoalType5();
+        assertEquals("""
+            Four groups each containing at least
+            4 tiles of the same type (not necessarily
+            in the depicted shape).
+            The tiles of one group can be different
+            from those of another group.""", commonGoalType5.getDescription());
+    }
+
+    @Test
+    public void testGetCardView(){
+        CommonGoalType5 commonGoalType5 = new CommonGoalType5();
+        assertEquals("""
+            ╔═══════════╗
+            ║     ■     ║
+            ║     ■     ║
+            ║     ■     ║
+            ║     ■     ║
+            ║     x4    ║
+            ╚═══════════╝
+            """, commonGoalType5.getCardView());
+    }
+
+    @Test
     public void testValidGroupOfFourSquare() {
         Shelf shelf = new Shelf();
         ObjectCardType type = ObjectCardType.book;

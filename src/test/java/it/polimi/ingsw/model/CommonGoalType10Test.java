@@ -5,11 +5,21 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class CommonGoalType10Test {
 
-//    @Test
-//    public void testCheckGoalWithNullShelf() {
-//        CommonGoalType10 goal = new CommonGoalType10();
-//        assertFalse(goal.checkGoal(null));
-//    }
+
+
+    @Test
+    public void testCheckGoalWithNullShelf() {
+        CommonGoalType10 goal = new CommonGoalType10();
+        Shelf shelf = new Shelf();
+
+        shelf.getGrid().put(new Coordinate(1,1), new ObjectCard(ObjectCardType.cat, "10"));
+        shelf.getGrid().put(new Coordinate(2,1), new ObjectCard(ObjectCardType.game, "00"));
+        shelf.getGrid().put(new Coordinate(3,1), new ObjectCard(ObjectCardType.cat, "20"));
+        shelf.getGrid().put(new Coordinate(2,3), new ObjectCard(ObjectCardType.trophy, "00"));
+        shelf.getGrid().put(new Coordinate(3,0), new ObjectCard(ObjectCardType.plant, "10"));
+
+        assertFalse(goal.checkGoal(null));
+    }
 
     @Test
     public void testGetType() {
