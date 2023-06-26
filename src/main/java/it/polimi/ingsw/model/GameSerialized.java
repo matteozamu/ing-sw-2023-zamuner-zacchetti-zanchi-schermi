@@ -141,6 +141,15 @@ public class GameSerialized implements Serializable {
         return allLimboCards;
     }
 
+    /**
+     * This method returns the list of all the common goals
+     *
+     * @return the list of all the common goals
+     */
+    public List<CommonGoal> getCommonGoals() {
+        return commonGoals;
+    }
+
     @Override
     public String toString() {
         return "GameSerialized{" +
