@@ -293,9 +293,9 @@ public class GuiManager extends ClientGameManager implements DisconnectionListen
      */
     @Override
     public void printLimbo() {
-        Platform.runLater(() ->
-                gameSceneController.setLimbo(getGameSerialized())
-        );
+//        Platform.runLater(() ->
+//                gameSceneController.setLimbo(getGameSerialized())
+//        );
     }
 
     /**
