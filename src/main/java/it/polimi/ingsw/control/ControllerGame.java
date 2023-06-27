@@ -803,9 +803,11 @@ public class ControllerGame implements TimerRunListener, Serializable {
         int points = 0;
         Player player = game.getCurrentPlayer();
 
+        //check personal goal
         points += this.game.getCurrentPlayer().getPersonalGoalCard().calculatePoints(player.getShelf());
         System.out.println("PUNTI PERSONAL GOAL: " + points);
 
+        //check common goals
         for (CommonGoal c : this.game.getCommonGoals()) {
             if (c.checkGoal(player.getShelf())) {
                 if (!player.getCommonGoalsReached().containsKey(c)) {
@@ -819,9 +821,11 @@ public class ControllerGame implements TimerRunListener, Serializable {
         }
         System.out.println("PUNTI COMMON GOALS: " + points);
 
+        //check near object cards
         points += player.getShelf().closeObjectCardsPoints();
         System.out.println("PUNTI CARTE OGGETTO VICINE: " + points);
 
+        //check shelf fullness
         if (player.getShelf().isFull()) points++;
         System.out.println("PUNTI SHELF PIENA: " + points);
 

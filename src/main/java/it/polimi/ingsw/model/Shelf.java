@@ -67,30 +67,85 @@ public class Shelf implements Serializable {
         return availableRows;
     }
 
+//    public int closeObjectCardsPoints() {
+//        ObjectCard card;
+//        int closeCards;
+//        int points = 0;
+//        List<ObjectCardType> types = ObjectCardType.VALUES;
+//
+//        for (ObjectCardType type : types) {
+//            closeCards = 0;
+//            for (int row = 0; row < ROWS; row++) {
+//                for (int col = 0; col < COLUMNS; col++) {
+//                    card = getObjectCard(new Coordinate(row, col));
+//                    if (card != null && card.getType().equals(type)) {
+//                        if (getObjectCard(new Coordinate(row - 1, col)) != null) {
+//                            if (getObjectCard(new Coordinate(row - 1, col)).getType().equals(card.getType()))
+//                                closeCards++;
+//                        } else if (getObjectCard(new Coordinate(row + 1, col)) != null) {
+//                            if (getObjectCard(new Coordinate(row + 1, col)).getType().equals(card.getType()))
+//                                closeCards++;
+//                        } else if (getObjectCard(new Coordinate(row, col - 1)) != null) {
+//                            if (getObjectCard(new Coordinate(row, col - 1)).getType().equals(card.getType()))
+//                                closeCards++;
+//                        } else if (getObjectCard(new Coordinate(row, col + 1)) != null) {
+//                            if (getObjectCard(new Coordinate(row, col + 1)).getType().equals(card.getType()))
+//                                closeCards++;
+//                        }
+//                    }
+//                }
+//            }
+//            if (closeCards == 3) points += 2;
+//            else if (closeCards == 4) points += 3;
+//            else if (closeCards == 5) points += 5;
+//            else if (closeCards >= 6) points += 8;
+//        }
+//
+//        return points;
+//    }
+
     public int closeObjectCardsPoints() {
         ObjectCard card;
         int closeCards;
         int points = 0;
         List<ObjectCardType> types = ObjectCardType.VALUES;
+        int[][] visited = new int[ROWS][COLUMNS];
+
+        for (int i = 0; i < ROWS; i++) {
+            for (int j = 0; j < COLUMNS; j++) {
+                visited[i][j] = 0;
+            }
+        }
 
         for (ObjectCardType type : types) {
             closeCards = 0;
             for (int row = 0; row < ROWS; row++) {
                 for (int col = 0; col < COLUMNS; col++) {
                     card = getObjectCard(new Coordinate(row, col));
-                    if (card != null && card.getType().equals(type)) {
+                    if (card != null && card.getType().equals(type) && visited[row][col] == 0) {
                         if (getObjectCard(new Coordinate(row - 1, col)) != null) {
-                            if (getObjectCard(new Coordinate(row - 1, col)).getType().equals(card.getType()))
+                            if (getObjectCard(new Coordinate(row - 1, col)).getType().equals(card.getType())) {
                                 closeCards++;
-                        } else if (getObjectCard(new Coordinate(row + 1, col)) != null) {
-                            if (getObjectCard(new Coordinate(row + 1, col)).getType().equals(card.getType()))
+                                visited[row - 1][col] = 1;
+                            }
+                        }
+                        if (getObjectCard(new Coordinate(row + 1, col)) != null) {
+                            if (getObjectCard(new Coordinate(row + 1, col)).getType().equals(card.getType())) {
                                 closeCards++;
-                        } else if (getObjectCard(new Coordinate(row, col - 1)) != null) {
-                            if (getObjectCard(new Coordinate(row, col - 1)).getType().equals(card.getType()))
+                                visited[row + 1][col] = 1;
+                            }
+                        }
+                        if (getObjectCard(new Coordinate(row, col - 1)) != null) {
+                            if (getObjectCard(new Coordinate(row, col - 1)).getType().equals(card.getType())) {
                                 closeCards++;
-                        } else if (getObjectCard(new Coordinate(row, col + 1)) != null) {
-                            if (getObjectCard(new Coordinate(row, col + 1)).getType().equals(card.getType()))
+                                visited[row][col - 1] = 1;
+                            }
+                        }
+                        if (getObjectCard(new Coordinate(row, col + 1)) != null) {
+                            if (getObjectCard(new Coordinate(row, col + 1)).getType().equals(card.getType())) {
                                 closeCards++;
+                                visited[row][col + 1] = 1;
+                            }
                         }
                     }
                 }
