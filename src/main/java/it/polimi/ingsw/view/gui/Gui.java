@@ -26,12 +26,15 @@ public class Gui extends Application {
         stage.setFullScreen(true);
         stage.setFullScreenExitHint("");
         stage.setFullScreenExitKeyCombination(KeyCombination.NO_MATCH);
+        stage.setResizable(false);
+        stage.setHeight(1080);
+        stage.setWidth(1920);
 
-        stage.fullScreenProperty().addListener((observable, oldValue, newValue) -> {
-            if (!newValue) {
-                stage.setResizable(false);
-            }
-        });
+//        stage.fullScreenProperty().addListener((observable, oldValue, newValue) -> {
+//            if (!newValue) {
+//                stage.setResizable(false);
+//            }
+//        });
 
         InputStream is = Gui.class.getClassLoader().getResourceAsStream("img/logos/gigaTitle.png");
         if (is != null) {
