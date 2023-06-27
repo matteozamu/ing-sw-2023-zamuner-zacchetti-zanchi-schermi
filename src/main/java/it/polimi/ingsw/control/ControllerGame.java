@@ -35,7 +35,7 @@ public class ControllerGame implements TimerRunListener, Serializable {
      * Constructor for the ControllerGame class, initializing the game state.
      */
     public ControllerGame(Server server) {
-        JsonReader.readJsonConstant("GameConstant.json");
+        JsonReader.readJsonConstant(server.getFilepath());
         this.server = server;
         this.id = UUID.randomUUID();
         this.selectedCoordinates = new ArrayList<>();
@@ -178,7 +178,7 @@ public class ControllerGame implements TimerRunListener, Serializable {
 //            turnController.setActivePlayer(game.getCurrentPlayer());
 
             if (checkIfRefill()) refillBoard();
-            
+
             sendPrivateUpdates();
 
             return new Response("Cards moved", MessageStatus.OK);
