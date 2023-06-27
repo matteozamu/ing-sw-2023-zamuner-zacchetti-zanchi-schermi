@@ -13,7 +13,6 @@ import java.util.*;
  */
 public class Game implements Serializable {
     private static Map<String, Game> instanceMap = new HashMap<>();
-    private static Game instance;
     private List<ObjectCard> objectCardContainer;
     private List<CommonGoal> commonGoalContainer;
     private List<PersonalGoalCard> personalGoalCardsContainer;

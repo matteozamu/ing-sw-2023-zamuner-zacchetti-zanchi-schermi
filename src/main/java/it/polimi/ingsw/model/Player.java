@@ -1,6 +1,8 @@
 package it.polimi.ingsw.model;
 
 import java.io.Serializable;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Represents a player in the game, including their name, current points, shelf, and personal goal card.
@@ -12,6 +14,7 @@ public class Player implements Serializable {
     private Shelf shelf;
     private boolean winner = false;
     private boolean connected;
+    private Map<CommonGoal, Integer> commonGoalsReached;
 
     /**
      * Constructs a Player with the given name, shelf, and personal goal card.
@@ -26,6 +29,7 @@ public class Player implements Serializable {
         this.shelf = shelf;
         this.personalGoalCard = personalGoalCard;
         this.connected = true;
+        this.commonGoalsReached = new HashMap<>();
     }
 
     /**
@@ -42,6 +46,10 @@ public class Player implements Serializable {
      */
     public void setConnected(boolean connected) {
         this.connected = connected;
+    }
+
+    public Map<CommonGoal, Integer> getCommonGoalsReached() {
+        return commonGoalsReached;
     }
 
     /**
