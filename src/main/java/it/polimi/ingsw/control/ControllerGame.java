@@ -35,7 +35,7 @@ public class ControllerGame implements TimerRunListener, Serializable {
      * Constructor for the ControllerGame class, initializing the game state.
      */
     public ControllerGame(Server server) {
-        JsonReader.readJsonConstant("GameConstant.json");
+        JsonReader.readJsonConstant(server.getFilepath());
         this.server = server;
         this.id = UUID.randomUUID();
         this.selectedCoordinates = new ArrayList<>();
@@ -177,9 +177,10 @@ public class ControllerGame implements TimerRunListener, Serializable {
             }
 //            turnController.setActivePlayer(game.getCurrentPlayer());
 
+            if (checkIfRefill()) refillBoard();
+
             sendPrivateUpdates();
 
-            if (checkIfRefill()) refillBoard();
             return new Response("Cards moved", MessageStatus.OK);
         } else {
             System.out.println("Column does not have enough space");
@@ -772,13 +773,13 @@ public class ControllerGame implements TimerRunListener, Serializable {
      */
     // TODO aggiustare metodi sapendo che il limbo è una mappa coordinata-carta per un eventuale annullamento
     // limbo e reinserimento nella board
-//    public boolean addObjectCardToLimbo(ObjectCard card) throws NullPointerException {
-//        if (card == null) throw new NullPointerException("ObjectCard is null");
-//        if (this.getGame().getLimbo().size() == 3) return false;
-//
-////        this.getGame().getLimbo().add(card);
-//        return true;
-//    }
+    public boolean addObjectCardToLimbo(ObjectCard card) throws NullPointerException {
+        if (card == null) throw new NullPointerException("ObjectCard is null");
+        if (this.getGame().getLimbo().size() == 3) return false;
+
+//        this.getGame().getLimbo().add(card);
+        return true;
+    }
 
     /**
      * pick the ObjectCard from the board
@@ -786,11 +787,11 @@ public class ControllerGame implements TimerRunListener, Serializable {
      * @param coordinate is the coordinate of the ObjectCard clicked by the user
      * @return the ObjectCard with that Coordinate
      */
-//    public ObjectCard pickObjectCard(Coordinate coordinate) {
-//        if (isObjectCardAvailable(coordinate)) {
-//            return this.game.getBoard().removeObjectCard(coordinate);
-//        } else return null;
-//    }
+    public ObjectCard pickObjectCard(Coordinate coordinate) {
+        if (isObjectCardAvailable(coordinate)) {
+            return this.game.getBoard().removeObjectCard(coordinate);
+        } else return null;
+    }
 
     /**
      * Calculate the points of the currentPlayer. Each time the method counts the points starting from 0.
@@ -800,24 +801,31 @@ public class ControllerGame implements TimerRunListener, Serializable {
      */
     public int pointsCalculator() {
         int points = 0;
+        Player player = game.getCurrentPlayer();
 
-        points += this.game.getCurrentPlayer().getPersonalGoalCard().calculatePoints(this.game.getCurrentPlayer().getShelf());
+        points += this.game.getCurrentPlayer().getPersonalGoalCard().calculatePoints(player.getShelf());
         System.out.println("PUNTI PERSONAL GOAL: " + points);
 
         for (CommonGoal c : this.game.getCommonGoals()) {
-            if (c.checkGoal(this.game.getCurrentPlayer().getShelf())) {
-                points += c.updateCurrentPoints(this.game.getPlayers().size());
+            if (c.checkGoal(player.getShelf())) {
+                if (!player.getCommonGoalsReached().containsKey(c)) {
+                    int pointsToAdd = c.updateCurrentPoints(this.game.getPlayers().size());
+                    points += pointsToAdd;
+                    player.getCommonGoalsReached().put(c, pointsToAdd);
+                } else {
+                    points += player.getCommonGoalsReached().get(c);
+                }
             }
         }
         System.out.println("PUNTI COMMON GOALS: " + points);
 
-        points += this.game.getCurrentPlayer().getShelf().closeObjectCardsPoints();
+        points += player.getShelf().closeObjectCardsPoints();
         System.out.println("PUNTI CARTE OGGETTO VICINE: " + points);
 
-        if (this.game.getCurrentPlayer().getShelf().isFull()) points++;
+        if (player.getShelf().isFull()) points++;
         System.out.println("PUNTI SHELF PIENA: " + points);
 
-        this.game.getCurrentPlayer().setCurrentPoints(points);
+        player.setCurrentPoints(points);
 
         return points;
     }

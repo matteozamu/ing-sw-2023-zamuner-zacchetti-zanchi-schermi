@@ -593,7 +593,6 @@ public class GameSceneController {
         } else {
             myNameLabel = new Label(myName);
         }
-
         myNameLabel.setId("myNameLabel");
         myNameLabel.getStyleClass().add(CSS_PLAYERINFO_LABEL);
         playersInfoVBox.getChildren().add(myNameLabel);
@@ -618,7 +617,6 @@ public class GameSceneController {
                 } else {
                     playerNameLabel = new Label(playerName);
                 }
-
                 playerNameLabel.setId("playerNameLabel" + i);
                 playerNameLabel.getStyleClass().add(CSS_PLAYERINFO_LABEL);
                 playersInfoVBox.getChildren().add(playerNameLabel);
