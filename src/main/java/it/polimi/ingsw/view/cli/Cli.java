@@ -790,7 +790,12 @@ public class Cli extends ClientGameManager implements DisconnectionListener {
             }
         }
 
+        out.println("Press any key to exit...");
+        Scanner scanner = new Scanner(System.in);
+        scanner.nextLine(); // Attendere l'input dell'utente per terminare il programma
+        scanner.close();
 
+        System.exit(0); // Terminare il programma
     }
 
     /**
