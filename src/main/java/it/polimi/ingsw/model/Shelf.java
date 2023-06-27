@@ -118,33 +118,35 @@ public class Shelf implements Serializable {
         }
 
         for (ObjectCardType type : types) {
+            System.out.println("type: " + type);
             closeCards = 0;
             for (int row = 0; row < ROWS; row++) {
                 for (int col = 0; col < COLUMNS; col++) {
+                    System.out.println();
                     card = getObjectCard(new Coordinate(row, col));
                     if (card != null && card.getType().equals(type) && visited[row][col] == 0) {
-                        if (getObjectCard(new Coordinate(row - 1, col)) != null) {
+                        if (getObjectCard(new Coordinate(row - 1, col)) != null && visited[row - 1][col] == 0) {
                             if (getObjectCard(new Coordinate(row - 1, col)).getType().equals(card.getType())) {
                                 closeCards++;
-                                visited[row - 1][col] = 1;
+                                visited[row][col] = 1;
                             }
                         }
-                        if (getObjectCard(new Coordinate(row + 1, col)) != null) {
+                        if (getObjectCard(new Coordinate(row + 1, col)) != null && visited[row + 1][col] == 0) {
                             if (getObjectCard(new Coordinate(row + 1, col)).getType().equals(card.getType())) {
                                 closeCards++;
-                                visited[row + 1][col] = 1;
+                                visited[row][col] = 1;
                             }
                         }
-                        if (getObjectCard(new Coordinate(row, col - 1)) != null) {
+                        if (getObjectCard(new Coordinate(row, col - 1)) != null && visited[row][col - 1] == 0) {
                             if (getObjectCard(new Coordinate(row, col - 1)).getType().equals(card.getType())) {
                                 closeCards++;
-                                visited[row][col - 1] = 1;
+                                visited[row][col] = 1;
                             }
                         }
-                        if (getObjectCard(new Coordinate(row, col + 1)) != null) {
+                        if (getObjectCard(new Coordinate(row, col + 1)) != null && visited[row][col + 1] == 0) {
                             if (getObjectCard(new Coordinate(row, col + 1)).getType().equals(card.getType())) {
                                 closeCards++;
-                                visited[row][col + 1] = 1;
+                                visited[row][col] = 1;
                             }
                         }
                     }
