@@ -36,9 +36,9 @@
     </center>
 
     <bottom>
-        <VBox styleClass="botEndBox">
+        <HBox styleClass="botEndBox">
             <ImageView fx:id="exitButton" id="exitButton" fitWidth="400" fitHeight="400" preserveRatio="true" pickOnBounds="true" styleClass="button"/>
-        </VBox>
+        </HBox>
     </bottom>
 
 </BorderPane>
