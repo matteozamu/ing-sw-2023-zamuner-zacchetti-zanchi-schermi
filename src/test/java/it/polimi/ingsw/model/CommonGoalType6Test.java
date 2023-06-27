@@ -6,6 +6,40 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class CommonGoalType6Test {
 
+    @Test
+    public void testToString(){
+        CommonGoalType6 commonGoalType6 = new CommonGoalType6();
+        assertEquals("commonGoalCard-6", commonGoalType6.toString());
+    }
+
+    @Test
+    public void testGetType(){
+        CommonGoalType6 commonGoalType6 = new CommonGoalType6();
+        assertEquals(6, commonGoalType6.getType());
+    }
+
+    @Test
+    public void testGetDescription(){
+        CommonGoalType6 commonGoalType6 = new CommonGoalType6();
+        assertEquals("Two columns each formed by 6 different types of tiles.", commonGoalType6.getDescription());
+    }
+
+    @Test
+    public void testGetCardView(){
+        CommonGoalType6 commonGoalType6 = new CommonGoalType6();
+        assertEquals("""
+            ╔═════════════╗
+            ║      ■      ║
+            ║      ■      ║
+            ║      ■      ║
+            ║      ■  x2  ║
+            ║      ■      ║
+            ║      ■      ║
+            ╚═════════════╝
+            """, commonGoalType6.getCardView());
+
+    }
+
 
     @Test
     public void testCheckGoalNotEligibleShelf(){

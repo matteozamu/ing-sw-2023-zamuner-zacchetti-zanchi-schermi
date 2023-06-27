@@ -145,7 +145,7 @@ public class Cli extends ClientGameManager implements DisconnectionListener {
         out.println("Server Address: " + address);
 
         int port = askPort(connection);
-//        int port = 2727;
+//        int port = 6666;
         out.println("Server Port: " + port);
 
         try {
@@ -233,7 +233,7 @@ public class Cli extends ClientGameManager implements DisconnectionListener {
      */
     private int askPort(int connection) {
 
-        int defaultPort = (connection == 0 ? 2727 : 7272);
+        int defaultPort = (connection == 0 ? 6666 : 7777);
         out.println("\nEnter the server port (default " + defaultPort + "):");
         in.reset();
 
@@ -423,6 +423,9 @@ public class Cli extends ClientGameManager implements DisconnectionListener {
      */
     @Override
     public void gameStateUpdate() {
+        List<CommonGoal> cg = getGameSerialized().getCommonGoals();
+        out.println("The common goal cards are: \n" + cg.get(0).getDescription() + "\n" + cg.get(0).getCardView() + "\n\n" + cg.get(1).getDescription() + "\n" + cg.get(1).getCardView());
+
         CliVisual.printPersonalGoalCards(out, getGameSerialized());
         out.println();
         CliVisual.printBoard(out, getGameSerialized());
@@ -433,7 +436,7 @@ public class Cli extends ClientGameManager implements DisconnectionListener {
     }
 
     /**
-     * Tells the other players who is playing
+     * Tells the other players who are playing
      *
      * @param turnOwner the player who is playing
      */
@@ -461,7 +464,7 @@ public class Cli extends ClientGameManager implements DisconnectionListener {
     @Override
     public void firstPlayerCommunication(String username, List<CommonGoal> cg) {
         out.println("Game has started!");
-        out.println("The common goal cards are: \n" + cg.get(0).getDescription() + "\n" + cg.get(0).getCardView() + "\n\n" + cg.get(1).getDescription() + "\n" + cg.get(1).getCardView());
+//        out.println("The common goal cards are: \n" + cg.get(0).getDescription() + "\n" + cg.get(0).getCardView() + "\n\n" + cg.get(1).getDescription() + "\n" + cg.get(1).getCardView());
 
         if (username.equals(getUsername())) {
             out.println("You are the first player!\n");

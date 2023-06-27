@@ -7,6 +7,41 @@ import static org.junit.jupiter.api.Assertions.*;
 class CommonGoalType7Test {
 
     @Test
+    public void testToString(){
+        CommonGoalType7 commonGoalType7 = new CommonGoalType7();
+        assertEquals("commonGoalCard-7", commonGoalType7.toString());
+    }
+
+    @Test
+    public void testGetType(){
+        CommonGoalType7 commonGoalType7 = new CommonGoalType7();
+        assertEquals(7, commonGoalType7.getType());
+    }
+
+    @Test
+    public void testGetDescription(){
+        CommonGoalType7 commonGoalType7 = new CommonGoalType7();
+        assertEquals("""
+            Two groups each containing 4 tiles of
+            the same type in a 2x2 square. The tiles
+            of one square can be different from
+            those of the other square.""", commonGoalType7.getDescription());
+    }
+
+    @Test
+    public void testGetCardView(){
+        CommonGoalType7 commonGoalType7 = new CommonGoalType7();
+        assertEquals("""
+            ╔═══════╗
+            ║  ■ ■  ║
+            ║  ■ ■  ║
+            ║  x2   ║
+            ╚═══════╝
+            """, commonGoalType7.getCardView());
+
+    }
+
+    @Test
     public void testIsSquareWithSquare() {
         Shelf shelf = new Shelf();
         shelf.getGrid().put(new Coordinate(0, 0), new ObjectCard(ObjectCardType.cat, "00"));

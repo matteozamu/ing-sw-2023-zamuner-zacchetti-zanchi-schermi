@@ -75,6 +75,7 @@ public final class CommonGoalType1 extends CommonGoal {
             ObjectCard card = entry.getValue();
 
             if (checkAdjacent(coord, card, grid)) {
+                System.out.println(coord + " "+card+" " + checkAdjacent(coord, card, grid));
                 matchedPairs++;
                 if (matchedPairs == 6) {
                     return true;

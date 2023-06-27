@@ -7,9 +7,9 @@ import java.util.ArrayList;
  * Represents a personal goal card in the game, containing a list of personal goals and tracking the number of goals reached.
  */
 public class PersonalGoalCard implements Serializable {
-    private ArrayList<PersonalGoal> goals;
+    private final ArrayList<PersonalGoal> goals;
     private int targetsReached;
-    private String ID;
+    private final String ID;
 
     /**
      * Constructs a PersonalGoalCard with the given list of personal goals.
@@ -44,18 +44,28 @@ public class PersonalGoalCard implements Serializable {
     }
 
     /**
-     * Calculates the points earned by a player based on their personal goal card.
-     *
-     * @return The number of points earned by the player.
+     * return the points of the target reached
+     * @param shelf is the shelf of the player
+     * @return the points of the target reached
      */
-    public int calculatePoints() {
-        if (this.targetsReached == 1) return 1;
-        if (this.targetsReached == 2) return 2;
-        if (this.targetsReached == 3) return 4;
-        if (this.targetsReached == 4) return 6;
-        if (this.targetsReached == 5) return 9;
-        if (this.targetsReached == 6) return 12;
-
-        return 0;
+    public int calculatePoints(Shelf shelf) {
+        int targetReached = 0;
+        int points = 0;
+        for (PersonalGoal goal : this.goals) {
+            if (shelf.getGrid().containsKey(new Coordinate(goal.getRow(), goal.getColumn()))) {
+                if (shelf.getGrid().get(new Coordinate(goal.getRow(), goal.getColumn())) != null && shelf.getGrid().get(new Coordinate(goal.getRow(), goal.getColumn())).getType() == goal.getType()) {
+                    targetReached++;
+                }
+            }
+        }
+        switch (targetReached) {
+            case 1 -> points = 1;
+            case 2 -> points = 2;
+            case 3 -> points = 4;
+            case 4 -> points = 6;
+            case 5 -> points = 9;
+            case 6 -> points = 12;
+        }
+        return points;
     }
 }
