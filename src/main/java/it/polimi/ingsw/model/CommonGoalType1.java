@@ -38,6 +38,7 @@ public final class CommonGoalType1 extends CommonGoal {
     public String getDescription() {
         return description;
     }
+
     @Override
     public String getCardView() {
         return cardView;
@@ -68,16 +69,16 @@ public final class CommonGoalType1 extends CommonGoal {
         }
 
         Map<Coordinate, ObjectCard> grid = shelf.getGrid();
-        int matchedPairs = 0;
+        int matchedCards = 0;
 
         for (Map.Entry<Coordinate, ObjectCard> entry : grid.entrySet()) {
             Coordinate coord = entry.getKey();
             ObjectCard card = entry.getValue();
 
             if (checkAdjacent(coord, card, grid)) {
-                System.out.println(coord + " "+card+" " + checkAdjacent(coord, card, grid));
-                matchedPairs++;
-                if (matchedPairs == 6) {
+                matchedCards++;
+                // Ho dei dubbi, ma funziona. Una volta era 6
+                if (matchedCards == 12) {
                     return true;
                 }
             }
