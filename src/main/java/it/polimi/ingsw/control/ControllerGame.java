@@ -806,7 +806,7 @@ public class ControllerGame implements TimerRunListener, Serializable {
         };
 
         // start a timer of 10 seconds (10000 milliseconds)
-        reconnectionTimer.schedule(task, 5000);
+        reconnectionTimer.schedule(task, JsonReader.getTimer());
     }
 
     @Override

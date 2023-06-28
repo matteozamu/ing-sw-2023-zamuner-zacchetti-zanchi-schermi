@@ -22,6 +22,7 @@ public class JsonReader {
     private static int[][] board3Matrix;
     private static int[][] board4Matrix;
     private static List<PersonalGoalCard> personalGoalCardsContainer;
+    private static int timer;
 
     /**
      * read the program's constant from a json file
@@ -47,6 +48,7 @@ public class JsonReader {
             RMIPort = jsonObject.getInt("RMIPort");
             maxPlayers = jsonObject.getInt("maxPlayers");
             minPlayers = jsonObject.getInt("minPlayers");
+            timer = jsonObject.getInt("disconnectionTimer");
             JSONArray board2 = jsonObject.getJSONArray("board2");
             JSONArray board3 = jsonObject.getJSONArray("board3");
             JSONArray board4 = jsonObject.getJSONArray("board4");
@@ -120,5 +122,9 @@ public class JsonReader {
 
     public static List<PersonalGoalCard> getPersonalGoalCardsContainer() {
         return personalGoalCardsContainer;
+    }
+
+    public static int getTimer() {
+        return timer;
     }
 }
