@@ -295,7 +295,7 @@ public class Server implements Runnable {
                         playersGame.remove(username);
                         controllerGame.getGame().getPlayers().remove(p);
                     }
-                    sendMessageToAll(controllerGame.getId(), new LobbyMessage(username, null, true));
+                    sendMessageToAll(controllerGame.getId(), new LobbyPlayersResponse(new ArrayList<>(controllerGame.getGame().getPlayers().stream().map(Player::getName).collect(Collectors.toList()))));
                     LOGGER.log(Level.INFO, "{0} removed from client list!", username);
                 }
                 sendMessageToAll(controllerGame.getId(), new DisconnectionMessage(username));
