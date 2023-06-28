@@ -5,6 +5,7 @@ import it.polimi.ingsw.model.*;
 import it.polimi.ingsw.utility.MessageBuilder;
 import javafx.collections.ObservableList;
 import javafx.event.Event;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
@@ -518,10 +519,10 @@ public class GameSceneController {
 
     void setLimbo(GameSerialized gameSerialized) {
         List<ObjectCard> limboCards = gameSerialized.getAllLimboCards();
-//        createNewLimboCards(limboCards);
+        orderLimboObjectCards.clear();
         limboHBoxArea.getChildren().clear();
 
-        if(limboCards.isEmpty()){
+        if (limboCards.isEmpty()) {
             ImageView imageView = new ImageView(MYSHELFIE_LOGO_PATH);
             imageView.setFitHeight(MYSHELFIE_LOGO_HEIGHT);
             imageView.setFitWidth(MYSHELFIE_LOGO_WIDTH);
@@ -543,16 +544,20 @@ public class GameSceneController {
                         ImageView imageView = objectCards.get(cardNameType);
 
                         if (imageView != null) {
-                            imageView.setFitWidth(LIMBO_OBJECT_CARD_WIDTH);
-                            imageView.setFitHeight(LIMBO_OBJECT_CARD_HEIGHT);
-                            imageView.setPreserveRatio(true);
-                            imageView.setPickOnBounds(true);
-                            //imageView.setMouseTransparent(false);
+                            ImageView imageViewCopy = new ImageView(imageView.getImage());
+//                            imageViewCopy.setId(imageView.getId());
+                            imageViewCopy.getStyleClass().addAll(imageView.getStyleClass());
 
-                            limboHBoxArea.getChildren().add(imageView);
+
+                            imageViewCopy.setFitWidth(LIMBO_OBJECT_CARD_WIDTH);
+                            imageViewCopy.setFitHeight(LIMBO_OBJECT_CARD_HEIGHT);
+                            imageViewCopy.setPreserveRatio(true);
+                            imageViewCopy.setPickOnBounds(true);
+
+                            limboHBoxArea.getChildren().add(imageViewCopy);
 
                             int finalI = i;
-                            imageView.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> onObjectCardInLimboClick(finalI, limboCards));
+                            imageViewCopy.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> onObjectCardInLimboClick(finalI, limboCards));
                         }
                     }
                 }
@@ -560,18 +565,12 @@ public class GameSceneController {
         }
     }
 
-//    private List<ObjectCard> createNewLimboCards(List<ObjectCard> limboCards) {
-//        for(ObjectCard objectCard: limboCards) {
-//            ObjectCard newObjectCard = new ObjectCard(objectCard.getType(), objectCard.getType());
-//
-//        }
-//    }
-
     private void onObjectCardInLimboClick(int index, List<ObjectCard> limboCards) {
         orderLimboObjectCards.add(index);
 
         if(orderLimboObjectCards.size() == limboCards.size()) {
             onReorderLimboRequest();
+            orderLimboObjectCards.clear();
         }
     }
 

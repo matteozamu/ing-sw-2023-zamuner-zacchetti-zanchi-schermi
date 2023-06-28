@@ -62,17 +62,23 @@ public final class CommonGoalType10 extends CommonGoal {
         Map<Coordinate, ObjectCard> grid = shelf.getGrid();
         for (int i = 0; i < 4; i++){
             for (int j = 0; j < 3; j++){
-                if (grid.get(new Coordinate(i, j)) == null) return false;
+                if (grid.get(new Coordinate(i, j)) == null) {
+                    return false;
+                }
 
                 if(grid.get(new Coordinate(i,j)) == null || grid.get(new Coordinate(i+1, j+1)) == null ||
                         grid.get(new Coordinate(i+2, j+2)) == null || grid.get(new Coordinate(i, j+2)) == null ||
-                        grid.get(new Coordinate(i+2, j)) == null) return false;
+                        grid.get(new Coordinate(i+2, j)) == null) {
+                    return false;
+                }
 
                 if (grid.get(new Coordinate(i,j)).getType() == grid.get(new Coordinate(i+1, j+1)).getType() &&
                         grid.get(new Coordinate(i,j)).getType() == grid.get(new Coordinate(i+2, j+2)).getType() &&
                         grid.get(new Coordinate(i,j)).getType() == grid.get(new Coordinate(i, j+2)).getType() &&
                         grid.get(new Coordinate(i,j)).getType() == grid.get(new Coordinate(i+2, j)).getType()
-                        ) return true;
+                        ) {
+                    return true;
+                }
             }
         }
         return false;
