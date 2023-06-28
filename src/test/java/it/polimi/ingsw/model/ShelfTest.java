@@ -42,7 +42,50 @@ public class ShelfTest extends TestCase {
         s.getGrid().put(new Coordinate(2, 3), new ObjectCard(ObjectCardType.cat, "00"));
         s.getGrid().put(new Coordinate(2, 2), new ObjectCard(ObjectCardType.cat, "00"));
 
-        assertEquals(0, s.closeObjectCardsPoints());
+        assertEquals(2, s.closeObjectCardsPoints());
+    }
+
+    @Test
+    public void testCloseObjectCardsPoints3() {
+        s.getGrid().put(new Coordinate(0, 0), new ObjectCard(ObjectCardType.cat, "01"));
+        s.getGrid().put(new Coordinate(0, 1), new ObjectCard(ObjectCardType.cat, "00"));
+        s.getGrid().put(new Coordinate(1, 1), new ObjectCard(ObjectCardType.cat, "02"));
+
+        assertEquals(2, s.closeObjectCardsPoints());
+    }
+
+    @Test
+    public void testCloseObjectCardsPointsL() {
+        s.getGrid().put(new Coordinate(0, 0), new ObjectCard(ObjectCardType.cat, "00"));
+        s.getGrid().put(new Coordinate(0, 1), new ObjectCard(ObjectCardType.cat, "00"));
+        s.getGrid().put(new Coordinate(0, 2), new ObjectCard(ObjectCardType.cat, "00"));
+
+        s.getGrid().put(new Coordinate(1, 0), new ObjectCard(ObjectCardType.trophy, "02"));
+        s.getGrid().put(new Coordinate(2, 0), new ObjectCard(ObjectCardType.trophy, "02"));
+
+        s.getGrid().put(new Coordinate(0, 3), new ObjectCard(ObjectCardType.game, "02"));
+        s.getGrid().put(new Coordinate(1, 3), new ObjectCard(ObjectCardType.game, "02"));
+        s.getGrid().put(new Coordinate(2, 3), new ObjectCard(ObjectCardType.game, "02"));
+        s.getGrid().put(new Coordinate(0, 4), new ObjectCard(ObjectCardType.game, "02"));
+        s.getGrid().put(new Coordinate(1, 4), new ObjectCard(ObjectCardType.game, "02"));
+        s.getGrid().put(new Coordinate(2, 4), new ObjectCard(ObjectCardType.game, "02"));
+
+        assertEquals(10, s.closeObjectCardsPoints());
+    }
+
+    @Test
+    public void testCloseObjectCardsPointsTwoSquaresOfFour() {
+        s.getGrid().put(new Coordinate(0, 0), new ObjectCard(ObjectCardType.cat, "00"));
+        s.getGrid().put(new Coordinate(0, 1), new ObjectCard(ObjectCardType.cat, "10"));
+        s.getGrid().put(new Coordinate(1, 0), new ObjectCard(ObjectCardType.cat, "00"));
+        s.getGrid().put(new Coordinate(1, 1), new ObjectCard(ObjectCardType.cat, "20"));
+
+        s.getGrid().put(new Coordinate(4, 3), new ObjectCard(ObjectCardType.cat, "00"));
+        s.getGrid().put(new Coordinate(5, 3), new ObjectCard(ObjectCardType.cat, "10"));
+        s.getGrid().put(new Coordinate(4, 4), new ObjectCard(ObjectCardType.cat, "00"));
+        s.getGrid().put(new Coordinate(5, 4), new ObjectCard(ObjectCardType.cat, "20"));
+
+        assertEquals(6, s.closeObjectCardsPoints());
     }
 
     @Test
