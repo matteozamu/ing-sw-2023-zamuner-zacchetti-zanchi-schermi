@@ -1,9 +1,7 @@
 package it.polimi.ingsw.model;
 
 import java.io.Serializable;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 // TODO CREAZIONE MAPPA DELLA SHELF SE NO NON POSSIAMO ITERARE OPPURE
 //  CAMBiArE IL MODO DI CONTROLLARE IL NUMERO DI RIGHE DISPONIBILI
@@ -67,11 +65,96 @@ public class Shelf implements Serializable {
         return availableRows;
     }
 
+    private int dfs(ObjectCard currentTile, Set<ObjectCard> visited, ObjectCardType type, int row, int column) {
+        visited.add(currentTile);
+        int size = 1;
+        int[][] DIRECTIONS = {
+                {-1, 0}, // Spostamento verso l'alto (riga precedente)
+                {1, 0},  // Spostamento verso il basso (riga successiva)
+                {0, -1}, // Spostamento verso sinistra (colonna precedente)
+                {0, 1}   // Spostamento verso destra (colonna successiva)
+        };
+        for (int[] dir : DIRECTIONS) {
+            int x = row + dir[0];
+            int y = column + dir[1];
+            Coordinate coordinate = new Coordinate(x, y);
+            if (!grid.containsKey(coordinate)) {
+                continue; // Proceeding in other adjacent directions
+            }
+            ObjectCard nextTile = grid.get(coordinate);
+            if (!visited.contains(nextTile) && nextTile.getType() == type) {
+                size += dfs(nextTile, visited, type, x, y);
+            }
+        }
+        return size;
+    }
+
+    public List<Integer> findAdjacentTilesGroups() {
+        ObjectCard startingTile = null;
+        List<Integer> groupsSizes = new ArrayList<>();
+        Set<ObjectCard> visited = new HashSet<>();
+        int lastRow = ROWS - 1;
+        int lastColumn = COLUMNS - 1;
+        int startingRow = lastRow;
+        int startingColumn = 0;
+
+        for (Coordinate coordinate : grid.keySet()) {
+            int row = coordinate.getRow();
+            int column = coordinate.getColumn();
+            if (row > lastRow) {
+                lastRow = row;
+                lastColumn = column;
+            }
+            ObjectCard currentTile = grid.get(coordinate);
+            if (currentTile != null && (!Objects.equals(currentTile.getType(), -1))) {
+                startingTile = currentTile;
+                startingRow = row;
+                startingColumn = column;
+                break;
+            }
+        }
+
+        if (startingTile == null || Objects.equals(startingTile.getType(), -1)) {
+            return groupsSizes;
+        }
+
+        ObjectCardType startingType = startingTile.getType();
+        int groupSize = dfs(startingTile, visited, startingType, startingRow, startingColumn);
+        groupsSizes.add(groupSize);
+
+        for (Coordinate coordinate : grid.keySet()) {
+            int row = coordinate.getRow();
+            int column = coordinate.getColumn();
+            ObjectCard currentTile = grid.get(coordinate);
+            if (!visited.contains(currentTile) && currentTile.getType() != null && (!Objects.equals(currentTile.getType(), -1))) {
+                ObjectCardType currentType = currentTile.getType();
+                groupSize = dfs(currentTile, visited, currentType, row, column);
+                groupsSizes.add(groupSize);
+            }
+        }
+        return groupsSizes;
+    }
+
+    public int closeObjectCardsPoints() {
+        int points = 0;
+
+        for (int closeCard : findAdjacentTilesGroups()) {
+            if (closeCard == 3) points += 2;
+            else if (closeCard == 4) points += 3;
+            else if (closeCard == 5) points += 5;
+            else if (closeCard >= 6) points += 8;
+        }
+
+        return points;
+    }
+
 //    public int closeObjectCardsPoints() {
 //        ObjectCard card;
 //        int closeCards;
 //        int points = 0;
 //        List<ObjectCardType> types = ObjectCardType.VALUES;
+//
+//        System.out.println(grid);
 //
 //        for (ObjectCardType type : types) {
 //            closeCards = 0;
@@ -79,18 +162,104 @@ public class Shelf implements Serializable {
 //                for (int col = 0; col < COLUMNS; col++) {
 //                    card = getObjectCard(new Coordinate(row, col));
 //                    if (card != null && card.getType().equals(type)) {
-//                        if (getObjectCard(new Coordinate(row - 1, col)) != null) {
-//                            if (getObjectCard(new Coordinate(row - 1, col)).getType().equals(card.getType()))
+////                        if (getObjectCard(new Coordinate(row - 1, col)) != null) {
+////                            if (getObjectCard(new Coordinate(row - 1, col)).getType().equals(card.getType())) {
+////                                System.out.println("row: " + row + " col: " + col + " type: " + card.getType());
+////                                closeCards++;
+////                            }
+////                        }
+//                        if (getObjectCard(new Coordinate(row + 1, col)) != null) {
+//                            if (getObjectCard(new Coordinate(row + 1, col)).getType().equals(card.getType())) {
+//                                System.out.println("row: " + row + " col: " + col + " type: " + card.getType());
 //                                closeCards++;
-//                        } else if (getObjectCard(new Coordinate(row + 1, col)) != null) {
-//                            if (getObjectCard(new Coordinate(row + 1, col)).getType().equals(card.getType()))
+//                            }
+//                        }
+////                        if (getObjectCard(new Coordinate(row, col - 1)) != null) {
+////                            if (getObjectCard(new Coordinate(row, col - 1)).getType().equals(card.getType())) {
+////                                System.out.println("row: " + row + " col: " + col + " type: " + card.getType());
+////                                closeCards++;
+////                            }
+////                        }
+//                        if (getObjectCard(new Coordinate(row, col + 1)) != null) {
+//                            if (getObjectCard(new Coordinate(row, col + 1)).getType().equals(card.getType())) {
+//                                System.out.println("row: " + row + " col: " + col + " type: " + card.getType());
 //                                closeCards++;
-//                        } else if (getObjectCard(new Coordinate(row, col - 1)) != null) {
-//                            if (getObjectCard(new Coordinate(row, col - 1)).getType().equals(card.getType()))
+//                            }
+//                        }
+//
+//                        if (getObjectCard(new Coordinate(row, col - 1)) != null && getObjectCard(new Coordinate(row, col - 1)).getType().equals(card.getType())) {
+//                            if (getObjectCard(new Coordinate(row, col + 1)) == null || !getObjectCard(new Coordinate(row, col + 1)).getType().equals(card.getType())) {
+//                                if (getObjectCard(new Coordinate(row + 1, col)) == null || !getObjectCard(new Coordinate(row + 1, col)).getType().equals(card.getType())) {
+//                                    closeCards++;
+//                                }
+//                            }
+//                        }
+//
+//                        if (getObjectCard(new Coordinate(row - 1, col)) != null && getObjectCard(new Coordinate(row - 1, col)).getType().equals(card.getType())) {
+//                            if (getObjectCard(new Coordinate(row, col + 1)) == null || !getObjectCard(new Coordinate(row, col + 1)).getType().equals(card.getType())) {
+//                                if (getObjectCard(new Coordinate(row + 1, col)) == null || !getObjectCard(new Coordinate(row + 1, col)).getType().equals(card.getType())) {
+//                                    closeCards++;
+//                                }
+//                            }
+//                        }
+//                    }
+//                }
+//            }
+//            if (closeCards == 3) points += 2;
+//            else if (closeCards == 4) points += 3;
+//            else if (closeCards == 5) points += 5;
+//            else if (closeCards >= 6) points += 8;
+//
+//            System.out.println(type + ": " + closeCards + " points: " + points);
+//        }
+//
+//        return points;
+//    }
+
+//    public int closeObjectCardsPoints() {
+//        ObjectCard card;
+//        int closeCards;
+//        int points = 0;
+//        List<ObjectCardType> types = ObjectCardType.VALUES;
+//        int[][] visited = new int[ROWS][COLUMNS];
+//
+//        for (int i = 0; i < ROWS; i++) {
+//            for (int j = 0; j < COLUMNS; j++) {
+//                visited[i][j] = 0;
+//            }
+//        }
+//
+//        for (ObjectCardType type : types) {
+//            System.out.println("type: " + type);
+//            closeCards = 0;
+//            for (int row = 0; row < ROWS; row++) {
+//                for (int col = 0; col < COLUMNS; col++) {
+//                    System.out.println();
+//                    card = getObjectCard(new Coordinate(row, col));
+//                    if (card != null && card.getType().equals(type) && visited[row][col] == 0) {
+//                        if (getObjectCard(new Coordinate(row - 1, col)) != null && visited[row - 1][col] == 0) {
+//                            if (getObjectCard(new Coordinate(row - 1, col)).getType().equals(card.getType())) {
 //                                closeCards++;
-//                        } else if (getObjectCard(new Coordinate(row, col + 1)) != null) {
-//                            if (getObjectCard(new Coordinate(row, col + 1)).getType().equals(card.getType()))
+//                                visited[row][col] = 1;
+//                            }
+//                        }
+//                        if (getObjectCard(new Coordinate(row + 1, col)) != null && visited[row + 1][col] == 0) {
+//                            if (getObjectCard(new Coordinate(row + 1, col)).getType().equals(card.getType())) {
 //                                closeCards++;
+//                                visited[row][col] = 1;
+//                            }
+//                        }
+//                        if (getObjectCard(new Coordinate(row, col - 1)) != null && visited[row][col - 1] == 0) {
+//                            if (getObjectCard(new Coordinate(row, col - 1)).getType().equals(card.getType())) {
+//                                closeCards++;
+//                                visited[row][col] = 1;
+//                            }
+//                        }
+//                        if (getObjectCard(new Coordinate(row, col + 1)) != null && visited[row][col + 1] == 0) {
+//                            if (getObjectCard(new Coordinate(row, col + 1)).getType().equals(card.getType())) {
+//                                closeCards++;
+//                                visited[row][col] = 1;
+//                            }
 //                        }
 //                    }
 //                }
@@ -103,63 +272,6 @@ public class Shelf implements Serializable {
 //
 //        return points;
 //    }
-
-    public int closeObjectCardsPoints() {
-        ObjectCard card;
-        int closeCards;
-        int points = 0;
-        List<ObjectCardType> types = ObjectCardType.VALUES;
-        int[][] visited = new int[ROWS][COLUMNS];
-
-        for (int i = 0; i < ROWS; i++) {
-            for (int j = 0; j < COLUMNS; j++) {
-                visited[i][j] = 0;
-            }
-        }
-
-        for (ObjectCardType type : types) {
-            System.out.println("type: " + type);
-            closeCards = 0;
-            for (int row = 0; row < ROWS; row++) {
-                for (int col = 0; col < COLUMNS; col++) {
-                    System.out.println();
-                    card = getObjectCard(new Coordinate(row, col));
-                    if (card != null && card.getType().equals(type) && visited[row][col] == 0) {
-                        if (getObjectCard(new Coordinate(row - 1, col)) != null && visited[row - 1][col] == 0) {
-                            if (getObjectCard(new Coordinate(row - 1, col)).getType().equals(card.getType())) {
-                                closeCards++;
-                                visited[row][col] = 1;
-                            }
-                        }
-                        if (getObjectCard(new Coordinate(row + 1, col)) != null && visited[row + 1][col] == 0) {
-                            if (getObjectCard(new Coordinate(row + 1, col)).getType().equals(card.getType())) {
-                                closeCards++;
-                                visited[row][col] = 1;
-                            }
-                        }
-                        if (getObjectCard(new Coordinate(row, col - 1)) != null && visited[row][col - 1] == 0) {
-                            if (getObjectCard(new Coordinate(row, col - 1)).getType().equals(card.getType())) {
-                                closeCards++;
-                                visited[row][col] = 1;
-                            }
-                        }
-                        if (getObjectCard(new Coordinate(row, col + 1)) != null && visited[row][col + 1] == 0) {
-                            if (getObjectCard(new Coordinate(row, col + 1)).getType().equals(card.getType())) {
-                                closeCards++;
-                                visited[row][col] = 1;
-                            }
-                        }
-                    }
-                }
-            }
-            if (closeCards == 3) points += 2;
-            else if (closeCards == 4) points += 3;
-            else if (closeCards == 5) points += 5;
-            else if (closeCards >= 6) points += 8;
-        }
-
-        return points;
-    }
 
     /**
      * Returns a map with the number of free cells for each column in the Shelf.

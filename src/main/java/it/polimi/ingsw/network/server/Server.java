@@ -287,8 +287,6 @@ public class Server implements Runnable {
 
                 LOGGER.log(Level.INFO, "{0} set connected false!", username);
 
-                System.out.println("controllerGame.getGameState() " + controllerGame.getGameState());
-
                 if (controllerGame.getGameState() == PossibleGameState.GAME_ROOM) {
                     synchronized (clientsLock) {
                         clients.remove(username);
@@ -304,17 +302,6 @@ public class Server implements Runnable {
                     clients.remove(username);
                 }
             }
-
-//            if (controllerGame.getGameState() == PossibleGameState.GAME_ROOM) {
-//                synchronized (clientsLock) {
-//                    clients.remove(username);
-//                }
-//                controllerGame.onMessage(new LobbyMessage(username, null, true));
-//            LOGGER.log(Level.INFO, "{0} removed from client list!", username);
-//            }
-//        else {
-//                controllerGame.onConnectionMessage(new LobbyMessage(username, null, true));
-//            }
         }
     }
 

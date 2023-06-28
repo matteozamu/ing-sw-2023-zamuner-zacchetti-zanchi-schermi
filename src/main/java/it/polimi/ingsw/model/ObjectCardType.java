@@ -35,7 +35,7 @@ public enum ObjectCardType {
         this.colorBG = colorBG;
     }
 
-    //    /**
+//        /**
 //     * @return a coloured string
 //     */
 //    public String getColoredText() {
@@ -54,9 +54,9 @@ public enum ObjectCardType {
     /**
      * @return the color of the object card
      */
-//    public String getColor() {
-//        return color;
-//    }
+    public String getColor() {
+        return color;
+    }
 
     /**
      * @return the color of the background of the object card

@@ -1,6 +1,9 @@
 package it.polimi.ingsw.model;
 
 import org.junit.jupiter.api.Test;
+
+import static it.polimi.ingsw.model.Shelf.COLUMNS;
+import static it.polimi.ingsw.model.Shelf.ROWS;
 import static org.junit.jupiter.api.Assertions.*;
 
 class CommonGoalType12Test {
@@ -59,22 +62,30 @@ class CommonGoalType12Test {
         shelf.getGrid().put(new Coordinate(3,0), new ObjectCard(ObjectCardType.randomObjectCardType(), "00"));
         shelf.getGrid().put(new Coordinate(4,0), new ObjectCard(ObjectCardType.randomObjectCardType(), "00"));
         shelf.getGrid().put(new Coordinate(5,0), new ObjectCard(ObjectCardType.randomObjectCardType(), "00"));
+
         shelf.getGrid().put(new Coordinate(0,1), new ObjectCard(ObjectCardType.randomObjectCardType(), "00"));
         shelf.getGrid().put(new Coordinate(1,1), new ObjectCard(ObjectCardType.randomObjectCardType(), "00"));
         shelf.getGrid().put(new Coordinate(2,1), new ObjectCard(ObjectCardType.randomObjectCardType(), "00"));
         shelf.getGrid().put(new Coordinate(3,1), new ObjectCard(ObjectCardType.randomObjectCardType(), "00"));
         shelf.getGrid().put(new Coordinate(4,1), new ObjectCard(ObjectCardType.randomObjectCardType(), "00"));
+
         shelf.getGrid().put(new Coordinate(0,2), new ObjectCard(ObjectCardType.randomObjectCardType(), "00"));
         shelf.getGrid().put(new Coordinate(1,2), new ObjectCard(ObjectCardType.randomObjectCardType(), "00"));
         shelf.getGrid().put(new Coordinate(2,2), new ObjectCard(ObjectCardType.randomObjectCardType(), "00"));
         shelf.getGrid().put(new Coordinate(3,2), new ObjectCard(ObjectCardType.randomObjectCardType(), "00"));
+
         shelf.getGrid().put(new Coordinate(0,3), new ObjectCard(ObjectCardType.randomObjectCardType(), "00"));
         shelf.getGrid().put(new Coordinate(1,3), new ObjectCard(ObjectCardType.randomObjectCardType(), "00"));
         shelf.getGrid().put(new Coordinate(2,3), new ObjectCard(ObjectCardType.randomObjectCardType(), "00"));
+
         shelf.getGrid().put(new Coordinate(0,4), new ObjectCard(ObjectCardType.randomObjectCardType(), "00"));
         shelf.getGrid().put(new Coordinate(1,4), new ObjectCard(ObjectCardType.randomObjectCardType(), "00"));
 
+        shelf.getGrid().put(new Coordinate(5,1), new ObjectCard(ObjectCardType.randomObjectCardType(), "00"));
+
+
         assertTrue(goal.checkGoal(shelf));
+
     }
 
 
@@ -111,20 +122,24 @@ class CommonGoalType12Test {
         CommonGoalType12 goal = new CommonGoalType12();
         Shelf shelf = new Shelf();
         shelf.getGrid().put(new Coordinate(0,0), new ObjectCard(ObjectCardType.randomObjectCardType(), "00"));
+        shelf.getGrid().put(new Coordinate(1,0), new ObjectCard(ObjectCardType.randomObjectCardType(), "00"));
         shelf.getGrid().put(new Coordinate(2,0), new ObjectCard(ObjectCardType.randomObjectCardType(), "00"));
         shelf.getGrid().put(new Coordinate(3,0), new ObjectCard(ObjectCardType.randomObjectCardType(), "00"));
-        shelf.getGrid().put(new Coordinate(4,0), new ObjectCard(ObjectCardType.randomObjectCardType(), "00"));
-        shelf.getGrid().put(new Coordinate(5,0), new ObjectCard(ObjectCardType.randomObjectCardType(), "00"));
+//        shelf.getGrid().put(new Coordinate(4,0), new ObjectCard(ObjectCardType.randomObjectCardType(), "00"));
+
+        shelf.getGrid().put(new Coordinate(0,1), new ObjectCard(ObjectCardType.randomObjectCardType(), "00"));
         shelf.getGrid().put(new Coordinate(1,1), new ObjectCard(ObjectCardType.randomObjectCardType(), "00"));
         shelf.getGrid().put(new Coordinate(2,1), new ObjectCard(ObjectCardType.randomObjectCardType(), "00"));
         shelf.getGrid().put(new Coordinate(3,1), new ObjectCard(ObjectCardType.randomObjectCardType(), "00"));
-        shelf.getGrid().put(new Coordinate(4,1), new ObjectCard(ObjectCardType.randomObjectCardType(), "00"));
+
         shelf.getGrid().put(new Coordinate(0,2), new ObjectCard(ObjectCardType.randomObjectCardType(), "00"));
         shelf.getGrid().put(new Coordinate(1,2), new ObjectCard(ObjectCardType.randomObjectCardType(), "00"));
         shelf.getGrid().put(new Coordinate(2,2), new ObjectCard(ObjectCardType.randomObjectCardType(), "00"));
         shelf.getGrid().put(new Coordinate(3,2), new ObjectCard(ObjectCardType.randomObjectCardType(), "00"));
+
         shelf.getGrid().put(new Coordinate(0,3), new ObjectCard(ObjectCardType.randomObjectCardType(), "00"));
-        shelf.getGrid().put(new Coordinate(2,3), new ObjectCard(ObjectCardType.randomObjectCardType(), "00"));
+        shelf.getGrid().put(new Coordinate(1,3), new ObjectCard(ObjectCardType.randomObjectCardType(), "00"));
+
         shelf.getGrid().put(new Coordinate(0,4), new ObjectCard(ObjectCardType.randomObjectCardType(), "00"));
 
         assertFalse(goal.checkDescendingStair(shelf));
@@ -134,7 +149,7 @@ class CommonGoalType12Test {
     public void testCheckAscendingStairReturnsTrue(){
         CommonGoalType12 goal = new CommonGoalType12();
         Shelf shelf = new Shelf();
-        shelf.getGrid().put(new Coordinate(0,4), new ObjectCard(ObjectCardType.randomObjectCardType(), "00"));
+        shelf.getGrid().put(new Coordinate(0,0), new ObjectCard(ObjectCardType.randomObjectCardType(), "00"));
         shelf.getGrid().put(new Coordinate(1,4), new ObjectCard(ObjectCardType.randomObjectCardType(), "00"));
         shelf.getGrid().put(new Coordinate(2,4), new ObjectCard(ObjectCardType.randomObjectCardType(), "00"));
         shelf.getGrid().put(new Coordinate(3,4), new ObjectCard(ObjectCardType.randomObjectCardType(), "00"));
@@ -166,21 +181,37 @@ class CommonGoalType12Test {
         shelf.getGrid().put(new Coordinate(0,4), new ObjectCard(ObjectCardType.randomObjectCardType(), "00"));
         shelf.getGrid().put(new Coordinate(1,4), new ObjectCard(ObjectCardType.randomObjectCardType(), "00"));
         shelf.getGrid().put(new Coordinate(2,4), new ObjectCard(ObjectCardType.randomObjectCardType(), "00"));
-        shelf.getGrid().put(new Coordinate(4,4), new ObjectCard(ObjectCardType.randomObjectCardType(), "00"));
-        shelf.getGrid().put(new Coordinate(5,4), new ObjectCard(ObjectCardType.randomObjectCardType(), "00"));
+
         shelf.getGrid().put(new Coordinate(0,3), new ObjectCard(ObjectCardType.randomObjectCardType(), "00"));
         shelf.getGrid().put(new Coordinate(1,3), new ObjectCard(ObjectCardType.randomObjectCardType(), "00"));
         shelf.getGrid().put(new Coordinate(2,3), new ObjectCard(ObjectCardType.randomObjectCardType(), "00"));
-        shelf.getGrid().put(new Coordinate(4,3), new ObjectCard(ObjectCardType.randomObjectCardType(), "00"));
+
         shelf.getGrid().put(new Coordinate(0,2), new ObjectCard(ObjectCardType.randomObjectCardType(), "00"));
         shelf.getGrid().put(new Coordinate(1,2), new ObjectCard(ObjectCardType.randomObjectCardType(), "00"));
         shelf.getGrid().put(new Coordinate(2,2), new ObjectCard(ObjectCardType.randomObjectCardType(), "00"));
-        shelf.getGrid().put(new Coordinate(3,2), new ObjectCard(ObjectCardType.randomObjectCardType(), "00"));
+
+        shelf.getGrid().put(new Coordinate(0,1), new ObjectCard(ObjectCardType.randomObjectCardType(), "00"));
         shelf.getGrid().put(new Coordinate(1,1), new ObjectCard(ObjectCardType.randomObjectCardType(), "00"));
         shelf.getGrid().put(new Coordinate(2,1), new ObjectCard(ObjectCardType.randomObjectCardType(), "00"));
+
         shelf.getGrid().put(new Coordinate(0,0), new ObjectCard(ObjectCardType.randomObjectCardType(), "00"));
+        shelf.getGrid().put(new Coordinate(1,0), new ObjectCard(ObjectCardType.randomObjectCardType(), "00"));
+        shelf.getGrid().put(new Coordinate(2,0), new ObjectCard(ObjectCardType.randomObjectCardType(), "00"));
 
         assertFalse(goal.checkAscendingStair(shelf));
     }
 
+    @Test
+    public void testFullShelf(){
+        CommonGoalType12 goal = new CommonGoalType12();
+        Shelf shelf = new Shelf();
+
+        for (int i = 0; i < ROWS; i++){
+            for (int j = 0; j < COLUMNS; j++){
+                shelf.getGrid().put(new Coordinate(i,j), new ObjectCard(ObjectCardType.randomObjectCardType(), "00"));
+            }
+        }
+
+        assertTrue(goal.checkGoal(shelf));
+    }
 }
