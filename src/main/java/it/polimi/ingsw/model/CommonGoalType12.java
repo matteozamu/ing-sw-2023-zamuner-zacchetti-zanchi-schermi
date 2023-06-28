@@ -83,8 +83,8 @@ public final class CommonGoalType12 extends CommonGoal {
                 }
             }
 
-            patternOne = patternOne && (countD == maxHeightPatternOne);
-            patternThree = patternThree && (countD == maxHeightPatternThree);
+            patternOne = patternOne && (countD >= maxHeightPatternOne);
+            patternThree = patternThree && (countD >= maxHeightPatternThree);
 
             if (!patternOne && !patternThree) {
                 break;
@@ -107,8 +107,8 @@ public final class CommonGoalType12 extends CommonGoal {
                 }
             }
 
-            patternTwo = patternTwo && (countA == maxHeightPatternTwo);
-            patternFour = patternFour && (countA == maxHeightPatternFour);
+            patternTwo = patternTwo && (countA >= maxHeightPatternTwo);
+            patternFour = patternFour && (countA >= maxHeightPatternFour);
 
             if (!patternTwo && !patternFour) {
                 break;
