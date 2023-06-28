@@ -3,10 +3,17 @@ package it.polimi.ingsw.model;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 class PlayerTest {
+
+    @Test
+    public void testGetCommonGoalsReached(){
+        HashMap<CommonGoal, Integer> commonGoalsReached = new HashMap<>();
+        assertEquals(commonGoalsReached, new Player("federica", new Shelf(), null).getCommonGoalsReached());
+    }
 
     @Test
     void getName() {
