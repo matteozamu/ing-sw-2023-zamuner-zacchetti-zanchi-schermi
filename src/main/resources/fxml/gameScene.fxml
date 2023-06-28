@@ -19,7 +19,6 @@
 
                 <StackPane fx:id="boardStackPaneArea" styleClass="boardStackPaneArea">
                     <ImageView fx:id="boardImage" fitHeight="656.0" fitWidth="656.0" styleClass="boardImage">
-
                     </ImageView>
 
                     <GridPane fx:id="boardGridPane" hgap="6.0" maxHeight="592.0" maxWidth="592.0" styleClass="boardGridPane" translateX="-2.0" vgap="6.0" StackPane.alignment="CENTER">
@@ -30,10 +29,9 @@
 
                 <HBox fx:id="commonGoalCardsHBoxArea" styleClass="commonGoalCardsHBoxArea">
                     <StackPane fx:id="commonGoalCard1StackPane">
-                        <ImageView fx:id="scoring81" fitHeight="39.5" fitWidth="39.5" rotate="-8.0" styleClass="scoring-8" translateX="32.2" translateY="-3.5" />
                     </StackPane>
+
                     <StackPane fx:id="commonGoalCard2StackPane">
-                        <ImageView fx:id="scoring82" fitHeight="39.5" fitWidth="39.5" rotate="-8.0" styleClass="scoring-8" translateX="32.2" translateY="-3.5" />
                     </StackPane>
                 </HBox>
 
@@ -52,29 +50,24 @@
                     <ImageView id="arrowShelf" fx:id="arrowShelf4" fitHeight="30" fitWidth="30" layoutX="309.0" layoutY="40.0" styleClass="button" />
                 </AnchorPane>
 
-                <ScrollPane fx:id="shelfScrollPane" prefHeight="420.0" prefWidth="400.0" fitToWidth="true" styleClass="shelfScrollPane" translateY="68.0">
+                <ScrollPane fx:id="shelfScrollPane" fitToWidth="true" prefHeight="420.0" prefWidth="400.0" styleClass="shelfScrollPane" translateY="68.0">
                     <HBox fx:id="shelfHBoxImages" styleClass="shelfHBoxImages">
                         <StackPane fx:id="myStackPane">
-
                         </StackPane>
 
                         <StackPane fx:id="shelfStackPane2">
-
                         </StackPane>
 
                         <StackPane fx:id="shelfStackPane3">
-
                         </StackPane>
 
                         <StackPane fx:id="shelfStackPane4">
-
                         </StackPane>
 
                     </HBox>
                 </ScrollPane>
 
                 <StackPane fx:id="actionListStackPane" maxHeight="70.0" maxWidth="400.0" minHeight="70.0" minWidth="400.0" prefHeight="70.0" prefWidth="400.0" styleClass="actionList" translateY="86.0">
-
                 </StackPane>
 
             </VBox>
@@ -84,6 +77,10 @@
             <VBox fx:id="playersInfoPersonalGoalCardVBox" maxWidth="133.0" minWidth="133.0" prefWidth="133.0">
                 <VBox fx:id="playersInfoVBox" maxHeight="169.0" maxWidth="133.0" minHeight="169.0" minWidth="133.0" prefHeight="169.0" prefWidth="133.0" translateY="20.0">
                 </VBox>
+
+<!--                <Label fx:id="infoLabel" maxWidth="133.0" minWidth="133.0" prefWidth="133.0" translateY="67.0" >-->
+<!--                    -->
+<!--                </Label>-->
 
                 <StackPane fx:id="personalGoalCardPane" styleClass="personalGoalCardPane" translateY="120.0">
                 </StackPane>
