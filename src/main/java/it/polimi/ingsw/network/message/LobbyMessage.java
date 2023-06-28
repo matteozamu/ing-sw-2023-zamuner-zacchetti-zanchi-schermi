@@ -19,7 +19,7 @@ public class LobbyMessage extends Message {
         return this.disconnection;
     }
 
-    // a Lobby message is equal to an other (in our case) if its the same message or if it has the same user sender name
+    // a Lobby message is equal to another (in our case) if it is the same message or if it has the same user sender name
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

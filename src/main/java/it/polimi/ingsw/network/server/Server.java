@@ -280,13 +280,24 @@ public class Server implements Runnable {
         if (username != null) {
             LOGGER.log(Level.INFO, "{0} disconnected from server!", username);
 
-
             if (playersGame.get(username) != null) {
                 ControllerGame controllerGame = findGameByPlayerUsername(username);
                 Player p = controllerGame.getGame().getPlayerByName(username);
                 p.setConnected(false);
 
-                LOGGER.log(Level.INFO, "{0} removed from client list!", username);
+                LOGGER.log(Level.INFO, "{0} set connected false!", username);
+
+                System.out.println("controllerGame.getGameState() " + controllerGame.getGameState());
+
+                if (controllerGame.getGameState() == PossibleGameState.GAME_ROOM) {
+                    synchronized (clientsLock) {
+                        clients.remove(username);
+                        playersGame.remove(username);
+                        controllerGame.getGame().getPlayers().remove(p);
+                    }
+                    sendMessageToAll(controllerGame.getId(), new LobbyMessage(username, null, true));
+                    LOGGER.log(Level.INFO, "{0} removed from client list!", username);
+                }
                 sendMessageToAll(controllerGame.getId(), new DisconnectionMessage(username));
             } else {
                 synchronized (clientsLock) {
@@ -329,19 +340,6 @@ public class Server implements Runnable {
         }
         LOGGER.log(Level.INFO, "Send to all: {0}", message);
     }
-
-//    public void sendMessageToAll(Message message) {
-//        for (Map.Entry<String, Connection> client : clients.entrySet()) {
-//            if (client.getValue() != null && client.getValue().isConnected()) {
-//                try {
-//                    client.getValue().sendMessage(message);
-//                } catch (IOException e) {
-//                    LOGGER.severe(e.getMessage());
-//                }
-//            }
-//        }
-//        LOGGER.log(Level.INFO, "Send to all: {0}", message);
-//    }
 
     /**
      * send a message to a single client

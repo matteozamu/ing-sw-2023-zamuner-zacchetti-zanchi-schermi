@@ -325,9 +325,13 @@ public class ControllerGame implements TimerRunListener, Serializable {
 
                 server.sendMessageToAll(this.id, new LobbyPlayersResponse(new ArrayList<>(inLobbyPlayers.stream().map(Player::getName).collect(Collectors.toList()))));
             } else {
+                System.out.println("Lobby is full");
                 return buildInvalidResponse();
             }
         } else {
+            System.out.println("Username is not available");
+            System.out.println(isUsernameAvailable(lobbyMessage.getSenderUsername()));
+            System.out.println(lobbyMessage.isDisconnection());
             return buildInvalidResponse();
         }
 
