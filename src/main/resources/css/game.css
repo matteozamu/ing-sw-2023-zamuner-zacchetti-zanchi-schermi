@@ -1115,20 +1115,44 @@
 
 /* Scoring */
 
-#scoring-2 {
+#scoring-20 {
     -fx-image: url("/img/scoring_tokens/scoring-2.jpg");
 }
 
-#scoring-4 {
+#scoring-40 {
     -fx-image: url("/img/scoring_tokens/scoring-4.jpg");
 }
 
-#scoring-6 {
+#scoring-60 {
     -fx-image: url("/img/scoring_tokens/scoring-6.jpg");
 }
 
-#scoring-8 {
+#scoring-80 {
     -fx-image: url("/img/scoring_tokens/scoring-8.jpg");
+}
+
+#scoring-21 {
+    -fx-image: url("/img/scoring_tokens/scoring-2.jpg");
+}
+
+#scoring-41 {
+    -fx-image: url("/img/scoring_tokens/scoring-4.jpg");
+}
+
+#scoring-61 {
+    -fx-image: url("/img/scoring_tokens/scoring-6.jpg");
+}
+
+#scoring-81 {
+    -fx-image: url("/img/scoring_tokens/scoring-8.jpg");
+}
+
+#scoring-00 {
+    -fx-image: url("/img/scoring_tokens/scoring-0.jpg");
+}
+
+#scoring-01 {
+    -fx-image: url("/img/scoring_tokens/scoring-0.jpg");
 }
 
 /* End game */

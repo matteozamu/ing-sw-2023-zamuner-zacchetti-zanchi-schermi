@@ -5,7 +5,6 @@ import it.polimi.ingsw.model.*;
 import it.polimi.ingsw.utility.MessageBuilder;
 import javafx.collections.ObservableList;
 import javafx.event.Event;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
@@ -32,11 +31,9 @@ public class GameSceneController {
     private static final String CSS_SHELF_GRIDPANE = "shelfGridPane";
     private static final String CSS_SHELF_LABEL = "shelfLabel";
     private static final String CSS_PLAYERINFO_LABEL = "playerInfo";
-    private static final String CSS_INFO_LABEL = "infoLabel";
+//    private static final String CSS_INFO_LABEL = "infoLabel";
     private static final String CSS_PLAYERINFO_SEPARATOR = "labelSeparator";
     private static final String CSS_LIMBO_HBOX = "limboHBoxArea";
-    private static final double OPAQUE = 0.2;
-    private static final double NOT_OPAQUE = 1;
     private static final double COMMONGOAL_CARD_WIDTH = 138.5;
     private static final double COMMONGOAL_CARD_HEIGHT = 91.3;
     private static final double BOARD_OBJECT_CARD_WIDTH = 60.0;
@@ -99,22 +96,12 @@ public class GameSceneController {
     StackPane actionListStackPane;
     @FXML
     ScrollPane shelfScrollPane;
-    @FXML
-    Label infoLabel;
-    @FXML
-    ImageView winnerTile;
-    @FXML
-    ImageView pointsTile;
+//    @FXML
+//    Label infoLabel;
     @FXML
     HBox limboHBoxArea;
     @FXML
     StackPane personalGoalCardPane;
-    @FXML
-    FlowPane zoomPanel;
-    @FXML
-    BorderPane infoPanel;
-    @FXML
-    BorderPane actionPanel;
     @FXML
     VBox playersInfoPersonalGoalCardVBox;
     @FXML
@@ -123,8 +110,6 @@ public class GameSceneController {
     HBox shelfHBoxImages;
     @FXML
     AnchorPane columnArrowAnchorPane;
-    @FXML
-    StackPane playersInfoStackPane;
     @FXML
     ImageView arrowShelf0;
     @FXML
@@ -135,10 +120,6 @@ public class GameSceneController {
     ImageView arrowShelf3;
     @FXML
     ImageView arrowShelf4;
-    @FXML
-    ImageView scoring81;
-    @FXML
-    ImageView scoring82;
     @FXML
     ImageView endGameTokenImage;
 
@@ -186,8 +167,6 @@ public class GameSceneController {
      * @param gameSerialized state of the game at the time of the join
      */
     void setupGame(GameSerialized gameSerialized) {
-        bindCommonGoalCardInfoPanelZoom();
-        //bindPanels();
         bindChooseColumnArrows();
 
         setShelves(gameSerialized);
@@ -204,22 +183,6 @@ public class GameSceneController {
         arrowShelf2.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> onChooseColumnButtonClick(2));
         arrowShelf3.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> onChooseColumnButtonClick(3));
         arrowShelf4.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> onChooseColumnButtonClick(4));
-    }
-
-    /**
-     * Binds click events on the panels
-     */
-    private void bindPanels() {
-        zoomPanel.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> hideZoomPanel());
-    }
-
-    /**
-     * Binds common goal info zoom on card click
-     */
-    private void bindCommonGoalCardInfoPanelZoom() {
-        for (ImageView commonGoalCard : commonGoalCards.values()) {
-            commonGoalCard.addEventHandler(MouseEvent.MOUSE_CLICKED, this::showCommonGoalCardInfoPanelZoom);
-        }
     }
 
     private void loadObjectCards() {
@@ -267,13 +230,17 @@ public class GameSceneController {
     private void loadCommonGoalPoints() {
         int[] points = {2, 4, 6, 8};
         for (int i = 0; i < 4; i++) {
-            ImageView imageView = new ImageView();
-            String id = "scoring-" + points[i];
-            imageView.setId(id);
-            commonGoalPoints.put(imageView.getId(), imageView);
+            ImageView imageView1 = new ImageView();
+            String id1 = "scoring-" + points[i] + "0";
+            imageView1.setId(id1);
+            commonGoalPoints.put(imageView1.getId(), imageView1);
+
+            ImageView imageView2 = new ImageView();
+            String id2 = "scoring-" + points[i] + "1";
+            imageView2.setId(id2);
+            commonGoalPoints.put(imageView2.getId(), imageView2);
         }
     }
-
 
     /**
      * Adds the object cards to the board
@@ -440,7 +407,12 @@ public class GameSceneController {
             }
 
             int commonGoalCurrentPointsInt = commonGoals.get(i).getCurrentPoints();
-            String commonGoalCurrentPointsString = "scoring-" + commonGoalCurrentPointsInt;
+            String commonGoalCurrentPointsString;
+            if(commonGoalCurrentPointsInt == 0) {
+                commonGoalCurrentPointsString = "scoring-0" + i;
+            } else {
+                commonGoalCurrentPointsString = "scoring-" + commonGoalCurrentPointsInt + i;
+            }
             ImageView pointsImageView = commonGoalPoints.get(commonGoalCurrentPointsString);
 
             if (pointsImageView != null) {
@@ -694,84 +666,6 @@ public class GameSceneController {
     }
 
     /**
-     * Hides the zoom panel
-     */
-    private void hideZoomPanel() {
-        zoomPanel.getChildren().clear();
-        zoomPanel.setVisible(false);
-
-        setBoardOpaque(NOT_OPAQUE);
-    }
-
-    /**
-     * Sets an opacity value for every element on the board
-     *
-     * @param value opacity value
-     */
-    private void setBoardOpaque(double value) {
-        boardStackPaneArea.opacityProperty().setValue(value);
-
-//        for (ImageView ammotile : ammoTiles) {
-//            ammotile.opacityProperty().setValue(value);
-//        }
-//
-//        for (ImageView playerFigure : playerFigures) {
-//            playerFigure.opacityProperty().setValue(value);
-//        }
-//
-//        for (ImageView killshots : killshotsImages) {
-//            killshots.opacityProperty().setValue(value);
-//        }
-//
-//        for (Node node : actionList.getChildren()) {
-//            node.opacityProperty().setValue(value);
-//        }
-//
-//        for (Node node : iconList.getChildren()) {
-//            node.opacityProperty().setValue(value);
-//        }
-    }
-
-    /**
-     * Shows the zoom on a weapon in the zoom panel
-     *
-     * @param event of the click on a weapon
-     */
-    private void showCommonGoalCardInfoPanelZoom(Event event) {
-//        ImageView commonGoalCardTarget = (ImageView) event.getTarget();
-//
-//        if (commonGoalCardTarget != null) {
-//            setBoardOpaque(OPAQUE);
-//
-//            zoomPanel.toFront();
-//            ImageView commonGoalCard = new ImageView(commonGoalCardTarget.getImage());
-//
-//            String commonGoalCardType = commonGoalCards.getKey(commonGoalCard.getId());
-//            if (color != null) {
-//                String className = null;
-//
-//                switch (color) {
-//                    case BLUE:
-//                        className = "weaponZoomImageBlue";
-//                        break;
-//                    case RED:
-//                        className = "weaponZoomImageRed";
-//                        break;
-//                    case YELLOW:
-//                        className = "weaponZoomImageYellow";
-//                        break;
-//                }
-//
-//                commonGoalCard.getStyleClass().add(className);
-//
-//                zoomPanel.getChildren().add(commonGoalCard);
-//                zoomPanel.setVisible(true);
-//                zoomPanel.toFront();
-//            }
-//        }
-    }
-
-    /**
      * Updates the elements of the board
      */
     void onStateUpdate() {
@@ -789,7 +683,6 @@ public class GameSceneController {
         updateLimbo(gameSerialized);
         updateCommonGoalCards(gameSerialized);
         updatePlayersInfo(gameSerialized);
-        // Aggiungere altri elementi da aggiornare
     }
 
     /**
@@ -834,7 +727,6 @@ public class GameSceneController {
         GuiManager.showDialog((Stage) mainPane.getScene().getWindow(), GuiManager.ERROR_DIALOG_TITLE, error);
     }
 
-    // per impedire che un giocatore non di turno possa compiere azioni
     void notYourTurn(String turnOwner) {
         actionListStackPane.getChildren().clear();
         arrowShelf0.setMouseTransparent(true);
@@ -851,7 +743,7 @@ public class GameSceneController {
     }
 
     /**
-     * Displays action buttons
+     * Displays possible actions
      *
      * @param possibleActions possible actions
      */

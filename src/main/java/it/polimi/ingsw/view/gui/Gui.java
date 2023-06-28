@@ -33,16 +33,12 @@ public class Gui extends Application {
         stage.setFullScreenExitHint("");
         stage.setFullScreenExitKeyCombination(KeyCombination.NO_MATCH);
 
-        stage.fullScreenProperty().addListener(new ChangeListener<Boolean>() {
-            @Override
-            public void changed(ObservableValue<? extends Boolean> observable,
-                                Boolean oldValue, Boolean newValue) {
-                if(newValue != null && !newValue.booleanValue())
-                    stage.setFullScreen(true);
-            }
+        stage.fullScreenProperty().addListener((observable, oldValue, newValue) -> {
+            if(newValue != null && !newValue)
+                stage.setFullScreen(true);
         });
 
-        InputStream is = Gui.class.getClassLoader().getResourceAsStream("img/logos/gigaTitle.png");
+        InputStream is = Gui.class.getClassLoader().getResourceAsStream("img/logos/nanoTitleV1.png");
         if (is != null) {
             stage.getIcons().add(new Image(is));
         }

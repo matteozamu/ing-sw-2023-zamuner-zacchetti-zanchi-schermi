@@ -78,7 +78,6 @@ public final class CommonGoalType2 extends CommonGoal {
         return false;
     }
 
-
     public boolean checkDiagonalFromTopLeft(Shelf shelf, Coordinate start, ObjectCardType type) {
         for (int i = 0; i < 5; i++) {
             Coordinate currentCoordinate = new Coordinate(start.getRow() - i, start.getColumn() + i);
