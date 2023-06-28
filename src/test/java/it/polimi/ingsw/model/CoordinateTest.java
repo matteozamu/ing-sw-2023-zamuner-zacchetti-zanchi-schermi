@@ -63,4 +63,16 @@ public class CoordinateTest extends TestCase {
         cord.toString();
         assertEquals("[2,1]", cord.toString());
     }
+
+    @Test
+    public void testEqualsReturnsTrue(){
+        Coordinate c = new Coordinate(2,1);
+        assertTrue(c.equals(c));
+    }
+    @Test
+    public void testEqualsReturnsFalse(){
+        Coordinate c = new Coordinate(2,1);
+        assertFalse(c.equals(null));
+    }
+
 }
