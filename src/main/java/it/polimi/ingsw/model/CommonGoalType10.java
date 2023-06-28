@@ -66,7 +66,7 @@ public final class CommonGoalType10 extends CommonGoal {
                     return false;
                 }
 
-                if(grid.get(new Coordinate(i,j)) == null || grid.get(new Coordinate(i+1, j+1)) == null ||
+                if(grid.get(new Coordinate(i+1, j+1)) == null ||
                         grid.get(new Coordinate(i+2, j+2)) == null || grid.get(new Coordinate(i, j+2)) == null ||
                         grid.get(new Coordinate(i+2, j)) == null) {
                     return false;

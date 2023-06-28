@@ -390,14 +390,14 @@ public class Game implements Serializable {
         }
     }
 
-//    @Override
-//    public String toString() {
-//        return "Game{" +
-//                ", players=" + players +
-//                ", currentPlayer=" + currentPlayer +
-//                ", board=" + board +
-//                ", started=" + started +
-//                ", numberOfPlayers=" + numberOfPlayers +
-//                '}';
-//    }
+    @Override
+    public String toString() {
+        return "Game{" +
+                ", players=" + players +
+                ", currentPlayer=" + currentPlayer +
+                ", board=" + board +
+                ", started=" + started +
+                ", numberOfPlayers=" + numberOfPlayers +
+                '}';
+    }
 }

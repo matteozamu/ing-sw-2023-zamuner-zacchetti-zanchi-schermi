@@ -1115,20 +1115,20 @@
 
 /* Scoring */
 
-.scoring-2 {
-    -fx-image: url("/img/scoring_tokens/scoring_2.jpg");
+#scoring-2 {
+    -fx-image: url("/img/scoring_tokens/scoring-2.jpg");
 }
 
-.scoring-4 {
-    -fx-image: url("/img/scoring_tokens/scoring_4.jpg");
+#scoring-4 {
+    -fx-image: url("/img/scoring_tokens/scoring-4.jpg");
 }
 
-.scoring-6 {
-    -fx-image: url("/img/scoring_tokens/scoring_6.jpg");
+#scoring-6 {
+    -fx-image: url("/img/scoring_tokens/scoring-6.jpg");
 }
 
-.scoring-8 {
-    -fx-image: url("/img/scoring_tokens/scoring_8.jpg");
+#scoring-8 {
+    -fx-image: url("/img/scoring_tokens/scoring-8.jpg");
 }
 
 /* End game */
@@ -1178,4 +1178,13 @@
 .actionList {
     -fx-min-width: 400px;
     -fx-max-width: 400px;
+}
+
+/* Info label */
+
+.infoLabel {
+    -fx-alignment: center;
+    -fx-font-family: "Merriweather Regular";
+    -fx-font-size: 13px;
+    -fx-text-fill: #6C2310;
 }

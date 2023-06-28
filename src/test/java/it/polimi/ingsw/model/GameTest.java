@@ -25,6 +25,28 @@ class GameTest extends TestCase {
     }
 
     @Test
+    public void testGetGameName(){
+        assertEquals("GenericGame", g.getGameName());
+    }
+
+    @Test
+    public void testSetGameName(){
+        g.setGameName("NewName");
+        assertEquals("NewName", g.getGameName());
+    }
+
+    @Test
+    public void testIsStarted(){
+        assertFalse(g.isStarted());
+    }
+
+    @Test
+    public void testSetStarted(){
+        g.setStarted(true);
+        assertTrue(g.isStarted());
+    }
+
+    @Test
     public void testGetInstanceMap() {
         Map<String, Game> map = Game.getInstanceMap();
         assertNotNull(map);
@@ -70,16 +92,6 @@ class GameTest extends TestCase {
         assertNotNull(g.getLimboOrder());
     }
 
-    //    @Test
-//    public void testIsHasStarted() {
-//        assertFalse(g.isHasStarted());
-//    }
-//
-//    @Test
-//    public void testSetHasStarted() {
-//        g.setHasStarted(true);
-//        assertTrue(g.isHasStarted());
-//    }
     @Test
     public void testGetCommonGoalContainer() {
         assertNotNull(g.getCommonGoalContainer());
@@ -207,6 +219,7 @@ class GameTest extends TestCase {
         Player p = new Player("Maddy", this.shelf, this.pg);
         g.addPlayer(p);
         g.setCurrentPlayer(p);
+        assertEquals(p, g.nextPlayer());
 
         Player p2 = new Player("Patty", this.shelf, this.pg);
         g.addPlayer(p2);
@@ -243,6 +256,7 @@ class GameTest extends TestCase {
 
         assertEquals(g.getPlayers().get(0), g.getPlayerByName("Ember"));
         assertEquals(g.getPlayers().get(1), g.getPlayerByName("Addison"));
+        assertNull(g.getPlayerByName("test"));
     }
 
 

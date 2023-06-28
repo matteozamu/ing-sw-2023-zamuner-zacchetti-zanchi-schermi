@@ -51,8 +51,8 @@ public class ObjectCard implements Serializable {
      *
      * @return A string representation of the object card in the format "type-id".
      */
-    @Override
-    public String toString() {
-        return type.getColor() + type.getText() + ANSI_RESET;
-    }
+//    @Override
+//    public String toString() {
+//        return type.getColor() + type.getText() + ANSI_RESET;
+//    }
 }

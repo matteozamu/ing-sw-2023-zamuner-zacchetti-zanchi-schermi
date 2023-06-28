@@ -37,6 +37,15 @@ class CommonGoalType10Test {
     }
 
     @Test
+    public void testIsShelfEligible(){
+        CommonGoalType10 goal = new CommonGoalType10();
+        Shelf shelf = new Shelf();
+        shelf.getGrid().put(new Coordinate(1, 1), new ObjectCard(ObjectCardType.cat, "00"));
+        shelf.getGrid().put(new Coordinate(1, 2), new ObjectCard(ObjectCardType.cat, "10"));
+        assertFalse(goal.isShelfEligible(shelf));
+    }
+
+    @Test
     public void testCheckGoalEmptyShelf() {
         CommonGoalType10 goal = new CommonGoalType10();
         Shelf shelf = new Shelf();
@@ -90,6 +99,42 @@ class CommonGoalType10Test {
         shelf.getGrid().put(new Coordinate(0, 2), new ObjectCard(ObjectCardType.trophy, "20"));
         shelf.getGrid().put(new Coordinate(2, 2), new ObjectCard(ObjectCardType.trophy, "10"));
         assertTrue(goal.checkGoal(shelf));
+    }
+
+    @Test
+    public void testCheckGoalReturnsFalse_NotSameType(){
+        CommonGoalType10 goal = new CommonGoalType10();
+        Shelf shelf = new Shelf();
+        shelf.getGrid().put(new Coordinate(0, 0), new ObjectCard(ObjectCardType.trophy, "00"));
+        shelf.getGrid().put(new Coordinate(2, 0), new ObjectCard(ObjectCardType.cat, "10"));
+        shelf.getGrid().put(new Coordinate(1, 1), new ObjectCard(ObjectCardType.trophy, "00"));
+        shelf.getGrid().put(new Coordinate(0, 2), new ObjectCard(ObjectCardType.trophy, "20"));
+        shelf.getGrid().put(new Coordinate(2, 2), new ObjectCard(ObjectCardType.trophy, "10"));
+        assertFalse(goal.checkGoal(shelf));
+    }
+
+    @Test
+    public void testCheckGoalReturnsFalse_NotXShape(){
+        CommonGoalType10 goal = new CommonGoalType10();
+        Shelf shelf = new Shelf();
+        shelf.getGrid().put(new Coordinate(1, 0), new ObjectCard(ObjectCardType.trophy, "00"));
+        shelf.getGrid().put(new Coordinate(2, 0), new ObjectCard(ObjectCardType.trophy, "10"));
+        shelf.getGrid().put(new Coordinate(1, 1), new ObjectCard(ObjectCardType.trophy, "00"));
+        shelf.getGrid().put(new Coordinate(0, 2), new ObjectCard(ObjectCardType.trophy, "20"));
+        shelf.getGrid().put(new Coordinate(2, 2), new ObjectCard(ObjectCardType.trophy, "10"));
+        assertFalse(goal.checkGoal(shelf));
+    }
+
+    @Test
+    public void testCheckGoalReturnsFalse_OneCardMissing(){
+        CommonGoalType10 goal = new CommonGoalType10();
+        Shelf shelf = new Shelf();
+        shelf.getGrid().put(new Coordinate(0, 0), new ObjectCard(ObjectCardType.trophy, "00"));
+        shelf.getGrid().put(new Coordinate(2, 0), new ObjectCard(ObjectCardType.trophy, "10"));
+        shelf.getGrid().put(new Coordinate(1, 1), null);
+        shelf.getGrid().put(new Coordinate(0, 2), new ObjectCard(ObjectCardType.trophy, "20"));
+        shelf.getGrid().put(new Coordinate(2, 2), new ObjectCard(ObjectCardType.trophy, "10"));
+        assertFalse(goal.checkGoal(shelf));
     }
 
 

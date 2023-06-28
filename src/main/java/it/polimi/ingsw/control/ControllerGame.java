@@ -194,7 +194,7 @@ public class ControllerGame implements TimerRunListener, Serializable {
      * @param deleteLimboRequest is the message received
      * @return the response to the message
      */
-    private Response deleteLimboHandler(DeleteLimboRequest deleteLimboRequest) {
+    protected Response deleteLimboHandler(DeleteLimboRequest deleteLimboRequest) {
         if (deleteLimboRequest.getContent() == MessageContent.DELETE_LIMBO) {
             Server.LOGGER.log(Level.INFO, "Deleting limbo for player: {0}", deleteLimboRequest.getSenderUsername());
             for (Coordinate coordinate : game.getLimbo().keySet()) {
@@ -205,7 +205,7 @@ public class ControllerGame implements TimerRunListener, Serializable {
             sendPrivateUpdates();
             return new Response("Limbo deleted", MessageStatus.OK);
         } else {
-            System.out.println("Limbo is not valid");
+//            System.out.println("Limbo is not valid");
             return buildInvalidResponse();
         }
     }
@@ -216,7 +216,7 @@ public class ControllerGame implements TimerRunListener, Serializable {
      * @param reorderLimboRequest is the message received
      * @return the response to the message
      */
-    private Response reorderLimboHandler(ReorderLimboRequest reorderLimboRequest) {
+    protected Response reorderLimboHandler(ReorderLimboRequest reorderLimboRequest) {
         ArrayList<Integer> newLimboOrder = reorderLimboRequest.getLimboOrder();
         ArrayList<Coordinate> limboCoordinates;
 
@@ -231,7 +231,7 @@ public class ControllerGame implements TimerRunListener, Serializable {
             //TODO si puo mandare un altro game state message cosi il limbo viene aggiornato amche lato client
             return new Response("Limbo reordered", MessageStatus.PRINT_LIMBO);
         } else {
-            System.out.println("Limbo order is not valid");
+//            System.out.println("Limbo order is not valid");
             return buildInvalidResponse();
         }
     }
@@ -243,21 +243,18 @@ public class ControllerGame implements TimerRunListener, Serializable {
      * @return the response to the message
      */
     //TODO qui non ritorniamo una ObjectCardResponse ma una generica Response, eliminaiamo ObjectCardResponse?
-    private Response pickObjectCardHandler(ObjectCardRequest objectCardRequest) {
+    protected Response pickObjectCardHandler(ObjectCardRequest objectCardRequest) {
         Coordinate c = objectCardRequest.getCoordinate();
 
         if (objectCardRequest.getContent() == MessageContent.PICK_OBJECT_CARD && c != null && isObjectCardAvailable(c)) {
             Server.LOGGER.log(Level.INFO, "Coordinate of the card: {0}", c);
-            // TODO cambiare metodo con pick object card
-
             this.getGame().getLimbo().put(c, this.getGame().getBoard().removeObjectCard(c));
-            System.out.println(this.getGame().getLimbo());
             sendPrivateUpdates();
-            return new Response("Valid card!", MessageStatus.PRINT_LIMBO);
+            return new Response("Valid card :)", MessageStatus.PRINT_LIMBO);
 //            return new ObjectCardResponse(objectCardRequest.getSenderUsername());
         } else {
-            System.out.println("Carta non valida");
-            return new Response("Carta non valida", MessageStatus.NOT_VALID_CARD);
+//            System.out.println("Carta non valida");
+            return new Response("Invalid card :(", MessageStatus.NOT_VALID_CARD);
 //            return buildInvalidResponse();
         }
     }
@@ -269,7 +266,7 @@ public class ControllerGame implements TimerRunListener, Serializable {
      * @param receivedMessage is the message received
      * @return the response to the message
      */
-    private Message firstStateHandler(Message receivedMessage) {
+    protected Message firstStateHandler(Message receivedMessage) {
         Server.LOGGER.log(Level.SEVERE, "FIRST STATE HANDLER: {0}", receivedMessage);
         switch (receivedMessage.getContent()) {
             case ADD_PLAYER:
@@ -287,7 +284,7 @@ public class ControllerGame implements TimerRunListener, Serializable {
      * @param numberOfPlayersMessage is the number of players entered by the client
      * @return the response to the message
      */
-    private Response numberOfPlayersMessageHandler(NumberOfPlayersMessage numberOfPlayersMessage) {
+    protected Response numberOfPlayersMessageHandler(NumberOfPlayersMessage numberOfPlayersMessage) {
         int numberOfPlayers = numberOfPlayersMessage.getNumberOfPlayers();
 
         if (numberOfPlayersMessage.getContent() == MessageContent.NUMBER_OF_PLAYERS && numberOfPlayers >= JsonReader.getMinPlayers() && numberOfPlayers <= JsonReader.getMaxPlayers()) {
@@ -309,7 +306,7 @@ public class ControllerGame implements TimerRunListener, Serializable {
      * @param lobbyMessage is the message received
      * @return the response to the message
      */
-    private Response lobbyMessageHandler(LobbyMessage lobbyMessage) {
+    protected Response lobbyMessageHandler(LobbyMessage lobbyMessage) {
         if (game == null) this.game = Game.getInstance(lobbyMessage.getSenderUsername());
         List<Player> inLobbyPlayers = game.getPlayers();
 
@@ -319,9 +316,8 @@ public class ControllerGame implements TimerRunListener, Serializable {
                 server.getPlayersGame().put(lobbyMessage.getSenderUsername(), this);
                 Game.getInstanceMap().put(lobbyMessage.getSenderUsername(), game);
 
-
                 Server.LOGGER.log(Level.INFO, "{0} joined the lobby", lobbyMessage.getSenderUsername());
-                System.out.println("Players in lobby: " + game.getPlayers());
+//                System.out.println("Players in lobby: " + game.getPlayers());
 
                 server.sendMessageToAll(this.id, new LobbyPlayersResponse(new ArrayList<>(inLobbyPlayers.stream().map(Player::getName).collect(Collectors.toList()))));
             } else {
@@ -405,7 +401,7 @@ public class ControllerGame implements TimerRunListener, Serializable {
      *
      * @return a Response message to the client
      */
-    private Response checkLobby() {
+    protected Response checkLobby() {
         List<Player> inLobbyPlayers = game.getPlayers();
 
         if (inLobbyPlayers.size() == this.game.getNumberOfPlayers()) {
@@ -565,7 +561,6 @@ public class ControllerGame implements TimerRunListener, Serializable {
                 }
             }
         }
-
         return true;
     }
 
@@ -607,50 +602,6 @@ public class ControllerGame implements TimerRunListener, Serializable {
         game.addObjectCardsToShelf(objectCards, column);
     }
 
-    //si puo fare una modifica che non rimuova la coordinata della cella ma setti il contenuto a null
-
-
-    /**
-     * Checks if the object card at the given coordinate is available for selection.
-     * An object card is considered available if it has at least one free side and,
-     * when other object cards have been selected, it shares a side with one of them.
-     * This method is used to determine if a player can pick up an object card from the board.
-     * When three cards have been selected, the list of selected coordinates is cleared.
-     *
-     * @param coordinate The coordinate of the object card to check.
-     * @return True if the object card is available for selection, false otherwise.
-     */
-    //TODO: da testare
-    // non funziona il controllo per verificare che le tessere abbiano un lato in comune
-//    public boolean isObjectCardAvailable(Coordinate coordinate) {
-//        if (selectedCoordinates.size() == 3) {
-//            selectedCoordinates.clear();
-//        }
-//        if (selectedCoordinates.isEmpty()) {
-//            this.selectedCoordinates.add(coordinate);
-//            return this.game.getBoard().isEmptyAtDirection(coordinate, UP) ||
-//                    this.game.getBoard().isEmptyAtDirection(coordinate, DOWN) ||
-//                    this.game.getBoard().isEmptyAtDirection(coordinate, RIGHT) ||
-//                    this.game.getBoard().isEmptyAtDirection(coordinate, LEFT);
-//        } else {
-//            boolean hasFreeSide = this.game.getBoard().isEmptyAtDirection(coordinate, UP) ||
-//                    this.game.getBoard().isEmptyAtDirection(coordinate, DOWN) ||
-//                    this.game.getBoard().isEmptyAtDirection(coordinate, RIGHT) ||
-//                    this.game.getBoard().isEmptyAtDirection(coordinate, LEFT);
-//            boolean hasCommonSide = false;
-//            for (Coordinate selectedCoordinate : selectedCoordinates) {
-//                if (coordinate.getAdjacent(Coordinate.Direction.UP).equals(selectedCoordinate) ||
-//                        coordinate.getAdjacent(Coordinate.Direction.DOWN).equals(selectedCoordinate) ||
-//                        coordinate.getAdjacent(Coordinate.Direction.LEFT).equals(selectedCoordinate) ||
-//                        coordinate.getAdjacent(Coordinate.Direction.RIGHT).equals(selectedCoordinate)) {
-//                    hasCommonSide = true;
-//                    break;
-//                }
-//            }
-//            this.selectedCoordinates.add(coordinate);
-//            return hasFreeSide && hasCommonSide;
-//        }
-//    }
     public boolean isObjectCardAvailable(Coordinate coordinate) {
         Map<Coordinate, ObjectCard> limbo = game.getLimbo();
         Map<Coordinate, ObjectCard> boardOrig = game.getBoard().getGrid();
@@ -710,91 +661,6 @@ public class ControllerGame implements TimerRunListener, Serializable {
         }
 
         return available;
-    }
-
-//    public boolean isObjectCardAvailable(Coordinate coordinate) {
-//        Map<Coordinate, ObjectCard> limbo = game.getLimbo();
-//        Map<Coordinate, ObjectCard> board = game.getBoard().getGrid();
-//        Iterator<Coordinate> iterator = limbo.keySet().iterator();
-//        boolean available = false;
-//
-//        if (!board.containsKey(coordinate))
-//            return false;
-//
-//        if (!this.game.getBoard().isEmptyAtDirection(coordinate, UP) &&
-//                !this.game.getBoard().isEmptyAtDirection(coordinate, DOWN) &&
-//                !this.game.getBoard().isEmptyAtDirection(coordinate, RIGHT) &&
-//                !this.game.getBoard().isEmptyAtDirection(coordinate, LEFT)) return false;
-//
-//        if (limbo.size() == 0) available = true;
-//
-//        if (limbo.size() == 1) {
-//            Coordinate c = iterator.next();
-//            int dx = Math.abs(c.getColumn() - coordinate.getColumn());
-//            int dy = Math.abs(c.getRow() - coordinate.getRow());
-//
-//            if ((dx == 0 && dy == 1) || (dy == 0 && dx == 1))
-//                available = true;
-//            else return false;
-//        }
-//
-//        if (limbo.size() == 2) {
-//            Coordinate c1 = iterator.next();
-//            Coordinate c2 = iterator.next();
-//            int dx = Math.abs(c1.getColumn() - c2.getColumn());
-//            int dy = Math.abs(c1.getRow() - c2.getRow());
-//
-//            if ((dx == 0 && dy == 1) || (dy == 0 && dx == 1))
-//                available = true;
-//            else return false;
-//
-//            dx = Math.abs(c2.getColumn() - coordinate.getColumn());
-//            dy = Math.abs(c2.getRow() - coordinate.getRow());
-//
-//            if ((dx == 0 && dy == 1) || (dy == 0 && dx == 1))
-//                available = true;
-//            else return false;
-//        }
-//
-//        return available;
-//    }
-
-
-    /*
-    Questo è il metodo originale, quello sopra è il metodo aggiornato
-    public boolean isObjectCardAvailable(Coordinate coordinate) {
-        return this.game.getBoard().isEmptyAtDirection(coordinate, UP) || this.game.getBoard().isEmptyAtDirection(coordinate, DOWN) || this.game.getBoard().isEmptyAtDirection(coordinate, RIGHT) || this.game.getBoard().isEmptyAtDirection(coordinate, LEFT);
-    }
-
-     */
-
-    /**
-     * Adds the object card at the specified coordinate to the limbo area.
-     * The limbo area is used to store object cards that a player has picked up but not yet placed on their shelf.
-     *
-     * @param card The object card to add to the limbo area.
-     * @throws NullPointerException If the object card is null (should not happen).
-     */
-    // TODO aggiustare metodi sapendo che il limbo è una mappa coordinata-carta per un eventuale annullamento
-    // limbo e reinserimento nella board
-    public boolean addObjectCardToLimbo(ObjectCard card) throws NullPointerException {
-        if (card == null) throw new NullPointerException("ObjectCard is null");
-        if (this.getGame().getLimbo().size() == 3) return false;
-
-//        this.getGame().getLimbo().add(card);
-        return true;
-    }
-
-    /**
-     * pick the ObjectCard from the board
-     *
-     * @param coordinate is the coordinate of the ObjectCard clicked by the user
-     * @return the ObjectCard with that Coordinate
-     */
-    public ObjectCard pickObjectCard(Coordinate coordinate) {
-        if (isObjectCardAvailable(coordinate)) {
-            return this.game.getBoard().removeObjectCard(coordinate);
-        } else return null;
     }
 
     /**
@@ -887,28 +753,6 @@ public class ControllerGame implements TimerRunListener, Serializable {
         return buildInvalidResponse();
     }
 
-//    public Message onConnectionMessage(Message receivedConnectionMessage) {
-//        if (gameState == PossibleGameState.GAME_ENDED) {
-//            return new Response("GAME ENDED", MessageStatus.ERROR);
-//        }
-//
-////        if (!InputValidator.validatePlayerUsername(game.getPlayers(), receivedConnectionMessage)) {
-////            return new Response("Invalid connection Message", MessageStatus.ERROR);
-////        }
-//
-//        if (gameState != PossibleGameState.GAME_ROOM && receivedConnectionMessage.getContent() == MessageContent.GET_IN_LOBBY) {
-//            if (((LobbyMessage) receivedConnectionMessage).isDisconnection()) {
-//                return disconnectionHandler((LobbyMessage) receivedConnectionMessage);
-//            } else {
-//                return reconnectionHandler((LobbyMessage) receivedConnectionMessage);
-//            }
-//        } else {
-//            System.out.println("Invalid game state");
-//            return null;
-//        }
-//    }
-//
-
     /**
      * Method used to handle the reconnection of a player from the game
      *
@@ -944,34 +788,6 @@ public class ControllerGame implements TimerRunListener, Serializable {
         server.sendMessage(reconnectingPlayerName, new GameStateResponse(reconnectingPlayerName, game.getCurrentPlayer().getName(), server.getFilepath()));
         return new ReconnectionRequest("Reconnection request", receivedConnectionMessage.getToken());
     }
-
-
-//    private Message disconnectionHandler(LobbyMessage receivedConnectionMessage) {
-//        ArrayList<LobbyMessage> inLobbyPlayers = lobby.getInLobbyPlayers();
-//        boolean gameEnded;
-//
-//        if (inLobbyPlayers.contains(receivedConnectionMessage)) {
-//            // if I receive a disconnection message I remove it from the lobby and set the corresponding player state to DISCONNECTED
-//            inLobbyPlayers.remove(receivedConnectionMessage);
-//            ((Player) game.getPlayerByName(receivedConnectionMessage.getSenderUsername())).setPlayerState(PossiblePlayerState.DISCONNECTED);
-//
-//            // then I check if in the lobby there are still enough players to continue the game, if not the game ends
-//            gameEnded = checkStartedLobby();
-//
-//            if (gameEnded) {
-//                return new Response("Player disconnected, game has now less then 3 players and then is ending...", MessageStatus.OK);
-//            }
-//            // if game hasn't ended I check if the disconnected player is the turn owner, if so I change the state, otherwise nothing happens
-//            else if (turnController.getActivePlayer().getName().equals(receivedConnectionMessage.getSenderUsername())) {
-////                turnController.handlePassAction();
-////                return new Response("Turn Owner disconnected, turn is passed to next Player", MessageStatus.OK);
-//            } else {
-//                return new Response("Player disconnected from the game", MessageStatus.OK);
-//            }
-//        } else {
-//            return new Response("Disconnection Message from not in lobby Player", MessageStatus.ERROR);
-//        }
-//    }
 
     /**
      * Method that start a timer whenever only one player is in the game
