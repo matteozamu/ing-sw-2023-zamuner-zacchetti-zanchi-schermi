@@ -32,6 +32,7 @@ public class GameSceneController {
     private static final String CSS_SHELF_GRIDPANE = "shelfGridPane";
     private static final String CSS_SHELF_LABEL = "shelfLabel";
     private static final String CSS_PLAYERINFO_LABEL = "playerInfo";
+    private static final String CSS_INFO_LABEL = "infoLabel";
     private static final String CSS_PLAYERINFO_SEPARATOR = "labelSeparator";
     private static final String CSS_LIMBO_HBOX = "limboHBoxArea";
     private static final double OPAQUE = 0.2;
@@ -99,6 +100,8 @@ public class GameSceneController {
     @FXML
     ScrollPane shelfScrollPane;
     @FXML
+    Label infoLabel;
+    @FXML
     ImageView winnerTile;
     @FXML
     ImageView pointsTile;
@@ -143,6 +146,7 @@ public class GameSceneController {
     private Map<String, ImageView> objectCards;
     private Map<String, ImageView> commonGoalCards;
     private Map<String, ImageView> personalGoalCards;
+    private Map<String, ImageView> commonGoalPoints;
     private List<GridPane> shelvesGridPane;
     private List<StackPane> shelvesStackPane;
     private ArrayList<Integer> orderLimboObjectCards;
@@ -158,6 +162,7 @@ public class GameSceneController {
         objectCards = new HashMap<>();
         commonGoalCards = new HashMap<>();
         personalGoalCards = new HashMap<>();
+        commonGoalPoints = new HashMap<>();
         shelvesGridPane = new ArrayList<>();
         orderLimboObjectCards = new ArrayList<>();
         imageViewsWithListener = new HashSet<>();
@@ -172,6 +177,7 @@ public class GameSceneController {
         loadObjectCards();
         loadCommonGoalCards();
         loadPersonalGoalCards();
+        loadCommonGoalPoints();
     }
 
     /**
@@ -187,6 +193,7 @@ public class GameSceneController {
         setShelves(gameSerialized);
         setPersonalGoalCard(gameSerialized);
         setCommonGoalCards(gameSerialized);
+//        setInfoLabel(gameSerialized);
         setPlayerInfo(gameSerialized);
         updateGameArea(gameSerialized);
     }
@@ -256,6 +263,17 @@ public class GameSceneController {
             personalGoalCards.put(imageView.getId(), imageView);
         }
     }
+
+    private void loadCommonGoalPoints() {
+        int[] points = {2, 4, 6, 8};
+        for (int i = 0; i < 4; i++) {
+            ImageView imageView = new ImageView();
+            String id = "scoring-" + points[i];
+            imageView.setId(id);
+            commonGoalPoints.put(imageView.getId(), imageView);
+        }
+    }
+
 
     /**
      * Adds the object cards to the board
@@ -396,11 +414,10 @@ public class GameSceneController {
         }
     }
 
-    //TODO : implementare l'aggiornamento dei punteggi
     private void setCommonGoalCards(GameSerialized gameSerialized) {
+        List<CommonGoal> commonGoals = gameSerialized.getCommonGoals();
         commonGoalCard1StackPane.getChildren().clear();
         commonGoalCard2StackPane.getChildren().clear();
-        List<CommonGoal> commonGoals = gameSerialized.getCommonGoals();
 
 
         for (int i = 0; i < commonGoals.size(); i++) {
@@ -415,11 +432,33 @@ public class GameSceneController {
 
                 if (i == 0) {
                     commonGoalCard1StackPane.getChildren().add(imageView);
-                    imageView.toBack();
+                    imageView.setMouseTransparent(true);
                 } else if (i == 1) {
                     commonGoalCard2StackPane.getChildren().add(imageView);
-                    imageView.toBack();
+                    imageView.setMouseTransparent(true);
                 }
+            }
+
+            int commonGoalCurrentPointsInt = commonGoals.get(i).getCurrentPoints();
+            String commonGoalCurrentPointsString = "scoring-" + commonGoalCurrentPointsInt;
+            ImageView pointsImageView = commonGoalPoints.get(commonGoalCurrentPointsString);
+
+            if (pointsImageView != null) {
+                pointsImageView.setFitWidth(39.5);
+                pointsImageView.setFitHeight(39.5);
+                pointsImageView.setRotate(-8.0);
+                pointsImageView.setTranslateX(32.2);
+                pointsImageView.setTranslateY(-3.5);
+                pointsImageView.setPreserveRatio(true);
+
+                if (i == 0) {
+                    commonGoalCard1StackPane.getChildren().add(pointsImageView);
+                    pointsImageView.toFront();
+                } else if (i == 1) {
+                    commonGoalCard2StackPane.getChildren().add(pointsImageView);
+                    pointsImageView.toFront();
+                }
+
             }
         }
     }
@@ -436,10 +475,23 @@ public class GameSceneController {
             imageView.setPreserveRatio(true);
             imageView.setPickOnBounds(true);
             StackPane.setAlignment(imageView, Pos.CENTER);
+            imageView.setMouseTransparent(true);
 
             personalGoalCardPane.getChildren().add(imageView);
         }
     }
+
+//    private void setInfoLabel(GameSerialized gameSerialized) {
+//        List<Player> players = gameSerialized.getAllPlayers();
+//        String firstPlayerName = players.get(0).getName();
+//
+//        infoLabel.setText(firstPlayerName + " started the game as the first player. " +
+//                "When a player fills their Shelf, " +
+//                "the game ends in that round with the " +
+//                "player preceding " + firstPlayerName + " in turn order.");
+//        infoLabel.setWrapText(true);
+//        infoLabel.getStyleClass().add(CSS_INFO_LABEL);
+//    }
 
     void setShelves(GameSerialized gameSerialized) {
         int i = 0;
