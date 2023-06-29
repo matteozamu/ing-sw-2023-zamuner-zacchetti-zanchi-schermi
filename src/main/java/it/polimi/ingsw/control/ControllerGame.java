@@ -734,11 +734,6 @@ public class ControllerGame implements TimerRunListener, Serializable {
         if (gameState == PossibleGameState.GAME_ENDED) {
             return new Response("GAME ENDED", MessageStatus.ERROR);
         }
-
-//        if (!InputValidator.validatePlayerUsername(game.getPlayers(), receivedConnectionMessage)) {
-//            return new Response("Invalid connection Message", MessageStatus.ERROR);
-//        }
-
         if (gameState != PossibleGameState.GAME_ROOM && receivedConnectionMessage.getContent() == MessageContent.ADD_PLAYER) {
             // if the player wants to disconnect from the game
             if (((LobbyMessage) receivedConnectionMessage).isDisconnection()) {

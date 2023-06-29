@@ -12,7 +12,7 @@ import java.net.Socket;
 /**
  * This class represents a Socket connection with a client
  */
-class SocketConnection extends Connection implements Runnable {
+public class SocketConnection extends Connection implements Runnable {
     private final SocketServer socketServer;
     private final Socket socket;
     private final Object outLock = new Object();
@@ -29,7 +29,7 @@ class SocketConnection extends Connection implements Runnable {
      * @param socketServer socket server
      * @param socket       socket of the client
      */
-    SocketConnection(SocketServer socketServer, Socket socket) {
+    public SocketConnection(SocketServer socketServer, Socket socket) {
         this.socketServer = socketServer;
         this.socket = socket;
 
