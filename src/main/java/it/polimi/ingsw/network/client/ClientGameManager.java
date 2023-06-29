@@ -11,10 +11,7 @@ import it.polimi.ingsw.network.message.*;
 import java.io.IOException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.GregorianCalendar;
-import java.util.List;
+import java.util.*;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.LinkedBlockingQueue;
 import java.util.logging.FileHandler;
@@ -42,6 +39,7 @@ public abstract class ClientGameManager implements ClientGameManagerListener, Cl
     private boolean gameEnded = false;
     private GameSerialized gameSerialized;
     private boolean reconnection = false;
+    private Timer makeMoveTimer;
 
     /**
      * constructor of the client game manager
@@ -306,7 +304,6 @@ public abstract class ClientGameManager implements ClientGameManagerListener, Cl
                     // TODO check if this is correct
                     queue.add(() -> lobbyJoinResponse(response));
             } else {
-                if (turnManager != null) System.out.println("TURN MANAGER: " + turnManager.getUserPlayerState());
                 if (response.getStatus() == MessageStatus.ERROR) {
 //                    queue.add(() -> responseError(response.getMessage()));
                 } else if (response.getStatus() == MessageStatus.NOT_VALID_CARD) {
@@ -517,10 +514,28 @@ public abstract class ClientGameManager implements ClientGameManagerListener, Cl
         }
     }
 
+    public void setMakeMoveTimer() {
+        makeMoveTimer = new Timer();
+
+        // code to run when the timer ends
+        TimerTask task = new TimerTask() {
+            @Override
+            public void run() {
+                System.out.println("Timer ended");
+                newTurn();
+                System.exit(1);
+            }
+        };
+
+        // start a timer of 10 seconds (10000 milliseconds)
+        makeMoveTimer.schedule(task, 5000);
+    }
+
     /**
      * Show the client all the possible actions
      */
     public void makeMove() {
+//        setMakeMoveTimer();
         if (getUsername().equals(turnOwner)) {
             queue.add(() -> displayActions(getPossibleActions()));
         }

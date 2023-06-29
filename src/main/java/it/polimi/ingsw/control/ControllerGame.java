@@ -30,6 +30,7 @@ public class ControllerGame implements TimerRunListener, Serializable {
     private boolean isLobbyFull;
     private transient TurnController turnController;
     private Timer reconnectionTimer;
+    private Timer makeMoveTimer;
 
     /**
      * Constructor for the ControllerGame class, initializing the game state.
@@ -96,6 +97,29 @@ public class ControllerGame implements TimerRunListener, Serializable {
         return orderedMap;
     }
 
+    public void setMakeMoveTimer() {
+        makeMoveTimer = new Timer();
+
+        // code to run when the timer ends
+        TimerTask task = new TimerTask() {
+            @Override
+            public void run() {
+                Player currentPlayer = game.getCurrentPlayer();
+                Player nextPlayer = game.nextPlayer();
+
+                if (nextPlayer == currentPlayer) {
+                    setTimer();
+                }
+
+                sendPrivateUpdates();
+                System.out.println("Timer ended");
+            }
+        };
+
+        // start a timer of 10 seconds (10000 milliseconds)
+        makeMoveTimer.schedule(task, 5000);
+    }
+
     /**
      * @return the id of the game
      */
@@ -127,6 +151,7 @@ public class ControllerGame implements TimerRunListener, Serializable {
 //            return buildInvalidResponse();
 //        }
 
+        setMakeMoveTimer();
         switch (receivedMessage.getContent()) {
             case GAME_STATE:
                 return new GameStateResponse(receivedMessage.getSenderUsername(), game.getCurrentPlayer().getName(), server.getFilepath());
@@ -442,6 +467,7 @@ public class ControllerGame implements TimerRunListener, Serializable {
         for (Player player : players) {
             server.sendMessage(player.getName(), new GameStartMessage(game.getCurrentPlayer().getName(), game.getCommonGoals(), player.getName(), server.getFilepath()));
         }
+        setMakeMoveTimer();
 //        server.sendMessageToAll(new GameStartMessage(game.getCurrentPlayer().getName(), game.getCommonGoals(), player.getName()));
     }
 
