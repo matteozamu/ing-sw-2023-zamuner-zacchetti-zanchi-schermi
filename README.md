@@ -19,14 +19,15 @@ presentati gli elenchi dei diagrammi delle classi in UML, seguiti dalla document
 
 Di seguito sono riportati diagrammi delle classi dell’architettura di rete dei client e del server
 
-- [UML alto livello client server](*LINK GIT*)
-- [UML dettagliato client server](*LINK GIT*)
-- [UML protocollo comunicazione client server](*LINK GIT*)
+- [UML alto livello client server](https://github.com/matteozamu/ing-sw-2023-zamuner-zacchetti-zanchi-schermi/blob/main/deliverables/uml/client%20server%20alto%20livello.png)
+- [UML dettagliato client](https://github.com/matteozamu/ing-sw-2023-zamuner-zacchetti-zanchi-schermi/blob/main/deliverables/uml/client.png)
+- [UML dettagliato server](https://github.com/matteozamu/ing-sw-2023-zamuner-zacchetti-zanchi-schermi/blob/main/deliverables/uml/server.png)
+- [Descrizione protocollo comunicazione client server](https://github.com/matteozamu/ing-sw-2023-zamuner-zacchetti-zanchi-schermi/blob/main/deliverables/Network%20documentation.md)
 
 ### Peer Review
 
-- [Peer review - Model](https://github.com/matteozamu/ing-sw-2023-zamuner-zacchetti-zanchi-schermi/blob/main/Peer%20review%20Model%20-%20GC5.md)
-- [Peer review - Network ](https://github.com/matteozamu/ing-sw-2023-zamuner-zacchetti-zanchi-schermi/blob/main/Peer%20Review%20Network%20-%20GC5.md)
+- [Peer review - Model](https://github.com/matteozamu/ing-sw-2023-zamuner-zacchetti-zanchi-schermi/blob/main/deliverables/peer%20review/Peer%20review%20GC15%20-%20Model.md)
+- [Peer review - Network ](https://github.com/matteozamu/ing-sw-2023-zamuner-zacchetti-zanchi-schermi/blob/main/deliverables/peer%20review/Peer%20Review%20GC15%20-%20Network.md)
 
 ### JavaDoc
 
@@ -76,7 +77,8 @@ comando apposito all'inizio dell'esecuzione del Jar.
 
 #### CLI
 
-Per eseguire in client in modalità testuale, è necessario eseguire il seguente comando da terminale:
+Per eseguire in client in modalità testuale, è necessario eseguire il seguente comando da terminale, specificando che si
+vuole eseguire l'interfaccia a riga di comando:
 
 ```bash
 java -jar client.jar cli
@@ -84,15 +86,11 @@ java -jar client.jar cli
 
 #### GUI
 
-Per poter eseguire MyShelfie con interfaccia grafica, è necessario importare le dipendenze di JavaFX e lanciare il
-client, digitando il seguente comando:
+Per poter eseguire MyShelfie con interfaccia grafica è sufficiente digitare il seguente comando:
 
 ```
-java --module-path /percorso/alla/cartella/estratta/javafx-sdk-VERSIONE/lib --add-modules javafx.controls,javafx.fxml -jar client.jar
+java -jar client.jar
 ```
-
-Assicurati di sostituire "/percorso/alla/cartella/estratta/javafx-sdk-VERSIONE" con il percorso effettivo in cui hai
-posizionato la cartella estratta del JavaFX SDK, e "VERSIONE" con la versione specifica del SDK che hai scaricato.
 
 ### Server
 
