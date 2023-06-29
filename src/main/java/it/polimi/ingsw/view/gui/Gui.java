@@ -1,11 +1,16 @@
 package it.polimi.ingsw.view.gui;
 
 import javafx.application.Application;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.scene.input.KeyCombination;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
+import javafx.stage.Screen;
+import javafx.stage.StageStyle;
+
 
 import java.io.InputStream;
 
@@ -22,18 +27,18 @@ public class Gui extends Application {
      */
     @Override
     public void start(Stage stage) {
-        stage.setMaximized(true);
         stage.setFullScreen(true);
+        stage.setResizable(false);
+        stage.setMaximized(true);
         stage.setFullScreenExitHint("");
         stage.setFullScreenExitKeyCombination(KeyCombination.NO_MATCH);
 
         stage.fullScreenProperty().addListener((observable, oldValue, newValue) -> {
-            if (!newValue) {
-                stage.setResizable(false);
-            }
+            if(newValue != null && !newValue)
+                stage.setFullScreen(true);
         });
 
-        InputStream is = Gui.class.getClassLoader().getResourceAsStream("img/logos/gigaTitle.png");
+        InputStream is = Gui.class.getClassLoader().getResourceAsStream("img/logos/nanoTitleV1.png");
         if (is != null) {
             stage.getIcons().add(new Image(is));
         }
@@ -42,6 +47,14 @@ public class Gui extends Application {
 
         GuiManager.setLayout(stage.getScene(), "fxml/menuScene.fxml");
         stage.show();
+
+        Screen screen = Screen.getPrimary();
+        javafx.geometry.Rectangle2D bounds = screen.getVisualBounds();
+
+        stage.setX(bounds.getMinX());
+        stage.setY(bounds.getMinY());
+        stage.setWidth(bounds.getWidth());
+        stage.setHeight(bounds.getHeight());
     }
 
     /**

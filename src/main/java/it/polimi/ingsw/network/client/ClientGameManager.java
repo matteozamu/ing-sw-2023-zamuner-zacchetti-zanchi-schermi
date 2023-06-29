@@ -11,10 +11,7 @@ import it.polimi.ingsw.network.message.*;
 import java.io.IOException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.GregorianCalendar;
-import java.util.List;
+import java.util.*;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.LinkedBlockingQueue;
 import java.util.logging.FileHandler;
@@ -37,11 +34,12 @@ public abstract class ClientGameManager implements ClientGameManagerListener, Cl
     private boolean firstTurn;
     private boolean yourTurn;
     private boolean turnOwnerChanged;
-    private ClientTurnManager turnManager; // manage the rounds of this client
+    private ClientTurnManager turnManager;
     private ClientUpdater clientUpdater;
     private boolean gameEnded = false;
     private GameSerialized gameSerialized;
     private boolean reconnection = false;
+    private Timer makeMoveTimer;
 
     /**
      * constructor of the client game manager
@@ -102,8 +100,6 @@ public abstract class ClientGameManager implements ClientGameManagerListener, Cl
      */
     @Override
     public void onUpdate(Message message) {
-//        LOGGER.log(Level.INFO, "Received: {0}", message);
-
         if (gameEnded) {
             return;
         }
@@ -177,11 +173,12 @@ public abstract class ClientGameManager implements ClientGameManagerListener, Cl
         startGame(gameStartMessage.getCommonGoals());
     }
 
+    /**
+     * sends a generic request to the server
+     *
+     * @param message is the request message
+     */
     public boolean sendRequest(Message message) {
-        if (turnManager != null) {
-//            checkChangeStateRequest(message);
-        }
-
         try {
             client.sendMessage(message);
         } catch (IOException e) {
@@ -241,18 +238,15 @@ public abstract class ClientGameManager implements ClientGameManagerListener, Cl
         } else queue.add(() -> chooseGameToJoin(message.getGames()));
     }
 
+    /**
+     * method that handles a request of a client to reconnect to a game
+     *
+     * @param reconnectionRequest is the request received from the server
+     */
     private void handleReconnectionRequest(ReconnectionRequest reconnectionRequest) {
         reconnection = true;
-//        if (reconnectionRequest.getStatus().equals(MessageStatus.OK)) {
         client.setToken(reconnectionRequest.getToken());
-//        } else {
-//            client.pingTimer.cancel();
-//            closeConnection();
-//        }
-
-//        queue.add(() -> connectionResponse(connectionResponse));
         turnManager.startTurn();
-//        queue.add(() -> displayActions(getPossibleActions()));
     }
 
     /**
@@ -288,6 +282,9 @@ public abstract class ClientGameManager implements ClientGameManagerListener, Cl
      * @param response is the message received from the server
      */
     private void handleResponse(Response response) {
+        if (response.getStatus() == MessageStatus.QUIT) {
+            System.exit(1);
+        }
         if (response.getStatus() == MessageStatus.GAME_CREATED || response.getStatus() == MessageStatus.GAME_JOINED) {
             queue.add(this::addPlayerToGameRequest);
         } else {
@@ -303,10 +300,8 @@ public abstract class ClientGameManager implements ClientGameManagerListener, Cl
                     queue.add(() -> lobbyJoinResponse(response));
                     return;
                 } else
-                    // TODO check if this is correct
                     queue.add(() -> lobbyJoinResponse(response));
             } else {
-                if (turnManager != null) System.out.println("TURN MANAGER: " + turnManager.getUserPlayerState());
                 if (response.getStatus() == MessageStatus.ERROR) {
 //                    queue.add(() -> responseError(response.getMessage()));
                 } else if (response.getStatus() == MessageStatus.NOT_VALID_CARD) {
@@ -334,12 +329,8 @@ public abstract class ClientGameManager implements ClientGameManagerListener, Cl
         queue.add(() -> printWinner(gameSerialized));
     }
 
-    public UserPlayerState getUserPlayerState() {
-        return turnManager.getUserPlayerState();
-    }
-
     /**
-     * Handles a disconnection message received from the server when a clìient disconnects
+     * Handles a disconnection message received from the server when a client disconnects
      *
      * @param disconnectionMessage disconnection message received
      */
@@ -347,6 +338,11 @@ public abstract class ClientGameManager implements ClientGameManagerListener, Cl
         queue.add(() -> onPlayerDisconnection(disconnectionMessage.getUsername()));
     }
 
+    /**
+     * Handles a reconnection message received from the server when a client reconnects
+     *
+     * @param reconnectionMessage reconnection message received
+     */
     private void handleReconnection(ReconnectionMessage reconnectionMessage) {
         this.firstTurn = false;
         this.joinedLobby = true;
@@ -363,8 +359,6 @@ public abstract class ClientGameManager implements ClientGameManagerListener, Cl
      * Check what is the next action for the client
      */
     private void checkNextAction() {
-        // se il giocatore è disconnesso creo un nuovo turno
-        // TODO gestire il caso di un singolo giocatore
         if (!gameSerialized.getCurrentPlayer().isConnected()) {
             newTurn();
         } else {
@@ -373,8 +367,6 @@ public abstract class ClientGameManager implements ClientGameManagerListener, Cl
             } else {
                 turnManager.endTurn();
             }
-
-//        System.out.println(yourTurn + "  -  " + turnOwnerChanged);
             if (yourTurn && turnOwnerChanged) {
                 turnOwnerChanged = false;
                 yourTurn = false;
@@ -435,7 +427,6 @@ public abstract class ClientGameManager implements ClientGameManagerListener, Cl
         try {
             client.close();
         } catch (Exception e) {
-            // No issues
         }
         client = null;
     }
@@ -475,13 +466,6 @@ public abstract class ClientGameManager implements ClientGameManagerListener, Cl
     }
 
     /**
-     * @return the turn owner
-     */
-    public String getTurnOwner() {
-        return turnOwner;
-    }
-
-    /**
      * method used to start the game
      *
      * @param cg the list of the common goal of the game
@@ -496,8 +480,6 @@ public abstract class ClientGameManager implements ClientGameManagerListener, Cl
 
             queue.add(() -> firstPlayerCommunication(firstPlayer, cg));
             queue.add(this::gameStateUpdate);
-            // TODO cosi stampa prima inizio game poi chiede lo stato ma problema di sincro con la ricezione messaggi
-//            queue.add(() -> gameStateRequest(getUsername(), getClientToken()));
 
             firstTurn = false;
         }
@@ -543,31 +525,25 @@ public abstract class ClientGameManager implements ClientGameManagerListener, Cl
         switch (turnManager.getUserPlayerState()) {
             case PICK_CARD_BOARD -> {
                 actions.add(PossibleAction.BOARD_PICK_CARD);
-//                actions = List.of(PossibleAction.BOARD_PICK_CARD, PossibleAction.SHOW_PERSONAL_GOAL, PossibleAction.SHOW_SHELF);
             }
             case AFTER_FIRST_PICK -> {
                 if (gameSerialized.getLimbo().size() == 3) {
                     actions.add(PossibleAction.LOAD_SHELF);
                     actions.add(PossibleAction.REORDER_LIMBO);
                     actions.add(PossibleAction.DELETE_LIMBO);
-//                    actions = List.of(PossibleAction.LOAD_SHELF, PossibleAction.REORDER_LIMBO, PossibleAction.DELETE_LIMBO, PossibleAction.SHOW_PERSONAL_GOAL, PossibleAction.SHOW_SHELF);
                 } else if (gameSerialized.getLimbo().size() > 1) {
                     actions.add(PossibleAction.BOARD_PICK_CARD);
                     actions.add(PossibleAction.LOAD_SHELF);
                     actions.add(PossibleAction.REORDER_LIMBO);
                     actions.add(PossibleAction.DELETE_LIMBO);
-                    //actions = List.of(PossibleAction.BOARD_PICK_CARD, PossibleAction.LOAD_SHELF, PossibleAction.REORDER_LIMBO, PossibleAction.DELETE_LIMBO, PossibleAction.SHOW_PERSONAL_GOAL, PossibleAction.SHOW_SHELF);
                 } else {
                     actions.add(PossibleAction.BOARD_PICK_CARD);
                     actions.add(PossibleAction.LOAD_SHELF);
                     actions.add(PossibleAction.DELETE_LIMBO);
-                    //actions = List.of(PossibleAction.BOARD_PICK_CARD, PossibleAction.LOAD_SHELF, PossibleAction.DELETE_LIMBO, PossibleAction.SHOW_PERSONAL_GOAL, PossibleAction.SHOW_SHELF);
                 }
             }
             case LOADING_SHELF -> {
                 actions.add(PossibleAction.LOAD_SHELF);
-                //actions.add(PossibleAction.SHOW_PERSONAL_GOAL);
-                //actions.add(PossibleAction.SHOW_SHELF);
             }
             default -> {
                 return null;
@@ -586,33 +562,25 @@ public abstract class ClientGameManager implements ClientGameManagerListener, Cl
 
         switch (chosenAction) {
             case JOIN_GAME -> {
-//                System.out.println("JOIN GAME");
                 action = this::joinGame;
             }
             case CREATE_GAME -> {
-//                System.out.println("CREATE GAME");
                 action = this::createGame;
             }
             case BOARD_PICK_CARD -> {
-//                System.out.println("SCEGLI CARTA");
                 action = this::pickBoardCard;
             }
             case LOAD_SHELF -> {
-//                System.out.println("CARICA SHELF");
-//                turnManager.loadingShelf();
                 action = this::chooseColumn;
             }
             case REORDER_LIMBO -> {
-//                System.out.println("SCEGLI ORDINE");
                 action = this::reorderLimbo;
             }
             case SHOW_PERSONAL_GOAL -> {
-//                System.out.println("SHOW PERSONAL GOAL");
                 action = this::showPersonalGoal;
                 checkNextAction();
             }
             case SHOW_SHELF -> {
-//                System.out.println("SHOW SHELF");
                 action = this::showShelf;
                 checkNextAction();
             }
@@ -621,13 +589,11 @@ public abstract class ClientGameManager implements ClientGameManagerListener, Cl
                 checkNextAction();
             }
             case DELETE_LIMBO -> {
-//                System.out.println("ELIMINO LIMBO");
                 turnManager.deleteLimbo();
                 action = this::deleteLimbo;
             }
             default -> {
             }
-//                throw new ClientRoundManagerException("Invalid Action");
         }
 
         assert action != null;

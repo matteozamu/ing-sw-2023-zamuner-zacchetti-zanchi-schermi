@@ -12,7 +12,9 @@ import it.polimi.ingsw.utility.MessageBuilder;
 import it.polimi.ingsw.utility.ServerAddressValidator;
 
 import java.io.PrintStream;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Scanner;
 import java.util.stream.Collectors;
 
 public class Cli extends ClientGameManager implements DisconnectionListener {
@@ -27,6 +29,29 @@ public class Cli extends ClientGameManager implements DisconnectionListener {
 
         this.in = new Scanner(System.in);
         this.out = new PrintStream(System.out, true);
+    }
+
+    /**
+     * Method used to read the input for the reorderLimbo method
+     *
+     * @return the list of the index read
+     */
+    private static ArrayList<Integer> readLimboInput() {
+        ArrayList<Integer> numbers = new ArrayList<>();
+        Scanner scanner = new Scanner(System.in);
+        String input = scanner.nextLine();
+
+        String[] numberStrings = input.split(" ");
+        for (String numberString : numberStrings) {
+            try {
+                int number = Integer.parseInt(numberString);
+                numbers.add(number);
+            } catch (NumberFormatException e) {
+                System.out.println("Invalid number: " + numberString);
+            }
+        }
+
+        return numbers;
     }
 
     /**
@@ -66,11 +91,6 @@ public class Cli extends ClientGameManager implements DisconnectionListener {
      * @param errorMessage the error to show
      */
     private void promptInputError(String errorMessage) {
-//        out.print(AnsiCode.CLEAR_LINE);
-//        if (!firstError) {
-//            out.print(AnsiCode.CLEAR_LINE);
-//        }
-
         out.println(errorMessage);
     }
 
@@ -126,13 +146,11 @@ public class Cli extends ClientGameManager implements DisconnectionListener {
      * Try to connect to the server
      */
     private void doConnection() {
-        boolean validConnection = false;
 
         String username = askUsername();
 
         out.printf("Hi %s!%n", username);
         int connection = askConnection();
-//        int connection = 0;
 
         if (connection == 0) {
             out.println("You chose Socket connection\n");
@@ -141,11 +159,9 @@ public class Cli extends ClientGameManager implements DisconnectionListener {
         }
 
         String address = askAddress();
-//        String address = "localhost";
         out.println("Server Address: " + address);
 
         int port = askPort(connection);
-//        int port = 2727;
         out.println("Server Port: " + port);
 
         try {
@@ -233,7 +249,7 @@ public class Cli extends ClientGameManager implements DisconnectionListener {
      */
     private int askPort(int connection) {
 
-        int defaultPort = (connection == 0 ? 2727 : 7272);
+        int defaultPort = (connection == 0 ? 6666 : 7777);
         out.println("\nEnter the server port (default " + defaultPort + "):");
         in.reset();
 
@@ -345,19 +361,6 @@ public class Cli extends ClientGameManager implements DisconnectionListener {
     }
 
     /**
-     * Send a game state request to the server
-     *
-     * @param username of the player
-     * @param token    of the player
-     */
-    @Override
-    public void gameStateRequest(String username, String token) {
-        if (!sendRequest(MessageBuilder.buildGameStateRequest(getUsername(), getClientToken()))) {
-            promptError(SEND_ERROR, true);
-        }
-    }
-
-    /**
      * Send a message to the server with the number of players
      *
      * @param response
@@ -371,6 +374,9 @@ public class Cli extends ClientGameManager implements DisconnectionListener {
         }
     }
 
+    /**
+     * asks the user for a game name for the game they created
+     */
     private String askGameName() {
         String gameName = null;
 
@@ -423,6 +429,9 @@ public class Cli extends ClientGameManager implements DisconnectionListener {
      */
     @Override
     public void gameStateUpdate() {
+        List<CommonGoal> cg = getGameSerialized().getCommonGoals();
+        out.println("The common goal cards are: \n" + cg.get(0).getDescription() + "\n" + cg.get(0).getCardView() + "\n\n" + cg.get(1).getDescription() + "\n" + cg.get(1).getCardView());
+
         CliVisual.printPersonalGoalCards(out, getGameSerialized());
         out.println();
         CliVisual.printBoard(out, getGameSerialized());
@@ -433,7 +442,7 @@ public class Cli extends ClientGameManager implements DisconnectionListener {
     }
 
     /**
-     * Tells the other players who is playing
+     * Tells the other players who are playing
      *
      * @param turnOwner the player who is playing
      */
@@ -461,7 +470,6 @@ public class Cli extends ClientGameManager implements DisconnectionListener {
     @Override
     public void firstPlayerCommunication(String username, List<CommonGoal> cg) {
         out.println("Game has started!");
-        out.println("The common goal cards are: \n" + cg.get(0).getDescription() + "\n" + cg.get(0).getCardView() + "\n\n" + cg.get(1).getDescription() + "\n" + cg.get(1).getCardView());
 
         if (username.equals(getUsername())) {
             out.println("You are the first player!\n");
@@ -499,7 +507,6 @@ public class Cli extends ClientGameManager implements DisconnectionListener {
         do {
             choose = readInt(0, games.size() - 1);
             if (choose == null) {
-                System.out.println("NOOOO");
                 promptInputError("Not valid input!");
             }
         } while (choose == null);
@@ -550,7 +557,6 @@ public class Cli extends ClientGameManager implements DisconnectionListener {
             String line = in.nextLine();
 
             if (line.equals("CANCEL")) {
-                System.out.println("RETURNING NULL");
                 return null;
             }
 
@@ -616,6 +622,9 @@ public class Cli extends ClientGameManager implements DisconnectionListener {
         }
     }
 
+    /**
+     * Method used to cancel a previous action
+     */
     private void cancelAction(String message) {
         CliVisual.clearConsole(out);
         out.println(message);
@@ -657,58 +666,12 @@ public class Cli extends ClientGameManager implements DisconnectionListener {
      */
     @Override
     public void reorderLimbo() {
-//        Map<Coordinate, ObjectCard> limbo = getGameSerialized().getLimbo();
-//        List<ObjectCard> limbo = getGameSerialized().getAllLimboCards();
-        List<Coordinate> limboCoordinates;
-        int choose;
-        boolean accepted = false;
-
         out.println("Choose the order of the cards in the limbo:");
         ArrayList<Integer> limboOrder = readLimboInput();
-
-        /*
-        for (int i = 0; i < limbo.size(); i++) {
-            out.println("\t" + (i) + " - " + limbo.get(i));
-        }
-
-
-        do {
-            choose = readInt(0, limbo.size() - 1);
-
-            if (newLimbo.contains(limbo.get(choose))) {
-                promptInputError("You can't choose the same card twice!");
-            } else {
-                newLimbo.add(limbo.get(choose));
-            }
-//            limbo.remove(choose);
-            if (newLimbo.size() == limbo.size()) accepted = true;
-        } while (!accepted);*/
 
         if (!sendRequest(MessageBuilder.buildReorderLimboRequest(getUsername(), getClientToken(), limboOrder))) {
             promptError(SEND_ERROR, true);
         }
-    }
-
-    /**
-     * Method used to read the input for the reorderLimbo method
-     * @return the list of the index read
-     */
-    private static ArrayList<Integer> readLimboInput(){
-        ArrayList<Integer> numbers = new ArrayList<>();
-        Scanner scanner = new Scanner(System.in);
-        String input = scanner.nextLine();
-
-        String[] numberStrings = input.split(" ");
-        for (String numberString : numberStrings) {
-            try {
-                int number = Integer.parseInt(numberString);
-                numbers.add(number);
-            } catch (NumberFormatException e) {
-                System.out.println("Invalid number: " + numberString);
-            }
-        }
-
-        return numbers;
     }
 
     /**
@@ -717,11 +680,6 @@ public class Cli extends ClientGameManager implements DisconnectionListener {
     @Override
     public void printLimbo() {
         CliVisual.printLimbo(out, getGameSerialized());
-    }
-
-    @Override
-    public void printScore() {
-        CliVisual.printScore(out, getGameSerialized());
     }
 
     @Override
@@ -734,8 +692,6 @@ public class Cli extends ClientGameManager implements DisconnectionListener {
     /**
      * Send a message to the server asking the available columns
      */
-    // TODO se non ci sono colonne disponibili svuotiamo il limbo e rifacciamo scegliere le carte
-    // TODO: c'è un metodo nella classe shelf (getFreeCellsPerColumnMap()) per evitare di farlo
     @Override
     public void chooseColumn() {
         out.println("Choose the column you want to load:");
@@ -754,6 +710,9 @@ public class Cli extends ClientGameManager implements DisconnectionListener {
         }
     }
 
+    /**
+     * shows a player their personal goal
+     */
     @Override
     public void showPersonalGoal() {
         CliVisual.printPersonalGoalCards(out, getGameSerialized());
@@ -764,6 +723,10 @@ public class Cli extends ClientGameManager implements DisconnectionListener {
         out.println("Action canceled");
     }
 
+
+    /**
+     * shows a player their shelf
+     */
     @Override
     public void showShelf() {
         CliVisual.printShelf(out, getGameSerialized());
@@ -787,7 +750,12 @@ public class Cli extends ClientGameManager implements DisconnectionListener {
             }
         }
 
+        out.println("Press any key to exit...");
+        Scanner scanner = new Scanner(System.in);
+        scanner.nextLine();
+        scanner.close();
 
+        System.exit(0);
     }
 
     /**

@@ -34,8 +34,6 @@ public class Server implements Runnable {
     private boolean waitForLoad;
     private String filepath;
 
-    private Timer moveTimer;
-
     /**
      * costructor of a new game
      */
@@ -57,37 +55,7 @@ public class Server implements Runnable {
 
         Thread pingThread = new Thread(this);
         pingThread.start();
-
-        moveTimer = new Timer();
     }
-
-
-//    /**
-//     * Starts the server loading a game
-//     *
-//     * @param confFilePath path of the config file
-//     */
-//    private Server(String confFilePath) {
-//        initLogger();
-//        synchronized (clientsLock) {
-//            this.clients = new HashMap<>();
-//        }
-//        this.waitForLoad = true;
-//
-//        loadConfigFile(confFilePath);
-//
-//        startServers();
-//
-//        this.gameManager = SaveGame.loadGame(this, startTime);
-//        reserveSlots(gameManager.getGameInstance().getPlayers());
-//
-//        LOGGER.log(Level.INFO, "Game loaded successfully.");
-//
-//        Thread pingThread = new Thread(this);
-//        pingThread.start();
-//
-//        moveTimer = new Timer();
-//    }
 
     public static void main(String[] args) {
         new Server(args[0]);
@@ -164,11 +132,6 @@ public class Server implements Runnable {
                 connection.sendMessage(
                         new GameLoadResponse("Successfully reconnected", token, UserPlayerState.FIRST_ACTION)
                 );
-//            ControllerGame controllerGame = playersGame.get(username);
-
-                System.out.println("controllerGame: " + controllerGame);
-
-                //checkLoadReady();
             } else {
                 if (controllerGame.getGameState() == PossibleGameState.GAME_ROOM) { // Game in lobby state
                     connection.sendMessage(
@@ -211,9 +174,6 @@ public class Server implements Runnable {
      * @param message is the message received to the client
      */
     void onMessage(Message message) {
-        System.out.println("onMessage: " + message);
-        System.out.println(message.getToken());
-        System.out.println(message.getToken() != null);
         if (message != null && message.getSenderUsername() != null && (message.getToken() != null || message.getSenderUsername().equals("serverUser"))) {
             LOGGER.log(Level.INFO, "Received: {0}", message);
 
@@ -280,30 +240,36 @@ public class Server implements Runnable {
         if (username != null) {
             LOGGER.log(Level.INFO, "{0} disconnected from server!", username);
 
-
             if (playersGame.get(username) != null) {
                 ControllerGame controllerGame = findGameByPlayerUsername(username);
                 Player p = controllerGame.getGame().getPlayerByName(username);
                 p.setConnected(false);
 
-                LOGGER.log(Level.INFO, "{0} removed from client list!", username);
+                int connectionCounter = 0;
+                for (Player pl : controllerGame.getGame().getPlayers()) {
+                    if (pl.isConnected()) connectionCounter++;
+                }
+                if (connectionCounter == 1) {
+                    controllerGame.setTimer();
+                }
+
+                LOGGER.log(Level.INFO, "{0} set connected false!", username);
+
+                if (controllerGame.getGameState() == PossibleGameState.GAME_ROOM) {
+                    synchronized (clientsLock) {
+                        clients.remove(username);
+                        playersGame.remove(username);
+                        controllerGame.getGame().getPlayers().remove(p);
+                    }
+                    sendMessageToAll(controllerGame.getId(), new LobbyPlayersResponse(new ArrayList<>(controllerGame.getGame().getPlayers().stream().map(Player::getName).collect(Collectors.toList()))));
+                    LOGGER.log(Level.INFO, "{0} removed from client list!", username);
+                }
                 sendMessageToAll(controllerGame.getId(), new DisconnectionMessage(username));
             } else {
                 synchronized (clientsLock) {
                     clients.remove(username);
                 }
             }
-
-//            if (controllerGame.getGameState() == PossibleGameState.GAME_ROOM) {
-//                synchronized (clientsLock) {
-//                    clients.remove(username);
-//                }
-//                controllerGame.onMessage(new LobbyMessage(username, null, true));
-//            LOGGER.log(Level.INFO, "{0} removed from client list!", username);
-//            }
-//        else {
-//                controllerGame.onConnectionMessage(new LobbyMessage(username, null, true));
-//            }
         }
     }
 
@@ -314,34 +280,19 @@ public class Server implements Runnable {
      * @param message is the message to send
      */
     public void sendMessageToAll(UUID gameId, Message message) {
-        System.out.println("ALL SENDING MESSAGE");
         for (Map.Entry<String, ControllerGame> client : playersGame.entrySet()) {
-            System.out.println(client.getKey() + " " + client.getValue().getId() + " " + gameId + " " + clients.get(client.getKey()).isConnected());
-            if (client.getValue() != null && client.getValue().getId().equals(gameId) && clients.get(client.getKey()).isConnected()) {
-                try {
-                    System.out.println("ALL SENDING MESSAGE TO " + client.getKey());
-                    System.out.println("ALL MESSAGE: " + message);
-                    clients.get(client.getKey()).sendMessage(message);
-                } catch (IOException e) {
-                    LOGGER.severe(e.getMessage());
+            synchronized (clientsLock) {
+                if (client.getValue() != null && client.getValue().getId().equals(gameId) && clients.get(client.getKey()).isConnected()) {
+                    try {
+                        clients.get(client.getKey()).sendMessage(message);
+                    } catch (IOException e) {
+                        LOGGER.severe(e.getMessage());
+                    }
                 }
             }
         }
         LOGGER.log(Level.INFO, "Send to all: {0}", message);
     }
-
-//    public void sendMessageToAll(Message message) {
-//        for (Map.Entry<String, Connection> client : clients.entrySet()) {
-//            if (client.getValue() != null && client.getValue().isConnected()) {
-//                try {
-//                    client.getValue().sendMessage(message);
-//                } catch (IOException e) {
-//                    LOGGER.severe(e.getMessage());
-//                }
-//            }
-//        }
-//        LOGGER.log(Level.INFO, "Send to all: {0}", message);
-//    }
 
     /**
      * send a message to a single client
@@ -387,6 +338,7 @@ public class Server implements Runnable {
             return usernameList.iterator().next();
         }
     }
+
 
     @Override
     public void run() {
@@ -440,18 +392,30 @@ public class Server implements Runnable {
         return playersGame;
     }
 
+    /**
+     * @return the lock of the clients map
+     */
     public Object getClientsLock() {
         return clientsLock;
     }
 
+    /**
+     * @return a map with all the clients connected and their connection
+     */
     public Map<String, Connection> getClients() {
         return clients;
     }
 
+    /**
+     * @return the list of all the controller games
+     */
     public List<ControllerGame> getControllerGames() {
         return controllerGames;
     }
 
+    /**
+     * @return the filepath of the server
+     */
     public String getFilepath() {
         return filepath;
     }

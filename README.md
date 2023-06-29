@@ -92,8 +92,8 @@ L'esecuzione del Server prevede la lettura di un file di configurazione di tipo 
 di gioco; i valori eventualmente modificabili sono i seguenti:
 
 ```
-"socketPort": 2727,
-"RMIPort": 7272,
+"socketPort": 6666,
+"RMIPort": 7777,
 "maxPlayers": 4,
 "minPlayers": 2,
 "disconnectionTimer": 30000

@@ -1,12 +1,7 @@
 package it.polimi.ingsw.model;
 
 import java.io.Serializable;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
-// TODO CREAZIONE MAPPA DELLA SHELF SE NO NON POSSIAMO ITERARE OPPURE
-//  CAMBiArE IL MODO DI CONTROLLARE IL NUMERO DI RIGHE DISPONIBILI
+import java.util.*;
 
 /**
  * Represents a Shelf in the game, which holds ObjectCards.
@@ -67,58 +62,99 @@ public class Shelf implements Serializable {
         return availableRows;
     }
 
-    public int closeObjectCardsPoints() {
-        ObjectCard card;
-        int closeCards;
-        int points = 0;
-        List<ObjectCardType> types = ObjectCardType.VALUES;
-
-        for (ObjectCardType type : types) {
-            closeCards = 0;
-            for (int row = 0; row < ROWS; row++) {
-                for (int col = 0; col < COLUMNS; col++) {
-                    card = getObjectCard(new Coordinate(row, col));
-                    if (card != null && card.getType().equals(type)) {
-                        if (getObjectCard(new Coordinate(row - 1, col)) != null) {
-                            if (getObjectCard(new Coordinate(row - 1, col)).getType().equals(card.getType()))
-                                closeCards++;
-                        } else if (getObjectCard(new Coordinate(row + 1, col)) != null) {
-                            if (getObjectCard(new Coordinate(row + 1, col)).getType().equals(card.getType()))
-                                closeCards++;
-                        } else if (getObjectCard(new Coordinate(row, col - 1)) != null) {
-                            if (getObjectCard(new Coordinate(row, col - 1)).getType().equals(card.getType()))
-                                closeCards++;
-                        } else if (getObjectCard(new Coordinate(row, col + 1)) != null) {
-                            if (getObjectCard(new Coordinate(row, col + 1)).getType().equals(card.getType()))
-                                closeCards++;
-                        }
-                    }
-                }
+    /**
+     * Depth-first search (DFS) is an algorithm for traversing or searching tree or graph data structures.
+     * The algorithm starts at the root node (selecting some arbitrary node as the root node in the case of a graph)
+     * and explores as far as possible along each branch before backtracking.
+     * It is a recursive algorithm used for the calculation of the points.
+     */
+    private int dfs(ObjectCard currentTile, Set<ObjectCard> visited, ObjectCardType type, int row, int column) {
+        visited.add(currentTile);
+        int size = 1;
+        int[][] DIRECTIONS = {
+                {-1, 0},
+                {1, 0},
+                {0, -1},
+                {0, 1}
+        };
+        for (int[] dir : DIRECTIONS) {
+            int x = row + dir[0];
+            int y = column + dir[1];
+            Coordinate coordinate = new Coordinate(x, y);
+            if (!grid.containsKey(coordinate)) {
+                continue;
             }
-            if (closeCards == 3) points += 2;
-            else if (closeCards == 4) points += 3;
-            else if (closeCards == 5) points += 5;
-            else if (closeCards >= 6) points += 8;
+            ObjectCard nextTile = grid.get(coordinate);
+            if (!visited.contains(nextTile) && nextTile.getType() == type) {
+                size += dfs(nextTile, visited, type, x, y);
+            }
+        }
+        return size;
+    }
+
+    /**
+     * finds groups of adjacent ObjectCards of the same type.
+     * It is used for the calculation of the points.
+     */
+    public List<Integer> findAdjacentTilesGroups() {
+        ObjectCard startingTile = null;
+        List<Integer> groupsSizes = new ArrayList<>();
+        Set<ObjectCard> visited = new HashSet<>();
+        int lastRow = ROWS - 1;
+        int startingRow = lastRow;
+        int startingColumn = 0;
+
+        for (Coordinate coordinate : grid.keySet()) {
+            int row = coordinate.getRow();
+            int column = coordinate.getColumn();
+            if (row > lastRow) {
+                lastRow = row;
+            }
+            ObjectCard currentTile = grid.get(coordinate);
+            if (currentTile != null && (!Objects.equals(currentTile.getType(), -1))) {
+                startingTile = currentTile;
+                startingRow = row;
+                startingColumn = column;
+                break;
+            }
+        }
+
+        if (startingTile == null || Objects.equals(startingTile.getType(), -1)) {
+            return groupsSizes;
+        }
+
+        ObjectCardType startingType = startingTile.getType();
+        int groupSize = dfs(startingTile, visited, startingType, startingRow, startingColumn);
+        groupsSizes.add(groupSize);
+
+        for (Coordinate coordinate : grid.keySet()) {
+            int row = coordinate.getRow();
+            int column = coordinate.getColumn();
+            ObjectCard currentTile = grid.get(coordinate);
+            if (!visited.contains(currentTile) && currentTile.getType() != null && (!Objects.equals(currentTile.getType(), -1))) {
+                ObjectCardType currentType = currentTile.getType();
+                groupSize = dfs(currentTile, visited, currentType, row, column);
+                groupsSizes.add(groupSize);
+            }
+        }
+        return groupsSizes;
+    }
+
+    /**
+     * Calculates the point from the groups of adjacent ObjectCards.
+     */
+    public int closeObjectCardsPoints() {
+        int points = 0;
+
+        for (int closeCard : findAdjacentTilesGroups()) {
+            if (closeCard == 3) points += 2;
+            else if (closeCard == 4) points += 3;
+            else if (closeCard == 5) points += 5;
+            else if (closeCard >= 6) points += 8;
         }
 
         return points;
     }
-
-    /**
-     * Returns a map with the number of free cells for each column in the Shelf.
-     *
-     * @return A Map<Integer, Integer> where the key represents the column index and the value
-     * represents the number of free cells in that column.
-     */
-//    public Map<Integer, Integer> getFreeCellsPerColumnMap() {
-//        Map<Integer, Integer> freeCellsPerColumn = new HashMap<>();
-//
-//        for (int col = 0; col < COLUMNS; col++) {
-//            int freeRows = getFreeCellsPerColumn(col);
-//            freeCellsPerColumn.put(col, freeRows);
-//        }
-//        return freeCellsPerColumn;
-//    }
 
     /**
      * Returns the ObjectCard at the specified coordinate in the shelf.
@@ -129,9 +165,4 @@ public class Shelf implements Serializable {
     public ObjectCard getObjectCard(Coordinate coord) {
         return grid.get(coord);
     }
-
-//    @Override
-//    public String toString() {
-//        return "Shelf{" + "grid=" + grid + '}';
-//    }
 }

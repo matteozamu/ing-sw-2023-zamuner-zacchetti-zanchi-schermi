@@ -1,5 +1,8 @@
 package it.polimi.ingsw.utility;
 
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
+import it.polimi.ingsw.model.PersonalGoalCard;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import org.json.JSONTokener;
@@ -7,6 +10,8 @@ import org.json.JSONTokener;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.InputStream;
+import java.lang.reflect.Type;
+import java.util.List;
 
 public class JsonReader {
     private static int socketPort;
@@ -16,6 +21,8 @@ public class JsonReader {
     private static int[][] board2Matrix;
     private static int[][] board3Matrix;
     private static int[][] board4Matrix;
+    private static List<PersonalGoalCard> personalGoalCardsContainer;
+    private static int timer;
 
     /**
      * read the program's constant from a json file
@@ -23,20 +30,25 @@ public class JsonReader {
      * @param filename the file to read
      */
     public static void readJsonConstant(String filename) {
+        Gson gson = new Gson();
         try {
             // Read JSON from a file
             File file = new File(filename);
-            InputStream inputStream = null;
-            inputStream = new FileInputStream(file);
+            InputStream inputStream = new FileInputStream(file);
 
             // Parse the JSON data
             JSONTokener tokener = new JSONTokener(inputStream);
             JSONObject jsonObject = new JSONObject(tokener);
 
+
+            JSONArray personalGoalCardsArray = jsonObject.getJSONArray("personalGoalCards");
+            Type personalGoalCardListType = new TypeToken<List<PersonalGoalCard>>() {}.getType();
+            personalGoalCardsContainer = gson.fromJson(personalGoalCardsArray.toString(), personalGoalCardListType);
             socketPort = jsonObject.getInt("socketPort");
             RMIPort = jsonObject.getInt("RMIPort");
             maxPlayers = jsonObject.getInt("maxPlayers");
             minPlayers = jsonObject.getInt("minPlayers");
+            timer = jsonObject.getInt("disconnectionTimer");
             JSONArray board2 = jsonObject.getJSONArray("board2");
             JSONArray board3 = jsonObject.getJSONArray("board3");
             JSONArray board4 = jsonObject.getJSONArray("board4");
@@ -64,6 +76,7 @@ public class JsonReader {
                     board4Matrix[i][j] = rowArray.getInt(j);
                 }
             }
+
 
             // Close the input stream
             inputStream.close();
@@ -105,5 +118,13 @@ public class JsonReader {
 
     public static int getRMIPort() {
         return RMIPort;
+    }
+
+    public static List<PersonalGoalCard> getPersonalGoalCardsContainer() {
+        return personalGoalCardsContainer;
+    }
+
+    public static int getTimer() {
+        return timer;
     }
 }

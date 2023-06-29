@@ -7,6 +7,39 @@ import static org.junit.jupiter.api.Assertions.*;
 class CommonGoalType3Test {
 
     @Test
+    public void testGetType(){
+        CommonGoalType3 goal = new CommonGoalType3();
+        assertEquals(3, goal.getType());
+    }
+
+    @Test
+    public void testGetDescription(){
+        CommonGoalType3 goal = new CommonGoalType3();
+        assertEquals("Four tiles of the same type in the four corners of the bookshelf.", goal.getDescription());
+    }
+
+    @Test
+    public void testGetCardView(){
+        CommonGoalType3 goal = new CommonGoalType3();
+        assertEquals("""
+                ╔═══════════╗
+                ║ ■ - - - ■ ║
+                ║ - - - - - ║
+                ║ - - - - - ║
+                ║ - - - - - ║
+                ║ - - - - - ║
+                ║ ■ - - - ■ ║
+                ╚═══════════╝
+                """, goal.getCardView());
+    }
+
+    @Test
+    public void testToString(){
+        CommonGoalType3 goal = new CommonGoalType3();
+        assertEquals("commonGoalCard-3", goal.toString());
+    }
+
+    @Test
     public void testCheckGoalEligibleShelfAndSameCornerType() {
         CommonGoalType3 goal = new CommonGoalType3();
         ObjectCardType type = ObjectCardType.cat;

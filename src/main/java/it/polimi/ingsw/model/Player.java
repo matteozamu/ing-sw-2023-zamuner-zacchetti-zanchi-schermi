@@ -48,6 +48,9 @@ public class Player implements Serializable {
         this.connected = connected;
     }
 
+    /**
+     * @return the map of common goals reached by the player
+     */
     public Map<CommonGoal, Integer> getCommonGoalsReached() {
         return commonGoalsReached;
     }
@@ -110,13 +113,4 @@ public class Player implements Serializable {
     public PersonalGoalCard getPersonalGoalCard() {
         return personalGoalCard;
     }
-
-    /**
-     * Returns a string representation of the player, including their name, current points, and personal goal card.
-     * @return A string representation of the player.
-     */
-//    @Override
-//    public String toString() {
-//        return name + ", points=" + currentPoints + ", personalGoalCard=" + personalGoalCard;
-//    }
 }

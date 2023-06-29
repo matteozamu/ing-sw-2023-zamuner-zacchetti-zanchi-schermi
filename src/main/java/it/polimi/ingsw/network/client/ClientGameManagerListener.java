@@ -19,6 +19,9 @@ interface ClientGameManagerListener {
      */
     void connectionResponse(ConnectionResponse response);
 
+    /**
+     * Handles the request to a player addition to a game
+     */
     void addPlayerToGameRequest();
 
     /**
@@ -26,6 +29,9 @@ interface ClientGameManagerListener {
      */
     void loadResponse();
 
+    /**
+     * Handles the response to a generic error
+     */
     void responseError(String error);
 
     /**
@@ -35,6 +41,11 @@ interface ClientGameManagerListener {
      */
     void lobbyJoinResponse(Response response);
 
+    /**
+     * Handles the request to the number of players
+     *
+     * @param response to the request
+     */
     void numberOfPlayersRequest(Response response);
 
     /**
@@ -44,8 +55,16 @@ interface ClientGameManagerListener {
      */
     void playersWaitingUpdate(List<String> users);
 
+    /**
+     * Handles the request of joining an existing game
+     *
+     * @param games list of games a player can join
+     */
     void chooseGameToJoin(List<ControllerGame> games);
 
+    /**
+     * Handles the situation where there are no available games
+     */
     void noGameAvailable();
 
     /**
@@ -77,8 +96,14 @@ interface ClientGameManagerListener {
      */
     void pickBoardCard();
 
+    /**
+     * Handles the joining of a player to a game
+     */
     void joinGame();
 
+    /**
+     * Handles the creation of  a game
+     */
     void createGame();
 
     /**
@@ -101,10 +126,19 @@ interface ClientGameManagerListener {
      */
     void chooseColumn();
 
+    /**
+     * shows a player their personal goal
+     */
     void showPersonalGoal();
 
+    /**
+     * cancel the action
+     */
     void cancelAction();
 
+    /**
+     * shows a player their shelf
+     */
     void showShelf();
 
     /**
@@ -120,11 +154,6 @@ interface ClientGameManagerListener {
      * @param message is the message to print
      */
     void printEndGame(String message);
-
-
-    void printScore();
-
-    void gameStateRequest(String username, String token);
 
     /**
      * print the disconnection of the player

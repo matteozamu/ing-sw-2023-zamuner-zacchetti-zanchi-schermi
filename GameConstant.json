@@ -1,9 +1,9 @@
 {
-  "socketPort": 2727,
-  "RMIPort": 7272,
+  "socketPort": 6666,
+  "RMIPort": 7777,
   "maxPlayers": 4,
   "minPlayers": 2,
-  "disconnectionTimer": 30000,
+  "disconnectionTimer": 120000,
   "board2": [
     [
       0,
@@ -306,5 +306,427 @@
       0,
       0
     ]
+  ],
+  "personalGoalCards": [
+    {
+      "ID": "personalGoalCard-1",
+      "goals": [
+        {
+          "row": 5,
+          "column": 0,
+          "type": "Plant"
+        },
+        {
+          "row": 5,
+          "column": 2,
+          "type": "Frame"
+        },
+        {
+          "row": 4,
+          "column": 4,
+          "type": "Cat"
+        },
+        {
+          "row": 3,
+          "column": 3,
+          "type": "Book"
+        },
+        {
+          "row": 2,
+          "column": 1,
+          "type": "Game"
+        },
+        {
+          "row": 0,
+          "column": 2,
+          "type": "Trophy"
+        }
+      ]
+    },
+    {
+      "ID": "personalGoalCard-2",
+      "goals": [
+        {
+          "row": 3,
+          "column": 0,
+          "type": "Cat"
+        },
+        {
+          "row": 4,
+          "column": 1,
+          "type": "Plant"
+        },
+        {
+          "row": 3,
+          "column": 2,
+          "type": "Game"
+        },
+        {
+          "row": 1,
+          "column": 3,
+          "type": "Trophy"
+        },
+        {
+          "row": 0,
+          "column": 4,
+          "type": "Frame"
+        },
+        {
+          "row": 2,
+          "column": 4,
+          "type": "Book"
+        }
+      ]
+    },
+    {
+      "ID": "personalGoalCard-3",
+      "goals": [
+        {
+          "row": 0,
+          "column": 0,
+          "type": "Book"
+        },
+        {
+          "row": 2,
+          "column": 1,
+          "type": "Cat"
+        },
+        {
+          "row": 3,
+          "column": 2,
+          "type": "Plant"
+        },
+        {
+          "row": 4,
+          "column": 3,
+          "type": "Game"
+        },
+        {
+          "row": 3,
+          "column": 2,
+          "type": "Plant"
+        },
+        {
+          "row": 4,
+          "column": 0,
+          "type": "Frame"
+        }
+      ]
+    },
+    {
+      "ID": "personalGoalCard-4",
+      "goals": [
+        {
+          "row": 3,
+          "column": 0,
+          "type": "Trophy"
+        },
+        {
+          "row": 1,
+          "column": 1,
+          "type": "Book"
+        },
+        {
+          "row": 1,
+          "column": 2,
+          "type": "Cat"
+        },
+        {
+          "row": 3,
+          "column": 2,
+          "type": "Frame"
+        },
+        {
+          "row": 2,
+          "column": 3,
+          "type": "Plant"
+        },
+        {
+          "row": 5,
+          "column": 4,
+          "type": "Game"
+        }
+      ]
+    },
+    {
+      "ID": "personalGoalCard-5",
+      "goals": [
+        {
+          "row": 0,
+          "column": 0,
+          "type": "Game"
+        },
+        {
+          "row": 2,
+          "column": 1,
+          "type": "Frame"
+        },
+        {
+          "row": 4,
+          "column": 1,
+          "type": "Trophy"
+        },
+        {
+          "row": 2,
+          "column": 2,
+          "type": "Book"
+        },
+        {
+          "row": 0,
+          "column": 3,
+          "type": "Cat"
+        },
+        {
+          "row": 1,
+          "column": 4,
+          "type": "Plant"
+        }
+      ]
+    },
+    {
+      "ID": "personalGoalCard-6",
+      "goals": [
+        {
+          "row": 0,
+          "column": 0,
+          "type": "Plant"
+        },
+        {
+          "row": 1,
+          "column": 1,
+          "type": "Game"
+        },
+        {
+          "row": 5,
+          "column": 2,
+          "type": "Trophy"
+        },
+        {
+          "row": 1,
+          "column": 3,
+          "type": "Frame"
+        },
+        {
+          "row": 3,
+          "column": 3,
+          "type": "Book"
+        },
+        {
+          "row": 5,
+          "column": 4,
+          "type": "Cat"
+        }
+      ]
+    },
+    {
+      "ID": "personalGoalCard-7",
+      "goals": [
+        {
+          "row": 5,
+          "column": 0,
+          "type": "Cat"
+        },
+        {
+          "row": 2,
+          "column": 0,
+          "type": "Trophy"
+        },
+        {
+          "row": 3,
+          "column": 1,
+          "type": "Plant"
+        },
+        {
+          "row": 0,
+          "column": 2,
+          "type": "Book"
+        },
+        {
+          "row": 4,
+          "column": 3,
+          "type": "Frame"
+        },
+        {
+          "row": 1,
+          "column": 4,
+          "type": "Game"
+        }
+      ]
+    },
+    {
+      "ID": "personalGoalCard-8",
+      "goals": [
+        {
+          "row": 2,
+          "column": 0,
+          "type": "Plant"
+        },
+        {
+          "row": 4,
+          "column": 1,
+          "type": "Cat"
+        },
+        {
+          "row": 3,
+          "column": 2,
+          "type": "Trophy"
+        },
+        {
+          "row": 0,
+          "column": 3,
+          "type": "Game"
+        },
+        {
+          "row": 1,
+          "column": 3,
+          "type": "Book"
+        },
+        {
+          "row": 5,
+          "column": 4,
+          "type": "Frame"
+        }
+      ]
+    },
+    {
+      "ID": "personalGoalCard-9",
+      "goals": [
+        {
+          "row": 0,
+          "column": 0,
+          "type": "Frame"
+        },
+        {
+          "row": 1,
+          "column": 1,
+          "type": "Trophy"
+        },
+        {
+          "row": 3,
+          "column": 2,
+          "type": "Cat"
+        },
+        {
+          "row": 5,
+          "column": 2,
+          "type": "Game"
+        },
+        {
+          "row": 1,
+          "column": 4,
+          "type": "Plant"
+        },
+        {
+          "row": 2,
+          "column": 4,
+          "type": "Book"
+        }
+      ]
+    },
+    {
+      "ID": "personalGoalCard-10",
+      "goals": [
+        {
+          "row": 3,
+          "column": 0,
+          "type": "Book"
+        },
+        {
+          "row": 1,
+          "column": 1,
+          "type": "Frame"
+        },
+        {
+          "row": 4,
+          "column": 1,
+          "type": "Game"
+        },
+        {
+          "row": 0,
+          "column": 3,
+          "type": "Plant"
+        },
+        {
+          "row": 2,
+          "column": 3,
+          "type": "Cat"
+        },
+        {
+          "row": 5,
+          "column": 4,
+          "type": "Trophy"
+        }
+      ]
+    },
+    {
+      "ID": "personalGoalCard-11",
+      "goals": [
+        {
+          "row": 3,
+          "column": 0,
+          "type": "Game"
+        },
+        {
+          "row": 4,
+          "column": 1,
+          "type": "Book"
+        },
+        {
+          "row": 2,
+          "column": 2,
+          "type": "Frame"
+        },
+        {
+          "row": 5,
+          "column": 2,
+          "type": "Plant"
+        },
+        {
+          "row": 0,
+          "column": 3,
+          "type": "Trophy"
+        },
+        {
+          "row": 1,
+          "column": 4,
+          "type": "Cat"
+        }
+      ]
+    },
+    {
+      "ID": "personalGoalCard-12",
+      "goals": [
+        {
+          "row": 0,
+          "column": 0,
+          "type": "Cat"
+        },
+        {
+          "row": 4,
+          "column": 1,
+          "type": "Plant"
+        },
+        {
+          "row": 3,
+          "column": 2,
+          "type": "Frame"
+        },
+        {
+          "row": 5,
+          "column": 2,
+          "type": "Book"
+        },
+        {
+          "row": 2,
+          "column": 3,
+          "type": "Trophy"
+        },
+        {
+          "row": 1,
+          "column": 4,
+          "type": "Game"
+        }
+      ]
+    }
   ]
 }

@@ -23,21 +23,33 @@ public final class CommonGoalType8 extends CommonGoal {
             ╚═══════════╝
             """;
 
+    /**
+     * Gets the type of the CommonGoal.
+     */
     @Override
     public int getType() {
         return type;
     }
 
+    /**
+     * Gets the description of the CommonGoal.
+     */
     @Override
     public String getDescription() {
         return description;
     }
 
+    /**
+     * Gets the visual representation of the CommonGoal.
+     */
     @Override
     public String getCardView() {
         return cardView;
     }
 
+    /**
+     * Gets the String representation of the CommonGoal.
+     */
     @Override
     public String toString() {
         return "commonGoalCard-8";
@@ -55,6 +67,13 @@ public final class CommonGoalType8 extends CommonGoal {
         return shelf.getGrid().size() >= 10;
     }
 
+    /**
+     * Checks if the Shelf satisfies the CommonGoal.
+     * For CommonGoalType8, the Shelf must have two rows each formed by 5 different types of tiles.
+     *
+     * @param shelf The Shelf to check.
+     * @return true if the Shelf satisfies the CommonGoal, false otherwise.
+     */
     @Override
     public boolean checkGoal(Shelf shelf) {
         if (!isShelfEligible(shelf)) {

@@ -7,14 +7,51 @@ import static org.junit.jupiter.api.Assertions.*;
 class CommonGoalType9Test {
 
     @Test
-    public void testCheckGoalShelfNotEligible(){
+    public void testToString() {
+        CommonGoalType9 commonGoalType9 = new CommonGoalType9();
+        assertEquals("commonGoalCard-9", commonGoalType9.toString());
+    }
+
+    @Test
+    public void testGetType() {
+        CommonGoalType9 commonGoalType9 = new CommonGoalType9();
+        assertEquals(9, commonGoalType9.getType());
+    }
+
+    @Test
+    public void testGetDescription() {
+        CommonGoalType9 commonGoalType9 = new CommonGoalType9();
+        assertEquals("""
+                Three columns each formed by 6 tiles 
+                of maximum three different types. One
+                column can show the same or a different
+                combination of another column.""", commonGoalType9.getDescription());
+    }
+
+    @Test
+    public void testGetCardView() {
+        CommonGoalType9 commonGoalType9 = new CommonGoalType9();
+        assertEquals("""
+                ╔═════════════╗
+                ║      ■      ║
+                ║      ■      ║
+                ║      ■      ║
+                ║      ■  x3  ║
+                ║      ■      ║
+                ║      ■      ║
+                ╚═════════════╝
+                """, commonGoalType9.getCardView());
+    }
+
+    @Test
+    public void testCheckGoalShelfNotEligible() {
         Shelf shelf = new Shelf();
         CommonGoalType9 goal = new CommonGoalType9();
         assertFalse(goal.checkGoal(shelf));
     }
 
     @Test
-    public void testCheckGoalThreeColumnsReturnsTrue(){
+    public void testCheckGoalThreeColumnsReturnsTrue() {
         Shelf shelf = new Shelf();
         shelf.getGrid().put(new Coordinate(0, 0), new ObjectCard(ObjectCardType.cat, "00"));
         shelf.getGrid().put(new Coordinate(1, 0), new ObjectCard(ObjectCardType.cat, "00"));
@@ -42,7 +79,7 @@ class CommonGoalType9Test {
     }
 
     @Test
-    public void testCheckGoalOnlyTwoColumnsReturnsFalse(){
+    public void testCheckGoalOnlyTwoColumnsReturnsFalse() {
         Shelf shelf = new Shelf();
         shelf.getGrid().put(new Coordinate(0, 1), new ObjectCard(ObjectCardType.game, "00"));
         shelf.getGrid().put(new Coordinate(1, 1), new ObjectCard(ObjectCardType.plant, "00"));
@@ -63,7 +100,7 @@ class CommonGoalType9Test {
     }
 
     @Test
-    public void testCheckGoalThreeColumnsOneWrongReturnsFalse(){
+    public void testCheckGoalThreeColumnsOneWrongReturnsFalse() {
         Shelf shelf = new Shelf();
         shelf.getGrid().put(new Coordinate(0, 0), new ObjectCard(ObjectCardType.cat, "00"));
         shelf.getGrid().put(new Coordinate(1, 0), new ObjectCard(ObjectCardType.cat, "00"));

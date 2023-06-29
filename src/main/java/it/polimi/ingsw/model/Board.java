@@ -21,6 +21,7 @@ public class Board implements Serializable {
         this.grid = board.getGrid();
     }
 
+
     public Map<Coordinate, ObjectCard> getGrid() {
         return grid;
     }
@@ -66,15 +67,7 @@ public class Board implements Serializable {
      * @throws IllegalArgumentException If the direction parameter is invalid.
      */
 
-    public boolean isEmptyAtDirection(Coordinate coord, Direction direction) throws NullPointerException, IllegalArgumentException {
-        if (coord == null) {
-//            throw new NullPointerException("Coordinate cannot be null");
-        }
-
-        if (direction == null) {
-//            throw new IllegalArgumentException("Direction cannot be null");
-        }
-
+    public boolean isEmptyAtDirection(Coordinate coord, Direction direction) {
         Coordinate tmp = switch (direction) {
             case UP -> new Coordinate(coord.getRow() + 1, coord.getColumn());
             case DOWN -> new Coordinate(coord.getRow() - 1, coord.getColumn());
@@ -84,13 +77,6 @@ public class Board implements Serializable {
 
         return !grid.containsKey(tmp);
     }
-
-//    @Override
-//    public String toString() {
-//        return "Board{" +
-//                "grid=" + grid +
-//                '}';
-//    }
 
     /**
      * Represents the four possible directions: UP, DOWN, LEFT, and RIGHT.

@@ -173,6 +173,7 @@
     -fx-font-family: "Berkshire Swash Regular";
     -fx-font-size: 50px;
     -fx-text-fill: #F1E1B2;
+    -fx-effect: dropshadow(three-pass-box, #796939, 1, 1.0, 0, 0);
 }
 
 .endTable {
@@ -217,7 +218,8 @@
 
     -fx-font-family: "Berkshire Swash Regular";
     -fx-font-size: 25px;
-    -fx-text-fill: #F44336;
+    -fx-text-fill: #F1E1B2;
+    -fx-effect: dropshadow(three-pass-box, #796939, 0.3, 1.0, 0, 0);
 
     -fx-padding: 20 0 20 0;
 }
@@ -230,7 +232,8 @@
     -fx-alignment:  center;
     -fx-font-family: "Merriweather Regular";
     -fx-font-size: 20px;
-    -fx-text-fill: #F44336;
+    -fx-text-fill: #F1E1B2;
+    -fx-effect: dropshadow(three-pass-box, #796939, 0.3, 1.0, 0, 0);
 }
 
 .table-row-cell {
@@ -1112,20 +1115,44 @@
 
 /* Scoring */
 
-.scoring-2 {
-    -fx-image: url("/img/scoring_tokens/scoring_2.jpg");
+#scoring-20 {
+    -fx-image: url("/img/scoring_tokens/scoring-2.jpg");
 }
 
-.scoring-4 {
-    -fx-image: url("/img/scoring_tokens/scoring_4.jpg");
+#scoring-40 {
+    -fx-image: url("/img/scoring_tokens/scoring-4.jpg");
 }
 
-.scoring-6 {
-    -fx-image: url("/img/scoring_tokens/scoring_6.jpg");
+#scoring-60 {
+    -fx-image: url("/img/scoring_tokens/scoring-6.jpg");
 }
 
-.scoring-8 {
-    -fx-image: url("/img/scoring_tokens/scoring_8.jpg");
+#scoring-80 {
+    -fx-image: url("/img/scoring_tokens/scoring-8.jpg");
+}
+
+#scoring-21 {
+    -fx-image: url("/img/scoring_tokens/scoring-2.jpg");
+}
+
+#scoring-41 {
+    -fx-image: url("/img/scoring_tokens/scoring-4.jpg");
+}
+
+#scoring-61 {
+    -fx-image: url("/img/scoring_tokens/scoring-6.jpg");
+}
+
+#scoring-81 {
+    -fx-image: url("/img/scoring_tokens/scoring-8.jpg");
+}
+
+#scoring-00 {
+    -fx-image: url("/img/scoring_tokens/scoring-0.jpg");
+}
+
+#scoring-01 {
+    -fx-image: url("/img/scoring_tokens/scoring-0.jpg");
 }
 
 /* End game */
@@ -1175,4 +1202,13 @@
 .actionList {
     -fx-min-width: 400px;
     -fx-max-width: 400px;
+}
+
+/* Info label */
+
+.infoLabel {
+    -fx-alignment: center;
+    -fx-font-family: "Merriweather Regular";
+    -fx-font-size: 13px;
+    -fx-text-fill: #6C2310;
 }

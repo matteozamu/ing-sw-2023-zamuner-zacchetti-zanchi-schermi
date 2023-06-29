@@ -1,7 +1,6 @@
 package it.polimi.ingsw.view.cli;
 
 import it.polimi.ingsw.model.*;
-import it.polimi.ingsw.utility.JsonReader;
 
 import java.io.PrintStream;
 import java.util.List;
@@ -53,17 +52,11 @@ public class CliVisual {
         out.print(sb);
     }
 
-//    /**
-//     * @param r red
-//     * @param g green
-//     * @param b blue
-//     * @return a coloured string
-//     */
-//    public static String getColoredText(String color) {
-//        // TODO se serve cambiare questa stringa per i colori
-//
-//    }
-
+    /**
+     * clears the console
+     *
+     * @param out is the output PrintStream
+     */
     static void clearConsole(PrintStream out) {
         out.print("\033[H\033[2J");
         out.flush();
@@ -210,6 +203,12 @@ public class CliVisual {
     }
 
 
+    /**
+     * Prints the layout of the selected object cards.
+     *
+     * @param out            the output stream
+     * @param gameSerialized the game serialized
+     */
     public static void printLimbo(PrintStream out, GameSerialized gameSerialized) {
         List<ObjectCard> limboCards = gameSerialized.getAllLimboCards();
         StringBuilder limbo = new StringBuilder();

@@ -3,10 +3,7 @@ package it.polimi.ingsw.control;
 import it.polimi.ingsw.enumeration.MessageStatus;
 import it.polimi.ingsw.enumeration.PossibleGameState;
 import it.polimi.ingsw.model.*;
-import it.polimi.ingsw.network.message.LoadShelfRequest;
-import it.polimi.ingsw.network.message.ObjectCardRequest;
-import it.polimi.ingsw.network.message.ReorderLimboRequest;
-import it.polimi.ingsw.network.message.Response;
+import it.polimi.ingsw.network.message.*;
 import it.polimi.ingsw.network.server.Server;
 import junit.framework.TestCase;
 import org.junit.jupiter.api.BeforeEach;
@@ -25,11 +22,17 @@ public class ControllerGameTest extends TestCase {
 
     @BeforeEach
     public void setUp() {
+        server = new Server("GameConstant.json");
         cg = new ControllerGame(server);
         cg.setGame(new Game());
         cg.getGame().setNumberOfPlayers(2);
         //cg.fillBoard();
 
+    }
+
+    @Test
+    public void testGetId() {
+        assertTrue(cg.getId() instanceof UUID);
     }
 
     @Test
@@ -58,35 +61,12 @@ public class ControllerGameTest extends TestCase {
 
     @Test
     public void testOnMessage() {
-
-        //PICK_OBJECT_CARD Case null coordinates
         Response response = (Response) cg.onMessage(
                 new ObjectCardRequest("federica", null, null));
         assertEquals(MessageStatus.ERROR, response.getStatus());
-
-//        //PICK_OBJECT_CARD Case right coordinates
-//        response = (Response) cg.onMessage(
-//                new ObjectCardRequest("federica", null, new Coordinate(-3, 1)));
-//        assertEquals(MessageStatus.PRINT_LIMBO, response.getStatus());
-
-        // REORDER_LIMBO_REQUEST Case null limbo
         response = (Response) cg.onMessage(
                 new ReorderLimboRequest("federica", null, null));
         assertEquals(MessageStatus.ERROR, response.getStatus());
-
-//        // REORDER_LIMBO_REQUEST Case full limbo
-//        ArrayList<ObjectCard> limbo = new ArrayList<>();
-//        Map<Coordinate, ObjectCard> limbo2 = new HashMap<>();
-//        limbo2.put(new Coordinate(0, 0), new ObjectCard(ObjectCardType.randomObjectCardType(), 1));
-//        limbo2.put(new Coordinate(1, 0), new ObjectCard(ObjectCardType.randomObjectCardType(), 1));
-//
-//        limbo.add(new ObjectCard(ObjectCardType.randomObjectCardType(), 1));
-//        limbo.add(new ObjectCard(ObjectCardType.randomObjectCardType(), 0));
-//        cg.getGame().setLimbo(limbo2);
-//
-//        response = (Response) cg.onMessage(
-//                new ReorderLimboRequest("federica", null, limbo));
-//        assertEquals(MessageStatus.PRINT_LIMBO, response.getStatus());
     }
 
     @Test
@@ -98,7 +78,28 @@ public class ControllerGameTest extends TestCase {
 
         assertFalse(cg.getIsLobbyFull());
     }
-    
+
+    @Test
+    public void testGameSetupHandler2() {
+        cg.getGame().setNumberOfPlayers(2);
+        ArrayList<PersonalGoal> goals = new ArrayList<>();
+        goals.add(new PersonalGoal(1, 1, ObjectCardType.randomObjectCardType()));
+        goals.add(new PersonalGoal(2, 2, ObjectCardType.randomObjectCardType()));
+        goals.add(new PersonalGoal(2, 3, ObjectCardType.randomObjectCardType()));
+        goals.add(new PersonalGoal(4, 5, ObjectCardType.randomObjectCardType()));
+        goals.add(new PersonalGoal(5, 2, ObjectCardType.randomObjectCardType()));
+        goals.add(new PersonalGoal(3, 6, ObjectCardType.randomObjectCardType()));
+        cg.getGame().addPlayer(new Player("federica", new Shelf(), new PersonalGoalCard(goals, "1")));
+        cg.getGame().addPlayer(new Player("matteo", new Shelf(), new PersonalGoalCard(goals, "2")));
+
+        Game.getInstanceMap().put("federica", cg.getGame());
+        Game.getInstanceMap().put("matteo", cg.getGame());
+
+        cg.gameSetupHandler();
+
+        assertTrue(cg.getIsLobbyFull());
+    }
+
     @Test
     public void testUsernameNull() {
         assertThrows(NullPointerException.class, () -> {
@@ -107,7 +108,38 @@ public class ControllerGameTest extends TestCase {
     }
 
     @Test
-    void testLoadShelfHandler_ValidRequest() {
+    void testLoadShelfHandler() {
+        LoadShelfRequest request = new LoadShelfRequest("Pescheria", null, 1);
+
+        ArrayList<PersonalGoal> goals = new ArrayList<>();
+        goals.add(new PersonalGoal(1, 1, ObjectCardType.randomObjectCardType()));
+        goals.add(new PersonalGoal(2, 2, ObjectCardType.randomObjectCardType()));
+        goals.add(new PersonalGoal(2, 3, ObjectCardType.randomObjectCardType()));
+        goals.add(new PersonalGoal(4, 5, ObjectCardType.randomObjectCardType()));
+        goals.add(new PersonalGoal(5, 2, ObjectCardType.randomObjectCardType()));
+        goals.add(new PersonalGoal(3, 6, ObjectCardType.randomObjectCardType()));
+
+        Player currentPlayer = new Player("Pescheria", new Shelf(), new PersonalGoalCard(goals, "1"));
+        cg.getGame().addPlayer(currentPlayer);
+        Game.getInstanceMap().put("Pescheria", cg.getGame());
+        cg.getGame().setCurrentPlayer(currentPlayer);
+
+        LinkedHashMap<Coordinate, ObjectCard> limbo = new LinkedHashMap<>();
+        limbo.put(new Coordinate(-3, 0), new ObjectCard(ObjectCardType.randomObjectCardType(), "02"));
+        limbo.put(new Coordinate(-3, 1), new ObjectCard(ObjectCardType.randomObjectCardType(), "02"));
+        limbo.put(new Coordinate(-2, 0), new ObjectCard(ObjectCardType.randomObjectCardType(), "02"));
+        cg.getGame().setLimbo(limbo);
+
+        cg.setMakeMoveTimer();
+        Response response = cg.loadShelfHandler(request);
+
+        assertEquals("Cards moved", response.getMessage());
+        assertEquals(MessageStatus.OK, response.getStatus());
+        assertEquals(0, cg.getGame().getLimbo().size());
+    }
+
+    @Test
+    public void testLoadShelfHandler2() {
         LoadShelfRequest request = new LoadShelfRequest("Armando", null, 1);
 
         ArrayList<PersonalGoal> goals = new ArrayList<>();
@@ -118,20 +150,10 @@ public class ControllerGameTest extends TestCase {
         goals.add(new PersonalGoal(5, 2, ObjectCardType.randomObjectCardType()));
         goals.add(new PersonalGoal(3, 6, ObjectCardType.randomObjectCardType()));
 
-        Player currentPlayer = new Player("Player 1", new Shelf(), new PersonalGoalCard(goals, "1"));
+        Player currentPlayer = new Player("Armando", new Shelf(), new PersonalGoalCard(goals, "1"));
         cg.getGame().setCurrentPlayer(currentPlayer);
-
-        LinkedHashMap<Coordinate, ObjectCard> limbo = new LinkedHashMap<>();
-        limbo.put(new Coordinate(-3, 0), new ObjectCard(ObjectCardType.randomObjectCardType(), "02"));
-        limbo.put(new Coordinate(-3, 1), new ObjectCard(ObjectCardType.randomObjectCardType(), "02"));
-        limbo.put(new Coordinate(-2, 0), new ObjectCard(ObjectCardType.randomObjectCardType(), "02"));
-        cg.getGame().setLimbo(limbo);
-
-        Response response = cg.loadShelfHandler(request);
-
-        assertEquals("Cards moved", response.getMessage());
-        assertEquals(MessageStatus.OK, response.getStatus());
-        assertEquals(0, cg.getGame().getLimbo().size());
+        currentPlayer.getShelf().setFull(true);
+        assertEquals(new Response("Game has ended.", MessageStatus.GAME_ENDED).getStatus(), cg.loadShelfHandler(request).getStatus());
     }
 
 
@@ -151,127 +173,255 @@ public class ControllerGameTest extends TestCase {
         assertEquals(29, cg.getGame().getBoard().getGrid().size());
     }
 
-//------------------------------------------------------------
-//    @BeforeEach
-//    public void setUp() {
-//        this.cg = new ControllerGame(new Server());
-//        this.cg.getGame().loadObjectCards();
-//
-//        ArrayList<PersonalGoal> goals = new ArrayList<>();
-//        goals.add(new PersonalGoal(1, 1, ObjectCardType.randomObjectCardType()));
-//        goals.add(new PersonalGoal(2, 2, ObjectCardType.randomObjectCardType()));
-//        goals.add(new PersonalGoal(2, 3, ObjectCardType.randomObjectCardType()));
-//        goals.add(new PersonalGoal(4, 5, ObjectCardType.randomObjectCardType()));
-//        goals.add(new PersonalGoal(5, 2, ObjectCardType.randomObjectCardType()));
-//        goals.add(new PersonalGoal(3, 6, ObjectCardType.randomObjectCardType()));
-//
-//        this.pg = new PersonalGoalCard(goals);
-//        this.shelf = new Shelf();
-//    }
-//
-//    @Test
-//    public void testUsernameAvailable() {
-//        assertTrue(cg.isUsernameAvailable("Madeleine"));
-//
-//        Player p = new Player("Madeleine", this.shelf, this.pg);
-//        cg.getGame().addPlayer(p);
-//
-//        assertFalse(cg.isUsernameAvailable("Madeleine"));
-//        assertTrue(cg.isUsernameAvailable("Daphne"));
-//    }
+    @Test
+    void testDeleteLimboHandler() {
+        DeleteLimboRequest request = new DeleteLimboRequest("Mollica", null);
 
-    //    @Test
-//    public void testAddObjectEmptyLimbo() {
-//        assertFalse(cg.addObjectCards(1));
-//    }
-//
-//    @Test
-//    public void testAddObjectLimboTooBig() {
-//        Player p = new Player("Kelleigh", this.shelf, this.pg);
-//        cg.getGame().addPlayer(p);
-//        cg.getGame().setCurrentPlayer(p);
-//
-//        cg.getLimbo().add(new ObjectCard(ObjectCardType.randomObjectCardType(), 1));
-//        cg.getLimbo().add(new ObjectCard(ObjectCardType.randomObjectCardType(), 2));
-//        cg.getLimbo().add(new ObjectCard(ObjectCardType.randomObjectCardType(), 0));
-//        cg.getLimbo().add(new ObjectCard(ObjectCardType.randomObjectCardType(), 0));
-//
-//        assertFalse(cg.getGame().addObjectCardsToShelf(cg.getLimbo(), 0));
-//
-//    }
-//
-//    @Test
-//    public void testAddObjectCardsNoSpaceShelfColumn() {
-//        Player p = new Player("Estela", this.shelf, this.pg);
-//        cg.addPlayer(p);
-//        cg.setCurrentPlayer(p);
-//
-//        for (int i = 0; i < 6; i++) {
-//            cg.getCurrentPlayer().getShelf().getGrid().put(new Coordinate(i, 0), new ObjectCard(ObjectCardType.randomObjectCardType(), 1));
-//        }
-//
-//        cg.getLimbo().add(new ObjectCard(ObjectCardType.randomObjectCardType(), 2));
-//        assertFalse(cg.addObjectCards(0));
-//    }
-//
-//    @Test
-//    public void testAddObjectCards() {
-//        Player p = new Player("Laia", this.shelf, this.pg);
-//        cg.addPlayer(p);
-//        cg.setCurrentPlayer(p);
-//
-//        for (int i = 0; i < 4; i++) {
-//            cg.getCurrentPlayer().getShelf().getGrid().put(new Coordinate(i, 0), new ObjectCard(ObjectCardType.randomObjectCardType(), 1));
-//        }
-//
-//        cg.getLimbo().add(new ObjectCard(ObjectCardType.randomObjectCardType(), 1));
-//        cg.getLimbo().add(new ObjectCard(ObjectCardType.randomObjectCardType(), 2));
-//
-//        assertTrue(cg.addObjectCards(0));
-//    }
-//
-//    @Test
-//    public void testAddObjectCardsCardRightPositionShelf() {
-//        Player p = new Player("Ines", this.shelf, this.pg);
-//        cg.addPlayer(p);
-//        cg.setCurrentPlayer(p);
-//
-//        ObjectCard oc = new ObjectCard(ObjectCardType.randomObjectCardType(), 2);
-//        cg.getLimbo().add(oc);
-//
-//        cg.addObjectCards(0);
-//        assertEquals(cg.getCurrentPlayer().getShelf().getGrid().get(new Coordinate(0, 0)), oc);
-//    }
-//
-//    @Test
-//    public void testAddObjectCardsShelfIsFull() {
-//        Player p = new Player("Juanita", this.shelf, this.pg);
-//        cg.addPlayer(p);
-//        cg.setCurrentPlayer(p);
-//
-//        for (int i = 0; i < 6; i++) {
-//            for (int j = 0; j < 4; j++) {
-//                cg.getCurrentPlayer().getShelf().getGrid().put(new Coordinate(i, j), new ObjectCard(ObjectCardType.randomObjectCardType(), 1));
-//            }
-//        }
-//        cg.getCurrentPlayer().getShelf().getGrid().put(new Coordinate(0, 5), new ObjectCard(ObjectCardType.randomObjectCardType(), 1));
-//        cg.getCurrentPlayer().getShelf().getGrid().put(new Coordinate(1, 5), new ObjectCard(ObjectCardType.randomObjectCardType(), 1));
-//        cg.getCurrentPlayer().getShelf().getGrid().put(new Coordinate(2, 5), new ObjectCard(ObjectCardType.randomObjectCardType(), 1));
-//        cg.getCurrentPlayer().getShelf().getGrid().put(new Coordinate(3, 5), new ObjectCard(ObjectCardType.randomObjectCardType(), 1));
-//        cg.getCurrentPlayer().getShelf().getGrid().put(new Coordinate(4, 5), new ObjectCard(ObjectCardType.randomObjectCardType(), 1));
-//
-//        cg.getLimbo().add(new ObjectCard(ObjectCardType.randomObjectCardType(), 1));
-//
-//        cg.addObjectCards(5);
-//        assertTrue(cg.getCurrentPlayer().getShelf().isFull());
-//    }
-//
-//
+        ArrayList<PersonalGoal> goals = new ArrayList<>();
+        goals.add(new PersonalGoal(1, 1, ObjectCardType.randomObjectCardType()));
+        goals.add(new PersonalGoal(2, 2, ObjectCardType.randomObjectCardType()));
+        goals.add(new PersonalGoal(2, 3, ObjectCardType.randomObjectCardType()));
+        goals.add(new PersonalGoal(4, 5, ObjectCardType.randomObjectCardType()));
+        goals.add(new PersonalGoal(5, 2, ObjectCardType.randomObjectCardType()));
+        goals.add(new PersonalGoal(3, 6, ObjectCardType.randomObjectCardType()));
+
+        Player currentPlayer = new Player("Mollica", new Shelf(), new PersonalGoalCard(goals, "1"));
+        cg.getGame().addPlayer(currentPlayer);
+        Game.getInstanceMap().put("Mollica", cg.getGame());
+        cg.getGame().setCurrentPlayer(currentPlayer);
+
+        LinkedHashMap<Coordinate, ObjectCard> limbo = new LinkedHashMap<>();
+        limbo.put(new Coordinate(-3, 0), new ObjectCard(ObjectCardType.randomObjectCardType(), "02"));
+        limbo.put(new Coordinate(-3, 1), new ObjectCard(ObjectCardType.randomObjectCardType(), "02"));
+        limbo.put(new Coordinate(-2, 0), new ObjectCard(ObjectCardType.randomObjectCardType(), "02"));
+        cg.getGame().setLimbo(limbo);
+
+        Response response = cg.deleteLimboHandler(request);
+
+        assertEquals("Limbo deleted", response.getMessage());
+        assertEquals(MessageStatus.OK, response.getStatus());
+        assertEquals(0, cg.getGame().getLimbo().size());
+    }
+
+    @Test
+    public void testReorderLimboHandler() {
+        ArrayList newLimbo = new ArrayList();
+        newLimbo.add(3);
+        newLimbo.add(2);
+        newLimbo.add(1);
+        ReorderLimboRequest request = new ReorderLimboRequest("Number1", null, newLimbo);
+
+        ArrayList<PersonalGoal> goals = new ArrayList<>();
+        goals.add(new PersonalGoal(1, 1, ObjectCardType.randomObjectCardType()));
+        goals.add(new PersonalGoal(2, 2, ObjectCardType.randomObjectCardType()));
+        goals.add(new PersonalGoal(2, 3, ObjectCardType.randomObjectCardType()));
+        goals.add(new PersonalGoal(4, 5, ObjectCardType.randomObjectCardType()));
+        goals.add(new PersonalGoal(5, 2, ObjectCardType.randomObjectCardType()));
+        goals.add(new PersonalGoal(3, 6, ObjectCardType.randomObjectCardType()));
+
+        Player currentPlayer = new Player("Number1", new Shelf(), new PersonalGoalCard(goals, "1"));
+        cg.getGame().addPlayer(currentPlayer);
+        Game.getInstanceMap().put("Number1", cg.getGame());
+        cg.getGame().setCurrentPlayer(currentPlayer);
+
+        LinkedHashMap<Coordinate, ObjectCard> limbo = new LinkedHashMap<>();
+        limbo.put(new Coordinate(-3, 0), new ObjectCard(ObjectCardType.randomObjectCardType(), "02"));
+        limbo.put(new Coordinate(-3, 1), new ObjectCard(ObjectCardType.randomObjectCardType(), "02"));
+        limbo.put(new Coordinate(-2, 0), new ObjectCard(ObjectCardType.randomObjectCardType(), "02"));
+        cg.getGame().setLimbo(limbo);
+
+        Response response = cg.reorderLimboHandler(request);
+
+        assertEquals("Limbo reordered", response.getMessage());
+        assertEquals(MessageStatus.PRINT_LIMBO, response.getStatus());
+    }
+
+    @Test
+    public void testPickObjectCardHandlerValidCard() {
+        cg.fillBoard();
+        ObjectCardRequest request = new ObjectCardRequest("Billy", null, new Coordinate(-3, 0));
+
+        ArrayList<PersonalGoal> goals = new ArrayList<>();
+        goals.add(new PersonalGoal(1, 1, ObjectCardType.randomObjectCardType()));
+        goals.add(new PersonalGoal(2, 2, ObjectCardType.randomObjectCardType()));
+        goals.add(new PersonalGoal(2, 3, ObjectCardType.randomObjectCardType()));
+        goals.add(new PersonalGoal(4, 5, ObjectCardType.randomObjectCardType()));
+        goals.add(new PersonalGoal(5, 2, ObjectCardType.randomObjectCardType()));
+        goals.add(new PersonalGoal(3, 6, ObjectCardType.randomObjectCardType()));
+
+        Player currentPlayer = new Player("Billy", new Shelf(), new PersonalGoalCard(goals, "1"));
+        cg.getGame().addPlayer(currentPlayer);
+        cg.getGame().setCurrentPlayer(currentPlayer);
+        Game.getInstanceMap().put("Billy", cg.getGame());
+
+        Response response = cg.pickObjectCardHandler(request);
+
+        assertEquals("Valid card :)", response.getMessage());
+        assertEquals(MessageStatus.PRINT_LIMBO, response.getStatus());
+    }
+
+    @Test
+    public void testPickObjectCardHandlerInvalidCard() {
+        cg.fillBoard();
+        ObjectCardRequest request = new ObjectCardRequest("Billy", null, new Coordinate(0, 0));
+
+        ArrayList<PersonalGoal> goals = new ArrayList<>();
+        goals.add(new PersonalGoal(1, 1, ObjectCardType.randomObjectCardType()));
+        goals.add(new PersonalGoal(2, 2, ObjectCardType.randomObjectCardType()));
+        goals.add(new PersonalGoal(2, 3, ObjectCardType.randomObjectCardType()));
+        goals.add(new PersonalGoal(4, 5, ObjectCardType.randomObjectCardType()));
+        goals.add(new PersonalGoal(5, 2, ObjectCardType.randomObjectCardType()));
+        goals.add(new PersonalGoal(3, 6, ObjectCardType.randomObjectCardType()));
+
+        Player currentPlayer = new Player("Billy", new Shelf(), new PersonalGoalCard(goals, "1"));
+        cg.getGame().addPlayer(currentPlayer);
+        cg.getGame().setCurrentPlayer(currentPlayer);
+        Game.getInstanceMap().put("Billy", cg.getGame());
+
+        Response response = cg.pickObjectCardHandler(request);
+
+        assertEquals("Invalid card :(", response.getMessage());
+        assertEquals(MessageStatus.NOT_VALID_CARD, response.getStatus());
+    }
+
+
+    @Test
+    public void testnumberOfPlayersMessageHandler() {
+        NumberOfPlayersMessage request = new NumberOfPlayersMessage("Billy", null, 2, "Gioco1");
+
+        ArrayList<PersonalGoal> goals = new ArrayList<>();
+        goals.add(new PersonalGoal(1, 1, ObjectCardType.randomObjectCardType()));
+        goals.add(new PersonalGoal(2, 2, ObjectCardType.randomObjectCardType()));
+        goals.add(new PersonalGoal(2, 3, ObjectCardType.randomObjectCardType()));
+        goals.add(new PersonalGoal(4, 5, ObjectCardType.randomObjectCardType()));
+        goals.add(new PersonalGoal(5, 2, ObjectCardType.randomObjectCardType()));
+        goals.add(new PersonalGoal(3, 6, ObjectCardType.randomObjectCardType()));
+
+        Response response = cg.numberOfPlayersMessageHandler(request);
+
+        assertEquals("Number of players set", response.getMessage());
+        assertEquals(MessageStatus.OK, response.getStatus());
+    }
+
+    @Test
+    public void testGetGameState() {
+        assertEquals(PossibleGameState.GAME_ROOM, cg.getGameState());
+    }
+
+    @Test
+    public void testCheckLobby() {
+        cg.getGame().setNumberOfPlayers(2);
+        ArrayList<PersonalGoal> goals = new ArrayList<>();
+        goals.add(new PersonalGoal(1, 1, ObjectCardType.randomObjectCardType()));
+        goals.add(new PersonalGoal(2, 2, ObjectCardType.randomObjectCardType()));
+        goals.add(new PersonalGoal(2, 3, ObjectCardType.randomObjectCardType()));
+        goals.add(new PersonalGoal(4, 5, ObjectCardType.randomObjectCardType()));
+        goals.add(new PersonalGoal(5, 2, ObjectCardType.randomObjectCardType()));
+        goals.add(new PersonalGoal(3, 6, ObjectCardType.randomObjectCardType()));
+        cg.getGame().addPlayer(new Player("federica", new Shelf(), new PersonalGoalCard(goals, "1")));
+        cg.getGame().addPlayer(new Player("matteo", new Shelf(), new PersonalGoalCard(goals, "2")));
+
+        Game.getInstanceMap().put("federica", cg.getGame());
+        Game.getInstanceMap().put("matteo", cg.getGame());
+
+        Response response = cg.checkLobby();
+
+        assertEquals(MessageStatus.OK, response.getStatus());
+    }
+
+    @Test
+    public void testCheckLobby2() {
+        cg.getGame().setNumberOfPlayers(1);
+        ArrayList<PersonalGoal> goals = new ArrayList<>();
+        goals.add(new PersonalGoal(1, 1, ObjectCardType.randomObjectCardType()));
+        goals.add(new PersonalGoal(2, 2, ObjectCardType.randomObjectCardType()));
+        goals.add(new PersonalGoal(2, 3, ObjectCardType.randomObjectCardType()));
+        goals.add(new PersonalGoal(4, 5, ObjectCardType.randomObjectCardType()));
+        goals.add(new PersonalGoal(5, 2, ObjectCardType.randomObjectCardType()));
+        goals.add(new PersonalGoal(3, 6, ObjectCardType.randomObjectCardType()));
+        cg.getGame().addPlayer(new Player("federica", new Shelf(), new PersonalGoalCard(goals, "1")));
+        cg.getGame().addPlayer(new Player("matteo", new Shelf(), new PersonalGoalCard(goals, "2")));
+
+        Game.getInstanceMap().put("federica", cg.getGame());
+        Game.getInstanceMap().put("matteo", cg.getGame());
+
+        Response response = cg.checkLobby();
+
+        assertEquals(MessageStatus.OK, response.getStatus());
+    }
+
+    @Test
+    public void testIsUsernameAvailable() {
+        ArrayList<PersonalGoal> goals = new ArrayList<>();
+        goals.add(new PersonalGoal(1, 1, ObjectCardType.randomObjectCardType()));
+        goals.add(new PersonalGoal(2, 2, ObjectCardType.randomObjectCardType()));
+        goals.add(new PersonalGoal(2, 3, ObjectCardType.randomObjectCardType()));
+        goals.add(new PersonalGoal(4, 5, ObjectCardType.randomObjectCardType()));
+        goals.add(new PersonalGoal(5, 2, ObjectCardType.randomObjectCardType()));
+        goals.add(new PersonalGoal(3, 6, ObjectCardType.randomObjectCardType()));
+        cg.getGame().addPlayer(new Player("federica", new Shelf(), new PersonalGoalCard(goals, "1")));
+        cg.getGame().addPlayer(new Player("matteo", new Shelf(), new PersonalGoalCard(goals, "2")));
+
+        Game.getInstanceMap().put("federica", cg.getGame());
+        Game.getInstanceMap().put("matteo", cg.getGame());
+
+        assertFalse(cg.isUsernameAvailable("federica"));
+        assertTrue(cg.isUsernameAvailable("giulia"));
+    }
+
+    @Test
+    public void testCheckIfRefill() {
+        cg.getGame().setNumberOfPlayers(2);
+        ArrayList<PersonalGoal> goals = new ArrayList<>();
+        goals.add(new PersonalGoal(1, 1, ObjectCardType.randomObjectCardType()));
+        goals.add(new PersonalGoal(2, 2, ObjectCardType.randomObjectCardType()));
+        goals.add(new PersonalGoal(2, 3, ObjectCardType.randomObjectCardType()));
+        goals.add(new PersonalGoal(4, 5, ObjectCardType.randomObjectCardType()));
+        goals.add(new PersonalGoal(5, 2, ObjectCardType.randomObjectCardType()));
+        goals.add(new PersonalGoal(3, 6, ObjectCardType.randomObjectCardType()));
+        cg.getGame().addPlayer(new Player("federica", new Shelf(), new PersonalGoalCard(goals, "1")));
+        cg.getGame().addPlayer(new Player("matteo", new Shelf(), new PersonalGoalCard(goals, "2")));
+
+        Game.getInstanceMap().put("federica", cg.getGame());
+        Game.getInstanceMap().put("matteo", cg.getGame());
+
+        cg.getGame().getBoard().getGrid().put(new Coordinate(0, 0), new ObjectCard(ObjectCardType.randomObjectCardType(), "00"));
+
+        assertTrue(cg.checkIfRefill());
+    }
+
+    @Test
+    public void testCheckIfRefillTrue() {
+        cg.getGame().setNumberOfPlayers(2);
+        cg.fillBoard();
+
+        assertFalse(cg.checkIfRefill());
+    }
+
+
+    @Test
+    public void testLobbyMessageHandler() {
+        ArrayList<PersonalGoal> goals = new ArrayList<>();
+        goals.add(new PersonalGoal(1, 1, ObjectCardType.randomObjectCardType()));
+        goals.add(new PersonalGoal(2, 2, ObjectCardType.randomObjectCardType()));
+        goals.add(new PersonalGoal(2, 3, ObjectCardType.randomObjectCardType()));
+        goals.add(new PersonalGoal(4, 5, ObjectCardType.randomObjectCardType()));
+        goals.add(new PersonalGoal(5, 2, ObjectCardType.randomObjectCardType()));
+        goals.add(new PersonalGoal(3, 6, ObjectCardType.randomObjectCardType()));
+        LobbyMessage request = new LobbyMessage("federica", null, false);
+
+        cg.getGame().addPlayer(new Player("federica", new Shelf(), new PersonalGoalCard(goals, "1")));
+        cg.getGame().addPlayer(new Player("matteo", new Shelf(), new PersonalGoalCard(goals, "2")));
+        Game.getInstanceMap().put("federica", cg.getGame());
+        Game.getInstanceMap().put("matteo", cg.getGame());
+
+        Response response = cg.lobbyMessageHandler(request);
+
+        assertEquals(MessageStatus.ERROR, response.getStatus());
+    }
 
     @Test
     public void testObjectCardAvailableNoLimboCards() {
-//            ControllerGame cg = new ControllerGame(server);
-//            cg.setGame(new Game());
         cg.fillBoard();
         cg.getGame().setLimbo(new LinkedHashMap<>());
         Coordinate coordinate = new Coordinate(-3, 0);
@@ -335,12 +485,6 @@ public class ControllerGameTest extends TestCase {
         boolean result = cg.isObjectCardAvailable(coordinate);
         assertFalse(result);
     }
-
-//    @Test
-//    public void testIsObjectCardAvailableAllEmptyDirections() {
-//        Coordinate c = new Coordinate(0, 0);
-//        assertTrue(cg.isObjectCardAvailable(c));
-//    }
 
     @Test
     public void testIsObjectCardAvailableOneDirectionFull() {
@@ -429,28 +573,6 @@ public class ControllerGameTest extends TestCase {
 
     }
 
-
-    //
-//    @Test
-//    public void testAddObjectCardToLimbo() {
-//        assertTrue(cg.addObjectCardToLimbo(new ObjectCard(ObjectCardType.randomObjectCardType(), 1)));
-//    }
-//
-//    @Test
-//    public void testAddObjectCardToLimboSizeLimit() {
-//        cg.addObjectCardToLimbo(new ObjectCard(ObjectCardType.randomObjectCardType(), 1));
-//        cg.addObjectCardToLimbo(new ObjectCard(ObjectCardType.randomObjectCardType(), 1));
-//        cg.addObjectCardToLimbo(new ObjectCard(ObjectCardType.randomObjectCardType(), 1));
-//        assertFalse(cg.addObjectCardToLimbo(new ObjectCard(ObjectCardType.randomObjectCardType(), 1)));
-//    }
-//
-//    @Test
-//    public void testAddObjectCardToLimboNullCard() {
-//        assertThrows(NullPointerException.class, () -> {
-//            cg.addObjectCardToLimbo(null);
-//        });
-//    }
-//
     @Test
     public void testPointsCalculatorNoCompletedRows() {
         ArrayList<PersonalGoal> goals = new ArrayList<>();
@@ -471,19 +593,21 @@ public class ControllerGameTest extends TestCase {
     }
 
     @Test
-    public void testPointsCalculatorOneCompletedRowInShelf() {
+    public void testPointsCalculatorCommonGoals() {
         ArrayList<PersonalGoal> goals = new ArrayList<>();
-//        goals.add(new PersonalGoal(1, 1, ObjectCardType.randomObjectCardType()));
-//        goals.add(new PersonalGoal(2, 2, ObjectCardType.randomObjectCardType()));
-//        goals.add(new PersonalGoal(2, 3, ObjectCardType.randomObjectCardType()));
-//        goals.add(new PersonalGoal(4, 5, ObjectCardType.randomObjectCardType()));
-//        goals.add(new PersonalGoal(5, 2, ObjectCardType.randomObjectCardType()));
-//        goals.add(new PersonalGoal(3, 6, ObjectCardType.randomObjectCardType()));
-        cg.getGame().loadPersonalGoaldCards();
-        PersonalGoalCard pgc = cg.getGame().getRandomAvailablePersonalGoalCard();
-        System.out.println(pgc);
-        this.pg = pgc;
+        goals.add(new PersonalGoal(1, 1, ObjectCardType.randomObjectCardType()));
+        goals.add(new PersonalGoal(2, 2, ObjectCardType.randomObjectCardType()));
+        goals.add(new PersonalGoal(2, 3, ObjectCardType.randomObjectCardType()));
+        goals.add(new PersonalGoal(4, 5, ObjectCardType.randomObjectCardType()));
+        goals.add(new PersonalGoal(5, 2, ObjectCardType.randomObjectCardType()));
+        goals.add(new PersonalGoal(3, 6, ObjectCardType.randomObjectCardType()));
+
+        this.pg = new PersonalGoalCard(goals, "personalGoalCard-1");
         this.shelf = new Shelf();
+
+        cg.getGame().getCommonGoals().clear();
+
+        cg.getGame().getCommonGoals().add(new CommonGoalType3());
 
         Player p = new Player("Wejdene", this.shelf, this.pg);
         cg.getGame().addPlayer(p);
@@ -492,45 +616,151 @@ public class ControllerGameTest extends TestCase {
         ObjectCardType type = ObjectCardType.randomObjectCardType();
         ObjectCard oc = new ObjectCard(type, "00");
 
-        for (int i = 0; i < 5; i++) {
-            cg.getGame().getCurrentPlayer().getShelf().getGrid().put(new Coordinate(i, 0), oc);
-        }
+        cg.getGame().getCurrentPlayer().getShelf().getGrid().put(new Coordinate(0, 0), oc);
+        cg.getGame().getCurrentPlayer().getShelf().getGrid().put(new Coordinate(5, 0), oc);
+        cg.getGame().getCurrentPlayer().getShelf().getGrid().put(new Coordinate(5, 4), oc);
+        cg.getGame().getCurrentPlayer().getShelf().getGrid().put(new Coordinate(0, 4), oc);
 
-        assertEquals(5, cg.pointsCalculator());
+
+        assertEquals(8, cg.pointsCalculator());
+        assertEquals(8, cg.pointsCalculator());
     }
 
     @Test
-    public void testPointsCalculatorPersonalGoalCard() {
-        cg.getGame().loadPersonalGoaldCards();
-        PersonalGoalCard pgc = cg.getGame().getRandomAvailablePersonalGoalCard();
-        this.shelf = new Shelf();
-        this.pg = pgc;
-        Player p = new Player("Karol", this.shelf, this.pg);
-        cg.getGame().addPlayer(p);
-        cg.getGame().setCurrentPlayer(p);
+    void testReconnectionHandler() {
+        // Arrange
+        LobbyMessage lobbyMessage = new LobbyMessage("messia", "Token", false);
+        cg.setGame(Game.getInstance(lobbyMessage.getSenderUsername()));
+        Player player = new Player("messia", new Shelf(), new PersonalGoalCard(new ArrayList<>(), "1"));
+        cg.getGame().addPlayer(player);
+        cg.getGame().setCurrentPlayer(player);
+        cg.getGame().setStarted(true);
 
-        cg.getGame().getCurrentPlayer().getPersonalGoalCard().setTargetsReached(4);
-        assertEquals(6, cg.pointsCalculator());
+        Message result = cg.reconnectionHandler(lobbyMessage);
+
+        assertNotNull(result);
+        assertTrue(result instanceof ReconnectionRequest);
+        assertEquals("Reconnection request", ((ReconnectionRequest) result).getMessage());
+        assertEquals("Token", ((ReconnectionRequest) result).getToken());
+        assertTrue(player.isConnected());
     }
 
-//    @Test
-//    public void testPickObjectCardFailed() {
-//        cg.fillBoard();
-//
-//        // pick an object card from the board
-//        Coordinate coordinate = new Coordinate(0, 0);
-//        ObjectCard card = cg.getGame().getBoard().getObjectCard(coordinate);
-//        assertTrue(cg.isObjectCardAvailable(coordinate));
-//        cg.pickObjectCard(coordinate);
-//        assertFalse(cg.isObjectCardAvailable(coordinate));
-//        assertTrue(cg.getLimbo().contains(card));
-//
-//        // pick an object card from the same cell
-//        assertFalse(cg.pickObjectCard(coordinate));
-//        // check that the object card was not added to the limbo
-//        List<ObjectCard> limbo = cg.getLimbo();
-//        assertTrue(limbo.isEmpty());
-//
-//    }
+    @Test
+    void testReconnectionHandlerGameNotStarted() {
+        LobbyMessage lobbyMessage = new LobbyMessage("messia", "Token", false);
+        cg.setGame(Game.getInstance(lobbyMessage.getSenderUsername()));
+        Player player = new Player("messia", new Shelf(), new PersonalGoalCard(new ArrayList<>(), "1"));
+        cg.getGame().addPlayer(player);
+        cg.getGame().setCurrentPlayer(player);
+        cg.getGame().setStarted(false);
 
+        Message result = cg.reconnectionHandler(lobbyMessage);
+
+        assertNotNull(result);
+        assertTrue(result instanceof Message);
+        assertEquals("Game is ended.", ((Response) result).getMessage());
+        assertEquals(MessageStatus.ERROR, ((Response) result).getStatus());
+    }
+
+    @Test
+    void testReconnectionHandlerPlayerWasConnected() {
+        LobbyMessage lobbyMessage = new LobbyMessage("messia", "Token", false);
+        cg.setGame(Game.getInstance(lobbyMessage.getSenderUsername()));
+        Player player = new Player("messia", new Shelf(), new PersonalGoalCard(new ArrayList<>(), "1"));
+        cg.getGame().addPlayer(player);
+        cg.getGame().setCurrentPlayer(player);
+        cg.getGame().setStarted(true);
+        cg.setTimer();
+
+        Message result = cg.reconnectionHandler(lobbyMessage);
+
+        assertNotNull(result);
+        assertTrue(result instanceof ReconnectionRequest);
+        assertEquals("Reconnection request", ((ReconnectionRequest) result).getMessage());
+    }
+
+    @Test
+    void testReconnectionHandlerPlayerWasNotConnected() {
+        LobbyMessage lobbyMessage = new LobbyMessage("Franco", "Token", false);
+        cg.setGame(Game.getInstance(lobbyMessage.getSenderUsername()));
+        Player player = new Player("Pier Giovanni", new Shelf(), new PersonalGoalCard(new ArrayList<>(), "1"));
+        cg.getGame().addPlayer(player);
+        cg.getGame().setCurrentPlayer(player);
+        cg.getGame().setStarted(true);
+        cg.setTimer();
+
+        Message result = cg.reconnectionHandler(lobbyMessage);
+
+        assertNotNull(result);
+        assertTrue(result instanceof Response);
+        assertEquals("Reconnection message from already in lobby Player", ((Response) result).getMessage());
+    }
+
+    @Test
+    public void testOnConnectionMessage_GameEnded() {
+        cg.setGame(Game.getInstance("Matteo sei un leone"));
+        Player player = new Player("Matteo sei un leone", new Shelf(), new PersonalGoalCard(new ArrayList<>(), "1"));
+        cg.getGame().addPlayer(player);
+        cg.getGame().setCurrentPlayer(player);
+        cg.setGameState(PossibleGameState.GAME_ENDED);
+
+        Message connectionMessage = new EndGameMessage("Matteo sei un leone", "GameConstant.json");
+
+        Message response = cg.onConnectionMessage(connectionMessage);
+
+        assertEquals("GAME ENDED", ((Response) response).getMessage());
+        assertEquals(MessageStatus.ERROR, ((Response) response).getStatus());
+    }
+
+    @Test
+    public void testOnConnectionMessage_Invalid1() {
+        cg.setGame(Game.getInstance("Matteo sei un leone"));
+        Player player = new Player("Matteo sei un leone", new Shelf(), new PersonalGoalCard(new ArrayList<>(), "1"));
+        cg.getGame().addPlayer(player);
+        cg.getGame().setCurrentPlayer(player);
+        cg.setGameState(PossibleGameState.GAME_STARTED);
+
+        cg.getGame().setStarted(false);
+
+        Message connectionMessage = new LobbyMessage("Matteo sei un leone", null, false);
+
+        Message response = cg.onConnectionMessage(connectionMessage);
+
+        assertNotNull(response);
+        assertTrue(response instanceof Response);
+        assertEquals("Game is ended.", ((Response) response).getMessage());
+        assertEquals(MessageStatus.ERROR, ((Response) response).getStatus());
+    }
+
+    @Test
+    public void testOnConnectionMessage_Invalid2() {
+        cg.setGame(Game.getInstance("Matteo sei un leone"));
+        Player player = new Player("Matteo sei un leone", new Shelf(), new PersonalGoalCard(new ArrayList<>(), "1"));
+        cg.getGame().addPlayer(player);
+        cg.getGame().setCurrentPlayer(player);
+        cg.setGameState(PossibleGameState.GAME_ROOM);
+
+        Message connectionMessage = new LobbyMessage("Matteo sei un leone", null, false);
+
+        Message response = cg.onConnectionMessage(connectionMessage);
+
+        assertNotNull(response);
+        assertTrue(response instanceof Response);
+        assertEquals("Invalid message", ((Response) response).getMessage());
+        assertEquals(MessageStatus.ERROR, ((Response) response).getStatus());
+    }
+
+    @Test
+    public void testSendEndGame() {
+        cg.setGame(Game.getInstance("Player1"));
+        Player player1 = new Player("Player1", new Shelf(), new PersonalGoalCard(new ArrayList<>(), "1"));
+        cg.getGame().addPlayer(player1);
+        cg.getGame().setCurrentPlayer(player1);
+
+        server.getPlayersGame().put(player1.getName(), cg);
+
+        cg.sendEndGame();
+
+        assertTrue(server.getControllerGames().isEmpty());
+    }
 }

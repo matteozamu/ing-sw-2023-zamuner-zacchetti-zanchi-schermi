@@ -5,17 +5,16 @@ import it.polimi.ingsw.enumeration.MessageStatus;
 import it.polimi.ingsw.network.message.Response;
 import it.polimi.ingsw.utility.MessageBuilder;
 import javafx.fxml.FXML;
-import javafx.scene.Scene;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 
 import java.util.List;
+
 /**
  * Class StartGameSceneController represents the controller of the scene where the player can choose to create
  * a new game or to join an existing one
- *
  */
 
 public class StartGameSceneController {
@@ -53,7 +52,6 @@ public class StartGameSceneController {
 
     /**
      * Handles create game click
-     *
      */
     private void onCreateGameClick() {
         createGameButton.setDisable(true);
@@ -77,7 +75,6 @@ public class StartGameSceneController {
 
     /**
      * Handles join game click
-     *
      */
     private void onJoinGameClick() {
         createGameButton.setDisable(true);
@@ -96,7 +93,6 @@ public class StartGameSceneController {
 
     /**
      * Handles the situation where the player chooses to join an existing game
-     *
      */
     void onJoinGameResponse(List<ControllerGame> games) {
         JoinGameSceneController joinGameSceneController = GuiManager.setLayout(mainPane.getScene(), "fxml/joinGameScene.fxml");
@@ -121,7 +117,7 @@ public class StartGameSceneController {
             onBackButtonClick();
 
         } else {
-            if (guiManager.getLobbyPlayers().size() == 1){
+            if (guiManager.getLobbyPlayers().size() == 1) {
                 GuiManager.setLayout(mainPane.getScene(), "fxml/numberPlayersScene.fxml");
             } else {
                 LobbySceneController lobbySceneController = GuiManager.setLayout(mainPane.getScene(), "fxml/lobbyScene.fxml");
@@ -135,11 +131,14 @@ public class StartGameSceneController {
 
     /**
      * Handles the situation where the player chooses to join an existing game but there are no available games
-     *
      */
     void noGameAvailable() {
         GuiManager.showDialog((Stage) mainPane.getScene().getWindow(), GuiManager.ERROR_DIALOG_TITLE,
                 "No games available");
+
+        createGameButton.setDisable(false);
+        joinGameButton.setDisable(false);
+        backButton.setDisable(false);
     }
 
     /**

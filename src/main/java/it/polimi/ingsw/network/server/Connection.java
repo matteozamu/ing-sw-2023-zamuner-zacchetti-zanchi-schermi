@@ -36,10 +36,17 @@ public abstract class Connection {
      */
     public abstract void ping();
 
+    /**
+     * gest the token of the connection
+     */
     public String getToken() {
         return token;
     }
 
+    /**
+     * sets the token of the connection
+     * @param token the token to set
+     */
     public void setToken(String token) {
         this.token = token;
     }

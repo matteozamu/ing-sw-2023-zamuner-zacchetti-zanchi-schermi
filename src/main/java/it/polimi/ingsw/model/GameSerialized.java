@@ -16,8 +16,6 @@ public class GameSerialized implements Serializable {
     private Board board;
     private int[][] boardMatrix;
     private List<CommonGoal> commonGoals;
-
-    // attributes for each single player, initialized thanks to the username passed to the constructor
     private int points;
     private Shelf shelf;
     private PersonalGoalCard personalGoalCard;
@@ -81,7 +79,7 @@ public class GameSerialized implements Serializable {
     }
 
     /**
-     * @return
+     * @return the current player
      */
     public Player getCurrentPlayer() {
         return currentPlayer;
@@ -152,16 +150,21 @@ public class GameSerialized implements Serializable {
         return commonGoals;
     }
 
-//    @Override
-//    public String toString() {
-//        return "GameSerialized{" +
-//                "players=" + players +
-//                ", board=" + board +
-//                ", points=" + points +
-//                ", shelf=" + shelf +
-//                ", personalGoalCard=" + personalGoalCard +
-//                ", limbo=" + limbo +
-//                ", currentPlayer=" + currentPlayer +
-//                '}';
-//    }
+
+    /**
+     * override of the toString method
+     */
+    @Override
+    public String toString() {
+        return "GameSerialized{" +
+                "players=" + players +
+                ", board=" + board +
+                ", points=" + points +
+                ", shelf=" + shelf +
+                ", personalGoalCard=" + personalGoalCard +
+                ", commonGoals=" + commonGoals +
+                ", limbo=" + limbo +
+                ", currentPlayer=" + currentPlayer +
+                '}';
+    }
 }

@@ -26,20 +26,34 @@ public final class CommonGoalType3 extends CommonGoal {
                 ╚═══════════╝
                 """;
 
+    /**
+     * Gets the type of the CommonGoal.
+     */
     @Override
     public int getType() {
         return type;
     }
 
+    /**
+     * Gets the description of the CommonGoal.
+     */
     @Override
     public String getDescription() {
         return description;
     }
+
+    /**
+     * Gets the visual representation of the CommonGoal.
+     */
     @Override
     public String getCardView() {
         return cardView;
     }
 
+
+    /**
+     * Gets the String representation of the CommonGoal.
+     */
     @Override
     public String toString() {
         return "commonGoalCard-3";
@@ -57,6 +71,13 @@ public final class CommonGoalType3 extends CommonGoal {
         return shelf.getGrid().size() >= 4;
     }
 
+
+    /**
+     * Checks if the Shelf has four object cards of the same type in the four corners.
+     *
+     * @param shelf The Shelf to check.
+     * @return true if the Shelf satisfies the commongoal, false otherwise.
+     */
     @Override
     public boolean checkGoal(Shelf shelf) {
         if (!isShelfEligible(shelf)) {

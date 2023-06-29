@@ -8,7 +8,6 @@ import it.polimi.ingsw.network.client.ClientGameManager;
 import it.polimi.ingsw.network.client.DisconnectionListener;
 import it.polimi.ingsw.network.message.ConnectionResponse;
 import it.polimi.ingsw.network.message.Response;
-import it.polimi.ingsw.utility.MessageBuilder;
 import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -36,11 +35,7 @@ public class GuiManager extends ClientGameManager implements DisconnectionListen
 
     private LobbySceneController lobbySceneController;
 
-    //private NumberPlayersController numberPlayersController;
-
     private StartGameSceneController startGameSceneController;
-
-    //private JoinGameSceneController joinGameSceneController;
 
     private GuiManager() {
         super();
@@ -219,7 +214,7 @@ public class GuiManager extends ClientGameManager implements DisconnectionListen
     @Override
     public void notYourTurn(String turnOwner) {
         Platform.runLater(() ->
-                gameSceneController.notYourTurn(turnOwner));
+                gameSceneController.notYourTurn());
     }
 
     /**
@@ -231,9 +226,6 @@ public class GuiManager extends ClientGameManager implements DisconnectionListen
     @Override
     public void firstPlayerCommunication(String username, List<CommonGoal> commonGoals) {
         Platform.runLater(lobbySceneController::onGameStart);
-
-//        Platform.runLater(() ->
-//                gameSceneController.setCommonGoalCards(commonGoals));
     }
 
     /**
@@ -293,9 +285,9 @@ public class GuiManager extends ClientGameManager implements DisconnectionListen
      */
     @Override
     public void printLimbo() {
-        Platform.runLater(() ->
-                gameSceneController.setLimbo(getGameSerialized())
-        );
+//        Platform.runLater(() ->
+//                gameSceneController.setLimbo(getGameSerialized())
+//        );
     }
 
     /**
@@ -358,19 +350,6 @@ public class GuiManager extends ClientGameManager implements DisconnectionListen
      */
     @Override
     public void printEndGame(String message) {
-
-    }
-
-    /**
-     * Prints the score of the players
-     */
-    @Override
-    public void printScore() {
-
-    }
-
-    @Override
-    public void gameStateRequest(String username, String token) {
 
     }
 

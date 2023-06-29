@@ -7,6 +7,38 @@ import static org.junit.jupiter.api.Assertions.*;
 class CommonGoalType8Test {
 
     @Test
+    public void testToString(){
+        CommonGoalType8 commonGoalType8 = new CommonGoalType8();
+        assertEquals("commonGoalCard-8", commonGoalType8.toString());
+    }
+
+    @Test
+    public void testGetType(){
+        CommonGoalType8 commonGoalType8 = new CommonGoalType8();
+        assertEquals(8, commonGoalType8.getType());
+    }
+
+    @Test
+    public void testGetDescription(){
+        CommonGoalType8 commonGoalType8 = new CommonGoalType8();
+        assertEquals("Two lines each formed by 5 different types of tiles. One line can show the same or a different combination of the other line.", commonGoalType8.getDescription());
+    }
+
+    @Test
+    public void testGetCardView(){
+        CommonGoalType8 commonGoalType8 = new CommonGoalType8();
+        assertEquals("""
+                ╔═══════════╗
+                ║           ║
+                ║ ■ ■ ■ ■ ■ ║
+                ║    x2     ║
+                ║           ║
+                ║           ║
+                ╚═══════════╝
+                """, commonGoalType8.getCardView());
+    }
+
+    @Test
     public void testCheckGoalTwoRowsReturnsTrue() {
         Shelf shelf = new Shelf();
         shelf.getGrid().put(new Coordinate(0, 0), new ObjectCard(ObjectCardType.cat, "00"));

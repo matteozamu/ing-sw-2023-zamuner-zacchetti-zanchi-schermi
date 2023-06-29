@@ -22,6 +22,19 @@ public class BoardTest extends TestCase {
     }
 
     @Test
+    public void testConstructor() {
+        Board b = new Board();
+        new Board(b);
+    }
+
+    @Test
+    public void testSetGrid() {
+        Map<Coordinate, ObjectCard> grid = new HashMap<>();
+        this.b.setGrid(grid);
+        assertEquals(grid, this.b.getGrid());
+    }
+
+    @Test
     public void testGetGrid() {
         Map<Coordinate, ObjectCard> expected = new HashMap<>();
         assertEquals(expected, this.b.getGrid());
@@ -42,7 +55,6 @@ public class BoardTest extends TestCase {
         this.b.createCell(this.c, this.objectCard);
         this.b.createCell(c2, objectCard2);
 
-        //da separare in unità??
         ObjectCard removedCard = this.b.removeObjectCard(this.c);
         assertEquals(this.objectCard, removedCard);
         assertFalse(this.b.getGrid().containsKey(this.c));
@@ -114,18 +126,6 @@ public class BoardTest extends TestCase {
         // Test RIGHT is not empty
         assertFalse(this.b.isEmptyAtDirection(this.c, Board.Direction.RIGHT));
     }
-
-    //TODO: rifare test quando sono sistemate le eccezioni. Sono state sistemate
-//    @Test
-//    public void testIsEmptyAtDirectionIllegalArgumentException(){
-//        assertThrows(IllegalArgumentException.class, () -> {
-//            this.b.isEmptyAtDirection(this.c, null);
-//        });
-//    }
-
-
-
-
 
 }
 

@@ -1,10 +1,7 @@
 package it.polimi.ingsw.model;
 
-import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
 import it.polimi.ingsw.utility.JsonReader;
 
-import java.io.FileReader;
 import java.io.Serializable;
 import java.util.*;
 
@@ -13,7 +10,6 @@ import java.util.*;
  */
 public class Game implements Serializable {
     private static Map<String, Game> instanceMap = new HashMap<>();
-    private static Game instance;
     private List<ObjectCard> objectCardContainer;
     private List<CommonGoal> commonGoalContainer;
     private List<PersonalGoalCard> personalGoalCardsContainer;
@@ -49,12 +45,6 @@ public class Game implements Serializable {
         commonGoals.add(getRandomAvailableCommonGoal());
     }
 
-//    public static Game getInstance() {
-//        if (instance == null)
-//            instance = new Game();
-//        return instance;
-//    }
-
     /**
      * @return an instance of the map
      */
@@ -75,10 +65,16 @@ public class Game implements Serializable {
         return instanceMap.get(username);
     }
 
+    /**
+     * Gets the game name
+     */
     public String getGameName() {
         return gameName;
     }
 
+    /**
+     * sets the name of the game
+     */
     public void setGameName(String gameName) {
         this.gameName = gameName;
     }
@@ -161,7 +157,6 @@ public class Game implements Serializable {
         return personalGoalCardsContainer;
     }
 
-    // TODO da eliminare, non viene usato
     public void setPersonalGoalCardsContainer(List<PersonalGoalCard> personalGoalCardsContainer) {
         this.personalGoalCardsContainer = personalGoalCardsContainer;
     }
@@ -179,13 +174,6 @@ public class Game implements Serializable {
     public List<Player> getPlayers() {
         return players;
     }
-
-//    public boolean doesPlayerExists(String username) {
-//        for (Player p : players) {
-//            if (p.getName().equals(username)) return true;
-//        }
-//        return false;
-//    }
 
     /**
      * method used to add a player in the game
@@ -252,12 +240,13 @@ public class Game implements Serializable {
             }
         } while (nextPlayerIndex != currentPlayerIndex);
 
-        // no other players connected, return the current player
         return this.currentPlayer;
     }
 
 
-    // TODO da eliminare
+    /**
+     * @return the list of the players that are connected
+     */
     public List<String> getPlayersNames() {
         List<String> names = new ArrayList<>();
         for (Player p : players) {
@@ -382,23 +371,20 @@ public class Game implements Serializable {
      * Load into the personalGoalCardsContainer all personal goal cards from a json file
      */
     public void loadPersonalGoaldCards() {
-        Gson gson = new Gson();
-        try (FileReader reader = new FileReader("personalGoalCards.json")) {
-            this.personalGoalCardsContainer = gson.fromJson(reader, new TypeToken<List<PersonalGoalCard>>() {
-            }.getType());
-        } catch (Exception e) {
-//            e.printStackTrace();
-        }
+        this.personalGoalCardsContainer = JsonReader.getPersonalGoalCardsContainer();
     }
 
-//    @Override
-//    public String toString() {
-//        return "Game{" +
-//                ", players=" + players +
-//                ", currentPlayer=" + currentPlayer +
-//                ", board=" + board +
-//                ", started=" + started +
-//                ", numberOfPlayers=" + numberOfPlayers +
-//                '}';
-//    }
+    /**
+     * Override of the toString method
+     */
+    @Override
+    public String toString() {
+        return "Game{" +
+                ", players=" + players +
+                ", currentPlayer=" + currentPlayer +
+                ", board=" + board +
+                ", started=" + started +
+                ", numberOfPlayers=" + numberOfPlayers +
+                '}';
+    }
 }

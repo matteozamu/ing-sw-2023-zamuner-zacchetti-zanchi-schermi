@@ -7,6 +7,39 @@ import static org.junit.jupiter.api.Assertions.*;
 class CommonGoalType2Test {
 
     @Test
+    public void testGetType(){
+        CommonGoalType2 commonGoalType2 = new CommonGoalType2();
+        assertEquals(2, commonGoalType2.getType());
+    }
+
+    @Test
+    public void testGetDescription(){
+        CommonGoalType2 commonGoalType2 = new CommonGoalType2();
+        assertEquals("Five tiles of the same type forming a diagonal.", commonGoalType2.getDescription());
+    }
+
+    @Test
+    public void testGetCardView(){
+        CommonGoalType2 commonGoalType2 = new CommonGoalType2();
+        assertEquals("""
+                ╔══════════╗
+                ║■         ║
+                ║  ■       ║
+                ║    ■     ║
+                ║      ■   ║
+                ║        ■ ║
+                ╚══════════╝
+                """, commonGoalType2.getCardView());
+    }
+
+    @Test
+    public void testToString(){
+        CommonGoalType2 commonGoalType2 = new CommonGoalType2();
+        assertEquals("commonGoalCard-2", commonGoalType2.toString());
+    }
+
+
+    @Test
     public void testCheckDiagonalFromTopLeftEmptyShelfReturnsFalse() {
         Shelf emptyShelf = new Shelf();
         Coordinate start = new Coordinate(5, 0);
@@ -125,6 +158,18 @@ class CommonGoalType2Test {
         Shelf shelf = new Shelf();
         CommonGoalType2 goal = new CommonGoalType2();
         assertFalse(goal.checkGoal(shelf));
+    }
+
+    @Test
+    public void testCheckGoalFromTopRightReturnsTrue(){
+        Shelf shelf = new Shelf();
+        shelf.getGrid().put(new Coordinate(5, 4), new ObjectCard(ObjectCardType.cat, "20"));
+        shelf.getGrid().put(new Coordinate(4, 3), new ObjectCard(ObjectCardType.cat, "00"));
+        shelf.getGrid().put(new Coordinate(3, 2), new ObjectCard(ObjectCardType.cat, "10"));
+        shelf.getGrid().put(new Coordinate(2, 1), new ObjectCard(ObjectCardType.cat, "00"));
+        shelf.getGrid().put(new Coordinate(1, 0), new ObjectCard(ObjectCardType.cat, "20"));
+        CommonGoalType2 goal = new CommonGoalType2();
+        assertTrue(goal.checkGoal(shelf));
     }
 
 
