@@ -110,10 +110,14 @@ public class ControllerGame implements TimerRunListener, Serializable {
                     game.getBoard().getGrid().put(coordinate, game.getLimbo().get(coordinate));
                 }
                 game.getLimbo().clear();
-                Player currentPlayer = game.getCurrentPlayer();
-                Player nextPlayer = game.nextPlayer();
 
-                if (nextPlayer == currentPlayer) {
+                game.nextPlayer();
+
+                int connectionCounter = 0;
+                for (Player pl : game.getPlayers()){
+                    if (pl.isConnected()) connectionCounter++;
+                }
+                if(connectionCounter == 1){
                     setTimer();
                 }
 
@@ -122,8 +126,8 @@ public class ControllerGame implements TimerRunListener, Serializable {
             }
         };
 
-        // start a timer of 10 seconds (10000 milliseconds)
-        makeMoveTimer.schedule(task, 10000);
+        // start a timer of 5 minutes (300000 milliseconds) to let the player play
+        makeMoveTimer.schedule(task, 300000);
     }
 
     /**
@@ -152,7 +156,6 @@ public class ControllerGame implements TimerRunListener, Serializable {
             return new Response("GAME ENDED", MessageStatus.ERROR);
         }
 
-//        setMakeMoveTimer();
         switch (receivedMessage.getContent()) {
             case GAME_STATE:
                 return new GameStateResponse(receivedMessage.getSenderUsername(), game.getCurrentPlayer().getName(), server.getFilepath());
@@ -195,9 +198,12 @@ public class ControllerGame implements TimerRunListener, Serializable {
                 return new Response("Game has ended.", MessageStatus.GAME_ENDED);
             }
 
+            makeMoveTimer.cancel();
+
             Player currentPlayer = game.getCurrentPlayer();
             Player nextPlayer = game.nextPlayer();
 
+            setMakeMoveTimer();
             if (nextPlayer == currentPlayer) {
                 setTimer();
             }
@@ -469,7 +475,7 @@ public class ControllerGame implements TimerRunListener, Serializable {
             server.sendMessage(player.getName(), new GameStartMessage(game.getCurrentPlayer().getName(), game.getCommonGoals(), player.getName(), server.getFilepath()));
         }
 
-//        setMakeMoveTimer();
+        setMakeMoveTimer();
 //        server.sendMessageToAll(new GameStartMessage(game.getCurrentPlayer().getName(), game.getCommonGoals(), player.getName()));
     }
 

@@ -3,7 +3,7 @@
   "RMIPort": 7777,
   "maxPlayers": 4,
   "minPlayers": 2,
-  "disconnectionTimer": 30000,
+  "disconnectionTimer": 120000,
   "board2": [
     [
       0,

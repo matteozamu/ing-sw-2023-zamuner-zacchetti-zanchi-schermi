@@ -291,7 +291,6 @@ public class Server implements Runnable {
                 }
                 if(connectionCounter == 1){
                     controllerGame.setTimer();
-                    System.out.println("Timer set");
                 }
 
                 LOGGER.log(Level.INFO, "{0} set connected false!", username);
