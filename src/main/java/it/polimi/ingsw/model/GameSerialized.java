@@ -22,7 +22,6 @@ public class GameSerialized implements Serializable {
     private LinkedHashMap<Coordinate, ObjectCard> limbo;
     private Player currentPlayer;
 
-
     /**
      * constructor of the class, it initializes the attributes of the class
      *
@@ -152,6 +151,7 @@ public class GameSerialized implements Serializable {
 
     /**
      * override of the toString method
+     *
      * @return the string representation
      */
     @Override

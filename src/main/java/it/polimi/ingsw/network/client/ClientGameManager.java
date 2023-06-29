@@ -18,6 +18,9 @@ import java.util.logging.FileHandler;
 import java.util.logging.Logger;
 import java.util.logging.SimpleFormatter;
 
+/**
+ * This class represents the client game manager
+ */
 public abstract class ClientGameManager implements ClientGameManagerListener, ClientUpdateListener, Runnable {
     public static final Logger LOGGER = Logger.getLogger("my_shelfie_client");
 

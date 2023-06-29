@@ -8,8 +8,8 @@ import java.util.ArrayList;
  */
 public class PersonalGoalCard implements Serializable {
     private final ArrayList<PersonalGoal> goals;
-    private int targetsReached;
     private final String ID;
+    private int targetsReached;
 
     /**
      * Constructs a PersonalGoalCard with the given list of personal goals.
@@ -23,6 +23,8 @@ public class PersonalGoalCard implements Serializable {
     }
 
     /**
+     * return the number of targets reached
+     *
      * @return a list of the goals of the Personal Goal Card
      */
     public ArrayList<PersonalGoal> getGoals() {
@@ -30,6 +32,8 @@ public class PersonalGoalCard implements Serializable {
     }
 
     /**
+     * return the id
+     *
      * @return the ID of the Personal Goal Card
      */
     public String getID() {
@@ -37,6 +41,8 @@ public class PersonalGoalCard implements Serializable {
     }
 
     /**
+     * set the number of targets reached
+     *
      * @param targetsReached is true if the target is reached
      */
     public void setTargetsReached(int targetsReached) {
@@ -45,6 +51,7 @@ public class PersonalGoalCard implements Serializable {
 
     /**
      * return the points of the target reached
+     *
      * @param shelf is the shelf of the player
      * @return the points of the target reached
      */

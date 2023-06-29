@@ -46,8 +46,6 @@ public class ObjectCard implements Serializable {
         return ID;
     }
 
-
-
     /**
      * Returns a string representation of the object card.
      *

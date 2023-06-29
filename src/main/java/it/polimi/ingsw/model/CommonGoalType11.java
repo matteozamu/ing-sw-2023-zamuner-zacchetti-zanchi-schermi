@@ -24,7 +24,8 @@ public final class CommonGoalType11 extends CommonGoal {
             """;
 
     /**
-     *  Gets the type of the CommonGoal.
+     * Gets the type of the CommonGoal.
+     *
      * @return the type of the CommonGoal.
      */
     @Override
@@ -34,6 +35,7 @@ public final class CommonGoalType11 extends CommonGoal {
 
     /**
      * Gets the description of the CommonGoal.
+     *
      * @return the description of the CommonGoal.
      */
     @Override
@@ -43,6 +45,7 @@ public final class CommonGoalType11 extends CommonGoal {
 
     /**
      * Gets the visual representation of the CommonGoal.
+     *
      * @return the visual representation of the CommonGoal.
      */
     @Override
@@ -52,6 +55,7 @@ public final class CommonGoalType11 extends CommonGoal {
 
     /**
      * Gets the String representation of the CommonGoal.
+     *
      * @return the String representation of the CommonGoal.
      */
     @Override
