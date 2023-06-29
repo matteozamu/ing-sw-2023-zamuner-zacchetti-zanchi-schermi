@@ -4,7 +4,7 @@ import it.polimi.ingsw.enumeration.MessageContent;
 import it.polimi.ingsw.model.Coordinate;
 
 /**
- * Message class for requesting the bot spawn
+ * Message sent by the client containing the coordinate of the object card to pick in order to verify if the player can pick it
  */
 public class ObjectCardRequest extends Message {
     private static final long serialVersionUID = 1272585248979532293L;

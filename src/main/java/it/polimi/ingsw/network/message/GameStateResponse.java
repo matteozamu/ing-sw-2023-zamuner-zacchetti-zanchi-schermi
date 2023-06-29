@@ -4,7 +4,7 @@ import it.polimi.ingsw.enumeration.MessageContent;
 import it.polimi.ingsw.model.GameSerialized;
 
 /**
- * Message class to inform the clients about a game state update
+ * Message class to inform the clients about the model changes
  */
 public class GameStateResponse extends Message {
     private static final long serialVersionUID = 2725986184174583892L;
