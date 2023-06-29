@@ -12,7 +12,9 @@ import it.polimi.ingsw.utility.MessageBuilder;
 import it.polimi.ingsw.utility.ServerAddressValidator;
 
 import java.io.PrintStream;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Scanner;
 import java.util.stream.Collectors;
 
 public class Cli extends ClientGameManager implements DisconnectionListener {
@@ -27,6 +29,29 @@ public class Cli extends ClientGameManager implements DisconnectionListener {
 
         this.in = new Scanner(System.in);
         this.out = new PrintStream(System.out, true);
+    }
+
+    /**
+     * Method used to read the input for the reorderLimbo method
+     *
+     * @return the list of the index read
+     */
+    private static ArrayList<Integer> readLimboInput() {
+        ArrayList<Integer> numbers = new ArrayList<>();
+        Scanner scanner = new Scanner(System.in);
+        String input = scanner.nextLine();
+
+        String[] numberStrings = input.split(" ");
+        for (String numberString : numberStrings) {
+            try {
+                int number = Integer.parseInt(numberString);
+                numbers.add(number);
+            } catch (NumberFormatException e) {
+                System.out.println("Invalid number: " + numberString);
+            }
+        }
+
+        return numbers;
     }
 
     /**
@@ -505,7 +530,6 @@ public class Cli extends ClientGameManager implements DisconnectionListener {
         do {
             choose = readInt(0, games.size() - 1);
             if (choose == null) {
-                System.out.println("NOOOO");
                 promptInputError("Not valid input!");
             }
         } while (choose == null);
@@ -556,7 +580,6 @@ public class Cli extends ClientGameManager implements DisconnectionListener {
             String line = in.nextLine();
 
             if (line.equals("CANCEL")) {
-                System.out.println("RETURNING NULL");
                 return null;
             }
 
@@ -696,28 +719,6 @@ public class Cli extends ClientGameManager implements DisconnectionListener {
         if (!sendRequest(MessageBuilder.buildReorderLimboRequest(getUsername(), getClientToken(), limboOrder))) {
             promptError(SEND_ERROR, true);
         }
-    }
-
-    /**
-     * Method used to read the input for the reorderLimbo method
-     * @return the list of the index read
-     */
-    private static ArrayList<Integer> readLimboInput(){
-        ArrayList<Integer> numbers = new ArrayList<>();
-        Scanner scanner = new Scanner(System.in);
-        String input = scanner.nextLine();
-
-        String[] numberStrings = input.split(" ");
-        for (String numberString : numberStrings) {
-            try {
-                int number = Integer.parseInt(numberString);
-                numbers.add(number);
-            } catch (NumberFormatException e) {
-                System.out.println("Invalid number: " + numberString);
-            }
-        }
-
-        return numbers;
     }
 
     /**

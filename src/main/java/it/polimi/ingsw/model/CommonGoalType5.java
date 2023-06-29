@@ -93,8 +93,6 @@ public class CommonGoalType5 extends CommonGoal {
 
         List<Integer> groups = shelf.findAdjacentTilesGroups();
 
-        System.out.println("groups:" + groups);
-
         for (int i : groups) {
             if (i >= 4) {
                 counter++;

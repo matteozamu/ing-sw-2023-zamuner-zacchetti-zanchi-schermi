@@ -93,7 +93,7 @@ public class ControllerGame implements TimerRunListener, Serializable {
                 orderedMap.put(coordinate, objectCard);
             }
         }
-        System.out.println("ordered map " + orderedMap);
+//        System.out.println("ordered map " + orderedMap);
         return orderedMap;
     }
 
@@ -114,15 +114,15 @@ public class ControllerGame implements TimerRunListener, Serializable {
                 game.nextPlayer();
 
                 int connectionCounter = 0;
-                for (Player pl : game.getPlayers()){
+                for (Player pl : game.getPlayers()) {
                     if (pl.isConnected()) connectionCounter++;
                 }
-                if(connectionCounter == 1){
+                if (connectionCounter == 1) {
                     setTimer();
                 }
 
                 sendPrivateUpdates();
-                System.out.println("Timer ended");
+//                System.out.println("Timer ended");
             }
         };
 
@@ -215,7 +215,7 @@ public class ControllerGame implements TimerRunListener, Serializable {
 
             return new Response("Cards moved", MessageStatus.OK);
         } else {
-            System.out.println("Column does not have enough space");
+//            System.out.println("Column does not have enough space");
             return buildInvalidResponse();
         }
     }
@@ -644,9 +644,10 @@ public class ControllerGame implements TimerRunListener, Serializable {
 
     /**
      * Check availability of the ObjectCard from the board
-     * @return true if the ObjectCard can be taken by a player, false if not
+     *
      * @param coordinate are the board coordinates of the ObjectCard to check
-     * */
+     * @return true if the ObjectCard can be taken by a player, false if not
+     */
     public boolean isObjectCardAvailable(Coordinate coordinate) {
         Map<Coordinate, ObjectCard> limbo = game.getLimbo();
         Map<Coordinate, ObjectCard> boardOrig = game.getBoard().getGrid();

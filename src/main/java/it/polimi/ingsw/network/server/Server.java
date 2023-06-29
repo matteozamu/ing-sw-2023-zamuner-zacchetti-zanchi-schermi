@@ -164,11 +164,6 @@ public class Server implements Runnable {
                 connection.sendMessage(
                         new GameLoadResponse("Successfully reconnected", token, UserPlayerState.FIRST_ACTION)
                 );
-//            ControllerGame controllerGame = playersGame.get(username);
-
-                System.out.println("controllerGame: " + controllerGame);
-
-                //checkLoadReady();
             } else {
                 if (controllerGame.getGameState() == PossibleGameState.GAME_ROOM) { // Game in lobby state
                     connection.sendMessage(
@@ -211,9 +206,6 @@ public class Server implements Runnable {
      * @param message is the message received to the client
      */
     void onMessage(Message message) {
-        System.out.println("onMessage: " + message);
-        System.out.println(message.getToken());
-        System.out.println(message.getToken() != null);
         if (message != null && message.getSenderUsername() != null && (message.getToken() != null || message.getSenderUsername().equals("serverUser"))) {
             LOGGER.log(Level.INFO, "Received: {0}", message);
 
@@ -286,10 +278,10 @@ public class Server implements Runnable {
                 p.setConnected(false);
 
                 int connectionCounter = 0;
-                for (Player pl : controllerGame.getGame().getPlayers()){
+                for (Player pl : controllerGame.getGame().getPlayers()) {
                     if (pl.isConnected()) connectionCounter++;
                 }
-                if(connectionCounter == 1){
+                if (connectionCounter == 1) {
                     controllerGame.setTimer();
                 }
 
