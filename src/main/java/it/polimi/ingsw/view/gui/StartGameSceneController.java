@@ -140,6 +140,10 @@ public class StartGameSceneController {
     void noGameAvailable() {
         GuiManager.showDialog((Stage) mainPane.getScene().getWindow(), GuiManager.ERROR_DIALOG_TITLE,
                 "No games available");
+
+        createGameButton.setDisable(false);
+        joinGameButton.setDisable(false);
+        backButton.setDisable(false);
     }
 
     /**
