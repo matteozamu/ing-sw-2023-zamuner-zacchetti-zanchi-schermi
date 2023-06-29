@@ -118,31 +118,11 @@ class GameTest extends TestCase {
         assertNotNull(g.getPlayers());
     }
 
-//    @Test
-//    public void testDoesPlayerExist() {
-//        Player p = new Player("test", this.shelf, this.pg);
-//        g.addPlayer(p);
-//        assertTrue(g.doesPlayerExist("test"));
-//    }
-
-//    @Test
-//    public void testDoesPlayerExistNull() {
-//        assertFalse(g.doesPlayerExist(null));
-//    }
-
-
     @Test
     public void testAddPlayer() {
         Player p = new Player("Matteo", this.shelf, this.pg);
         assertTrue(g.addPlayer(p));
     }
-
-    //TODO: fix this test (error)
-//    @Test
-//    public void testAddPlayerNull(){
-//        Player p = null;
-//        assertTrue(g.addPlayer(p));
-//    }
 
     @Test
     public void TestGetCurrentPlayer() {
@@ -165,15 +145,6 @@ class GameTest extends TestCase {
     public void testGetCommonGoals() {
         assertNotNull(g.getCommonGoals());
     }
-
-//    @Test
-//    public void testAddPlayerCurrentPlayer() {
-//        Player p = new Player("Rebecca", this.shelf, this.pg);
-//        g.addPlayer(p);
-//        g.setCurrentPlayer(p);
-//
-//        assertEquals(g.getPlayers().get(0), g.getCurrentPlayer());
-//    }
 
     @Test
     public void testMaxNumbersOfPlayers() {
@@ -260,11 +231,6 @@ class GameTest extends TestCase {
     }
 
 
-//    @Test
-//    public void testGetRandomAvailablePersonalGoalCardEmptyContainer() {
-//        assertNull(g.getRandomAvailablePersonalGoalCard());
-//    }
-
     @Test
     public void testGetRandomAvailablePersonalGoalCardFullContainer() {
         g.getPersonalGoalCardsContainer().add(new PersonalGoalCard(new ArrayList<>(), "personalGoalCard-1"));
@@ -272,10 +238,6 @@ class GameTest extends TestCase {
         assertTrue(o instanceof PersonalGoalCard);
     }
 
-//    @Test
-//    public void testGetRandomAvailableObjectCardEmptyContainer() {
-//        assertNull(g.getRandomAvailableObjectCard());
-//    }
 
     @Test
     public void testGetRandomAvailableObjectCardFullContainer() {
@@ -284,8 +246,6 @@ class GameTest extends TestCase {
         assertTrue(o instanceof ObjectCard);
     }
 
-
-    //TODO: non passa: ritorna true anche se non c'è spazio disponibile nella colonna
     @Test
     public void testAddObjectCardsToShelf() {
         List<ObjectCard> objectCards = new ArrayList<>();
@@ -366,9 +326,5 @@ class GameTest extends TestCase {
         assertTrue(o instanceof CommonGoal);
     }
 
-//    @Test
-//    void testGetRandomAvailableCommonGoalEmptyContainer() {
-//        assertNull(g.getRandomAvailableCommonGoal());
-//    }
 
 }
