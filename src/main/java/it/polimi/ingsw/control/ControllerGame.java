@@ -745,11 +745,6 @@ public class ControllerGame implements TimerRunListener, Serializable {
         if (gameState == PossibleGameState.GAME_ENDED) {
             return new Response("GAME ENDED", MessageStatus.ERROR);
         }
-
-//        if (!InputValidator.validatePlayerUsername(game.getPlayers(), receivedConnectionMessage)) {
-//            return new Response("Invalid connection Message", MessageStatus.ERROR);
-//        }
-
         if (gameState != PossibleGameState.GAME_ROOM && receivedConnectionMessage.getContent() == MessageContent.ADD_PLAYER) {
             // if the player wants to disconnect from the game
             if (((LobbyMessage) receivedConnectionMessage).isDisconnection()) {
@@ -770,7 +765,7 @@ public class ControllerGame implements TimerRunListener, Serializable {
      * @param receivedConnectionMessage message received by the server from the player asking to reconnect to the game
      * @return a {@link Message Message} which contains the result of the received message
      */
-    private Message reconnectionHandler(LobbyMessage receivedConnectionMessage) {
+    protected Message reconnectionHandler(LobbyMessage receivedConnectionMessage) {
         String reconnectingPlayerName = receivedConnectionMessage.getSenderUsername();
         List<String> playersNames = game.getPlayers().stream().map(Player::getName).collect(Collectors.toList());
 //        ArrayList<LobbyMessage> inLobbyPlayers = lobby.getInLobbyPlayers();

@@ -312,16 +312,14 @@ public class Server implements Runnable {
      * @param message is the message to send
      */
     public void sendMessageToAll(UUID gameId, Message message) {
-        System.out.println("ALL SENDING MESSAGE");
         for (Map.Entry<String, ControllerGame> client : playersGame.entrySet()) {
-            System.out.println(client.getKey() + " " + client.getValue().getId() + " " + gameId + " " + clients.get(client.getKey()).isConnected());
-            if (client.getValue() != null && client.getValue().getId().equals(gameId) && clients.get(client.getKey()).isConnected()) {
-                try {
-                    System.out.println("ALL SENDING MESSAGE TO " + client.getKey());
-                    System.out.println("ALL MESSAGE: " + message);
-                    clients.get(client.getKey()).sendMessage(message);
-                } catch (IOException e) {
-                    LOGGER.severe(e.getMessage());
+            synchronized (clientsLock) {
+                if (client.getValue() != null && client.getValue().getId().equals(gameId) && clients.get(client.getKey()).isConnected()) {
+                    try {
+                        clients.get(client.getKey()).sendMessage(message);
+                    } catch (IOException e) {
+                        LOGGER.severe(e.getMessage());
+                    }
                 }
             }
         }
