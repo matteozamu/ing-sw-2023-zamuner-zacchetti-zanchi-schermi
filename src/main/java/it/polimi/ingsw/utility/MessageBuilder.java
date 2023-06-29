@@ -87,17 +87,6 @@ public class MessageBuilder {
     }
 
     /**
-     * Create a {@link GameStateRequest GameStateRequest}
-     *
-     * @param username is the username under which the user log itself in
-     * @param token    is the user token
-     * @return the {@link GameStateRequest GameStateRequest} object to send to the server
-     */
-    public static GameStateRequest buildGameStateRequest(String username, String token) {
-        return new GameStateRequest(username, token);
-    }
-
-    /**
      * Create a {@link ReorderLimboRequest ReorderLimboRequest}
      *
      * @param username is the username under which the user log itself in

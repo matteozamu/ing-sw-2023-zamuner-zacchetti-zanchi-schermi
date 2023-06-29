@@ -2,6 +2,9 @@ package it.polimi.ingsw.network.message;
 
 import it.polimi.ingsw.enumeration.MessageContent;
 
+/**
+ * Message sent by the client to load the shelf of the player
+ */
 public class LoadShelfRequest extends Message {
     private static final long serialVersionUID = 127258524891232293L;
     private int column;
