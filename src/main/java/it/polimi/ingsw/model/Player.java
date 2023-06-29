@@ -48,6 +48,9 @@ public class Player implements Serializable {
         this.connected = connected;
     }
 
+    /**
+     * @return the map of common goals reached by the player
+     */
     public Map<CommonGoal, Integer> getCommonGoalsReached() {
         return commonGoalsReached;
     }

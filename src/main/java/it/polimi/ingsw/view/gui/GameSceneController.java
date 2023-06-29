@@ -4,7 +4,6 @@ import it.polimi.ingsw.enumeration.PossibleAction;
 import it.polimi.ingsw.model.*;
 import it.polimi.ingsw.utility.MessageBuilder;
 import javafx.collections.ObservableList;
-import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
@@ -133,6 +132,9 @@ public class GameSceneController {
     private ArrayList<Integer> orderLimboObjectCards;
     private Set<ImageView> imageViewsWithListener;
 
+    /**
+     * Method to initialize the game scene
+     */
     @FXML
     private void initialize() {
         guiManager = GuiManager.getInstance();
@@ -177,6 +179,10 @@ public class GameSceneController {
         updateGameArea(gameSerialized);
     }
 
+    /**
+     *
+     * Binds the arrow buttons to the corresponding event handlers that invoke the onChooseColumnButtonClick method.
+     */
     private void bindChooseColumnArrows() {
         arrowShelf0.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> onChooseColumnButtonClick(0));
         arrowShelf1.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> onChooseColumnButtonClick(1));
@@ -185,6 +191,10 @@ public class GameSceneController {
         arrowShelf4.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> onChooseColumnButtonClick(4));
     }
 
+    /**
+     *
+     * Loads the images for object cards and adds them to the objectCards map through the addObjectCardImagesToMap method
+     */
     private void loadObjectCards() {
         List<String> types = Arrays.stream(ObjectCardType.values())
                                     .map(Enum::name)
@@ -197,6 +207,12 @@ public class GameSceneController {
         }
     }
 
+    /**
+     * Adds the specified number of object card images to the objectCards map.
+     * @param type the type of the object card
+     * @param ID the ID of the object card
+     * @param count the number of images to add
+     */
     private void addObjectCardImagesToMap(String type, String ID, int count) {
         for (int i = 0; i < count; i++) {
             ImageView imageView = new ImageView();
@@ -207,6 +223,10 @@ public class GameSceneController {
         }
     }
 
+    /**
+     *
+     * Loads the common goal cards and adds them to the commonGoalCards map.
+     */
     private void loadCommonGoalCards() {
         for (int i = 1; i <= 12; i++) {
             ImageView imageView = new ImageView();
@@ -217,6 +237,10 @@ public class GameSceneController {
         }
     }
 
+    /**
+     *
+     * Loads the personal goal cards and adds them to the personalGoalCards map.
+     */
     private void loadPersonalGoalCards() {
         for (int i = 1; i <= 12; i++) {
             ImageView imageView = new ImageView();
@@ -227,6 +251,10 @@ public class GameSceneController {
         }
     }
 
+    /**
+     *
+     * Loads the common goal points images and adds them to the commonGoalPoints map.
+     */
     private void loadCommonGoalPoints() {
         int[] points = {2, 4, 6, 8};
         for (int i = 0; i < 4; i++) {
@@ -340,6 +368,7 @@ public class GameSceneController {
             }
         }
     }
+
 
     private void updateShelfGrid(GameSerialized gameSerialized, GridPane shelfGrid, String shelfOwner) {
         List<Player> players = gameSerialized.getAllPlayers();
@@ -727,7 +756,7 @@ public class GameSceneController {
         GuiManager.showDialog((Stage) mainPane.getScene().getWindow(), GuiManager.ERROR_DIALOG_TITLE, error);
     }
 
-    void notYourTurn(String turnOwner) {
+    void notYourTurn() {
         actionListStackPane.getChildren().clear();
         arrowShelf0.setMouseTransparent(true);
         arrowShelf1.setMouseTransparent(true);
@@ -756,20 +785,20 @@ public class GameSceneController {
             String actionID = getActionIDFromPossibleAction(possibleAction);
 
             switch (actionID) {
-                case "boardPickCard":
+                case "boardPickCard" -> {
                     setObjectsCardAvailability(false);
                     isBoardPickCardActionPresent = true;
-                    break;
-                case "loadShelf":
+                }
+                case "loadShelf" -> {
                     setShelfArrowsAvailability(false);
                     isLoadShelfActionPresent = true;
-                    break;
-                case "reorderLimbo":
+                }
+                case "reorderLimbo" -> {
                     setLimboAvailability(false);
                     isReorderLimboActionPresent = true;
-                    break;
-                default:
-                    break;
+                }
+                default -> {
+                }
             }
         }
 

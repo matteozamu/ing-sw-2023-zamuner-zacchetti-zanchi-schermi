@@ -23,21 +23,33 @@ public final class CommonGoalType7 extends CommonGoal {
             ╚═══════╝
             """;
 
+    /**
+     * Gets the type of the CommonGoal.
+     */
     @Override
     public int getType() {
         return type;
     }
 
+    /**
+     * Gets the description of the CommonGoal.
+     */
     @Override
     public String getDescription() {
         return description;
     }
 
+    /**
+     * Gets the visual representation of the CommonGoal.
+     */
     @Override
     public String getCardView() {
         return cardView;
     }
 
+    /**
+     * Gets the String representation of the CommonGoal.
+     */
     @Override
     public String toString() {
         return "commonGoalCard-7";
@@ -55,6 +67,14 @@ public final class CommonGoalType7 extends CommonGoal {
         return shelf.getGrid().size() >= 8;
     }
 
+    /**
+     * Checks if the Shelf satisfies the goal.
+     * For CommonGoalType7, the Shelf must have two groups of 4 tiles of the same type in a 2x2 square.
+     * The tiles of one square can be different from those of the other square.
+     *
+     * @param shelf The Shelf to check.
+     * @return true if the Shelf satisfies the goal, false otherwise.
+     */
     @Override
     public boolean checkGoal(Shelf shelf) {
         if (!isShelfEligible(shelf)) {
@@ -84,6 +104,15 @@ public final class CommonGoalType7 extends CommonGoal {
         }
         return false;
     }
+
+    /**
+     * Checks if the Shelf has a 2x2 square of the same type.
+     *
+     * @param shelf The Shelf to check.
+     * @param bottomLeft The bottom left Coordinate of the square.
+     * @param type The type of the square.
+     * @return true if the Shelf has a 2x2 square of the same type, false otherwise.
+     */
 
     public boolean isSquare(Shelf shelf, Coordinate bottomLeft, ObjectCardType type) {
         ObjectCard bottomLeftCard = shelf.getObjectCard(bottomLeft);

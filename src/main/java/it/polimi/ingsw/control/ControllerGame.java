@@ -543,6 +543,12 @@ public class ControllerGame implements TimerRunListener, Serializable {
         }
     }
 
+    /**
+     * Check if the board needs to be refilled
+     *
+     * @return true if refill, false if not
+     */
+
     public boolean checkIfRefill() {
         int playerNumber = game.getNumberOfPlayers();
         Map<Coordinate, ObjectCard> b = game.getBoard().getGrid();
@@ -628,6 +634,11 @@ public class ControllerGame implements TimerRunListener, Serializable {
         game.addObjectCardsToShelf(objectCards, column);
     }
 
+    /**
+     * Check availability of the ObjectCard from the board
+     * @return true if the ObjectCard can be taken by a player, false if not
+     * @param coordinate are the board coordinates of the ObjectCard to check
+     * */
     public boolean isObjectCardAvailable(Coordinate coordinate) {
         Map<Coordinate, ObjectCard> limbo = game.getLimbo();
         Map<Coordinate, ObjectCard> boardOrig = game.getBoard().getGrid();

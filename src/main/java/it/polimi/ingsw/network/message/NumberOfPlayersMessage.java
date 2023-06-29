@@ -2,6 +2,9 @@ package it.polimi.ingsw.network.message;
 
 import it.polimi.ingsw.enumeration.MessageContent;
 
+/**
+ * Message that contains the number of players in a game
+ */
 public class NumberOfPlayersMessage extends Message {
     private static final long serialVersionUID = -8420070827032848314L;
 

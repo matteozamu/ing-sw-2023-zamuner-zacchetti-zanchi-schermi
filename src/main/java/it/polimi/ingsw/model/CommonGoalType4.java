@@ -27,20 +27,33 @@ public final class CommonGoalType4 extends CommonGoal {
                 ╚═══════════╝
                 """;
 
+    /**
+     * Gets the type of the CommonGoal.
+     */
     @Override
     public int getType() {
         return type;
     }
 
+    /**
+     * Gets the description of the CommonGoal.
+     */
     @Override
     public String getDescription() {
         return description;
     }
+
+    /**
+     * Gets the visual representation of the CommonGoal.
+     */
     @Override
     public String getCardView() {
         return cardView;
     }
 
+    /**
+     * Gets the String representation of the CommonGoal.
+     */
     @Override
     public String toString() {
         return "commonGoalCard-4";
@@ -58,6 +71,16 @@ public final class CommonGoalType4 extends CommonGoal {
         return shelf.getGrid().size() >= 20;
     }
 
+
+    /**
+     * Checks if the Shelf satisfies the goal.
+     * For CommonGoalType4, the Shelf must have four lines each formed by 5 tiles of
+     * maximum three different types. One line can show the same or a different
+     * combination of another line.
+     *
+     * @param shelf The Shelf to check.
+     * @return true if the Shelf satisfies the goal, false otherwise.
+     */
     @Override
     public boolean checkGoal(Shelf shelf) {
         if (!isShelfEligible(shelf)) {

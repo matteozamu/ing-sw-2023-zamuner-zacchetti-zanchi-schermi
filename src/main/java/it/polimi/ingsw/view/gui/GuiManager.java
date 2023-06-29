@@ -219,7 +219,7 @@ public class GuiManager extends ClientGameManager implements DisconnectionListen
     @Override
     public void notYourTurn(String turnOwner) {
         Platform.runLater(() ->
-                gameSceneController.notYourTurn(turnOwner));
+                gameSceneController.notYourTurn());
     }
 
     /**

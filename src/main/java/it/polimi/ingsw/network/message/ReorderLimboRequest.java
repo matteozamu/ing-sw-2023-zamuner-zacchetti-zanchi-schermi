@@ -4,6 +4,9 @@ import it.polimi.ingsw.enumeration.MessageContent;
 
 import java.util.ArrayList;
 
+/**
+ * Message used to reorder the limbo
+ */
 public class ReorderLimboRequest extends Message{
     private static final long serialVersionUID = 127258524891232293L;
     private ArrayList<Integer> newLimbo;

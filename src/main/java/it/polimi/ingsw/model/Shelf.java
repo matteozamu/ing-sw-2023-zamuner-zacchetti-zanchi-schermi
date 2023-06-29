@@ -65,6 +65,12 @@ public class Shelf implements Serializable {
         return availableRows;
     }
 
+    /**
+     * Depth-first search (DFS) is an algorithm for traversing or searching tree or graph data structures.
+     * The algorithm starts at the root node (selecting some arbitrary node as the root node in the case of a graph)
+     * and explores as far as possible along each branch before backtracking.
+     * It is a recursive algorithm used for the calculation of the points.
+     */
     private int dfs(ObjectCard currentTile, Set<ObjectCard> visited, ObjectCardType type, int row, int column) {
         visited.add(currentTile);
         int size = 1;
@@ -89,6 +95,10 @@ public class Shelf implements Serializable {
         return size;
     }
 
+    /**
+     * finds groups of adjacent ObjectCards of the same type.
+     * It is used for the calculation of the points.
+     */
     public List<Integer> findAdjacentTilesGroups() {
         ObjectCard startingTile = null;
         List<Integer> groupsSizes = new ArrayList<>();
@@ -135,6 +145,9 @@ public class Shelf implements Serializable {
         return groupsSizes;
     }
 
+    /**
+     * Calculates the point from the groups of adjacent ObjectCards.
+     */
     public int closeObjectCardsPoints() {
         int points = 0;
 

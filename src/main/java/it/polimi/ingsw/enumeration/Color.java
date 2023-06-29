@@ -1,5 +1,8 @@
 package it.polimi.ingsw.enumeration;
 
+/**
+ * Enumeration of the colors used in the game
+ */
 public class Color {
     public static final String ANSI_RESET = "\u001B[0m";
     public static final String CLEAR_CONSOLE = "\033[H\033[2J";

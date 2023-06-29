@@ -21,19 +21,34 @@ public final class CommonGoalType2 extends CommonGoal {
                 ╚══════════╝
                 """;
 
+    /**
+     * Gets the type of the CommonGoal.
+     */
     @Override
     public int getType() {
         return type;
     }
 
+    /**
+     * Gets the description of the CommonGoal.
+     */
+
     @Override
     public String getDescription() {
         return description;
     }
+
+    /**
+     * Gets the visual representation of the CommonGoal.
+     */
     @Override
     public String getCardView() {
         return cardView;
     }
+
+    /**
+     * Gets the String representation of the CommonGoal.
+     */
 
     @Override
     public String toString() {
@@ -51,6 +66,14 @@ public final class CommonGoalType2 extends CommonGoal {
     protected boolean isShelfEligible(Shelf shelf) {
         return shelf.getGrid().size() >= 5;
     }
+
+    /**
+     * Checks if the given Shelf satisfies the CommonGoal.
+     * For CommonGoalType2, the Shelf must contain 5 object cards of the same type forming a diagonal.
+     *
+     * @param shelf The Shelf to check.
+     * @return true if the Shelf satisfies the CommonGoal, false otherwise.
+     */
 
     @Override
     public boolean checkGoal(Shelf shelf) {
@@ -78,6 +101,15 @@ public final class CommonGoalType2 extends CommonGoal {
         return false;
     }
 
+    /**
+     * Checks if the given Shelf contains 5 object cards of the same type forming a diagonal from the top left.
+     *
+     * @param shelf The Shelf to check.
+     * @param start The Coordinate of the first ObjectCard to check.
+     * @param type  The ObjectCardType to check.
+     * @return true if the Shelf contains 5 object cards of the same type forming a diagonal from the top left, false otherwise.
+     */
+
     public boolean checkDiagonalFromTopLeft(Shelf shelf, Coordinate start, ObjectCardType type) {
         for (int i = 0; i < 5; i++) {
             Coordinate currentCoordinate = new Coordinate(start.getRow() - i, start.getColumn() + i);
@@ -89,6 +121,15 @@ public final class CommonGoalType2 extends CommonGoal {
         }
         return true;
     }
+
+    /**
+     * Checks if the given Shelf contains 5 object cards of the same type forming a diagonal from the top right.
+     *
+     * @param shelf The Shelf to check.
+     * @param start The Coordinate of the first ObjectCard to check.
+     * @param type  The ObjectCardType to check.
+     * @return true if the Shelf contains 5 object cards of the same type forming a diagonal from the top right, false otherwise.
+     */
 
     public boolean checkDiagonalFromTopRight(Shelf shelf, Coordinate start, ObjectCardType type) {
         for (int i = 0; i < 5; i++) {

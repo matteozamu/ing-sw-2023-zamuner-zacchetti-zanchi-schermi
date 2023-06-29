@@ -20,21 +20,33 @@ public final class CommonGoalType10 extends CommonGoal {
             ╚═════════╝
             """;
 
+    /**
+     * Gets the type of the CommonGoal.
+     */
     @Override
     public int getType() {
         return type;
     }
 
+    /**
+     * Gets the description of the CommonGoal.
+     */
     @Override
     public String getDescription() {
         return description;
     }
 
+    /**
+     * Gets the visual representation of the CommonGoal.
+     */
     @Override
     public String getCardView() {
         return cardView;
     }
 
+    /**
+     * Gets the String representation of the CommonGoal.
+     */
     @Override
     public String toString() {
         return "commonGoalCard-10";
@@ -54,6 +66,7 @@ public final class CommonGoalType10 extends CommonGoal {
 
     /**
      * Checks if the Shelf satisfies the goal.
+     * For CommonGoalType10, the Shelf must have five tiles of the same type forming an X.
      * @param shelf The Shelf object to evaluate.
      * @return true if the Shelf satisfies the goal, false otherwise.
      */

@@ -646,8 +646,6 @@ public class ControllerGameTest extends TestCase {
         goals.add(new PersonalGoal(3, 6, ObjectCardType.randomObjectCardType()));
 
         this.pg = new PersonalGoalCard(goals, "personalGoalCard-1");
-        System.out.println(pg);
-        this.pg = pg;
         this.shelf = new Shelf();
 
         cg.getGame().getCommonGoals().clear();

@@ -22,21 +22,33 @@ public final class CommonGoalType11 extends CommonGoal {
             ╚═════════╝
             """;
 
+    /**
+     *  Gets the type of the CommonGoal.
+     */
     @Override
     public int getType() {
         return type;
     }
 
+    /**
+     * Gets the description of the CommonGoal.
+     */
     @Override
     public String getDescription() {
         return description;
     }
 
+    /**
+     * Gets the visual representation of the CommonGoal.
+     */
     @Override
     public String getCardView() {
         return cardView;
     }
 
+    /**
+     * Gets the String representation of the CommonGoal.
+     */
     @Override
     public String toString() {
         return "commonGoalCard-11";
@@ -44,7 +56,8 @@ public final class CommonGoalType11 extends CommonGoal {
 
     /**
      * Checks if the Shelf is eligible for the goal check.
-     * For CommonGoalType11, the Shelf must have at least 8 object cards.
+     * For CommonGoalType11, the Shelf must have eight tiles of the same type.
+     * There’s no restriction about the position of these tiles.
      *
      * @param shelf The Shelf to check.
      * @return true if the Shelf is eligible, false otherwise.
@@ -54,6 +67,13 @@ public final class CommonGoalType11 extends CommonGoal {
         return shelf.getGrid().size() >= 8;
     }
 
+    /**
+     * Checks if the Shelf is eligible for the goal check.
+     * For CommonGoalType11, the Shelf must have at least 8 object cards.
+     *
+     * @param shelf The Shelf to check.
+     * @return true if the Shelf is eligible, false otherwise.
+     */
     @Override
     public boolean checkGoal(Shelf shelf) {
         if (!isShelfEligible(shelf)) {

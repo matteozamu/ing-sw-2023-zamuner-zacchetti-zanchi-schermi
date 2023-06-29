@@ -49,6 +49,9 @@ public class RMIHandlerImplementation extends UnicastRemoteObject implements RMI
         rmiSession.disconnect();
     }
 
+    /**
+     * overridden equals method
+     */
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -59,6 +62,9 @@ public class RMIHandlerImplementation extends UnicastRemoteObject implements RMI
                 Objects.equals(rmiSession, that.rmiSession);
     }
 
+    /**
+     * overridden hashcode method
+     */
     @Override
     public int hashCode() {
         return Objects.hash(super.hashCode(), server, rmiSession);
