@@ -321,13 +321,13 @@ public class ControllerGame implements TimerRunListener, Serializable {
 
                 server.sendMessageToAll(this.id, new LobbyPlayersResponse(new ArrayList<>(inLobbyPlayers.stream().map(Player::getName).collect(Collectors.toList()))));
             } else {
-                System.out.println("Lobby is full");
+//                System.out.println("Lobby is full");
                 return buildInvalidResponse();
             }
         } else {
-            System.out.println("Username is not available");
-            System.out.println(isUsernameAvailable(lobbyMessage.getSenderUsername()));
-            System.out.println(lobbyMessage.isDisconnection());
+//            System.out.println("Username is not available");
+//            System.out.println(isUsernameAvailable(lobbyMessage.getSenderUsername()));
+//            System.out.println(lobbyMessage.isDisconnection());
             return buildInvalidResponse();
         }
 
@@ -749,7 +749,7 @@ public class ControllerGame implements TimerRunListener, Serializable {
             }
         }
 
-        System.out.println("Invalid game state");
+//        System.out.println("Invalid game state");
         return buildInvalidResponse();
     }
 
@@ -806,7 +806,7 @@ public class ControllerGame implements TimerRunListener, Serializable {
         };
 
         // start a timer of 10 seconds (10000 milliseconds)
-        reconnectionTimer.schedule(task, 5000);
+        reconnectionTimer.schedule(task, JsonReader.getTimer());
     }
 
     @Override

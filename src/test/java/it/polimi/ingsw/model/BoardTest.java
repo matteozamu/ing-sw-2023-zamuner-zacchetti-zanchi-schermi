@@ -22,6 +22,19 @@ public class BoardTest extends TestCase {
     }
 
     @Test
+    public void testConstructor() {
+        Board b = new Board();
+        new Board(b);
+    }
+
+    @Test
+    public void testSetGrid() {
+        Map<Coordinate, ObjectCard> grid = new HashMap<>();
+        this.b.setGrid(grid);
+        assertEquals(grid, this.b.getGrid());
+    }
+
+    @Test
     public void testGetGrid() {
         Map<Coordinate, ObjectCard> expected = new HashMap<>();
         assertEquals(expected, this.b.getGrid());
