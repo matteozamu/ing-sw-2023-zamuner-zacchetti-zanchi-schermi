@@ -4,14 +4,11 @@ import it.polimi.ingsw.enumeration.MessageStatus;
 import it.polimi.ingsw.enumeration.PossibleGameState;
 import it.polimi.ingsw.model.*;
 import it.polimi.ingsw.network.message.*;
-import it.polimi.ingsw.network.server.Connection;
 import it.polimi.ingsw.network.server.Server;
-import junit.framework.Assert;
 import junit.framework.TestCase;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import java.io.IOException;
 import java.util.*;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -32,8 +29,9 @@ public class ControllerGameTest extends TestCase {
         //cg.fillBoard();
 
     }
+
     @Test
-    public void testGetId(){
+    public void testGetId() {
         assertTrue(cg.getId() instanceof UUID);
     }
 
@@ -103,8 +101,9 @@ public class ControllerGameTest extends TestCase {
 
         assertFalse(cg.getIsLobbyFull());
     }
+
     @Test
-    public void testGameSetupHandler2(){
+    public void testGameSetupHandler2() {
         cg.getGame().setNumberOfPlayers(2);
         ArrayList<PersonalGoal> goals = new ArrayList<>();
         goals.add(new PersonalGoal(1, 1, ObjectCardType.randomObjectCardType()));
@@ -123,7 +122,7 @@ public class ControllerGameTest extends TestCase {
 
         assertTrue(cg.getIsLobbyFull());
     }
-    
+
     @Test
     public void testUsernameNull() {
         assertThrows(NullPointerException.class, () -> {
@@ -162,7 +161,7 @@ public class ControllerGameTest extends TestCase {
     }
 
     @Test
-    public void testLoadShelfHandler2(){
+    public void testLoadShelfHandler2() {
         LoadShelfRequest request = new LoadShelfRequest("Armando", null, 1);
 
         ArrayList<PersonalGoal> goals = new ArrayList<>();
@@ -176,7 +175,7 @@ public class ControllerGameTest extends TestCase {
         Player currentPlayer = new Player("Armando", new Shelf(), new PersonalGoalCard(goals, "1"));
         cg.getGame().setCurrentPlayer(currentPlayer);
         currentPlayer.getShelf().setFull(true);
-        assertEquals(new Response("Game has ended.", MessageStatus.GAME_ENDED).getStatus(),cg.loadShelfHandler(request).getStatus());
+        assertEquals(new Response("Game has ended.", MessageStatus.GAME_ENDED).getStatus(), cg.loadShelfHandler(request).getStatus());
     }
 
 
@@ -227,7 +226,7 @@ public class ControllerGameTest extends TestCase {
     }
 
     @Test
-    public void testReorderLimboHandler(){
+    public void testReorderLimboHandler() {
         ArrayList newLimbo = new ArrayList();
         newLimbo.add(3);
         newLimbo.add(2);
@@ -261,9 +260,9 @@ public class ControllerGameTest extends TestCase {
     }
 
     @Test
-    public void testPickObjectCardHandler(){
+    public void testPickObjectCardHandler() {
         cg.fillBoard();
-        ObjectCardRequest request = new ObjectCardRequest("Billy", null, new Coordinate(-3,0));
+        ObjectCardRequest request = new ObjectCardRequest("Billy", null, new Coordinate(-3, 0));
 
         ArrayList<PersonalGoal> goals = new ArrayList<>();
         goals.add(new PersonalGoal(1, 1, ObjectCardType.randomObjectCardType()));
@@ -285,7 +284,7 @@ public class ControllerGameTest extends TestCase {
     }
 
     @Test
-    public void testnumberOfPlayersMessageHandler(){
+    public void testnumberOfPlayersMessageHandler() {
         NumberOfPlayersMessage request = new NumberOfPlayersMessage("Billy", null, 2, "Gioco1");
 
         ArrayList<PersonalGoal> goals = new ArrayList<>();
@@ -303,12 +302,12 @@ public class ControllerGameTest extends TestCase {
     }
 
     @Test
-    public void testGetGameState(){
+    public void testGetGameState() {
         assertEquals(PossibleGameState.GAME_ROOM, cg.getGameState());
     }
 
     @Test
-    public void testCheckLobby(){
+    public void testCheckLobby() {
         cg.getGame().setNumberOfPlayers(2);
         ArrayList<PersonalGoal> goals = new ArrayList<>();
         goals.add(new PersonalGoal(1, 1, ObjectCardType.randomObjectCardType()));
@@ -329,7 +328,7 @@ public class ControllerGameTest extends TestCase {
     }
 
     @Test
-    public void testCheckLobby2(){
+    public void testCheckLobby2() {
         cg.getGame().setNumberOfPlayers(1);
         ArrayList<PersonalGoal> goals = new ArrayList<>();
         goals.add(new PersonalGoal(1, 1, ObjectCardType.randomObjectCardType()));
@@ -350,7 +349,7 @@ public class ControllerGameTest extends TestCase {
     }
 
     @Test
-    public void testIsUsernameAvailable(){
+    public void testIsUsernameAvailable() {
         ArrayList<PersonalGoal> goals = new ArrayList<>();
         goals.add(new PersonalGoal(1, 1, ObjectCardType.randomObjectCardType()));
         goals.add(new PersonalGoal(2, 2, ObjectCardType.randomObjectCardType()));
@@ -369,7 +368,7 @@ public class ControllerGameTest extends TestCase {
     }
 
     @Test
-    public void testCheckIfRefill(){
+    public void testCheckIfRefill() {
         cg.getGame().setNumberOfPlayers(2);
         ArrayList<PersonalGoal> goals = new ArrayList<>();
         goals.add(new PersonalGoal(1, 1, ObjectCardType.randomObjectCardType()));
@@ -384,13 +383,13 @@ public class ControllerGameTest extends TestCase {
         Game.getInstanceMap().put("federica", cg.getGame());
         Game.getInstanceMap().put("matteo", cg.getGame());
 
-        cg.getGame().getBoard().getGrid().put(new Coordinate(0,0), new ObjectCard(ObjectCardType.randomObjectCardType(), "00"));
+        cg.getGame().getBoard().getGrid().put(new Coordinate(0, 0), new ObjectCard(ObjectCardType.randomObjectCardType(), "00"));
 
         assertTrue(cg.checkIfRefill());
     }
 
     @Test
-    public void testCheckIfRefillTrue(){
+    public void testCheckIfRefillTrue() {
         cg.getGame().setNumberOfPlayers(2);
         cg.fillBoard();
 
@@ -786,9 +785,6 @@ public class ControllerGameTest extends TestCase {
     }
 
 
-
-
-
 //    @Test
 //    public void testPickObjectCardFailed() {
 //        cg.fillBoard();
@@ -808,5 +804,60 @@ public class ControllerGameTest extends TestCase {
 //        assertTrue(limbo.isEmpty());
 //
 //    }
+
+    @Test
+    void testReconnectionHandler() {
+        // Arrange
+        LobbyMessage lobbyMessage = new LobbyMessage("messia", "Token", false);
+        cg.setGame(Game.getInstance(lobbyMessage.getSenderUsername()));
+        Player player = new Player("messia", new Shelf(), new PersonalGoalCard(new ArrayList<>(), "1"));
+        cg.getGame().addPlayer(player);
+        cg.getGame().setCurrentPlayer(player);
+        cg.getGame().setStarted(true);
+
+        Message result = cg.reconnectionHandler(lobbyMessage);
+
+        assertNotNull(result);
+        assertTrue(result instanceof ReconnectionRequest);
+        assertEquals("Reconnection request", ((ReconnectionRequest) result).getMessage());
+        assertEquals("Token", ((ReconnectionRequest) result).getToken());
+        assertTrue(player.isConnected());
+    }
+
+    @Test
+    void testReconnectionHandlerGameNotStarted() {
+        // Arrange
+        LobbyMessage lobbyMessage = new LobbyMessage("messia", "Token", false);
+        cg.setGame(Game.getInstance(lobbyMessage.getSenderUsername()));
+        Player player = new Player("messia", new Shelf(), new PersonalGoalCard(new ArrayList<>(), "1"));
+        cg.getGame().addPlayer(player);
+        cg.getGame().setCurrentPlayer(player);
+        cg.getGame().setStarted(false);
+
+        Message result = cg.reconnectionHandler(lobbyMessage);
+
+        assertNotNull(result);
+        assertTrue(result instanceof Message);
+        assertEquals("Game is ended.", ((Response) result).getMessage());
+        assertEquals(MessageStatus.ERROR, ((Response) result).getStatus());
+    }
+
+    @Test
+    void testReconnectionHandlerPlayerWasConnected() {
+        // Arrange
+        LobbyMessage lobbyMessage = new LobbyMessage("messia", "Token", false);
+        cg.setGame(Game.getInstance(lobbyMessage.getSenderUsername()));
+        Player player = new Player("messia", new Shelf(), new PersonalGoalCard(new ArrayList<>(), "1"));
+        cg.getGame().addPlayer(player);
+        cg.getGame().setCurrentPlayer(player);
+        cg.getGame().setStarted(true);
+        cg.setTimer();
+
+        Message result = cg.reconnectionHandler(lobbyMessage);
+
+        assertNotNull(result);
+        assertTrue(result instanceof ReconnectionRequest);
+        assertEquals("Reconnection request", ((ReconnectionRequest) result).getMessage());
+    }
 
 }

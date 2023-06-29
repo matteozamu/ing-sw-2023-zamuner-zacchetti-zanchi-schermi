@@ -759,7 +759,7 @@ public class ControllerGame implements TimerRunListener, Serializable {
      * @param receivedConnectionMessage message received by the server from the player asking to reconnect to the game
      * @return a {@link Message Message} which contains the result of the received message
      */
-    private Message reconnectionHandler(LobbyMessage receivedConnectionMessage) {
+    protected Message reconnectionHandler(LobbyMessage receivedConnectionMessage) {
         String reconnectingPlayerName = receivedConnectionMessage.getSenderUsername();
         List<String> playersNames = game.getPlayers().stream().map(Player::getName).collect(Collectors.toList());
 //        ArrayList<LobbyMessage> inLobbyPlayers = lobby.getInLobbyPlayers();
