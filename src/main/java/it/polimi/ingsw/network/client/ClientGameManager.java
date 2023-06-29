@@ -543,7 +543,7 @@ public abstract class ClientGameManager implements ClientGameManagerListener, Cl
         };
 
         // start a timer of 10 seconds (10000 milliseconds)
-        makeMoveTimer.schedule(task, 5000);
+        makeMoveTimer.schedule(task, 300000);
     }
 
     /**
