@@ -58,7 +58,9 @@ public class Server implements Runnable {
     }
 
     public static void main(String[] args) {
-        new Server(args[0]);
+        if (args.length == 0)
+            new Server("GameConstant.json");
+        else new Server(args[0]);
     }
 
     /**
