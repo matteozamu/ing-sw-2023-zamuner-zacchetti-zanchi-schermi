@@ -392,6 +392,8 @@ public class ControllerGame implements Serializable {
     }
 
     /**
+     * Get the game
+     *
      * @return the game
      */
     public Game getGame() {
