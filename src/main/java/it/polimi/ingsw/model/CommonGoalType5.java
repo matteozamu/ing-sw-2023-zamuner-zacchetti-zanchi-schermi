@@ -1,6 +1,6 @@
 package it.polimi.ingsw.model;
 
-import java.util.Map;
+import java.util.List;
 
 // OK for TESTING
 
@@ -89,56 +89,18 @@ public class CommonGoalType5 extends CommonGoal {
             return false;
         }
 
-        int groupsCount = 0;
+        int counter = 0;
 
-        for (Map.Entry<Coordinate, ObjectCard> entry : shelf.getGrid().entrySet()) {
-            Coordinate coordinate = entry.getKey();
-            ObjectCard objectCard = entry.getValue();
+        List<Integer> groups = shelf.findAdjacentTilesGroups();
 
-            if (isValidGroupOfFour(shelf, coordinate, objectCard.getType())) {
-                groupsCount++;
+        System.out.println("groups:" + groups);
+
+        for (int i : groups) {
+            if (i >= 4) {
+                counter++;
             }
         }
 
-        return groupsCount == 4;
-    }
-
-    /**
-     * Checks if the Shelf has a valid group of four adjacent tiles of the same type.
-     *
-     * @param shelf The Shelf to check.
-     * @param coord The Coordinate of the first tile of the group.
-     * @param type  The type of the tiles of the group.
-     * @return true if the Shelf has a valid group of four adjacent tiles of the same type, false otherwise.
-     */
-
-    public boolean isValidGroupOfFour(Shelf shelf, Coordinate coord, ObjectCardType type) {
-        Coordinate[][] possibleGroups = new Coordinate[][]{
-                // Quadrato
-                {coord.getAdjacent(Coordinate.Direction.UP), coord.getAdjacent(Coordinate.Direction.RIGHT),
-                        coord.getAdjacent(Coordinate.Direction.UP).getAdjacent(Coordinate.Direction.RIGHT)},
-                // Fila di quattro tessere
-                {coord.getAdjacent(Coordinate.Direction.RIGHT), coord.getAdjacent(Coordinate.Direction.RIGHT).getAdjacent(Coordinate.Direction.RIGHT),
-                        coord.getAdjacent(Coordinate.Direction.RIGHT).getAdjacent(Coordinate.Direction.RIGHT).getAdjacent(Coordinate.Direction.RIGHT)},
-                // Colonna di quattro tessere
-                {coord.getAdjacent(Coordinate.Direction.UP), coord.getAdjacent(Coordinate.Direction.UP).getAdjacent(Coordinate.Direction.UP),
-                        coord.getAdjacent(Coordinate.Direction.UP).getAdjacent(Coordinate.Direction.UP).getAdjacent(Coordinate.Direction.UP)}
-        };
-
-        for (Coordinate[] group : possibleGroups) {
-            boolean isGroupValid = true;
-            for (Coordinate groupCoord : group) {
-                ObjectCard adjacentCard = shelf.getObjectCard(groupCoord);
-                if (adjacentCard == null || adjacentCard.getType() != type) {
-                    isGroupValid = false;
-                    break;
-                }
-            }
-            if (isGroupValid) {
-                return true;
-            }
-        }
-
-        return false;
+        return counter >= 4;
     }
 }
