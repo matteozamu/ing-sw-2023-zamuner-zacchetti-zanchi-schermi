@@ -84,7 +84,15 @@ java -jar client.jar cli
 
 #### GUI
 
-DA SCRIVERE
+Per poter eseguire MyShelfie con interfaccia grafica, è necessario importare le dipendenze di JavaFX e lanciare il
+client, digitando il seguente comando:
+
+```
+java --module-path /percorso/alla/cartella/estratta/javafx-sdk-VERSIONE/lib --add-modules javafx.controls,javafx.fxml -jar client.jar
+```
+
+Assicurati di sostituire "/percorso/alla/cartella/estratta/javafx-sdk-VERSIONE" con il percorso effettivo in cui hai
+posizionato la cartella estratta del JavaFX SDK, e "VERSIONE" con la versione specifica del SDK che hai scaricato.
 
 ### Server
 
@@ -96,7 +104,8 @@ di gioco; i valori eventualmente modificabili sono i seguenti:
 "RMIPort": 7777,
 "maxPlayers": 4,
 "minPlayers": 2,
-"disconnectionTimer": 30000
+"disconnectionTimer": 120000,
+"moveTimer": 300000
 ```
 
 #### Options
