@@ -65,10 +65,18 @@ public abstract class Client extends UnicastRemoteObject {
      */
     public abstract void startConnection() throws Exception;
 
+    /**
+     * @return the token
+     */
     public String getToken() {
         return token;
     }
 
+    /**
+     * Sets the token
+     *
+     * @param token token to set
+     */
     public void setToken(String token) {
         this.token = token;
     }
@@ -113,6 +121,9 @@ public abstract class Client extends UnicastRemoteObject {
         return username;
     }
 
+    /**
+     *overridden equals method
+     */
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -128,6 +139,9 @@ public abstract class Client extends UnicastRemoteObject {
                 Objects.equals(messageQueue, client.messageQueue);
     }
 
+    /**
+     *overridden hashcode method
+     */
     @Override
     public int hashCode() {
         return Objects.hash(super.hashCode(), disconnectionListener, pingTimer, username, address, port, token, messageQueue);

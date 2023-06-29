@@ -21,6 +21,7 @@ public class Board implements Serializable {
         this.grid = board.getGrid();
     }
 
+
     public Map<Coordinate, ObjectCard> getGrid() {
         return grid;
     }

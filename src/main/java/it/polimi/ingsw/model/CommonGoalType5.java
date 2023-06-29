@@ -30,20 +30,34 @@ public class CommonGoalType5 extends CommonGoal {
             ╚═══════════╝
             """;
 
+    /**
+     * Gets the type of the CommonGoal.
+     */
     @Override
     public int getType() {
         return type;
     }
 
+    /**
+     * Gets the description of the CommonGoal.
+     */
     @Override
     public String getDescription() {
         return description;
     }
+
+    /**
+     * Gets the visual representation of the CommonGoal.
+     */
     @Override
     public String getCardView() {
         return cardView;
     }
 
+
+    /**
+     * Gets the String representation of the CommonGoal.
+     */
     @Override
     public String toString() {
         return "commonGoalCard-5";
@@ -61,6 +75,14 @@ public class CommonGoalType5 extends CommonGoal {
         return shelf.getGrid().size() >= 16;
     }
 
+
+    /**
+     * Checks if the Shelf satisfies the CommonGoal.
+     * For CommonGoalType5, the Shelf must have four groups of four adjacent tiles of the same type.
+     *
+     * @param shelf The Shelf to check.
+     * @return true if the Shelf satisfies the CommonGoal, false otherwise.
+     */
     @Override
     public boolean checkGoal(Shelf shelf) {
         if (!isShelfEligible(shelf)) {
@@ -80,6 +102,15 @@ public class CommonGoalType5 extends CommonGoal {
 
         return groupsCount == 4;
     }
+
+    /**
+     * Checks if the Shelf has a valid group of four adjacent tiles of the same type.
+     *
+     * @param shelf The Shelf to check.
+     * @param coord The Coordinate of the first tile of the group.
+     * @param type  The type of the tiles of the group.
+     * @return true if the Shelf has a valid group of four adjacent tiles of the same type, false otherwise.
+     */
 
     public boolean isValidGroupOfFour(Shelf shelf, Coordinate coord, ObjectCardType type) {
         Coordinate[][] possibleGroups = new Coordinate[][]{

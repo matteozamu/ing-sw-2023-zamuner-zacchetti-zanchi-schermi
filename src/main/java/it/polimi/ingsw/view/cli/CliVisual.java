@@ -64,6 +64,11 @@ public class CliVisual {
 //
 //    }
 
+    /**
+     * clears the console
+     *
+     * @param out is the output PrintStream
+     */
     static void clearConsole(PrintStream out) {
         out.print("\033[H\033[2J");
         out.flush();

@@ -74,10 +74,16 @@ public class Game implements Serializable {
         return instanceMap.get(username);
     }
 
+    /**
+     * Gets the game name
+     */
     public String getGameName() {
         return gameName;
     }
 
+    /**
+     * sets the name of the game
+     */
     public void setGameName(String gameName) {
         this.gameName = gameName;
     }
@@ -256,6 +262,10 @@ public class Game implements Serializable {
     }
 
 
+    /**
+     * @return the list of the players that are connected
+     */
+
     // TODO da eliminare
     public List<String> getPlayersNames() {
         List<String> names = new ArrayList<>();
@@ -384,6 +394,9 @@ public class Game implements Serializable {
         this.personalGoalCardsContainer = JsonReader.getPersonalGoalCardsContainer();
     }
 
+    /**
+     * Override of the toString method
+     */
     @Override
     public String toString() {
         return "Game{" +

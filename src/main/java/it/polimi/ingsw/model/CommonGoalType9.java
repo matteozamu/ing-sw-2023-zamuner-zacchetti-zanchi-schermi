@@ -12,7 +12,7 @@ public final class CommonGoalType9 extends CommonGoal {
     public int type = 9;
 
     public String description = """
-            Three columns each formed by 6 tiles Five tiles of the same type forming an X.
+            Three columns each formed by 6 tiles
             of maximum three different types. One
             column can show the same or a different
             combination of another column.""";
@@ -28,21 +28,33 @@ public final class CommonGoalType9 extends CommonGoal {
             ╚═════════════╝
             """;
 
+    /**
+     * Gets the type of the CommonGoal.
+     */
     @Override
     public int getType() {
         return type;
     }
 
+    /**
+     * Gets the description of the CommonGoal.
+     */
     @Override
     public String getDescription() {
         return description;
     }
 
+    /**
+     * Gets the visual representation of the CommonGoal.
+     */
     @Override
     public String getCardView() {
         return cardView;
     }
 
+    /**
+     * Gets the String representation of the CommonGoal.
+     */
     @Override
     public String toString() {
         return "commonGoalCard-9";
@@ -61,6 +73,15 @@ public final class CommonGoalType9 extends CommonGoal {
     }
 
 
+    /**
+     * Checks if the Shelf is eligible for the goal check.
+     * For CommonGoalType9, the Shelf must have three columns each formed by 6 tiles
+     * of maximum three different types. One  column can show the same or a different
+     * combination of another column.
+     *
+     * @param shelf The Shelf to check.
+     * @return true if the Shelf is eligible, false otherwise.
+     */
     @Override
     public boolean checkGoal(Shelf shelf) {
         if (!isShelfEligible(shelf)) {

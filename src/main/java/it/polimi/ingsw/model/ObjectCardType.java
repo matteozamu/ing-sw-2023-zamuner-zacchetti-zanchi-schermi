@@ -65,6 +65,11 @@ public enum ObjectCardType {
         return colorBG;
     }
 
+    /**
+     * Returns the type of the ObjectCardType.
+     *
+     * @return The type of the ObjectCardType.
+     */
     public String getText() {
         return text;
     }
