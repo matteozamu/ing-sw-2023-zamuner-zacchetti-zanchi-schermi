@@ -2,30 +2,25 @@ package it.polimi.ingsw.view.gui;
 
 import it.polimi.ingsw.enumeration.MessageStatus;
 import it.polimi.ingsw.network.message.ConnectionResponse;
-import it.polimi.ingsw.network.message.Response;
 import it.polimi.ingsw.utility.MessageBuilder;
+import it.polimi.ingsw.utility.ServerAddressValidator;
+import javafx.css.PseudoClass;
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.scene.control.TextFormatter;
 import javafx.scene.image.ImageView;
-import javafx.css.PseudoClass;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
-import it.polimi.ingsw.utility.ServerAddressValidator;
-import it.polimi.ingsw.network.client.ClientGameManager;
+
 /**
  * Class ConnectionSceneController represents the controller of the connection scene, the scene where the player can
  * choose the connection type and insert their username and the server address
- *
  */
 
 public class ConnectionSceneController {
-
     private final PseudoClass errorPseudo = PseudoClass.getPseudoClass("error");
     private GuiManager guiManager;
-
     @FXML
     private Pane mainPane;
     @FXML
@@ -111,10 +106,10 @@ public class ConnectionSceneController {
 
         boolean isUsernameValid =
                 !username.equals("") &&
-                !username.equals("Server") &&
-                !username.equals("server") &&
-                !username.equals("User") &&
-                !username.equals("user");
+                        !username.equals("Server") &&
+                        !username.equals("server") &&
+                        !username.equals("User") &&
+                        !username.equals("user");
 
         boolean isAddressValid = ServerAddressValidator.isAddressValid(address);
 
@@ -158,7 +153,7 @@ public class ConnectionSceneController {
     /**
      * Requests to add a player to the game, or shows an error dialog if the request fails.
      */
-    void addPlayerToGameRequest(){
+    void addPlayerToGameRequest() {
         if (!guiManager.sendRequest(MessageBuilder.buildAddPlayerToGameMessage(guiManager.getClientToken(),
                 guiManager.getUsername(), false))) {
             GuiManager.showDialog((Stage) mainPane.getScene().getWindow(), GuiManager.ERROR_DIALOG_TITLE,

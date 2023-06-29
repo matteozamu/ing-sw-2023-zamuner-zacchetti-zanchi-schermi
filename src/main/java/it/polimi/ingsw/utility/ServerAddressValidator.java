@@ -26,7 +26,6 @@ public class ServerAddressValidator {
                 return true;
             }
         } catch (NumberFormatException e) {
-            // Handled with the return
         }
 
         return false;

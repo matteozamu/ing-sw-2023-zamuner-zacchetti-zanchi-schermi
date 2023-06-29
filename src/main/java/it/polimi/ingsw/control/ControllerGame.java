@@ -7,7 +7,6 @@ import it.polimi.ingsw.model.*;
 import it.polimi.ingsw.network.message.*;
 import it.polimi.ingsw.network.server.Server;
 import it.polimi.ingsw.utility.JsonReader;
-import it.polimi.ingsw.utility.TimerRunListener;
 
 import java.io.Serializable;
 import java.util.*;
@@ -16,19 +15,15 @@ import java.util.stream.Collectors;
 
 import static it.polimi.ingsw.model.Board.Direction.*;
 
-//TODO: Eliminare il codice che non serve più
-
 /**
  * Controller for the game, handling game logic and interactions between model components.
  */
-public class ControllerGame implements TimerRunListener, Serializable {
+public class ControllerGame implements Serializable {
     private final transient Server server;
     private UUID id;
     private Game game;
-    private List<Coordinate> selectedCoordinates;
     private PossibleGameState gameState = PossibleGameState.GAME_ROOM;
     private boolean isLobbyFull;
-    private transient TurnController turnController;
     private Timer reconnectionTimer;
     private Timer makeMoveTimer;
 
@@ -39,7 +34,6 @@ public class ControllerGame implements TimerRunListener, Serializable {
         JsonReader.readJsonConstant(server.getFilepath());
         this.server = server;
         this.id = UUID.randomUUID();
-        this.selectedCoordinates = new ArrayList<>();
         this.game = null;
     }
 
@@ -89,11 +83,9 @@ public class ControllerGame implements TimerRunListener, Serializable {
             if (map.containsKey(coordinate)) {
                 // if the original map contains the coordinate, put it in the new map
                 ObjectCard objectCard = map.get(coordinate);
-//                System.out.println(orderedMap);
                 orderedMap.put(coordinate, objectCard);
             }
         }
-        System.out.println("ordered map " + orderedMap);
         return orderedMap;
     }
 
@@ -104,19 +96,28 @@ public class ControllerGame implements TimerRunListener, Serializable {
         TimerTask task = new TimerTask() {
             @Override
             public void run() {
-                Player currentPlayer = game.getCurrentPlayer();
-                Player nextPlayer = game.nextPlayer();
+                server.sendMessage(game.getCurrentPlayer().getName(), new Response("Timer ended", MessageStatus.QUIT));
 
-                if (nextPlayer == currentPlayer) {
+                for (Coordinate coordinate : game.getLimbo().keySet()) {
+                    game.getBoard().getGrid().put(coordinate, game.getLimbo().get(coordinate));
+                }
+                game.getLimbo().clear();
+
+                game.nextPlayer();
+
+                int connectionCounter = 0;
+                for (Player pl : game.getPlayers()) {
+                    if (pl.isConnected()) connectionCounter++;
+                }
+                if (connectionCounter == 1) {
                     setTimer();
                 }
 
                 sendPrivateUpdates();
-                System.out.println("Timer ended");
             }
         };
 
-        // start a timer of 10 seconds (10000 milliseconds)
+        // start a timer of 5 minutes (300000 milliseconds) to let the player play
         makeMoveTimer.schedule(task, 300000);
     }
 
@@ -136,8 +137,6 @@ public class ControllerGame implements TimerRunListener, Serializable {
     public Message onMessage(Message receivedMessage) {
         Server.LOGGER.log(Level.SEVERE, "ONMESSAGE: {0}", receivedMessage);
 
-//        System.out.println(gameState);
-
         if (gameState == PossibleGameState.GAME_ROOM) {
             return firstStateHandler(receivedMessage);
         }
@@ -146,12 +145,6 @@ public class ControllerGame implements TimerRunListener, Serializable {
             return new Response("GAME ENDED", MessageStatus.ERROR);
         }
 
-        // TODO da rimettere
-//        if (!InputValidator.validateInput(receivedMessage) || (gameState != PossibleGameState.GAME_ROOM && !this.getGame().doesPlayerExists(receivedMessage.getSenderUsername()))) {
-//            return buildInvalidResponse();
-//        }
-
-        setMakeMoveTimer();
         switch (receivedMessage.getContent()) {
             case GAME_STATE:
                 return new GameStateResponse(receivedMessage.getSenderUsername(), game.getCurrentPlayer().getName(), server.getFilepath());
@@ -182,8 +175,6 @@ public class ControllerGame implements TimerRunListener, Serializable {
             loadShelf(new ArrayList<>(game.getLimbo().values()), col);
 
             this.pointsCalculator();
-
-//           turnController.nextTurn();
             game.getLimbo().clear();
             if (game.getCurrentPlayer().getShelf().isFull()) {
                 // send a private message to all the player containing the winner
@@ -194,13 +185,15 @@ public class ControllerGame implements TimerRunListener, Serializable {
                 return new Response("Game has ended.", MessageStatus.GAME_ENDED);
             }
 
+            makeMoveTimer.cancel();
+
             Player currentPlayer = game.getCurrentPlayer();
             Player nextPlayer = game.nextPlayer();
 
+            setMakeMoveTimer();
             if (nextPlayer == currentPlayer) {
                 setTimer();
             }
-//            turnController.setActivePlayer(game.getCurrentPlayer());
 
             if (checkIfRefill()) refillBoard();
 
@@ -208,7 +201,6 @@ public class ControllerGame implements TimerRunListener, Serializable {
 
             return new Response("Cards moved", MessageStatus.OK);
         } else {
-            System.out.println("Column does not have enough space");
             return buildInvalidResponse();
         }
     }
@@ -230,7 +222,6 @@ public class ControllerGame implements TimerRunListener, Serializable {
             sendPrivateUpdates();
             return new Response("Limbo deleted", MessageStatus.OK);
         } else {
-//            System.out.println("Limbo is not valid");
             return buildInvalidResponse();
         }
     }
@@ -253,10 +244,8 @@ public class ControllerGame implements TimerRunListener, Serializable {
             LinkedHashMap<Coordinate, ObjectCard> newLimbo = reorderMap(game.getLimbo(), limboCoordinates);
             game.setLimbo(newLimbo);
             server.sendMessage(reorderLimboRequest.getSenderUsername(), new GameStateResponse(reorderLimboRequest.getSenderUsername(), game.getCurrentPlayer().getName(), server.getFilepath()));
-            //TODO si puo mandare un altro game state message cosi il limbo viene aggiornato amche lato client
             return new Response("Limbo reordered", MessageStatus.PRINT_LIMBO);
         } else {
-//            System.out.println("Limbo order is not valid");
             return buildInvalidResponse();
         }
     }
@@ -267,7 +256,6 @@ public class ControllerGame implements TimerRunListener, Serializable {
      * @param objectCardRequest is the message received
      * @return the response to the message
      */
-    //TODO qui non ritorniamo una ObjectCardResponse ma una generica Response, eliminaiamo ObjectCardResponse?
     protected Response pickObjectCardHandler(ObjectCardRequest objectCardRequest) {
         Coordinate c = objectCardRequest.getCoordinate();
 
@@ -276,11 +264,8 @@ public class ControllerGame implements TimerRunListener, Serializable {
             this.getGame().getLimbo().put(c, this.getGame().getBoard().removeObjectCard(c));
             sendPrivateUpdates();
             return new Response("Valid card :)", MessageStatus.PRINT_LIMBO);
-//            return new ObjectCardResponse(objectCardRequest.getSenderUsername());
         } else {
-//            System.out.println("Carta non valida");
             return new Response("Invalid card :(", MessageStatus.NOT_VALID_CARD);
-//            return buildInvalidResponse();
         }
     }
 
@@ -342,17 +327,12 @@ public class ControllerGame implements TimerRunListener, Serializable {
                 Game.getInstanceMap().put(lobbyMessage.getSenderUsername(), game);
 
                 Server.LOGGER.log(Level.INFO, "{0} joined the lobby", lobbyMessage.getSenderUsername());
-//                System.out.println("Players in lobby: " + game.getPlayers());
 
                 server.sendMessageToAll(this.id, new LobbyPlayersResponse(new ArrayList<>(inLobbyPlayers.stream().map(Player::getName).collect(Collectors.toList()))));
             } else {
-//                System.out.println("Lobby is full");
                 return buildInvalidResponse();
             }
         } else {
-//            System.out.println("Username is not available");
-//            System.out.println(isUsernameAvailable(lobbyMessage.getSenderUsername()));
-//            System.out.println(lobbyMessage.isDisconnection());
             return buildInvalidResponse();
         }
 
@@ -407,7 +387,6 @@ public class ControllerGame implements TimerRunListener, Serializable {
     /**
      * @return the game
      */
-    // TODO potrebbe essere un getInstance?
     public Game getGame() {
         return game;
     }
@@ -422,7 +401,7 @@ public class ControllerGame implements TimerRunListener, Serializable {
     }
 
     /**
-     * check if the lobby if full, if it is, it the game starts, otherwise it adds the player to the lobby
+     * check if the lobby is full, if it is, it the game starts, otherwise it adds the player to the lobby
      *
      * @return a Response message to the client
      */
@@ -447,28 +426,20 @@ public class ControllerGame implements TimerRunListener, Serializable {
     }
 
     /**
-     * method called when the game starts, it creates a new {@link TurnController TurnController} and
+     * method called when the game starts, and
      * sends to all clients the new state of the game
      */
     private void startingStateHandler() {
-        this.turnController = new TurnController(this.game.getPlayers(), this);
-        turnController.setActivePlayer(game.getCurrentPlayer());
         changeState(PossibleGameState.GAME_STARTED);
         game.setStarted(true);
-
-        //non ci serve, abbiamp gia il current player
-//        UserPlayer firstPlayer = roundController.getTurnManager().getTurnOwner();
-
-        // TODO cosi riceve prima lo stato del game poi stampa inizio partita
-//        sendPrivateUpdates();
 
         List<Player> players = game.getPlayers();
 
         for (Player player : players) {
             server.sendMessage(player.getName(), new GameStartMessage(game.getCurrentPlayer().getName(), game.getCommonGoals(), player.getName(), server.getFilepath()));
         }
+
         setMakeMoveTimer();
-//        server.sendMessageToAll(new GameStartMessage(game.getCurrentPlayer().getName(), game.getCommonGoals(), player.getName()));
     }
 
     /**
@@ -546,7 +517,7 @@ public class ControllerGame implements TimerRunListener, Serializable {
     /**
      * Check if the board needs to be refilled
      *
-     * @return true if refill, false if not
+     * @return true if it needs to be refilled, false if not
      */
 
     public boolean checkIfRefill() {
@@ -636,9 +607,10 @@ public class ControllerGame implements TimerRunListener, Serializable {
 
     /**
      * Check availability of the ObjectCard from the board
-     * @return true if the ObjectCard can be taken by a player, false if not
+     *
      * @param coordinate are the board coordinates of the ObjectCard to check
-     * */
+     * @return true if the ObjectCard can be taken by a player, false if not
+     */
     public boolean isObjectCardAvailable(Coordinate coordinate) {
         Map<Coordinate, ObjectCard> limbo = game.getLimbo();
         Map<Coordinate, ObjectCard> boardOrig = game.getBoard().getGrid();
@@ -712,7 +684,6 @@ public class ControllerGame implements TimerRunListener, Serializable {
 
         //check personal goal
         points += this.game.getCurrentPlayer().getPersonalGoalCard().calculatePoints(player.getShelf());
-        System.out.println("PUNTI PERSONAL GOAL: " + points);
 
         //check common goals
         for (CommonGoal c : this.game.getCommonGoals()) {
@@ -726,15 +697,12 @@ public class ControllerGame implements TimerRunListener, Serializable {
                 }
             }
         }
-        System.out.println("PUNTI COMMON GOALS: " + points);
 
         //check near object cards
         points += player.getShelf().closeObjectCardsPoints();
-        System.out.println("PUNTI CARTE OGGETTO VICINE: " + points);
 
         //check shelf fullness
         if (player.getShelf().isFull()) points++;
-        System.out.println("PUNTI SHELF PIENA: " + points);
 
         player.setCurrentPoints(points);
 
@@ -774,14 +742,10 @@ public class ControllerGame implements TimerRunListener, Serializable {
         if (gameState != PossibleGameState.GAME_ROOM && receivedConnectionMessage.getContent() == MessageContent.ADD_PLAYER) {
             // if the player wants to disconnect from the game
             if (((LobbyMessage) receivedConnectionMessage).isDisconnection()) {
-//                return disconnectionHandler((LobbyMessage) receivedConnectionMessage);
-                // if the player wants to reconnect to the game
             } else {
                 return reconnectionHandler((LobbyMessage) receivedConnectionMessage);
             }
         }
-
-//        System.out.println("Invalid game state");
         return buildInvalidResponse();
     }
 
@@ -794,7 +758,6 @@ public class ControllerGame implements TimerRunListener, Serializable {
     protected Message reconnectionHandler(LobbyMessage receivedConnectionMessage) {
         String reconnectingPlayerName = receivedConnectionMessage.getSenderUsername();
         List<String> playersNames = game.getPlayers().stream().map(Player::getName).collect(Collectors.toList());
-//        ArrayList<LobbyMessage> inLobbyPlayers = lobby.getInLobbyPlayers();
 
         if (!game.isStarted()) {
             return new Response("Game is ended.", MessageStatus.ERROR);
@@ -809,14 +772,9 @@ public class ControllerGame implements TimerRunListener, Serializable {
             game.getPlayerByName(reconnectingPlayerName).setConnected(true);
 
             server.sendMessageToAll(this.id, new ReconnectionMessage("Player " + reconnectingPlayerName + " reconnected to the game.", game.getCurrentPlayer().getName()));
-//            return new ReconnectionMessage(receivedConnectionMessage.getToken(),
-//                    new GameStateResponse(receivedConnectionMessage.getSenderUsername(),
-//                            turnController.getActivePlayer().getName()));
         } else {
             return new Response("Reconnection message from already in lobby Player", MessageStatus.ERROR);
         }
-//        return new GameStateResponse(reconnectingPlayerName, turnController.getActivePlayer().getName());
-//        return new GameStateResponse(reconnectingPlayerName, game.getCurrentPlayer().getName());
         server.sendMessage(reconnectingPlayerName, new GameStateResponse(reconnectingPlayerName, game.getCurrentPlayer().getName(), server.getFilepath()));
         return new ReconnectionRequest("Reconnection request", receivedConnectionMessage.getToken());
     }
@@ -832,31 +790,16 @@ public class ControllerGame implements TimerRunListener, Serializable {
             @Override
             public void run() {
                 game.setStarted(false);
-                game.getCurrentPlayer().setWinner(true);
+                // set the last connected player as the winner
+                for (Player p : game.getPlayers()) {
+                    if (p.isConnected()) {
+                        p.setWinner(true);
+                    }
+                }
                 sendEndGame();
             }
         };
-
-        // start a timer of 10 seconds (10000 milliseconds)
         reconnectionTimer.schedule(task, JsonReader.getTimer());
     }
-
-    @Override
-    public void onTimerRun() {
-        // TODO
-    }
-
-//    @Override
-//    public String toString() {
-//        return "ControllerGame{" +
-//                "server=" + server +
-//                ", id=" + id +
-//                ", game=" + game +
-//                ", selectedCoordinates=" + selectedCoordinates +
-//                ", gameState=" + gameState +
-//                ", isLobbyFull=" + isLobbyFull +
-//                ", turnController=" + turnController +
-//                '}';
-//    }
 }
 

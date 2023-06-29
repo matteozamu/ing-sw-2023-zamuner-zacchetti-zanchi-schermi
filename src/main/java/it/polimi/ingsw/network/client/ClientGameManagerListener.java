@@ -155,11 +155,6 @@ interface ClientGameManagerListener {
      */
     void printEndGame(String message);
 
-
-    void printScore();
-
-    void gameStateRequest(String username, String token);
-
     /**
      * print the disconnection of the player
      *

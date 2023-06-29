@@ -35,13 +35,6 @@ public enum ObjectCardType {
         this.colorBG = colorBG;
     }
 
-//        /**
-//     * @return a coloured string
-//     */
-//    public String getColoredText() {
-//        return Ansi.ansi().fgRgb(r, g, b).a(text).reset().toString();
-//    }
-
     /**
      * Returns a random ObjectCardType.
      *

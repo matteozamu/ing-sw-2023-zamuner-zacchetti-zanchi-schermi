@@ -55,7 +55,6 @@ public class RMIConnection extends Connection {
             try {
                 clientSession.disconnectMe();
             } catch (RemoteException e) {
-                //
             }
 
             server.onDisconnect(this);

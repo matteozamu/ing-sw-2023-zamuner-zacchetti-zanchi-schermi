@@ -81,10 +81,6 @@ public abstract class Client extends UnicastRemoteObject {
         this.token = token;
     }
 
-    public List<Message> getMessageQueue() {
-        return messageQueue;
-    }
-
     /**
      * Sends a message to the server
      *
@@ -122,7 +118,7 @@ public abstract class Client extends UnicastRemoteObject {
     }
 
     /**
-     *overridden equals method
+     * overridden equals method
      */
     @Override
     public boolean equals(Object o) {
@@ -140,7 +136,7 @@ public abstract class Client extends UnicastRemoteObject {
     }
 
     /**
-     *overridden hashcode method
+     * overridden hashcode method
      */
     @Override
     public int hashCode() {

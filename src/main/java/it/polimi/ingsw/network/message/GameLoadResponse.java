@@ -24,12 +24,4 @@ public class GameLoadResponse extends Message {
     public String getMessage() {
         return message;
     }
-
-    public String getNewToken() {
-        return newToken;
-    }
-
-    public UserPlayerState getUserPlayerState() {
-        return userPlayerState;
-    }
 }
