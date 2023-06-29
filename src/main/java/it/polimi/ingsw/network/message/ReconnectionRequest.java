@@ -2,6 +2,9 @@ package it.polimi.ingsw.network.message;
 
 import it.polimi.ingsw.enumeration.MessageContent;
 
+/**
+ * Message used to ask for a reconnection to the server
+ */
 public class ReconnectionRequest extends Message {
     private static final long serialVersionUID = -8073712912335222650L;
     private final String message;
