@@ -68,25 +68,14 @@
         <dependency>
             <groupId>org.openjfx</groupId>
             <artifactId>javafx-controls</artifactId>
-            <version>11.0.2</version>
-            <scope>provided</scope>
+            <version>${javafx.version}</version>
+            <scope>compile</scope>
         </dependency>
         <dependency>
             <groupId>org.openjfx</groupId>
             <artifactId>javafx-fxml</artifactId>
-            <version>11.0.2</version>
-            <scope>provided</scope>
-        </dependency>
-
-        <dependency>
-            <groupId>org.openjfx</groupId>
-            <artifactId>javafx-controls</artifactId>
-            <version>19-ea+7</version>
-        </dependency>
-        <dependency>
-            <groupId>org.openjfx</groupId>
-            <artifactId>javafx-fxml</artifactId>
-            <version>19-ea+7</version>
+            <version>${javafx.version}</version>
+            <scope>compile</scope>
         </dependency>
         <dependency>
             <groupId>org.controlsfx</groupId>
@@ -109,8 +98,8 @@
                 <artifactId>maven-compiler-plugin</artifactId>
                 <version>3.8.0</version>
                 <configuration>
-                    <source>15</source>
-                    <target>15</target>
+                    <source>${maven.compiler.source}</source>
+                    <target>${maven.compiler.target}</target>
                 </configuration>
             </plugin>
 
@@ -165,7 +154,7 @@
             <plugin>
                 <groupId>org.openjfx</groupId>
                 <artifactId>javafx-maven-plugin</artifactId>
-                <version>0.0.2</version>
+                <version>${javafx.maven.plugin.version}</version>
                 <configuration>
                     <mainClass>view.gui.Gui</mainClass>
                 </configuration>
@@ -178,44 +167,22 @@
                     <execution>
                         <id>build-server</id>
                         <configuration>
-                            <appendAssemblyId>false</appendAssemblyId>
                             <archive>
                                 <manifest>
-                                    <mainClass>network.server.Server</mainClass>
+                                    <mainClass>ServerMain</mainClass>
                                 </manifest>
                             </archive>
                             <descriptorRefs>
                                 <descriptorRef>jar-with-dependencies</descriptorRef>
                             </descriptorRefs>
-                            <finalName>${project.artifactId}-server</finalName>
+                            <finalName>ServerMain</finalName>
                         </configuration>
-                        <phase>package</phase>
-                        <goals>
-                            <goal>single</goal>
-                        </goals>
-                    </execution>
-                    <execution>
-                        <id>build-client</id>
-                        <configuration>
-                            <appendAssemblyId>false</appendAssemblyId>
-                            <archive>
-                                <manifest>
-                                    <mainClass>network.client.ClientMain</mainClass>
-                                </manifest>
-                            </archive>
-                            <descriptorRefs>
-                                <descriptorRef>jar-with-dependencies</descriptorRef>
-                            </descriptorRefs>
-                            <finalName>${project.artifactId}-client</finalName>
-                        </configuration>
-                        <phase>package</phase>
                         <goals>
                             <goal>single</goal>
                         </goals>
                     </execution>
                 </executions>
             </plugin>
-
         </plugins>
     </build>
 </project>
