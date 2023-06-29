@@ -285,6 +285,15 @@ public class Server implements Runnable {
                 Player p = controllerGame.getGame().getPlayerByName(username);
                 p.setConnected(false);
 
+                int connectionCounter = 0;
+                for (Player pl : controllerGame.getGame().getPlayers()){
+                    if (pl.isConnected()) connectionCounter++;
+                }
+                if(connectionCounter == 1){
+                    controllerGame.setTimer();
+                    System.out.println("Timer set");
+                }
+
                 LOGGER.log(Level.INFO, "{0} set connected false!", username);
 
                 if (controllerGame.getGameState() == PossibleGameState.GAME_ROOM) {

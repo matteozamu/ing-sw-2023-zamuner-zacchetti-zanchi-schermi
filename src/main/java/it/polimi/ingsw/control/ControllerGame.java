@@ -104,6 +104,12 @@ public class ControllerGame implements TimerRunListener, Serializable {
         TimerTask task = new TimerTask() {
             @Override
             public void run() {
+                server.sendMessage(game.getCurrentPlayer().getName(), new Response("Timer ended", MessageStatus.QUIT));
+
+                for (Coordinate coordinate : game.getLimbo().keySet()) {
+                    game.getBoard().getGrid().put(coordinate, game.getLimbo().get(coordinate));
+                }
+                game.getLimbo().clear();
                 Player currentPlayer = game.getCurrentPlayer();
                 Player nextPlayer = game.nextPlayer();
 
@@ -117,7 +123,7 @@ public class ControllerGame implements TimerRunListener, Serializable {
         };
 
         // start a timer of 10 seconds (10000 milliseconds)
-        makeMoveTimer.schedule(task, 300000);
+        makeMoveTimer.schedule(task, 10000);
     }
 
     /**
@@ -146,12 +152,7 @@ public class ControllerGame implements TimerRunListener, Serializable {
             return new Response("GAME ENDED", MessageStatus.ERROR);
         }
 
-        // TODO da rimettere
-//        if (!InputValidator.validateInput(receivedMessage) || (gameState != PossibleGameState.GAME_ROOM && !this.getGame().doesPlayerExists(receivedMessage.getSenderUsername()))) {
-//            return buildInvalidResponse();
-//        }
-
-        setMakeMoveTimer();
+//        setMakeMoveTimer();
         switch (receivedMessage.getContent()) {
             case GAME_STATE:
                 return new GameStateResponse(receivedMessage.getSenderUsername(), game.getCurrentPlayer().getName(), server.getFilepath());
@@ -467,7 +468,8 @@ public class ControllerGame implements TimerRunListener, Serializable {
         for (Player player : players) {
             server.sendMessage(player.getName(), new GameStartMessage(game.getCurrentPlayer().getName(), game.getCommonGoals(), player.getName(), server.getFilepath()));
         }
-        setMakeMoveTimer();
+
+//        setMakeMoveTimer();
 //        server.sendMessageToAll(new GameStartMessage(game.getCurrentPlayer().getName(), game.getCommonGoals(), player.getName()));
     }
 
@@ -832,7 +834,12 @@ public class ControllerGame implements TimerRunListener, Serializable {
             @Override
             public void run() {
                 game.setStarted(false);
-                game.getCurrentPlayer().setWinner(true);
+                // set the last connected player as the winner
+                for (Player p : game.getPlayers()) {
+                    if (p.isConnected()) {
+                        p.setWinner(true);
+                    }
+                }
                 sendEndGame();
             }
         };

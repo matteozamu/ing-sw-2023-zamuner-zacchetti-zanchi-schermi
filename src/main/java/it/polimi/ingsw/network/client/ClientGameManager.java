@@ -296,6 +296,9 @@ public abstract class ClientGameManager implements ClientGameManagerListener, Cl
      * @param response is the message received from the server
      */
     private void handleResponse(Response response) {
+        if (response.getStatus() == MessageStatus.QUIT){
+            System.exit(1);
+        }
         if (response.getStatus() == MessageStatus.GAME_CREATED || response.getStatus() == MessageStatus.GAME_JOINED) {
             queue.add(this::addPlayerToGameRequest);
         } else {
