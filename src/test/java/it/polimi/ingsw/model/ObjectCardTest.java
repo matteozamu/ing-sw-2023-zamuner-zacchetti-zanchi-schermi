@@ -32,4 +32,10 @@ class ObjectCardTest {
         });
     }
 
+    @Test
+    public void testToString(){
+        ObjectCard objectCard = new ObjectCard(ObjectCardType.plant, "10");
+        assertEquals("\u001B[35mPlant\u001B[0m", objectCard.toString());
+    }
+
 }

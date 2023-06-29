@@ -321,13 +321,13 @@ public class ControllerGame implements TimerRunListener, Serializable {
 
                 server.sendMessageToAll(this.id, new LobbyPlayersResponse(new ArrayList<>(inLobbyPlayers.stream().map(Player::getName).collect(Collectors.toList()))));
             } else {
-                System.out.println("Lobby is full");
+//                System.out.println("Lobby is full");
                 return buildInvalidResponse();
             }
         } else {
-            System.out.println("Username is not available");
-            System.out.println(isUsernameAvailable(lobbyMessage.getSenderUsername()));
-            System.out.println(lobbyMessage.isDisconnection());
+//            System.out.println("Username is not available");
+//            System.out.println(isUsernameAvailable(lobbyMessage.getSenderUsername()));
+//            System.out.println(lobbyMessage.isDisconnection());
             return buildInvalidResponse();
         }
 
@@ -734,11 +734,6 @@ public class ControllerGame implements TimerRunListener, Serializable {
         if (gameState == PossibleGameState.GAME_ENDED) {
             return new Response("GAME ENDED", MessageStatus.ERROR);
         }
-
-//        if (!InputValidator.validatePlayerUsername(game.getPlayers(), receivedConnectionMessage)) {
-//            return new Response("Invalid connection Message", MessageStatus.ERROR);
-//        }
-
         if (gameState != PossibleGameState.GAME_ROOM && receivedConnectionMessage.getContent() == MessageContent.ADD_PLAYER) {
             // if the player wants to disconnect from the game
             if (((LobbyMessage) receivedConnectionMessage).isDisconnection()) {
@@ -749,7 +744,7 @@ public class ControllerGame implements TimerRunListener, Serializable {
             }
         }
 
-        System.out.println("Invalid game state");
+//        System.out.println("Invalid game state");
         return buildInvalidResponse();
     }
 
@@ -759,7 +754,7 @@ public class ControllerGame implements TimerRunListener, Serializable {
      * @param receivedConnectionMessage message received by the server from the player asking to reconnect to the game
      * @return a {@link Message Message} which contains the result of the received message
      */
-    private Message reconnectionHandler(LobbyMessage receivedConnectionMessage) {
+    protected Message reconnectionHandler(LobbyMessage receivedConnectionMessage) {
         String reconnectingPlayerName = receivedConnectionMessage.getSenderUsername();
         List<String> playersNames = game.getPlayers().stream().map(Player::getName).collect(Collectors.toList());
 //        ArrayList<LobbyMessage> inLobbyPlayers = lobby.getInLobbyPlayers();
