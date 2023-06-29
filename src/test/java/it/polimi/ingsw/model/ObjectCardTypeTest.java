@@ -11,4 +11,10 @@ class ObjectCardTypeTest {
         assertEquals("Cat", objectCardType.getText());
     }
 
+    @Test
+    public void testGetColor(){
+        ObjectCardType objectCardType = ObjectCardType.cat;
+        assertEquals("\u001B[32m", objectCardType.getColor());
+    }
+
 }
