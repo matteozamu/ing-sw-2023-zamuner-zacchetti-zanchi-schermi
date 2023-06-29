@@ -21,6 +21,7 @@ import javafx.stage.Stage;
 public class ConnectionSceneController {
     private final PseudoClass errorPseudo = PseudoClass.getPseudoClass("error");
     private GuiManager guiManager;
+
     @FXML
     private Pane mainPane;
     @FXML
@@ -141,13 +142,14 @@ public class ConnectionSceneController {
      * @param response connection response
      */
     void onConnectionResponse(ConnectionResponse response) {
-        if (response.getStatus() != MessageStatus.OK) {
+        if (response.getStatus() == MessageStatus.OK) {
+            GuiManager.setLayout(mainPane.getScene(), "fxml/startGameScene.fxml");
+        } else {
             GuiManager.showDialog((Stage) mainPane.getScene().getWindow(), GuiManager.ERROR_DIALOG_TITLE, response.getMessage());
 
             guiManager.closeConnection();
             onBackButtonClick();
         }
-        GuiManager.setLayout(mainPane.getScene(), "fxml/startGameScene.fxml");
     }
 
     /**
