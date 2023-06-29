@@ -92,11 +92,19 @@ public class ClientRMI extends Client implements RMIClientConnection {
         super.pingTimer.schedule(new PingTimerTask(super.disconnectionListener), Client.DISCONNECTION_TIME);
     }
 
+    /**
+     * Disconnects client from server
+     *
+     * @throws RemoteException in case of problems with communication with server
+     */
     @Override
     public void disconnectMe() throws RemoteException {
         server = null;
     }
 
+    /**
+     * overridden equals method
+     */
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -106,6 +114,9 @@ public class ClientRMI extends Client implements RMIClientConnection {
         return Objects.equals(server, clientRMI.server);
     }
 
+    /**
+     * overridden hashCode method
+     */
     @Override
     public int hashCode() {
         return Objects.hash(super.hashCode(), server);

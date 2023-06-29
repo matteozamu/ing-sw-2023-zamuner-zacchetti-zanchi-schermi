@@ -122,6 +122,9 @@ public class ClientSocket extends Client implements Runnable {
         out = null;
     }
 
+    /**
+     * overridden equals method
+     */
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -134,6 +137,9 @@ public class ClientSocket extends Client implements Runnable {
                 Objects.equals(messageReceiver, that.messageReceiver);
     }
 
+    /**
+     * overridden hashCode method
+     */
     @Override
     public int hashCode() {
         return Objects.hash(super.hashCode(), socket, in, out, messageReceiver);

@@ -28,21 +28,33 @@ public final class CommonGoalType12 extends CommonGoal {
                 ╚══════════╝
                 """;
 
+    /**
+     * Gets the type of the CommonGoal.
+     */
     @Override
     public int getType() {
         return type;
     }
 
+    /**
+     * Gets the description of the CommonGoal.
+     */
     @Override
     public String getDescription() {
         return description;
     }
 
+    /**
+     * Gets the visual representation of the CommonGoal.
+     */
     @Override
     public String getCardView() {
         return cardView;
     }
 
+    /**
+     * Gets the String representation of the CommonGoal.
+     */
     @Override
     public String toString() {
         return "commonGoalCard-12";
@@ -60,6 +72,15 @@ public final class CommonGoalType12 extends CommonGoal {
         return shelf.getGrid().size() >= 15;
     }
 
+    /**
+     * Checks if the Shelf is eligible for the goal check.
+     * For CommonGoalType12, the Shelf must have five columns of increasing or decreasing height.
+     * Starting from the first column on the left or on the right, each next column must be made of exactly one more tile.
+     * Tiles can be of any type.
+     *
+     * @param shelf The Shelf to check.
+     * @return true if the Shelf is eligible, false otherwise.
+     */
     @Override
     public boolean checkGoal(Shelf shelf) {
         if (!isShelfEligible(shelf)) {
@@ -69,6 +90,12 @@ public final class CommonGoalType12 extends CommonGoal {
         return checkDescendingStair(shelf) || checkAscendingStair(shelf);
     }
 
+
+    /**
+     * Checks if the Shelf has five columns of decreasing height.
+     * @param shelf
+     * @return true if the Shelf has five columns of decreasing height, false otherwise.
+     */
     public boolean checkDescendingStair(Shelf shelf) {
         boolean patternOne = true;
         boolean patternThree = true;
@@ -93,6 +120,11 @@ public final class CommonGoalType12 extends CommonGoal {
         return patternOne || patternThree;
     }
 
+    /**
+     * Checks if the Shelf has five columns of increasing height.
+     * @param shelf
+     * @return true if the Shelf has five columns of increasing height, false otherwise.
+     */
     public boolean checkAscendingStair(Shelf shelf) {
         boolean patternTwo = true;
         boolean patternFour = true;

@@ -371,6 +371,9 @@ public class Cli extends ClientGameManager implements DisconnectionListener {
         }
     }
 
+    /**
+     * asks the user for a game name for the game they created
+     */
     private String askGameName() {
         String gameName = null;
 
@@ -619,6 +622,9 @@ public class Cli extends ClientGameManager implements DisconnectionListener {
         }
     }
 
+    /**
+     * Method used to cancel a previous action
+     */
     private void cancelAction(String message) {
         CliVisual.clearConsole(out);
         out.println(message);
@@ -757,6 +763,9 @@ public class Cli extends ClientGameManager implements DisconnectionListener {
         }
     }
 
+    /**
+     * shows a player their personal goal
+     */
     @Override
     public void showPersonalGoal() {
         CliVisual.printPersonalGoalCards(out, getGameSerialized());
@@ -767,6 +776,10 @@ public class Cli extends ClientGameManager implements DisconnectionListener {
         out.println("Action canceled");
     }
 
+
+    /**
+     * shows a player their shelf
+     */
     @Override
     public void showShelf() {
         CliVisual.printShelf(out, getGameSerialized());

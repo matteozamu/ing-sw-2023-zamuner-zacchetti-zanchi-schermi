@@ -52,6 +52,11 @@ public class Coordinate implements Serializable {
         };
     }
 
+    /**
+     * override of the equals method
+     * @param obj the object to compare
+     * @return true if the two objects are equal, false otherwise
+     */
     @Override
     public boolean equals(Object obj) {
         if (this == obj) {
@@ -64,6 +69,10 @@ public class Coordinate implements Serializable {
         return column == that.column && row == that.row;
     }
 
+    /**
+     * override of the hashCode method
+     * @return the hashcode of the object
+     */
     @Override
     public int hashCode() {
         final int prime = 31;
@@ -73,6 +82,11 @@ public class Coordinate implements Serializable {
         return result;
     }
 
+
+    /**
+     * override of the toString method
+     * @return the string representation of the object
+     */
     @Override
     public String toString() {
         return "[" + row + "," + column + ']';

@@ -22,6 +22,9 @@ public class ClientUpdater implements Runnable {
         this.thread.start();
     }
 
+    /**
+     * runs a process
+     */
     @Override
     public void run() {
         while (!Thread.currentThread().isInterrupted()) {

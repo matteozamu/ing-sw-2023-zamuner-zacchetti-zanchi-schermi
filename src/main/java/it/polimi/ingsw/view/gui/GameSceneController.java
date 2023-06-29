@@ -133,6 +133,9 @@ public class GameSceneController {
     private ArrayList<Integer> orderLimboObjectCards;
     private Set<ImageView> imageViewsWithListener;
 
+    /**
+     * Method to initialize the game scene
+     */
     @FXML
     private void initialize() {
         guiManager = GuiManager.getInstance();

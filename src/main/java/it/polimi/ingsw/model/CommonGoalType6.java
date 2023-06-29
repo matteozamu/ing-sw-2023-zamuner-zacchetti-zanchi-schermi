@@ -23,21 +23,33 @@ public final class CommonGoalType6 extends CommonGoal {
             ╚═════════════╝
             """;
 
+    /**
+     * Gets the type of the CommonGoal.
+     */
     @Override
     public int getType() {
         return type;
     }
 
+    /**
+     * Gets the description of the CommonGoal.
+     */
     @Override
     public String getDescription() {
         return description;
     }
 
+    /**
+     * Gets the visual representation of the CommonGoal.
+     */
     @Override
     public String getCardView() {
         return cardView;
     }
 
+    /**
+     * Gets the String representation of the CommonGoal.
+     */
     @Override
     public String toString() {
         return "commonGoalCard-6";
@@ -55,12 +67,13 @@ public final class CommonGoalType6 extends CommonGoal {
         return shelf.getGrid().size() >= 12;
     }
 
+
     /**
-     * Controlla se l'obiettivo comune di tipo 6 è stato raggiunto.
-     * L'obiettivo è raggiunto quando ci sono due colonne nella Shelf formate ciascuna da 6 diversi tipi di carte oggetto.
+     * Checks if the Shelf satisfies the goal.
+     * For CommonGoalType6, the Shelf must have two columns each formed by 6 different types of object cards.
      *
-     * @param shelf la Shelf da controllare
-     * @return true se l'obiettivo è stato raggiunto, false altrimenti
+     * @param shelf The Shelf to check.
+     * @return true if the Shelf satisfies the goal, false otherwise.
      */
     @Override
     public boolean checkGoal(Shelf shelf) {

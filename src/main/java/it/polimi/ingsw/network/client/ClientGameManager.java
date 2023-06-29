@@ -177,6 +177,11 @@ public abstract class ClientGameManager implements ClientGameManagerListener, Cl
         startGame(gameStartMessage.getCommonGoals());
     }
 
+    /**
+     * sends a generic request to the server
+     *
+     * @param message is the request message
+     */
     public boolean sendRequest(Message message) {
         if (turnManager != null) {
 //            checkChangeStateRequest(message);
@@ -241,6 +246,11 @@ public abstract class ClientGameManager implements ClientGameManagerListener, Cl
         } else queue.add(() -> chooseGameToJoin(message.getGames()));
     }
 
+    /**
+     * method that handles a request of a client to reconnect to a game
+     *
+     * @param reconnectionRequest is the request received from the server
+     */
     private void handleReconnectionRequest(ReconnectionRequest reconnectionRequest) {
         reconnection = true;
 //        if (reconnectionRequest.getStatus().equals(MessageStatus.OK)) {
@@ -339,7 +349,7 @@ public abstract class ClientGameManager implements ClientGameManagerListener, Cl
     }
 
     /**
-     * Handles a disconnection message received from the server when a clìient disconnects
+     * Handles a disconnection message received from the server when a client disconnects
      *
      * @param disconnectionMessage disconnection message received
      */
@@ -347,6 +357,11 @@ public abstract class ClientGameManager implements ClientGameManagerListener, Cl
         queue.add(() -> onPlayerDisconnection(disconnectionMessage.getUsername()));
     }
 
+    /**
+     * Handles a reconnection message received from the server when a client reconnects
+     *
+     * @param reconnectionMessage reconnection message received
+     */
     private void handleReconnection(ReconnectionMessage reconnectionMessage) {
         this.firstTurn = false;
         this.joinedLobby = true;

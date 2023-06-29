@@ -81,7 +81,7 @@ public class GameSerialized implements Serializable {
     }
 
     /**
-     * @return
+     * @return the current player
      */
     public Player getCurrentPlayer() {
         return currentPlayer;
@@ -152,6 +152,10 @@ public class GameSerialized implements Serializable {
         return commonGoals;
     }
 
+
+    /**
+     * override of the toString method
+     */
     @Override
     public String toString() {
         return "GameSerialized{" +

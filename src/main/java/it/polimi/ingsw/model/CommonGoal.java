@@ -14,11 +14,34 @@ public abstract class CommonGoal implements Serializable {
         this.currentPoints = 8;
     }
 
+    /**
+     * Gets the type of the CommonGoal.
+     *
+     * @return The type of the CommonGoal.
+     */
     public abstract int getType();
+
+    /**
+     * Gets the description of the CommonGoal.
+     *
+     * @return The description of the CommonGoal.
+     */
 
     public abstract String getDescription();
 
+    /**
+     * Gets the visual representation of the CommonGoal.
+     *
+     * @return The view of the CommonGoal.
+     */
+
     public abstract String getCardView();
+
+    /**
+     * Gets the string representation of the CommonGoal.
+     *
+     * @return The string representation of the CommonGoal.
+     */
 
     public abstract String toString();
 

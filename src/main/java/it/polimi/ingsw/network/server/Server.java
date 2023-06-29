@@ -371,6 +371,7 @@ public class Server implements Runnable {
         }
     }
 
+
     @Override
     public void run() {
         while (!Thread.currentThread().isInterrupted()) {
@@ -423,18 +424,30 @@ public class Server implements Runnable {
         return playersGame;
     }
 
+    /**
+     * @return the lock of the clients map
+     */
     public Object getClientsLock() {
         return clientsLock;
     }
 
+    /**
+     * @return a map with all the clients connected and their connection
+     */
     public Map<String, Connection> getClients() {
         return clients;
     }
 
+    /**
+     * @return the list of all the controller games
+     */
     public List<ControllerGame> getControllerGames() {
         return controllerGames;
     }
 
+    /**
+     * @return the filepath of the server
+     */
     public String getFilepath() {
         return filepath;
     }
