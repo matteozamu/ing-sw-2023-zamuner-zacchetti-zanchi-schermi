@@ -124,14 +124,15 @@ public class Game implements Serializable {
     }
 
     /**
-     * @return the nwe order of the selected object cards
+     * returns the order of the limbo
+     * @return the order of the selected object cards
      */
     public List<ObjectCard> getLimboOrder() {
         return limboOrder;
     }
 
     /**
-     * set the nwe order of the selected object cards
+     * set the new order of the selected object cards
      *
      * @param limboOrder is the order to set
      */

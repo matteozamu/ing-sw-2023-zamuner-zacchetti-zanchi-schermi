@@ -83,6 +83,7 @@ public abstract class ClientGameManager implements ClientGameManagerListener, Cl
     }
 
     /**
+     * returns the username of the player
      * @return the client's username
      */
     public String getUsername() {
@@ -90,6 +91,7 @@ public abstract class ClientGameManager implements ClientGameManagerListener, Cl
     }
 
     /**
+     * return the client's token
      * @return the client's token
      */
     public String getClientToken() {
@@ -153,6 +155,7 @@ public abstract class ClientGameManager implements ClientGameManagerListener, Cl
     }
 
     /**
+     * returns the game serialized
      * @return the game serialized
      */
     public GameSerialized getGameSerialized() {
@@ -454,6 +457,7 @@ public abstract class ClientGameManager implements ClientGameManagerListener, Cl
     }
 
     /**
+     * returns all the players
      * @return a list of all the players
      */
     public List<Player> getPlayers() {
@@ -463,7 +467,8 @@ public abstract class ClientGameManager implements ClientGameManagerListener, Cl
     }
 
     /**
-     * @return the players in lobby
+     * returns the players in the lobby
+     * @return a list of the players in lobby
      */
     public List<String> getLobbyPlayers() {
         return lobbyPlayers;

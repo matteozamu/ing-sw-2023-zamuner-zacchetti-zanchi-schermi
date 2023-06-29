@@ -17,6 +17,9 @@ import java.util.List;
 import java.util.Scanner;
 import java.util.stream.Collectors;
 
+/**
+ * This class is used to manage the cli
+ */
 public class Cli extends ClientGameManager implements DisconnectionListener {
     private Scanner in;
     private PrintStream out;

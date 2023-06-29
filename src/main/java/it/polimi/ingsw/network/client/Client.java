@@ -119,6 +119,7 @@ public abstract class Client extends UnicastRemoteObject {
     }
 
     /**
+     * returns the username of the player
      * @return the username of the player
      */
     public String getUsername() {

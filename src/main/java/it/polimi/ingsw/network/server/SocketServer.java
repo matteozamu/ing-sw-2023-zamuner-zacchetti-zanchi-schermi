@@ -6,6 +6,9 @@ import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
 
+/**
+ * This class represents a Socket server that listens for new connections
+ */
 public class SocketServer extends Thread {
     private final Server server;
     private final int port;
@@ -34,6 +37,9 @@ public class SocketServer extends Thread {
         }
     }
 
+    /**
+     * Process that continues to listen for new connections
+     */
     @Override
     public void run() {
         while (!Thread.currentThread().isInterrupted()) {

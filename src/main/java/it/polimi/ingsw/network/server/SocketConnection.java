@@ -80,6 +80,7 @@ public class SocketConnection extends Connection implements Runnable {
     }
 
     /**
+     * Returns the connection status
      * @return the connection status
      */
     @Override

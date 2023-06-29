@@ -77,6 +77,7 @@ public class GameSerialized implements Serializable {
     }
 
     /**
+     * returns the current player
      * @return the current player
      */
     public Player getCurrentPlayer() {
@@ -84,6 +85,7 @@ public class GameSerialized implements Serializable {
     }
 
     /**
+     * returns the list of all the players in the game
      * @return the list of all the players in the game
      */
     public List<Player> getAllPlayers() {

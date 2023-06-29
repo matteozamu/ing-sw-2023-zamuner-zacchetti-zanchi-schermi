@@ -7,6 +7,9 @@ import java.util.List;
 
 import static it.polimi.ingsw.enumeration.Color.ANSI_RESET;
 
+/**
+ * This class contains all the methods used to print the game in the console
+ */
 public class CliVisual {
 
     /**
