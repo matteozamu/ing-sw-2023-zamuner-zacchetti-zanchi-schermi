@@ -22,10 +22,18 @@ public class Board implements Serializable {
     }
 
 
+    /**
+     * gets the grid of the board
+     * @return the grid to get
+     */
     public Map<Coordinate, ObjectCard> getGrid() {
         return grid;
     }
 
+    /**
+     * sets the grid of the board
+     * @param grid the grid to set
+     */
     public void setGrid(Map<Coordinate, ObjectCard> grid) {
         this.grid = grid;
     }

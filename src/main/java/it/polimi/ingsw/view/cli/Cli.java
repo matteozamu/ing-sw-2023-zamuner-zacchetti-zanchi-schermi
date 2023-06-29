@@ -175,6 +175,7 @@ public class Cli extends ClientGameManager implements DisconnectionListener {
 
     /**
      * Ask the user to insert the connection type
+     * @return the connection type
      */
     private int askConnection() {
         int connection = -1;
@@ -376,6 +377,7 @@ public class Cli extends ClientGameManager implements DisconnectionListener {
 
     /**
      * asks the user for a game name for the game they created
+     * @return the game name
      */
     private String askGameName() {
         String gameName = null;
@@ -624,6 +626,7 @@ public class Cli extends ClientGameManager implements DisconnectionListener {
 
     /**
      * Method used to cancel a previous action
+     * @param message the message to show
      */
     private void cancelAction(String message) {
         CliVisual.clearConsole(out);
@@ -739,6 +742,7 @@ public class Cli extends ClientGameManager implements DisconnectionListener {
 
     /**
      * Method used to print the winner
+     * @param gameSerialized the game serialized
      */
     @Override
     public void printWinner(GameSerialized gameSerialized) {

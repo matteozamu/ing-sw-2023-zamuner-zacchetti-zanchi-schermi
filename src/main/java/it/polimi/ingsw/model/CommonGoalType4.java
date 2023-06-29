@@ -4,8 +4,8 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * Quattro righe formate ciascuna da 5 tessere di uno, due o tre tipi differenti.
- * Righe diverse possono avere combinazioni diverse di tipi di tessere.
+ * Four rows each formed by 5 tiles of maximum three different types.
+ * One line can show the same or a different combination of another line.
  */
 public final class CommonGoalType4 extends CommonGoal {
 
@@ -29,6 +29,7 @@ public final class CommonGoalType4 extends CommonGoal {
 
     /**
      * Gets the type of the CommonGoal.
+     * @return the type of the CommonGoal.
      */
     @Override
     public int getType() {
@@ -37,6 +38,7 @@ public final class CommonGoalType4 extends CommonGoal {
 
     /**
      * Gets the description of the CommonGoal.
+     * @return the description of the CommonGoal.
      */
     @Override
     public String getDescription() {
@@ -45,6 +47,7 @@ public final class CommonGoalType4 extends CommonGoal {
 
     /**
      * Gets the visual representation of the CommonGoal.
+     * @return the visual representation of the CommonGoal.
      */
     @Override
     public String getCardView() {
@@ -53,6 +56,7 @@ public final class CommonGoalType4 extends CommonGoal {
 
     /**
      * Gets the String representation of the CommonGoal.
+     * @return the String representation of the CommonGoal.
      */
     @Override
     public String toString() {

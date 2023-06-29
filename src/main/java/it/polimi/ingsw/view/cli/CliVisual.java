@@ -161,6 +161,8 @@ public class CliVisual {
      * Prints the layout of object cards on the Shelf.
      * Cards are printed in reverse row order, starting from the last row and proceeding towards the first.
      * Each card is represented as "type", where "type" is the card type.
+     * @param out is the output PrintStream
+     * @param gameSerialized is the gameSerialized containing the shelf to be printed
      */
     public static void printShelf(PrintStream out, GameSerialized gameSerialized) {
         Shelf s = gameSerialized.getShelf();

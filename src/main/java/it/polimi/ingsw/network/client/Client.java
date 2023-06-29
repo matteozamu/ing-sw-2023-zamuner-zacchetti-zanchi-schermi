@@ -119,6 +119,8 @@ public abstract class Client extends UnicastRemoteObject {
 
     /**
      * overridden equals method
+     * @param o object to compare
+     * @return true if the objects are equals, false otherwise
      */
     @Override
     public boolean equals(Object o) {
@@ -137,6 +139,7 @@ public abstract class Client extends UnicastRemoteObject {
 
     /**
      * overridden hashcode method
+     * @return the hashcode of the object
      */
     @Override
     public int hashCode() {

@@ -106,6 +106,8 @@ public class ClientRMI extends Client implements RMIClientConnection {
 
     /**
      * overridden equals method
+     * @param o object to compare
+     * @return true if the objects are equals, false otherwise
      */
     @Override
     public boolean equals(Object o) {
@@ -118,6 +120,7 @@ public class ClientRMI extends Client implements RMIClientConnection {
 
     /**
      * overridden hashCode method
+     * @return hash of the object
      */
     @Override
     public int hashCode() {

@@ -96,6 +96,7 @@ public class StartGameSceneController {
 
     /**
      * Handles the situation where the player chooses to join an existing game
+     * @param games list of games
      */
     void onJoinGameResponse(List<ControllerGame> games) {
         JoinGameSceneController joinGameSceneController = GuiManager.setLayout(mainPane.getScene(), "fxml/joinGameScene.fxml");

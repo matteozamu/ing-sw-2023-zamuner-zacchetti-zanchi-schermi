@@ -70,7 +70,7 @@ public class ControllerGame implements Serializable {
     }
 
     /**
-     * Method use to
+     * Method used to reorder a map of coordinates and object cards
      *
      * @param map   is the map to reorder
      * @param order is the list with the new order
@@ -88,6 +88,10 @@ public class ControllerGame implements Serializable {
         }
         return orderedMap;
     }
+
+    /**
+     * method that sets the timer for making a move in the game
+     */
 
     public void setMakeMoveTimer() {
         makeMoveTimer = new Timer();
@@ -380,6 +384,9 @@ public class ControllerGame implements Serializable {
         return gameState;
     }
 
+    /**
+     * @param gameState the gameState to set
+     */
     public void setGameState(PossibleGameState gameState) {
         this.gameState = gameState;
     }

@@ -363,6 +363,7 @@ public class GuiManager extends ClientGameManager implements DisconnectionListen
 
     /**
      * Handles the reconnection of a player
+     * @param message message to print
      */
     @Override
     public void onPlayerReconnection(String message) {

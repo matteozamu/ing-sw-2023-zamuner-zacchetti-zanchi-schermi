@@ -2,7 +2,7 @@ package it.polimi.ingsw.model;
 
 
 /**
- * Cinque tessere dello stesso tipo che formano una diagonale
+ * Five tiles of the same type forming a diagonal.
  */
 
 public final class CommonGoalType2 extends CommonGoal {
@@ -23,6 +23,7 @@ public final class CommonGoalType2 extends CommonGoal {
 
     /**
      * Gets the type of the CommonGoal.
+     * @return The type of the CommonGoal.
      */
     @Override
     public int getType() {
@@ -31,6 +32,7 @@ public final class CommonGoalType2 extends CommonGoal {
 
     /**
      * Gets the description of the CommonGoal.
+     *  @return The description of the CommonGoal.
      */
 
     @Override
@@ -40,6 +42,7 @@ public final class CommonGoalType2 extends CommonGoal {
 
     /**
      * Gets the visual representation of the CommonGoal.
+     * @return The view of the CommonGoal.
      */
     @Override
     public String getCardView() {
@@ -48,6 +51,7 @@ public final class CommonGoalType2 extends CommonGoal {
 
     /**
      * Gets the String representation of the CommonGoal.
+     * @return The String representation of the CommonGoal.
      */
 
     @Override

@@ -33,7 +33,7 @@ public class Player implements Serializable {
     }
 
     /**
-     * @return true if the user is connected
+     * @return true if the user is connected, false otherwise
      */
     public boolean isConnected() {
         return connected;

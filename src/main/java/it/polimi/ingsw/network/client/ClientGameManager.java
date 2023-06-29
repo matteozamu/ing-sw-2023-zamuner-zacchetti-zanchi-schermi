@@ -177,6 +177,7 @@ public abstract class ClientGameManager implements ClientGameManagerListener, Cl
      * sends a generic request to the server
      *
      * @param message is the request message
+     * @return true if the request is sent, false otherwise
      */
     public boolean sendRequest(Message message) {
         try {

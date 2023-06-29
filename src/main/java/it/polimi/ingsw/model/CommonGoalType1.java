@@ -4,8 +4,8 @@ import java.util.Map;
 
 
 /**
- * Sei gruppi separati formati ciascuno da due tessere adiacenti dello stesso tipo.
- * Le tessere di un gruppo possono essere diverse da quelle di un altro gruppo.
+ * Six separeted groups each containing at least 2 tiles of the same type.
+ * The tiles of one group can be different from those of another group.
  */
 
 public final class CommonGoalType1 extends CommonGoal {
@@ -31,6 +31,7 @@ public final class CommonGoalType1 extends CommonGoal {
 
     /**
      * Gets the type of the common goal.
+     * @return The type of the common goal.
      */
     @Override
     public int getType() {
@@ -39,6 +40,7 @@ public final class CommonGoalType1 extends CommonGoal {
 
     /**
      * Gets the description of the common goal.
+     * @return The description of the common goal.
      */
 
     @Override
@@ -48,6 +50,7 @@ public final class CommonGoalType1 extends CommonGoal {
 
     /**
      * Gets the visual representation of the common goal.
+     * @return The view of the common goal.
      */
 
     @Override
@@ -57,6 +60,7 @@ public final class CommonGoalType1 extends CommonGoal {
 
     /**
      * Gets the string representation of the common goal.
+     * @return The string representation of the common goal.
      */
 
     @Override

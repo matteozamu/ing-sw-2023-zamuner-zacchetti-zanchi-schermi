@@ -67,6 +67,7 @@ public class Game implements Serializable {
 
     /**
      * Gets the game name
+     * @return the game name
      */
     public String getGameName() {
         return gameName;
@@ -74,6 +75,7 @@ public class Game implements Serializable {
 
     /**
      * sets the name of the game
+     * @param gameName is the name of the game
      */
     public void setGameName(String gameName) {
         this.gameName = gameName;
@@ -128,7 +130,7 @@ public class Game implements Serializable {
     }
 
     /**
-     * @return true if the game is started
+     * @return true if the game is started, false otherwise
      */
     public boolean isStarted() {
         return started;
@@ -157,6 +159,9 @@ public class Game implements Serializable {
         return personalGoalCardsContainer;
     }
 
+    /**
+     * @param personalGoalCardsContainer is the list of the Personal Goal Cards to set
+     */
     public void setPersonalGoalCardsContainer(List<PersonalGoalCard> personalGoalCardsContainer) {
         this.personalGoalCardsContainer = personalGoalCardsContainer;
     }
@@ -275,7 +280,6 @@ public class Game implements Serializable {
      * @return true if the cards are successfully added.
      * @throws IllegalStateException if there is not enough space to add the cards.
      */
-    //TODO: gestire caso limbo vuoto (ora torna true)
     public boolean addObjectCardsToShelf(List<ObjectCard> limbo, int col) {
         Shelf s = this.currentPlayer.getShelf();
         int availableRows = s.getFreeCellsPerColumn(col);
@@ -376,6 +380,7 @@ public class Game implements Serializable {
 
     /**
      * Override of the toString method
+     * @return a string representation
      */
     @Override
     public String toString() {

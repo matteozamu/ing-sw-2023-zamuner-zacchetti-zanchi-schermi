@@ -64,7 +64,6 @@ public class GameSerialized implements Serializable {
      *
      * @return the list of the players
      */
-    // TODO: Si può eliminare?
     public List<Player> getPlayers() {
         return players;
     }
@@ -153,6 +152,7 @@ public class GameSerialized implements Serializable {
 
     /**
      * override of the toString method
+     * @return the string representation
      */
     @Override
     public String toString() {

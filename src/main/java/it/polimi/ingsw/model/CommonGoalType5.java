@@ -3,8 +3,8 @@ package it.polimi.ingsw.model;
 import java.util.List;
 
 /**
- * Quattro gruppi separati formati ciascuno da quattro tessere adiacenti dello stesso tipo.
- * Le tessere di un gruppo possono essere diverse da quelle di un altro gruppo.
+ * Four separate groups each containing at least 4 adjacent tiles of the same type.
+ * The tiles of one group can be different from those of another group.
  */
 
 public class CommonGoalType5 extends CommonGoal {
@@ -30,6 +30,7 @@ public class CommonGoalType5 extends CommonGoal {
 
     /**
      * Gets the type of the CommonGoal.
+     * @return the type of the CommonGoal.
      */
     @Override
     public int getType() {
@@ -38,6 +39,7 @@ public class CommonGoalType5 extends CommonGoal {
 
     /**
      * Gets the description of the CommonGoal.
+     * @return the description of the CommonGoal.
      */
     @Override
     public String getDescription() {
@@ -46,6 +48,7 @@ public class CommonGoalType5 extends CommonGoal {
 
     /**
      * Gets the visual representation of the CommonGoal.
+     * @return the visual representation of the CommonGoal.
      */
     @Override
     public String getCardView() {
@@ -55,6 +58,7 @@ public class CommonGoalType5 extends CommonGoal {
 
     /**
      * Gets the String representation of the CommonGoal.
+     * @return the String representation of the CommonGoal.
      */
     @Override
     public String toString() {
