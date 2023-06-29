@@ -264,7 +264,7 @@ public class GameSceneController {
     }
 
     /**
-     * Adds the object cards to the board
+     * Set and update the board grid with the new state of the game
      *
      * @param gameSerialized state of the game at the time of the join
      */
@@ -363,6 +363,13 @@ public class GameSceneController {
     }
 
 
+    /**
+     * Updates the shelf grid with the new state of the game
+     *
+     * @param gameSerialized state of the game at the time of the join
+     * @param shelfGrid shelfGrid grid to update
+     * @param shelfOwner owner of the shelf
+     */
     private void updateShelfGrid(GameSerialized gameSerialized, GridPane shelfGrid, String shelfOwner) {
         List<Player> players = gameSerialized.getAllPlayers();
         Shelf onWorkShelf = players.stream()
@@ -403,6 +410,11 @@ public class GameSceneController {
         }
     }
 
+    /**
+     * Set and update common goals and their points with the new state of the game
+     *
+     * @param gameSerialized state of the game at the time of the join
+     */
     private void setCommonGoalCards(GameSerialized gameSerialized) {
         List<CommonGoal> commonGoals = gameSerialized.getCommonGoals();
         commonGoalCard1StackPane.getChildren().clear();
@@ -457,6 +469,11 @@ public class GameSceneController {
         }
     }
 
+    /**
+     * Set personal goal
+     *
+     * @param gameSerialized state of the game at the time of the join
+     */
     private void setPersonalGoalCard(GameSerialized gameSerialized) {
         PersonalGoalCard personalGoalCard = gameSerialized.getPersonalGoalCard();
         String cardTypeText = personalGoalCard.getID();
@@ -487,6 +504,11 @@ public class GameSceneController {
 //        infoLabel.getStyleClass().add(CSS_INFO_LABEL);
 //    }
 
+    /**
+     * Set shelves
+     *
+     * @param gameSerialized state of the game at the time of the join
+     */
     void setShelves(GameSerialized gameSerialized) {
         int i = 0;
         List<Player> players = gameSerialized.getAllPlayers();
@@ -563,6 +585,11 @@ public class GameSceneController {
         }
     }
 
+    /**
+     * Set and update the list of chosen object cards with the new state of the game
+     *
+     * @param gameSerialized state of the game at the time of the join
+     */
     void setLimbo(GameSerialized gameSerialized) {
         List<ObjectCard> limboCards = gameSerialized.getAllLimboCards();
         orderLimboObjectCards.clear();
@@ -591,9 +618,7 @@ public class GameSceneController {
 
                         if (imageView != null) {
                             ImageView imageViewCopy = new ImageView(imageView.getImage());
-//                            imageViewCopy.setId(imageView.getId());
                             imageViewCopy.getStyleClass().addAll(imageView.getStyleClass());
-
 
                             imageViewCopy.setFitWidth(LIMBO_OBJECT_CARD_WIDTH);
                             imageViewCopy.setFitHeight(LIMBO_OBJECT_CARD_HEIGHT);
@@ -611,6 +636,11 @@ public class GameSceneController {
         }
     }
 
+    /**
+     * Handles the object card button click in the list of object cards selected
+     * @param index index of the object card in the list of object cards selected
+     * @param limboCards list of object cards selected
+     */
     private void onObjectCardInLimboClick(int index, List<ObjectCard> limboCards) {
         orderLimboObjectCards.add(index);
 
@@ -620,6 +650,11 @@ public class GameSceneController {
         }
     }
 
+    /**
+     * Set and update the player and points info with the new state of the game
+     *
+     * @param gameSerialized state of the game at the time of the join
+     */
     void setPlayerInfo(GameSerialized gameSerialized) {
         playersInfoVBox.getChildren().clear();
 
@@ -680,6 +715,10 @@ public class GameSceneController {
         }
     }
 
+    /**
+     * Handles the arrow button click for the choice of shelf column
+     * @param column column selected of the shelf
+     */
     private void onChooseColumnButtonClick(int column) {
         if (!guiManager.sendRequest(MessageBuilder.buildLoadShelfRequest(guiManager.getClientToken(), guiManager.getUsername(), column))) {
             GuiManager.showDialog((Stage) mainPane.getScene().getWindow(), GuiManager.ERROR_DIALOG_TITLE,
@@ -728,14 +767,23 @@ public class GameSceneController {
         }
     }
 
+    /**
+     * Updates the list of object cards selected
+     */
     private void updateLimbo(GameSerialized gameSerialized) {
         setLimbo(gameSerialized);
     }
 
+    /**
+     * Updates the common goal cards and their points
+     */
     private void updateCommonGoalCards(GameSerialized gameSerialized) {
         setCommonGoalCards(gameSerialized);
     }
 
+    /**
+     * Updates players' info and their scores
+     */
     private void updatePlayersInfo(GameSerialized gameSerialized) {
         setPlayerInfo(gameSerialized);
     }
@@ -749,6 +797,9 @@ public class GameSceneController {
         GuiManager.showDialog((Stage) mainPane.getScene().getWindow(), GuiManager.ERROR_DIALOG_TITLE, error);
     }
 
+    /**
+     * Handles the game scene when it is not the player's turn
+     */
     void notYourTurn() {
         actionListStackPane.getChildren().clear();
         arrowShelf0.setMouseTransparent(true);
@@ -765,7 +816,7 @@ public class GameSceneController {
     }
 
     /**
-     * Displays possible actions
+     * Manages what the player can click during his turn
      *
      * @param possibleActions possible actions
      */
