@@ -7,8 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Message class that is sent when a change is done to the lobby.
- * It contains the player in lobby
+ * Message that contains the list of available games
  */
 public class ListGameResponse extends Message {
     private static final long serialVersionUID = 6870316479006394730L;

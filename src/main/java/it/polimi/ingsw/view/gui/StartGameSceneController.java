@@ -69,6 +69,9 @@ public class StartGameSceneController {
         //GuiManager.setLayout(mainPane.getScene(), "fxml/numberPlayersScene.fxml");
     }
 
+    /**
+     * Handles the situation where the player chooses the number of players
+     */
     void numberOfPlayerRequest(Response response) {
         GuiManager.setLayout(mainPane.getScene(), "fxml/numberPlayersScene.fxml");
     }

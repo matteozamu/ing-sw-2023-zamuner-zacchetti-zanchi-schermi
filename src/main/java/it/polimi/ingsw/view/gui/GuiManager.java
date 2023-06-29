@@ -131,14 +131,6 @@ public class GuiManager extends ClientGameManager implements DisconnectionListen
         this.lobbySceneController = lobbySceneController;
     }
 
-//    /** Sets the number players controller
-//     *
-//     * @param numberPlayersController number players controller
-//     */
-//    void setNumberPlayersController(NumberPlayersController numberPlayersController) {
-//        this.numberPlayersController = numberPlayersController;
-//    }
-
     /**
      * Sets the start game scene controller
      *
@@ -147,14 +139,6 @@ public class GuiManager extends ClientGameManager implements DisconnectionListen
     void setStartGameSceneController(StartGameSceneController startGameSceneController) {
         this.startGameSceneController = startGameSceneController;
     }
-
-//    /** Sets the join game scene controller
-//     *
-//     * @param joinGameSceneController join game scene controller
-//     */
-//    void setJoinGameSceneController(JoinGameSceneController joinGameSceneController) {
-//        this.joinGameSceneController = joinGameSceneController;
-//    }
 
     /**
      * The server sends the response to the connection request to the client
@@ -259,6 +243,9 @@ public class GuiManager extends ClientGameManager implements DisconnectionListen
         }
     }
 
+    /**
+     * Join a game
+     */
     @Override
     public void joinGame() {
 
@@ -316,16 +303,25 @@ public class GuiManager extends ClientGameManager implements DisconnectionListen
 
     }
 
+    /**
+     * Show personal goal
+     */
     @Override
     public void showPersonalGoal() {
 
     }
 
+    /**
+     * Cancel action
+     */
     @Override
     public void cancelAction() {
 
     }
 
+    /**
+     * Show the shelf
+     */
     @Override
     public void showShelf() {
 

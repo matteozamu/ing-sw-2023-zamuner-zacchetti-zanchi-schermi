@@ -4,6 +4,7 @@
   "maxPlayers": 4,
   "minPlayers": 2,
   "disconnectionTimer": 120000,
+  "moveTimer": 300000,
   "board2": [
     [
       0,

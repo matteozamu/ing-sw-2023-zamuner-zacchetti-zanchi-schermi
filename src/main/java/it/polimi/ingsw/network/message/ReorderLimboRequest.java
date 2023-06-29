@@ -5,7 +5,7 @@ import it.polimi.ingsw.enumeration.MessageContent;
 import java.util.ArrayList;
 
 /**
- * Message used to reorder the limbo
+ * Message used to reorder the selected object cards
  */
 public class ReorderLimboRequest extends Message{
     private static final long serialVersionUID = 127258524891232293L;

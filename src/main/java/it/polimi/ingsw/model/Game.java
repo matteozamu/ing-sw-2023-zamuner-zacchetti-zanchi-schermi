@@ -67,6 +67,8 @@ public class Game implements Serializable {
 
     /**
      * Gets the game name
+     *
+     * @return the game name
      */
     public String getGameName() {
         return gameName;
