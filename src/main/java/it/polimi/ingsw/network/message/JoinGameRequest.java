@@ -5,7 +5,7 @@ import it.polimi.ingsw.enumeration.MessageContent;
 import java.util.UUID;
 
 /**
- * Message class for requesting the bot spawn
+ * Message used to request to join an existing game
  */
 public class JoinGameRequest extends Message {
     private static final long serialVersionUID = 1272585248979532293L;

@@ -51,7 +51,7 @@ class ClientTurnManager {
     }
 
     /**
-     * Set the state to {@code FIRST_ACTION}, reset {@code botMoved} to false
+     * Set the state to {@code FIRST_ACTION}
      */
     void endTurn() {
         playerState = UserPlayerState.FIRST_ACTION;

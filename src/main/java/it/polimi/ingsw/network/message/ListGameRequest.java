@@ -3,7 +3,7 @@ package it.polimi.ingsw.network.message;
 import it.polimi.ingsw.enumeration.MessageContent;
 
 /**
- * Message class for requesting the bot spawn
+ * Message used to request the list of available games
  */
 public class ListGameRequest extends Message {
     private static final long serialVersionUID = 1272585248979532293L;
