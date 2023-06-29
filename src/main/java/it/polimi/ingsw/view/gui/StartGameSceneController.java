@@ -54,9 +54,9 @@ public class StartGameSceneController {
      * Handles create game click
      */
     private void onCreateGameClick() {
-//        createGameButton.setDisable(true);
-//        joinGameButton.setDisable(true);
-//        backButton.setDisable(true);
+        createGameButton.setDisable(true);
+        joinGameButton.setDisable(true);
+        backButton.setDisable(true);
 
         if (!guiManager.sendRequest(MessageBuilder.buildCreateGameRequest(guiManager.getUsername(), guiManager.getClientToken()))) {
 
@@ -77,9 +77,9 @@ public class StartGameSceneController {
      * Handles join game click
      */
     private void onJoinGameClick() {
-//        createGameButton.setDisable(true);
-//        joinGameButton.setDisable(true);
-//        backButton.setDisable(true);
+        createGameButton.setDisable(true);
+        joinGameButton.setDisable(true);
+        backButton.setDisable(true);
 
         if (!guiManager.sendRequest(MessageBuilder.buildListGameRequest(guiManager.getUsername(), guiManager.getClientToken()))) {
 
@@ -135,6 +135,10 @@ public class StartGameSceneController {
     void noGameAvailable() {
         GuiManager.showDialog((Stage) mainPane.getScene().getWindow(), GuiManager.ERROR_DIALOG_TITLE,
                 "No games available");
+
+        createGameButton.setDisable(false);
+        joinGameButton.setDisable(false);
+        backButton.setDisable(false);
     }
 
     /**
