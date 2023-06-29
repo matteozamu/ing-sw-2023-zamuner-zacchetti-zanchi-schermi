@@ -4,6 +4,7 @@ import it.polimi.ingsw.network.message.Message;
 import it.polimi.ingsw.network.server.RMIHandler;
 
 import java.io.IOException;
+import java.io.Serial;
 import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
@@ -15,6 +16,7 @@ import java.util.Timer;
  * This class represents an RMI Client
  */
 public class ClientRMI extends Client implements RMIClientConnection {
+    @Serial
     private static final long serialVersionUID = -6701767031892802332L;
     private transient RMIHandler server;
 

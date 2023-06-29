@@ -2,29 +2,15 @@ package it.polimi.ingsw.utility;
 
 
 import it.polimi.ingsw.model.Coordinate;
-import it.polimi.ingsw.model.ObjectCard;
 import it.polimi.ingsw.model.Player;
 import it.polimi.ingsw.network.message.*;
 
-import java.util.List;
-import java.util.UUID;
 import java.util.ArrayList;
+import java.util.UUID;
 
 public class MessageBuilder {
-
-
     private MessageBuilder() {
         throw new IllegalStateException("Utility class");
-    }
-
-    /**
-     * Create a {@link ConnectionRequest ConnectionRequest} object from {@code username}
-     *
-     * @param username username chosen by the user to request from the server if available
-     * @return the {@link ConnectionRequest ConnectionRequest} object to send to the server
-     */
-    public static ConnectionRequest buildConnectionRequest(String username) {
-        return new ConnectionRequest(username);
     }
 
     /**

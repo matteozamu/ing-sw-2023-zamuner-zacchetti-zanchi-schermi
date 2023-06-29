@@ -2,8 +2,6 @@ package it.polimi.ingsw.model;
 
 import java.util.List;
 
-// OK for TESTING
-
 /**
  * Quattro gruppi separati formati ciascuno da quattro tessere adiacenti dello stesso tipo.
  * Le tessere di un gruppo possono essere diverse da quelle di un altro gruppo.

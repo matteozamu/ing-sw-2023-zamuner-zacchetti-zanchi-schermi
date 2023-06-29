@@ -16,8 +16,6 @@ public class GameSerialized implements Serializable {
     private Board board;
     private int[][] boardMatrix;
     private List<CommonGoal> commonGoals;
-
-    // attributes for each single player, initialized thanks to the username passed to the constructor
     private int points;
     private Shelf shelf;
     private PersonalGoalCard personalGoalCard;

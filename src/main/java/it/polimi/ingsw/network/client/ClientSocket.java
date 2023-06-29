@@ -17,10 +17,8 @@ import java.util.logging.Logger;
 public class ClientSocket extends Client implements Runnable {
     private static final long serialVersionUID = -7286675375073912395L;
     private transient Socket socket;
-
     private transient ObjectInputStream in;
     private transient ObjectOutputStream out;
-
     private transient Thread messageReceiver;
 
     /**
@@ -81,15 +79,9 @@ public class ClientSocket extends Client implements Runnable {
                         messageQueue.add(message);
                     }
                 }
-//                else if (message != null && message.getContent() == MessageContent.PING) {
-//                    super.pingTimer.cancel();
-//                    super.pingTimer = new Timer();
-//                    super.pingTimer.schedule(new PingTimerTask(super.disconnectionListener), Client.DISCONNECTION_TIME);
-//                }
             } catch (IOException e) {
                 disconnect();
             } catch (ClassNotFoundException e) {
-                // Discard Message
             }
         }
     }

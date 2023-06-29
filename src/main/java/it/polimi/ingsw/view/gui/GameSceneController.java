@@ -30,7 +30,6 @@ public class GameSceneController {
     private static final String CSS_SHELF_GRIDPANE = "shelfGridPane";
     private static final String CSS_SHELF_LABEL = "shelfLabel";
     private static final String CSS_PLAYERINFO_LABEL = "playerInfo";
-//    private static final String CSS_INFO_LABEL = "infoLabel";
     private static final String CSS_PLAYERINFO_SEPARATOR = "labelSeparator";
     private static final String CSS_LIMBO_HBOX = "limboHBoxArea";
     private static final double COMMONGOAL_CARD_WIDTH = 138.5;
@@ -95,8 +94,6 @@ public class GameSceneController {
     StackPane actionListStackPane;
     @FXML
     ScrollPane shelfScrollPane;
-//    @FXML
-//    Label infoLabel;
     @FXML
     HBox limboHBoxArea;
     @FXML
@@ -180,7 +177,6 @@ public class GameSceneController {
     }
 
     /**
-     *
      * Binds the arrow buttons to the corresponding event handlers that invoke the onChooseColumnButtonClick method.
      */
     private void bindChooseColumnArrows() {
@@ -192,13 +188,12 @@ public class GameSceneController {
     }
 
     /**
-     *
      * Loads the images for object cards and adds them to the objectCards map through the addObjectCardImagesToMap method
      */
     private void loadObjectCards() {
         List<String> types = Arrays.stream(ObjectCardType.values())
-                                    .map(Enum::name)
-                                    .collect(Collectors.toList());
+                .map(Enum::name)
+                .collect(Collectors.toList());
 
         for (int i = 0; i < ObjectCardType.SIZE; i++) {
             addObjectCardImagesToMap(types.get(i), "0", 7);
@@ -209,8 +204,9 @@ public class GameSceneController {
 
     /**
      * Adds the specified number of object card images to the objectCards map.
-     * @param type the type of the object card
-     * @param ID the ID of the object card
+     *
+     * @param type  the type of the object card
+     * @param ID    the ID of the object card
      * @param count the number of images to add
      */
     private void addObjectCardImagesToMap(String type, String ID, int count) {
@@ -224,7 +220,6 @@ public class GameSceneController {
     }
 
     /**
-     *
      * Loads the common goal cards and adds them to the commonGoalCards map.
      */
     private void loadCommonGoalCards() {
@@ -238,7 +233,6 @@ public class GameSceneController {
     }
 
     /**
-     *
      * Loads the personal goal cards and adds them to the personalGoalCards map.
      */
     private void loadPersonalGoalCards() {
@@ -252,7 +246,6 @@ public class GameSceneController {
     }
 
     /**
-     *
      * Loads the common goal points images and adds them to the commonGoalPoints map.
      */
     private void loadCommonGoalPoints() {
@@ -298,8 +291,8 @@ public class GameSceneController {
                             imageView.setPreserveRatio(true);
                             imageView.setPickOnBounds(true);
 
-                            int row = numRows/2 - (4 - i);
-                            int col = (j - 4) + numCols/2;
+                            int row = numRows / 2 - (4 - i);
+                            int col = (j - 4) + numCols / 2;
                             boardGridPane.add(imageView, col, row);
                             int finalI = i;
                             int finalJ = j;
@@ -318,8 +311,8 @@ public class GameSceneController {
                     transparentImageView.setPickOnBounds(true);
                     transparentImageView.setId(TRANSPARENT_IMAGEVIEW_ID);
 
-                    int row = numRows/2 - (4 - i);
-                    int col = (j - 4) + numCols/2;
+                    int row = numRows / 2 - (4 - i);
+                    int col = (j - 4) + numCols / 2;
                     boardGridPane.add(transparentImageView, col, row);
                 }
             }
@@ -341,8 +334,8 @@ public class GameSceneController {
                             imageView.setPreserveRatio(true);
                             imageView.setPickOnBounds(true);
 
-                            int row = numRows/2 - (4 - i);
-                            int col = (j - 4) + numCols/2;
+                            int row = numRows / 2 - (4 - i);
+                            int col = (j - 4) + numCols / 2;
                             boardGridPane.add(imageView, col, row);
                             int finalI = i;
                             int finalJ = j;
@@ -361,8 +354,8 @@ public class GameSceneController {
                     transparentImageView.setPickOnBounds(true);
                     transparentImageView.setId(TRANSPARENT_IMAGEVIEW_ID);
 
-                    int row = numRows/2 - (4 - i);
-                    int col = (j - 4) + numCols/2;
+                    int row = numRows / 2 - (4 - i);
+                    int col = (j - 4) + numCols / 2;
                     boardGridPane.add(transparentImageView, col, row);
                 }
             }
@@ -437,7 +430,7 @@ public class GameSceneController {
 
             int commonGoalCurrentPointsInt = commonGoals.get(i).getCurrentPoints();
             String commonGoalCurrentPointsString;
-            if(commonGoalCurrentPointsInt == 0) {
+            if (commonGoalCurrentPointsInt == 0) {
                 commonGoalCurrentPointsString = "scoring-0" + i;
             } else {
                 commonGoalCurrentPointsString = "scoring-" + commonGoalCurrentPointsInt + i;
@@ -621,7 +614,7 @@ public class GameSceneController {
     private void onObjectCardInLimboClick(int index, List<ObjectCard> limboCards) {
         orderLimboObjectCards.add(index);
 
-        if(orderLimboObjectCards.size() == limboCards.size()) {
+        if (orderLimboObjectCards.size() == limboCards.size()) {
             onReorderLimboRequest();
             orderLimboObjectCards.clear();
         }
@@ -640,7 +633,7 @@ public class GameSceneController {
         playersInfoVBox.getChildren().add(upSeparator);
 
         Label myNameLabel;
-        if(myName.equals(gameSerialized.getCurrentPlayer().getName())) {
+        if (myName.equals(gameSerialized.getCurrentPlayer().getName())) {
             myNameLabel = new Label(myName + " ★");
         } else {
             myNameLabel = new Label(myName);
@@ -664,7 +657,7 @@ public class GameSceneController {
                 String playerPoints = POINTS_PROPERTY + player.getCurrentPoints();
 
                 Label playerNameLabel;
-                if(playerName.equals(gameSerialized.getCurrentPlayer().getName())) {
+                if (playerName.equals(gameSerialized.getCurrentPlayer().getName())) {
                     playerNameLabel = new Label(playerName + " ★");
                 } else {
                     playerNameLabel = new Label(playerName);
@@ -816,7 +809,7 @@ public class GameSceneController {
 
         actionListStackPane.getChildren().clear();
         for (PossibleAction possibleAction : possibleActions) {
-            if(possibleAction.equals(PossibleAction.DELETE_LIMBO)) {
+            if (possibleAction.equals(PossibleAction.DELETE_LIMBO)) {
                 ImageView imageView = new ImageView();
                 imageView.setId(getActionIDFromPossibleAction(possibleAction));
                 imageView.setFitHeight(ACTION_BUTTON_HEIGHT);
@@ -854,6 +847,7 @@ public class GameSceneController {
 
     /**
      * Handles the event when an object card is clicked on the board.
+     *
      * @param row The row index of the clicked card.
      * @param col The column index of the clicked card.
      */
@@ -888,6 +882,7 @@ public class GameSceneController {
 
     /**
      * Sets the availability of object cards on the board.
+     *
      * @param isAvailable A boolean indicating whether the object cards should be available or not.
      */
     private void setObjectsCardAvailability(boolean isAvailable) {
@@ -896,6 +891,7 @@ public class GameSceneController {
 
     /**
      * Sets the availability of the shelf arrows.
+     *
      * @param isAvailable A boolean indicating whether the shelf arrows should be available or not.
      */
     private void setShelfArrowsAvailability(boolean isAvailable) {
@@ -908,6 +904,7 @@ public class GameSceneController {
 
     /**
      * Sets the availability of the limbo area.
+     *
      * @param isAvailable A boolean indicating whether the limbo area should be available or not.
      */
     private void setLimboAvailability(boolean isAvailable) {

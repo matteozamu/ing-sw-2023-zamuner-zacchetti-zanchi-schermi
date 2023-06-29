@@ -48,12 +48,12 @@ public class Coordinate implements Serializable {
             case DOWN -> new Coordinate(row - 1, column);
             case LEFT -> new Coordinate(row, column - 1);
             case RIGHT -> new Coordinate(row, column + 1);
-//            default -> throw new IllegalArgumentException("Invalid direction: " + direction);
         };
     }
 
     /**
      * override of the equals method
+     *
      * @param obj the object to compare
      * @return true if the two objects are equal, false otherwise
      */
@@ -71,6 +71,7 @@ public class Coordinate implements Serializable {
 
     /**
      * override of the hashCode method
+     *
      * @return the hashcode of the object
      */
     @Override
@@ -85,6 +86,7 @@ public class Coordinate implements Serializable {
 
     /**
      * override of the toString method
+     *
      * @return the string representation of the object
      */
     @Override

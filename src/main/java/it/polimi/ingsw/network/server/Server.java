@@ -34,8 +34,6 @@ public class Server implements Runnable {
     private boolean waitForLoad;
     private String filepath;
 
-    private Timer moveTimer;
-
     /**
      * costructor of a new game
      */
@@ -57,37 +55,7 @@ public class Server implements Runnable {
 
         Thread pingThread = new Thread(this);
         pingThread.start();
-
-        moveTimer = new Timer();
     }
-
-
-//    /**
-//     * Starts the server loading a game
-//     *
-//     * @param confFilePath path of the config file
-//     */
-//    private Server(String confFilePath) {
-//        initLogger();
-//        synchronized (clientsLock) {
-//            this.clients = new HashMap<>();
-//        }
-//        this.waitForLoad = true;
-//
-//        loadConfigFile(confFilePath);
-//
-//        startServers();
-//
-//        this.gameManager = SaveGame.loadGame(this, startTime);
-//        reserveSlots(gameManager.getGameInstance().getPlayers());
-//
-//        LOGGER.log(Level.INFO, "Game loaded successfully.");
-//
-//        Thread pingThread = new Thread(this);
-//        pingThread.start();
-//
-//        moveTimer = new Timer();
-//    }
 
     public static void main(String[] args) {
         new Server(args[0]);
