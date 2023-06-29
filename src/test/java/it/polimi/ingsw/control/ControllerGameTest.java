@@ -61,35 +61,12 @@ public class ControllerGameTest extends TestCase {
 
     @Test
     public void testOnMessage() {
-
-        //PICK_OBJECT_CARD Case null coordinates
         Response response = (Response) cg.onMessage(
                 new ObjectCardRequest("federica", null, null));
         assertEquals(MessageStatus.ERROR, response.getStatus());
-
-//        //PICK_OBJECT_CARD Case right coordinates
-//        response = (Response) cg.onMessage(
-//                new ObjectCardRequest("federica", null, new Coordinate(-3, 1)));
-//        assertEquals(MessageStatus.PRINT_LIMBO, response.getStatus());
-
-        // REORDER_LIMBO_REQUEST Case null limbo
         response = (Response) cg.onMessage(
                 new ReorderLimboRequest("federica", null, null));
         assertEquals(MessageStatus.ERROR, response.getStatus());
-
-//        // REORDER_LIMBO_REQUEST Case full limbo
-//        ArrayList<ObjectCard> limbo = new ArrayList<>();
-//        Map<Coordinate, ObjectCard> limbo2 = new HashMap<>();
-//        limbo2.put(new Coordinate(0, 0), new ObjectCard(ObjectCardType.randomObjectCardType(), 1));
-//        limbo2.put(new Coordinate(1, 0), new ObjectCard(ObjectCardType.randomObjectCardType(), 1));
-//
-//        limbo.add(new ObjectCard(ObjectCardType.randomObjectCardType(), 1));
-//        limbo.add(new ObjectCard(ObjectCardType.randomObjectCardType(), 0));
-//        cg.getGame().setLimbo(limbo2);
-//
-//        response = (Response) cg.onMessage(
-//                new ReorderLimboRequest("federica", null, limbo));
-//        assertEquals(MessageStatus.PRINT_LIMBO, response.getStatus());
     }
 
     @Test
@@ -153,6 +130,7 @@ public class ControllerGameTest extends TestCase {
         limbo.put(new Coordinate(-2, 0), new ObjectCard(ObjectCardType.randomObjectCardType(), "02"));
         cg.getGame().setLimbo(limbo);
 
+        cg.setMakeMoveTimer();
         Response response = cg.loadShelfHandler(request);
 
         assertEquals("Cards moved", response.getMessage());
@@ -256,7 +234,6 @@ public class ControllerGameTest extends TestCase {
 
         assertEquals("Limbo reordered", response.getMessage());
         assertEquals(MessageStatus.PRINT_LIMBO, response.getStatus());
-//        assertEquals(0, cg.getGame().getLimbo().size());
     }
 
     @Test
@@ -440,25 +417,11 @@ public class ControllerGameTest extends TestCase {
 
         Response response = cg.lobbyMessageHandler(request);
 
-//        assertEquals("Lobby message received", response.getMessage());
         assertEquals(MessageStatus.ERROR, response.getStatus());
     }
 
-
-//    @Test
-//    public void firstStateHandlerTest(){
-//        Message message = cg.firstStateHandler(new LobbyMessage("Savage", null, false));
-//        assertTrue(message instanceof LobbyMessage);
-//
-//        message = cg.firstStateHandler(new NumberOfPlayersMessage("Savage", null, 1, "Gioco1"));
-//        assertTrue(message instanceof LobbyMessage);
-//    }
-
-
     @Test
     public void testObjectCardAvailableNoLimboCards() {
-//            ControllerGame cg = new ControllerGame(server);
-//            cg.setGame(new Game());
         cg.fillBoard();
         cg.getGame().setLimbo(new LinkedHashMap<>());
         Coordinate coordinate = new Coordinate(-3, 0);
@@ -522,12 +485,6 @@ public class ControllerGameTest extends TestCase {
         boolean result = cg.isObjectCardAvailable(coordinate);
         assertFalse(result);
     }
-
-//    @Test
-//    public void testIsObjectCardAvailableAllEmptyDirections() {
-//        Coordinate c = new Coordinate(0, 0);
-//        assertTrue(cg.isObjectCardAvailable(c));
-//    }
 
     @Test
     public void testIsObjectCardAvailableOneDirectionFull() {
@@ -669,27 +626,6 @@ public class ControllerGameTest extends TestCase {
         assertEquals(8, cg.pointsCalculator());
     }
 
-
-//    @Test
-//    public void testPickObjectCardFailed() {
-//        cg.fillBoard();
-//
-//        // pick an object card from the board
-//        Coordinate coordinate = new Coordinate(0, 0);
-//        ObjectCard card = cg.getGame().getBoard().getObjectCard(coordinate);
-//        assertTrue(cg.isObjectCardAvailable(coordinate));
-//        cg.pickObjectCard(coordinate);
-//        assertFalse(cg.isObjectCardAvailable(coordinate));
-//        assertTrue(cg.getLimbo().contains(card));
-//
-//        // pick an object card from the same cell
-//        assertFalse(cg.pickObjectCard(coordinate));
-//        // check that the object card was not added to the limbo
-//        List<ObjectCard> limbo = cg.getLimbo();
-//        assertTrue(limbo.isEmpty());
-//
-//    }
-
     @Test
     void testReconnectionHandler() {
         // Arrange
@@ -711,7 +647,6 @@ public class ControllerGameTest extends TestCase {
 
     @Test
     void testReconnectionHandlerGameNotStarted() {
-        // Arrange
         LobbyMessage lobbyMessage = new LobbyMessage("messia", "Token", false);
         cg.setGame(Game.getInstance(lobbyMessage.getSenderUsername()));
         Player player = new Player("messia", new Shelf(), new PersonalGoalCard(new ArrayList<>(), "1"));
@@ -729,7 +664,6 @@ public class ControllerGameTest extends TestCase {
 
     @Test
     void testReconnectionHandlerPlayerWasConnected() {
-        // Arrange
         LobbyMessage lobbyMessage = new LobbyMessage("messia", "Token", false);
         cg.setGame(Game.getInstance(lobbyMessage.getSenderUsername()));
         Player player = new Player("messia", new Shelf(), new PersonalGoalCard(new ArrayList<>(), "1"));
@@ -747,7 +681,6 @@ public class ControllerGameTest extends TestCase {
 
     @Test
     void testReconnectionHandlerPlayerWasNotConnected() {
-        // Arrange
         LobbyMessage lobbyMessage = new LobbyMessage("Franco", "Token", false);
         cg.setGame(Game.getInstance(lobbyMessage.getSenderUsername()));
         Player player = new Player("Pier Giovanni", new Shelf(), new PersonalGoalCard(new ArrayList<>(), "1"));

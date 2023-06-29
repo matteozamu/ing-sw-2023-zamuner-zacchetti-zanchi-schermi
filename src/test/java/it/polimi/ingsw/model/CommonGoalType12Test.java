@@ -125,7 +125,6 @@ class CommonGoalType12Test {
         shelf.getGrid().put(new Coordinate(1,0), new ObjectCard(ObjectCardType.randomObjectCardType(), "00"));
         shelf.getGrid().put(new Coordinate(2,0), new ObjectCard(ObjectCardType.randomObjectCardType(), "00"));
         shelf.getGrid().put(new Coordinate(3,0), new ObjectCard(ObjectCardType.randomObjectCardType(), "00"));
-//        shelf.getGrid().put(new Coordinate(4,0), new ObjectCard(ObjectCardType.randomObjectCardType(), "00"));
 
         shelf.getGrid().put(new Coordinate(0,1), new ObjectCard(ObjectCardType.randomObjectCardType(), "00"));
         shelf.getGrid().put(new Coordinate(1,1), new ObjectCard(ObjectCardType.randomObjectCardType(), "00"));
