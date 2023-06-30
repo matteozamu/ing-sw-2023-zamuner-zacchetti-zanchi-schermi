@@ -12,6 +12,7 @@ public abstract class Connection {
     private String token;
 
     /**
+     * Returns the connection status
      * @return the connection status
      */
     public boolean isConnected() {
@@ -37,14 +38,14 @@ public abstract class Connection {
     public abstract void ping();
 
     /**
-     * gest the token of the connection
+     * Gets the token of the connection
      */
     public String getToken() {
         return token;
     }
 
     /**
-     * sets the token of the connection
+     * Sets the token of the connection
      * @param token the token to set
      */
     public void setToken(String token) {

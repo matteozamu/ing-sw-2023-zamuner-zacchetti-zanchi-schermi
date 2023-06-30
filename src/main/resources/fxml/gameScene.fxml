@@ -78,10 +78,6 @@
                 <VBox fx:id="playersInfoVBox" maxHeight="169.0" maxWidth="133.0" minHeight="169.0" minWidth="133.0" prefHeight="169.0" prefWidth="133.0" translateY="20.0">
                 </VBox>
 
-<!--                <Label fx:id="infoLabel" maxWidth="133.0" minWidth="133.0" prefWidth="133.0" translateY="67.0" >-->
-<!--                    -->
-<!--                </Label>-->
-
                 <StackPane fx:id="personalGoalCardPane" styleClass="personalGoalCardPane" translateY="120.0">
                 </StackPane>
             </VBox>

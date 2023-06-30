@@ -3,6 +3,7 @@ package it.polimi.ingsw.network.server;
 import it.polimi.ingsw.network.client.RMIClientConnection;
 import it.polimi.ingsw.network.message.Message;
 
+import java.io.Serial;
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
 import java.util.Objects;
@@ -11,10 +12,17 @@ import java.util.Objects;
  * This class is the implementation of the interface RMIHandler
  */
 public class RMIHandlerImplementation extends UnicastRemoteObject implements RMIHandler {
+    @Serial
     private static final long serialVersionUID = 7973004963846163594L;
     private final transient Server server;
     private transient RMIConnection rmiSession;
 
+    /**
+     * Constructs a RMIHandlerImplementation
+     *
+     * @param server server where the client is connected
+     * @throws RemoteException in case of problems with communication with client
+     */
     RMIHandlerImplementation(Server server) throws RemoteException {
         this.server = server;
     }
@@ -50,7 +58,7 @@ public class RMIHandlerImplementation extends UnicastRemoteObject implements RMI
     }
 
     /**
-     * overridden equals method
+     * Overridden equals method
      */
     @Override
     public boolean equals(Object o) {
@@ -63,7 +71,7 @@ public class RMIHandlerImplementation extends UnicastRemoteObject implements RMI
     }
 
     /**
-     * overridden hashcode method
+     * Overridden hashcode method
      */
     @Override
     public int hashCode() {

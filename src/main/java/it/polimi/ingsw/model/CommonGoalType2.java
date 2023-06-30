@@ -2,15 +2,24 @@ package it.polimi.ingsw.model;
 
 
 /**
- * Cinque tessere dello stesso tipo che formano una diagonale
+ * Five tiles of the same type forming a diagonal.
  */
 
 public final class CommonGoalType2 extends CommonGoal {
 
+    /**
+     * The type of the common goal.
+     */
     public int type = 2;
 
+    /**
+     * The description of the common goal.
+     */
     public String description = "Five tiles of the same type forming a diagonal.";
 
+    /**
+     * The visual representation of the common goal.
+     */
     public String cardView = """
                 ╔══════════╗
                 ║■         ║
@@ -23,6 +32,7 @@ public final class CommonGoalType2 extends CommonGoal {
 
     /**
      * Gets the type of the CommonGoal.
+     * @return The type of the CommonGoal.
      */
     @Override
     public int getType() {
@@ -31,8 +41,8 @@ public final class CommonGoalType2 extends CommonGoal {
 
     /**
      * Gets the description of the CommonGoal.
+     *  @return The description of the CommonGoal.
      */
-
     @Override
     public String getDescription() {
         return description;
@@ -40,6 +50,7 @@ public final class CommonGoalType2 extends CommonGoal {
 
     /**
      * Gets the visual representation of the CommonGoal.
+     * @return The view of the CommonGoal.
      */
     @Override
     public String getCardView() {
@@ -48,8 +59,8 @@ public final class CommonGoalType2 extends CommonGoal {
 
     /**
      * Gets the String representation of the CommonGoal.
+     * @return The String representation of the CommonGoal.
      */
-
     @Override
     public String toString() {
         return "commonGoalCard-2";
@@ -74,7 +85,6 @@ public final class CommonGoalType2 extends CommonGoal {
      * @param shelf The Shelf to check.
      * @return true if the Shelf satisfies the CommonGoal, false otherwise.
      */
-
     @Override
     public boolean checkGoal(Shelf shelf) {
         if (!isShelfEligible(shelf)) {
@@ -109,7 +119,6 @@ public final class CommonGoalType2 extends CommonGoal {
      * @param type  The ObjectCardType to check.
      * @return true if the Shelf contains 5 object cards of the same type forming a diagonal from the top left, false otherwise.
      */
-
     public boolean checkDiagonalFromTopLeft(Shelf shelf, Coordinate start, ObjectCardType type) {
         for (int i = 0; i < 5; i++) {
             Coordinate currentCoordinate = new Coordinate(start.getRow() - i, start.getColumn() + i);
@@ -130,7 +139,6 @@ public final class CommonGoalType2 extends CommonGoal {
      * @param type  The ObjectCardType to check.
      * @return true if the Shelf contains 5 object cards of the same type forming a diagonal from the top right, false otherwise.
      */
-
     public boolean checkDiagonalFromTopRight(Shelf shelf, Coordinate start, ObjectCardType type) {
         for (int i = 0; i < 5; i++) {
             Coordinate currentCoordinate = new Coordinate(start.getRow() - i, start.getColumn() - i);

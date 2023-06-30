@@ -34,6 +34,11 @@ public class GameSceneController {
     private static final String CSS_LIMBO_HBOX = "limboHBoxArea";
     private static final double COMMONGOAL_CARD_WIDTH = 138.5;
     private static final double COMMONGOAL_CARD_HEIGHT = 91.3;
+    private static final double COMMONGOAL_POINTS_WIDTH = 39.5;
+    private static final double COMMONGOAL_POINTS_HEIGHT = 39.5;
+    private static final double COMMONGOAL_POINTS_ROTATE = -8.0;
+    private static final double COMMONGOAL_POINTS_TRANSLATE_X = 32.2;
+    private static final double COMMONGOAL_POINTS_TRANSLATE_Y = -3.5;
     private static final double BOARD_OBJECT_CARD_WIDTH = 60.0;
     private static final double BOARD_OBJECT_CARD_HEIGHT = 60.0;
     private static final double SHELF_OBJECT_CARD_WIDTH = 47.0;
@@ -63,47 +68,27 @@ public class GameSceneController {
     @FXML
     StackPane gameStackPaneArea;
     @FXML
+    HBox boardShelfHBoxArea;
+    @FXML
+    VBox boardCommonGoalCardsVBoxArea;
+    @FXML
     StackPane boardStackPaneArea;
     @FXML
+    ImageView boardImage;
+    @FXML
     GridPane boardGridPane;
+    @FXML
+    ImageView endGameTokenImage;
+    @FXML
+    HBox commonGoalCardsHBoxArea;
     @FXML
     StackPane commonGoalCard1StackPane;
     @FXML
     StackPane commonGoalCard2StackPane;
     @FXML
-    ImageView boardImage;
-    @FXML
-    HBox boardShelfHBoxArea;
-    @FXML
-    VBox boardCommonGoalCardsVBoxArea;
-    @FXML
     VBox shelfLimboVBoxArea;
     @FXML
-    FlowPane commonGoalCardInfoPanel;
-    @FXML
-    VBox playersInfoVBox;
-    @FXML
-    StackPane myStackPane;
-    @FXML
-    StackPane shelfStackPane2;
-    @FXML
-    StackPane shelfStackPane3;
-    @FXML
-    StackPane shelfStackPane4;
-    @FXML
-    StackPane actionListStackPane;
-    @FXML
-    ScrollPane shelfScrollPane;
-    @FXML
     HBox limboHBoxArea;
-    @FXML
-    StackPane personalGoalCardPane;
-    @FXML
-    VBox playersInfoPersonalGoalCardVBox;
-    @FXML
-    HBox commonGoalCardsHBoxArea;
-    @FXML
-    HBox shelfHBoxImages;
     @FXML
     AnchorPane columnArrowAnchorPane;
     @FXML
@@ -117,7 +102,27 @@ public class GameSceneController {
     @FXML
     ImageView arrowShelf4;
     @FXML
-    ImageView endGameTokenImage;
+    ScrollPane shelfScrollPane;
+    @FXML
+    HBox shelfHBoxImages;
+    @FXML
+    StackPane myStackPane;
+    @FXML
+    StackPane shelfStackPane2;
+    @FXML
+    StackPane shelfStackPane3;
+    @FXML
+    StackPane shelfStackPane4;
+    @FXML
+    StackPane actionListStackPane;
+    @FXML
+    VBox playersInfoPersonalGoalCardVBox;
+    @FXML
+    VBox playersInfoVBox;
+    @FXML
+    StackPane personalGoalCardPane;
+    @FXML
+    FlowPane commonGoalCardInfoPanel;
 
     private GuiManager guiManager;
     private Map<String, ImageView> objectCards;
@@ -137,17 +142,16 @@ public class GameSceneController {
         guiManager = GuiManager.getInstance();
         guiManager.setGameSceneController(this);
 
-        limboHBoxArea.setVisible(true);
-
         objectCards = new HashMap<>();
         commonGoalCards = new HashMap<>();
         personalGoalCards = new HashMap<>();
         commonGoalPoints = new HashMap<>();
         shelvesGridPane = new ArrayList<>();
+        shelvesStackPane = List.of(shelfStackPane2, shelfStackPane3, shelfStackPane4);
         orderLimboObjectCards = new ArrayList<>();
         imageViewsWithListener = new HashSet<>();
-        shelvesStackPane = List.of(shelfStackPane2, shelfStackPane3, shelfStackPane4);
 
+        limboHBoxArea.setVisible(true);
         arrowShelf0.setMouseTransparent(true);
         arrowShelf1.setMouseTransparent(true);
         arrowShelf2.setMouseTransparent(true);
@@ -188,12 +192,79 @@ public class GameSceneController {
     }
 
     /**
+     * Updates the elements of the board
+     */
+    void onStateUpdate() {
+        updateGameArea(guiManager.getGameSerialized());
+    }
+
+    /**
+     * Updates element on the game area
+     *
+     * @param gameSerialized game update
+     */
+    private void updateGameArea(GameSerialized gameSerialized) {
+        updateBoard(gameSerialized);
+        updateShelves(gameSerialized);
+        updateLimbo(gameSerialized);
+        updateCommonGoalCards(gameSerialized);
+        updatePlayersInfo(gameSerialized);
+    }
+
+    /**
+     * Updates element on the board
+     * @param gameSerialized game update
+     */
+    private void updateBoard(GameSerialized gameSerialized) {
+        ObservableList<Node> children = boardGridPane.getChildren();
+        children.clear();
+        setBoard(gameSerialized);
+    }
+
+    /**
+     * Updates element on the shelves
+     * @param gameSerialized game update
+     */
+    private void updateShelves(GameSerialized gameSerialized) {
+        for (GridPane shelfGrid : shelvesGridPane) {
+            ObservableList<Node> children = shelfGrid.getChildren();
+            children.clear();
+            String shelfOwner = (String) shelfGrid.getProperties().get(USERNAME_PROPERTY);
+            updateShelfGrid(gameSerialized, shelfGrid, shelfOwner);
+        }
+    }
+
+    /**
+     * Updates the list of object cards selected
+     * @param gameSerialized game update
+     */
+    private void updateLimbo(GameSerialized gameSerialized) {
+        setLimbo(gameSerialized);
+    }
+
+    /**
+     * Updates the common goal cards and their points
+     * @param gameSerialized game update
+     */
+    private void updateCommonGoalCards(GameSerialized gameSerialized) {
+        setCommonGoalCards(gameSerialized);
+    }
+
+    /**
+     * Updates players' info and their scores
+     * @param gameSerialized game update
+     */
+    private void updatePlayersInfo(GameSerialized gameSerialized) {
+        setPlayerInfo(gameSerialized);
+    }
+
+    /**
      * Loads the images for object cards and adds them to the objectCards map through the addObjectCardImagesToMap method
      */
     private void loadObjectCards() {
         List<String> types = Arrays.stream(ObjectCardType.values())
                 .map(Enum::name)
-                .collect(Collectors.toList());
+                .toList();
 
         for (int i = 0; i < ObjectCardType.SIZE; i++) {
             addObjectCardImagesToMap(types.get(i), "0", 7);
@@ -362,150 +433,8 @@ public class GameSceneController {
         }
     }
 
-
     /**
-     * Updates the shelf grid with the new state of the game
-     *
-     * @param gameSerialized state of the game at the time of the join
-     * @param shelfGrid shelfGrid grid to update
-     * @param shelfOwner owner of the shelf
-     */
-    private void updateShelfGrid(GameSerialized gameSerialized, GridPane shelfGrid, String shelfOwner) {
-        List<Player> players = gameSerialized.getAllPlayers();
-        Shelf onWorkShelf = players.stream()
-                .filter(player -> player.getName().equals(shelfOwner))
-                .map(Player::getShelf)
-                .findFirst()
-                .orElse(null);
-
-        for (int row = Shelf.ROWS - 1; row >= 0; row--) {
-            for (int col = 0; col < Shelf.COLUMNS; col++) {
-                Coordinate coord = new Coordinate(row, col);
-                ObjectCard objectCard = onWorkShelf.getObjectCard(coord);
-                if (objectCard == null) {
-                    ImageView transparentImageView = new ImageView();
-                    transparentImageView.setFitWidth(SHELF_OBJECT_CARD_WIDTH);
-                    transparentImageView.setFitHeight(SHELF_OBJECT_CARD_HEIGHT);
-                    transparentImageView.setPreserveRatio(true);
-                    transparentImageView.setPickOnBounds(true);
-                    transparentImageView.setId(TRANSPARENT_IMAGEVIEW_ID);
-
-                    shelfGrid.add(transparentImageView, col, Shelf.ROWS - 1 - row);
-                } else {
-                    String cardTypeText = objectCard.getType().getText();
-                    String cardNameType = cardTypeText + "-" + objectCard.getId();
-
-                    ImageView imageView = objectCards.get(cardNameType);
-                    if (imageView != null) {
-                        imageView.setFitWidth(SHELF_OBJECT_CARD_WIDTH);
-                        imageView.setFitHeight(SHELF_OBJECT_CARD_HEIGHT);
-                        imageView.setPreserveRatio(true);
-                        imageView.setPickOnBounds(true);
-                        imageView.setMouseTransparent(true);
-
-                        shelfGrid.add(imageView, col, Shelf.ROWS - 1 - row);
-                    }
-                }
-            }
-        }
-    }
-
-    /**
-     * Set and update common goals and their points with the new state of the game
-     *
-     * @param gameSerialized state of the game at the time of the join
-     */
-    private void setCommonGoalCards(GameSerialized gameSerialized) {
-        List<CommonGoal> commonGoals = gameSerialized.getCommonGoals();
-        commonGoalCard1StackPane.getChildren().clear();
-        commonGoalCard2StackPane.getChildren().clear();
-
-
-        for (int i = 0; i < commonGoals.size(); i++) {
-            String cardTypeText = commonGoals.get(i).toString();
-            ImageView imageView = commonGoalCards.get(cardTypeText);
-
-            if (imageView != null) {
-                imageView.setFitWidth(COMMONGOAL_CARD_WIDTH);
-                imageView.setFitHeight(COMMONGOAL_CARD_HEIGHT);
-                imageView.setPreserveRatio(true);
-                imageView.setPickOnBounds(true);
-
-                if (i == 0) {
-                    commonGoalCard1StackPane.getChildren().add(imageView);
-                    imageView.setMouseTransparent(true);
-                } else if (i == 1) {
-                    commonGoalCard2StackPane.getChildren().add(imageView);
-                    imageView.setMouseTransparent(true);
-                }
-            }
-
-            int commonGoalCurrentPointsInt = commonGoals.get(i).getCurrentPoints();
-            String commonGoalCurrentPointsString;
-            if (commonGoalCurrentPointsInt == 0) {
-                commonGoalCurrentPointsString = "scoring-0" + i;
-            } else {
-                commonGoalCurrentPointsString = "scoring-" + commonGoalCurrentPointsInt + i;
-            }
-            ImageView pointsImageView = commonGoalPoints.get(commonGoalCurrentPointsString);
-
-            if (pointsImageView != null) {
-                pointsImageView.setFitWidth(39.5);
-                pointsImageView.setFitHeight(39.5);
-                pointsImageView.setRotate(-8.0);
-                pointsImageView.setTranslateX(32.2);
-                pointsImageView.setTranslateY(-3.5);
-                pointsImageView.setPreserveRatio(true);
-
-                if (i == 0) {
-                    commonGoalCard1StackPane.getChildren().add(pointsImageView);
-                    pointsImageView.toFront();
-                } else if (i == 1) {
-                    commonGoalCard2StackPane.getChildren().add(pointsImageView);
-                    pointsImageView.toFront();
-                }
-
-            }
-        }
-    }
-
-    /**
-     * Set personal goal
-     *
-     * @param gameSerialized state of the game at the time of the join
-     */
-    private void setPersonalGoalCard(GameSerialized gameSerialized) {
-        PersonalGoalCard personalGoalCard = gameSerialized.getPersonalGoalCard();
-        String cardTypeText = personalGoalCard.getID();
-        ImageView imageView = personalGoalCards.get(cardTypeText);
-
-        if (imageView != null) {
-            imageView.setFitWidth(PERSONALGOAL_CARD_WIDTH);
-            imageView.setFitHeight(PERSONALGOAL_CARD_HEIGHT);
-            imageView.setTranslateY(PERSONALGOAL_CARD_TRANSLATE_Y);
-            imageView.setPreserveRatio(true);
-            imageView.setPickOnBounds(true);
-            StackPane.setAlignment(imageView, Pos.CENTER);
-            imageView.setMouseTransparent(true);
-
-            personalGoalCardPane.getChildren().add(imageView);
-        }
-    }
-
-//    private void setInfoLabel(GameSerialized gameSerialized) {
-//        List<Player> players = gameSerialized.getAllPlayers();
-//        String firstPlayerName = players.get(0).getName();
-//
-//        infoLabel.setText(firstPlayerName + " started the game as the first player. " +
-//                "When a player fills their Shelf, " +
-//                "the game ends in that round with the " +
-//                "player preceding " + firstPlayerName + " in turn order.");
-//        infoLabel.setWrapText(true);
-//        infoLabel.getStyleClass().add(CSS_INFO_LABEL);
-//    }
-
-    /**
-     * Set shelves
+     * Set shelves of the players
      *
      * @param gameSerialized state of the game at the time of the join
      */
@@ -586,6 +515,133 @@ public class GameSceneController {
     }
 
     /**
+     * Updates the shelf grid with the new state of the game
+     *
+     * @param gameSerialized state of the game at the time of the join
+     * @param shelfGrid shelfGrid grid to update
+     * @param shelfOwner owner of the shelf
+     */
+    private void updateShelfGrid(GameSerialized gameSerialized, GridPane shelfGrid, String shelfOwner) {
+        List<Player> players = gameSerialized.getAllPlayers();
+        Shelf onWorkShelf = players.stream()
+                .filter(player -> player.getName().equals(shelfOwner))
+                .map(Player::getShelf)
+                .findFirst()
+                .orElse(null);
+
+        for (int row = Shelf.ROWS - 1; row >= 0; row--) {
+            for (int col = 0; col < Shelf.COLUMNS; col++) {
+                Coordinate coord = new Coordinate(row, col);
+                ObjectCard objectCard = onWorkShelf.getObjectCard(coord);
+                if (objectCard == null) {
+                    ImageView transparentImageView = new ImageView();
+                    transparentImageView.setFitWidth(SHELF_OBJECT_CARD_WIDTH);
+                    transparentImageView.setFitHeight(SHELF_OBJECT_CARD_HEIGHT);
+                    transparentImageView.setPreserveRatio(true);
+                    transparentImageView.setPickOnBounds(true);
+                    transparentImageView.setId(TRANSPARENT_IMAGEVIEW_ID);
+
+                    shelfGrid.add(transparentImageView, col, Shelf.ROWS - 1 - row);
+                } else {
+                    String cardTypeText = objectCard.getType().getText();
+                    String cardNameType = cardTypeText + "-" + objectCard.getId();
+
+                    ImageView imageView = objectCards.get(cardNameType);
+                    if (imageView != null) {
+                        imageView.setFitWidth(SHELF_OBJECT_CARD_WIDTH);
+                        imageView.setFitHeight(SHELF_OBJECT_CARD_HEIGHT);
+                        imageView.setPreserveRatio(true);
+                        imageView.setPickOnBounds(true);
+                        imageView.setMouseTransparent(true);
+
+                        shelfGrid.add(imageView, col, Shelf.ROWS - 1 - row);
+                    }
+                }
+            }
+        }
+    }
+
+    /**
+     * Set and update common goals and their points with the new state of the game
+     *
+     * @param gameSerialized state of the game at the time of the join
+     */
+    private void setCommonGoalCards(GameSerialized gameSerialized) {
+        List<CommonGoal> commonGoals = gameSerialized.getCommonGoals();
+        commonGoalCard1StackPane.getChildren().clear();
+        commonGoalCard2StackPane.getChildren().clear();
+
+        for (int i = 0; i < commonGoals.size(); i++) {
+            String cardTypeText = commonGoals.get(i).toString();
+            ImageView imageView = commonGoalCards.get(cardTypeText);
+
+            if (imageView != null) {
+                imageView.setFitWidth(COMMONGOAL_CARD_WIDTH);
+                imageView.setFitHeight(COMMONGOAL_CARD_HEIGHT);
+                imageView.setPreserveRatio(true);
+                imageView.setPickOnBounds(true);
+
+                if (i == 0) {
+                    commonGoalCard1StackPane.getChildren().add(imageView);
+                    imageView.setMouseTransparent(true);
+                } else if (i == 1) {
+                    commonGoalCard2StackPane.getChildren().add(imageView);
+                    imageView.setMouseTransparent(true);
+                }
+            }
+
+            int commonGoalCurrentPointsInt = commonGoals.get(i).getCurrentPoints();
+            String commonGoalCurrentPointsString;
+            if (commonGoalCurrentPointsInt == 0) {
+                commonGoalCurrentPointsString = "scoring-0" + i;
+            } else {
+                commonGoalCurrentPointsString = "scoring-" + commonGoalCurrentPointsInt + i;
+            }
+            ImageView pointsImageView = commonGoalPoints.get(commonGoalCurrentPointsString);
+
+            if (pointsImageView != null) {
+                pointsImageView.setFitWidth(COMMONGOAL_POINTS_WIDTH);
+                pointsImageView.setFitHeight(COMMONGOAL_POINTS_HEIGHT);
+                pointsImageView.setRotate(COMMONGOAL_POINTS_ROTATE);
+                pointsImageView.setTranslateX(COMMONGOAL_POINTS_TRANSLATE_X);
+                pointsImageView.setTranslateY(COMMONGOAL_POINTS_TRANSLATE_Y);
+                pointsImageView.setPreserveRatio(true);
+
+                if (i == 0) {
+                    commonGoalCard1StackPane.getChildren().add(pointsImageView);
+                    pointsImageView.toFront();
+                } else if (i == 1) {
+                    commonGoalCard2StackPane.getChildren().add(pointsImageView);
+                    pointsImageView.toFront();
+                }
+            }
+        }
+    }
+
+    /**
+     * Set personal goal
+     *
+     * @param gameSerialized state of the game at the time of the join
+     */
+    private void setPersonalGoalCard(GameSerialized gameSerialized) {
+        PersonalGoalCard personalGoalCard = gameSerialized.getPersonalGoalCard();
+        String cardTypeText = personalGoalCard.getID();
+        ImageView imageView = personalGoalCards.get(cardTypeText);
+
+        if (imageView != null) {
+            imageView.setFitWidth(PERSONALGOAL_CARD_WIDTH);
+            imageView.setFitHeight(PERSONALGOAL_CARD_HEIGHT);
+            imageView.setTranslateY(PERSONALGOAL_CARD_TRANSLATE_Y);
+            imageView.setPreserveRatio(true);
+            imageView.setPickOnBounds(true);
+            StackPane.setAlignment(imageView, Pos.CENTER);
+            imageView.setMouseTransparent(true);
+
+            personalGoalCardPane.getChildren().add(imageView);
+        }
+    }
+
+    /**
      * Set and update the list of chosen object cards with the new state of the game
      *
      * @param gameSerialized state of the game at the time of the join
@@ -633,20 +689,6 @@ public class GameSceneController {
                     }
                 }
             }
-        }
-    }
-
-    /**
-     * Handles the object card button click in the list of object cards selected
-     * @param index index of the object card in the list of object cards selected
-     * @param limboCards list of object cards selected
-     */
-    private void onObjectCardInLimboClick(int index, List<ObjectCard> limboCards) {
-        orderLimboObjectCards.add(index);
-
-        if (orderLimboObjectCards.size() == limboCards.size()) {
-            onReorderLimboRequest();
-            orderLimboObjectCards.clear();
         }
     }
 
@@ -713,106 +755,6 @@ public class GameSceneController {
                 i++;
             }
         }
-    }
-
-    /**
-     * Handles the arrow button click for the choice of shelf column
-     * @param column column selected of the shelf
-     */
-    private void onChooseColumnButtonClick(int column) {
-        if (!guiManager.sendRequest(MessageBuilder.buildLoadShelfRequest(guiManager.getClientToken(), guiManager.getUsername(), column))) {
-            GuiManager.showDialog((Stage) mainPane.getScene().getWindow(), GuiManager.ERROR_DIALOG_TITLE,
-                    GuiManager.SEND_ERROR);
-        }
-    }
-
-    /**
-     * Updates the elements of the board
-     */
-    void onStateUpdate() {
-        updateGameArea(guiManager.getGameSerialized());
-    }
-
-    /**
-     * Updates element on the game area
-     *
-     * @param gameSerialized game update
-     */
-    private void updateGameArea(GameSerialized gameSerialized) {
-        updateBoard(gameSerialized);
-        updateShelves(gameSerialized);
-        updateLimbo(gameSerialized);
-        updateCommonGoalCards(gameSerialized);
-        updatePlayersInfo(gameSerialized);
-    }
-
-    /**
-     * Updates element on the board
-     */
-    private void updateBoard(GameSerialized gameSerialized) {
-        ObservableList<Node> children = boardGridPane.getChildren();
-        children.clear();
-        setBoard(gameSerialized);
-    }
-
-    /**
-     * Updates element on the shelves
-     */
-    private void updateShelves(GameSerialized gameSerialized) {
-        for (GridPane shelfGrid : shelvesGridPane) {
-            ObservableList<Node> children = shelfGrid.getChildren();
-            children.clear();
-            String shelfOwner = (String) shelfGrid.getProperties().get(USERNAME_PROPERTY);
-            updateShelfGrid(gameSerialized, shelfGrid, shelfOwner);
-        }
-    }
-
-    /**
-     * Updates the list of object cards selected
-     */
-    private void updateLimbo(GameSerialized gameSerialized) {
-        setLimbo(gameSerialized);
-    }
-
-    /**
-     * Updates the common goal cards and their points
-     */
-    private void updateCommonGoalCards(GameSerialized gameSerialized) {
-        setCommonGoalCards(gameSerialized);
-    }
-
-    /**
-     * Updates players' info and their scores
-     */
-    private void updatePlayersInfo(GameSerialized gameSerialized) {
-        setPlayerInfo(gameSerialized);
-    }
-
-    /**
-     * Called when an error occurs. Displays an alert with the error message
-     *
-     * @param error message of the error
-     */
-    void onError(String error) {
-        GuiManager.showDialog((Stage) mainPane.getScene().getWindow(), GuiManager.ERROR_DIALOG_TITLE, error);
-    }
-
-    /**
-     * Handles the game scene when it is not the player's turn
-     */
-    void notYourTurn() {
-        actionListStackPane.getChildren().clear();
-        arrowShelf0.setMouseTransparent(true);
-        arrowShelf1.setMouseTransparent(true);
-        arrowShelf2.setMouseTransparent(true);
-        arrowShelf3.setMouseTransparent(true);
-        arrowShelf4.setMouseTransparent(true);
-        boardGridPane.setMouseTransparent(true);
-        myStackPane.setMouseTransparent(true);
-        shelfStackPane2.setMouseTransparent(true);
-        shelfStackPane3.setMouseTransparent(true);
-        shelfStackPane4.setMouseTransparent(true);
-        limboHBoxArea.setMouseTransparent(true);
     }
 
     /**
@@ -897,41 +839,6 @@ public class GameSceneController {
     }
 
     /**
-     * Handles the event when an object card is clicked on the board.
-     *
-     * @param row The row index of the clicked card.
-     * @param col The column index of the clicked card.
-     */
-    private void onObjectCardClick(int row, int col) {
-        Coordinate coordinate = new Coordinate(row, col);
-
-        if (!guiManager.sendRequest(MessageBuilder.buildPickObjectCardRequest(guiManager.getPlayer(), guiManager.getClientToken(), coordinate))) {
-            GuiManager.showDialog((Stage) mainPane.getScene().getWindow(), GuiManager.ERROR_DIALOG_TITLE,
-                    GuiManager.SEND_ERROR);
-        }
-    }
-
-    /**
-     * Handles the reorder limbo request.
-     */
-    private void onReorderLimboRequest() {
-        if (!guiManager.sendRequest(MessageBuilder.buildReorderLimboRequest(guiManager.getUsername(), guiManager.getClientToken(), orderLimboObjectCards))) {
-            GuiManager.showDialog((Stage) mainPane.getScene().getWindow(), GuiManager.ERROR_DIALOG_TITLE,
-                    GuiManager.SEND_ERROR);
-        }
-    }
-
-    /**
-     * Handles the delete limbo request.
-     */
-    void deleteLimbo() {
-        if (!guiManager.sendRequest(MessageBuilder.buildDeleteLimboRequest(guiManager.getUsername(), guiManager.getClientToken()))) {
-            GuiManager.showDialog((Stage) mainPane.getScene().getWindow(), GuiManager.ERROR_DIALOG_TITLE,
-                    GuiManager.SEND_ERROR);
-        }
-    }
-
-    /**
      * Sets the availability of object cards on the board.
      *
      * @param isAvailable A boolean indicating whether the object cards should be available or not.
@@ -963,6 +870,84 @@ public class GameSceneController {
     }
 
     /**
+     * Handles the game scene when it is not the player's turn
+     */
+    void notYourTurn() {
+        actionListStackPane.getChildren().clear();
+        arrowShelf0.setMouseTransparent(true);
+        arrowShelf1.setMouseTransparent(true);
+        arrowShelf2.setMouseTransparent(true);
+        arrowShelf3.setMouseTransparent(true);
+        arrowShelf4.setMouseTransparent(true);
+        boardGridPane.setMouseTransparent(true);
+        myStackPane.setMouseTransparent(true);
+        shelfStackPane2.setMouseTransparent(true);
+        shelfStackPane3.setMouseTransparent(true);
+        shelfStackPane4.setMouseTransparent(true);
+        limboHBoxArea.setMouseTransparent(true);
+    }
+
+    /**
+     * Handles the event when an object card is clicked on the board.
+     *
+     * @param row The row index of the clicked card.
+     * @param col The column index of the clicked card.
+     */
+    private void onObjectCardClick(int row, int col) {
+        Coordinate coordinate = new Coordinate(row, col);
+
+        if (!guiManager.sendRequest(MessageBuilder.buildPickObjectCardRequest(guiManager.getPlayer(), guiManager.getClientToken(), coordinate))) {
+            GuiManager.showDialog((Stage) mainPane.getScene().getWindow(), GuiManager.ERROR_DIALOG_TITLE,
+                    GuiManager.SEND_ERROR);
+        }
+    }
+
+    /**
+     * Handles the object card button click in the list of object cards selected
+     * @param index index of the object card in the list of object cards selected
+     * @param limboCards list of object cards selected
+     */
+    private void onObjectCardInLimboClick(int index, List<ObjectCard> limboCards) {
+        orderLimboObjectCards.add(index);
+
+        if (orderLimboObjectCards.size() == limboCards.size()) {
+            onReorderLimboRequest();
+            orderLimboObjectCards.clear();
+        }
+    }
+
+    /**
+     * Handles the arrow button click for the choice of shelf column
+     * @param column column selected of the shelf
+     */
+    private void onChooseColumnButtonClick(int column) {
+        if (!guiManager.sendRequest(MessageBuilder.buildLoadShelfRequest(guiManager.getClientToken(), guiManager.getUsername(), column))) {
+            GuiManager.showDialog((Stage) mainPane.getScene().getWindow(), GuiManager.ERROR_DIALOG_TITLE,
+                    GuiManager.SEND_ERROR);
+        }
+    }
+
+    /**
+     * Handles the reorder limbo request.
+     */
+    private void onReorderLimboRequest() {
+        if (!guiManager.sendRequest(MessageBuilder.buildReorderLimboRequest(guiManager.getUsername(), guiManager.getClientToken(), orderLimboObjectCards))) {
+            GuiManager.showDialog((Stage) mainPane.getScene().getWindow(), GuiManager.ERROR_DIALOG_TITLE,
+                    GuiManager.SEND_ERROR);
+        }
+    }
+
+    /**
+     * Handles the delete limbo request.
+     */
+    void onDeleteLimboRequest() {
+        if (!guiManager.sendRequest(MessageBuilder.buildDeleteLimboRequest(guiManager.getUsername(), guiManager.getClientToken()))) {
+            GuiManager.showDialog((Stage) mainPane.getScene().getWindow(), GuiManager.ERROR_DIALOG_TITLE,
+                    GuiManager.SEND_ERROR);
+        }
+    }
+
+    /**
      * Communicates the disconnection of a player
      *
      * @param player username of a player who disconnected
@@ -973,9 +958,17 @@ public class GameSceneController {
 
     /**
      * Communicates the reconnection of a player
+     * @param message message to be displayed
      */
     void onPlayerReconnection(String message) {
         GuiManager.showDialog((Stage) mainPane.getScene().getWindow(), "Reconnection", message);
+    }
+
+    /**
+     * Handles the disconnection
+     */
+    void onDisconnection() {
+        GuiManager.showDialog((Stage) mainPane.getScene().getWindow(), "Disconnection", "You were disconnected from the server");
     }
 
     /**
@@ -992,9 +985,11 @@ public class GameSceneController {
     }
 
     /**
-     * Handles the disconnection
+     * Called when an error occurs. Displays an alert with the error message
+     *
+     * @param error message of the error
      */
-    void onDisconnection() {
-        GuiManager.showDialog((Stage) mainPane.getScene().getWindow(), "Disconnection", "You were disconnected from the server");
+    void onError(String error) {
+        GuiManager.showDialog((Stage) mainPane.getScene().getWindow(), GuiManager.ERROR_DIALOG_TITLE, error);
     }
 }

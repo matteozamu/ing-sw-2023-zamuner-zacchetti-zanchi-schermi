@@ -4,14 +4,23 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * Cinque tessere dello stesso tipo che formano una X.
+ * Five tiles of the same type forming an X.
  */
 public final class CommonGoalType10 extends CommonGoal {
 
+    /**
+     * The type of the common goal.
+     */
     public int type = 10;
 
+    /**
+     * The description of the common goal.
+     */
     public String description = "Five tiles of the same type forming an X.";
 
+    /**
+     * The visual representation of the common goal.
+     */
     public String cardView = """
             ╔═════════╗
             ║  ■   ■  ║
@@ -22,6 +31,7 @@ public final class CommonGoalType10 extends CommonGoal {
 
     /**
      * Gets the type of the CommonGoal.
+     * @return the type of the CommonGoal.
      */
     @Override
     public int getType() {
@@ -30,6 +40,7 @@ public final class CommonGoalType10 extends CommonGoal {
 
     /**
      * Gets the description of the CommonGoal.
+     * @return the description of the CommonGoal.
      */
     @Override
     public String getDescription() {
@@ -38,6 +49,7 @@ public final class CommonGoalType10 extends CommonGoal {
 
     /**
      * Gets the visual representation of the CommonGoal.
+     * @return the visual representation of the CommonGoal.
      */
     @Override
     public String getCardView() {
@@ -46,6 +58,7 @@ public final class CommonGoalType10 extends CommonGoal {
 
     /**
      * Gets the String representation of the CommonGoal.
+     * @return the String representation of the CommonGoal.
      */
     @Override
     public String toString() {
@@ -96,5 +109,4 @@ public final class CommonGoalType10 extends CommonGoal {
         }
         return false;
     }
-
 }

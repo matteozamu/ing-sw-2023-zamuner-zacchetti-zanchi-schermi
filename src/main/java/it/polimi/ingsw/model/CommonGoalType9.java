@@ -4,19 +4,28 @@ import java.util.HashSet;
 import java.util.Set;
 
 /**
- * Tre colonne formate ciascuna da 6 tessere di uno, due o tre tipi differenti.
- * Colonne diverse possono avere combinazioni diverse di tipi di tessere.
+ * Three columns each formed by 6 tiles of maximum three different types.
+ * One column can show the same or a different combination of another column.
  */
 public final class CommonGoalType9 extends CommonGoal {
 
+    /**
+     * The type of the common goal.
+     */
     public int type = 9;
 
+    /**
+     * The description of the common goal.
+     */
     public String description = """
             Three columns each formed by 6 tiles
             of maximum three different types. One
             column can show the same or a different
             combination of another column.""";
 
+    /**
+     * The visual representation of the common goal.
+     */
     public String cardView = """
             ╔═════════════╗
             ║      ■      ║
@@ -30,6 +39,7 @@ public final class CommonGoalType9 extends CommonGoal {
 
     /**
      * Gets the type of the CommonGoal.
+     * @return the type of the CommonGoal.
      */
     @Override
     public int getType() {
@@ -38,6 +48,7 @@ public final class CommonGoalType9 extends CommonGoal {
 
     /**
      * Gets the description of the CommonGoal.
+     * @return the description of the CommonGoal.
      */
     @Override
     public String getDescription() {
@@ -46,6 +57,7 @@ public final class CommonGoalType9 extends CommonGoal {
 
     /**
      * Gets the visual representation of the CommonGoal.
+     * @return the visual representation of the CommonGoal.
      */
     @Override
     public String getCardView() {
@@ -54,6 +66,7 @@ public final class CommonGoalType9 extends CommonGoal {
 
     /**
      * Gets the String representation of the CommonGoal.
+     * @return the String representation of the CommonGoal.
      */
     @Override
     public String toString() {
@@ -71,7 +84,6 @@ public final class CommonGoalType9 extends CommonGoal {
     protected boolean isShelfEligible(Shelf shelf) {
         return shelf.getGrid().size() >= 18;
     }
-
 
     /**
      * Checks if the Shelf is eligible for the goal check.
@@ -114,5 +126,4 @@ public final class CommonGoalType9 extends CommonGoal {
 
         return columnCount == 3;
     }
-
 }

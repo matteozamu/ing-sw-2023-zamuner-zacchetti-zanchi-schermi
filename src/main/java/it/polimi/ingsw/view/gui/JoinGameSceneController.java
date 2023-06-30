@@ -18,7 +18,6 @@ import java.util.List;
  * Class JoinGameSceneController represents the controller of the join game scene, the scene where the player
  * can see the list of existing games they can join
  */
-
 public class JoinGameSceneController {
 
     private GuiManager guiManager;
@@ -62,6 +61,7 @@ public class JoinGameSceneController {
 
     /**
      * Updates the lobby list
+     * @param games the list of games
      */
     void updateIdList(List<ControllerGame> games) {
         ObservableList<Node> childrens = idLabelsBox.getChildren();

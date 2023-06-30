@@ -8,7 +8,7 @@ import java.util.LinkedHashMap;
 import java.util.List;
 
 /**
- * this class represents the game state, it is used to send the game state to the clients
+ * This class represents the game state, it is used to send the game state to the clients
  */
 public class GameSerialized implements Serializable {
     private static final long serialVersionUID = 526685006552543525L;
@@ -22,9 +22,8 @@ public class GameSerialized implements Serializable {
     private LinkedHashMap<Coordinate, ObjectCard> limbo;
     private Player currentPlayer;
 
-
     /**
-     * constructor of the class, it initializes the attributes of the class
+     * Constructor of the class, it initializes the attributes of the class
      *
      * @param username is the username of the player that is asking for the game state
      */
@@ -51,7 +50,7 @@ public class GameSerialized implements Serializable {
     }
 
     /**
-     * this method returns the board matrix
+     * This method returns the board matrix
      *
      * @return the board matrix
      */
@@ -60,17 +59,16 @@ public class GameSerialized implements Serializable {
     }
 
     /**
-     * this method returns the list of the players
+     * This method returns the list of the players
      *
      * @return the list of the players
      */
-    // TODO: Si può eliminare?
     public List<Player> getPlayers() {
         return players;
     }
 
     /**
-     * this method returns the points of the player
+     * This method returns the points of the player
      *
      * @return the points of the player
      */
@@ -79,6 +77,7 @@ public class GameSerialized implements Serializable {
     }
 
     /**
+     * Returns the current player
      * @return the current player
      */
     public Player getCurrentPlayer() {
@@ -86,6 +85,7 @@ public class GameSerialized implements Serializable {
     }
 
     /**
+     * Returns the list of all the players in the game
      * @return the list of all the players in the game
      */
     public List<Player> getAllPlayers() {
@@ -95,7 +95,7 @@ public class GameSerialized implements Serializable {
     }
 
     /**
-     * this method returns the board
+     * This method returns the board
      *
      * @return the board
      */
@@ -150,9 +150,10 @@ public class GameSerialized implements Serializable {
         return commonGoals;
     }
 
-
     /**
-     * override of the toString method
+     * Override of the toString method
+     *
+     * @return the string representation
      */
     @Override
     public String toString() {

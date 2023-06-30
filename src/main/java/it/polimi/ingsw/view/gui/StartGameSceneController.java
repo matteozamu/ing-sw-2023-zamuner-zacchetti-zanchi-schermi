@@ -16,7 +16,6 @@ import java.util.List;
  * Class StartGameSceneController represents the controller of the scene where the player can choose to create
  * a new game or to join an existing one
  */
-
 public class StartGameSceneController {
     private GuiManager guiManager;
 
@@ -96,6 +95,7 @@ public class StartGameSceneController {
 
     /**
      * Handles the situation where the player chooses to join an existing game
+     * @param games list of games
      */
     void onJoinGameResponse(List<ControllerGame> games) {
         JoinGameSceneController joinGameSceneController = GuiManager.setLayout(mainPane.getScene(), "fxml/joinGameScene.fxml");

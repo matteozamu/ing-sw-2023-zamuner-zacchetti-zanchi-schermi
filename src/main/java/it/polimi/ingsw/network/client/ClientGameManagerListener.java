@@ -16,6 +16,7 @@ import java.util.List;
 interface ClientGameManagerListener {
     /**
      * Handles the response to a connection
+     * @param response to the connection
      */
     void connectionResponse(ConnectionResponse response);
 
@@ -31,6 +32,7 @@ interface ClientGameManagerListener {
 
     /**
      * Handles the response to a generic error
+     * @param error message
      */
     void responseError(String error);
 
@@ -69,6 +71,7 @@ interface ClientGameManagerListener {
 
     /**
      * Tells the client that is not his turn
+     * @param turnOwner username of the player who has the turn
      */
     void notYourTurn(String turnOwner);
 
@@ -76,6 +79,7 @@ interface ClientGameManagerListener {
      * Communicates who is the first player
      *
      * @param username first player username
+     * @param cg list of common goals
      */
     void firstPlayerCommunication(String username, List<CommonGoal> cg);
 

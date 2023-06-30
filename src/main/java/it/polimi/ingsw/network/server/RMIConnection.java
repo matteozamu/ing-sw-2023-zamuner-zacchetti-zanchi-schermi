@@ -26,6 +26,7 @@ public class RMIConnection extends Connection {
     }
 
     /**
+     * Returns the connection status
      * @return the connection status
      */
     @Override

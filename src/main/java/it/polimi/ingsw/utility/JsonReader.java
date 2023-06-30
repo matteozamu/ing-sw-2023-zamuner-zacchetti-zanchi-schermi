@@ -13,6 +13,9 @@ import java.io.InputStream;
 import java.lang.reflect.Type;
 import java.util.List;
 
+/**
+ * This class reads the program's constants from a json file
+ */
 public class JsonReader {
     private static int socketPort;
     private static int RMIPort;
@@ -25,7 +28,7 @@ public class JsonReader {
     private static int timer;
 
     /**
-     * read the program's constant from a json file
+     * Read the program's constant from a json file
      *
      * @param filename the file to read
      */
@@ -39,7 +42,6 @@ public class JsonReader {
             // Parse the JSON data
             JSONTokener tokener = new JSONTokener(inputStream);
             JSONObject jsonObject = new JSONObject(tokener);
-
 
             JSONArray personalGoalCardsArray = jsonObject.getJSONArray("personalGoalCards");
             Type personalGoalCardListType = new TypeToken<List<PersonalGoalCard>>() {}.getType();
@@ -77,7 +79,6 @@ public class JsonReader {
                 }
             }
 
-
             // Close the input stream
             inputStream.close();
         } catch (Exception e) {
@@ -86,6 +87,7 @@ public class JsonReader {
     }
 
     /**
+     * Returns the maximum number of player
      * @return the maximum number of player
      */
     public static int getMaxPlayers() {
@@ -93,6 +95,7 @@ public class JsonReader {
     }
 
     /**
+     * Returns the minimum number of player
      * @return the minimum number of player
      */
     public static int getMinPlayers() {
@@ -100,7 +103,7 @@ public class JsonReader {
     }
 
     /**
-     * return the board based on the number of players in the game
+     * Return the board based on the number of players in the game
      *
      * @param numberOfPlayers number of players in the game
      * @return the specific board
@@ -112,18 +115,35 @@ public class JsonReader {
         else return null;
     }
 
+    /**
+     * Returns the socket port
+     * @return the socket port
+     */
     public static int getSocketPort() {
         return socketPort;
     }
+
+    /**
+     * Returns the RMI port
+     * @return the RMI port
+     */
 
     public static int getRMIPort() {
         return RMIPort;
     }
 
+    /**
+     * Returns the personal goal cards container
+     * @return the personal goal cards container
+     */
     public static List<PersonalGoalCard> getPersonalGoalCardsContainer() {
         return personalGoalCardsContainer;
     }
 
+    /**
+     * Returns the disconnection timer
+     * @return the disconnection timer
+     */
     public static int getTimer() {
         return timer;
     }

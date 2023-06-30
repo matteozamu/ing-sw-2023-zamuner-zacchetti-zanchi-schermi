@@ -8,24 +8,38 @@ import java.util.Map;
  * Represents the game board, consisting of a grid of ObjectCards with associated coordinates.
  * Provides methods for creating cells, checking if cells are empty, and removing ObjectCards from the board.
  */
-
 public class Board implements Serializable {
 
     private Map<Coordinate, ObjectCard> grid;
 
+    /**
+     * Constructs a new Board instance with an empty grid.
+     */
     public Board() {
         this.grid = new HashMap<>();
     }
 
+    /**
+     * Constructs a new Board instance with the same grid as the provided board.
+     *
+     * @param board The Board object to copy the grid from.
+     */
     public Board(Board board) {
         this.grid = board.getGrid();
     }
 
-
+    /**
+     * Gets the grid of the board
+     * @return the grid to get
+     */
     public Map<Coordinate, ObjectCard> getGrid() {
         return grid;
     }
 
+    /**
+     * Sets the grid of the board
+     * @param grid the grid to set
+     */
     public void setGrid(Map<Coordinate, ObjectCard> grid) {
         this.grid = grid;
     }
@@ -66,7 +80,6 @@ public class Board implements Serializable {
      * @return True if there is no ObjectCard in the specified direction from the given coordinate, false otherwise.
      * @throws IllegalArgumentException If the direction parameter is invalid.
      */
-
     public boolean isEmptyAtDirection(Coordinate coord, Direction direction) {
         Coordinate tmp = switch (direction) {
             case UP -> new Coordinate(coord.getRow() + 1, coord.getColumn());
@@ -82,9 +95,24 @@ public class Board implements Serializable {
      * Represents the four possible directions: UP, DOWN, LEFT, and RIGHT.
      */
     public enum Direction {
+        /**
+         * The UP direction.
+         */
         UP,
+
+        /**
+         * The DOWN direction.
+         */
         DOWN,
+
+        /**
+         * The LEFT direction.
+         */
         LEFT,
+
+        /**
+         * The RIGHT direction.
+         */
         RIGHT
     }
 }

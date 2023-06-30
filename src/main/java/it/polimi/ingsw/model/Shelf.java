@@ -8,7 +8,15 @@ import java.util.*;
  * The origin of the coordinates in the grid is in the lower left corner.
  */
 public class Shelf implements Serializable {
+
+    /**
+     * The number of rows in the Shelf.
+     */
     public static final int ROWS = 6;
+
+    /**
+     * The number of columns in the Shelf.
+     */
     public static final int COLUMNS = 5;
     private Map<Coordinate, ObjectCard> grid;
     private boolean isFull;
@@ -22,13 +30,17 @@ public class Shelf implements Serializable {
     }
 
     /**
-     * @return true if the shelf is full
+     * Return if the shelf is full
+     *
+     * @return true if the shelf is full, false otherwise
      */
     public boolean isFull() {
         return isFull;
     }
 
     /**
+     * Set the shelf full or not
+     *
      * @param full true if a shelf is full
      */
     public void setFull(boolean full) {
@@ -36,7 +48,7 @@ public class Shelf implements Serializable {
     }
 
     /**
-     * method that returns the map of the grid
+     * Method that returns the map of the grid
      *
      * @return The grid representing the Shelf
      */
@@ -45,7 +57,7 @@ public class Shelf implements Serializable {
     }
 
     /**
-     * return the number (row) of free cells in the col column
+     * Return the number (row) of free cells in the col column
      * if there are no free cells the method throws an exception
      *
      * @param col is the column
@@ -67,6 +79,13 @@ public class Shelf implements Serializable {
      * The algorithm starts at the root node (selecting some arbitrary node as the root node in the case of a graph)
      * and explores as far as possible along each branch before backtracking.
      * It is a recursive algorithm used for the calculation of the points.
+     *
+     * @param currentTile is the current tile
+     * @param visited     is the set of already visited tiles
+     * @param type        is the type of the tile
+     * @param row         is the row of the tile
+     * @param column      is the column of the tile
+     * @return the size of the group of adjacent tiles
      */
     private int dfs(ObjectCard currentTile, Set<ObjectCard> visited, ObjectCardType type, int row, int column) {
         visited.add(currentTile);
@@ -93,8 +112,10 @@ public class Shelf implements Serializable {
     }
 
     /**
-     * finds groups of adjacent ObjectCards of the same type.
+     * Finds groups of adjacent ObjectCards of the same type.
      * It is used for the calculation of the points.
+     *
+     * @return the list of the groups sizes
      */
     public List<Integer> findAdjacentTilesGroups() {
         ObjectCard startingTile = null;
@@ -142,6 +163,8 @@ public class Shelf implements Serializable {
 
     /**
      * Calculates the point from the groups of adjacent ObjectCards.
+     *
+     * @return the points
      */
     public int closeObjectCardsPoints() {
         int points = 0;

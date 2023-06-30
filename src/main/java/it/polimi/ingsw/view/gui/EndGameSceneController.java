@@ -46,7 +46,7 @@ public class EndGameSceneController {
     }
 
     /**
-     * Setups the table
+     * Sets the table up
      */
     private void tableSetup() {
         rankColumn.setReorderable(false);

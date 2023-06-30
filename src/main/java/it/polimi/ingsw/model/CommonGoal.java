@@ -10,6 +10,10 @@ import java.io.Serializable;
 public abstract class CommonGoal implements Serializable {
     private int currentPoints;
 
+    /**
+     * Constructs a CommonGoal object.
+     * Initializes the current points to 8.
+     */
     public CommonGoal() {
         this.currentPoints = 8;
     }
@@ -26,7 +30,6 @@ public abstract class CommonGoal implements Serializable {
      *
      * @return The description of the CommonGoal.
      */
-
     public abstract String getDescription();
 
     /**
@@ -34,7 +37,6 @@ public abstract class CommonGoal implements Serializable {
      *
      * @return The view of the CommonGoal.
      */
-
     public abstract String getCardView();
 
     /**
@@ -42,7 +44,6 @@ public abstract class CommonGoal implements Serializable {
      *
      * @return The string representation of the CommonGoal.
      */
-
     public abstract String toString();
 
     /**

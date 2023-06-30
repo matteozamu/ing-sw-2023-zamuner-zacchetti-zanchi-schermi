@@ -14,7 +14,6 @@ import javafx.stage.Stage;
  * the number of players of the game
  */
 public class NumberPlayersController {
-
     private final PseudoClass errorPseudo = PseudoClass.getPseudoClass("error");
     private GuiManager guiManager;
 
@@ -97,8 +96,6 @@ public class NumberPlayersController {
                 lobbySceneController.updateLobbyList();
             }
         }
-
-
     }
 
     /**

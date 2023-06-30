@@ -4,16 +4,26 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * Otto tessere dello stesso tipo. Non ci sono restrizioni sulla posizione di queste tessere.
+ * Eight tiles of the same type.
+ * There’s no restriction about the position of these tiles.
  */
 
 public final class CommonGoalType11 extends CommonGoal {
 
+    /**
+     * The type of the common goal.
+     */
     public int type = 11;
 
+    /**
+     * The description of the common goal.
+     */
     public String description = "Eight tiles of the same type. There’s no\n" +
             "restriction about the position of these tiles.";
 
+    /**
+     * The visual representation of the common goal.
+     */
     public String cardView = """
             ╔═════════╗
             ║  ■   ■  ║
@@ -23,7 +33,9 @@ public final class CommonGoalType11 extends CommonGoal {
             """;
 
     /**
-     *  Gets the type of the CommonGoal.
+     * Gets the type of the CommonGoal.
+     *
+     * @return the type of the CommonGoal.
      */
     @Override
     public int getType() {
@@ -32,6 +44,8 @@ public final class CommonGoalType11 extends CommonGoal {
 
     /**
      * Gets the description of the CommonGoal.
+     *
+     * @return the description of the CommonGoal.
      */
     @Override
     public String getDescription() {
@@ -40,6 +54,8 @@ public final class CommonGoalType11 extends CommonGoal {
 
     /**
      * Gets the visual representation of the CommonGoal.
+     *
+     * @return the visual representation of the CommonGoal.
      */
     @Override
     public String getCardView() {
@@ -48,6 +64,8 @@ public final class CommonGoalType11 extends CommonGoal {
 
     /**
      * Gets the String representation of the CommonGoal.
+     *
+     * @return the String representation of the CommonGoal.
      */
     @Override
     public String toString() {
@@ -83,7 +101,6 @@ public final class CommonGoalType11 extends CommonGoal {
         Map<ObjectCardType, Integer> typeCount = new HashMap<>();
         Map<Coordinate, ObjectCard> grid = shelf.getGrid();
 
-
         for (Coordinate coord : grid.keySet()) {
             ObjectCard objectCard = shelf.getObjectCard(coord);
             ObjectCardType cardType = objectCard.getType();
@@ -95,5 +112,4 @@ public final class CommonGoalType11 extends CommonGoal {
         }
         return false;
     }
-
 }

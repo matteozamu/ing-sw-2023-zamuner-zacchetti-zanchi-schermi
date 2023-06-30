@@ -4,15 +4,25 @@ import java.util.HashSet;
 import java.util.Set;
 
 /**
- * Due righe formate ciascuna da 5 diversi tipi di tessere.
+ * Two lines each formed by 5 different types of tiles.
+ * One line can show the same or a different combination of the other line.
  */
 
 public final class CommonGoalType8 extends CommonGoal {
 
+    /**
+     * The type of the common goal.
+     */
     public int type = 8;
 
+    /**
+     * The description of the common goal.
+     */
     public String description = "Two lines each formed by 5 different types of tiles. One line can show the same or a different combination of the other line.";
 
+    /**
+     * The visual representation of the common goal.
+     */
     public String cardView = """
             ╔═══════════╗
             ║           ║
@@ -25,6 +35,7 @@ public final class CommonGoalType8 extends CommonGoal {
 
     /**
      * Gets the type of the CommonGoal.
+     * @return the type of the CommonGoal.
      */
     @Override
     public int getType() {
@@ -33,6 +44,7 @@ public final class CommonGoalType8 extends CommonGoal {
 
     /**
      * Gets the description of the CommonGoal.
+     * @return the description of the CommonGoal.
      */
     @Override
     public String getDescription() {
@@ -41,6 +53,7 @@ public final class CommonGoalType8 extends CommonGoal {
 
     /**
      * Gets the visual representation of the CommonGoal.
+     * @return the visual representation of the CommonGoal.
      */
     @Override
     public String getCardView() {
@@ -49,6 +62,7 @@ public final class CommonGoalType8 extends CommonGoal {
 
     /**
      * Gets the String representation of the CommonGoal.
+     * @return the String representation of the CommonGoal.
      */
     @Override
     public String toString() {
@@ -105,5 +119,4 @@ public final class CommonGoalType8 extends CommonGoal {
 
         return rowCount == 2;
     }
-
 }

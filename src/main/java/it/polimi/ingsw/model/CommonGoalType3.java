@@ -5,16 +5,24 @@ import java.util.Map;
 import java.util.Set;
 
 /**
- * L'obiettivo è raggiunto quando le quattro tessere ai quattro angoli della Shelf
- * sono dello stesso tipo.
+ * The four corners of the Shelf must have four object cards of the same type.
  */
 
 public final class CommonGoalType3 extends CommonGoal {
 
+    /**
+     * The type of the common goal.
+     */
     public int type = 3;
 
+    /**
+     * The description of the common goal.
+     */
     public String description = "Four tiles of the same type in the four corners of the bookshelf.";
 
+    /**
+     * The visual representation of the common goal.
+     */
     public String cardView = """
                 ╔═══════════╗
                 ║ ■ - - - ■ ║
@@ -28,6 +36,7 @@ public final class CommonGoalType3 extends CommonGoal {
 
     /**
      * Gets the type of the CommonGoal.
+     * @return the type of the CommonGoal.
      */
     @Override
     public int getType() {
@@ -36,6 +45,7 @@ public final class CommonGoalType3 extends CommonGoal {
 
     /**
      * Gets the description of the CommonGoal.
+     * @return the description of the CommonGoal.
      */
     @Override
     public String getDescription() {
@@ -44,6 +54,7 @@ public final class CommonGoalType3 extends CommonGoal {
 
     /**
      * Gets the visual representation of the CommonGoal.
+     * @return the visual representation of the CommonGoal.
      */
     @Override
     public String getCardView() {
@@ -53,6 +64,7 @@ public final class CommonGoalType3 extends CommonGoal {
 
     /**
      * Gets the String representation of the CommonGoal.
+     * @return the String representation of the CommonGoal.
      */
     @Override
     public String toString() {

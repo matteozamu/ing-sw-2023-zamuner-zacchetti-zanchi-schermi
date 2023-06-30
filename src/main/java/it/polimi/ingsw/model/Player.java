@@ -33,14 +33,16 @@ public class Player implements Serializable {
     }
 
     /**
-     * @return true if the user is connected
+     * Return the connection state of the player
+     *
+     * @return true if the user is connected, false otherwise
      */
     public boolean isConnected() {
         return connected;
     }
 
     /**
-     * method used to set the connection state of the player
+     * Method used to set the connection state of the player
      *
      * @param connected is true if the player is connected, false otherwise
      */
@@ -49,6 +51,8 @@ public class Player implements Serializable {
     }
 
     /**
+     * Return a map of common goals reached by the player
+     *
      * @return the map of common goals reached by the player
      */
     public Map<CommonGoal, Integer> getCommonGoalsReached() {
@@ -83,7 +87,7 @@ public class Player implements Serializable {
     }
 
     /**
-     * set the player current point
+     * Set the player current point
      *
      * @param currentPoints the points of the player
      */
@@ -92,6 +96,8 @@ public class Player implements Serializable {
     }
 
     /**
+     * Return true if the player is winner
+     *
      * @return true if the user is winner
      */
     public boolean isWinner() {
@@ -99,6 +105,8 @@ public class Player implements Serializable {
     }
 
     /**
+     * Set the winner
+     *
      * @param winner set the winner
      */
     public void setWinner(boolean winner) {
