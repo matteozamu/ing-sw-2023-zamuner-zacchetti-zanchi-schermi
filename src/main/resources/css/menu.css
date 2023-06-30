@@ -222,7 +222,7 @@
 }
 
 #okButton {
-    -fx-image: url("/img/buttons/okbutton.png");
+    -fx-image: url("/img/buttons/okButton.png");
 }
 
 #twoPlayersButton {
