@@ -22,11 +22,26 @@ import java.util.logging.SimpleFormatter;
  * This class represents the client game manager
  */
 public abstract class ClientGameManager implements ClientGameManagerListener, ClientUpdateListener, Runnable {
+    /**
+     * The logger for logging messages for the Shelfie client.
+     */
     public static final Logger LOGGER = Logger.getLogger("my_shelfie_client");
 
+    /**
+     * The title of the error dialog.
+     */
     public static final String ERROR_DIALOG_TITLE = "Error";
+
+    /**
+     * Error message displayed when there is an error while sending the request.
+     */
     public static final String SEND_ERROR = "Error while sending the request";
+
+    /**
+     * String used to indicate an invalid string.
+     */
     protected static final String INVALID_STRING = "Invalid String!";
+
     private final BlockingQueue<Runnable> queue = new LinkedBlockingQueue<>();
     private final Object gameSerializedLock = new Object();
     private Client client;
@@ -45,7 +60,7 @@ public abstract class ClientGameManager implements ClientGameManagerListener, Cl
     private Timer makeMoveTimer;
 
     /**
-     * constructor of the client game manager
+     * Constructor of the client game manager
      */
     public ClientGameManager() {
         firstTurn = true;
@@ -68,7 +83,7 @@ public abstract class ClientGameManager implements ClientGameManagerListener, Cl
     }
 
     /**
-     * method to run a client thread
+     * Method to run a client thread
      */
     @Override
     public void run() {
@@ -83,7 +98,7 @@ public abstract class ClientGameManager implements ClientGameManagerListener, Cl
     }
 
     /**
-     * returns the username of the player
+     * Returns the username of the player
      * @return the client's username
      */
     public String getUsername() {
@@ -91,7 +106,7 @@ public abstract class ClientGameManager implements ClientGameManagerListener, Cl
     }
 
     /**
-     * return the client's token
+     * Return the client's token
      * @return the client's token
      */
     public String getClientToken() {
@@ -99,7 +114,7 @@ public abstract class ClientGameManager implements ClientGameManagerListener, Cl
     }
 
     /**
-     * method called when a message is received from the server
+     * Method called when a message is received from the server
      *
      * @param message the received message from the server
      */
@@ -155,7 +170,7 @@ public abstract class ClientGameManager implements ClientGameManagerListener, Cl
     }
 
     /**
-     * returns the game serialized
+     * Returns the game serialized
      * @return the game serialized
      */
     public GameSerialized getGameSerialized() {
@@ -165,7 +180,7 @@ public abstract class ClientGameManager implements ClientGameManagerListener, Cl
     }
 
     /**
-     * method used to handle the initial phase of the game
+     * Method used to handle the initial phase of the game
      *
      * @param gameStartMessage is the message received from the server
      */
@@ -180,7 +195,7 @@ public abstract class ClientGameManager implements ClientGameManagerListener, Cl
     }
 
     /**
-     * sends a generic request to the server
+     * Sends a generic request to the server
      *
      * @param message is the request message
      * @return true if the request is sent, false otherwise
@@ -234,7 +249,7 @@ public abstract class ClientGameManager implements ClientGameManagerListener, Cl
     }
 
     /**
-     * method that handles the message received with the list of available games
+     * Method that handles the message received with the list of available games
      *
      * @param message is the message received from the server
      */
@@ -246,7 +261,7 @@ public abstract class ClientGameManager implements ClientGameManagerListener, Cl
     }
 
     /**
-     * method that handles a request of a client to reconnect to a game
+     * Method that handles a request of a client to reconnect to a game
      *
      * @param reconnectionRequest is the request received from the server
      */
@@ -274,7 +289,7 @@ public abstract class ClientGameManager implements ClientGameManagerListener, Cl
     }
 
     /**
-     * handle adding a player to the game
+     * Handle adding a player to the game
      *
      * @param message is the message received from the server
      */
@@ -284,7 +299,7 @@ public abstract class ClientGameManager implements ClientGameManagerListener, Cl
     }
 
     /**
-     * handle a response message
+     * Handle a response message
      *
      * @param response is the message received from the server
      */
@@ -324,7 +339,7 @@ public abstract class ClientGameManager implements ClientGameManagerListener, Cl
     }
 
     /**
-     * handle the end of the game
+     * Handle the end of the game
      *
      * @param message is the message received from the server
      */
@@ -384,7 +399,7 @@ public abstract class ClientGameManager implements ClientGameManagerListener, Cl
     }
 
     /**
-     * method used to handle a positive response
+     * Method used to handle a positive response
      *
      * @param response is the positive response received from the server
      */
@@ -402,7 +417,7 @@ public abstract class ClientGameManager implements ClientGameManagerListener, Cl
     }
 
     /**
-     * method used to create a connection with the server
+     * Method used to create a connection with the server
      *
      * @param connection            can be 0 if the user choose a socket connection or 1 if the user choose a RMI connection
      * @param username              is the chosen username
@@ -423,7 +438,7 @@ public abstract class ClientGameManager implements ClientGameManagerListener, Cl
     }
 
     /**
-     * method used to close a connection
+     * Method used to close a connection
      */
     public void closeConnection() {
         if (clientUpdater != null) {
@@ -439,7 +454,7 @@ public abstract class ClientGameManager implements ClientGameManagerListener, Cl
     }
 
     /**
-     * method that start a client updater
+     * Method that start a client updater
      */
     private void startUpdater() {
         clientUpdater = new ClientUpdater(client, this);
@@ -457,7 +472,7 @@ public abstract class ClientGameManager implements ClientGameManagerListener, Cl
     }
 
     /**
-     * returns all the players
+     * Returns all the players
      * @return a list of all the players
      */
     public List<Player> getPlayers() {
@@ -467,7 +482,7 @@ public abstract class ClientGameManager implements ClientGameManagerListener, Cl
     }
 
     /**
-     * returns the players in the lobby
+     * Returns the players in the lobby
      * @return a list of the players in lobby
      */
     public List<String> getLobbyPlayers() {
@@ -475,7 +490,7 @@ public abstract class ClientGameManager implements ClientGameManagerListener, Cl
     }
 
     /**
-     * method used to start the game
+     * Method used to start the game
      *
      * @param cg the list of the common goal of the game
      */
@@ -492,7 +507,6 @@ public abstract class ClientGameManager implements ClientGameManagerListener, Cl
 
             firstTurn = false;
         }
-
         newTurn();
     }
 
@@ -518,6 +532,7 @@ public abstract class ClientGameManager implements ClientGameManagerListener, Cl
     }
 
     /**
+     * Method used to get the lobby actions
      * @return a list of possible actions based on the current state of the player
      */
     private List<PossibleAction> getLobbyActions() {
@@ -525,8 +540,8 @@ public abstract class ClientGameManager implements ClientGameManagerListener, Cl
 
     }
 
-
     /**
+     * Method used to get the possible actions
      * @return a list of possible actions based on the current state of the player
      */
     private List<PossibleAction> getPossibleActions() {

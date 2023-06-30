@@ -10,11 +10,20 @@ import java.util.Map;
 
 public final class CommonGoalType11 extends CommonGoal {
 
+    /**
+     * The type of the common goal.
+     */
     public int type = 11;
 
+    /**
+     * The description of the common goal.
+     */
     public String description = "Eight tiles of the same type. There’s no\n" +
             "restriction about the position of these tiles.";
 
+    /**
+     * The visual representation of the common goal.
+     */
     public String cardView = """
             ╔═════════╗
             ║  ■   ■  ║
@@ -92,7 +101,6 @@ public final class CommonGoalType11 extends CommonGoal {
         Map<ObjectCardType, Integer> typeCount = new HashMap<>();
         Map<Coordinate, ObjectCard> grid = shelf.getGrid();
 
-
         for (Coordinate coord : grid.keySet()) {
             ObjectCard objectCard = shelf.getObjectCard(coord);
             ObjectCardType cardType = objectCard.getType();
@@ -104,5 +112,4 @@ public final class CommonGoalType11 extends CommonGoal {
         }
         return false;
     }
-
 }

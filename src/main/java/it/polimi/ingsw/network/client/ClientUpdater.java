@@ -14,7 +14,6 @@ public class ClientUpdater implements Runnable {
     private ClientUpdateListener updateListener;
     private Thread thread;
 
-
     ClientUpdater(Client client, ClientUpdateListener updateListener) {
         this.client = client;
         this.updateListener = updateListener;
@@ -23,7 +22,7 @@ public class ClientUpdater implements Runnable {
     }
 
     /**
-     * runs a process
+     * Runs a process
      */
     @Override
     public void run() {
@@ -53,14 +52,14 @@ public class ClientUpdater implements Runnable {
     }
 
     /**
-     * stop the running process
+     * Stop the running process
      */
     public void stop() {
         this.thread.interrupt();
     }
 
     /**
-     * start the process
+     * Start the process
      */
     public void start() {
         if (this.thread.isInterrupted()) {

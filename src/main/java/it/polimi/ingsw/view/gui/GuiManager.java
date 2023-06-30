@@ -25,7 +25,6 @@ import java.util.logging.Logger;
 /**
  * Class GuiManager represents the manager of the GUI
  */
-
 public class GuiManager extends ClientGameManager implements DisconnectionListener {
     private static GuiManager instance = null;
 
@@ -41,6 +40,10 @@ public class GuiManager extends ClientGameManager implements DisconnectionListen
         super();
     }
 
+    /**
+     * Returns the current instance of the GuiManager class, ensuring it is unique.
+     * @return The current instance of the GuiManager class.
+     */
     public static GuiManager getInstance() {
         if (instance == null)
             instance = new GuiManager();
@@ -102,7 +105,6 @@ public class GuiManager extends ClientGameManager implements DisconnectionListen
 
         dialog.showAndWait();
     }
-
 
     /**
      * Sets the connection scene controller
@@ -291,7 +293,7 @@ public class GuiManager extends ClientGameManager implements DisconnectionListen
     @Override
     public void deleteLimbo() {
         Platform.runLater(() ->
-                gameSceneController.deleteLimbo()
+                gameSceneController.onDeleteLimboRequest()
         );
     }
 

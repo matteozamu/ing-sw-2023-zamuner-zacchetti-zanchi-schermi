@@ -9,14 +9,23 @@ import java.util.Set;
  */
 public final class CommonGoalType9 extends CommonGoal {
 
+    /**
+     * The type of the common goal.
+     */
     public int type = 9;
 
+    /**
+     * The description of the common goal.
+     */
     public String description = """
             Three columns each formed by 6 tiles
             of maximum three different types. One
             column can show the same or a different
             combination of another column.""";
 
+    /**
+     * The visual representation of the common goal.
+     */
     public String cardView = """
             ╔═════════════╗
             ║      ■      ║
@@ -76,7 +85,6 @@ public final class CommonGoalType9 extends CommonGoal {
         return shelf.getGrid().size() >= 18;
     }
 
-
     /**
      * Checks if the Shelf is eligible for the goal check.
      * For CommonGoalType9, the Shelf must have three columns each formed by 6 tiles
@@ -118,5 +126,4 @@ public final class CommonGoalType9 extends CommonGoal {
 
         return columnCount == 3;
     }
-
 }

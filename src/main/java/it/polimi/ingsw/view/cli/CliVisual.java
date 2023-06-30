@@ -56,7 +56,7 @@ public class CliVisual {
     }
 
     /**
-     * clears the console
+     * Clears the console
      *
      * @param out is the output PrintStream
      */
@@ -66,7 +66,7 @@ public class CliVisual {
     }
 
     /**
-     * print the score of the user
+     * Print the score of the user
      *
      * @param out            is the output PrintStream
      * @param gameSerialized is the object containing the points to be printed
@@ -207,7 +207,6 @@ public class CliVisual {
         out.print(shelfView);
     }
 
-
     /**
      * Prints the layout of the selected object cards.
      *
@@ -250,7 +249,7 @@ public class CliVisual {
     }
 
     /**
-     * print the logo
+     * Print the logo
      *
      * @param out is the output PrintStream
      */

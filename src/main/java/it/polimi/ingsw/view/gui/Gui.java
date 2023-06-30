@@ -17,7 +17,6 @@ import java.io.InputStream;
 /**
  * Class Gui represents the Graphical User Interface
  */
-
 public class Gui extends Application {
 
     /**

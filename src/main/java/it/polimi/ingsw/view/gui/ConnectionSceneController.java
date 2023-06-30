@@ -1,6 +1,7 @@
 package it.polimi.ingsw.view.gui;
 
 import it.polimi.ingsw.enumeration.MessageStatus;
+import it.polimi.ingsw.network.client.Client;
 import it.polimi.ingsw.network.message.ConnectionResponse;
 import it.polimi.ingsw.utility.MessageBuilder;
 import it.polimi.ingsw.utility.ServerAddressValidator;
@@ -17,7 +18,6 @@ import javafx.stage.Stage;
  * Class ConnectionSceneController represents the controller of the connection scene, the scene where the player can
  * choose the connection type and insert their username and the server address
  */
-
 public class ConnectionSceneController {
     private final PseudoClass errorPseudo = PseudoClass.getPseudoClass("error");
     private GuiManager guiManager;
@@ -62,6 +62,12 @@ public class ConnectionSceneController {
      * Sets the input formats for the textfield
      */
     private void setInputFormat() {
+        usernameField.textProperty().addListener((observable, oldValue, newValue) -> {
+            if (newValue.length() > Client.MAX_USERNAME_LENGTH) {
+                usernameField.setText(newValue.substring(0, Client.MAX_USERNAME_LENGTH));
+            }
+        });
+
         addressField.textProperty().addListener((observable, oldValue, newValue) -> {
             if (newValue.length() > ServerAddressValidator.MAX_ADDRESS_LENGTH) {
                 addressField.setText(newValue.substring(0, ServerAddressValidator.MAX_ADDRESS_LENGTH));

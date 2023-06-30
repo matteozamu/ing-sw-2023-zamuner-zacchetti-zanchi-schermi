@@ -24,7 +24,7 @@ public class PersonalGoal implements Serializable {
     }
 
     /**
-     * return the index of the column
+     * Return the index of the column
      *
      * @return the index of the column
      */
@@ -33,7 +33,7 @@ public class PersonalGoal implements Serializable {
     }
 
     /**
-     * return the index of the row
+     * Return the index of the row
      *
      * @return the index of the row
      */
@@ -42,7 +42,7 @@ public class PersonalGoal implements Serializable {
     }
 
     /**
-     * return the type of Personal Goal
+     * Return the type of Personal Goal
      *
      * @return the type of Personal Goal
      */

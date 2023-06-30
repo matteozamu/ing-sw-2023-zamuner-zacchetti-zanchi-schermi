@@ -10,8 +10,14 @@ package it.polimi.ingsw.model;
 
 public final class CommonGoalType12 extends CommonGoal {
 
+    /**
+     * The type of the common goal.
+     */
     public int type = 12;
 
+    /**
+     * The description of the common goal.
+     */
     public String description = """
             Five columns of increasing or decreasing
             height. Starting from the first column on
@@ -19,6 +25,9 @@ public final class CommonGoalType12 extends CommonGoal {
             must be made of exactly one more tile.
             Tiles can be of any type.""";
 
+    /**
+     * The visual representation of the common goal.
+     */
     public String cardView = """
                 ╔══════════╗
                 ║■ - - - - ║
@@ -94,7 +103,6 @@ public final class CommonGoalType12 extends CommonGoal {
 
         return checkDescendingStair(shelf) || checkAscendingStair(shelf);
     }
-
 
     /**
      * Checks if the Shelf has five columns of decreasing height.
