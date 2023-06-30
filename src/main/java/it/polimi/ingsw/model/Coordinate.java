@@ -21,6 +21,8 @@ public class Coordinate implements Serializable {
     }
 
     /**
+     * get the column of the coordinate
+     *
      * @return the index of the column
      */
     public int getColumn() {
@@ -28,6 +30,8 @@ public class Coordinate implements Serializable {
     }
 
     /**
+     * get the row of the coordinate
+     *
      * @return the index of the row
      */
     public int getRow() {

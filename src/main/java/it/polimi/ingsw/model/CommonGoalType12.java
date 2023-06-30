@@ -1,10 +1,11 @@
 package it.polimi.ingsw.model;
 
 /**
- * Cinque colonne di altezza crescente o decrescente:
- * a partire dalla prima colonna a sinistra o a destra, ogni colonna successiva
- * deve essere formata da una tessera in più.
- * Le tessere possono essere di qualsiasi tipo.
+ *
+ * Five columns of increasing or decreasingcheight.
+ * Starting from the first column on the left or on the right,
+ * each next column must be made of exactly one more tile.
+ * Tiles can be of any type.
  */
 
 public final class CommonGoalType12 extends CommonGoal {
@@ -30,6 +31,7 @@ public final class CommonGoalType12 extends CommonGoal {
 
     /**
      * Gets the type of the CommonGoal.
+     * @return the type of the CommonGoal.
      */
     @Override
     public int getType() {
@@ -38,6 +40,7 @@ public final class CommonGoalType12 extends CommonGoal {
 
     /**
      * Gets the description of the CommonGoal.
+     * @return the description of the CommonGoal.
      */
     @Override
     public String getDescription() {
@@ -46,6 +49,7 @@ public final class CommonGoalType12 extends CommonGoal {
 
     /**
      * Gets the visual representation of the CommonGoal.
+     * @return the visual representation of the CommonGoal.
      */
     @Override
     public String getCardView() {
@@ -54,6 +58,7 @@ public final class CommonGoalType12 extends CommonGoal {
 
     /**
      * Gets the String representation of the CommonGoal.
+     * @return the String representation of the CommonGoal.
      */
     @Override
     public String toString() {

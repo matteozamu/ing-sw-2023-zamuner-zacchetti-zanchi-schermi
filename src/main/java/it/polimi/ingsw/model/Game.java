@@ -46,6 +46,8 @@ public class Game implements Serializable {
     }
 
     /**
+     * Get an instance of the map
+     *
      * @return an instance of the map
      */
 
@@ -54,6 +56,8 @@ public class Game implements Serializable {
     }
 
     /**
+     * return an instance of the game
+     *
      * @param username is the username of a user
      * @return the instance of the game in which the user is playing
      */
@@ -76,12 +80,16 @@ public class Game implements Serializable {
 
     /**
      * sets the name of the game
+     *
+     * @param gameName is the name of the game
      */
     public void setGameName(String gameName) {
         this.gameName = gameName;
     }
 
     /**
+     * return the number of players
+     *
      * @return the number of player
      */
     public int getNumberOfPlayers() {
@@ -98,6 +106,8 @@ public class Game implements Serializable {
     }
 
     /**
+     * return the limbo of the game
+     *
      * @return a map with the selected object cards with their coordinates
      */
     public LinkedHashMap<Coordinate, ObjectCard> getLimbo() {
@@ -114,14 +124,15 @@ public class Game implements Serializable {
     }
 
     /**
-     * @return the nwe order of the selected object cards
+     * returns the order of the limbo
+     * @return the order of the selected object cards
      */
     public List<ObjectCard> getLimboOrder() {
         return limboOrder;
     }
 
     /**
-     * set the nwe order of the selected object cards
+     * set the new order of the selected object cards
      *
      * @param limboOrder is the order to set
      */
@@ -130,7 +141,9 @@ public class Game implements Serializable {
     }
 
     /**
-     * @return true if the game is started
+     * return if the game has started or not
+     *
+     * @return true if the game is started, false otherwise
      */
     public boolean isStarted() {
         return started;
@@ -146,6 +159,8 @@ public class Game implements Serializable {
     }
 
     /**
+     * get the list of the common goals
+     *
      * @return a list of the Common Goal Cards present in the game
      */
     public List<CommonGoal> getCommonGoalContainer() {
@@ -153,17 +168,26 @@ public class Game implements Serializable {
     }
 
     /**
+     * return a list of the personal goal cards
+     *
      * @return a list of the Personal Goal Cards present in the game
      */
     public List<PersonalGoalCard> getPersonalGoalCardsContainer() {
         return personalGoalCardsContainer;
     }
 
+    /**
+     * set personal goal cards
+     *
+     * @param personalGoalCardsContainer is the list of the Personal Goal Cards to set
+     */
     public void setPersonalGoalCardsContainer(List<PersonalGoalCard> personalGoalCardsContainer) {
         this.personalGoalCardsContainer = personalGoalCardsContainer;
     }
 
     /**
+     * return the list of the object cards
+     *
      * @return a list of the Object Cards present in the game
      */
     public List<ObjectCard> getObjectCardContainer() {
@@ -171,6 +195,8 @@ public class Game implements Serializable {
     }
 
     /**
+     * return the list of the players
+     *
      * @return a list of the players present in the game
      */
     public List<Player> getPlayers() {
@@ -192,6 +218,8 @@ public class Game implements Serializable {
     }
 
     /**
+     * method to return the player with the given username
+     *
      * @return the current player of the game
      */
     public Player getCurrentPlayer() {
@@ -208,6 +236,8 @@ public class Game implements Serializable {
     }
 
     /**
+     * return the board of the game
+     *
      * @return the board of the game
      */
     public Board getBoard() {
@@ -215,6 +245,8 @@ public class Game implements Serializable {
     }
 
     /**
+     * return the list of the common goal cards
+     *
      * @return the Common Goal Cards of the game
      */
     public List<CommonGoal> getCommonGoals() {
@@ -247,6 +279,8 @@ public class Game implements Serializable {
 
 
     /**
+     * return the list of name of the players
+     *
      * @return the list of the players that are connected
      */
     public List<String> getPlayersNames() {
@@ -277,7 +311,6 @@ public class Game implements Serializable {
      * @return true if the cards are successfully added.
      * @throws IllegalStateException if there is not enough space to add the cards.
      */
-    //TODO: gestire caso limbo vuoto (ora torna true)
     public boolean addObjectCardsToShelf(List<ObjectCard> limbo, int col) {
         Shelf s = this.currentPlayer.getShelf();
         int availableRows = s.getFreeCellsPerColumn(col);
@@ -378,6 +411,8 @@ public class Game implements Serializable {
 
     /**
      * Override of the toString method
+     *
+     * @return a string representation
      */
     @Override
     public String toString() {

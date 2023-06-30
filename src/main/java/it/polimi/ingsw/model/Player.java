@@ -33,7 +33,9 @@ public class Player implements Serializable {
     }
 
     /**
-     * @return true if the user is connected
+     * return the connection state of the player
+     *
+     * @return true if the user is connected, false otherwise
      */
     public boolean isConnected() {
         return connected;
@@ -49,6 +51,8 @@ public class Player implements Serializable {
     }
 
     /**
+     * return a map of common goals reached by the player
+     *
      * @return the map of common goals reached by the player
      */
     public Map<CommonGoal, Integer> getCommonGoalsReached() {
@@ -92,6 +96,8 @@ public class Player implements Serializable {
     }
 
     /**
+     * return true if the player is winner
+     *
      * @return true if the user is winner
      */
     public boolean isWinner() {
@@ -99,6 +105,8 @@ public class Player implements Serializable {
     }
 
     /**
+     * set the winner
+     *
      * @param winner set the winner
      */
     public void setWinner(boolean winner) {

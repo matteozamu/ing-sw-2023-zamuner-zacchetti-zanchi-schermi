@@ -24,6 +24,8 @@ public class PersonalGoal implements Serializable {
     }
 
     /**
+     * return the index of the column
+     *
      * @return the index of the column
      */
     public int getColumn() {
@@ -31,6 +33,8 @@ public class PersonalGoal implements Serializable {
     }
 
     /**
+     * return the index of the row
+     *
      * @return the index of the row
      */
     public int getRow() {
@@ -38,6 +42,8 @@ public class PersonalGoal implements Serializable {
     }
 
     /**
+     * return the type of Personal Goal
+     *
      * @return the type of Personal Goal
      */
     public ObjectCardType getType() {

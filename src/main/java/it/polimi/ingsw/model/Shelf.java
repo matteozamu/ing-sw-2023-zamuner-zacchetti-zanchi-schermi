@@ -22,13 +22,17 @@ public class Shelf implements Serializable {
     }
 
     /**
-     * @return true if the shelf is full
+     * return if the shelf is full
+     *
+     * @return true if the shelf is full, false otherwise
      */
     public boolean isFull() {
         return isFull;
     }
 
     /**
+     * set the shelf full or not
+     *
      * @param full true if a shelf is full
      */
     public void setFull(boolean full) {
@@ -67,6 +71,13 @@ public class Shelf implements Serializable {
      * The algorithm starts at the root node (selecting some arbitrary node as the root node in the case of a graph)
      * and explores as far as possible along each branch before backtracking.
      * It is a recursive algorithm used for the calculation of the points.
+     *
+     * @param currentTile is the current tile
+     * @param visited     is the set of already visited tiles
+     * @param type        is the type of the tile
+     * @param row         is the row of the tile
+     * @param column      is the column of the tile
+     * @return the size of the group of adjacent tiles
      */
     private int dfs(ObjectCard currentTile, Set<ObjectCard> visited, ObjectCardType type, int row, int column) {
         visited.add(currentTile);
@@ -95,6 +106,8 @@ public class Shelf implements Serializable {
     /**
      * finds groups of adjacent ObjectCards of the same type.
      * It is used for the calculation of the points.
+     *
+     * @return the list of the groups sizes
      */
     public List<Integer> findAdjacentTilesGroups() {
         ObjectCard startingTile = null;
@@ -142,6 +155,8 @@ public class Shelf implements Serializable {
 
     /**
      * Calculates the point from the groups of adjacent ObjectCards.
+     *
+     * @return the points
      */
     public int closeObjectCardsPoints() {
         int points = 0;

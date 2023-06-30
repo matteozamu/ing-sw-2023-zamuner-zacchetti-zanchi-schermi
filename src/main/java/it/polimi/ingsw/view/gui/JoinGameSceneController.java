@@ -62,6 +62,7 @@ public class JoinGameSceneController {
 
     /**
      * Updates the lobby list
+     * @param games the list of games
      */
     void updateIdList(List<ControllerGame> games) {
         ObservableList<Node> childrens = idLabelsBox.getChildren();

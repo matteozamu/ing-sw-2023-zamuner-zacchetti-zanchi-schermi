@@ -29,6 +29,7 @@ public class ControllerGame implements Serializable {
 
     /**
      * Constructor for the ControllerGame class, initializing the game state.
+     * @param server is the server
      */
     public ControllerGame(Server server) {
         JsonReader.readJsonConstant(server.getFilepath());
@@ -70,7 +71,7 @@ public class ControllerGame implements Serializable {
     }
 
     /**
-     * Method use to
+     * Method used to reorder a map of coordinates and object cards
      *
      * @param map   is the map to reorder
      * @param order is the list with the new order
@@ -88,6 +89,10 @@ public class ControllerGame implements Serializable {
         }
         return orderedMap;
     }
+
+    /**
+     * method that sets the timer for making a move in the game
+     */
 
     public void setMakeMoveTimer() {
         makeMoveTimer = new Timer();
@@ -122,6 +127,7 @@ public class ControllerGame implements Serializable {
     }
 
     /**
+     * returns the id of the game
      * @return the id of the game
      */
     public UUID getId() {
@@ -360,6 +366,7 @@ public class ControllerGame implements Serializable {
     }
 
     /**
+     * returns whether the lobby of the game is full or not
      * @return {@code true} if the lobby is full, otherwise false
      */
     public boolean getIsLobbyFull() {
@@ -367,6 +374,7 @@ public class ControllerGame implements Serializable {
     }
 
     /**
+     * sets the state of the lobby
      * @param lobbyFull tells if the lobby is full or not
      */
     public void setIsLobbyFull(boolean lobbyFull) {
@@ -374,12 +382,17 @@ public class ControllerGame implements Serializable {
     }
 
     /**
+     * returns the state of the game
      * @return the gameState
      */
     public PossibleGameState getGameState() {
         return gameState;
     }
 
+    /**
+     * sets the state of the game
+     * @param gameState the gameState to set
+     */
     public void setGameState(PossibleGameState gameState) {
         this.gameState = gameState;
     }

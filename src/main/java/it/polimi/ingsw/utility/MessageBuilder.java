@@ -8,6 +8,9 @@ import it.polimi.ingsw.network.message.*;
 import java.util.ArrayList;
 import java.util.UUID;
 
+/**
+ * This class is used to build messages
+ */
 public class MessageBuilder {
     private MessageBuilder() {
         throw new IllegalStateException("Utility class");

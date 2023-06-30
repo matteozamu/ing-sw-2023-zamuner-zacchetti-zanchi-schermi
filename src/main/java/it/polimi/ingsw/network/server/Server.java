@@ -35,7 +35,8 @@ public class Server implements Runnable {
     private String filepath;
 
     /**
-     * costructor of a new game
+     * constructor of a new game
+     * @param confFilePath the path of the configuration file
      */
     public Server(String confFilePath) {
         initLogger();
@@ -173,6 +174,7 @@ public class Server implements Runnable {
     }
 
     /**
+     * handles a received message
      * @param message is the message received to the client
      */
     void onMessage(Message message) {
@@ -352,6 +354,9 @@ public class Server implements Runnable {
     }
 
 
+    /**
+     * run the ping to check if client is still connected
+     */
     @Override
     public void run() {
         while (!Thread.currentThread().isInterrupted()) {
@@ -398,6 +403,7 @@ public class Server implements Runnable {
     }
 
     /**
+     * returns the players connected to the fame
      * @return a map with all the player connected to the server and the controller game of the game in which they are
      */
     public Map<String, ControllerGame> getPlayersGame() {
@@ -405,6 +411,7 @@ public class Server implements Runnable {
     }
 
     /**
+     * returns the lock of the clients map
      * @return the lock of the clients map
      */
     public Object getClientsLock() {
@@ -412,6 +419,7 @@ public class Server implements Runnable {
     }
 
     /**
+     * returns the clients with their connection
      * @return a map with all the clients connected and their connection
      */
     public Map<String, Connection> getClients() {
@@ -419,6 +427,7 @@ public class Server implements Runnable {
     }
 
     /**
+     * returns the list of all the controller games
      * @return the list of all the controller games
      */
     public List<ControllerGame> getControllerGames() {
@@ -426,6 +435,7 @@ public class Server implements Runnable {
     }
 
     /**
+     * returns the filepath of the server
      * @return the filepath of the server
      */
     public String getFilepath() {

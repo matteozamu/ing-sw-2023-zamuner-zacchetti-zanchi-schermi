@@ -24,7 +24,7 @@ class CommonGoalType7Test {
         assertEquals("""
             Two groups each containing 4 tiles of
             the same type in a 2x2 square. The tiles
-            of one square can be different from
+            of one square must be the same type as
             those of the other square.""", commonGoalType7.getDescription());
     }
 

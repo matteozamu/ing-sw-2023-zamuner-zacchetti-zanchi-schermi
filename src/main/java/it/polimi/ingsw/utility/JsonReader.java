@@ -13,6 +13,9 @@ import java.io.InputStream;
 import java.lang.reflect.Type;
 import java.util.List;
 
+/**
+ * This class reads the program's constants from a json file
+ */
 public class JsonReader {
     private static int socketPort;
     private static int RMIPort;
@@ -86,6 +89,7 @@ public class JsonReader {
     }
 
     /**
+     * returns the maximum number of player
      * @return the maximum number of player
      */
     public static int getMaxPlayers() {
@@ -93,6 +97,7 @@ public class JsonReader {
     }
 
     /**
+     * returns the minimum number of player
      * @return the minimum number of player
      */
     public static int getMinPlayers() {
@@ -112,18 +117,35 @@ public class JsonReader {
         else return null;
     }
 
+    /**
+     * returns the socket port
+     * @return the socket port
+     */
     public static int getSocketPort() {
         return socketPort;
     }
+
+    /**
+     * returns the RMI port
+     * @return the RMI port
+     */
 
     public static int getRMIPort() {
         return RMIPort;
     }
 
+    /**
+     * returns the personal goal cards container
+     * @return the personal goal cards container
+     */
     public static List<PersonalGoalCard> getPersonalGoalCardsContainer() {
         return personalGoalCardsContainer;
     }
 
+    /**
+     * returns the disconnection timer
+     * @return the disconnection timer
+     */
     public static int getTimer() {
         return timer;
     }

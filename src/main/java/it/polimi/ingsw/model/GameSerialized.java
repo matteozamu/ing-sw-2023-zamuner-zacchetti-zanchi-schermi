@@ -22,7 +22,6 @@ public class GameSerialized implements Serializable {
     private LinkedHashMap<Coordinate, ObjectCard> limbo;
     private Player currentPlayer;
 
-
     /**
      * constructor of the class, it initializes the attributes of the class
      *
@@ -64,7 +63,6 @@ public class GameSerialized implements Serializable {
      *
      * @return the list of the players
      */
-    // TODO: Si può eliminare?
     public List<Player> getPlayers() {
         return players;
     }
@@ -79,6 +77,7 @@ public class GameSerialized implements Serializable {
     }
 
     /**
+     * returns the current player
      * @return the current player
      */
     public Player getCurrentPlayer() {
@@ -86,6 +85,7 @@ public class GameSerialized implements Serializable {
     }
 
     /**
+     * returns the list of all the players in the game
      * @return the list of all the players in the game
      */
     public List<Player> getAllPlayers() {
@@ -153,6 +153,8 @@ public class GameSerialized implements Serializable {
 
     /**
      * override of the toString method
+     *
+     * @return the string representation
      */
     @Override
     public String toString() {

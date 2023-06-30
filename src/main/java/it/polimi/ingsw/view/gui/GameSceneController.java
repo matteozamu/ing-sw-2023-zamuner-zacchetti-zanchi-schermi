@@ -748,6 +748,7 @@ public class GameSceneController {
 
     /**
      * Updates element on the board
+     * @param gameSerialized game update
      */
     private void updateBoard(GameSerialized gameSerialized) {
         ObservableList<Node> children = boardGridPane.getChildren();
@@ -757,6 +758,7 @@ public class GameSceneController {
 
     /**
      * Updates element on the shelves
+     * @param gameSerialized game update
      */
     private void updateShelves(GameSerialized gameSerialized) {
         for (GridPane shelfGrid : shelvesGridPane) {
@@ -769,6 +771,7 @@ public class GameSceneController {
 
     /**
      * Updates the list of object cards selected
+     * @param gameSerialized game update
      */
     private void updateLimbo(GameSerialized gameSerialized) {
         setLimbo(gameSerialized);
@@ -776,6 +779,7 @@ public class GameSceneController {
 
     /**
      * Updates the common goal cards and their points
+     * @param gameSerialized game update
      */
     private void updateCommonGoalCards(GameSerialized gameSerialized) {
         setCommonGoalCards(gameSerialized);
@@ -783,6 +787,7 @@ public class GameSceneController {
 
     /**
      * Updates players' info and their scores
+     * @param gameSerialized game update
      */
     private void updatePlayersInfo(GameSerialized gameSerialized) {
         setPlayerInfo(gameSerialized);
@@ -973,6 +978,7 @@ public class GameSceneController {
 
     /**
      * Communicates the reconnection of a player
+     * @param message message to be displayed
      */
     void onPlayerReconnection(String message) {
         GuiManager.showDialog((Stage) mainPane.getScene().getWindow(), "Reconnection", message);

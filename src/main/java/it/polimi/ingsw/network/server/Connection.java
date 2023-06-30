@@ -12,6 +12,7 @@ public abstract class Connection {
     private String token;
 
     /**
+     * returns the connection status
      * @return the connection status
      */
     public boolean isConnected() {

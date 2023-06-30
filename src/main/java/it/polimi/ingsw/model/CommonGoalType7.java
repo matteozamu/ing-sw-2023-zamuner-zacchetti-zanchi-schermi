@@ -1,8 +1,8 @@
 package it.polimi.ingsw.model;
 
 /**
- * Due gruppi separati di 4 tessere dello stesso tipo che formano un quadrato 2x2.
- * Le tessere dei due gruppi devono essere dello stesso tipo.
+ * Two separate groups of 4 tiles of the same type in a 2x2 square.
+ * The tiles of one square must be the same type as those of the other square.
  */
 
 public final class CommonGoalType7 extends CommonGoal {
@@ -12,7 +12,7 @@ public final class CommonGoalType7 extends CommonGoal {
     public String description = """
             Two groups each containing 4 tiles of
             the same type in a 2x2 square. The tiles
-            of one square can be different from
+            of one square must be the same type as
             those of the other square.""";
 
     public String cardView = """
@@ -25,6 +25,7 @@ public final class CommonGoalType7 extends CommonGoal {
 
     /**
      * Gets the type of the CommonGoal.
+     * @return the type of the CommonGoal.
      */
     @Override
     public int getType() {
@@ -33,6 +34,7 @@ public final class CommonGoalType7 extends CommonGoal {
 
     /**
      * Gets the description of the CommonGoal.
+     * @return the description of the CommonGoal.
      */
     @Override
     public String getDescription() {
@@ -41,6 +43,7 @@ public final class CommonGoalType7 extends CommonGoal {
 
     /**
      * Gets the visual representation of the CommonGoal.
+     * @return the visual representation of the CommonGoal.
      */
     @Override
     public String getCardView() {
@@ -49,6 +52,7 @@ public final class CommonGoalType7 extends CommonGoal {
 
     /**
      * Gets the String representation of the CommonGoal.
+     * @return the String representation of the CommonGoal.
      */
     @Override
     public String toString() {

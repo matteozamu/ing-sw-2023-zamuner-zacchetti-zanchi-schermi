@@ -27,7 +27,9 @@ public enum ObjectCardType {
     /**
      * Constructs an ObjectCardType with the given text representation.
      *
-     * @param text The text representation of the ObjectCardType.
+     * @param text    The text representation of the ObjectCardType.
+     * @param color   The color of the ObjectCardType.
+     * @param colorBG The color of the background of the ObjectCardType.
      */
     ObjectCardType(final String text, final String color, final String colorBG) {
         this.text = text;
@@ -45,6 +47,8 @@ public enum ObjectCardType {
     }
 
     /**
+     * return the color of the object card
+     *
      * @return the color of the object card
      */
     public String getColor() {
@@ -52,6 +56,8 @@ public enum ObjectCardType {
     }
 
     /**
+     * return the color of the background of the object card
+     *
      * @return the color of the background of the object card
      */
     public String getColorBG() {
