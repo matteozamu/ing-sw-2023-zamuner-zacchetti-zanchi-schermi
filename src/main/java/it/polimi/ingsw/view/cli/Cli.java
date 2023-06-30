@@ -178,6 +178,7 @@ public class Cli extends ClientGameManager implements DisconnectionListener {
 
     /**
      * Ask the user to insert the connection type
+     *
      * @return the connection type
      */
     private int askConnection() {
@@ -253,7 +254,7 @@ public class Cli extends ClientGameManager implements DisconnectionListener {
      */
     private int askPort(int connection) {
 
-        int defaultPort = (connection == 0 ? 6666 : 7777);
+        int defaultPort = (connection == 0 ? 6666 : 1999);
         out.println("\nEnter the server port (default " + defaultPort + "):");
         in.reset();
 
@@ -383,6 +384,7 @@ public class Cli extends ClientGameManager implements DisconnectionListener {
 
     /**
      * Asks the user for a game name for the game they created
+     *
      * @return the game name
      */
     private String askGameName() {
@@ -632,6 +634,7 @@ public class Cli extends ClientGameManager implements DisconnectionListener {
 
     /**
      * Method used to cancel a previous action
+     *
      * @param message the message to show
      */
     private void cancelAction(String message) {
@@ -747,6 +750,7 @@ public class Cli extends ClientGameManager implements DisconnectionListener {
 
     /**
      * Method used to print the winner
+     *
      * @param gameSerialized the game serialized
      */
     @Override
@@ -779,6 +783,7 @@ public class Cli extends ClientGameManager implements DisconnectionListener {
 
     /**
      * Method used to print that a player has disconnected
+     *
      * @param player is the username that disconnected
      */
     @Override
@@ -788,6 +793,7 @@ public class Cli extends ClientGameManager implements DisconnectionListener {
 
     /**
      * Method used to print that a player has reconnected
+     *
      * @param message is the message to show
      */
     @Override

@@ -97,7 +97,7 @@ di gioco; i valori eventualmente modificabili sono i seguenti:
 
 ```
 "socketPort": 6666,
-"RMIPort": 7777,
+"RMIPort": 1999,
 "maxPlayers": 4,
 "minPlayers": 2,
 "disconnectionTimer": 120000,
@@ -113,7 +113,8 @@ di gioco; i valori eventualmente modificabili sono i seguenti:
 - `disconnectionTimer`: tempo in millisecondi che il server aspetta prima di considerare un giocatore definitivamente
   disconnesso dalla partita in corso.
 
-Inoltre, il file contiene anche tutte le personal goal card presenti nel gioco e le possibili configurazioni della plancia di gioco in base al numero di giocatori.
+Inoltre, il file contiene anche tutte le personal goal card presenti nel gioco e le possibili configurazioni della
+plancia di gioco in base al numero di giocatori.
 
 L'esecuzione del server avviene attraverso il seguente comando, in cui si specifica il percorso del file di
 configurazione:
@@ -122,7 +123,8 @@ configurazione:
 java -jar server.jar [configFilePath] 
 ```
 
-Se non specificato nessun percorso, il valore di default di confiFilePath è _GameConstant.json_, il quale deve essere presente nella stessa cartella dell'eseguibile del server.
+Se non specificato nessun percorso, il valore di default di confiFilePath è _GameConstant.json_, il quale deve essere
+presente nella stessa cartella dell'eseguibile del server.
 
 ## Componenti del gruppo
 
