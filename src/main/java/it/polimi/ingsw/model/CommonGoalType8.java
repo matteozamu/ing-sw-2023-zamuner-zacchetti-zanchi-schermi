@@ -10,10 +10,19 @@ import java.util.Set;
 
 public final class CommonGoalType8 extends CommonGoal {
 
+    /**
+     * The type of the common goal.
+     */
     public int type = 8;
 
+    /**
+     * The description of the common goal.
+     */
     public String description = "Two lines each formed by 5 different types of tiles. One line can show the same or a different combination of the other line.";
 
+    /**
+     * The visual representation of the common goal.
+     */
     public String cardView = """
             ╔═══════════╗
             ║           ║
@@ -110,5 +119,4 @@ public final class CommonGoalType8 extends CommonGoal {
 
         return rowCount == 2;
     }
-
 }

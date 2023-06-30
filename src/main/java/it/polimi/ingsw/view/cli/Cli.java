@@ -25,7 +25,7 @@ public class Cli extends ClientGameManager implements DisconnectionListener {
     private PrintStream out;
 
     /**
-     * constructor of a cli
+     * Constructor of a cli
      */
     public Cli() {
         super();
@@ -58,7 +58,7 @@ public class Cli extends ClientGameManager implements DisconnectionListener {
     }
 
     /**
-     * clear the console
+     * Clear the console
      */
     public void clearConsole() {
         try {
@@ -74,7 +74,7 @@ public class Cli extends ClientGameManager implements DisconnectionListener {
     }
 
     /**
-     * start a cli client
+     * Start a cli client
      */
     public void start() {
         CliVisual.printLogo(out);
@@ -82,14 +82,14 @@ public class Cli extends ClientGameManager implements DisconnectionListener {
     }
 
     /**
-     * print that there are no games available
+     * Print that there are no games available
      */
     public void noGameAvailable() {
         out.println("No game available");
     }
 
     /**
-     * show an error message
+     * Show an error message
      *
      * @param errorMessage the error to show
      */
@@ -344,6 +344,9 @@ public class Cli extends ClientGameManager implements DisconnectionListener {
         }
     }
 
+    /**
+     * If the user joins a loaded game, he waits for the game to start
+     */
     @Override
     public void loadResponse() {
         out.println("You joined a loaded game.\nWaiting for other players!");
@@ -367,7 +370,7 @@ public class Cli extends ClientGameManager implements DisconnectionListener {
     /**
      * Send a message to the server with the number of players
      *
-     * @param response
+     * @param response the response from the server
      */
     @Override
     public void numberOfPlayersRequest(Response response) {
@@ -379,7 +382,7 @@ public class Cli extends ClientGameManager implements DisconnectionListener {
     }
 
     /**
-     * asks the user for a game name for the game they created
+     * Asks the user for a game name for the game they created
      * @return the game name
      */
     private String askGameName() {
@@ -483,7 +486,7 @@ public class Cli extends ClientGameManager implements DisconnectionListener {
     }
 
     /**
-     * print a list of game in which the user can log in
+     * Print a list of game in which the user can log in
      *
      * @param games the list of games
      */
@@ -582,7 +585,7 @@ public class Cli extends ClientGameManager implements DisconnectionListener {
     }
 
     /**
-     * print a joining game message
+     * Print a joining game message
      */
     @Override
     public void joinGame() {
@@ -592,7 +595,7 @@ public class Cli extends ClientGameManager implements DisconnectionListener {
     }
 
     /**
-     * print a creation game message
+     * Print a creation game message
      */
     @Override
     public void createGame() {
@@ -681,7 +684,7 @@ public class Cli extends ClientGameManager implements DisconnectionListener {
     }
 
     /**
-     * print the limbo
+     * Print the limbo
      */
     @Override
     public void printLimbo() {
@@ -717,7 +720,7 @@ public class Cli extends ClientGameManager implements DisconnectionListener {
     }
 
     /**
-     * shows a player their personal goal
+     * Shows a player their personal goal
      */
     @Override
     public void showPersonalGoal() {
@@ -729,9 +732,8 @@ public class Cli extends ClientGameManager implements DisconnectionListener {
         out.println("Action canceled");
     }
 
-
     /**
-     * shows a player their shelf
+     * Shows a player their shelf
      */
     @Override
     public void showShelf() {
@@ -776,6 +778,7 @@ public class Cli extends ClientGameManager implements DisconnectionListener {
     }
 
     /**
+     * Method used to print that a player has disconnected
      * @param player is the username that disconnected
      */
     @Override
@@ -784,6 +787,7 @@ public class Cli extends ClientGameManager implements DisconnectionListener {
     }
 
     /**
+     * Method used to print that a player has reconnected
      * @param message is the message to show
      */
     @Override
@@ -792,7 +796,7 @@ public class Cli extends ClientGameManager implements DisconnectionListener {
     }
 
     /**
-     * show a disconnection message
+     * Show a disconnection message
      */
     @Override
     public void onDisconnection() {

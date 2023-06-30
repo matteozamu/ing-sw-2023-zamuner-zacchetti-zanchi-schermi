@@ -8,10 +8,19 @@ import java.util.Map;
  */
 public final class CommonGoalType10 extends CommonGoal {
 
+    /**
+     * The type of the common goal.
+     */
     public int type = 10;
 
+    /**
+     * The description of the common goal.
+     */
     public String description = "Five tiles of the same type forming an X.";
 
+    /**
+     * The visual representation of the common goal.
+     */
     public String cardView = """
             ╔═════════╗
             ║  ■   ■  ║
@@ -100,5 +109,4 @@ public final class CommonGoalType10 extends CommonGoal {
         }
         return false;
     }
-
 }

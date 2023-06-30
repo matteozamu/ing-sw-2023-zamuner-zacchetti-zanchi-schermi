@@ -35,7 +35,7 @@ public class Server implements Runnable {
     private String filepath;
 
     /**
-     * constructor of a new game
+     * Constructor of a new game
      * @param confFilePath the path of the configuration file
      */
     public Server(String confFilePath) {
@@ -58,6 +58,11 @@ public class Server implements Runnable {
         pingThread.start();
     }
 
+    /**
+     * Starts the server.
+     *
+     * @param args the command line arguments
+     */
     public static void main(String[] args) {
         if (args.length == 0)
             new Server("GameConstant.json");
@@ -65,7 +70,7 @@ public class Server implements Runnable {
     }
 
     /**
-     * initialize the logger
+     * Initialize the logger
      */
     private void initLogger() {
         Date date = GregorianCalendar.getInstance().getTime();
@@ -82,7 +87,7 @@ public class Server implements Runnable {
     }
 
     /**
-     * starts the RMI server and the socket server
+     * Starts the RMI server and the socket server
      */
     private void startServers() {
         SocketServer serverSocket = new SocketServer(this, socketPort);
@@ -159,7 +164,7 @@ public class Server implements Runnable {
     }
 
     /**
-     * method called when a new player logged in the game
+     * Method called when a new player logged in the game
      *
      * @param username   the name chosen by the user
      * @param connection the client connection
@@ -174,7 +179,7 @@ public class Server implements Runnable {
     }
 
     /**
-     * handles a received message
+     * Handles a received message
      * @param message is the message received to the client
      */
     void onMessage(Message message) {
@@ -232,9 +237,8 @@ public class Server implements Runnable {
         }
     }
 
-
     /**
-     * method used to disconnect a client from the server
+     * Method used to disconnect a client from the server
      *
      * @param playerConnection the connection of the player to delete
      */
@@ -288,7 +292,7 @@ public class Server implements Runnable {
     }
 
     /**
-     * method that send a message to all the players present in one game
+     * Method that send a message to all the players present in one game
      *
      * @param gameId  is the unique id of a single game
      * @param message is the message to send
@@ -309,7 +313,7 @@ public class Server implements Runnable {
     }
 
     /**
-     * send a message to a single client
+     * Send a message to a single client
      *
      * @param username is the name of the player to send the message to
      * @param message  is the message to send
@@ -332,7 +336,7 @@ public class Server implements Runnable {
     }
 
     /**
-     * method that return the username given a connection
+     * Method that return the username given a connection
      *
      * @param connection is the client connection
      * @return the username
@@ -355,7 +359,7 @@ public class Server implements Runnable {
 
 
     /**
-     * run the ping to check if client is still connected
+     * Run the ping to check if client is still connected
      */
     @Override
     public void run() {
@@ -378,7 +382,7 @@ public class Server implements Runnable {
     }
 
     /**
-     * method that return a controller game given the game UUID
+     * Method that return a controller game given the game UUID
      *
      * @param gameUUID is the game UUID
      * @return the controller game of the game
@@ -393,7 +397,7 @@ public class Server implements Runnable {
     }
 
     /**
-     * method that return a controller game given a username
+     * Method that return a controller game given a username
      *
      * @param username is the name of the user
      * @return the controller game of the game in which the user is present
@@ -403,7 +407,7 @@ public class Server implements Runnable {
     }
 
     /**
-     * returns the players connected to the fame
+     * Returns the players connected to the fame
      * @return a map with all the player connected to the server and the controller game of the game in which they are
      */
     public Map<String, ControllerGame> getPlayersGame() {
@@ -411,7 +415,7 @@ public class Server implements Runnable {
     }
 
     /**
-     * returns the lock of the clients map
+     * Returns the lock of the clients map
      * @return the lock of the clients map
      */
     public Object getClientsLock() {
@@ -419,7 +423,7 @@ public class Server implements Runnable {
     }
 
     /**
-     * returns the clients with their connection
+     * Returns the clients with their connection
      * @return a map with all the clients connected and their connection
      */
     public Map<String, Connection> getClients() {
@@ -427,7 +431,7 @@ public class Server implements Runnable {
     }
 
     /**
-     * returns the list of all the controller games
+     * Returns the list of all the controller games
      * @return the list of all the controller games
      */
     public List<ControllerGame> getControllerGames() {
@@ -435,7 +439,7 @@ public class Server implements Runnable {
     }
 
     /**
-     * returns the filepath of the server
+     * Returns the filepath of the server
      * @return the filepath of the server
      */
     public String getFilepath() {

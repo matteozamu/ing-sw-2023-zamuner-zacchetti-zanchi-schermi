@@ -6,7 +6,15 @@ import org.jetbrains.annotations.Contract;
  * This class is used to validate the server address
  */
 public class ServerAddressValidator {
+
+    /**
+     * The maximum length of the address
+     */
     public static final int MAX_ADDRESS_LENGTH = 15;
+
+    /**
+     * The maximum length of the port
+     */
     public static final int MAX_PORT_LENGTH = 5;
 
     /**

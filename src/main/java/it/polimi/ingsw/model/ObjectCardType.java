@@ -9,16 +9,49 @@ import static it.polimi.ingsw.enumeration.Color.*;
  * Represents the type of object card in the game.
  */
 public enum ObjectCardType {
+    /**
+     * Represents a cat object card.
+     */
     cat("Cat", ANSI_GREEN, ANSI_GREEN_BACKGROUND),
+
+    /**
+     * Represents a book object card.
+     */
     book("Book", ANSI_WHITE, ANSI_WHITE_BACKGROUND),
+
+    /**
+     * Represents a game object card.
+     */
     game("Game", ANSI_YELLOW, ANSI_YELLOW_BACKGROUND),
+
+    /**
+     * Represents a frame object card.
+     */
     frame("Frame", ANSI_BLUE, ANSI_BLUE_BACKGROUND),
+
+    /**
+     * Represents a trophy object card.
+     */
     trophy("Trophy", ANSI_CYAN, ANSI_CYAN_BACKGROUND),
+
+    /**
+     * Represents a plant object card.
+     */
     plant("Plant", ANSI_MAGENTA, ANSI_MAGENTA_BACKGROUND);
 
-    public static final List<ObjectCardType> VALUES =
-            List.of(values());
+    /**
+     * The list of all ObjectCardType values.
+     */
+    public static final List<ObjectCardType> VALUES = List.of(values());
+
+    /**
+     * The size of the ObjectCardType enumeration.
+     */
     public static final int SIZE = VALUES.size();
+
+    /**
+     * The random generator used to select a random ObjectCardType.
+     */
     private static final Random RANDOM = new Random();
     private final String text;
     private final String color;
@@ -47,7 +80,7 @@ public enum ObjectCardType {
     }
 
     /**
-     * return the color of the object card
+     * Return the color of the object card
      *
      * @return the color of the object card
      */
@@ -56,7 +89,7 @@ public enum ObjectCardType {
     }
 
     /**
-     * return the color of the background of the object card
+     * Return the color of the background of the object card
      *
      * @return the color of the background of the object card
      */

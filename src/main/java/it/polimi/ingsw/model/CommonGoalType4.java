@@ -9,14 +9,23 @@ import java.util.Map;
  */
 public final class CommonGoalType4 extends CommonGoal {
 
+    /**
+     * The type of the common goal.
+     */
     public int type = 4;
 
+    /**
+     * The description of the common goal.
+     */
     public String description = """
             Four lines each formed by 5 tiles of
             maximum three different types. One
             line can show the same or a different
             combination of another line.""";
 
+    /**
+     * The visual representation of the common goal.
+     */
     public String cardView = """
                 ╔═══════════╗
                 ║           ║
@@ -116,5 +125,4 @@ public final class CommonGoalType4 extends CommonGoal {
 
         return validRowCount == 4;
     }
-
 }

@@ -21,7 +21,7 @@ public class Coordinate implements Serializable {
     }
 
     /**
-     * get the column of the coordinate
+     * Get the column of the coordinate
      *
      * @return the index of the column
      */
@@ -30,7 +30,7 @@ public class Coordinate implements Serializable {
     }
 
     /**
-     * get the row of the coordinate
+     * Get the row of the coordinate
      *
      * @return the index of the row
      */
@@ -56,7 +56,7 @@ public class Coordinate implements Serializable {
     }
 
     /**
-     * override of the equals method
+     * Override of the equals method
      *
      * @param obj the object to compare
      * @return true if the two objects are equal, false otherwise
@@ -74,7 +74,7 @@ public class Coordinate implements Serializable {
     }
 
     /**
-     * override of the hashCode method
+     * Override of the hashCode method
      *
      * @return the hashcode of the object
      */
@@ -87,9 +87,8 @@ public class Coordinate implements Serializable {
         return result;
     }
 
-
     /**
-     * override of the toString method
+     * Override of the toString method
      *
      * @return the string representation of the object
      */
@@ -102,9 +101,24 @@ public class Coordinate implements Serializable {
      * Represents the four possible directions for moving from a coordinate in a 2D grid.
      */
     public enum Direction {
+        /**
+         * The UP direction.
+         */
         UP,
+
+        /**
+         * The DOWN direction.
+         */
         DOWN,
+
+        /**
+         * The LEFT direction.
+         */
         LEFT,
+
+        /**
+         * The RIGHT direction.
+         */
         RIGHT
     }
 }

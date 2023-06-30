@@ -7,14 +7,23 @@ package it.polimi.ingsw.model;
 
 public final class CommonGoalType7 extends CommonGoal {
 
+    /**
+     * The type of the common goal.
+     */
     public int type = 7;
 
+    /**
+     * The description of the common goal.
+     */
     public String description = """
             Two groups each containing 4 tiles of
             the same type in a 2x2 square. The tiles
             of one square must be the same type as
             those of the other square.""";
 
+    /**
+     * The visual representation of the common goal.
+     */
     public String cardView = """
             ╔═══════╗
             ║  ■ ■  ║
@@ -117,7 +126,6 @@ public final class CommonGoalType7 extends CommonGoal {
      * @param type The type of the square.
      * @return true if the Shelf has a 2x2 square of the same type, false otherwise.
      */
-
     public boolean isSquare(Shelf shelf, Coordinate bottomLeft, ObjectCardType type) {
         ObjectCard bottomLeftCard = shelf.getObjectCard(bottomLeft);
 

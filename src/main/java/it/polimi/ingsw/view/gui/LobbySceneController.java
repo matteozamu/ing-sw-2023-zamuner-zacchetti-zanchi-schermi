@@ -20,7 +20,6 @@ import static it.polimi.ingsw.network.client.ClientGameManager.LOGGER;
  */
 
 public class LobbySceneController {
-
     private GuiManager guiManager;
 
     @FXML

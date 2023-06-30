@@ -18,7 +18,6 @@ import java.util.List;
  * Class JoinGameSceneController represents the controller of the join game scene, the scene where the player
  * can see the list of existing games they can join
  */
-
 public class JoinGameSceneController {
 
     private GuiManager guiManager;

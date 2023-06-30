@@ -16,7 +16,6 @@ import java.util.List;
  * Class StartGameSceneController represents the controller of the scene where the player can choose to create
  * a new game or to join an existing one
  */
-
 public class StartGameSceneController {
     private GuiManager guiManager;
 

@@ -1,23 +1,18 @@
 package it.polimi.ingsw.view.gui;
 
 import javafx.application.Application;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.scene.input.KeyCombination;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 import javafx.stage.Screen;
-import javafx.stage.StageStyle;
-
 
 import java.io.InputStream;
 
 /**
  * Class Gui represents the Graphical User Interface
  */
-
 public class Gui extends Application {
 
     /**

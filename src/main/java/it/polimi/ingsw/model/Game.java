@@ -24,7 +24,7 @@ public class Game implements Serializable {
     private String gameName;
 
     /**
-     * constructor of the class
+     * Constructor of the class
      */
     public Game() {
         this.objectCardContainer = new ArrayList<>();
@@ -50,13 +50,12 @@ public class Game implements Serializable {
      *
      * @return an instance of the map
      */
-
     public static Map<String, Game> getInstanceMap() {
         return instanceMap;
     }
 
     /**
-     * return an instance of the game
+     * Return an instance of the game
      *
      * @param username is the username of a user
      * @return the instance of the game in which the user is playing
@@ -79,7 +78,7 @@ public class Game implements Serializable {
     }
 
     /**
-     * sets the name of the game
+     * Sets the name of the game
      *
      * @param gameName is the name of the game
      */
@@ -88,7 +87,7 @@ public class Game implements Serializable {
     }
 
     /**
-     * return the number of players
+     * Return the number of players
      *
      * @return the number of player
      */
@@ -97,7 +96,7 @@ public class Game implements Serializable {
     }
 
     /**
-     * set the number of players
+     * Set the number of players
      *
      * @param numberOfPlayers is the number of player to set
      */
@@ -106,7 +105,7 @@ public class Game implements Serializable {
     }
 
     /**
-     * return the limbo of the game
+     * Return the limbo of the game
      *
      * @return a map with the selected object cards with their coordinates
      */
@@ -115,7 +114,7 @@ public class Game implements Serializable {
     }
 
     /**
-     * set the limbo
+     * Set the limbo
      *
      * @param limbo the limbo to set
      */
@@ -124,7 +123,7 @@ public class Game implements Serializable {
     }
 
     /**
-     * returns the order of the limbo
+     * Returns the order of the limbo
      * @return the order of the selected object cards
      */
     public List<ObjectCard> getLimboOrder() {
@@ -132,7 +131,7 @@ public class Game implements Serializable {
     }
 
     /**
-     * set the new order of the selected object cards
+     * Set the new order of the selected object cards
      *
      * @param limboOrder is the order to set
      */
@@ -141,7 +140,7 @@ public class Game implements Serializable {
     }
 
     /**
-     * return if the game has started or not
+     * Return if the game has started or not
      *
      * @return true if the game is started, false otherwise
      */
@@ -150,7 +149,7 @@ public class Game implements Serializable {
     }
 
     /**
-     * method used to set that the game is started or ended
+     * Method used to set that the game is started or ended
      *
      * @param started is true if the game is started, false otherwise
      */
@@ -159,7 +158,7 @@ public class Game implements Serializable {
     }
 
     /**
-     * get the list of the common goals
+     * Get the list of the common goals
      *
      * @return a list of the Common Goal Cards present in the game
      */
@@ -168,7 +167,7 @@ public class Game implements Serializable {
     }
 
     /**
-     * return a list of the personal goal cards
+     * Return a list of the personal goal cards
      *
      * @return a list of the Personal Goal Cards present in the game
      */
@@ -177,7 +176,7 @@ public class Game implements Serializable {
     }
 
     /**
-     * set personal goal cards
+     * Set personal goal cards
      *
      * @param personalGoalCardsContainer is the list of the Personal Goal Cards to set
      */
@@ -186,7 +185,7 @@ public class Game implements Serializable {
     }
 
     /**
-     * return the list of the object cards
+     * Return the list of the object cards
      *
      * @return a list of the Object Cards present in the game
      */
@@ -195,7 +194,7 @@ public class Game implements Serializable {
     }
 
     /**
-     * return the list of the players
+     * Return the list of the players
      *
      * @return a list of the players present in the game
      */
@@ -204,7 +203,7 @@ public class Game implements Serializable {
     }
 
     /**
-     * method used to add a player in the game
+     * Method used to add a player in the game
      *
      * @param p is the player to add
      * @return true if the player has been successfully added
@@ -218,7 +217,7 @@ public class Game implements Serializable {
     }
 
     /**
-     * method to return the player with the given username
+     * Method to return the player with the given username
      *
      * @return the current player of the game
      */
@@ -227,7 +226,7 @@ public class Game implements Serializable {
     }
 
     /**
-     * set the current player of the game
+     * Set the current player of the game
      *
      * @param currentPlayer is the current player
      */
@@ -236,7 +235,7 @@ public class Game implements Serializable {
     }
 
     /**
-     * return the board of the game
+     * Return the board of the game
      *
      * @return the board of the game
      */
@@ -245,14 +244,13 @@ public class Game implements Serializable {
     }
 
     /**
-     * return the list of the common goal cards
+     * Return the list of the common goal cards
      *
      * @return the Common Goal Cards of the game
      */
     public List<CommonGoal> getCommonGoals() {
         return commonGoals;
     }
-
 
     /**
      * Move to the next player
@@ -277,9 +275,8 @@ public class Game implements Serializable {
         return this.currentPlayer;
     }
 
-
     /**
-     * return the list of name of the players
+     * Return the list of name of the players
      *
      * @return the list of the players that are connected
      */
@@ -292,7 +289,7 @@ public class Game implements Serializable {
     }
 
     /**
-     * return a Player given is username
+     * Return a Player given is username
      *
      * @param name the name of the player
      * @return the player with that username

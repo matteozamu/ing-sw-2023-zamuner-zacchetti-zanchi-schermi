@@ -23,7 +23,7 @@ public class PersonalGoalCard implements Serializable {
     }
 
     /**
-     * return the number of targets reached
+     * Return the number of targets reached
      *
      * @return a list of the goals of the Personal Goal Card
      */
@@ -32,7 +32,7 @@ public class PersonalGoalCard implements Serializable {
     }
 
     /**
-     * return the id
+     * Return the id
      *
      * @return the ID of the Personal Goal Card
      */
@@ -41,7 +41,7 @@ public class PersonalGoalCard implements Serializable {
     }
 
     /**
-     * set the number of targets reached
+     * Set the number of targets reached
      *
      * @param targetsReached is true if the target is reached
      */
@@ -50,7 +50,7 @@ public class PersonalGoalCard implements Serializable {
     }
 
     /**
-     * return the points of the target reached
+     * Return the points of the target reached
      *
      * @param shelf is the shelf of the player
      * @return the points of the target reached

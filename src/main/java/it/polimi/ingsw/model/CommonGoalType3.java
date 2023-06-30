@@ -10,10 +10,19 @@ import java.util.Set;
 
 public final class CommonGoalType3 extends CommonGoal {
 
+    /**
+     * The type of the common goal.
+     */
     public int type = 3;
 
+    /**
+     * The description of the common goal.
+     */
     public String description = "Four tiles of the same type in the four corners of the bookshelf.";
 
+    /**
+     * The visual representation of the common goal.
+     */
     public String cardView = """
                 ╔═══════════╗
                 ║ ■ - - - ■ ║

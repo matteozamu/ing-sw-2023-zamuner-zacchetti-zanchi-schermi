@@ -9,8 +9,14 @@ import java.util.List;
 
 public class CommonGoalType5 extends CommonGoal {
 
+    /**
+     * The type of the common goal.
+     */
     public int type = 5;
 
+    /**
+     * The description of the common goal.
+     */
     public String description = """
             Four groups each containing at least
             4 tiles of the same type (not necessarily
@@ -18,6 +24,9 @@ public class CommonGoalType5 extends CommonGoal {
             The tiles of one group can be different
             from those of another group.""";
 
+    /**
+     * The visual representation of the common goal.
+     */
     public String cardView = """
             ╔═══════════╗
             ║     ■     ║
@@ -54,7 +63,6 @@ public class CommonGoalType5 extends CommonGoal {
     public String getCardView() {
         return cardView;
     }
-
 
     /**
      * Gets the String representation of the CommonGoal.

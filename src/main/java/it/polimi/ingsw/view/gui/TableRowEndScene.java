@@ -14,14 +14,26 @@ public class TableRowEndScene {
         this.points = points;
     }
 
+    /**
+     * Gets the rank
+     * @return the rank
+     */
     public String getRank() {
         return rank;
     }
 
+    /**
+     * Gets the username
+     * @return the username
+     */
     public String getUsername() {
         return username;
     }
 
+    /**
+     * Gets the points
+     * @return the points
+     */
     public String getPoints() {
         return points;
     }

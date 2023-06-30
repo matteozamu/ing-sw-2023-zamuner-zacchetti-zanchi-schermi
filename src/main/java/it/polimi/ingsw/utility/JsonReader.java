@@ -28,7 +28,7 @@ public class JsonReader {
     private static int timer;
 
     /**
-     * read the program's constant from a json file
+     * Read the program's constant from a json file
      *
      * @param filename the file to read
      */
@@ -42,7 +42,6 @@ public class JsonReader {
             // Parse the JSON data
             JSONTokener tokener = new JSONTokener(inputStream);
             JSONObject jsonObject = new JSONObject(tokener);
-
 
             JSONArray personalGoalCardsArray = jsonObject.getJSONArray("personalGoalCards");
             Type personalGoalCardListType = new TypeToken<List<PersonalGoalCard>>() {}.getType();
@@ -80,7 +79,6 @@ public class JsonReader {
                 }
             }
 
-
             // Close the input stream
             inputStream.close();
         } catch (Exception e) {
@@ -89,7 +87,7 @@ public class JsonReader {
     }
 
     /**
-     * returns the maximum number of player
+     * Returns the maximum number of player
      * @return the maximum number of player
      */
     public static int getMaxPlayers() {
@@ -97,7 +95,7 @@ public class JsonReader {
     }
 
     /**
-     * returns the minimum number of player
+     * Returns the minimum number of player
      * @return the minimum number of player
      */
     public static int getMinPlayers() {
@@ -105,7 +103,7 @@ public class JsonReader {
     }
 
     /**
-     * return the board based on the number of players in the game
+     * Return the board based on the number of players in the game
      *
      * @param numberOfPlayers number of players in the game
      * @return the specific board
@@ -118,7 +116,7 @@ public class JsonReader {
     }
 
     /**
-     * returns the socket port
+     * Returns the socket port
      * @return the socket port
      */
     public static int getSocketPort() {
@@ -126,7 +124,7 @@ public class JsonReader {
     }
 
     /**
-     * returns the RMI port
+     * Returns the RMI port
      * @return the RMI port
      */
 
@@ -135,7 +133,7 @@ public class JsonReader {
     }
 
     /**
-     * returns the personal goal cards container
+     * Returns the personal goal cards container
      * @return the personal goal cards container
      */
     public static List<PersonalGoalCard> getPersonalGoalCardsContainer() {
@@ -143,7 +141,7 @@ public class JsonReader {
     }
 
     /**
-     * returns the disconnection timer
+     * Returns the disconnection timer
      * @return the disconnection timer
      */
     public static int getTimer() {

@@ -45,7 +45,7 @@ public abstract class Client extends UnicastRemoteObject {
     }
 
     /**
-     * return the address of the server
+     * Return the address of the server
      *
      * @return the address of the server
      */
@@ -54,7 +54,7 @@ public abstract class Client extends UnicastRemoteObject {
     }
 
     /**
-     * return the port of the server
+     * Return the port of the server
      *
      * @return the port of the server
      */
@@ -70,7 +70,7 @@ public abstract class Client extends UnicastRemoteObject {
     public abstract void startConnection() throws Exception;
 
     /**
-     * return the token
+     * Return the token
      *
      * @return the token
      */
@@ -103,7 +103,7 @@ public abstract class Client extends UnicastRemoteObject {
     public abstract void close() throws Exception;
 
     /**
-     * handle the received messages
+     * Handle the received messages
      *
      * @return the list of messages in the queue
      */
@@ -119,7 +119,7 @@ public abstract class Client extends UnicastRemoteObject {
     }
 
     /**
-     * returns the username of the player
+     * Returns the username of the player
      * @return the username of the player
      */
     public String getUsername() {
@@ -148,7 +148,7 @@ public abstract class Client extends UnicastRemoteObject {
     }
 
     /**
-     * overridden hashcode method
+     * Overridden hashcode method
      *
      * @return the hashcode of the object
      */

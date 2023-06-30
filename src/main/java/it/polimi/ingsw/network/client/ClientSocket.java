@@ -115,7 +115,7 @@ public class ClientSocket extends Client implements Runnable {
     }
 
     /**
-     * overridden equals method
+     * Overridden equals method
      * @param o object to compare
      * @return true if the objects are equals, false otherwise
      */
@@ -132,7 +132,7 @@ public class ClientSocket extends Client implements Runnable {
     }
 
     /**
-     * overridden hashCode method
+     * Overridden hashCode method
      * @return hash of the object
      */
     @Override

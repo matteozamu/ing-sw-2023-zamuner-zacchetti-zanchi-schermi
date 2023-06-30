@@ -9,9 +9,14 @@ public enum PossibleGameState {
      * Game State when wait to entry in lobby
      */
     GAME_ROOM,
+
     /**
      * Game started
      */
     GAME_STARTED,
+
+    /**
+     * Game ended
+     */
     GAME_ENDED,
 }

@@ -10,8 +10,14 @@ import java.util.Map;
 
 public final class CommonGoalType1 extends CommonGoal {
 
+    /**
+     * The type of the common goal.
+     */
     public int type = 1;
 
+    /**
+     * The description of the common goal.
+     */
     public String description = """
             Six groups each containing at least
             2 tiles of the same type (not necessarily
@@ -19,6 +25,9 @@ public final class CommonGoalType1 extends CommonGoal {
             The tiles of one group can be different
             from those of another group.""";
 
+    /**
+     * The visual representation of the common goal.
+     */
     public String cardView = """
             ╔═══════════╗
             ║           ║
@@ -42,7 +51,6 @@ public final class CommonGoalType1 extends CommonGoal {
      * Gets the description of the common goal.
      * @return The description of the common goal.
      */
-
     @Override
     public String getDescription() {
         return description;
@@ -52,7 +60,6 @@ public final class CommonGoalType1 extends CommonGoal {
      * Gets the visual representation of the common goal.
      * @return The view of the common goal.
      */
-
     @Override
     public String getCardView() {
         return cardView;
@@ -62,7 +69,6 @@ public final class CommonGoalType1 extends CommonGoal {
      * Gets the string representation of the common goal.
      * @return The string representation of the common goal.
      */
-
     @Override
     public String toString() {
         return "commonGoalCard-1";
@@ -120,7 +126,6 @@ public final class CommonGoalType1 extends CommonGoal {
      * @param grid The grid of the shelf to be checked.
      * @return true if the card is adjacent to another card of the same type, false otherwise.
      */
-
     public boolean checkAdjacent(Coordinate coord, ObjectCard card, Map<Coordinate, ObjectCard> grid) {
         ObjectCardType targetType = card.getType();
         Coordinate[] adjacentCoords = {coord.getAdjacent(Coordinate.Direction.UP), coord.getAdjacent(Coordinate.Direction.RIGHT), coord.getAdjacent(Coordinate.Direction.DOWN), coord.getAdjacent(Coordinate.Direction.LEFT)};
