@@ -1,7 +1,5 @@
 # Prova Finale di Ingegneria del Software - a.a. 2022-2023
 
-[![codecov](https://codecov.io/gh/matteozamu/ing-sw-2023-zamuner-zacchetti-zanchi-schermi/branch/dev/graph/badge.svg?token=KBR43CAQFL)](https://codecov.io/gh/matteozamu/ing-sw-2023-zamuner-zacchetti-zanchi-schermi)
-
 ![alt text](https://www.craniocreations.it/storage/media/products/54/112/My_Shelfie_box_ITA-ENG.png)
 
 L'obiettivo principale del progetto è implementare il gioco da tavolo MyShelfie utilizzando l'architettura Model View
@@ -33,7 +31,7 @@ Di seguito sono riportati diagrammi delle classi dell’architettura di rete dei
 
 Il presente documento fornisce una descrizione dettagliata della maggior parte delle classi e dei metodi utilizzati nel
 progetto, seguendo le convenzioni di documentazione di Java. È possibile consultare questa
-documentazione [cliccando qui](*LINK GIT*)
+documentazione [cliccando qui](https://github.com/matteozamu/ing-sw-2023-zamuner-zacchetti-zanchi-schermi/tree/main/deliverables/Javadoc)
 
 ### Librerie e Plugins
 
@@ -50,8 +48,8 @@ documentazione [cliccando qui](*LINK GIT*)
 Per la consegna del progetto sono stati utilizzati i seguenti Jar, i quali consentono di avviare il gioco secondo le
 funzionalità descritte nell'introduzione. Le funzionalità sviluppate in accordo con la specifica del progetto saranno
 elencate nella prossima sezione, mentre i dettagli relativi all'esecuzione dei Jar saranno forniti nella sezione
-denominata "Esecuzione dei Jar". La cartella che ospita il software del client e del server si trova all'indirizzo
-seguente: [Jars](*LINK GIT*).
+denominata "Esecuzione dei Jar". La cartella che ospita l'eseguibile del client e del server si trova all'indirizzo
+seguente: [Jars](https://github.com/matteozamu/ing-sw-2023-zamuner-zacchetti-zanchi-schermi/tree/main/deliverables/jar).
 
 ## Funzionalità
 
@@ -115,6 +113,8 @@ di gioco; i valori eventualmente modificabili sono i seguenti:
 - `disconnectionTimer`: tempo in millisecondi che il server aspetta prima di considerare un giocatore definitivamente
   disconnesso dalla partita in corso.
 
+Inoltre, il file contiene anche tutte le personal goal card presenti nel gioco e le possibili configurazioni della plancia di gioco in base al numero di giocatori.
+
 L'esecuzione del server avviene attraverso il seguente comando, in cui si specifica il percorso del file di
 configurazione:
 
@@ -122,7 +122,7 @@ configurazione:
 java -jar server.jar [configFilePath] 
 ```
 
-Se non specificato nessun percorso, il valore di default è _GameConstant.json_.
+Se non specificato nessun percorso, il valore di default di confiFilePath è _GameConstant.json_, il quale deve essere presente nella stessa cartella dell'eseguibile del server.
 
 ## Componenti del gruppo
 
