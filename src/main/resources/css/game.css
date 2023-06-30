@@ -12,16 +12,6 @@
     -fx-alignment: CENTER;
 }
 
-/*
-.turnOwner {
-    -fx-effect: dropshadow(gaussian, #F44336, 15, 0.2, 0, 0);
-}
-
-.notTurnOwner {
-    -fx-opacity: 0.5;
-}
- */
-
 .commonGoalCardsHBoxArea {
     -fx-spacing: 68;
     -fx-alignment: CENTER;
@@ -47,7 +37,6 @@
 }
 
 .boardStackPaneArea {
-    /* Fissare una dimensione in modo tale da non fissare la dimensione dell'immagine, ma sarà l'immagine a riempire tutto lo spazio dello stack pane */
     -fx-alignment: CENTER;
 }
 
@@ -60,13 +49,7 @@
 }
 
 .boardGridPane {
-    /*
-    -fx-alignment: CENTER;
-    -fx-translate-x: -2.0;
-    -fx-vgap: 6.0;
-    -fx-hgap: 6.0;
-    Da capire perché non funzionano
-     */
+
 }
 
 /* Shelf */
@@ -80,7 +63,7 @@
 }
 
 .shelfLimboVBoxArea {
-    /*-fx-spacing: 25;*/
+
 }
 
 #arrowShelf {

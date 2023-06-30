@@ -250,7 +250,7 @@ public class GuiManager extends ClientGameManager implements DisconnectionListen
      */
     @Override
     public void joinGame() {
-
+        // Not used in this implementation
     }
 
     /**
@@ -258,7 +258,7 @@ public class GuiManager extends ClientGameManager implements DisconnectionListen
      */
     @Override
     public void createGame() {
-
+        // Not used in this implementation
     }
 
     /**
@@ -266,7 +266,7 @@ public class GuiManager extends ClientGameManager implements DisconnectionListen
      */
     @Override
     public void pickBoardCard() {
-
+        // Not used in this implementation
     }
 
     /**
@@ -284,7 +284,7 @@ public class GuiManager extends ClientGameManager implements DisconnectionListen
      */
     @Override
     public void reorderLimbo() {
-
+        // Not used in this implementation
     }
 
     /**
@@ -302,7 +302,7 @@ public class GuiManager extends ClientGameManager implements DisconnectionListen
      */
     @Override
     public void chooseColumn() {
-
+        // Not used in this implementation
     }
 
     /**
@@ -310,7 +310,7 @@ public class GuiManager extends ClientGameManager implements DisconnectionListen
      */
     @Override
     public void showPersonalGoal() {
-
+        // Not used in this implementation
     }
 
     /**
@@ -318,7 +318,7 @@ public class GuiManager extends ClientGameManager implements DisconnectionListen
      */
     @Override
     public void cancelAction() {
-
+        // Not used in this implementation
     }
 
     /**
@@ -326,7 +326,7 @@ public class GuiManager extends ClientGameManager implements DisconnectionListen
      */
     @Override
     public void showShelf() {
-
+        // Not used in this implementation
     }
 
     /**
@@ -348,7 +348,7 @@ public class GuiManager extends ClientGameManager implements DisconnectionListen
      */
     @Override
     public void printEndGame(String message) {
-
+        // Not used in this implementation
     }
 
     /**
