@@ -765,10 +765,12 @@ public class ControllerGame implements Serializable {
             return new Response("Game is ended.", MessageStatus.ERROR);
         }
         if (playersNames.contains(reconnectingPlayerName)) {
+            System.out.println("Player " + reconnectingPlayerName + " reconnected to the game.");
             if (reconnectionTimer != null) {
+                System.out.println("Timer stopped.");
                 reconnectionTimer.cancel();
                 reconnectionTimer = null;
-                game.setCurrentPlayer(game.getPlayerByName(reconnectingPlayerName));
+//                game.setCurrentPlayer(game.getPlayerByName(reconnectingPlayerName));
             }
             // if I receive a reconnection message the player state change into connected == true
             game.getPlayerByName(reconnectingPlayerName).setConnected(true);

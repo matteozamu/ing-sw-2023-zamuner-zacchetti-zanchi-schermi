@@ -255,6 +255,16 @@ public class Server implements Runnable {
                     controllerGame.setTimer();
                 }
 
+                if (username.equals(controllerGame.getGame().getCurrentPlayer().getName())) {
+                    controllerGame.getGame().nextPlayer();
+
+                    List<Player> players = controllerGame.getGame().getPlayers();
+
+                    for (Player player : players) {
+                        sendMessage(player.getName(), new GameStateResponse(player.getName(), controllerGame.getGame().getCurrentPlayer().getName(), getFilepath()));
+                    }
+                }
+
                 LOGGER.log(Level.INFO, "{0} set connected false!", username);
 
                 if (controllerGame.getGameState() == PossibleGameState.GAME_ROOM) {
