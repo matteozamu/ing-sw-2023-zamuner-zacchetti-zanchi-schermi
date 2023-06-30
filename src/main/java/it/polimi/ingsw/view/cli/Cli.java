@@ -254,7 +254,7 @@ public class Cli extends ClientGameManager implements DisconnectionListener {
      */
     private int askPort(int connection) {
 
-        int defaultPort = (connection == 0 ? 6666 : 1999);
+        int defaultPort = (connection == 0 ? 6666 : 7777);
         out.println("\nEnter the server port (default " + defaultPort + "):");
         in.reset();
 

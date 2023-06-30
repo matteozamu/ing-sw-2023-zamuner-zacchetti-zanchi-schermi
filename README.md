@@ -97,7 +97,7 @@ di gioco; i valori eventualmente modificabili sono i seguenti:
 
 ```
 "socketPort": 6666,
-"RMIPort": 1999,
+"RMIPort": 7777,
 "maxPlayers": 4,
 "minPlayers": 2,
 "disconnectionTimer": 120000,
